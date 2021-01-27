@@ -63,16 +63,31 @@ const Application: React.FunctionComponent<{}> = props => {
             </BrowserRouter>
 
             <h1>Buildings</h1>
-            {buildings.map((building: any) => (
-                <div key={building.id}>
-                    <h2>{building.building_name}</h2>
-                    <h2>{building.address}</h2>
-                    <h2>{building.phone}</h2>
-                    <h2>{building.residential_targeted_area}</h2>
-                    <h2>{building.total_restricted_units}</h2>
+            <div>
+                <Table striped bordered hover variant="light">
+                    <thead>
+                        <tr>
+                            <th>Building Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Residential Targeted Area</th>
+                            <th>Total Restricted Units</th>
+                        </tr>
+                    </thead>
 
-                </div>
+            {buildings.map((building: any) => (
+                <tbody>
+                    <tr key={building.id}>
+                        <td>{building.building_name}</td>
+                        <td>{building.address}</td>
+                        <td>{building.phone}</td>
+                        <td>{building.residential_targeted_area}</td>
+                        <td>{building.total_restricted_units}</td>
+                    </tr>
+                </tbody>
             ))}
+            </Table>
+            </div>
 
 
         </div>
