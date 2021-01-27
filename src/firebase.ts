@@ -9,9 +9,9 @@ const firebaseConfig = {
     storageBucket: process.env.REACT_APP_SB,
     messagingSenderId: process.env.REACT_APP_SID,
     appId: process.env.REACT_APP_APPID,
-    measurementId:process.env.REACT_APP_MID
+    measurementId: process.env.REACT_APP_MID
 };
 firebase.initializeApp(firebaseConfig);
 // const databaseRef = firebase.database().ref();
-// export const todosRef = databaseRef.child("todos")
+// export const buildingsRef = databaseRef.child("buildings")
 export default firebase;
