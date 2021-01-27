@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react';
 import IPage from '../interfaces/page';
 import logging from '../config/logging';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+// import firebase from "./firebase";
 
 const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
+
+
+
+
+
     const [message, setMessage] = useState<string>('');
 
     useEffect(() => {
