@@ -44,6 +44,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.7"
+    "@types/googlemaps": "^3.43.2",
+    "@types/react-router-dom": "^5.1.7",
+    "sass": "^1.32.5"
   }
 }

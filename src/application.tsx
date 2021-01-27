@@ -5,8 +5,21 @@ import routes from './config/routes';
 import firebase from './firebase';
 import 'firebase/firestore';
 import { Table } from 'react-bootstrap';
+import Map from './Map';
+import {loadMapApi} from "./utils/GoogleMapsUtils";
 
 const Application: React.FunctionComponent<{}> = props => {
+
+    const [scriptLoaded, setScriptLoaded] = useState(false);
+
+    useEffect(() => {
+        const googleMapScript = loadMapApi();
+        googleMapScript.addEventListener('load', function () {
+            setScriptLoaded(true);
+        });
+    }, []);
+
+
 
     const [buildings, setBuildings] = useState([] as any);
     const [loading, setLoading] = useState(false);
@@ -37,7 +50,6 @@ const Application: React.FunctionComponent<{}> = props => {
     // useEffect(() => {
     //     logging.info('Loading application.');
     // }, [])
-    console.log(buildings)
 
     return (
         <div>
@@ -87,6 +99,17 @@ const Application: React.FunctionComponent<{}> = props => {
                 </tbody>
             ))}
             </Table>
+            </div>
+
+
+
+            <div>
+                {scriptLoaded && (
+                    <Map
+                        mapType={google.maps.MapTypeId.ROADMAP}
+                        mapTypeControl={true}
+                    />
+                )}
             </div>
 
 
