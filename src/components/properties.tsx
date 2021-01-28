@@ -1,7 +1,7 @@
 
 import { Navbar, Nav, NavLink,Form, FormControl, Button, Image, Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
-import firebase from './firebase';
+import firebase from '../db/firebase';
 import 'firebase/firestore';
 
 

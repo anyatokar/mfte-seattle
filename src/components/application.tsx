@@ -6,12 +6,12 @@ import { Properties } from './properties';
 
 
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
-import logging from './config/logging';
-import routes from './config/routes';
-import firebase from './firebase';
+import logging from '../config/logging';
+import routes from '../config/routes';
+import firebase from '../db/firebase';
 import 'firebase/firestore';
-import Map from './Map/';
-import {loadMapApi} from "./utils/GoogleMapsUtils";
+import Map from '../api/Map';
+import {loadMapApi} from "../utils/GoogleMapsUtils";
 import { Navbar, Nav, NavLink,Form, FormControl, Button, Image, Table } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
 
@@ -23,9 +23,9 @@ const Application: React.FunctionComponent<{}> = props => {
 
 
 
-    // useEffect(() => {
-    //     logging.info('Loading application.');
-    // }, [])
+    useEffect(() => {
+        logging.info('Loading application.');
+    }, [])
 
     return (
         <div>

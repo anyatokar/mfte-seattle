@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import IPage from '../interfaces/page';
 import logging from '../config/logging';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { Properties } from "/Users/anya/developer/mfte-capstone/src/properties"
+import { Properties } from "../components/properties"
 // import firebase from "./firebase";
 // import { Map } from "/Users/anya/developer/mfte-capstone/src/Map/Map";
-import Map from "../Map/Map";
+import Map from "../api/Map/Map";
 import {loadMapApi} from "../utils/GoogleMapsUtils";
 
 const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
