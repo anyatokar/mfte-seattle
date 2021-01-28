@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Header } from './header';
+// import { Main } from './components/main';
+// import { Footer } from './components/footer';
+
+
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
 import logging from './config/logging';
 import routes from './config/routes';
@@ -57,26 +62,9 @@ const Application: React.FunctionComponent<{}> = props => {
 
     return (
         <div>
-            <header>
-                <h1>MFTE Simple</h1>
-            </header>
+
             <BrowserRouter>
-                <Navbar bg="dark" variant="dark">
-                    <Nav className="mr-auto">
-                        <LinkContainer to='/'>
-                            <Nav.Link>Home</Nav.Link>
-                        </LinkContainer>
-                        <LinkContainer to='/about'>
-                            <Nav.Link>About</Nav.Link>
-                        </LinkContainer>
-                        {/* <LinkContainer to='./pages/about'>
-                            <Nav.Link>About</Nav.Link>
-                        </LinkContainer>
-                        <LinkContainer to='./pages/about'>
-                            <Nav.Link>About</Nav.Link>
-                        </LinkContainer> */}
-                    </Nav>
-                </Navbar>
+            <Header />
 
                 <Switch>
                     {routes.map((route, index) => {
