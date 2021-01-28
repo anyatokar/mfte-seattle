@@ -4,10 +4,22 @@ import logging from '../config/logging';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Properties } from "/Users/anya/developer/mfte-capstone/src/properties"
 // import firebase from "./firebase";
+// import { Map } from "/Users/anya/developer/mfte-capstone/src/Map/Map";
+import Map from "../Map/Map";
+import {loadMapApi} from "../utils/GoogleMapsUtils";
 
 const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
+    const [scriptLoaded, setScriptLoaded] = useState(false);
 
+    useEffect(() => {
+        const googleMapScript = loadMapApi();
+        googleMapScript.addEventListener('load', function () {
+            setScriptLoaded(true);
+        });
+    }, []);
+
+    
 
 
 
@@ -28,11 +40,29 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
         }
     }, [props])
 
+
+
+
+
+
     return (
         <div>
+            <div>
+                {scriptLoaded && (
+                    <Map
+                        mapType={google.maps.MapTypeId.ROADMAP}
+                        mapTypeControl={true}
+                    />
+                )}
+            </div>
             < Properties />
             <p>{message}</p>
             <Link to="/">Go to the home page!</Link>
+
+
+
+
+
         </div>
     );
 }

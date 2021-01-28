@@ -17,14 +17,7 @@ import {LinkContainer} from 'react-router-bootstrap'
 
 const Application: React.FunctionComponent<{}> = props => {
 
-    const [scriptLoaded, setScriptLoaded] = useState(false);
 
-    useEffect(() => {
-        const googleMapScript = loadMapApi();
-        googleMapScript.addEventListener('load', function () {
-            setScriptLoaded(true);
-        });
-    }, []);
 
 
 
@@ -65,14 +58,6 @@ const Application: React.FunctionComponent<{}> = props => {
 
 
 
-            <div>
-                {scriptLoaded && (
-                    <Map
-                        mapType={google.maps.MapTypeId.ROADMAP}
-                        mapTypeControl={true}
-                    />
-                )}
-            </div>
 
 
         </div>
