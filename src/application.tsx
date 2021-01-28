@@ -39,7 +39,7 @@ const Application: React.FunctionComponent<{}> = props => {
 
             <BrowserRouter>
             <Header />
-            <Properties />
+        
 
                 <Switch>
                     {routes.map((route, index) => {

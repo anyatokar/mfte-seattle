@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import IPage from '../interfaces/page';
 import logging from '../config/logging';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { Properties } from "/Users/anya/developer/mfte-capstone/src/properties"
 // import firebase from "./firebase";
 
 const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
@@ -30,7 +29,6 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
 
     return (
         <div>
-            < Properties />
             <p>{message}</p>
             <Link to="/">Go to the home page!</Link>
         </div>
