@@ -5,7 +5,7 @@ import routes from './config/routes';
 import firebase from './firebase';
 import 'firebase/firestore';
 import { Table } from 'react-bootstrap';
-import Map from './Map';
+import Map from './Map/';
 import {loadMapApi} from "./utils/GoogleMapsUtils";
 
 const Application: React.FunctionComponent<{}> = props => {
@@ -25,6 +25,9 @@ const Application: React.FunctionComponent<{}> = props => {
     const [loading, setLoading] = useState(false);
 
     const ref = firebase.firestore().collection("buildings");
+    // const ref = firebase.database();
+
+    console.log(ref)
 
     function getBuildings() {
         setLoading(true);
@@ -84,17 +87,27 @@ const Application: React.FunctionComponent<{}> = props => {
                             <th>Phone</th>
                             <th>Residential Targeted Area</th>
                             <th>Total Restricted Units</th>
+                            <th>Studio Units</th>
+                            <th>One Bedroom Units</th>
+                            <th>Two Bedroom Units</th>
+                            <th>Three Bedroom+ Units</th>
+                            <th>Building url</th>
                         </tr>
                     </thead>
 
             {buildings.map((building: any) => (
                 <tbody>
                     <tr key={building.id}>
-                        <td>{building.building_name}</td>
+                        <td>{building.buildingName}</td>
                         <td>{building.address}</td>
                         <td>{building.phone}</td>
-                        <td>{building.residential_targeted_area}</td>
-                        <td>{building.total_restricted_units}</td>
+                        <td>{building.residentialTargetedArea}</td>
+                        <td>{building.totalRestrictedUnits}</td>
+                        <td>{building.studioUnits}</td>
+                        <td>{building.oneBedroomUnits}</td>
+                        <td>{building.twoBedroomUnits}</td>
+                        <td>{building.threePlusBedroomUnits}</td>
+                        <td>{building.urlforBuilding}</td>
                     </tr>
                 </tbody>
             ))}

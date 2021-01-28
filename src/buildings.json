@@ -1,0 +1,6171 @@
+[
+
+  {
+
+    "buildingName": "Alder Flats",
+ 
+    "address": "220 10th Ave Seattle WA",
+ 
+    "phone": "206-408-2176",
+ 
+    "residentialTargetedArea": "12th Avenue",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 19,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.thealderflats.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Anthem",
+ 
+    "address": "103 12th Ave Seattle WA",
+ 
+    "phone": "877-204-5282",
+ 
+    "residentialTargetedArea": "12th Avenue",
+ 
+    "totalRestrictedUnits": 24,
+ 
+    "studioUnits": 9,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 6,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.cwsapartments.com/apartments/wa/seattle/anthem-on-12th/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Decibel",
+ 
+    "address": "301 12th Ave Seattle WA",
+ 
+    "phone": "206-823-1496",
+ 
+    "residentialTargetedArea": "12th Avenue",
+ 
+    "totalRestrictedUnits": 15,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 7,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://decibel12.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Denny 18",
+ 
+    "address": "1823 18th Ave Seattle WA",
+ 
+    "phone": "425-780-0648",
+ 
+    "residentialTargetedArea": "12th Avenue",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://denny18.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Reverb",
+ 
+    "address": "1023 E Alder St Seattle WA",
+ 
+    "phone": "206-624-7720",
+ 
+    "residentialTargetedArea": "12th Avenue",
+ 
+    "totalRestrictedUnits": 17,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 7,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://reverb11.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Soleil",
+ 
+    "address": "315 10th Ave Seattle WA",
+ 
+    "phone": "818-259-1752",
+ 
+    "residentialTargetedArea": "12th Avenue",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.seattlestudioapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Terrazza aPodments",
+ 
+    "address": "413 11th Ave  Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "12th Avenue",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/terrazza"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Zig Apartments",
+ 
+    "address": "515 Broadway Seattle WA",
+ 
+    "phone": "206-397-0545",
+ 
+    "residentialTargetedArea": "12th Avenue",
+ 
+    "totalRestrictedUnits": 34,
+ 
+    "studioUnits": 17,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://livezigseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "East Union",
+ 
+    "address": "2220 East Union St Seattle WA",
+ 
+    "phone": "206-829-5942",
+ 
+    "residentialTargetedArea": "23rd  & Union-Jackson",
+ 
+    "totalRestrictedUnits": 37,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 19,
+ 
+    "twoBedroomUnits": 6,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.eastunionseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Modera Jackson",
+ 
+    "address": "1801 S Jackson St Seattle WA",
+ 
+    "phone": "888-657-7681",
+ 
+    "residentialTargetedArea": "23rd  & Union-Jackson",
+ 
+    "totalRestrictedUnits": 31,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 22,
+ 
+    "twoBedroomUnits": 8,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.moderajackson.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "1611 S. Weller",
+ 
+    "address": "1611 S. Weller Seattle WA",
+ 
+    "phone": "206-726-6230 ",
+ 
+    "residentialTargetedArea": "23rd & Union- Jackson",
+ 
+    "totalRestrictedUnits": 2,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Madison Two-O",
+ 
+    "address": "1811 20th Ave. Seattle WA",
+ 
+    "phone": "206-478-3019",
+ 
+    "residentialTargetedArea": "23rd & Union- Jackson",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.cornellandassociates.com/madison-20/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Twenty20 MAD",
+ 
+    "address": "2020 E Madison Seattle WA",
+ 
+    "phone": "206-456-2608",
+ 
+    "residentialTargetedArea": "23rd & Union- Jackson",
+ 
+    "totalRestrictedUnits": 32,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 25,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.twenty20mad.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "1410 S King St",
+ 
+    "address": "1410 S King St Seattle WA",
+ 
+    "phone": "206-954-3555",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 3,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Central",
+ 
+    "address": "2203 E Union St Seattle WA",
+ 
+    "phone": "206-709-6953",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 12,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.thecentralapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Jackson Apartments",
+ 
+    "address": "2401 S Jackson Seattle WA",
+ 
+    "phone": "206-322-1139",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 107,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 89,
+ 
+    "twoBedroomUnits": 10,
+ 
+    "threePlusBedroomUnits": 2,
+ 
+    "urlforBuilding": "https://jacksonseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Jackson Street Apartments",
+ 
+    "address": "2524 S Jackson Seattle WA",
+ 
+    "phone": "206-492-9276",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 15,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 3,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.jacksonstapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Muir Apartments",
+ 
+    "address": "1601 South Lane St Seattle WA",
+ 
+    "phone": "206-899-0090",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 27,
+ 
+    "studioUnits": 19,
+ 
+    "oneBedroomUnits": 3,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://muirseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Pratt Park",
+ 
+    "address": "1800 S Jackson St Seattle WA",
+ 
+    "phone": "206-866-2198",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 50,
+ 
+    "studioUnits": 15,
+ 
+    "oneBedroomUnits": 22,
+ 
+    "twoBedroomUnits": 13,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.legacyatprattpark.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Roost",
+ 
+    "address": "901 Hiawatha Place S Seattle WA",
+ 
+    "phone": "206-735-1509",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 9,
+ 
+    "studioUnits": 9,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://theroostlofts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Solana aPodments",
+ 
+    "address": "310 17th Ave S Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/solana"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Stencil Apartments",
+ 
+    "address": "2407 E Union St. Seattle WA",
+ 
+    "phone": "206-709-6947",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.stencilapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Element 42",
+ 
+    "address": "2622 California Ave SW Seattle WA",
+ 
+    "phone": "855-790-1103",
+ 
+    "residentialTargetedArea": "Admiral",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.element42apts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Springline",
+ 
+    "address": "3220 California Ave SW Seattle WA",
+ 
+    "phone": "206-347-3641",
+ 
+    "residentialTargetedArea": "Admiral",
+ 
+    "totalRestrictedUnits": 30,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 13,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.equityapartments.com/seattle/admiral-district/springline-apartments"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Bode Greenview",
+ 
+    "address": "8558 Nesbit Ave N Seattle WA",
+ 
+    "phone": "206-202-8601",
+ 
+    "residentialTargetedArea": "Aurora Licton Springs",
+ 
+    "totalRestrictedUnits": 17,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 10,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.common.com/bode-greenview/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cubix ",
+ 
+    "address": "918 N 103rd St Seattle WA",
+ 
+    "phone": "206-259-5909",
+ 
+    "residentialTargetedArea": "Aurora Licton Springs",
+ 
+    "totalRestrictedUnits": 6,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://cubixapartments.com/contact/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cubix 95th St.",
+ 
+    "address": "714 N 95th St Seattle WA",
+ 
+    "phone": "206-259-5909",
+ 
+    "residentialTargetedArea": "Aurora Licton Springs",
+ 
+    "totalRestrictedUnits": 9,
+ 
+    "studioUnits": 9,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://cubixapartments.com/contact/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cubix Park North",
+ 
+    "address": "1008 N 109th St Seattle WA",
+ 
+    "phone": "206-259-5909",
+ 
+    "residentialTargetedArea": "Aurora Licton Springs",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://cubixapartments.com/contact/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Galloway",
+ 
+    "address": "1126 N 90th St. Seattle WA",
+ 
+    "phone": "206-408-2508",
+ 
+    "residentialTargetedArea": "Aurora Licton Springs",
+ 
+    "totalRestrictedUnits": 2,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 2,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://verraterrapm.appfolio.com/listings/listings"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Midvale 4",
+ 
+    "address": "8555 Midvale Ave N Seattle WA",
+ 
+    "phone": "206-268-0599",
+ 
+    "residentialTargetedArea": "Aurora Licton Springs",
+ 
+    "totalRestrictedUnits": 1,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 1,
+ 
+    "urlforBuilding": "http://www.marathonpropmgmt.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Midtown Apartments",
+ 
+    "address": "8820 Aurora Ave N Seattle WA",
+ 
+    "phone": "206-659-6030",
+ 
+    "residentialTargetedArea": "Aurora Licton Springs",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.cornellandassociates.com/north-seattle/midtown-flats"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "1715 Apartments",
+ 
+    "address": "1715 NW 58th St Seattle WA",
+ 
+    "phone": "206-403-1467",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 9,
+ 
+    "studioUnits": 9,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://keystonepropertiesnw.com/1715-apartments/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Avalon Ballard",
+ 
+    "address": "1400 NW Market St. Seattle WA",
+ 
+    "phone": "360-295-9401",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 53,
+ 
+    "studioUnits": 13,
+ 
+    "oneBedroomUnits": 28,
+ 
+    "twoBedroomUnits": 12,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.avaloncommunities.com/washington/seattle-apartments/ava-ballard"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Ballard on the Park",
+ 
+    "address": "2233 NW 58th St. Seattle WA",
+ 
+    "phone": "206-899-0105",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 54,
+ 
+    "studioUnits": 14,
+ 
+    "oneBedroomUnits": 28,
+ 
+    "twoBedroomUnits": 12,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.ballardonthepark.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Ballard Public Lofts",
+ 
+    "address": "6450 24th Ave. NW Seattle WA",
+ 
+    "phone": "844-379-8406",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 20,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.ballardpublic.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Bespoke Ballard",
+ 
+    "address": "1506 NW 61st St Seattle WA",
+ 
+    "phone": "206-403-1467",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.keystonepropertiesnw.com/bespoke"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Commons at Ballard",
+ 
+    "address": "5621 22nd Ave. NW Seattle WA",
+ 
+    "phone": "206-963-5499",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 17,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://commonsatballard.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Grove Ballard",
+ 
+    "address": "6301 15th Ave NW Seattle WA",
+ 
+    "phone": "206.279-6480",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.thegroveballard.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Keelson",
+ 
+    "address": "1537 NW 56th St. Seattle WA",
+ 
+    "phone": "206-207-0180",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 21,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.keelsonballard.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Koi",
+ 
+    "address": "1139 NW Market Street Seattle WA",
+ 
+    "phone": "833-361-1497",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 31,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 12,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.greystar.com/properties/broadstone-koi-apartments/12277"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Lillehammer Ballard",
+ 
+    "address": "7016 15th Ave NW Seattle WA",
+ 
+    "phone": "206-483-2684",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://lillehammerballard.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Solo Lofts ",
+ 
+    "address": "2018 NW 57 St Seattle WA",
+ 
+    "phone": "206-972-7107",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 1,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 1,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.sololofts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Valdok",
+ 
+    "address": "1701 NW 56th St Seattle WA",
+ 
+    "phone": "833-334-0909",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 34,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 26,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://valdokapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Valdok II",
+ 
+    "address": "1706 NW 56th St Seattle WA",
+ 
+    "phone": "833-334-0909",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 30,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 26,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://valdokapartments.com/?utm_source=GMB&utm_medium=organic"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Wilcox",
+ 
+    "address": "2003 NW 57th St Seattle WA",
+ 
+    "phone": "206-701-5999",
+ 
+    "residentialTargetedArea": "Ballard",
+ 
+    "totalRestrictedUnits": 24,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.thewilcoxballard.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Reverie",
+ 
+    "address": "3309 Beacon Ave S Seattle WA",
+ 
+    "phone": "206-237-5299",
+ 
+    "residentialTargetedArea": "Beacon Hill",
+ 
+    "totalRestrictedUnits": 6,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 3,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://reveriebeaconhill.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Elara",
+ 
+    "address": "2134 Western Ave Seattle WA",
+ 
+    "phone": "833-359-8504",
+ 
+    "residentialTargetedArea": "Belltown",
+ 
+    "totalRestrictedUnits": 29,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 24,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.elaraseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Joseph Arnold Lofts",
+ 
+    "address": "2708 Elliot Ave Seattle WA",
+ 
+    "phone": "206-859-4500",
+ 
+    "residentialTargetedArea": "Belltown",
+ 
+    "totalRestrictedUnits": 27,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 20,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.thejoeseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Minnie Flats",
+ 
+    "address": "101 Denny Way Seattle WA",
+ 
+    "phone": "425-519-9749",
+ 
+    "residentialTargetedArea": "Belltown",
+ 
+    "totalRestrictedUnits": 17,
+ 
+    "studioUnits": 17,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.minnieflats.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Walton Lofts",
+ 
+    "address": "2521 Western Ave Seattle WA",
+ 
+    "phone": "206-792-1203",
+ 
+    "residentialTargetedArea": "Belltown",
+ 
+    "totalRestrictedUnits": 28,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 21,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://lifeatwalton.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "101 Broadway",
+ 
+    "address": "101 Broadway Seattle WA",
+ 
+    "phone": "206-325-1010",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 9,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://101broadwayseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "741 Harvard",
+ 
+    "address": "741 Harvard Avenue E Seattle WA",
+ 
+    "phone": "206-992-3403",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 9,
+ 
+    "studioUnits": 9,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.741harvard.com/741-harvard-seattle-wa/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Alturra aPodments",
+ 
+    "address": "306 Summit Ave E Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/alturra"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "BASE Capitol Hill",
+ 
+    "address": "1728 12th Ave Seattle WA",
+ 
+    "phone": "833-200-9169",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://revelrealtymgmt.com/revel-communities/1728-base/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Broadway Building",
+ 
+    "address": "1620 Broadway Ave E Seattle WA",
+ 
+    "phone": "206-323-1500",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.broadwaybuilding.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Capitol Core",
+ 
+    "address": "215 Boylston Seattle WA",
+ 
+    "phone": "206-577-0589",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 2,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.cascadebuilt.com/project/capitol-core/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Capitol Hill Station - Site B South",
+ 
+    "address": "123 10th Ave E Seattle WA",
+ 
+    "phone": "206-707-9717",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 15,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 2,
+ 
+    "urlforBuilding": "https://livecapitolhillstation.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Capitol Hill Station - Site C",
+ 
+    "address": "1830 Broadway Seattle WA",
+ 
+    "phone": "206-707-9717",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 21,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 7,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 1,
+ 
+    "urlforBuilding": "http://www.livecapitolhillstation.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Centro aPodments",
+ 
+    "address": "1304 E John St Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/centro"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Citizen",
+ 
+    "address": "1220 E Madison Seattle WA",
+ 
+    "phone": "206-326-1922",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 22,
+ 
+    "studioUnits": 20,
+ 
+    "oneBedroomUnits": 2,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.citizenapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Common Anderson",
+ 
+    "address": "1812 12th Avenue Seattle WA",
+ 
+    "phone": "206-323-1771",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 11,
+ 
+    "studioUnits": 11,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.common.com/anderson/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Common Anderson",
+ 
+    "address": "1806 12th Avenue Seattle WA",
+ 
+    "phone": "206-323-1771",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.common.com/anderson/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Common Capitol",
+ 
+    "address": "422 11th Ave E Seattle WA",
+ 
+    "phone": "206-323-1771",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 11,
+ 
+    "studioUnits": 11,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.common.com/seattle/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cortena aPodments",
+ 
+    "address": "227 Boyston Ave E Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/cortena"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Craft Apartments ",
+ 
+    "address": "1315 E Jefferson Seattle WA",
+ 
+    "phone": "206-348-6259",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 4,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://craftseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Ilaria aPodments",
+ 
+    "address": "1305 E Mercer Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/ilaria"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Jack Apartments",
+ 
+    "address": "1427 1th Ave. Seattle WA",
+ 
+    "phone": "206-531-2028",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 27,
+ 
+    "studioUnits": 11,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.jackapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Jet on Boylston",
+ 
+    "address": "1820 Boylston Ave Seattle WA",
+ 
+    "phone": "206-466-2375",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 11,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://jetonboylston.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Kulle Urban Living",
+ 
+    "address": "1815 Bellevue Ave. Seattle WA",
+ 
+    "phone": "206-403-1467",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 3,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://keystonepropertiesnw.com/kulle-urban-studios/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Lexicon",
+ 
+    "address": "120 Harvard Ave E Seattle WA",
+ 
+    "phone": "206-325-7000",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 1,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://lexiconseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "LIV at East John",
+ 
+    "address": "1113 E John St Seattle WA",
+ 
+    "phone": "513-443-4716",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.cornellandassociates.com/east-john"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Local 418 Apartments",
+ 
+    "address": "418 Bellevue Ave E Seattle WA",
+ 
+    "phone": "206-334-6763",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://thelocal418.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Local 422 Apartments",
+ 
+    "address": "422 Summit Ave E Seattle WA",
+ 
+    "phone": "206-334-6763",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 7,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.thelocal422.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Lyric",
+ 
+    "address": "230 Broadway Ave E Seattle WA",
+ 
+    "phone": "206-209-0510",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 47,
+ 
+    "studioUnits": 14,
+ 
+    "oneBedroomUnits": 21,
+ 
+    "twoBedroomUnits": 12,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.thelyriccapitolhill.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Mad Flats ",
+ 
+    "address": "1523 East Madison Street Seattle WA",
+ 
+    "phone": "425-519-9732",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 11,
+ 
+    "studioUnits": 11,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://themadflats.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Modera Broadway - South Building",
+ 
+    "address": "1732 Broadway Seattle WA",
+ 
+    "phone": "206-580-0580",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 17,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.moderabroadway.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "OneOne6",
+ 
+    "address": "116 13th Ave E Seattle WA",
+ 
+    "phone": "833-200-9169",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://revelrealtymgmt.com/revel-communities/oneone6/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Patent 523",
+ 
+    "address": "523 Broadway Ave E Seattle WA",
+ 
+    "phone": "206-483-2165",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 59,
+ 
+    "studioUnits": 25,
+ 
+    "oneBedroomUnits": 27,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.essexapartmenthomes.com/washington/seattle-area/seattle/joule"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Ramiro's Place",
+ 
+    "address": "200 10th Ave E Seattle WA",
+ 
+    "phone": "833-200-9169",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 5,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://revelrealtymgmt.com/revel-communities/ramiros-place/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Rubix",
+ 
+    "address": "515 Harvard Ave E Seattle WA",
+ 
+    "phone": "206-467-4846",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 15,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.rubixapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Ruth Court",
+ 
+    "address": "123 18th Ave E. Seattle WA",
+ 
+    "phone": "844-494-2482",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 14,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.ruthcourtapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Session Apartments ",
+ 
+    "address": "1717 22nd Ave. Seattle WA",
+ 
+    "phone": "206-538-2921",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.sessionapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Seventeen Fifteen",
+ 
+    "address": "1715 12th Ave. Seattle WA",
+ 
+    "phone": "406-219-7397",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.redsidepartners.com/property/seventeen-fifteen/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Solis",
+ 
+    "address": "1300 E. Pike St. Seattle WA",
+ 
+    "phone": "503-816-0211",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.livesolis.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Stream 403",
+ 
+    "address": "403 Belmont Ave E. Seattle WA",
+ 
+    "phone": "206-325-5899",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://stream403.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Stream Belmont",
+ 
+    "address": "500 Belmont Ave E Seattle WA",
+ 
+    "phone": "206-325-3663",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 14,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 4,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.streambelmont.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Stream Fifteen",
+ 
+    "address": "605 15th Ave E Seattle WA",
+ 
+    "phone": "206-999-2853",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.streamfifteen.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "TOD Apartments",
+ 
+    "address": "120 10th Ave E  Seattle WA",
+ 
+    "phone": "833-200-9169",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://revelrealtymgmt.com/revel-communities/tod-apartments/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Yardhouse",
+ 
+    "address": "1406 E Republican St Seattle WA",
+ 
+    "phone": "206-623-5504",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.yardhouseapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Zephyr",
+ 
+    "address": "1650 E. Olive Way Seattle WA",
+ 
+    "phone": "206-322-9010",
+ 
+    "residentialTargetedArea": "Capitol Hill",
+ 
+    "totalRestrictedUnits": 2,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 1,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.zephyrseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Avant Apartments",
+ 
+    "address": "2112 East Denny Way Seattle WA",
+ 
+    "phone": "206-388-3946",
+ 
+    "residentialTargetedArea": "Capitol Hill/ Eastlake",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.theavantapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Chloe on Madison",
+ 
+    "address": "1401 East Madison St Seattle WA",
+ 
+    "phone": "206-347-3495",
+ 
+    "residentialTargetedArea": "Capitol Hill/ Eastlake",
+ 
+    "totalRestrictedUnits": 28,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 17,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.equityapartments.com/seattle/pike-pine/chloe-on-madison-apartments"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Robin's Nest",
+ 
+    "address": "3272 Fuhrman Ave E Seattle WA",
+ 
+    "phone": "206-237-5658",
+ 
+    "residentialTargetedArea": "Capitol Hill/ Eastlake",
+ 
+    "totalRestrictedUnits": 13,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.robinsnestseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Larson Building",
+ 
+    "address": "3206 Harvard Ave E. Seattle WA",
+ 
+    "phone": "206-486-5861",
+ 
+    "residentialTargetedArea": "Capitol Hill/Eastlake",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 4,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://larsoneastlake.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Sienna Apartments",
+ 
+    "address": "207 18th Ave Seattle WA",
+ 
+    "phone": "253-334-4080",
+ 
+    "residentialTargetedArea": "Central District",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.thesiennaapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Liberty Bank Building",
+ 
+    "address": "1405 24th Ave Seattle WA",
+ 
+    "phone": "206-204-8753",
+ 
+    "residentialTargetedArea": "Central District",
+ 
+    "totalRestrictedUnits": 23,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 15,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://libertybankbuilding.org/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Valley Apartments",
+ 
+    "address": "1141 MLK Jr. Way Seattle WA",
+ 
+    "phone": "206-325-0422",
+ 
+    "residentialTargetedArea": "Central District",
+ 
+    "totalRestrictedUnits": 9,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 2,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.thevalleybuilding.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "An Lạc",
+ 
+    "address": "1253 S. Jacson Seattle WA",
+ 
+    "phone": "206-443-9935",
+ 
+    "residentialTargetedArea": "Chinatown/ID",
+ 
+    "totalRestrictedUnits": 13,
+ 
+    "studioUnits": 9,
+ 
+    "oneBedroomUnits": 1,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://lihi.org/an-lac/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Ascona Apartments",
+ 
+    "address": "200 Fifth Ave. S. Seattle WA",
+ 
+    "phone": "206-652-0744",
+ 
+    "residentialTargetedArea": "Chinatown/ID",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Hana Apartments",
+ 
+    "address": "101 6th Ave S Seattle WA",
+ 
+    "phone": "206-222-7097",
+ 
+    "residentialTargetedArea": "Chinatown/ID",
+ 
+    "totalRestrictedUnits": 160,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 125,
+ 
+    "twoBedroomUnits": 23,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.hanaapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Icon Apartments",
+ 
+    "address": "400 S Jackson St. Seattle WA",
+ 
+    "phone": "206-453-6254",
+ 
+    "residentialTargetedArea": "Chinatown/ID",
+ 
+    "totalRestrictedUnits": 24,
+ 
+    "studioUnits": 18,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://iconseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Louisa Hotel Apartments",
+ 
+    "address": "669 S King St. Seattle WA",
+ 
+    "phone": "206-809-4407",
+ 
+    "residentialTargetedArea": "Chinatown/ID",
+ 
+    "totalRestrictedUnits": 22,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 4,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://louisahotelapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Thai Binh Apartments",
+ 
+    "address": "913 South Jackson St Seattle WA",
+ 
+    "phone": "206-257-2717",
+ 
+    "residentialTargetedArea": "Chinatown/ID",
+ 
+    "totalRestrictedUnits": 50,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 38,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.thaibinhapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Angeline",
+ 
+    "address": "4801 Rainier Ave S. Seattle WA",
+ 
+    "phone": "206-928-6376",
+ 
+    "residentialTargetedArea": "Columbia City",
+ 
+    "totalRestrictedUnits": 39,
+ 
+    "studioUnits": 16,
+ 
+    "oneBedroomUnits": 16,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.angelineapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "CityLine",
+ 
+    "address": "4740 32nd Ave S Seattle WA",
+ 
+    "phone": "206-207-0452",
+ 
+    "residentialTargetedArea": "Columbia City",
+ 
+    "totalRestrictedUnits": 49,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 28,
+ 
+    "twoBedroomUnits": 21,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.udr.com/seattle-apartments/columbia-city/cityline/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cityline (Phase II)",
+ 
+    "address": "4740 32nd Ave S. Seattle WA",
+ 
+    "phone": "206-207-0452",
+ 
+    "residentialTargetedArea": "Columbia City",
+ 
+    "totalRestrictedUnits": 31,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 12,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.udr.com/seattle-apartments/columbia-city/cityline/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Greenhouse",
+ 
+    "address": "3701 S Hudson St. Seattle WA",
+ 
+    "phone": "844-330-3151",
+ 
+    "residentialTargetedArea": "Columbia City",
+ 
+    "totalRestrictedUnits": 25,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 23,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.greenhouse-apts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Parla",
+ 
+    "address": "9076 Holman Rd NW Seattle WA",
+ 
+    "phone": "206-782-5911",
+ 
+    "residentialTargetedArea": "Crown Hill",
+ 
+    "totalRestrictedUnits": 27,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.parlaapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Livingstone",
+ 
+    "address": "9049 20th Ave SW Seattle WA",
+ 
+    "phone": "206-309-4732",
+ 
+    "residentialTargetedArea": "Delridge/Westwood Highland Pk.",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 2,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://thelivingstoneapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Youngstown Flats",
+ 
+    "address": "4040 26th Ave SW Seattle WA",
+ 
+    "phone": "206-408-2192",
+ 
+    "residentialTargetedArea": "Delridge/Westwood Highland Pk.",
+ 
+    "totalRestrictedUnits": 39,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 29,
+ 
+    "twoBedroomUnits": 10,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.youngstownflats.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Westward ",
+ 
+    "address": "4546 Delridge Way SW Seattle WA",
+ 
+    "phone": "206-437-0828",
+ 
+    "residentialTargetedArea": "Delridge/Westwood Highland Pk.",
+ 
+    "totalRestrictedUnits": 4,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "9th & Pine Apartments",
+ 
+    "address": "1601 9th Ave Seattle WA",
+ 
+    "phone": "206-623-1122",
+ 
+    "residentialTargetedArea": "Denny Triangle",
+ 
+    "totalRestrictedUnits": 15,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.nineandpine.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Borealis",
+ 
+    "address": "109 Dexter Ave. N. Seattle WA",
+ 
+    "phone": "206-202-5060",
+ 
+    "residentialTargetedArea": "Denny Triangle",
+ 
+    "totalRestrictedUnits": 50,
+ 
+    "studioUnits": 23,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 13,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.borealisapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Axle Apartments ",
+ 
+    "address": "3230 16th Ave W Seattle WA",
+ 
+    "phone": "206-203-8090",
+ 
+    "residentialTargetedArea": "Dravus",
+ 
+    "totalRestrictedUnits": 46,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 40,
+ 
+    "twoBedroomUnits": 6,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://axleapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Slate Apartments",
+ 
+    "address": "3040 17th Ave W Seattle WA",
+ 
+    "phone": "206-397-3341",
+ 
+    "residentialTargetedArea": "Dravus",
+ 
+    "totalRestrictedUnits": 48,
+ 
+    "studioUnits": 16,
+ 
+    "oneBedroomUnits": 24,
+ 
+    "twoBedroomUnits": 8,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.slateliving.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Common Rogers",
+ 
+    "address": "2371 Franklin Ave E Seattle WA",
+ 
+    "phone": "844-612-6997",
+ 
+    "residentialTargetedArea": "Eastlake",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.common.com/seattle/eastlake/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "East Howe Steps",
+ 
+    "address": "1823 Eastlake Ave E. Seattle WA",
+ 
+    "phone": "206-279-6632",
+ 
+    "residentialTargetedArea": "Eastlake",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 10,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.easthowesteps.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Eastlake Flats",
+ 
+    "address": "2820 Eastlake Ave E Seattle WA",
+ 
+    "phone": "206-408-2172",
+ 
+    "residentialTargetedArea": "Eastlake",
+ 
+    "totalRestrictedUnits": 24,
+ 
+    "studioUnits": 24,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.eastlake-flats.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Equinox Apts",
+ 
+    "address": "1520 Eastlake Seattle WA",
+ 
+    "phone": "206-309-5146",
+ 
+    "residentialTargetedArea": "Eastlake",
+ 
+    "totalRestrictedUnits": 41,
+ 
+    "studioUnits": 16,
+ 
+    "oneBedroomUnits": 18,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.equinoxseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Waterton Apartments",
+ 
+    "address": "2201 Eastlake Ave E Seattle WA",
+ 
+    "phone": "206-673-7170",
+ 
+    "residentialTargetedArea": "Eastlake",
+ 
+    "totalRestrictedUnits": 9,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://watertonseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Barclay Broadway",
+ 
+    "address": "412 Broadway  Seattle WA",
+ 
+    "phone": "206-588-8600",
+ 
+    "residentialTargetedArea": "First Hill",
+ 
+    "totalRestrictedUnits": 24,
+ 
+    "studioUnits": 9,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.barclaybroadway.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Batik Apartments ",
+ 
+    "address": "123 Broadway Seattle WA",
+ 
+    "phone": "(206) 460-1401",
+ 
+    "residentialTargetedArea": "First Hill",
+ 
+    "totalRestrictedUnits": 39,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 31,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.batikseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Broadstone Lexington",
+ 
+    "address": "1050 James St Seattle WA",
+ 
+    "phone": "866-646-6550",
+ 
+    "residentialTargetedArea": "First Hill",
+ 
+    "totalRestrictedUnits": 15,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cypress Apartments",
+ 
+    "address": "120 Broadway  Seattle WA",
+ 
+    "phone": "833-333-5706",
+ 
+    "residentialTargetedArea": "First Hill",
+ 
+    "totalRestrictedUnits": 48,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 40,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://seattlecypress.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Danforth",
+ 
+    "address": "1425 Spring St Seattle WA",
+ 
+    "phone": "206-324-1000",
+ 
+    "residentialTargetedArea": "First Hill",
+ 
+    "totalRestrictedUnits": 53,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 42,
+ 
+    "twoBedroomUnits": 10,
+ 
+    "threePlusBedroomUnits": 1,
+ 
+    "urlforBuilding": "http://www.thedanforthseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Emerson Seattle",
+ 
+    "address": "125 Boren Avenue S Seattle WA",
+ 
+    "phone": "206-385-4755",
+ 
+    "residentialTargetedArea": "First Hill",
+ 
+    "totalRestrictedUnits": 58,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 37,
+ 
+    "twoBedroomUnits": 11,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.emersonseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Perry",
+ 
+    "address": "1001 Minor Ave  Seattle WA",
+ 
+    "phone": "206-971-2053",
+ 
+    "residentialTargetedArea": "First Hill",
+ 
+    "totalRestrictedUnits": 42,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 30,
+ 
+    "twoBedroomUnits": 10,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.theperryseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Pine + Minor",
+ 
+    "address": "1519 Minor Ave Seattle WA",
+ 
+    "phone": "206-899-0373",
+ 
+    "residentialTargetedArea": "First Hill",
+ 
+    "totalRestrictedUnits": 23,
+ 
+    "studioUnits": 16,
+ 
+    "oneBedroomUnits": 7,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.pineminor.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Lime Studios",
+ 
+    "address": "3639 Linden Ave N. Seattle WA",
+ 
+    "phone": "206-420-1907",
+ 
+    "residentialTargetedArea": "Fremont",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.limefremont.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Positano",
+ 
+    "address": "3640 Woodland Park Ave N Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "Fremont",
+ 
+    "totalRestrictedUnits": 14,
+ 
+    "studioUnits": 14,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/positano"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Ray Apartments",
+ 
+    "address": "3636 Stone Way N Seattle WA",
+ 
+    "phone": "509-215-1779",
+ 
+    "residentialTargetedArea": "Fremont",
+ 
+    "totalRestrictedUnits": 24,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 18,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.essexapartmenthomes.com/apartments/velo-and-ray"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Ray East",
+ 
+    "address": "3651 Interlake Ave N Seattle WA",
+ 
+    "phone": "509-215-1779",
+ 
+    "residentialTargetedArea": "Fremont",
+ 
+    "totalRestrictedUnits": 4,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 1,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.essexapartmenthomes.com/apartments/velo-and-ray"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Velo Apts",
+ 
+    "address": "3653 Woodland Park Ave N Seattle WA",
+ 
+    "phone": "509-215-1779",
+ 
+    "residentialTargetedArea": "Fremont",
+ 
+    "totalRestrictedUnits": 36,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 32,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.essexapartmenthomes.com/apartments/velo-and-ray"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Vibe Fremont",
+ 
+    "address": "3601 Greenwood Ave N Seattle WA",
+ 
+    "phone": "206-812-2209",
+ 
+    "residentialTargetedArea": "Fremont",
+ 
+    "totalRestrictedUnits": 13,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://vibefremont.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Crew Apartments ",
+ 
+    "address": "8228 Green Lake Dr N  Seattle WA",
+ 
+    "phone": "833-857-4949",
+ 
+    "residentialTargetedArea": "Greenlake/ Wallingford",
+ 
+    "totalRestrictedUnits": 17,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 10,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.liveatcrew.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Eddy at Greenlake Village",
+ 
+    "address": "419 NE 71st St Seattle WA",
+ 
+    "phone": "206-686-6663",
+ 
+    "residentialTargetedArea": "Greenlake/ Wallingford",
+ 
+    "totalRestrictedUnits": 26,
+ 
+    "studioUnits": 18,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://greenlakevillage.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Helene Apartments",
+ 
+    "address": "414 NE Ravenna Blvd. Seattle WA",
+ 
+    "phone": "206-356-0235",
+ 
+    "residentialTargetedArea": "Greenlake/ Wallingford",
+ 
+    "totalRestrictedUnits": 13,
+ 
+    "studioUnits": 11,
+ 
+    "oneBedroomUnits": 2,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.helenegreenlake.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "The Loop",
+ 
+    "address": "407 NE 73rd St Seattle WA",
+ 
+    "phone": "206-472-3920",
+ 
+    "residentialTargetedArea": "Greenlake/ Wallingford",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 3,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.theloopgreenlake.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Smith and Burns",
+ 
+    "address": "1321 N 45th St. Seattle WA",
+ 
+    "phone": "206-889-6488",
+ 
+    "residentialTargetedArea": "Greenlake/ Wallingford",
+ 
+    "totalRestrictedUnits": 30,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 21,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://smithandburnsseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Bogtown Flats",
+ 
+    "address": "9039 Greenwood Ave N Seattle WA",
+ 
+    "phone": "(206) 595-0592",
+ 
+    "residentialTargetedArea": "Greenwood-Phinney Ridge",
+ 
+    "totalRestrictedUnits": 18,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 17,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://bogtownflats.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cubix Crown Hill",
+ 
+    "address": "8541 15th Avenue NW Seattle WA",
+ 
+    "phone": "206-401-5030",
+ 
+    "residentialTargetedArea": "Greenwood-Phinney Ridge",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.cubixcrownhill.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Horizon Greenwood",
+ 
+    "address": "143 NW 85th Street Seattle WA",
+ 
+    "phone": "833-200-9169",
+ 
+    "residentialTargetedArea": "Greenwood-Phinney Ridge",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://revelrealtymgmt.com/revel-communities/horizongreenwood/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Horizon Phinney",
+ 
+    "address": "8727 Phinney Ave N Seattle WA",
+ 
+    "phone": "833-200-9169",
+ 
+    "residentialTargetedArea": "Greenwood-Phinney Ridge",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://revelrealtymgmt.com/revel-communities/horizonphinney/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Horizon Phinney(2)",
+ 
+    "address": "8731 Phinney Ave N Seattle WA",
+ 
+    "phone": "833-200-9169",
+ 
+    "residentialTargetedArea": "Greenwood-Phinney Ridge",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://revelrealtymgmt.com/revel-communities/horizonphinney/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Janus",
+ 
+    "address": "101 NW 85th St. Seattle WA",
+ 
+    "phone": "206-928-6375",
+ 
+    "residentialTargetedArea": "Greenwood-Phinney Ridge",
+ 
+    "totalRestrictedUnits": 21,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 15,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.janusapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Ivy Apartments",
+ 
+    "address": "3008 16th Ave W Seattle WA",
+ 
+    "phone": "206-557-8396",
+ 
+    "residentialTargetedArea": "Interbay",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://ivyinterbay.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Crane at Interbay",
+ 
+    "address": "3200 16th Ave.  Seattle WA",
+ 
+    "phone": "206-282-4776",
+ 
+    "residentialTargetedArea": "Interbay",
+ 
+    "totalRestrictedUnits": 3,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 2,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.craneinterbay.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Publix",
+ 
+    "address": "504 Fifth Ave S.  Seattle WA",
+ 
+    "phone": "206-467-1581",
+ 
+    "residentialTargetedArea": "International District",
+ 
+    "totalRestrictedUnits": 25,
+ 
+    "studioUnits": 11,
+ 
+    "oneBedroomUnits": 10,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://publixseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Array",
+ 
+    "address": "14027 Lake City Way NE Seattle WA",
+ 
+    "phone": "206-362-7729",
+ 
+    "residentialTargetedArea": "Lake City",
+ 
+    "totalRestrictedUnits": 64,
+ 
+    "studioUnits": 13,
+ 
+    "oneBedroomUnits": 38,
+ 
+    "twoBedroomUnits": 13,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.arrayapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Mysa",
+ 
+    "address": "3025 NE 130th St Seattle WA",
+ 
+    "phone": "844-779-7848",
+ 
+    "residentialTargetedArea": "Lake City",
+ 
+    "totalRestrictedUnits": 24,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 7,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 2,
+ 
+    "urlforBuilding": "https://www.mysa-apartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Origin",
+ 
+    "address": "12311 32nd Ave NE Seattle WA",
+ 
+    "phone": "206-402-4420",
+ 
+    "residentialTargetedArea": "Lake City",
+ 
+    "totalRestrictedUnits": 29,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 8,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.originapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Savoy at Lake City",
+ 
+    "address": "13730 Lake City Way NE Seattle WA",
+ 
+    "phone": "206-482-8808",
+ 
+    "residentialTargetedArea": "Lake City",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 10,
+ 
+    "twoBedroomUnits": 6,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://thesavoylakecity.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "1806 23rd Ave",
+ 
+    "address": "1806 23rd Ave Seattle WA",
+ 
+    "phone": "206-966-4376",
+ 
+    "residentialTargetedArea": "Madison-Miller",
+ 
+    "totalRestrictedUnits": 13,
+ 
+    "studioUnits": 13,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Hamilton Apartments",
+ 
+    "address": "2302 E Denny Way Seattle WA",
+ 
+    "phone": "206-992-3403",
+ 
+    "residentialTargetedArea": "Madison-Miller",
+ 
+    "totalRestrictedUnits": 11,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.redsidepartners.com/property/hamilton/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Othello Station South",
+ 
+    "address": "4219 S Othello St Seattle WA",
+ 
+    "phone": "833-332-2569",
+ 
+    "residentialTargetedArea": "MLK @ Holly",
+ 
+    "totalRestrictedUnits": 71,
+ 
+    "studioUnits": 33,
+ 
+    "oneBedroomUnits": 30,
+ 
+    "twoBedroomUnits": 8,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.thestationatothellopark.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Fauntleroy Lofts",
+ 
+    "address": "5949 California Ave SW Seattle WA",
+ 
+    "phone": "253-569-6912",
+ 
+    "residentialTargetedArea": "Morgan Junction",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.cornellandassociates.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Viridian Apartments",
+ 
+    "address": "6917 California Ave SW Seattle WA",
+ 
+    "phone": "206-898-0078",
+ 
+    "residentialTargetedArea": "Morgan Junction",
+ 
+    "totalRestrictedUnits": 6,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Denning",
+ 
+    "address": "2721 17th Ave S Seattle WA",
+ 
+    "phone": "206-653-4088",
+ 
+    "residentialTargetedArea": "North Beacon Hill",
+ 
+    "totalRestrictedUnits": 9,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://thedenning.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Holgate 12 (Phase II)",
+ 
+    "address": "1814 12th Avenue S Seattle WA",
+ 
+    "phone": "425-780-0648",
+ 
+    "residentialTargetedArea": "North Beacon Hill",
+ 
+    "totalRestrictedUnits": 6,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 3,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://holgate12.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Holgate 12 Apts",
+ 
+    "address": "1814 12th Avenue S Seattle WA",
+ 
+    "phone": "425-780-0648",
+ 
+    "residentialTargetedArea": "North Beacon Hill",
+ 
+    "totalRestrictedUnits": 5,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 2,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://holgate12.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Jefferson Station Apartments",
+ 
+    "address": "2902 Beacon Ave S Seattle WA",
+ 
+    "phone": "206-886-3969",
+ 
+    "residentialTargetedArea": "North Beacon Hill",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.stationseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "525 at the Enclave",
+ 
+    "address": "525 NE Northgate Way Seattle WA",
+ 
+    "phone": "206-326-1018",
+ 
+    "residentialTargetedArea": "Northgate",
+ 
+    "totalRestrictedUnits": 54,
+ 
+    "studioUnits": 36,
+ 
+    "oneBedroomUnits": 15,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://525attheenclave.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Lane Apartments",
+ 
+    "address": "10702 5th Ave NE  Seattle WA",
+ 
+    "phone": "206-492-7001",
+ 
+    "residentialTargetedArea": "Northgate",
+ 
+    "totalRestrictedUnits": 44,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 30,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.avenue5.com/community-search-map-view.aspx"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Prism",
+ 
+    "address": "10711 NE 8th Ave Seattle WA",
+ 
+    "phone": "206-326-1911",
+ 
+    "residentialTargetedArea": "Northgate",
+ 
+    "totalRestrictedUnits": 27,
+ 
+    "studioUnits": 17,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.liveatprism.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Thornton Place",
+ 
+    "address": "308 NE Thornton Place Seattle WA",
+ 
+    "phone": "206-523-1111",
+ 
+    "residentialTargetedArea": "Northgate",
+ 
+    "totalRestrictedUnits": 56,
+ 
+    "studioUnits": 13,
+ 
+    "oneBedroomUnits": 36,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://thorntonplaceliving.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Beryl",
+ 
+    "address": "1200 E Pike St Seattle WA",
+ 
+    "phone": "206-320-1200",
+ 
+    "residentialTargetedArea": "Pike/Pine",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 7,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://beryl.tarragon.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Boylston Flats",
+ 
+    "address": "1404 Boylston Ave Seattle WA",
+ 
+    "phone": "206-538-2340",
+ 
+    "residentialTargetedArea": "Pike/Pine",
+ 
+    "totalRestrictedUnits": 23,
+ 
+    "studioUnits": 23,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://1404boylston.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Broadcast Apartments",
+ 
+    "address": "1420 E Madison St Seattle WA",
+ 
+    "phone": "206-322-1326",
+ 
+    "residentialTargetedArea": "Pike/Pine",
+ 
+    "totalRestrictedUnits": 14,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 12,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.broadcastapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cove",
+ 
+    "address": "601 East Pike St. Seattle WA",
+ 
+    "phone": "206-566-6603",
+ 
+    "residentialTargetedArea": "Pike/Pine",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.westfreemanproperties.com/the-cove"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cue Apartments",
+ 
+    "address": "721 E Pine St Seattle WA",
+ 
+    "phone": "855-724-8638",
+ 
+    "residentialTargetedArea": "Pike/Pine",
+ 
+    "totalRestrictedUnits": 18,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 17,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.greystar.com/properties/cue-apartment-homes/13099"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Evolve",
+ 
+    "address": "954 E Union St Seattle WA",
+ 
+    "phone": "206-328-4006",
+ 
+    "residentialTargetedArea": "Pike/Pine",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 11,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://liveatevolve.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "REO Flats",
+ 
+    "address": "1515 14th Ave Seattle WA",
+ 
+    "phone": "206-860-3000",
+ 
+    "residentialTargetedArea": "Pike/Pine",
+ 
+    "totalRestrictedUnits": 22,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.reoflats.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Three20",
+ 
+    "address": "320 East Pine St Seattle WA",
+ 
+    "phone": "206-347-3513",
+ 
+    "residentialTargetedArea": "Pike/Pine",
+ 
+    "totalRestrictedUnits": 27,
+ 
+    "studioUnits": 14,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.equityapartments.com/washington/seattle-apartments/capitol-hill/three20-apartments.aspx"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Assembly 118",
+ 
+    "address": "4200 S. Othello St. Seattle WA",
+ 
+    "phone": "206-981-5707",
+ 
+    "residentialTargetedArea": "Rainier Valley",
+ 
+    "totalRestrictedUnits": 72,
+ 
+    "studioUnits": 18,
+ 
+    "oneBedroomUnits": 47,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.assembly118.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Spokane",
+ 
+    "address": "3616 34th Ave S Seattle WA",
+ 
+    "phone": "206-227-9923",
+ 
+    "residentialTargetedArea": "Rainier Valley",
+ 
+    "totalRestrictedUnits": 17,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.seedseattle.org/bgmp-category/apartment-rentals/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Stazione 25-North",
+ 
+    "address": "2615 25th Ave S Seattle WA",
+ 
+    "phone": "206-806-7992",
+ 
+    "residentialTargetedArea": "Rainier Valley",
+ 
+    "totalRestrictedUnits": 22,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.stazione25.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Stazione 25-South",
+ 
+    "address": "2715 25th Ave S Seattle WA",
+ 
+    "phone": "206-725-2615",
+ 
+    "residentialTargetedArea": "Rainier Valley",
+ 
+    "totalRestrictedUnits": 39,
+ 
+    "studioUnits": 19,
+ 
+    "oneBedroomUnits": 15,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.stazione25.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Eleanor",
+ 
+    "address": "800 NE 67th St. Seattle WA",
+ 
+    "phone": "206-201-1948",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 52,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 36,
+ 
+    "twoBedroomUnits": 13,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://eleanorapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Innovative Living @ Roosevelt",
+ 
+    "address": "817 NE 64th St Seattle WA",
+ 
+    "phone": "206-523-0300",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 4,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.rentseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Iron Flats - East",
+ 
+    "address": "814 NE 66th St Seattle WA",
+ 
+    "phone": "206-403-1467",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 13,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://keystonepropertiesnw.com/iron-flats-apartments/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Kavela",
+ 
+    "address": "6521 Roosevelt Way NE Seattle WA",
+ 
+    "phone": "206-889-6542",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 13,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 10,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.kavelaapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "LIV Roosevelt",
+ 
+    "address": "6404 9th Ave NE  Seattle WA",
+ 
+    "phone": "206-719-1900",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 17,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.cornellandassociates.com/liv-roosevelt/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Lucille on Roosevelt",
+ 
+    "address": "6717 Roosevelt Way NE Seattle WA",
+ 
+    "phone": "206-388-2233",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 22,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 15,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.lucilleonroosevelt.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Maude Apartments",
+ 
+    "address": "836 NE 67th St Seattle WA",
+ 
+    "phone": "206-403-1467",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 16,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://maudeseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Mio Apartments",
+ 
+    "address": "1319 NE 65th St. Seattle WA",
+ 
+    "phone": "206-734-3359",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 2,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://mioseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Roosevelt Townhomes",
+ 
+    "address": "6313 15th Ave NE Seattle WA",
+ 
+    "phone": "206-230-9874",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 3,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 1,
+ 
+    "urlforBuilding": "http://indigorealestate.com/project/roosevelt-on-sixty-fifth-ave/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Rooster",
+ 
+    "address": "910 NE 65th St Seattle WA",
+ 
+    "phone": "206-445-6785",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 40,
+ 
+    "studioUnits": 20,
+ 
+    "oneBedroomUnits": 15,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://roosterapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Square One",
+ 
+    "address": "1012 NE 63rd St  Seattle WA",
+ 
+    "phone": "206-347-3722",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 22,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 12,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.equityapartments.com/washington/seattle-apartments/roosevelt/square-one-apartments.aspx"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Vista Apartments",
+ 
+    "address": "7011 Roosevelt Way NE Seattle WA",
+ 
+    "phone": "206-237-5307",
+ 
+    "residentialTargetedArea": "Roosevelt",
+ 
+    "totalRestrictedUnits": 14,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 4,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://vista7011apartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Boxcar",
+ 
+    "address": "975 John St Seattle WA",
+ 
+    "phone": "206-467-1111",
+ 
+    "residentialTargetedArea": "South Lake Union",
+ 
+    "totalRestrictedUnits": 29,
+ 
+    "studioUnits": 24,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://boxcar.tarragon.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Chroma",
+ 
+    "address": "1232 Harrison St.  Seattle WA",
+ 
+    "phone": "206-971-2111",
+ 
+    "residentialTargetedArea": "South Lake Union",
+ 
+    "totalRestrictedUnits": 56,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 53,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.chromaslu.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Modera South Lake Union",
+ 
+    "address": "434 Dexter Seattle WA",
+ 
+    "phone": "844-679-7953",
+ 
+    "residentialTargetedArea": "South Lake Union",
+ 
+    "totalRestrictedUnits": 59,
+ 
+    "studioUnits": 16,
+ 
+    "oneBedroomUnits": 36,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.millcreekplaces.com/portfolio/Modera-South-Lake-Union-Seattle-Apartments"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Orion",
+ 
+    "address": "910 John St.  Seattle WA",
+ 
+    "phone": "206-806-6700",
+ 
+    "residentialTargetedArea": "South Lake Union",
+ 
+    "totalRestrictedUnits": 26,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 20,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.orionseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Sitka",
+ 
+    "address": "1255 Harrison Seattle WA",
+ 
+    "phone": "206-887-9523",
+ 
+    "residentialTargetedArea": "South Lake Union",
+ 
+    "totalRestrictedUnits": 77,
+ 
+    "studioUnits": 20,
+ 
+    "oneBedroomUnits": 43,
+ 
+    "twoBedroomUnits": 14,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://sitkaseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Stack House",
+ 
+    "address": "420 Pontius Ave N Seattle WA",
+ 
+    "phone": "206-682-7319",
+ 
+    "residentialTargetedArea": "South Lake Union",
+ 
+    "totalRestrictedUnits": 56,
+ 
+    "studioUnits": 15,
+ 
+    "oneBedroomUnits": 31,
+ 
+    "twoBedroomUnits": 10,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.stackhouseapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Stream Dexios",
+ 
+    "address": "1600 Dexter Ave N Seattle WA",
+ 
+    "phone": "206-285-1240",
+ 
+    "residentialTargetedArea": "South Lake Union",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.streamdexios.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Westlake Steps",
+ 
+    "address": "1209 Westlake Ave N Seattle WA",
+ 
+    "phone": "206-207-3420",
+ 
+    "residentialTargetedArea": "South Lake Union",
+ 
+    "totalRestrictedUnits": 77,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 72,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.hollandresidential.com/westlake-steps"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "50th and Roosevelt",
+ 
+    "address": "4750 Roosevelt Way NE Seattle WA",
+ 
+    "phone": "206-240-0878",
+ 
+    "residentialTargetedArea": "University",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 1,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.50roosevelt.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Augusta",
+ 
+    "address": "4041 Roosevelt Way NE  Seattle WA",
+ 
+    "phone": "206-339-3440",
+ 
+    "residentialTargetedArea": "University",
+ 
+    "totalRestrictedUnits": 42,
+ 
+    "studioUnits": 15,
+ 
+    "oneBedroomUnits": 17,
+ 
+    "twoBedroomUnits": 9,
+ 
+    "threePlusBedroomUnits": 1,
+ 
+    "urlforBuilding": "http://augustaseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Medora",
+ 
+    "address": "6810 Roosevelt Way NE  Seattle WA",
+ 
+    "phone": "206-457-8491",
+ 
+    "residentialTargetedArea": "University",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 6,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.livemedora.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Mercy Magnuson Place",
+ 
+    "address": "7101 62nd Ave NE Seattle WA",
+ 
+    "phone": "206-455-9269",
+ 
+    "residentialTargetedArea": "University District",
+ 
+    "totalRestrictedUnits": 22,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.mercyhousing.org/northwest/mercy-magnuson-place/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Parsonage",
+ 
+    "address": "4138 Brooklyn Ave NE  Seattle WA",
+ 
+    "phone": "206-771-4593",
+ 
+    "residentialTargetedArea": "University District",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 13,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 3,
+ 
+    "urlforBuilding": "http://parsonageuw.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Prexy",
+ 
+    "address": "4737 Roosevelt Way NE Seattle WA",
+ 
+    "phone": "206-641-7732",
+ 
+    "residentialTargetedArea": "University District",
+ 
+    "totalRestrictedUnits": 14,
+ 
+    "studioUnits": 13,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.prexyseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Vida Apartments",
+ 
+    "address": "1205 NE 66th St Seattle WA",
+ 
+    "phone": "206-523-3555",
+ 
+    "residentialTargetedArea": "University District",
+ 
+    "totalRestrictedUnits": 42,
+ 
+    "studioUnits": 13,
+ 
+    "oneBedroomUnits": 22,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://vidaseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Bridges at 11th",
+ 
+    "address": "4529 11th Ave NE Seattle WA",
+ 
+    "phone": "206-569-5416",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 37,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 12,
+ 
+    "twoBedroomUnits": 11,
+ 
+    "threePlusBedroomUnits": 2,
+ 
+    "urlforBuilding": "https://www.americancampus.com/student-apartments/wa/seattle/bridges-at-11th"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Identity (NORA) (Building \"D\")",
+ 
+    "address": "4119 12th Ave NE Seattle WA",
+ 
+    "phone": "206-399-7526",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 21,
+ 
+    "studioUnits": 21,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://liveatnora.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Identity (NORA) (Building \"I\")",
+ 
+    "address": "4106 12th Ave Seattle WA",
+ 
+    "phone": "206-399-7526",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 20,
+ 
+    "studioUnits": 18,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://liveatnora.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Lightbox",
+ 
+    "address": "4545 8th Ave NE Seattle WA",
+ 
+    "phone": "206-207-0084",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 33,
+ 
+    "studioUnits": 15,
+ 
+    "oneBedroomUnits": 11,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.udr.com/seattle-apartments/downtown-seattle/lightbox/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "LOHAS",
+ 
+    "address": "4558 7th Ave NE Seattle WA",
+ 
+    "phone": "206-282-1103",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 5,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.metmgmt.net/properties/details/47-7"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Muriels Landing",
+ 
+    "address": "5240 University Way NE Seattle WA",
+ 
+    "phone": "206-929-4102",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 20,
+ 
+    "studioUnits": 13,
+ 
+    "oneBedroomUnits": 7,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://murielslanding.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Sophie Studios",
+ 
+    "address": "4743 21st Ave NE Seattle WA",
+ 
+    "phone": "206-403-1467",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 9,
+ 
+    "studioUnits": 9,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://keystonepropertiesnw.com/university-district-micro-studios/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Strada aPodments",
+ 
+    "address": "4516 7th Ave NE Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/strada"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Trovere aPodments",
+ 
+    "address": "4309 7th Ave NE Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/trovere"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Venetia aPodments",
+ 
+    "address": "4324 8th Ave NE Seattle WA",
+ 
+    "phone": "206-801-3570",
+ 
+    "residentialTargetedArea": "University District - NW",
+ 
+    "totalRestrictedUnits": 10,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.apodment.com/locations/venetia"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Brooklyn Boutique Apartments",
+ 
+    "address": "5246 Brooklyn Ave NE Seattle WA",
+ 
+    "phone": "206-396-4057",
+ 
+    "residentialTargetedArea": "University District- NW",
+ 
+    "totalRestrictedUnits": 4,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Stax",
+ 
+    "address": "5001 Brooklyn Ave NE Seattle WA",
+ 
+    "phone": "206-403-1467",
+ 
+    "residentialTargetedArea": "University District- NW",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://keystonepropertiesnw.com/the-stax/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Squire Park Plaza",
+ 
+    "address": "1700 S Jackson Street Seattle WA",
+ 
+    "phone": "206-204-8746",
+ 
+    "residentialTargetedArea": "23rd & Union-Jackson",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.squireparkplaza.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Studio 7 Apartments",
+ 
+    "address": "4029 7th Ave SW Seattle WA",
+ 
+    "phone": "206-641-1520",
+ 
+    "residentialTargetedArea": "University District- NW",
+ 
+    "totalRestrictedUnits": 15,
+ 
+    "studioUnits": 15,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.studio7apartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "708 Uptown",
+ 
+    "address": "708 6th Ave N Seattle WA",
+ 
+    "phone": "844-244-2901; 206-453-5585",
+ 
+    "residentialTargetedArea": "Uptown",
+ 
+    "totalRestrictedUnits": 24,
+ 
+    "studioUnits": 16,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.708uptown.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Aperture on Fifth",
+ 
+    "address": "500 John St Seattle WA",
+ 
+    "phone": "206-785-2002",
+ 
+    "residentialTargetedArea": "Uptown",
+ 
+    "totalRestrictedUnits": 21,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.apertureon5th.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Avalon Queen Anne",
+ 
+    "address": "300 3rd Ave. W. Seattle WA",
+ 
+    "phone": "206-237-4849",
+ 
+    "residentialTargetedArea": "Uptown",
+ 
+    "totalRestrictedUnits": 41,
+ 
+    "studioUnits": 11,
+ 
+    "oneBedroomUnits": 22,
+ 
+    "twoBedroomUnits": 8,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.avaloncommunities.com/washington/seattle-apartments/ava-queen-anne"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Broadstone Clarendon",
+ 
+    "address": "105 Warren Ave N  Seattle WA",
+ 
+    "phone": "425-490-4793",
+ 
+    "residentialTargetedArea": "Uptown",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.clarendon-seattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Century",
+ 
+    "address": "101 Taylor Ave N. Seattle WA",
+ 
+    "phone": "(206) 962-5444",
+ 
+    "residentialTargetedArea": "Uptown",
+ 
+    "totalRestrictedUnits": 52,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 32,
+ 
+    "twoBedroomUnits": 8,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.thecenturyseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Cora Apartments",
+ 
+    "address": "350 1st Ave. West Seattle WA",
+ 
+    "phone": "206-281-5278",
+ 
+    "residentialTargetedArea": "Uptown",
+ 
+    "totalRestrictedUnits": 15,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 10,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.coraqueenanne.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Expo",
+ 
+    "address": "100 Republican St. Seattle WA",
+ 
+    "phone": "206-483-0093",
+ 
+    "residentialTargetedArea": "Uptown",
+ 
+    "totalRestrictedUnits": 55,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 42,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.essexapartmenthomes.com/washington/seattle-area-apartments/seattle-apartments/expo"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "H2O Apts",
+ 
+    "address": "201 West Harrison Seattle WA",
+ 
+    "phone": "206-282-0400",
+ 
+    "residentialTargetedArea": "Uptown",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://h2oseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Zella Apartments ",
+ 
+    "address": "429 2nd Ave West Seattle WA",
+ 
+    "phone": "206-312-6409",
+ 
+    "residentialTargetedArea": "Uptown",
+ 
+    "totalRestrictedUnits": 26,
+ 
+    "studioUnits": 19,
+ 
+    "oneBedroomUnits": 6,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.zellaseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "4025 Stone",
+ 
+    "address": "4025 Stone Way N Seattle WA",
+ 
+    "phone": "206-480-7138",
+ 
+    "residentialTargetedArea": "Wallingford",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 2,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.cornellandassociates.com/4025-stone-apartments"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Bowman Stoneway",
+ 
+    "address": "3801 Stone Way N Seattle WA",
+ 
+    "phone": "844-377-9825",
+ 
+    "residentialTargetedArea": "Wallingford",
+ 
+    "totalRestrictedUnits": 55,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 40,
+ 
+    "twoBedroomUnits": 8,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://bowmanstoneway.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "LIV Wallingford",
+ 
+    "address": "1240 N Midvale Pl Seattle WA",
+ 
+    "phone": "978-820-0417",
+ 
+    "residentialTargetedArea": "Wallingford",
+ 
+    "totalRestrictedUnits": 6,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.cornellandassociates.com/liv-wallingford/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Noble",
+ 
+    "address": "4301 Stone Way Seattle WA",
+ 
+    "phone": "206-453-6781",
+ 
+    "residentialTargetedArea": "Wallingford",
+ 
+    "totalRestrictedUnits": 19,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.thenoblewallingford.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Wallingford Studios",
+ 
+    "address": "4516 Meridian Ave N Seattle WA",
+ 
+    "phone": "206-812-1037",
+ 
+    "residentialTargetedArea": "Wallingford",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Wally Apts",
+ 
+    "address": "4111 Stone Way N Seattle WA",
+ 
+    "phone": "206-632-0281",
+ 
+    "residentialTargetedArea": "Wallingford",
+ 
+    "totalRestrictedUnits": 6,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 5,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": ""
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Huxley",
+ 
+    "address": "4754 Fauntleroy Way SW Seattle WA",
+ 
+    "phone": "206-309-7628",
+ 
+    "residentialTargetedArea": "West Seattle",
+ 
+    "totalRestrictedUnits": 22,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 17,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.hollandresidential.com/wa/seattle/the-huxley/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "4730 California",
+ 
+    "address": "4730 California Ave SW Seattle WA",
+ 
+    "phone": "855-761-7237",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 15,
+ 
+    "studioUnits": 1,
+ 
+    "oneBedroomUnits": 11,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://4730ca.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Adell Apartments",
+ 
+    "address": "4542 42nd Ave SW Seattle WA",
+ 
+    "phone": "206-397-3811",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 22,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 10,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://adellapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "AJ Apartments",
+ 
+    "address": "4505 SW 42nd Ave. Seattle WA",
+ 
+    "phone": "206-923-2828",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 11,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.theajapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Altamira Apts",
+ 
+    "address": "4100 SW Alaska St. Seattle WA",
+ 
+    "phone": "206-937-8439",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 32,
+ 
+    "studioUnits": 9,
+ 
+    "oneBedroomUnits": 18,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.altamiraapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Aura West",
+ 
+    "address": "4435 35th Ave SW Seattle WA",
+ 
+    "phone": "206-203-5772",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 31,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 19,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://aurawestseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Avalon Studios",
+ 
+    "address": "3266 SW Avalon Way  Seattle WA",
+ 
+    "phone": "206-329-0085",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 12,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.cornellandassociates.com/avalon-i/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Blake",
+ 
+    "address": "5020 California Ave SW Seattle WA",
+ 
+    "phone": "206-935-3435",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 21,
+ 
+    "studioUnits": 7,
+ 
+    "oneBedroomUnits": 12,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.theblakeapartments.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Broadstone Sky",
+ 
+    "address": "4745 40th Ave SW Seattle WA",
+ 
+    "phone": "844-367-3017",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 27,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 23,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://broadstonesky.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Junction 47",
+ 
+    "address": "4700 California Ave SW Seattle WA",
+ 
+    "phone": "206-347-3655",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 42,
+ 
+    "studioUnits": 6,
+ 
+    "oneBedroomUnits": 31,
+ 
+    "twoBedroomUnits": 5,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.equityapartments.com/washington/seattle-apartments/west-seattle/junction-47-apartments.aspx"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Junction Flats",
+ 
+    "address": "4433 42nd Avenue SW Seattle WA",
+ 
+    "phone": "206-420-8222",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 16,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 9,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://junctionflatsseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Junction Landing",
+ 
+    "address": "4417 42nd Avenue SW Seattle WA",
+ 
+    "phone": "206-432-9991",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 12,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 8,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://junctionlanding.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Link Apts",
+ 
+    "address": "4550 38th Ave SW Seattle WA",
+ 
+    "phone": "833-863-9641",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 39,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 37,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.linkapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "LIV Fauntleroy",
+ 
+    "address": "4801 Fauntleroy Way SW Seattle WA",
+ 
+    "phone": "971-770-2415",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 11,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.cornellandassociates.com/fauntleroy/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Lofts at the Junction",
+ 
+    "address": "4535 44th Avenue SW Seattle WA",
+ 
+    "phone": "206-858-2112",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 8,
+ 
+    "studioUnits": 8,
+ 
+    "oneBedroomUnits": 0,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.liveatjunctionlofts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Luna",
+ 
+    "address": "2745 California Avenue SW Seattle WA",
+ 
+    "phone": "206-702-3142",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 27,
+ 
+    "studioUnits": 4,
+ 
+    "oneBedroomUnits": 23,
+ 
+    "twoBedroomUnits": 0,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://lunaapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Marq West Seattle",
+ 
+    "address": "3261 SW Avalon Way Seattle WA",
+ 
+    "phone": "888-246-2295",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 23,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 14,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.marqwestseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Mural Apts",
+ 
+    "address": "4727 42nd Ave SW Seattle WA",
+ 
+    "phone": "833-668-1682",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 28,
+ 
+    "studioUnits": 2,
+ 
+    "oneBedroomUnits": 23,
+ 
+    "twoBedroomUnits": 3,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.muralapts.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Nova Apts",
+ 
+    "address": "4600 36th Ave SW Seattle WA",
+ 
+    "phone": "206-937-0112",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 13,
+ 
+    "studioUnits": 0,
+ 
+    "oneBedroomUnits": 11,
+ 
+    "twoBedroomUnits": 2,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.novaseattle.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Oregon 42",
+ 
+    "address": "4502 42nd Ave SW Seattle WA",
+ 
+    "phone": "206-935-4200",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 27,
+ 
+    "studioUnits": 10,
+ 
+    "oneBedroomUnits": 13,
+ 
+    "twoBedroomUnits": 4,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.oregon42.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Spruce",
+ 
+    "address": "3922 SW Alaska St Seattle WA",
+ 
+    "phone": "206-937-0643",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 44,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 32,
+ 
+    "twoBedroomUnits": 7,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://liveatspruce.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Whittaker",
+ 
+    "address": "4755 Fauntleroy Way SW Seattle WA",
+ 
+    "phone": "844-409-2377",
+ 
+    "residentialTargetedArea": "West Seattle Junction",
+ 
+    "totalRestrictedUnits": 78,
+ 
+    "studioUnits": 5,
+ 
+    "oneBedroomUnits": 63,
+ 
+    "twoBedroomUnits": 10,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.livewhittaker.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Center Steps",
+ 
+    "address": "225 Roy Street Seattle WA",
+ 
+    "phone": "206-465-8850",
+ 
+    "residentialTargetedArea": "Westlake",
+ 
+    "totalRestrictedUnits": 54,
+ 
+    "studioUnits": 22,
+ 
+    "oneBedroomUnits": 22,
+ 
+    "twoBedroomUnits": 10,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "http://www.centersteps.com/"
+ 
+  },
+ 
+  {
+ 
+    "buildingName": "Leeward",
+ 
+    "address": "1309/1319 Dexter Ave. N. Seattle WA",
+ 
+    "phone": "206-203-7509",
+ 
+    "residentialTargetedArea": "Westlake",
+ 
+    "totalRestrictedUnits": 7,
+ 
+    "studioUnits": 3,
+ 
+    "oneBedroomUnits": 3,
+ 
+    "twoBedroomUnits": 1,
+ 
+    "threePlusBedroomUnits": 0,
+ 
+    "urlforBuilding": "https://www.leewardapts.com/"
+ 
+  }
+ 
+ ]
