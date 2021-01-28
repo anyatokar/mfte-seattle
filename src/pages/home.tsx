@@ -7,7 +7,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
         logging.info(`Loading ${props.name}`);
     }, [props.name])
 
-    return <h1>MFTE Simple</h1>
+    return <h1>Home Page</h1>
 }
 
 export default HomePage;
