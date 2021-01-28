@@ -39,7 +39,7 @@ export const Properties = () => {
   return (
     <div>
 
-<h1>Buildings</h1>
+<h1>All Properties</h1>
             <div>
                 <Table striped bordered hover variant="light">
                     <thead>
