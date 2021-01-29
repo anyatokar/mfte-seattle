@@ -1,4 +1,4 @@
-import IRoute from '../interfaces/route';
+import IRoute from '../types/route';
 import AboutPage from '../pages/about';
 import HomePage from '../pages/home';
 
