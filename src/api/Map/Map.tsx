@@ -84,7 +84,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false}) => {
 
   const initMap = (zoomLevel: number, address: GoogleLatLng): void => {
     if (ref.current) {
-      setMap(
+      const map = 
         new google.maps.Map(ref.current, {
           zoom: zoomLevel,
           center: address,
@@ -98,10 +98,33 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false}) => {
           gestureHandling: 'cooperative',
           mapTypeId: mapType,
           draggableCursor: 'pointer',
-        })
-      );
+        });
+      const latLng = new google.maps.LatLng(47.608013, -122.335167)
 
-      
+      const marker = 
+        new google.maps.Marker({
+          position: latLng,
+          map: map,
+          animation: google.maps.Animation.DROP,
+      });
+
+      marker.setMap(map);
+
+    // var geocoder = new google.maps.Geocoder();
+
+    // const address = 'Seattle, WA';
+
+    // geocoder.geocode( { 'address': address}, function(results, status) {
+    //   if (status == 'OK') {
+    //     map.setCenter(results[0].geometry.location);
+    //     var marker = new google.maps.Marker({
+    //         map: map,
+    //         position: results[0].geometry.location
+    //     });
+    //   } else {
+    //     alert('Geocode was not successful for the following reason: ' + status);
+    //   }
+    // });
     }
   };
 
@@ -111,8 +134,5 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false}) => {
     </div>
   );
 };
-
-
-
 
 export default Map;
