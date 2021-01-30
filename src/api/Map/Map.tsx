@@ -100,6 +100,8 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false}) => {
           draggableCursor: 'pointer',
         })
       );
+
+      
     }
   };
 
@@ -109,5 +111,8 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false}) => {
     </div>
   );
 };
+
+
+
 
 export default Map;

@@ -7,14 +7,7 @@ import Map from "../api/Map/Map";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 
 const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
-  const [scriptLoaded, setScriptLoaded] = useState(false);
 
-  useEffect(() => {
-    const googleMapScript = loadMapApi();
-    googleMapScript.addEventListener('load', function () {
-      setScriptLoaded(true);
-    });
-  }, []);
 
   const [message, setMessage] = useState<string>('');
 
@@ -35,14 +28,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
 
   return (
     <div>
-      <div>
-        {scriptLoaded && (
-          <Map
-            mapType={google.maps.MapTypeId.ROADMAP}
-            mapTypeControl={true}
-          />
-        )}
-      </div>
+
 
       < BuildingsTable />
       <p>{message}</p>
