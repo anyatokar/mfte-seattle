@@ -42,7 +42,7 @@ export const BuildingsTable = () => {
       return <h1>loading...</h1>;
   }
 
-// console.log(buildings)
+console.log(buildings)
 
   return (
     <div>

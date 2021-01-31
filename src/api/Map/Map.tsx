@@ -22,6 +22,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false}) => {
       defaultMapStart();
     }
   };
+
   useEffect(startMap, [map]);
 
   const defaultMapStart = (): void => {
@@ -55,26 +56,6 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false}) => {
       //     map: map,
       //     animation: google.maps.Animation.DROP,
       // });
-
-  
-
-
-
-    // var geocoder = new google.maps.Geocoder();
-
-    // const address = 'Seattle, WA';
-
-    // geocoder.geocode( { 'address': address}, function(results, status) {
-    //   if (status == 'OK') {
-    //     map.setCenter(results[0].geometry.location);
-    //     var marker = new google.maps.Marker({
-    //         map: map,
-    //         position: results[0].geometry.location
-    //     });
-    //   } else {
-    //     alert('Geocode was not successful for the following reason: ' + status);
-    //   }
-    // });
     }
   };
 
@@ -106,26 +87,26 @@ useEffect(() => {
   });
 }, []);
 
-// const [buildings, setBuildings] = useState([] as any);
-// const [loading, setLoading] = useState(false);
+const [buildings, setBuildings] = useState([] as any);
+const [loading, setLoading] = useState(false);
 
-// const refB = firebase.firestore().collection("buildings");
+const refB = firebase.firestore().collection("buildings");
 
-// function getBuildings() {
-//   setLoading(true);
-//   refB.onSnapshot((querySnapshot) => {
-//     const items: Array<object> = [];
-//     querySnapshot.forEach((doc) => {
-//         items.push(doc.data());
-//     });
-//     setBuildings(items)
-//     setLoading(false)
-//   });
-// }
+function getBuildings() {
+  setLoading(true);
+  refB.onSnapshot((querySnapshot) => {
+    const items: Array<object> = [];
+    querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+    });
+    setBuildings(items)
+    setLoading(false)
+  });
+}
 
-// useEffect(() => {
-//     getBuildings();
-// }, []);
+useEffect(() => {
+    getBuildings();
+}, []);
 
 // if (loading) {
 //     return <h1>loading...</h1>;
@@ -134,7 +115,7 @@ useEffect(() => {
 const sites = [{latitude: 47.482880, longitude: -122.217064 }, 
   {latitude: 47.608013, longitude: -125.335167 }, {latitude: 47.608013, longitude: -122.335167 }]
 
-drop(sites)
+drop(buildings)
 
 // marker.setMap(map);
 
@@ -146,24 +127,54 @@ drop(sites)
         // if(i == filteredMeetings.length - 1) {
             // toastDown(i);
         // } 
+
+    // var geocoder = new google.maps.Geocoder();
+
+    // const address = 'Seattle, WA';
+
+    // geocoder.geocode( { 'address': address}, function(results, status) {
+    //   if (status == 'OK') {
+    //     map.setCenter(results[0].geometry.location);
+    //     var marker = new google.maps.Marker({
+    //         map: map,
+    //         position: results[0].geometry.location
+    //     });
+    //   } else {
+    //     alert('Geocode was not successful for the following reason: ' + status);
+    //   }
+    // });
+
+
+
         addMarkerWithTimeout(filteredMeetings[i], i * timer);
     }
 }
 
-function addMarkerWithTimeout (site:any, timeout:number){
+function addMarkerWithTimeout (building:any, timeout:number){
   // function addMarkerWithTimeout (site:any, timeout:any){
   var dropTimer = window.setTimeout(function() {
       // meetingBadgesUp(site);
       // var p = new google.maps.LatLng(47.608013, -122.335167);
-      var p = new google.maps.LatLng(site.latitude, site.longitude);
+      var p = new google.maps.LatLng(building.lat, building.lng);
       // var boolAm = false;
       // var boolNoon = false;
       // var boolPm = false;
-      // var infoContent = '<span class="bold caps">' + site.val().name + 
-      //         '<br>' + site.val().hour + site.val().min + ' ' + site.val().timeframe + '</span><br><span class="cap">' +
-      //         '<a href="http://maps.google.com/?q=' + site.val().street + ' ' + site.val().city + ' ' + site.val().state + 
-      //         ' ' + site.val().zip + '">' + site.val().street + '<br>' + site.val().city + ', ' + site.val().state + 
-      //         '  ' + site.val().zip + '</a><br>' + site.val().siteNotes + '</span>';
+      var infoContent = '<span class="bold caps">' + 
+              building.buildingName + '<br>' + 
+              building.phone + '<br>' + 
+              // site.val().hour + 
+              // site.val().min + ' ' + 
+              // site.val().timeframe + '</span><br><span class="cap">' +
+              // '<a href="http://maps.google.com/?q=' + 
+              // building.address + ' ' + 
+              // site.val().city + ' ' + 
+              // site.val().state + ' ' + 
+              // site.val().zip + '">' + 
+              // site.val().street + '<br>' + 
+              // site.val().city + ', ' + 
+              // site.val().state + '  ' + 
+              // site.val().zip + '</a><br>' + 
+              building.urlforBuilding + '</span>';
       // switch(site.val().timeframe) {
       //     case 'am':
       //         boolAm = true;
@@ -198,14 +209,16 @@ function addMarkerWithTimeout (site:any, timeout:number){
           animation: google.maps.Animation.DROP,
       });
 
+      const infoWindow = new google.maps.InfoWindow({});
+
       markers.push(marker);
-      //add infowindow with closure
-      // google.maps.event.addListener(marker, 'click', (function(marker) {
-      //     return function() {
-      //         // infoWindow.setContent(infoContent);
-      //         // infoWindow.open(map, marker);
-      //     };
-      // })(marker));
+      // add infowindow with closure
+      google.maps.event.addListener(marker, 'click', (function(marker) {
+          return function() {
+              infoWindow.setContent(infoContent);
+              infoWindow.open(map, marker);
+          };
+      })(marker));
   })
 }
 
