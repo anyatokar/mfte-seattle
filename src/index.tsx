@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import { render } from 'react-dom';
 import './index.css';
-import Application from './components/application';
+import Application from './application';
 import reportWebVitals from './reportWebVitals';
 
 // const rootElement = document.getElementById('root');
