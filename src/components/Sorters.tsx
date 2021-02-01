@@ -28,22 +28,27 @@ export default function Sorters<T>(props: ISortersProps<T>) {
           if (!key) {
             return <></>
           }
-          return (
-            <>
-              <option
-                key={`${key}-true`}
-                value={[key, "true"]}
-              >
-                sort by '{key}' descending
-              </option>
-              <option
-                key={`${key}-false`}
-                value={[key, "false"]}
-              >
-                sort by '{key}' ascending
-              </option>
-            </>
-          );
+          if (key === 'buildingName') {
+            return (
+              <>
+                <option
+                  key={`${key}-true`}
+                  value={[key, "true"]}
+                >
+                  {/* sort by '{key}' descending */}
+                  descending by building name
+                </option>
+                <option
+                  key={`${key}-false`}
+                  value={[key, "false"]}
+                >
+                  {/* sort by '{key}' ascending */}
+                  ascending by building name
+                </option>
+              </>
+            );
+          }
+
         })}
       </select>
     </>
