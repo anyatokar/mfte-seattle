@@ -23,7 +23,6 @@ const db = firebase.firestore();
 buildings.forEach(function(obj) {
   db.collection("buildings").add({
     buildingName: obj.buildingName,
-    address: obj.address,
     phone: obj.phone,
     residentialTargetedArea: obj.residentialTargetedArea,
     totalRestrictedUnits: obj.totalRestrictedUnits,
@@ -31,7 +30,13 @@ buildings.forEach(function(obj) {
     oneBedroomUnits: obj.oneBedroomUnits,
     twoBedroomUnits: obj.twoBedroomUnits,
     threePlusBedroomUnits: obj.threePlusBedroomUnits,
-    urlforBuilding: obj.urlforBuilding
+    urlforBuilding: obj.urlforBuilding,
+    lat: obj.lat,
+    lng: obj.lng,
+    streetNum: obj.number,
+    street: obj.street, 
+    state: obj.state,
+    zip: obj.zip
   }).then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
   })
