@@ -114,10 +114,9 @@ useEffect(() => {
 
 const sites = [{address: 'Seattle, WA' }]
 
-drop(sites)
+drop(buildings)
 
 // marker.setMap(map);
-
 
   function drop(filteredMeetings:any) {
     // clearMarkers(true);
@@ -131,95 +130,40 @@ drop(sites)
 
 
 
-        addMarkerWithTimeout(filteredMeetings[i], i * timer);
+        addMarkerWithTimeout(filteredMeetings[i], i * 1);
     }
 }
 
-function addMarkerWithTimeout (building:any, timeout:number){
-  // function addMarkerWithTimeout (site:any, timeout:any){
-  var dropTimer = window.setTimeout(function() {
-      // meetingBadgesUp(site);
-      // var p = new google.maps.LatLng(47.608013, -122.335167);
+function addMarkerWithTimeout(
+  building:any, 
+  timeout:number
+) {
+  window.setTimeout(function() {
 
 
-
-
-
-
-
-
-
-
-
-
-      var p = new google.maps.LatLng(building.lat, building.lng);
+      // var p = new google.maps.LatLng(building.lat, building.lng);
       // var boolAm = false;
       // var boolNoon = false;
       // var boolPm = false;
       var infoContent = '<span class="bold caps">' + 
               building.buildingName + '<br>' + 
               building.phone + '<br>' + 
-              // site.val().hour + 
-              // site.val().min + ' ' + 
-              // site.val().timeframe + '</span><br><span class="cap">' +
-              // '<a href="
-              //maps.google.com/?q=' + 
-              // building.address + ' ' + 
-              // site.val().city + ' ' + 
-              // site.val().state + ' ' + 
-              // site.val().zip + '">' + 
-              // site.val().street + '<br>' + 
-              // site.val().city + ', ' + 
-              // site.val().state + '  ' + 
-              // site.val().zip + '</a><br>' + 
               building.urlforBuilding + '</span>';
-      // switch(site.val().timeframe) {
-      //     case 'am':
-      //         boolAm = true;
-      //         break;
-      //     case 'noon':
-      //         boolNoon = true;
-      //         break;
-      //     case 'pm':
-      //         boolPm = true;
-      //         break;
-      // }
 
 
-      var geocoder = new google.maps.Geocoder();
 
-      const address = building.address;
-  
-      geocoder.geocode( { 'address': address}, function(results, status) {
-        if (status === 'OK') {
+
   
 
 
 
-      var marker = new google.maps.Marker({
-          position: results[0].geometry.location,
+          const marker = new google.maps.Marker({ 
+          position: new google.maps.LatLng({lat: building.lat, lng: building.lng}),
           map: map,
-          // day: site.val().day,
-          // meetingOpen: site.val().meetingOpen,
-          // meetingClosed: !site.val().meetingOpen,
-          // onlyMen: site.val().onlyMen,
-          // onlyWomen: site.val().onlyWomen,
-          // childcare: site.val().childcare,
-          // meditation: site.val().meditation,
-          // speaker: site.val().speaker,
-          // step: site.val().step,
-          // spanish: site.val().spanish,
-          // bigBook: site.val().bigBook,
-          // discussion: site.val().discussion,
-          // tradition: site.val().tradition,
-          // beginner: site.val().beginner,
-          // am: boolAm,
-          // noon: boolNoon,
-          // pm: boolPm,
           animation: google.maps.Animation.DROP,
-      });
+          })
 
-      
+      console.log(building.buildingName)
 
       const infoWindow = new google.maps.InfoWindow({});
 
@@ -232,10 +176,11 @@ function addMarkerWithTimeout (building:any, timeout:number){
           };
       })(marker, building));
 
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
+    // } 
+    // else {
+    //   alert('Geocode was not successful for the following reason: ' + status);
+    // }
+  // });
   }, timeout)
 }
 
