@@ -106,7 +106,7 @@ const Application: React.FunctionComponent<{}> = props => {
   ); */}
 
 
-
+{/* state for map should be tracked here! instead of Map -- loading once bug */}
 
 
 

@@ -10,7 +10,7 @@ type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
 type InfoWindow = google.maps.InfoWindow;
 
-const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false}) => {
+const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, buildings}) => {
 
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
@@ -71,28 +71,30 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false}) => {
 //   });
 // }, []);
 
-const [buildings, setBuildings] = useState([] as any);
+// const [buildings, setBuildings] = useState([] as any);
 const [loading, setLoading] = useState(false);
 
 const refB = firebase.firestore().collection("buildings");
 
-function getBuildings() {
-  setLoading(true);
-  refB.onSnapshot((querySnapshot) => {
-    const items: Array<object> = [];
-    querySnapshot.forEach((doc) => {
-        items.push(doc.data());
-    });
-    setBuildings(items)
-    setLoading(false)
-  });
-}
+// const buildings = props.buildings
 
-useEffect(() => {
-    getBuildings();
-}, []);
+// function getBuildings() {
+//   setLoading(true);
+//   refB.onSnapshot((querySnapshot) => {
+//     const items: Array<object> = [];
+//     querySnapshot.forEach((doc) => {
+//         items.push(doc.data());
+//     });
+//     setBuildings(items)
+//     setLoading(false)
+//   });
+// }
 
-const sites = [{address: 'Seattle, WA' }]
+// useEffect(() => {
+//     getBuildings();
+// }, []);
+
+// const sites = [{address: 'Seattle, WA' }]
 
 drop(buildings)
 

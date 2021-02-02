@@ -5,13 +5,15 @@ import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { BuildingsTable } from "../components/buildingsTable"
 import Map from "../Map/Map";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
+import firebase from '../db/firebase';
+import 'firebase/firestore';
 
 
 import Sorters from "../components/Sorters";
 import SearchInput from "../components/SearchInput";
 import { WidgetCard } from "../components/WidgetCard";
 import IWidget from "../interfaces/IWidget";
-import widgets from "../db/widgets";
+// import widgets from "../db/widgets";
 import { genericSort } from "../utils/genericSort";
 import { genericSearch } from "../utils/genericSearch";
 import { genericFilter } from "../utils/genericFilter";
@@ -19,14 +21,39 @@ import { Filters } from "../components/Filters";
 import IFilter from "../interfaces/IFilter";
 import ISorter from "../interfaces/ISorter";
 
-const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
+const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [widgets, setWidgets] = useState([] as Array<IWidget>);
+
+  // const [buildings, setBuildings] = useState([] as any);
+const [loading, setLoading] = useState(false);
+
+const refB = firebase.firestore().collection("buildings");
+
+function getBuildings() {
+  setLoading(true);
+  refB.onSnapshot((querySnapshot) => {
+    const items: Array<IWidget> = [];
+    querySnapshot.forEach((doc) => {
+        items.push(doc.data() as IWidget);
+        // console.log(doc.data())
+    });
+    setWidgets(items)
+
+    setLoading(false)
+  });
+}
+
+useEffect(() => {
+    getBuildings();
+}, []);
 
   useEffect(() => {
     const googleMapScript = loadMapApi();
     googleMapScript.addEventListener('load', function () {
       setScriptLoaded(true);
+      console.log('code is running!!!!!')
     });
   }, []);
 
@@ -73,7 +100,8 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
         {/* search */}
         <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
         {/* sort */}
-        <Sorters<IWidget>
+        {widgets.length > 0 && <Sorters<IWidget>
+        
           object={widgets[0]}
           onChangeSorter={(property, isDescending) => {
             setActiveSorter({
@@ -81,9 +109,9 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
               isDescending,
             });
           }}
-        />
+        />}
         {/* filter */}
-        <Filters<IWidget>
+        {widgets.length > 0 && <Filters<IWidget>
           object={widgets[0]}
           filters={activeFilters}
           onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
@@ -100,7 +128,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
                   )
                 );
           }}
-        />
+        />}
       </div>
 
       {/* map */}
@@ -109,6 +137,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
           <Map
             mapType={google.maps.MapTypeId.ROADMAP}
             mapTypeControl={true}
+            buildings={widgets}
           />
         )}
       </div>
@@ -131,4 +160,4 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
   );
 }
 
-export default withRouter(AboutPage);
+export default withRouter(BuildingsPage);
