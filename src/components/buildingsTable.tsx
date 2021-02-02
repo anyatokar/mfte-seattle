@@ -3,7 +3,7 @@ import { Form, FormControl, Button, Image, Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import firebase from '../db/firebase';
 import 'firebase/firestore';
-import Map from "../api/Map/Map";
+import Map from "../Map/Map";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 
 export const BuildingsTable = () => {

@@ -22,7 +22,7 @@ export default function SearchInput(props: ISearchProps) {
       <label htmlFor="search" className="mt-3">Enter neighborhood, building name, street address, or zip code:</label>
       <input
         id="search"
-        className="form-control"
+        className="form-control w-50"
         type="search"
         placeholder="Search"
         aria-label="Search"

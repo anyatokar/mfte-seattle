@@ -15,7 +15,7 @@ export default function Sorters<T>(props: ISortersProps<T>) {
       <label htmlFor="sorters" className="mt-3"></label>
       <select
         id="sorters"
-        className="custom-select"
+        className="custom-select form-control w-50"
         onChange={(event) =>
           onChangeSorter(
             event.target.value.split(",")[0] as any,

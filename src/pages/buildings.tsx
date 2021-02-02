@@ -3,7 +3,7 @@ import IPage from '../interfaces/page';
 import logging from '../config/logging';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { BuildingsTable } from "../components/buildingsTable"
-import Map from "../api/Map/Map";
+import Map from "../Map/Map";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 
 

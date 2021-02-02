@@ -1100,24 +1100,6 @@ const widgets: Array<IWidget> = [
     "zip": 98122
   },
   {
-    "buildingName": "Common Anderson",
-    "phone": "206-323-1771",
-    "residentialTargetedArea": "Capitol Hill",
-    "totalRestrictedUnits": 8,
-    "studioUnits": 8,
-    "oneBedroomUnits": 0,
-    "twoBedroomUnits": 0,
-    "threePlusBedroomUnits": 0,
-    "urlforBuilding": "https://www.common.com/anderson/",
-    "lat": 47.617928,
-    "lng": -122.316556,
-    "number": "1806",
-    "street": "12th Ave",
-    "city": "Seattle",
-    "state": "WA",
-    "zip": 98122
-  },
-  {
     "buildingName": "Common Capitol",
     "phone": "206-323-1771",
     "residentialTargetedArea": "Capitol Hill",

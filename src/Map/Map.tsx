@@ -1,13 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Map.scss';
-import firebase from '../../db/firebase';
+import firebase from '../db/firebase';
 import 'firebase/firestore';
-import { loadMapApi } from "../../utils/GoogleMapsUtils";
+import { loadMapApi } from "../utils/GoogleMapsUtils";
+import IMap from "../interfaces/IMap";
 
-interface IMap {
-  mapType: google.maps.MapTypeId;
-  mapTypeControl?: boolean;
-}
+// interface IMap {
+//   mapType: google.maps.MapTypeId;
+//   mapTypeControl?: boolean;
+// }
 
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
