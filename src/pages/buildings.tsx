@@ -19,16 +19,21 @@ import { Filters } from "../components/Filters";
 import IFilter from "../interfaces/IFilter";
 import ISorter from "../interfaces/ISorter";
 
-
-
 const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
+  useEffect(() => {
+    const googleMapScript = loadMapApi();
+    googleMapScript.addEventListener('load', function () {
+      setScriptLoaded(true);
+    });
+  }, []);
 
   const [query, setQuery] = useState<string>("");
   const [activeSorter, setActiveSorter] = useState<ISorter<IWidget>>({
     property: "buildingName",
-    isDescending: true,
+    isDescending: false,
   });
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IWidget>>>(
     []
@@ -63,89 +68,65 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
 
   return (
     <div>
-
-
-    <div className="container mx-auto my-2">
-    <div className="my-3">
-      {/* <i>
-        From the blog post{" "}
-        <a href="https://chrisfrewin.com/blog/react-typescript-generic-search-sort-and-filters/">
-          "React and TypeScript: Generic Search, Sorters, and Filters"
-        </a>
-        .
-      </i> */}
-    </div>
-    
-    <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
-    <Sorters<IWidget>
-      object={widgets[0]}
-      onChangeSorter={(property, isDescending) => {
-        setActiveSorter({
-          property,
-          isDescending,
-        });
-      }}
-    />
-    <Filters<IWidget>
-      object={widgets[0]}
-      filters={activeFilters}
-      onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
-        checked
-          ? setActiveFilters([
-              ...activeFilters.filter(
-                (filter) => filter.property !== changedFilterProperty
-              ),
-              { property: changedFilterProperty, isTruthyPicked },
-            ])
-          : setActiveFilters(
-              activeFilters.filter(
-                (filter) => filter.property !== changedFilterProperty
-              )
-            );
-      }}
-    />
-
-  </div>
-
-    
-
-
-
-
-  <section className="col">
-          < BuildingsTable />
-        </section>
-    <div className="wrapper container">
-
-
-
-
-
-
-
-
-      <div className="row">
-
-        <section className="col">
-          <h3>Results:</h3>
-          {resultWidgets.length > 0 && (
-            <div className="row">
-              {resultWidgets.map((widget) => (
-                <WidgetCard key={widget.buildingName} {...widget} />
-              ))}
-            </div>
-          )}
-          {resultWidgets.length === 0 && <p>No results found!</p>}
-        </section>
-        
-
+      {/* search sort filter container */}
+      <div className="container mx-auto my-2">
+        {/* search */}
+        <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
+        {/* sort */}
+        <Sorters<IWidget>
+          object={widgets[0]}
+          onChangeSorter={(property, isDescending) => {
+            setActiveSorter({
+              property,
+              isDescending,
+            });
+          }}
+        />
+        {/* filter */}
+        <Filters<IWidget>
+          object={widgets[0]}
+          filters={activeFilters}
+          onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
+            checked
+              ? setActiveFilters([
+                  ...activeFilters.filter(
+                    (filter) => filter.property !== changedFilterProperty
+                  ),
+                  { property: changedFilterProperty, isTruthyPicked },
+                ])
+              : setActiveFilters(
+                  activeFilters.filter(
+                    (filter) => filter.property !== changedFilterProperty
+                  )
+                );
+          }}
+        />
       </div>
 
+      {/* map */}
+      <div>
+        {scriptLoaded && (
+          <Map
+            mapType={google.maps.MapTypeId.ROADMAP}
+            mapTypeControl={true}
+          />
+        )}
+      </div>
 
-
-      <p>{message}</p>
-      <Link to="/">Go to the home page!</Link>
-    </div>
+      {/* building list */}
+      <div className="container mx-auto my-2">
+        <h3>Search results:</h3>
+        {resultWidgets.length > 0 && (
+          <div className="row">
+            {resultWidgets.map((widget) => (
+              <WidgetCard key={widget.buildingName} {...widget} />
+            ))}
+          </div>
+        )}
+        {resultWidgets.length === 0 && <p>No results found!</p>}
+        {/* <p>{message}</p>
+        <Link to="/">Go to the home page!</Link> */}
+      </div>
     </div>
   );
 }

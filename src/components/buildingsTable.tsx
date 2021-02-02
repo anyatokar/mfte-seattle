@@ -47,14 +47,14 @@ console.log(buildings)
   return (
     <div>
 
-      <div>
+      {/* <div>
         {scriptLoaded && (
           <Map
             mapType={google.maps.MapTypeId.ROADMAP}
             mapTypeControl={true}
           />
         )}
-      </div>
+      </div> */}
 
       {/* <h1>All Buildings</h1>
         <Table striped bordered hover variant="light">
