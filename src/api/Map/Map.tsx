@@ -163,8 +163,6 @@ function addMarkerWithTimeout(
           animation: google.maps.Animation.DROP,
           })
 
-      console.log(building.buildingName)
-
       const infoWindow = new google.maps.InfoWindow({});
 
       markers.push(marker);

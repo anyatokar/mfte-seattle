@@ -17,7 +17,7 @@ export function Filters<T>(props: IFiltersProps<T>) {
 
   const labelTruthy = (
     <>
-      is <b>truthy</b>
+      {/* offered */}
     </>
   );
 
@@ -29,8 +29,28 @@ export function Filters<T>(props: IFiltersProps<T>) {
 
   return (
     <div className="p-1 my-2">
-      <label className="mt-3">Filter:</label>
+      
+      <label className="mt-3">Filter by number of bedrooms:</label>
       {Object.keys(object).map((key) => {
+        if (key !== 'studioUnits' && 
+            key !== 'oneBedroomUnits' && 
+            key !== 'twoBedroomUnits' && 
+            key !== 'threePlusBedroomUnits') 
+            { return ('')}
+        
+        let styledKey = ''
+
+        if (key === 'studioUnits') { 
+          styledKey = 'Studios'
+        } else if (key === 'oneBedroomUnits') {
+          styledKey = 'One bedrooms'
+        } else if (key === 'twoBedroomUnits') {
+          styledKey = 'Two bedrooms' 
+        } else if (key === 'threePlusBedroomUnits') {
+          styledKey = 'Three or more bedrooms' 
+        }
+
+
         const getRadioButton = (isTruthyPicked: boolean): ReactNode => {
           const id = isTruthyPicked
             ? `radio-defined-${key}`
@@ -47,7 +67,7 @@ export function Filters<T>(props: IFiltersProps<T>) {
           return (
             <>
               <input
-                type="radio"
+                type="checkbox"
                 id={id}
                 value={key}
                 checked={getChecked()}
@@ -57,7 +77,7 @@ export function Filters<T>(props: IFiltersProps<T>) {
                 className={"m-1 ml-3"}
               />
               <label htmlFor={id}>
-                '{key}' {label}
+                {styledKey}  {label}
               </label>
             </>
           );
@@ -66,7 +86,7 @@ export function Filters<T>(props: IFiltersProps<T>) {
         return (
           <div key={key} className="input-group my-3">
             {getRadioButton(true)}
-            {getRadioButton(false)}
+            {/* {getRadioButton(false)} */}
           </div>
         );
       })}
