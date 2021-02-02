@@ -56,7 +56,7 @@ console.log(buildings)
         )}
       </div>
 
-      <h1>All Buildings</h1>
+      {/* <h1>All Buildings</h1>
         <Table striped bordered hover variant="light">
           <thead>
             <tr>
@@ -89,7 +89,7 @@ console.log(buildings)
               </tr>
             ))}
           </tbody>
-      </Table>
+      </Table> */}
     </div>
   )
 }

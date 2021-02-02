@@ -20,23 +20,23 @@ import ISorter from "./interfaces/ISorter";
 const Application: React.FunctionComponent<{}> = props => {
 
 
-  const [query, setQuery] = useState<string>("");
-  const [activeSorter, setActiveSorter] = useState<ISorter<IWidget>>({
-    property: "buildingName",
-    isDescending: true,
-  });
-  const [activeFilters, setActiveFilters] = useState<Array<IFilter<IWidget>>>(
-    []
-  );
+  // const [query, setQuery] = useState<string>("");
+  // const [activeSorter, setActiveSorter] = useState<ISorter<IWidget>>({
+  //   property: "buildingName",
+  //   isDescending: true,
+  // });
+  // const [activeFilters, setActiveFilters] = useState<Array<IFilter<IWidget>>>(
+  //   []
+  // );
 
-  const resultWidgets = widgets
-    .filter((widget) =>
-      genericSearch<IWidget>(widget, ["buildingName", "residentialTargetedArea", "number", "street", "zip"], query)
-    )
-    .filter((widget) => genericFilter<IWidget>(widget, activeFilters))
-    .sort((widgetA, widgetB) =>
-      genericSort<IWidget>(widgetA, widgetB, activeSorter)
-    );
+  // const resultWidgets = widgets
+  //   .filter((widget) =>
+  //     genericSearch<IWidget>(widget, ["buildingName", "residentialTargetedArea", "number", "street", "zip"], query)
+  //   )
+  //   .filter((widget) => genericFilter<IWidget>(widget, activeFilters))
+  //   .sort((widgetA, widgetB) =>
+  //     genericSort<IWidget>(widgetA, widgetB, activeSorter)
+  //   );
 
 
 
@@ -54,8 +54,8 @@ const Application: React.FunctionComponent<{}> = props => {
 
 
 
-      <div className="container mx-auto my-2">
-      <div className="my-3">
+      {/* <div className="container mx-auto my-2">
+      <div className="my-3"> */}
         {/* <i>
           From the blog post{" "}
           <a href="https://chrisfrewin.com/blog/react-typescript-generic-search-sort-and-filters/">
@@ -63,7 +63,8 @@ const Application: React.FunctionComponent<{}> = props => {
           </a>
           .
         </i> */}
-      </div>
+      {/* </div>
+      
       <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
       <Sorters<IWidget>
         object={widgets[0]}
@@ -102,7 +103,7 @@ const Application: React.FunctionComponent<{}> = props => {
       )}
       {resultWidgets.length === 0 && <p>No results found!</p>}
     </div>
-  );
+  ); */}
 
 
 

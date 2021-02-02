@@ -114,7 +114,7 @@ useEffect(() => {
 
 const sites = [{address: 'Seattle, WA' }]
 
-drop(buildings)
+// drop(buildings)
 
 // marker.setMap(map);
 
