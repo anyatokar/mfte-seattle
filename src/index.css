@@ -4,7 +4,20 @@ body {
 
 img {
   width: 100%;
-  height: auto;
-  background-repeat: no-repeat;
-  background-size: contain;
+  /* padding-top: 3em; */
+  /* padding: 1em; */
+  /* border-radius: 25px; */
+}
+
+/* .slogan {
+  padding-top:5em;
+} */
+
+.jumbotron {
+  background: none;
+}
+
+.navbar {
+  color: #0e365d;
+  background: #bceeeb;
 }
