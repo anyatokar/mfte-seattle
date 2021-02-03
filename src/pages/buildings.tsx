@@ -137,7 +137,7 @@ useEffect(() => {
           <Map
             mapType={google.maps.MapTypeId.ROADMAP}
             mapTypeControl={true}
-            buildings={widgets}
+            filteredBuildings={resultWidgets}
           />
         )}
       </div>

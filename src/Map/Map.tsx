@@ -1,16 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Map.scss';
-import firebase from '../db/firebase';
 import 'firebase/firestore';
-import { loadMapApi } from "../utils/GoogleMapsUtils";
 import IMap from "../interfaces/IMap";
-// import dot from "../assets/images/dot.png"
+import IWidget from '../interfaces/IWidget';
 
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
 type InfoWindow = google.maps.InfoWindow;
 
-const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, buildings}) => {
+let Markers:any = [];
+
+const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuildings}) => {
 
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
@@ -19,6 +19,8 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, buildings}) => {
   const startMap = (): void => {
     if (!map) {
       defaultMapStart();
+      console.log("hello")
+      // check to see if this is running
     }
   };
 
@@ -26,11 +28,8 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, buildings}) => {
 
   const defaultMapStart = (): void => {
     const defaultAddress = new google.maps.LatLng(47.608013, -122.335167);
-    initMap(10, defaultAddress);
+    initMap(12, defaultAddress);
   };
-
-  const timer:number = 10;
-  let markers:any = [];
 
   const initMap = (zoomLevel: number, address: GoogleLatLng): void => {
     if (ref.current) {
@@ -53,91 +52,38 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, buildings}) => {
     }
   };
 
-  function clearMarkers(del:any) {
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
+  function setMapOnAll(map: google.maps.Map | null) {
+    for (let i = 0; i < Markers.length; i++) {
+      Markers[i].setMap(map);
     }
-    if(del === true){
-        markers = [];
+  }
+  
+  function clearMarkers() {
+    setMapOnAll(null);
+  }
+
+  function deleteMarkers() {
+    clearMarkers();
+    Markers = [];
+  }
+
+  drop(filteredBuildings)
+
+  function drop(filteredBuildings:Array<IWidget>) {
+    deleteMarkers();
+    for (var i = 0; i < filteredBuildings.length; i++) {
+      addMarker(filteredBuildings[i]);
     }
   }
 
-// const [scriptLoaded, setScriptLoaded] = useState(false);
-
-// useEffect(() => {
-//   const googleMapScript = loadMapApi();
-//   googleMapScript.addEventListener('load', function () {
-//     setScriptLoaded(true);
-//   });
-// }, []);
-
-// const [buildings, setBuildings] = useState([] as any);
-const [loading, setLoading] = useState(false);
-
-const refB = firebase.firestore().collection("buildings");
-
-// const buildings = props.buildings
-
-// function getBuildings() {
-//   setLoading(true);
-//   refB.onSnapshot((querySnapshot) => {
-//     const items: Array<object> = [];
-//     querySnapshot.forEach((doc) => {
-//         items.push(doc.data());
-//     });
-//     setBuildings(items)
-//     setLoading(false)
-//   });
-// }
-
-// useEffect(() => {
-//     getBuildings();
-// }, []);
-
-// const sites = [{address: 'Seattle, WA' }]
-
-drop(buildings)
-
-  function drop(filteredMeetings:any) {
-    clearMarkers(true);
-    for (var i = 0; i < filteredMeetings.length; i++) {
-        addMarkerWithTimeout(filteredMeetings[i], 0);
-    }
-}
-
-function addMarkerWithTimeout(
-  building:any, 
-  timeout:number
-) {
-  window.setTimeout(function() {
-
-
-      // var p = new google.maps.LatLng(building.lat, building.lng);
-      // var boolAm = false;
-      // var boolNoon = false;
-      // var boolPm = false;
-      var infoContent = '<span class="bold caps">' + 
-              building.buildingName + '<br>' + 
-              building.phone + '<br>' + 
-              building.urlforBuilding + '</span>';
-
-          const marker = new google.maps.Marker({ 
-          position: new google.maps.LatLng({lat: building.lat, lng: building.lng}),
-          map: map,
-          animation: google.maps.Animation.DROP,
-          // icon: dot
-          })
-
-      markers.push(marker);
-      // add infowindow with closure
-      google.maps.event.addListener(marker, 'click', (function(marker, building) {
-          return function() {
-              // infoWindow.setContent(infoContent);
-              // infoWindow.open(map, marker);
-          };
-      })(marker, building));
-  }, timeout)
-}
+  function addMarker(building:IWidget) {
+    const marker = new google.maps.Marker({ 
+      position: new google.maps.LatLng({lat: building.lat, lng: building.lng}),
+      map: map,
+      animation: google.maps.Animation.DROP,
+    })
+    Markers.push(marker);
+  }
 
   return (
     <div className="map-container">

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import IPage from '../interfaces/page';
 import logging from '../config/logging';
-import seattle from '../assets/images/seattler.jpg';
+import seattle from '../assets/images/seattle.jpg';
 
 const HomePage: React.FunctionComponent<IPage> = props => {
   useEffect(() => {
@@ -9,7 +9,10 @@ const HomePage: React.FunctionComponent<IPage> = props => {
   }, [props.name])
 
   return (
-    <img src={seattle} alt="seattle" />
+    <div className="container">
+      <img src={seattle} alt="seattle" />
+    </div>
+
   )
 }
 
