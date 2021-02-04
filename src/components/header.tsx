@@ -25,9 +25,6 @@ export const Header = () => {
             <Nav.Link>About</Nav.Link>
           </LinkContainer> */}
         </Nav>
-        <Button>Saved Homes</Button>
-        <Button>Saved Searches</Button>
-        <Button>Sign up or Log in</Button>
       </Navbar>
     </div>
   )
