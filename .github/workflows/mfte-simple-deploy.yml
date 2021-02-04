@@ -8,7 +8,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.MFTE_SIMPLE_PROJECT }}
   RUN_REGION: us-west1
-  SERVICE_NAME: mfte-simple
+  SERVICE_NAME: mfte-simple-92c08
 
 jobs:
   build:
