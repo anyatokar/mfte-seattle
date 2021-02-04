@@ -42,7 +42,7 @@ const getBuildings = useCallback(() => {
   setBuildings(items)
   // setLoading(false)
 });
-}, []) 
+}, [ref]) 
 
 
 useEffect(() => {
