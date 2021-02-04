@@ -1,4 +1,4 @@
-export default interface IWidget {
+export default interface IBuilding {
     buildingName: string;
     phone: string;
     residentialTargetedArea: string;

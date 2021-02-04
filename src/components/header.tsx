@@ -1,4 +1,4 @@
-import { Navbar, Nav, NavLink, Form, FormControl, Button, Image, Table } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
 export const Header = () => {

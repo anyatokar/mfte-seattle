@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import IPage from '../interfaces/page';
 import logging from '../config/logging';
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { BuildingsTable } from "../components/buildingsTable"
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Map from "../Map/Map";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 import firebase from '../db/firebase';
@@ -11,9 +10,9 @@ import 'firebase/firestore';
 
 import Sorters from "../components/Sorters";
 import SearchInput from "../components/SearchInput";
-import { WidgetCard } from "../components/WidgetCard";
-import IWidget from "../interfaces/IWidget";
-// import widgets from "../db/widgets";
+import { BuildingCard } from "../components/BuildingCard";
+import IBuilding from "../interfaces/IBuilding";
+// import buildings from "../db/buildings";
 import { genericSort } from "../utils/genericSort";
 import { genericSearch } from "../utils/genericSearch";
 import { genericFilter } from "../utils/genericFilter";
@@ -24,24 +23,24 @@ import ISorter from "../interfaces/ISorter";
 const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
   const [scriptLoaded, setScriptLoaded] = useState(false);
-  const [widgets, setWidgets] = useState([] as Array<IWidget>);
+  const [buildings, setBuildings] = useState([] as Array<IBuilding>);
 
   // const [buildings, setBuildings] = useState([] as any);
-const [loading, setLoading] = useState(false);
+// const [loading, setLoading] = useState(false);
 
-const refB = firebase.firestore().collection("buildings");
+const ref = firebase.firestore().collection("buildings");
 
-function getBuildings() {
-  setLoading(true);
-  refB.onSnapshot((querySnapshot) => {
-    const items: Array<IWidget> = [];
+const getBuildings = () => {
+  // setLoading(true);
+  ref.onSnapshot((querySnapshot) => {
+    const items: Array<IBuilding> = [];
     querySnapshot.forEach((doc) => {
-        items.push(doc.data() as IWidget);
+        items.push(doc.data() as IBuilding);
         // console.log(doc.data())
     });
-    setWidgets(items)
+    setBuildings(items)
 
-    setLoading(false)
+    // setLoading(false)
   });
 }
 
@@ -53,45 +52,45 @@ useEffect(() => {
     const googleMapScript = loadMapApi();
     googleMapScript.addEventListener('load', function () {
       setScriptLoaded(true);
-      console.log('code is running!!!!!')
+      // console.log('code is running!!!!!')
     });
   }, []);
 
   const [query, setQuery] = useState<string>("");
-  const [activeSorter, setActiveSorter] = useState<ISorter<IWidget>>({
+  const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
     property: "buildingName",
     isDescending: false,
   });
-  const [activeFilters, setActiveFilters] = useState<Array<IFilter<IWidget>>>(
+  const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
     []
   );
 
-  const resultWidgets = widgets
-    .filter((widget) =>
-      genericSearch<IWidget>(widget, ["buildingName", "residentialTargetedArea", "number", "street", "zip"], query)
+  const resultBuildings = buildings
+    .filter((building) =>
+      genericSearch<IBuilding>(building, ["buildingName", "residentialTargetedArea", "number", "street", "zip"], query)
     )
-    .filter((widget) => genericFilter<IWidget>(widget, activeFilters))
-    .sort((widgetA, widgetB) =>
-      genericSort<IWidget>(widgetA, widgetB, activeSorter)
+    .filter((building) => genericFilter<IBuilding>(building, activeFilters))
+    .sort((buildingA, buildingB) =>
+      genericSort<IBuilding>(buildingA, buildingB, activeSorter)
     );
 
 
-  const [message, setMessage] = useState<string>('');
+  // const [message, setMessage] = useState<string>('');
 
-  useEffect(() => {
-    logging.info(`Loading ${props.name}`);
+  // useEffect(() => {
+  //   logging.info(`Loading ${props.name}`);
 
-    let number = props.match.params.number;
+  //   let number = props.match.params.number;
 
-    if (number)
-    {
-      setMessage(`The Number is ${number}`);
-    }
-    else
-    {
-      setMessage(`No number provided!`);
-    }
-  }, [props])
+  //   if (number)
+  //   {
+  //     setMessage(`The Number is ${number}`);
+  //   }
+  //   else
+  //   {
+  //     setMessage(`No number provided!`);
+  //   }
+  // }, [props])
 
   return (
     <div>
@@ -100,9 +99,9 @@ useEffect(() => {
         {/* search */}
         <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
         {/* sort */}
-        {widgets.length > 0 && <Sorters<IWidget>
+        {buildings.length > 0 && <Sorters<IBuilding>
         
-          object={widgets[0]}
+          object={buildings[0]}
           onChangeSorter={(property, isDescending) => {
             setActiveSorter({
               property,
@@ -111,8 +110,8 @@ useEffect(() => {
           }}
         />}
         {/* filter */}
-        {widgets.length > 0 && <Filters<IWidget>
-          object={widgets[0]}
+        {buildings.length > 0 && <Filters<IBuilding>
+          object={buildings[0]}
           filters={activeFilters}
           onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
             checked
@@ -137,7 +136,7 @@ useEffect(() => {
           <Map
             mapType={google.maps.MapTypeId.ROADMAP}
             mapTypeControl={true}
-            filteredBuildings={resultWidgets}
+            filteredBuildings={resultBuildings}
           />
         )}
       </div>
@@ -145,14 +144,14 @@ useEffect(() => {
       {/* building list */}
       <div className="container mx-auto my-2">
         <h3>Search results:</h3>
-        {resultWidgets.length > 0 && (
+        {resultBuildings.length > 0 && (
           <div className="row">
-            {resultWidgets.map((widget) => (
-              <WidgetCard key={widget.buildingName} {...widget} />
+            {resultBuildings.map((building) => (
+              <BuildingCard key={building.buildingName} {...building} />
             ))}
           </div>
         )}
-        {resultWidgets.length === 0 && <p>No results found!</p>}
+        {resultBuildings.length === 0 && <p>No results found!</p>}
         {/* <p>{message}</p>
         <Link to="/">Go to the home page!</Link> */}
       </div>

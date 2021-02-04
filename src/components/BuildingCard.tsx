@@ -1,8 +1,8 @@
 import * as React from "react";
 import Moment from "react-moment";
-import IWidget from "../interfaces/IWidget";
+import IBuilding from "../interfaces/IBuilding";
 
-export function WidgetCard(props: IWidget) {
+export function BuildingCard(props: IBuilding) {
   const {
     buildingName,
     phone,

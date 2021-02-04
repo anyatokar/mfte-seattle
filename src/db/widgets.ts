@@ -1,6 +1,6 @@
-import IWidget from "../interfaces/IWidget";
+import IBuilding from "../interfaces/IBuilding";
 
-const widgets: Array<IWidget> = [
+const buildings: Array<IBuilding> = [
   {
     "buildingName": "Alder Flats",
     "phone": "206-408-2176",
@@ -4611,4 +4611,4 @@ const widgets: Array<IWidget> = [
   }
  ]
 
- export default widgets;
+ export default buildings;

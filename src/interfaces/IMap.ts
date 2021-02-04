@@ -1,8 +1,8 @@
-import IWidget from "./IWidget"
+import IBuilding from "./IBuilding"
 
 export default interface IMap {
   mapType: google.maps.MapTypeId;
   mapTypeControl?: boolean;
-  filteredBuildings: Array<IWidget>
+  filteredBuildings: Array<IBuilding>
 }
 

@@ -1,12 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 import './Map.scss';
 import 'firebase/firestore';
 import IMap from "../interfaces/IMap";
-import IWidget from '../interfaces/IWidget';
+import IBuilding from '../interfaces/IBuilding';
 
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
-type InfoWindow = google.maps.InfoWindow;
+// type InfoWindow = google.maps.InfoWindow;
 
 let Markers:any = [];
 
@@ -19,19 +19,10 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
   const startMap = (): void => {
     if (!map) {
       defaultMapStart();
-      console.log("hello")
-      // check to see if this is running
     }
   };
 
-  useEffect(startMap, [map]);
-
-  const defaultMapStart = (): void => {
-    const defaultAddress = new google.maps.LatLng(47.608013, -122.335167);
-    initMap(12, defaultAddress);
-  };
-
-  const initMap = (zoomLevel: number, address: GoogleLatLng): void => {
+  const initMap = useCallback((zoomLevel: number, address: GoogleLatLng): void => {
     if (ref.current) {
       setMap( 
         new google.maps.Map(ref.current, {
@@ -50,7 +41,14 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
         })
       )
     }
-  };
+  }, [mapType, mapTypeControl]);
+
+  const defaultMapStart = useCallback((): void => {
+    const defaultAddress = new google.maps.LatLng(47.608013, -122.335167);
+    initMap(12, defaultAddress);
+  }, [initMap]);
+
+  useEffect(startMap, [map, defaultMapStart]);
 
   function setMapOnAll(map: google.maps.Map | null) {
     for (let i = 0; i < Markers.length; i++) {
@@ -69,14 +67,14 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
 
   drop(filteredBuildings)
 
-  function drop(filteredBuildings:Array<IWidget>) {
+  function drop(filteredBuildings:Array<IBuilding>) {
     deleteMarkers();
     for (var i = 0; i < filteredBuildings.length; i++) {
       addMarker(filteredBuildings[i]);
     }
   }
 
-  function addMarker(building:IWidget) {
+  function addMarker(building:IBuilding) {
     const marker = new google.maps.Marker({ 
       position: new google.maps.LatLng({lat: building.lat, lng: building.lng}),
       map: map,
