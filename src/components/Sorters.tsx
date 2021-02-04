@@ -26,10 +26,10 @@ export default function Sorters<T>(props: ISortersProps<T>) {
       >
         {Object.keys(object).map((key) => {
           if (!key) {
-            return <></>
+            return<></>
           }
           if (key === 'buildingName') {
-            return (
+            return(
               <>
                 <option
                   key={`${key}-true`}
@@ -48,7 +48,7 @@ export default function Sorters<T>(props: ISortersProps<T>) {
               </>
             );
           }
-
+        return<></>
         })}
       </select>
     </>
