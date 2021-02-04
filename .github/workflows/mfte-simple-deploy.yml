@@ -37,7 +37,7 @@ jobs:
           CI: true
 
       - name: Build Development
-        run: npm build
+        run: npm run-script build
 
       - name: Archive Production Artifact
         uses: actions/upload-artifact@main
