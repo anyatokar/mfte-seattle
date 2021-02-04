@@ -8,7 +8,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.MFTE_SIMPLE_PROJECT }}
   RUN_REGION: us-west1
-  SERVICE_NAME: mfte-simple-92c08
+  SERVICE_NAME: mfte-simple
 
 jobs:
   build:
@@ -32,7 +32,7 @@ jobs:
           restore-keys: |
             nodeModules-
       - name: Install dependencies
-        run: npm ci
+        run: npm build
         env:
           CI: true
 
