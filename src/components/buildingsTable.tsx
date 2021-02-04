@@ -3,7 +3,7 @@ import { Form, FormControl, Button, Image, Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import firebase from '../db/firebase';
 import 'firebase/firestore';
-import Map from "../api/Map/Map";
+import Map from "../Map/Map";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 
 export const BuildingsTable = () => {
@@ -47,16 +47,16 @@ console.log(buildings)
   return (
     <div>
 
-      <div>
+      {/* <div>
         {scriptLoaded && (
           <Map
             mapType={google.maps.MapTypeId.ROADMAP}
             mapTypeControl={true}
           />
         )}
-      </div>
+      </div> */}
 
-      <h1>All Buildings</h1>
+      {/* <h1>All Buildings</h1>
         <Table striped bordered hover variant="light">
           <thead>
             <tr>
@@ -89,7 +89,7 @@ console.log(buildings)
               </tr>
             ))}
           </tbody>
-      </Table>
+      </Table> */}
     </div>
   )
 }

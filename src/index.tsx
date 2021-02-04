@@ -2,15 +2,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import { render } from 'react-dom';
 import './index.css';
-import Application from './components/application';
+import App from './app';
 import reportWebVitals from './reportWebVitals';
-
-// const rootElement = document.getElementById('root');
-// render(<Application />, rootElement);
 
 render(
   <React.StrictMode>
-    <Application />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
