@@ -32,12 +32,12 @@ jobs:
           restore-keys: |
             nodeModules-
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
         env:
           CI: true
 
       - name: Build Development
-        run: yarn build
+        run: npm build
 
       - name: Archive Production Artifact
         uses: actions/upload-artifact@main
