@@ -30,9 +30,10 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   // const [buildings, setBuildings] = useState([] as any);
 // const [loading, setLoading] = useState(false);
 
-const ref = firebase.firestore().collection("buildings");
 
-const getBuildings = useCallback(() => {    
+
+const getBuildings = useCallback(() => {   
+  const ref = firebase.firestore().collection("buildings"); 
   ref.onSnapshot((querySnapshot) => {
   const items: Array<IBuilding> = [];
   querySnapshot.forEach((doc) => {
@@ -42,7 +43,7 @@ const getBuildings = useCallback(() => {
   setBuildings(items)
   // setLoading(false)
 });
-}, [ref]) 
+}, []) 
 
 
 useEffect(() => {
