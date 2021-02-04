@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import IPage from '../interfaces/page';
-import logging from '../config/logging';
+// import logging from '../config/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Map from "../Map/Map";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
@@ -20,6 +20,8 @@ import { Filters } from "../components/Filters";
 import IFilter from "../interfaces/IFilter";
 import ISorter from "../interfaces/ISorter";
 
+const ref = firebase.firestore().collection("buildings");
+
 const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -28,25 +30,22 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   // const [buildings, setBuildings] = useState([] as any);
 // const [loading, setLoading] = useState(false);
 
-const ref = firebase.firestore().collection("buildings");
-
-const getBuildings = () => {
-  // setLoading(true);
+const getBuildings = useCallback(() => {    
   ref.onSnapshot((querySnapshot) => {
-    const items: Array<IBuilding> = [];
-    querySnapshot.forEach((doc) => {
-        items.push(doc.data() as IBuilding);
-        // console.log(doc.data())
-    });
-    setBuildings(items)
-
-    // setLoading(false)
+  const items: Array<IBuilding> = [];
+  querySnapshot.forEach((doc) => {
+    items.push(doc.data() as IBuilding);
+    // console.log(doc.data())
   });
-}
+  setBuildings(items)
+  // setLoading(false)
+});
+}, []) 
+
 
 useEffect(() => {
-    getBuildings();
-}, []);
+  getBuildings(); 
+}, [getBuildings]); 
 
   useEffect(() => {
     const googleMapScript = loadMapApi();
