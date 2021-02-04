@@ -32,7 +32,7 @@ jobs:
           restore-keys: |
             nodeModules-
       - name: Install dependencies
-        run: npm build
+        run: npm install
         env:
           CI: true
 
