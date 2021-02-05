@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-
 import logging from './config/logging';
 import routes from './config/routes';
 
+
+
 const Application: React.FunctionComponent<{}> = props => {
 
   useEffect(() => {

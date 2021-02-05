@@ -24,6 +24,8 @@
 .env.production.local
 .env
 .eslintcache
+env-config.js
+/public/env-config.js
 
 npm-debug.log*
 yarn-debug.log*
