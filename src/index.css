@@ -4,14 +4,7 @@ body {
 
 img {
   width: 100%;
-  /* padding-top: 3em; */
-  /* padding: 1em; */
-  /* border-radius: 25px; */
 }
-
-/* .slogan {
-  padding-top:5em;
-} */
 
 .jumbotron {
   background: none;
@@ -20,4 +13,9 @@ img {
 .navbar {
   color: #0e365d;
   background: #bceeeb;
+}
+
+.btn {
+  margin: .5em;
+  outline: #f47591;
 }

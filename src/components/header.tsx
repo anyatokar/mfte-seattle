@@ -15,7 +15,7 @@ export const Header = () => {
           <LinkContainer to='/about-mfte'>
             <Nav.Link>About MFTE</Nav.Link>
           </LinkContainer>
-          <LinkContainer to='/about-mfte-simple'>
+          <LinkContainer to='/about-app'>
             <Nav.Link>About this app</Nav.Link>
           </LinkContainer>
           {/* <LinkContainer to='./pages/about'>

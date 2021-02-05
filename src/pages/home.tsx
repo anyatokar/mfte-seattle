@@ -16,11 +16,14 @@ const HomePage: React.FunctionComponent<IPage> = props => {
         <p className="lead">
           Find safe, comfortable, and affordable apartments for rent in Seattle.
         </p>
-        {/* <hr className="my-4"></hr> */}
+        <hr className="my-4"></hr>
         <p className="lead">
-          {/* <a className="btn btn-primary btn-lg" href="#" role="button">Search Buildings</a>
-          <a className="btn btn-primary btn-lg" href="#" role="button">About MFTE</a> */}
+        
         </p>
+        <div className="btn-toolbar">
+          <a className="btn btn-outline-info btn-lg" href="./buildings" role="button">Search Buildings</a>
+          <a className="btn btn-outline-info btn-lg" href="./about-mfte" role="button">About MFTE</a>
+        </div>
       </div>
     </div>
   )
