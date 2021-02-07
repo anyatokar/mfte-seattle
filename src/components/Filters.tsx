@@ -84,10 +84,12 @@ export function Filters<T>(props: IFiltersProps<T>) {
         };
 
         return (
-          <div key={key} className="input-group my-3">
-            {getRadioButton(true)}
-            {/* {getRadioButton(false)} */}
-          </div>
+          <section className="form-check-inline">
+            <div key={key} >
+              {getRadioButton(true)}
+              {/* {getRadioButton(false)} */}
+            </div>
+          </section>
         );
       })}
     </div>
