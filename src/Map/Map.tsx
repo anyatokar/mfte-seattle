@@ -3,14 +3,21 @@ import './Map.scss';
 import 'firebase/firestore';
 import IMap from "../interfaces/IMap";
 import IBuilding from '../interfaces/IBuilding';
+// import {InfoWindow} from 'google-map-react';
+// import {InfoWindow} from '@types/google-map-react'
+
 
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
-// type InfoWindow = google.maps.InfoWindow;
+type InfoWindow = google.maps.InfoWindow;
+
+
 
 let Markers:any = [];
 
 const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuildings}) => {
+
+  
 
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
@@ -40,6 +47,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
           draggableCursor: 'pointer',
         })
       )
+      
     }
   }, [mapType, mapTypeControl]);
 
@@ -53,6 +61,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
   function setMapOnAll(map: google.maps.Map | null) {
     for (let i = 0; i < Markers.length; i++) {
       Markers[i].setMap(map);
+      
     }
   }
   
@@ -65,22 +74,30 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
     Markers = [];
   }
 
+  const [infoWindowContent, setInfoWindowContent] = useState("something about building")
+
   drop(filteredBuildings)
 
   function drop(filteredBuildings:Array<IBuilding>) {
+    const infoWindow = new google.maps.InfoWindow({content: infoWindowContent});
     deleteMarkers();
-    for (var i = 0; i < filteredBuildings.length; i++) {
-      addMarker(filteredBuildings[i]);
+    for (let i = 0; i < filteredBuildings.length; i++) {
+      addMarker(filteredBuildings[i], infoWindow);
     }
   }
 
-  function addMarker(building:IBuilding) {
+  function addMarker(building:IBuilding, infoWindow:InfoWindow) {
+    setInfoWindowContent('hi')
+    
     const marker = new google.maps.Marker({ 
       position: new google.maps.LatLng({lat: building.lat, lng: building.lng}),
       map: map,
       animation: google.maps.Animation.DROP,
-    })
+    });
     Markers.push(marker);
+    marker.addListener("click", () => {
+      infoWindow.open(map, marker);
+    });
   }
 
   return (

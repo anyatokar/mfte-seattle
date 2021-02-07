@@ -27,6 +27,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [buildings, setBuildings] = useState([] as Array<IBuilding>);
+  // const [infoWindownContent, setInfoWindowContent] = useState('');
 
   // const [buildings, setBuildings] = useState([] as any);
 // const [loading, setLoading] = useState(false);
