@@ -69,7 +69,7 @@ useEffect(() => {
 
   const resultBuildings = buildings
     .filter((building) =>
-      genericSearch<IBuilding>(building, ["buildingName", "residentialTargetedArea", "number", "street", "zip"], query)
+      genericSearch<IBuilding>(building, ["buildingName", "residentialTargetedArea", "streetNum", "street", "zip"], query)
     )
     .filter((building) => genericFilter<IBuilding>(building, activeFilters))
     .sort((buildingA, buildingB) =>

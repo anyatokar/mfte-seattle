@@ -96,7 +96,32 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
     });
     
     Markers.push(marker);
-    marker.addListener("click", () => {
+
+    let contentString = 
+      '<div>' +
+        '<h5>' + building.buildingName + '</h5>' + 
+        '<h6>' + building.residentialTargetedArea + '</h6>' + 
+        '<p>' + building.streetNum + " "
+        + building.street +
+        '<br>' +
+        // TODO upload state to db
+        'Seattle' + ', ' +
+        building.state + " " +
+        building.zip  + '</p>' +
+        building.phone +
+        '<a href=' + building.urlforBuilding + '>' +
+        '<br>' +
+        building.urlforBuilding +
+        // '<br>' +
+        // '<button className="btn btn-info btn-sm">' + 
+        // 'Save to list' + 
+        // '</button>' +
+      '</div>'
+
+
+    
+    marker.addListener("mouseover", () => {
+      infoWindow.setContent(contentString)
       infoWindow.open(map, marker);
     });
   }

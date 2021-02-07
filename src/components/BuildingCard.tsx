@@ -14,7 +14,7 @@ export function BuildingCard(props: IBuilding) {
     twoBedroomUnits,
     threePlusBedroomUnits,
     urlforBuilding,
-    number,
+    streetNum,
     street, 
     city,
     state, 
@@ -27,7 +27,7 @@ export function BuildingCard(props: IBuilding) {
           <h1 className="card-title">{buildingName}</h1>
           {/* <Iframe url={urlforBuilding}></Iframe> */}
           <p className="card-text">Neighborhood: {residentialTargetedArea}</p>
-          <p className="card-text">Address: {number} {street}, {city}, {state} {zip}</p>
+          <p className="card-text">Address: {streetNum} {street}, {city}, {state} {zip}</p>
           <p className="card-text">Total Resticted Units: {totalRestrictedUnits}</p>
           <p className="card-text font-italic">Studios: {studioUnits}</p>
           <p className="card-text font-italic">One bedrooms: {oneBedroomUnits}</p>

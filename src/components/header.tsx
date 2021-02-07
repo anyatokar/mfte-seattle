@@ -25,7 +25,7 @@ export const Header = () => {
             <Nav.Link>About</Nav.Link>
           </LinkContainer> */}
                   <div className="nav-buttons">
-          <a className="btn btn-info btn-md " href="./buildings" role="button">Saved Homes</a>
+          <a className="btn btn-info btn-md" href="./buildings" role="button">Saved Homes</a>
           <a className="btn btn-info btn-md" href="./about-mfte" role="button">Saved Searches</a>
           <a className="btn btn-info btn-md pull-right" href="./about-mfte" role="button">Sign up or Login</a>
         </div>

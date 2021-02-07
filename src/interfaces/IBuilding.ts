@@ -10,7 +10,7 @@ export default interface IBuilding {
     urlforBuilding: string;
     lat: number;
     lng: number;
-    number: string;
+    streetNum: string;
     street: string;
     city: string;
     state: string;
