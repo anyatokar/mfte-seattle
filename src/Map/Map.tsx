@@ -21,7 +21,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
 
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
-  const [infoWindow, setInfoWindow] = useState<InfoWindow>();
+  // const [infoWindow, setInfoWindow] = useState<InfoWindow>();
 
   const startMap = (): void => {
     if (!map) {
@@ -87,13 +87,14 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
   }
 
   function addMarker(building:IBuilding, infoWindow:InfoWindow) {
-    setInfoWindowContent('hi')
+
     
     const marker = new google.maps.Marker({ 
       position: new google.maps.LatLng({lat: building.lat, lng: building.lng}),
       map: map,
       animation: google.maps.Animation.DROP,
     });
+    
     Markers.push(marker);
     marker.addListener("click", () => {
       infoWindow.open(map, marker);
