@@ -17,7 +17,7 @@ const AboutMFTEPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         <h1 className="display-4">About Multifamily Tax Exemption Program</h1>
         <hr className="my-4"></hr>
         <p className="lead">
-          This is placeholder text. I want this page to have more advice and information thats important to know such as income restrictions. 
+          This is placeholder text. I want this page to have more advice and information that's important to know such as income restrictions. 
         </p>
         <p className="lead">
           There are more than 4,000 units in over 250 apartment buildings in Seattle are rent-restricted through the Multifamily Tax Exemption Program and/or Incentive Zoning. These units are available to low to moderate income households, with specific income requirements dependent on the size of the household and the number of bedrooms. Each building's property management team handles the income certification and leasing process. Inquiries about current vacancies and the application process should be directed to the property.

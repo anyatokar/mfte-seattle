@@ -130,33 +130,41 @@ useEffect(() => {
           }}
         />}
       </div>
+      <h3>Search results:</h3>
 
       {/* map */}
-      <div>
-        {scriptLoaded && (
-          <Map
-            mapType={google.maps.MapTypeId.ROADMAP}
-            mapTypeControl={true}
-            filteredBuildings={resultBuildings}
-          />
-        )}
-      </div>
+      <section className="container-fluid">
+        <div className="row">
+
 
       {/* building list */}
-      <div className="container mx-auto my-2">
-        <h3>Search results:</h3>
-        {resultBuildings.length > 0 && (
-          <div className="row">
-            {resultBuildings.map((building) => (
-              <BuildingCard key={building.buildingName} {...building} />
-            ))}
+      {/* <div className="container mx-auto my-2"> */}
+          <div className="col container mx-auto my-2 overflow-auto buildings-list">
+
+            {resultBuildings.length > 0 && (
+              <div>
+                {resultBuildings.map((building) => (
+                  <BuildingCard key={building.buildingName} {...building} />
+                ))}
+              </div>
+            )}
+            {resultBuildings.length === 0 && <p>No results found!</p>}
+            {/* <p>{message}</p>
+            <Link to="/">Go to the home page!</Link> */}
           </div>
-        )}
-        {resultBuildings.length === 0 && <p>No results found!</p>}
-        {/* <p>{message}</p>
-        <Link to="/">Go to the home page!</Link> */}
-      </div>
+          <div className="col">
+            {scriptLoaded && (
+              <Map
+                mapType={google.maps.MapTypeId.ROADMAP}
+                mapTypeControl={true}
+                filteredBuildings={resultBuildings}
+              />
+            )}
+          </div>
+        </div>
+      </section>
     </div>
+
   );
 }
 

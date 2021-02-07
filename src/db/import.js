@@ -34,7 +34,8 @@ buildings.forEach(function(obj) {
     lat: obj.lat,
     lng: obj.lng,
     streetNum: obj.number,
-    street: obj.street, 
+    street: obj.street,
+    city: obj.city,
     state: obj.state,
     zip: obj.zip
   }).then(function(docRef) {

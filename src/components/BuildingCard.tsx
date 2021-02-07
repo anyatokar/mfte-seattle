@@ -1,4 +1,5 @@
 import * as React from "react";
+import Iframe from 'react-iframe'
 // import Moment from "react-moment";
 import IBuilding from "../interfaces/IBuilding";
 
@@ -24,6 +25,7 @@ export function BuildingCard(props: IBuilding) {
       <div>
         <div className="card-body">
           <h1 className="card-title">{buildingName}</h1>
+          {/* <Iframe url={urlforBuilding}></Iframe> */}
           <p className="card-text">Neighborhood: {residentialTargetedArea}</p>
           <p className="card-text">Address: {number} {street}, {city}, {state} {zip}</p>
           <p className="card-text">Total Resticted Units: {totalRestrictedUnits}</p>

@@ -14,7 +14,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
 
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
-  // const [infoWindow, setInfoWindow] = useState<InfoWindow>();
+  const [infoWindow, setInfoWindow] = useState<InfoWindow>();
 
   const startMap = (): void => {
     if (!map) {

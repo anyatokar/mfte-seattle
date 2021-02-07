@@ -19,3 +19,11 @@ img {
   margin: .5em;
   outline: #f47591;
 }
+
+.nav-buttons {
+  margin-right: auto;
+}
+
+.buildings-list {
+  height: 70vh;
+}
