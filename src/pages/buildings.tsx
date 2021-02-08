@@ -100,17 +100,6 @@ useEffect(() => {
       <div className="container mx-auto my-2">
         {/* search */}
         <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
-        {/* sort */}
-        {buildings.length > 0 && <Sorters<IBuilding>
-        
-          object={buildings[0]}
-          onChangeSorter={(property, isDescending) => {
-            setActiveSorter({
-              property,
-              isDescending,
-            });
-          }}
-        />}
         {/* filter */}
         {buildings.length > 0 && <Filters<IBuilding>
           object={buildings[0]}
@@ -131,7 +120,27 @@ useEffect(() => {
           }}
         />}
       </div>
-      <h3>Search results:</h3>
+
+      <section className="container-fluid">
+        <div className="row">
+        <div className="col-lg-4">
+      <h3>Results:</h3>
+
+
+              {/* sort */}
+              {buildings.length > 0 && <Sorters<IBuilding>
+        
+        object={buildings[0]}
+        onChangeSorter={(property, isDescending) => {
+          setActiveSorter({
+            property,
+            isDescending,
+          });
+        }}
+      />}
+       </div>
+      </div>
+      </section>
 
       {/* map */}
       <section className="container-fluid">

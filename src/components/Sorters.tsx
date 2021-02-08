@@ -12,7 +12,7 @@ export default function Sorters<T>(props: ISortersProps<T>) {
   const { object, onChangeSorter } = props;
   return (
     <>
-      <label htmlFor="sorters" className="mt-3"></label>
+      <label htmlFor="sorters" className="mt-3">Sort:</label>
       <select
         id="sorters"
         className="custom-select form-control w-50"
@@ -36,14 +36,14 @@ export default function Sorters<T>(props: ISortersProps<T>) {
                   value={[key, "true"]}
                 >
                   {/* sort by '{key}' descending */}
-                  sort descending by building name
+                  descending by building name
                 </option>
                 <option
                   key={`${key}-false`}
                   value={[key, "false"]}
                 >
                   {/* sort by '{key}' ascending */}
-                  sort ascending by building name
+                  ascending by building name
                 </option>
               </>
             );

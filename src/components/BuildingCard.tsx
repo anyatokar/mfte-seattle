@@ -49,15 +49,25 @@ export function BuildingCard(props: IBuilding) {
                 <h6> Total MFTE Units: {totalRestrictedUnits}</h6>
                   <text> Studios: {studioUnits}</text>
                   <br></br>
-                  <text>One bedrooms: {oneBedroomUnits}</text>
+                  <text>One beds: {oneBedroomUnits}</text>
                   <br></br>
-                  <text>Two bedrooms: {twoBedroomUnits}</text>
+                  <text>Two beds: {twoBedroomUnits}</text>
                   <br></br>
-                  <text>Three+ bedrooms: {threePlusBedroomUnits}</text>
+                  <text>Three+ beds: {threePlusBedroomUnits}</text>
               </div>
 
-              <div>
-              <a className="btn btn-outline-warning btn-md" href="./about-mfte" role="button">Save to List</a>
+              <div className="col-3">
+              <a className="btn btn-outline-secondary btn-sm" 
+                href={urlforBuilding} 
+                target="_blank" 
+                rel="noreferrer">
+                Open Website
+              </a>
+              <a className="btn btn-outline-warning btn-sm" 
+                href="./about-mfte" 
+                role="button">
+                Save to List
+              </a>
               </div>
             </div>
           </div>

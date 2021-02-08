@@ -52,8 +52,8 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
   }, [mapType, mapTypeControl]);
 
   const defaultMapStart = useCallback((): void => {
-    const defaultAddress = new google.maps.LatLng(47.608013, -122.335167);
-    initMap(12, defaultAddress);
+    const defaultAddress = new google.maps.LatLng(47.608013, -122.315);
+    initMap(15, defaultAddress);
   }, [initMap]);
 
   useEffect(startMap, [map, defaultMapStart]);
@@ -119,8 +119,8 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
       '</div>'
 
 
-    
-    marker.addListener("mouseover", () => {
+    // mouseover
+    marker.addListener("click", () => {
       infoWindow.setContent(contentString)
       infoWindow.open(map, marker);
     });
