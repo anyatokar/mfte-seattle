@@ -138,11 +138,11 @@ useEffect(() => {
           });
         }}
       />}
-       </div>
+      </div>
       </div>
       </section>
 
-      {/* map */}
+
       <section className="container-fluid">
         <div className="row">
 
@@ -162,6 +162,7 @@ useEffect(() => {
             {/* <p>{message}</p>
             <Link to="/">Go to the home page!</Link> */}
           </div>
+                {/* map */}
           <div className="col">
             {scriptLoaded && (
               <Map
