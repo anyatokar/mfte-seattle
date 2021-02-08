@@ -85,6 +85,7 @@ export function Filters<T>(props: IFiltersProps<T>) {
 
         return (
           <section className="form-check-inline">
+          {/* <section className="form-check"> */}
             <div key={key} >
               {getRadioButton(true)}
               {/* {getRadioButton(false)} */}
