@@ -15,7 +15,7 @@ img {
   background: #bceeeb;
 }
 
-.btn {
+.standalone-btn {
   margin: .5em;
   outline: #f47591;
 }
@@ -26,4 +26,8 @@ img {
 
 .buildings-list {
   height: 70vh;
+}
+
+.btn-group-btn {
+  margin: none;
 }

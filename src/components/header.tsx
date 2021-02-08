@@ -1,9 +1,9 @@
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, ButtonGroup } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
 export const Header = () => {
   return (
-    <div className="navbar">
+    <div>
       <Navbar variant="light">
         <Nav className="mr-auto">
           <LinkContainer to='/'>
@@ -24,12 +24,17 @@ export const Header = () => {
           <LinkContainer to='./pages/about'>
             <Nav.Link>About</Nav.Link>
           </LinkContainer> */}
-                  <div className="nav-buttons">
-          {/* <a className="btn btn-info btn-md" href="./buildings" role="button">Saved Homes</a>
-          <a className="btn btn-info btn-md" href="./about-mfte" role="button">Saved Searches</a>
-          <a className="btn btn-info btn-md pull-right" href="./about-mfte" role="button">Sign up or Login</a> */}
-        </div>
-        </Nav>
+                  </Nav>
+          <ButtonGroup className='ml-auto'>
+
+          <div className="btn-group btn-group-md" role="group" aria-label="logged in user button group">
+            <a className="btn btn-info btn-group-btn" href="./buildings" role="button">Saved Homes</a>
+            <a className="btn btn-info btn-group-btn" href="./about-mfte" role="button">Saved Searches</a>
+            <a className="btn btn-info btn-group-btn" href="./about-mfte" role="button">Sign up or Login</a>
+
+          </div>
+          </ButtonGroup>
+
       </Navbar>
     </div>
   )

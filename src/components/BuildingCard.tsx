@@ -57,13 +57,13 @@ export function BuildingCard(props: IBuilding) {
               </div>
 
               <div className="col-3">
-              <a className="btn btn-outline-secondary btn-sm" 
+              <a className="btn btn-outline-secondary btn-sm standalone-btn" 
                 href={urlforBuilding} 
                 target="_blank" 
                 rel="noreferrer">
                 Open Website
               </a>
-              <a className="btn btn-outline-warning btn-sm" 
+              <a className="btn btn-outline-warning btn-sm standalone-btn" 
                 href="./about-mfte" 
                 role="button">
                 Save to List

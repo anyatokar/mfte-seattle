@@ -21,8 +21,8 @@ const HomePage: React.FunctionComponent<IPage> = props => {
         
         </p>
         <div className="btn-toolbar">
-          <a className="btn btn-outline-info btn-lg" href="./buildings" role="button">Search Buildings</a>
-          <a className="btn btn-outline-info btn-lg" href="./about-mfte" role="button">About MFTE</a>
+          <a className="btn btn-outline-info btn-lg standalone-btn" href="./buildings" role="button">View Buildings</a>
+          <a className="btn btn-outline-info btn-lg standalone-btn" href="./about-mfte" role="button">About MFTE</a>
         </div>
       </div>
     </div>
