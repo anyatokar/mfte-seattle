@@ -140,7 +140,7 @@ useEffect(() => {
 
       {/* building list */}
       {/* <div className="container mx-auto my-2"> */}
-          <div className="col container mx-auto my-2 overflow-auto buildings-list">
+          <div className="col-lg-4 col-med-12 mx-auto my-2 overflow-auto buildings-list">
 
             {resultBuildings.length > 0 && (
               <div>

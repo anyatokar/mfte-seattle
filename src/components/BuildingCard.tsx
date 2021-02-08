@@ -24,7 +24,15 @@ export function BuildingCard(props: IBuilding) {
     <div>
       <div>
         <div className="card-body">
-          <h4 className="card-title">{<a href={urlforBuilding}>{buildingName}</a>}</h4>
+          {/* <h4 className="card-title">{<a href={urlforBuilding}>{buildingName}</a>}</h4> */}
+          <h4 className="card-title">{
+            <a id="myLink" 
+              href={urlforBuilding} 
+              target="_blank" 
+              rel="noreferrer">
+              {buildingName}
+            </a>}
+          </h4>
           <div className="container-fluid">
             <div className="row">
               <div className="col">
