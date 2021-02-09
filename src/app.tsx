@@ -17,8 +17,6 @@ import UpdateProfile from "./auth_components/UpdateProfile"
 
 import { Component, FunctionComponent, useState } from "react";
 import { render } from "react-dom";
-import { Modal } from './modal/modal'
-import { ConfirmationModal } from './confirmation-modal/confirmation-modal'
 import { useModal } from './useModal';
 
 
@@ -64,19 +62,7 @@ const Application: React.FunctionComponent<{}> = props => {
 
       <div>
         <Router>
-        <button onClick={toggle}>Open modal</button>
-        <Modal
-          isShown={isShown}
-          hide={toggle}
-          headerText='Confirmation'
-          modalContent={
-            <ConfirmationModal 
-              onConfirm={onConfirm} 
-              onCancel={onCancel}
-              message='Are you sure you want to delete element?'
-            />
-          }
-        />
+        
           <Header />
           <AuthProvider>
             <Switch>

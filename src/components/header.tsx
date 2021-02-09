@@ -1,7 +1,26 @@
-import { Navbar, Nav, ButtonGroup } from 'react-bootstrap';
+import { Navbar, Nav, ButtonGroup, Button, Modal } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
+import Signup from '../auth_components/Signup';
+
+import { Component, FunctionComponent, useState } from "react";
+import { render } from "react-dom";
+import { useModal } from '../useModal';
+import Login from "../auth_components/Login"
 
 export const Header = () => {
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+//   const { isShown, toggle } = useModal();
+  
+// const onConfirm = () => toggle();
+// const onCancel = () => toggle();
+
+const [modalShow, setModalShow] = useState(false);
+
   return (
     <div>
       <Navbar variant="light">
@@ -30,8 +49,46 @@ export const Header = () => {
           <div className="btn-group btn-group-md" role="group" aria-label="logged in user button group">
             <a className="btn btn-info btn-group-btn" href="./saved-homes" role="button">Saved Homes</a>
             <a className="btn btn-info btn-group-btn" href="./saved-searches" role="button">Saved Searches</a>
-            <a className="btn btn-info btn-group-btn" href="./about-mfte" role="button">Sign up or Login</a>
+            <a className="btn btn-info btn-group-btn" href="./login" role="button">Sign up or Login</a>
+            
 
+
+            <>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* <Login /> */}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+
+            {/* <button onClick={toggle}>Open modal</button>
+            <Modal
+              isShown={isShown}
+              hide={toggle}
+              headerText='Confirmation'
+              modalContent={
+                <ConfirmationModal 
+                  onConfirm={onConfirm} 
+                  onCancel={onCancel}
+                  message='Are you sure you want to delete element?'
+                />
+              }
+            /> */}
           </div>
           </ButtonGroup>
 
