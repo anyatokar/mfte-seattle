@@ -28,8 +28,8 @@ export const Header = () => {
           <ButtonGroup className='ml-auto'>
 
           <div className="btn-group btn-group-md" role="group" aria-label="logged in user button group">
-            <a className="btn btn-info btn-group-btn" href="./buildings" role="button">Saved Homes</a>
-            <a className="btn btn-info btn-group-btn" href="./about-mfte" role="button">Saved Searches</a>
+            <a className="btn btn-info btn-group-btn" href="./saved-homes" role="button">Saved Homes</a>
+            <a className="btn btn-info btn-group-btn" href="./saved-searches" role="button">Saved Searches</a>
             <a className="btn btn-info btn-group-btn" href="./about-mfte" role="button">Sign up or Login</a>
 
           </div>

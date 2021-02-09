@@ -3,6 +3,9 @@ import BuildingsPage from '../pages/buildings';
 import AboutMFTEPage from '../pages/about-mfte';
 import AboutAppPage from '../pages/about-app';
 import HomePage from '../pages/home';
+import SavedHomesPage from '../pages/saved-homes';
+import SavedSearchesPage from '../pages/saved-searches';
+
 
 const routes: IRoute[] = [
     {
@@ -27,6 +30,18 @@ const routes: IRoute[] = [
       path: '/about-app',
       name: 'About App Page',
       component: AboutAppPage,
+      exact: true
+    },
+    {
+      path: '/saved-homes',
+      name: 'Saved Homes Page',
+      component: SavedHomesPage,
+      exact: true
+    },
+    {
+      path: '/saved-searches',
+      name: 'Saved Searches Page',
+      component: SavedSearchesPage,
       exact: true
     },
     // {
