@@ -12,10 +12,10 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState(false)
 
 
-  const [show, setShow] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseSignup = () => setShowSignup(false);
+  const handleShowSignup = () => setShowSignup(true);
 
 
   async function handleSubmit(e: any) {
@@ -60,8 +60,8 @@ export default function ForgotPassword() {
           </div>
 
       <div className="w-100 text-center mt-2">
-        Need an account? <Button onClick={handleShow}>Sign Up</Button>
-        <Modal show={show} onHide={handleClose}>
+        Need an account? <Button onClick={handleShowSignup}>Sign Up</Button>
+        <Modal show={showSignup} onHide={handleCloseSignup}>
               <Signup />
             </Modal>
       </div>
