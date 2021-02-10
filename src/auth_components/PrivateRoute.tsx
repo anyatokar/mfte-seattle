@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 
 export default function PrivateRoute({ component: Component, ...rest }: any) {
-  const { currentUser } = useAuth()
+  const { currentUser } = useAuth() as any
 
   return (
     <Route

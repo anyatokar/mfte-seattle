@@ -49,30 +49,16 @@ const [modalShow, setModalShow] = useState(false);
           <div className="btn-group btn-group-md" role="group" aria-label="logged in user button group">
             <a className="btn btn-info btn-group-btn" href="./saved-homes" role="button">Saved Homes</a>
             <a className="btn btn-info btn-group-btn" href="./saved-searches" role="button">Saved Searches</a>
-            <a className="btn btn-info btn-group-btn" href="./login" role="button">Sign up or Login</a>
+            <Button variant="btn btn-info btn-group-btn" onClick={handleShow}>Sign up or Login</Button>
+
             
 
 
             <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
+      
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {/* <Login /> */}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+
+          <Login />
       </Modal>
     </>
 

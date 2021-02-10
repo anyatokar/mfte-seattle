@@ -5,6 +5,7 @@ import AboutAppPage from '../pages/about-app';
 import HomePage from '../pages/home';
 import SavedHomesPage from '../pages/saved-homes';
 import SavedSearchesPage from '../pages/saved-searches';
+import LoginModal from '../auth_components/Login'
 
 
 const routes: IRoute[] = [
@@ -44,6 +45,13 @@ const routes: IRoute[] = [
       component: SavedSearchesPage,
       exact: true
     },
+
+    // {
+    //   path: '/buildings/login',
+    //   name: 'Login Modal',
+    //   component: LoginModal,
+    //   exact: true
+    // },
     // {
     //     path: '/buildings/:number',
     //     name: 'Building Details Page',
