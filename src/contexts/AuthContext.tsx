@@ -22,8 +22,9 @@ export function AuthProvider({ children}: IProps) {
       password).then(cred => {
         if (cred.user) {
       return firebase.firestore().collection('users').doc(cred.user.uid).set({
+        email: cred.user.email,
         savedHomes: {}, 
-        savedSearches: {}
+        savedSearches: {} 
       })
       }})
       return { user }
