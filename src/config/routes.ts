@@ -6,9 +6,9 @@ import HomePage from '../pages/home';
 import SavedHomesPage from '../pages/saved-homes';
 import SavedSearchesPage from '../pages/saved-searches';
 import DashboardPage from '../auth_components/Dashboard'
-import LoginModal from '../auth_components/Login'
-import SignupModal from '../auth_components/Signup'
-import ForgotPasswordModal from '../auth_components/ForgotPassword'
+// import LoginModal from '../auth_components/Login'
+// import SignupModal from '../auth_components/Signup'
+// import ForgotPasswordModal from '../auth_components/ForgotPassword'
 
 
 const routes: IRoute[] = [
@@ -55,11 +55,18 @@ const routes: IRoute[] = [
       exact: true
     },
     {
-      path: '/buildings/signup',
-      name: 'Signup Modal',
-      component: SignupModal,
+      path: '*',
+      name: 'Home Page',
+      component: HomePage,
       exact: true
     },
+
+    // {
+    //   path: '/buildings/signup',
+    //   name: 'Signup Modal',
+    //   component: SignupModal,
+    //   exact: true
+    // },
     // {
     //   path: '/../password-reset',
     //   name: 'Forgot Password Modal',

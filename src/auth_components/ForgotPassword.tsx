@@ -3,6 +3,7 @@ import { Form, Button, Modal, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import Signup from "./Signup"
+import Login from "./Login"
 
 export default function ForgotPassword() {
   const emailRef = useRef() as any
@@ -10,6 +11,11 @@ export default function ForgotPassword() {
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
+
+  const [showLogin, setShowLogin] = useState(false);
+
+  const handleCloseLogin = () => setShowLogin(false);
+  const handleShowLogin = () => setShowLogin(true);
 
 
   const [showSignup, setShowSignup] = useState(false);
@@ -56,7 +62,10 @@ export default function ForgotPassword() {
           </Modal.Body>
           <Modal.Footer>
           <div className="w-100 text-center mt-3">
-            <Link to="/login">Login</Link>
+            Already have an account? <Button onClick={handleShowLogin}>Log In</Button>
+            <Modal show={showLogin} onHide={handleCloseLogin}>
+              <Login/>
+            </Modal>
           </div>
 
       <div className="w-100 text-center mt-2">
