@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Modal, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import ForgotPassword from "./ForgotPassword"
 
 export default function Signup() {
   const emailRef = useRef() as any
@@ -33,9 +34,12 @@ export default function Signup() {
 
   return (
     <>
-      <Modal>
+        
+        <Modal.Header closeButton>
+          <Modal.Title>Sign Up</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
-          <h2 className="text-center mb-4">Sign Up</h2>
+          {/* <h2 className="text-center mb-4">Sign Up</h2> */}
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
@@ -55,10 +59,12 @@ export default function Signup() {
             </Button>
           </Form>
         </Modal.Body>
-      </Modal>
-      <div className="w-100 text-center mt-2">
+        <Modal.Footer>
+        <div className="w-100 text-center mt-2">
         Already have an account? <Link to="/login">Log In</Link>
       </div>
+        </Modal.Footer>
+
     </>
   )
 }

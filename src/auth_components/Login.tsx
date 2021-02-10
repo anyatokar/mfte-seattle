@@ -63,9 +63,9 @@ export default function Login() {
             <Button onClick={ForgotPassword}>Forgot Password?</Button>
           </div>
           <div className="w-100 text-center mt-2">
-        Need an account? <Button onClick={Signup}>Sign Up</Button>
+        Need an account? <Button onClick={handleShow}>Sign Up</Button>
         <Modal show={show} onHide={handleClose}>
-              <Login />
+              <Signup />
             </Modal>
       </div>
         </Modal.Footer>

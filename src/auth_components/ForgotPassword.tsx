@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Form, Button, Card, Alert, Modal } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
+import Signup from "./Signup"
 
 export default function ForgotPassword() {
   const emailRef = useRef() as any
@@ -9,6 +10,13 @@ export default function ForgotPassword() {
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
+
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
 
   async function handleSubmit(e: any) {
     e.preventDefault()
@@ -48,7 +56,10 @@ export default function ForgotPassword() {
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Need an account? <Link to="/signup">Sign Up</Link>
+        Need an account? <Button onClick={handleShow}>Sign Up</Button>
+        <Modal show={show} onHide={handleClose}>
+              <Signup />
+            </Modal>
       </div>
     </>
   )
