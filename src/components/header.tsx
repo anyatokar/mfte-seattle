@@ -16,6 +16,13 @@ export const Header = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+//   const { isShown, toggle } = useModal();
+  
+// const onConfirm = () => toggle();
+// const onCancel = () => toggle();
+
+// const [modalShow, setModalShow] = useState(false);
+
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth() as any
   const history = useHistory()

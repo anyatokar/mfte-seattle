@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert, Modal } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import ForgotPassword from "./ForgotPassword"
+import Signup from "./Signup"
 
 export default function Login() {
   const emailRef = useRef() as any
@@ -34,6 +35,7 @@ export default function Login() {
 
   return (
     <>
+  
             <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
@@ -58,18 +60,16 @@ export default function Login() {
         </Modal.Body>
         <Modal.Footer>
         <div className="w-100 text-center mt-3">
-            {/* <Button onClick={handleShow}>Forgot Password?</Button>
-
-            <Modal show={show} onHide={handleClose}>
-              <ForgotPassword />
-            </Modal> */}
-
-            <Link to="/forgot-password">Forgot Password?</Link>
+            <Button onClick={ForgotPassword}>Forgot Password?</Button>
           </div>
           <div className="w-100 text-center mt-2">
-        Need an account? <Link to="/signup">Sign Up</Link>
+        Need an account? <Button onClick={Signup}>Sign Up</Button>
+        <Modal show={show} onHide={handleClose}>
+              <Login />
+            </Modal>
       </div>
         </Modal.Footer>
+      
 
 
     </>
