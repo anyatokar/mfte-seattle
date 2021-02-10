@@ -1,4 +1,4 @@
-import { Navbar, Nav, ButtonGroup, Button, Modal } from 'react-bootstrap';
+import { Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import Signup from '../auth_components/Signup';
 
@@ -6,6 +6,8 @@ import { Component, FunctionComponent, useState } from "react";
 import { render } from "react-dom";
 import { useModal } from '../useModal';
 import Login from "../auth_components/Login"
+import { useAuth } from "../contexts/AuthContext"
+import { Link, useHistory } from "react-router-dom"
 
 export const Header = () => {
 
@@ -20,6 +22,21 @@ export const Header = () => {
 // const onCancel = () => toggle();
 
 // const [modalShow, setModalShow] = useState(false);
+
+  const [error, setError] = useState("")
+  const { currentUser, logout } = useAuth() as any
+  const history = useHistory()
+
+  async function handleLogout() {
+    setError("")
+
+    try {
+      await logout()
+      // history.push("/login")
+    } catch {
+      setError("Failed to log out")
+    }
+  }
 
   return (
     <div>
@@ -37,48 +54,30 @@ export const Header = () => {
           <LinkContainer to='/about-app'>
             <Nav.Link>About this app</Nav.Link>
           </LinkContainer>
-          {/* <LinkContainer to='./pages/about'>
-            <Nav.Link>About</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to='./pages/about'>
-            <Nav.Link>About</Nav.Link>
-          </LinkContainer> */}
-                  </Nav>
-          <ButtonGroup className='ml-auto'>
+        </Nav>
 
-          <div className="btn-group btn-group-md" role="group" aria-label="logged in user button group">
-            <a className="btn btn-info btn-group-btn" href="./saved-homes" role="button">Saved Homes</a>
-            <a className="btn btn-info btn-group-btn" href="./saved-searches" role="button">Saved Searches</a>
-            {}
-            <Button variant="btn btn-info btn-group-btn" onClick={handleShow}>Sign up or Login</Button>
-
-            
-
-
-            <>
-      
-      <Modal show={show} onHide={handleClose}>
-
-          <Login />
-      </Modal>
-    </>
-
-            {/* <button onClick={toggle}>Open modal</button>
-            <Modal
-              isShown={isShown}
-              hide={toggle}
-              headerText='Confirmation'
-              modalContent={
-                <ConfirmationModal 
-                  onConfirm={onConfirm} 
-                  onCancel={onCancel}
-                  message='Are you sure you want to delete element?'
-                />
-              }
-            /> */}
-          </div>
-          </ButtonGroup>
-
+        <ButtonGroup>
+          { currentUser ? (
+          <>
+            <Button href="./saved-homes" variant="warning">Saved Homes</Button>
+            <Button href="./saved-searches" variant="warning">Saved Searches</Button>
+            <DropdownButton as={ButtonGroup} title={currentUser.email} id="bg-nested-dropdown" variant="warning">
+              <Dropdown.Item href="./dashboard" eventKey="1">Dashboard</Dropdown.Item>
+              <Dropdown.Item href="./update-profile" eventKey="2">Update Profile</Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout} eventKey="3">Logout</Dropdown.Item>
+            </DropdownButton>
+          </>
+          ) : (
+          <>
+            <Button href="./saved-homes" variant="info">Saved Homes</Button>
+            <Button href="./saved-searches" variant="info">Saved Searches</Button>
+            <Button onClick={handleShow} variant="info">Log in or Sign up</Button>
+            <Modal show={show} onHide={handleClose}>
+              <Login />
+            </Modal>
+          </>
+          )}
+        </ButtonGroup>
       </Navbar>
     </div>
   )

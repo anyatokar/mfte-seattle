@@ -14,6 +14,8 @@ import Login from "./auth_components/Login"
 import PrivateRoute from "./auth_components/PrivateRoute"
 import ForgotPassword from "./auth_components/ForgotPassword"
 import UpdateProfile from "./auth_components/UpdateProfile"
+import { useAuth } from "./contexts/AuthContext"
+
 
 
 
@@ -24,9 +26,14 @@ import { useModal } from './useModal';
 
 const Application: React.FunctionComponent<{}> = props => {
 
+  
+
+
   useEffect(() => {
     logging.info('Loading application.');
   }, [])
+
+
 
   return (
     <div>
@@ -62,11 +69,11 @@ const Application: React.FunctionComponent<{}> = props => {
           <AuthProvider>
           <Header />
             <Switch>
-              <PrivateRoute exact path="/" component={Dashboard} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
-              <Route path="/signup" component={Signup} />
+              {/* <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
-              <Route path="/forgot-password" component={ForgotPassword} />
+              <Route path="/forgot-password" component={ForgotPassword} /> */}
               
               {routes.map((route, index) => {
             return (
