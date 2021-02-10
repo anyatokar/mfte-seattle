@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert, Modal } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import ForgotPassword from "./ForgotPassword"
 
 export default function Login() {
   const emailRef = useRef() as any
@@ -10,6 +11,11 @@ export default function Login() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   async function handleSubmit(e: any) {
     e.preventDefault()
@@ -52,6 +58,12 @@ export default function Login() {
         </Modal.Body>
         <Modal.Footer>
         <div className="w-100 text-center mt-3">
+            {/* <Button onClick={handleShow}>Forgot Password?</Button>
+
+            <Modal show={show} onHide={handleClose}>
+              <ForgotPassword />
+            </Modal> */}
+
             <Link to="/forgot-password">Forgot Password?</Link>
           </div>
           <div className="w-100 text-center mt-2">

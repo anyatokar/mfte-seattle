@@ -5,7 +5,10 @@ import AboutAppPage from '../pages/about-app';
 import HomePage from '../pages/home';
 import SavedHomesPage from '../pages/saved-homes';
 import SavedSearchesPage from '../pages/saved-searches';
+import DashboardPage from '../auth_components/Dashboard'
 import LoginModal from '../auth_components/Login'
+import SignupModal from '../auth_components/Signup'
+import ForgotPasswordModal from '../auth_components/ForgotPassword'
 
 
 const routes: IRoute[] = [
@@ -45,19 +48,30 @@ const routes: IRoute[] = [
       component: SavedSearchesPage,
       exact: true
     },
-
+    {
+      path: '/dashboard',
+      name: 'Dashboard Page',
+      component: DashboardPage,
+      exact: true
+    },
+    {
+      path: '/buildings/signup',
+      name: 'Signup Modal',
+      component: SignupModal,
+      exact: true
+    },
     // {
-    //   path: '/buildings/login',
-    //   name: 'Login Modal',
-    //   component: LoginModal,
+    //   path: '/../password-reset',
+    //   name: 'Forgot Password Modal',
+    //   component: ForgotPasswordModal,
     //   exact: true
     // },
-    // {
-    //     path: '/buildings/:number',
-    //     name: 'Building Details Page',
-    //     component: BuildingsPage,
-    //     exact: true
-    // },
+//     {
+//         path: '/buildings/:number',
+//         name: 'Building Details Page',
+//         component: BuildingsPage,
+//         exact: true
+//     },
 ]
 
 export default routes;

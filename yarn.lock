@@ -10733,6 +10733,11 @@ react-router-dom@^5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-router-modal@^2.0.0-rc3:
+  version "2.0.0-rc3"
+  resolved "https://registry.yarnpkg.com/react-router-modal/-/react-router-modal-2.0.0-rc3.tgz#f03e569e895a417635c9a0114f6265356cc0b724"
+  integrity sha512-jXbhz+kK8ons1EUDW0AJt/a8gWXzMiLhLR1oHNC/4X6iKvd7+KOL/Ftwsh9pnmsmhXmFCveTt+riaoHm3d68jQ==
+
 react-router@5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-5.2.0.tgz#424e75641ca8747fbf76e5ecca69781aa37ea293"
