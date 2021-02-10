@@ -13,10 +13,15 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
-  const [show, setShow] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseSignup = () => setShowSignup(false);
+  const handleShowSignup = () => setShowSignup(true);
+
+  const [showPassReset, setShowPassReset] = useState(false);
+
+  const handleClosePassReset = () => setShowPassReset(false);
+  const handleShowPassReset = () => setShowPassReset(true);
 
   async function handleSubmit(e: any) {
     e.preventDefault()
@@ -57,18 +62,23 @@ export default function Login() {
             </Button>
           </Form>
           
-        </Modal.Body>
-        <Modal.Footer>
+      </Modal.Body>
+      <Modal.Footer>
         <div className="w-100 text-center mt-3">
-            <Button onClick={ForgotPassword}>Forgot Password?</Button>
-          </div>
-          <div className="w-100 text-center mt-2">
-        Need an account? <Button onClick={handleShow}>Sign Up</Button>
-        <Modal show={show} onHide={handleClose}>
-              <Signup />
-            </Modal>
-      </div>
-        </Modal.Footer>
+          <Button onClick={handleShowPassReset}>Forgot Password?</Button>
+          <Modal show={showPassReset} onHide={handleClosePassReset}>
+            <ForgotPassword />
+          </Modal>
+        </div>
+
+        <div className="w-100 text-center mt-2">
+          Need an account? 
+          <Button onClick={handleShowSignup}>Sign Up</Button>
+          <Modal show={showSignup} onHide={handleCloseSignup}>
+            <Signup />
+          </Modal>
+        </div>
+      </Modal.Footer>
       
 
 

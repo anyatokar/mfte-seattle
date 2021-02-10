@@ -3,6 +3,7 @@ import { Form, Button, Modal, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import ForgotPassword from "./ForgotPassword"
+import Login from "./Login"
 
 export default function Signup() {
   const emailRef = useRef() as any
@@ -12,6 +13,12 @@ export default function Signup() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   async function handleSubmit(e: any) {
     e.preventDefault()
@@ -61,7 +68,11 @@ export default function Signup() {
         </Modal.Body>
         <Modal.Footer>
         <div className="w-100 text-center mt-2">
-        Already have an account? <Link to="/login">Log In</Link>
+        {/* Already have an account? <Link to="/login">Log In</Link> */}
+        Already have an account? <Button onClick={handleShow}>Log In</Button>
+        <Modal show={show} onHide={handleClose}>
+              <Login/>
+            </Modal>
       </div>
         </Modal.Footer>
 
