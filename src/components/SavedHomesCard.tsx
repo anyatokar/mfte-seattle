@@ -6,7 +6,7 @@ import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext"
 
-export function BuildingCard(props: IBuilding) {
+export function SavedHomesCard(props: IBuilding) {
   const { currentUser } = useAuth() as any
   const {
     id,
@@ -26,15 +26,10 @@ export function BuildingCard(props: IBuilding) {
     zip,
   } = props;
 
-  function saveBuilding(e: any) {
-
-    firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").add(
-      {buildingName: buildingName,
-        lat: 47.6253,
-        lng: -122.3222,
-      })
+  function deleteBuilding(e: any) {
+    firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingName).delete()
     .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document deleted: ", docRef);
   })
   .catch((error) => {
       console.error("Error adding document: ", error);
@@ -85,11 +80,11 @@ export function BuildingCard(props: IBuilding) {
                 rel="noreferrer">
                 Open Website
               </a>
-              <a className="btn btn-outline-warning btn-sm standalone-btn"
+              <a className="btn btn-outline-danger btn-sm standalone-btn"
                               // href={urlforBuilding} 
-                onClick={saveBuilding}
+                onClick={deleteBuilding}
                 role="button">
-                Save to List
+                Delete from List
               </a>
               </div>
             </div>

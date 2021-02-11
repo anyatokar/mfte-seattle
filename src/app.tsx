@@ -22,6 +22,8 @@ import { useAuth } from "./contexts/AuthContext"
 import { Component, FunctionComponent, useState } from "react";
 import { render } from "react-dom";
 import { useModal } from './useModal';
+import savedHomes from './pages/saved-homes';
+import savedSearches from './pages/saved-searches';
 
 
 const Application: React.FunctionComponent<{}> = props => {
@@ -71,6 +73,8 @@ const Application: React.FunctionComponent<{}> = props => {
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
+              <PrivateRoute path="/saved-homes" component={savedHomes} />
+              <PrivateRoute path="/saved-searches" component={savedSearches} />
               {/* <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} /> */}

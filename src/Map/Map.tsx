@@ -53,7 +53,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
 
   const defaultMapStart = useCallback((): void => {
     const defaultAddress = new google.maps.LatLng(47.608013, -122.315);
-    initMap(15, defaultAddress);
+    initMap(14, defaultAddress);
   }, [initMap]);
 
   useEffect(startMap, [map, defaultMapStart]);

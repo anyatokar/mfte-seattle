@@ -15,7 +15,7 @@ import 'firebase/firestore';
 
 import Sorters from "../components/Sorters";
 import SearchInput from "../components/SearchInput";
-import { BuildingCard } from "../components/BuildingCard";
+import { SavedHomesCard } from "../components/SavedHomesCard";
 import IBuilding from "../interfaces/IBuilding";
 // import buildings from "../db/buildings";
 import { genericSort } from "../utils/genericSort";
@@ -129,13 +129,24 @@ useEffect(() => {
             {resultBuildings.length > 0 && (
               <div>
                 {resultBuildings.map((building) => (
-                  <BuildingCard key={building.buildingName} {...building} />
+                  <SavedHomesCard key={building.buildingName} {...building} />
                 ))}
               </div>
             )}
             {resultBuildings.length === 0 && <p>No results found!</p>}
             {/* <p>{message}</p>
             <Link to="/">Go to the home page!</Link> */}
+
+                            {/* map */}
+          {/* <div className="col">
+            {scriptLoaded && (
+              <Map
+                mapType={google.maps.MapTypeId.ROADMAP}
+                mapTypeControl={true}
+                filteredBuildings={resultBuildings}
+              />
+            )}
+          </div> */}
           </div>
         </div>
       </section>
