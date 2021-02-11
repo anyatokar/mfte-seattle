@@ -28,11 +28,11 @@ export function BuildingCard(props: IBuilding) {
 
   function saveBuilding(e: any) {
 
-    firebase.firestore().collection("users").doc(currentUser.uid).update({savedHomes:
-      {"buildingName": buildingName}
-    })
+    firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").add(
+      {buildingName: buildingName
+      })
     .then((docRef) => {
-      console.log("Document written with ID: ");
+      console.log("Document written with ID: ", {id});
   })
   .catch((error) => {
       console.error("Error adding document: ", error);
