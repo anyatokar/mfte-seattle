@@ -1,10 +1,15 @@
 import * as React from "react";
 import Iframe from 'react-iframe'
+import app from "../db/firebase";
 // import Moment from "react-moment";
 import IBuilding from "../interfaces/IBuilding";
+import firebase from "../db/firebase"
+import { useAuth } from "../contexts/AuthContext"
 
 export function BuildingCard(props: IBuilding) {
+  const { currentUser } = useAuth() as any
   const {
+    id,
     buildingName,
     phone,
     residentialTargetedArea,
@@ -20,6 +25,21 @@ export function BuildingCard(props: IBuilding) {
     state, 
     zip,
   } = props;
+
+  function saveBuilding(e: any) {
+
+    firebase.firestore().collection("users").doc(currentUser.uid).update({savedHomes:
+      {"buildingName": buildingName}
+    })
+    .then((docRef) => {
+      console.log("Document written with ID: ");
+  })
+  .catch((error) => {
+      console.error("Error adding document: ", error);
+  });
+
+
+  }
   return (
     <div>
       <div>
@@ -63,8 +83,9 @@ export function BuildingCard(props: IBuilding) {
                 rel="noreferrer">
                 Open Website
               </a>
-              <a className="btn btn-outline-warning btn-sm standalone-btn" 
-                href="./about-mfte" 
+              <a className="btn btn-outline-warning btn-sm standalone-btn"
+                              // href={urlforBuilding} 
+                onClick={saveBuilding}
                 role="button">
                 Save to List
               </a>
