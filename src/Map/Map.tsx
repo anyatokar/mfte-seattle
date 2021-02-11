@@ -74,12 +74,12 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
     Markers = [];
   }
 
-  const [infoWindowContent, setInfoWindowContent] = useState("something about building")
+  // const [infoWindowContent, setInfoWindowContent] = useState("something about building")
 
   drop(filteredBuildings)
 
   function drop(filteredBuildings:Array<IBuilding>) {
-    const infoWindow = new google.maps.InfoWindow({content: infoWindowContent});
+    const infoWindow = new google.maps.InfoWindow({content: ''});
     deleteMarkers();
     for (let i = 0; i < filteredBuildings.length; i++) {
       addMarker(filteredBuildings[i], infoWindow);
@@ -87,8 +87,6 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
   }
 
   function addMarker(building:IBuilding, infoWindow:InfoWindow) {
-
-    
     const marker = new google.maps.Marker({ 
       position: new google.maps.LatLng({lat: building.lat, lng: building.lng}),
       map: map,

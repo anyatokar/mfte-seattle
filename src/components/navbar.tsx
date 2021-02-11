@@ -16,6 +16,8 @@ export const Header = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+
+
 //   const { isShown, toggle } = useModal();
   
 // const onConfirm = () => toggle();
@@ -26,6 +28,11 @@ export const Header = () => {
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth() as any
   const history = useHistory()
+
+  function onClick(e: any) {
+    e.preventDefault()
+    history.push(e.target.value)
+  };
 
   async function handleLogout() {
     setError("")
@@ -56,11 +63,11 @@ export const Header = () => {
           </LinkContainer>
         </Nav>
 
-        <ButtonGroup>
+        <ButtonGroup >
           { currentUser ? (
           <>
-            <Button href="./saved-homes" variant="warning">Saved Homes</Button>
-            <Button href="./saved-searches" variant="warning">Saved Searches</Button>
+            <Button onClick={onClick} value="./saved-homes" variant="warning">Saved Homes</Button>
+            <Button onClick={onClick} value="./saved-searches" variant="warning">Saved Searches</Button>
             <DropdownButton as={ButtonGroup} title={currentUser.email} id="bg-nested-dropdown" variant="warning">
               <Dropdown.Item href="./dashboard" eventKey="1">Dashboard</Dropdown.Item>
               <Dropdown.Item href="./update-profile" eventKey="2">Update Profile</Dropdown.Item>
@@ -71,7 +78,7 @@ export const Header = () => {
           <>
             <Button href="./saved-homes" variant="info">Saved Homes</Button>
             <Button href="./saved-searches" variant="info">Saved Searches</Button>
-            <Button onClick={handleShow} variant="info">Log in or Sign up</Button>
+            <Button variant="info">Log in or Sign up</Button>
             <Modal show={show} onHide={handleClose}>
               <Login />
             </Modal>

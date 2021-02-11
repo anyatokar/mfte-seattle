@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Header } from './components/header';
+import { Header } from './components/navbar';
 import { Footer } from './components/footer';
 import { BrowserRouter as Router, Route, Switch, RouteComponentProps, useLocation } from 'react-router-dom';
 import logging from './config/logging';
