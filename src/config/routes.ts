@@ -1,4 +1,4 @@
-import IRoute from '../interfaces/route';
+import IRoute from '../interfaces/IRoute';
 import BuildingsPage from '../pages/buildings';
 import AboutMFTEPage from '../pages/about-mfte';
 import AboutAppPage from '../pages/about-app';

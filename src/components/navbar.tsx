@@ -3,8 +3,6 @@ import {LinkContainer} from 'react-router-bootstrap';
 import Signup from '../auth_components/Signup';
 
 import { Component, FunctionComponent, useState } from "react";
-import { render } from "react-dom";
-import { useModal } from '../useModal';
 import Login from "../auth_components/Login"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
@@ -67,7 +65,7 @@ export const Header = () => {
           </>
           ) : (
           <>
-            <Button onClick={handleShowLogin}  variant="info">Saved Homes</Button>
+            <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />
               </Modal>

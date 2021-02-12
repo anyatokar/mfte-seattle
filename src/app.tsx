@@ -21,7 +21,6 @@ import { useAuth } from "./contexts/AuthContext"
 
 import { Component, FunctionComponent, useState } from "react";
 import { render } from "react-dom";
-import { useModal } from './useModal';
 import savedHomes from './pages/saved-homes';
 import savedSearches from './pages/saved-searches';
 

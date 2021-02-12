@@ -1,4 +1,4 @@
 export default interface IFilter<T> {
-    property: keyof T;
-    isTruthyPicked: boolean;
+  property: keyof T;
+  isTruthyPicked: boolean;
 }

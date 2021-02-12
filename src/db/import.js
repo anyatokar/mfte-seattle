@@ -2,8 +2,6 @@ const buildings = require('./buildings.json');
 const firebase = require('firebase');
 require('firebase/firestore');
 
-// TODO: try importing firebase to DRY up
-
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
   authDomain: process.env.REACT_APP_AUTHDOMAIN,

@@ -69,7 +69,7 @@ export default function Signup() {
         <Modal.Footer>
         <div className="w-100 text-center mt-2">
         {/* Already have an account? <Link to="/login">Log In</Link> */}
-        Already have an account? <Button onClick={handleShow}>Log In</Button>
+        Already have an account? <Button onClick={handleShow} variant="link">Log In</Button>
         <Modal show={show} onHide={handleClose}>
               <Login/>
             </Modal>

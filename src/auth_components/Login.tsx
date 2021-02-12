@@ -29,7 +29,6 @@ export default function Login() {
 
   async function handleSubmit(e: any) {
     e.preventDefault()
-
     try {
       setError("")
       setLoading(true)
@@ -38,38 +37,35 @@ export default function Login() {
     } catch {
       setError("Failed to log in")
     }
-
     setLoading(false)
   }
 
   return (
     <>
-  
-            <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
+      <Modal.Header closeButton>
+        <Modal.Title>Login</Modal.Title>
+      </Modal.Header>
 
-        <Modal.Body>
-          {/* <h2 className="text-center mb-4">Log In</h2> */}
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
-            </Form.Group>
-            <Button disabled={loading} className="w-100 btn-modal btn btn-outline" type="submit">
-              Log In
-            </Button>
-          </Form>
-          
+      <Modal.Body>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group id="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="email" ref={emailRef} required />
+          </Form.Group>
+          <Form.Group id="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" ref={passwordRef} required />
+          </Form.Group>
+          <Button disabled={loading} className="w-100 btn-modal btn btn-outline" type="submit">
+            Log In
+          </Button>
+        </Form>
       </Modal.Body>
+
       <Modal.Footer>
         <div className="w-100 text-center mt-3">
-          <Button onClick={handleShowPassReset}>Forgot Password?</Button>
+          <Button onClick={handleShowPassReset} variant="link">Forgot Password?</Button>
           <Modal show={showPassReset} onHide={handleClosePassReset}>
             <ForgotPassword />
           </Modal>
@@ -77,15 +73,12 @@ export default function Login() {
 
         <div className="w-100 text-center mt-2">
           Need an account? 
-          <Button onClick={handleShowSignup}>Sign Up</Button>
+          <Button onClick={handleShowSignup} variant="link">Sign Up</Button>
           <Modal show={showSignup} onHide={handleCloseSignup}>
             <Signup />
           </Modal>
         </div>
       </Modal.Footer>
-      
-
-
     </>
   )
 }

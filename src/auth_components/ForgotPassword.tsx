@@ -62,14 +62,14 @@ export default function ForgotPassword() {
           </Modal.Body>
           <Modal.Footer>
           <div className="w-100 text-center mt-3">
-            Already have an account? <Button onClick={handleShowLogin}>Log In</Button>
+            Already have an account? <Button onClick={handleShowLogin} variant="link">Log In</Button>
             <Modal show={showLogin} onHide={handleCloseLogin}>
               <Login/>
             </Modal>
           </div>
 
       <div className="w-100 text-center mt-2">
-        Need an account? <Button onClick={handleShowSignup}>Sign Up</Button>
+        Need an account? <Button onClick={handleShowSignup} variant="link">Sign Up</Button>
         <Modal show={showSignup} onHide={handleCloseSignup}>
               <Signup />
             </Modal>

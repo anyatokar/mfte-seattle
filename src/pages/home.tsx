@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import IPage from '../interfaces/page';
+import IPage from '../interfaces/IPage';
 import logging from '../config/logging';
 
 const HomePage: React.FunctionComponent<IPage> = props => {
