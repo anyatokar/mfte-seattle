@@ -34,10 +34,9 @@
   },
   "scripts": {
     "start": "PORT=8080 react-scripts start",
-    "build": "rm -rf .docker/build && react-scripts build && mv build .docker && cp .env .docker",
+    "build": "rm -rf .docker/build && react-scripts build && mv build .docker",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && PORT=8080 react-scripts start"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
