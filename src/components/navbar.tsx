@@ -30,12 +30,11 @@ export const Header = () => {
     history.push("./dashboard")
   };
 
-
   // Update Profile onClick and redirect
-  function onClickUpdateProfile(e: any) {
-    e.preventDefault()
-    history.push("./update-profile")
-  };
+  // function onClickUpdateProfile(e: any) {
+  //   e.preventDefault()
+  //   history.push("./update-profile")
+  // };
 
   // Logout
   async function handleLogout() {
@@ -78,7 +77,7 @@ export const Header = () => {
               id="bg-nested-dropdown" 
               variant="warning">
               <Dropdown.Item onClick={onClickDashboard} eventKey="1">Dashboard</Dropdown.Item>
-              <Dropdown.Item onClick={onClickUpdateProfile} value="./UpdateProfile" eventKey="2">Update Profile</Dropdown.Item>
+              {/* <Dropdown.Item onClick={onClickUpdateProfile} value="./UpdateProfile" eventKey="2">Update Profile</Dropdown.Item> */}
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout} eventKey="3">Logout</Dropdown.Item>
             </DropdownButton>

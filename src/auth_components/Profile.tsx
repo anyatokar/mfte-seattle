@@ -34,67 +34,21 @@ export default function Dashboard() {
       {currentUser
         ? (
         <>
-        <Card style={{ width: '18rem' }}>
-          <Card.Header>
-            <Nav variant="tabs" defaultActiveKey="#first">
-              <Nav.Item>
-                <Nav.Link href="#first">Profile</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="#link">Update Profile</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Card.Header>
-          <Card>
-          <Card.Body>
-            <Card.Title></Card.Title>
-            <Card.Text id="#first">
-              <strong>Email: </strong>{currentUser.email}
-            </Card.Text>
-            {/* <Button variant="primary">Go somewhere</Button> */}
-          </Card.Body>
-          </Card>
-
-          <Card>
-          <Card.Body>
-            <Card.Title></Card.Title>
-            <Card.Text>
-              <strong>Emafil: </strong>{currentUser.email}
-            </Card.Text>
-            {/* <Button variant="primary">Go somewhere</Button> */}
-          </Card.Body>
-          </Card>
-        </Card>
-          {/* <Card style={{ width: '18rem' }}> */}
-            {/* <div className="container saved-homes-header"> */}
-              {/* <h1 className="display-6">Profile</h1> */}
-              {/* <p className="lead"></p> */}
-              {/* <hr className="my-4"></hr> */}
-            {/* </div> */}
-            {/* <Card.Header>Profile</Card.Header>
+          <Card style={{ width: '25rem' }}>
             <Card.Body>
-
-            <Card.Text>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <strong>Email:</strong> {currentUser.email}
-              <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-                Update Profile
-              </Link>
+              <Card.Title></Card.Title>
+              <Card.Text>
+                <strong>Email: </strong>{currentUser.email}
               </Card.Text>
-              <div className="w-100 text-center mt-2">
-            <Button variant="link" onClick={handleLogout}>
-              Log Out
-            </Button>
-          </div>
             </Card.Body>
-          </Card> */}
+          </Card>
         </>
         ) : (
         <>
           <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
-          <Modal show={showLogin} onHide={handleCloseLogin}>
-            <Login />
-          </Modal>
+            <Modal show={showLogin} onHide={handleCloseLogin}>
+              <Login />
+            </Modal>
         </>
         )
       }

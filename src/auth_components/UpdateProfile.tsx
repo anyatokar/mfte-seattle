@@ -43,9 +43,9 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <Card>
+      <Card style={{ width: '25rem' }}>
         <Card.Body>
-          <h2 className="text-center mb-4">Update Profile</h2>
+          {/* <h2 className="text-center mb-4">Update Profile</h2> */}
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
@@ -73,15 +73,18 @@ export default function UpdateProfile() {
                 placeholder="Leave blank to keep the same"
               />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            <div className="text-center">
+            <Button disabled={loading} className="w-40 btn btn-info" type="submit">
               Update
             </Button>
+            </div>
           </Form>
+          <div className="w-100 text-center mt-2">
+        <Link to="./dashboard">Cancel</Link>
+      </div>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
-        <Link to="/">Cancel</Link>
-      </div>
+
     </>
   )
 }

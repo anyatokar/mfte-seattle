@@ -39,12 +39,12 @@ img {
 
 .nav.nav-pills .nav-link {
   background-color: white;
-  color: #06253e
+  color: #06253e;
 }
 
 .nav.nav-pills .nav-link.active {
   background-color: #06253e;
-  color: white
+  color: white;
 }
 
 .profile-email {

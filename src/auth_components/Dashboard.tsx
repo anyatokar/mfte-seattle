@@ -4,6 +4,8 @@ import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import { render } from "@testing-library/react"
 import Login from "./Login"
+import UpdateProfile from "./UpdateProfile"
+import Profile from "./Profile"
 
 export default function Dashboard() {
   const [error, setError] = useState("")
@@ -26,8 +28,6 @@ export default function Dashboard() {
 
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowLogin = () => setShowLogin(true);
-
-  const [key, setKey] = useState('Profile');
 
   return (
     <>
@@ -53,11 +53,11 @@ export default function Dashboard() {
             <Tab.Content>
               <Tab.Pane eventKey="first">
                 {/* <h3>Profile</h3> */}
-                <strong>Email: </strong>{currentUser.email}
+                <Profile />
               </Tab.Pane>
               <Tab.Pane eventKey="second">
               {/* <h3 className="display-6">Update</h3> */}
-              Form
+              <UpdateProfile />
               </Tab.Pane>
             </Tab.Content>
             </Col>
