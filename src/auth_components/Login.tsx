@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert, Modal } from "react-bootstrap"
+import { Form, Button, Alert, Modal } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import ForgotPassword from "./ForgotPassword"
 import Signup from "./Signup"
 
@@ -9,19 +9,19 @@ export default function Login() {
   const emailRef = useRef() as any
   const passwordRef = useRef() as any
   const { login } = useAuth() as any
+
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+
   const history = useHistory()
 
-
-
+  // Signup
   const [showSignup, setShowSignup] = useState(false);
 
   const handleCloseSignup = () => setShowSignup(false);
   const handleShowSignup = () => setShowSignup(true);
 
-
-
+  // Password Reset
   const [showPassReset, setShowPassReset] = useState(false);
 
   const handleClosePassReset = () => setShowPassReset(false);

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Modal, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import Signup from "./Signup"
 import Login from "./Login"
 
@@ -12,17 +12,17 @@ export default function ForgotPassword() {
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
+  // Login
   const [showLogin, setShowLogin] = useState(false);
 
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowLogin = () => setShowLogin(true);
 
-
+  // Signup
   const [showSignup, setShowSignup] = useState(false);
 
   const handleCloseSignup = () => setShowSignup(false);
   const handleShowSignup = () => setShowSignup(true);
-
 
   async function handleSubmit(e: any) {
     e.preventDefault()

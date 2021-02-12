@@ -18,17 +18,31 @@ export const Header = () => {
   const { currentUser, logout } = useAuth() as any
   const history = useHistory()
 
+  // generic onClick and redirect
   function onClick(e: any) {
     e.preventDefault()
     history.push(e.target.value)
   };
 
+  // Dashboard onClick and redirect
+  function onClickDashboard(e: any) {
+    e.preventDefault()
+    history.push("./dashboard")
+  };
+
+
+  // Update Profile onClick and redirect
+  function onClickUpdateProfile(e: any) {
+    e.preventDefault()
+    history.push("./update-profile")
+  };
+
+  // Logout
   async function handleLogout() {
     setError("")
-
     try {
       await logout()
-      // history.push("/login")
+      history.push("/login")
     } catch {
       setError("Failed to log out")
     }
@@ -57,9 +71,15 @@ export const Header = () => {
           <>
             <Button onClick={onClick} value="./saved-homes" variant="warning">Saved Homes</Button>
             <Button onClick={onClick} value="./saved-searches" variant="warning">Saved Searches</Button>
-            <DropdownButton as={ButtonGroup} title={`Logged in as: ${currentUser.email}`} id="bg-nested-dropdown" variant="warning">
-              <Dropdown.Item href="./dashboard" eventKey="1">Dashboard</Dropdown.Item>
-              <Dropdown.Item href="./update-profile" eventKey="2">Update Profile</Dropdown.Item>
+            <DropdownButton 
+              menuAlign="right"
+              as={ButtonGroup} 
+              title={`${currentUser.email}`} 
+              id="bg-nested-dropdown" 
+              variant="warning">
+              <Dropdown.Item onClick={onClickDashboard} eventKey="1">Dashboard</Dropdown.Item>
+              <Dropdown.Item onClick={onClickUpdateProfile} value="./UpdateProfile" eventKey="2">Update Profile</Dropdown.Item>
+              <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout} eventKey="3">Logout</Dropdown.Item>
             </DropdownButton>
           </>
