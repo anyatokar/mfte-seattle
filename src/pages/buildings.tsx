@@ -76,7 +76,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   useEffect(() => {logging.info(`Loading ${props.name}`);}, [props])
 
   if (loading) {
-    return <h4>Loading potential homes...</h4>;
+    return <h4>Loading map...</h4>;
   }
 
   return (

@@ -11,19 +11,10 @@ import { Link, useHistory } from "react-router-dom"
 
 export const Header = () => {
 
-  const [show, setShow] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-
-
-//   const { isShown, toggle } = useModal();
-  
-// const onConfirm = () => toggle();
-// const onCancel = () => toggle();
-
-// const [modalShow, setModalShow] = useState(false);
+  const handleCloseLogin = () => setShowLogin(false);
+  const handleShowLogin = () => setShowLogin(true);
 
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth() as any
@@ -76,12 +67,18 @@ export const Header = () => {
           </>
           ) : (
           <>
-            <Button href="./saved-homes" variant="info">Saved Homes</Button>
-            <Button href="./saved-searches" variant="info">Saved Searches</Button>
-            <Button variant="info">Log in or Sign up</Button>
-            <Modal show={show} onHide={handleClose}>
-              <Login />
-            </Modal>
+            <Button onClick={handleShowLogin}  variant="info">Saved Homes</Button>
+              <Modal show={showLogin} onHide={handleCloseLogin}>
+                <Login />
+              </Modal>
+            <Button onClick={handleShowLogin}  variant="info">Saved Searches</Button>
+              <Modal show={showLogin} onHide={handleCloseLogin}>
+                <Login />
+              </Modal>
+            <Button onClick={handleShowLogin} variant="info">Log in or Sign up</Button>
+              <Modal show={showLogin} onHide={handleCloseLogin}>
+                <Login />
+              </Modal>
           </>
           )}
         </ButtonGroup>
