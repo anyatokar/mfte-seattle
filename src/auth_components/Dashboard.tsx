@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Card, Button, Alert, Modal } from "react-bootstrap"
+import { Card, Button, Alert, Modal, Nav, Tab, Row, Col } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import { render } from "@testing-library/react"
@@ -27,26 +27,44 @@ export default function Dashboard() {
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowLogin = () => setShowLogin(true);
 
+  const [key, setKey] = useState('Profile');
+
   return (
     <>
       {currentUser
-        ? (<div>
-        <Card>
-          <Card.Body>
-            <h2 className="text-center mb-4">Profile</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <strong>Email:</strong> {currentUser.email}
-            <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-              Update Profile
-            </Link>
-          </Card.Body>
-        </Card>
-        <div className="w-100 text-center mt-2">
-          <Button variant="link" onClick={handleLogout}>
-            Log Out
-          </Button>
-        </div>
-        </div>
+        ? (
+        <>
+        <Tab.Container id="sidebar" defaultActiveKey="first">
+          <Row>
+            <Col sm={3}>
+            <Nav variant="pills" className="flex-column">
+              <Nav.Item>
+                <Nav.Link eventKey="first" className="tab">Profile</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="second" className="tab">Update Profile</Nav.Link>
+              </Nav.Item>
+              {/* <Nav.Item>
+                <Nav.Link eventKey="third" className="tab">Tab 3</Nav.Link>
+              </Nav.Item> */}
+            </Nav>
+            </Col>
+            <Col sm={9} className="profile-email">
+            <Tab.Content>
+              <Tab.Pane eventKey="first">
+                {/* <h3>Profile</h3> */}
+                <strong>Email: </strong>{currentUser.email}
+              </Tab.Pane>
+              <Tab.Pane eventKey="second">
+              {/* <h3 className="display-6">Update</h3> */}
+              Form
+              </Tab.Pane>
+            </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
+
+        </>
         ) : (
         <>
           <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>

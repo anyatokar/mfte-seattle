@@ -36,3 +36,17 @@ img {
 .saved-homes-header {
   margin-top: 4em
 }
+
+.nav.nav-pills .nav-link {
+  background-color: white;
+  color: #06253e
+}
+
+.nav.nav-pills .nav-link.active {
+  background-color: #06253e;
+  color: white
+}
+
+.profile-email {
+  padding: 2em;
+}
