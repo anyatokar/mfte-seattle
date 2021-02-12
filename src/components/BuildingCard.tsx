@@ -92,7 +92,7 @@ export function BuildingCard(props: IBuilding) {
             </a>
 
             { currentUser ? (
-              <Button className="btn btn-outline-warning btn-sm standalone-btn"
+              <Button variant="btn btn-outline-warning btn-sm standalone-btn"
                               // href={urlforBuilding} 
                 onClick={saveBuilding}
                 role="button">
