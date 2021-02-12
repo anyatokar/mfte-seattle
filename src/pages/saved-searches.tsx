@@ -10,10 +10,16 @@ const SavedSearchesPage: React.FunctionComponent<IPage & RouteComponentProps<any
   }, [props.name])
 
   return (
-    <div>
-      Your saved searches here.
-
-    </div>
+    <>
+      <div className="container saved-homes-header">
+        <h1 className="display-6">Saved Searches</h1>
+        {/* <p className="lead"></p> */}
+        <hr className="my-4"></hr>
+      </div>
+      {/* <div className="container-fluid">
+        <div className="row"></div>
+      </div> */}
+    </>
   )
 }
 

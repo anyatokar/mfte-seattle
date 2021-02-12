@@ -105,53 +105,45 @@ useEffect(() => {
   // }, [props])
 
   return (
-    <div>
-      <section className="container-fluid">
-        <div className="row">
-        <div className="col-lg-4">
-      <h3>Saved Homes:</h3>
-
-
-            
-      </div>
-      </div>
-      </section>
-
-
-      <section className="container-fluid">
-        <div className="row">
-
-
-      {/* building list */}
-      {/* <div className="container mx-auto my-2"> */}
-          <div className="col-lg-4 col-med-12 mx-auto my-2 overflow-auto buildings-list">
-
-            {resultBuildings.length > 0 && (
-              <div>
-                {resultBuildings.map((building) => (
-                  <SavedHomesCard key={building.buildingName} {...building} />
-                ))}
-              </div>
-            )}
-            {resultBuildings.length === 0 && <p>No results found!</p>}
-            {/* <p>{message}</p>
-            <Link to="/">Go to the home page!</Link> */}
-
-                            {/* map */}
-          {/* <div className="col">
-            {scriptLoaded && (
-              <Map
-                mapType={google.maps.MapTypeId.ROADMAP}
-                mapTypeControl={true}
-                filteredBuildings={resultBuildings}
-              />
-            )}
-          </div> */}
-          </div>
+    <>
+     
+        <div className="container saved-homes-header">
+          <h1 className="display-6">Saved Homes</h1>
+          {/* <p className="lead"></p> */}
+          <hr className="my-4"></hr>
         </div>
-      </section>
-    </div>
 
+      <div className="container-fluid">
+        <div className="row">
+
+        {/* building list */}
+        {/* <div className="container mx-auto my-2"> */}
+            <div className="col-lg-10 mx-auto my-2 overflow-auto buildings-list">
+              {resultBuildings.length > 0 && (
+                <div>
+                  {resultBuildings.map((building) => (
+                    <SavedHomesCard key={building.buildingName} {...building} />
+                  ))}
+                </div>
+              )}
+              {resultBuildings.length === 0 && <p>No results found!</p>}
+              {/* <p>{message}</p>
+              <Link to="/">Go to the home page!</Link> */}
+
+                              {/* map */}
+            {/* <div className="col">
+              {scriptLoaded && (
+                <Map
+                  mapType={google.maps.MapTypeId.ROADMAP}
+                  mapTypeControl={true}
+                  filteredBuildings={resultBuildings}
+                />
+              )}
+            </div> */}
+            </div>
+          </div>
+    </div>
+    </>
   );
 }
 

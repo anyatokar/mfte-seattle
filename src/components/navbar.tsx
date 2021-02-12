@@ -68,7 +68,7 @@ export const Header = () => {
           <>
             <Button onClick={onClick} value="./saved-homes" variant="warning">Saved Homes</Button>
             <Button onClick={onClick} value="./saved-searches" variant="warning">Saved Searches</Button>
-            <DropdownButton as={ButtonGroup} title={currentUser.email} id="bg-nested-dropdown" variant="warning">
+            <DropdownButton as={ButtonGroup} title={`Logged in as: ${currentUser.email}`} id="bg-nested-dropdown" variant="warning">
               <Dropdown.Item href="./dashboard" eventKey="1">Dashboard</Dropdown.Item>
               <Dropdown.Item href="./update-profile" eventKey="2">Update Profile</Dropdown.Item>
               <Dropdown.Item onClick={handleLogout} eventKey="3">Logout</Dropdown.Item>
