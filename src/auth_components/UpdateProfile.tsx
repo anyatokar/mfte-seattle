@@ -41,6 +41,11 @@ export default function UpdateProfile() {
       })
   }
 
+  function onCancel(e: any) {
+    e.preventDefault()
+    history.push("/")
+  }
+
   return (
     <>
       <Card style={{ width: '25rem' }}>
@@ -80,11 +85,11 @@ export default function UpdateProfile() {
             </div>
           </Form>
           <div className="w-100 text-center mt-2">
-        <Link to="./dashboard">Cancel</Link>
+          {/* <Link to="/">Cancel</Link> */}
+        <Button onClick={onCancel} variant="link">Cancel</Button>
       </div>
         </Card.Body>
       </Card>
-
     </>
   )
 }

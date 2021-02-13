@@ -34,15 +34,15 @@ export default function Dashboard() {
       {currentUser
         ? (
         <>
-        <Tab.Container id="sidebar" defaultActiveKey="first">
+        <Tab.Container id="sidebar" defaultActiveKey="profile">
           <Row>
             <Col sm={3}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
-                <Nav.Link eventKey="first" className="tab">Profile</Nav.Link>
+                <Nav.Link eventKey="profile" className="tab">Profile</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="second" className="tab">Update Profile</Nav.Link>
+                <Nav.Link eventKey="update" className="tab">Update Profile</Nav.Link>
               </Nav.Item>
               {/* <Nav.Item>
                 <Nav.Link eventKey="third" className="tab">Tab 3</Nav.Link>
@@ -51,11 +51,11 @@ export default function Dashboard() {
             </Col>
             <Col sm={9} className="profile-email">
             <Tab.Content>
-              <Tab.Pane eventKey="first">
+              <Tab.Pane eventKey="profile">
                 {/* <h3>Profile</h3> */}
                 <Profile />
               </Tab.Pane>
-              <Tab.Pane eventKey="second">
+              <Tab.Pane eventKey="update">
               {/* <h3 className="display-6">Update</h3> */}
               <UpdateProfile />
               </Tab.Pane>
