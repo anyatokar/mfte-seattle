@@ -2,25 +2,26 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import firebase from "../db/firebase"
 
 export default function UpdateProfile() {
   const emailRef = useRef() as any
   const passwordRef = useRef() as any
   const passwordConfirmRef = useRef() as any
   const { currentUser, updatePassword, updateEmail } = useAuth() as any
-  const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
   function handleSubmit(e: any) {
     e.preventDefault()
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match")
+      return setMessage("Passwords do not match")
     }
 
     const promises = []
     setLoading(true)
-    setError("")
+    setMessage("")
 
     if (emailRef.current.value !== currentUser.email) {
       promises.push(updateEmail(emailRef.current.value))
@@ -31,27 +32,41 @@ export default function UpdateProfile() {
 
     Promise.all(promises)
       .then(() => {
-        history.push("/")
+        // history.push("/")
+        setMessage("Update successful")
       })
-      .catch(() => {
-        setError("Failed to update account")
+      .catch((error) => {
+        console.log(error.code)
+        console.log(error.message)
+        setMessage(error.message)
+        // setMessage("Failed to update account")
       })
       .finally(() => {
         setLoading(false)
       })
   }
 
-  function onCancel(e: any) {
+  function onDelete(e: any) {
     e.preventDefault()
-    history.push("/")
-  }
+    firebase.firestore().collection("users").doc(currentUser.uid).delete().then(() => {
+      console.log("User successfully deleted from Firestore.");
+    }).catch((error) => {
+      console.error("Error removing user from Firestore: ", error);
+    });
 
+    currentUser.delete().then(() => {
+      console.log("User successfully deleted from Auth.");
+    }).catch((error: any) => {
+      console.error("Error removing user from Auth: ", error);
+    });
+  }
   return (
     <>
       <Card style={{ width: '25rem' }}>
         <Card.Body>
           {/* <h2 className="text-center mb-4">Update Profile</h2> */}
-          {error && <Alert variant="danger">{error}</Alert>}
+          {message === "Update successful" && <Alert variant="success">{message}</Alert>}
+          {message && message !== "Update successful" && <Alert variant="danger">{message}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
@@ -86,7 +101,7 @@ export default function UpdateProfile() {
           </Form>
           <div className="w-100 text-center mt-2">
           {/* <Link to="/">Cancel</Link> */}
-        <Button onClick={onCancel} variant="link">Cancel</Button>
+        <Button onClick={onDelete} variant="link">Delete Account</Button>
       </div>
         </Card.Body>
       </Card>

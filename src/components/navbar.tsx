@@ -73,7 +73,7 @@ export const Header = () => {
             <DropdownButton 
               menuAlign="right"
               as={ButtonGroup} 
-              title={`${currentUser.email}`} 
+              title={currentUser.email}
               id="bg-nested-dropdown" 
               variant="warning">
               <Dropdown.Item onClick={onClickDashboard} eventKey="1">Dashboard</Dropdown.Item>

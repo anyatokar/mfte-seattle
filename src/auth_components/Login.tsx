@@ -10,7 +10,7 @@ export default function Login() {
   const passwordRef = useRef() as any
   const { login } = useAuth() as any
 
-  const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
   const history = useHistory()
@@ -30,12 +30,14 @@ export default function Login() {
   async function handleSubmit(e: any) {
     e.preventDefault()
     try {
-      setError("")
+      setMessage("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
       // history.push("/")
-    } catch {
-      setError("Failed to log in")
+    } catch(error) {
+      console.log(error.code)
+      console.log(error.message)
+      setMessage(error.message)
     }
     setLoading(false)
   }
@@ -47,7 +49,7 @@ export default function Login() {
       </Modal.Header>
 
       <Modal.Body>
-        {error && <Alert variant="danger">{error}</Alert>}
+        {message && <Alert variant="danger">{message}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group id="email">
             <Form.Label>Email</Form.Label>
