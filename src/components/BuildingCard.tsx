@@ -11,7 +11,7 @@ import Login from "../auth_components/Login"
 export function BuildingCard(props: IBuilding) {
   const { currentUser } = useAuth() as any
   const {
-    id,
+    buildingID,
     buildingName,
     phone,
     residentialTargetedArea,
@@ -30,18 +30,47 @@ export function BuildingCard(props: IBuilding) {
 
   function saveBuilding(e: any) {
 
-    firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").add(
-      {buildingName: buildingName,
-        lat: 47.6253,
-        lng: -122.3222,
+
+    firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID).set(
+      {
+        // could not access data from buildingRef code below
+        // buildingRef: firebase.firestore().collection("buildings").doc(buildingID)
+        "buildingID": buildingID,
+        "buildingName": buildingName,
+        "phone": phone,
+        "residentialTargetedArea": residentialTargetedArea,
+        "totalRestrictedUnits": totalRestrictedUnits,
+        "studioUnits": studioUnits,
+        "oneBedroomUnits": oneBedroomUnits, 
+        "twoBedroomUnits": twoBedroomUnits,
+        "threePlusBedroomUnits": threePlusBedroomUnits,
+        "urlforBuilding": urlforBuilding,
+        "streetNum": streetNum,
+        "street": street, 
+        "city": city,
+        "state": state, 
+        "zip": zip
       })
-    .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
+    .then(() => {
+      
+      console.log("Building saved to user");
   })
   .catch((error) => {
       console.error("Error adding document: ", error);
   });
   }
+
+  //   firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").add(
+  //     {buildingName: buildingName
+  //     })
+  //   .then((docRef) => {
+      
+  //     console.log("Document written with ID: ", docRef.id);
+  // })
+  // .catch((error) => {
+  //     console.error("Error adding document: ", error);
+  // });
+  // }
 
   const [showLogin, setShowLogin] = useState(false);
 
@@ -67,7 +96,7 @@ export function BuildingCard(props: IBuilding) {
               <h6 className="card-title">{residentialTargetedArea}</h6>
                 <text>{streetNum} {street}</text>
                 <br></br>
-                <p>Seattle, {state} {zip}</p>
+                <p>{city}, {state} {zip}</p>
                 <p>{phone}</p>
               </div>
             </div>

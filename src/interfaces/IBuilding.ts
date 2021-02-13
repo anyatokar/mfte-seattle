@@ -1,5 +1,5 @@
 export default interface IBuilding {
-  id: string;
+  buildingID: string;
   buildingName: string;
   phone: string;
   residentialTargetedArea: string;

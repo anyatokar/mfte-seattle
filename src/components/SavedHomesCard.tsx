@@ -9,7 +9,7 @@ import { useAuth } from "../contexts/AuthContext"
 export function SavedHomesCard(props: IBuilding) {
   const { currentUser } = useAuth() as any
   const {
-    id,
+    buildingID,
     buildingName,
     phone,
     residentialTargetedArea,
@@ -27,13 +27,12 @@ export function SavedHomesCard(props: IBuilding) {
   } = props;
 
   function deleteBuilding(e: any) {
-    firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingName).delete()
-    .then((docRef) => {
-      console.log("Document deleted: ", docRef);
-  })
-  .catch((error) => {
-      console.error("Error adding document: ", error);
-  });
+    const savedHomesQuery = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where('buildingID','==', buildingID);
+    savedHomesQuery.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete();
+      });
+    });
 
 
   }
@@ -57,7 +56,7 @@ export function SavedHomesCard(props: IBuilding) {
                 <h6 className="card-title">{residentialTargetedArea}</h6>
                   <text>{streetNum} {street}</text>
                   <br></br>
-                  <p>Seattle, {state} {zip}</p>
+                  <p>{city}, {state} {zip}</p>
                   <p>{phone}</p>
                 </div>
               </div>

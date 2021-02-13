@@ -103,7 +103,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
         + building.street +
         '<br>' +
         // TODO upload state to db
-        'Seattle' + ', ' +
+        building.city + ', ' +
         building.state + " " +
         building.zip  + '</p>' +
         building.phone +

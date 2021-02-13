@@ -28,62 +28,59 @@ import { useAuth } from "../contexts/AuthContext"
 
 
 
-// const ref = firebase.firestore().collection("buildings"); 
+
+
+
 
 const SavedHomesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
-
   const { currentUser } = useAuth() as any
+  const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
 
-const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
+  // console.log(ref.data)
+
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [buildings, setBuildings] = useState([] as Array<IBuilding>);
+  const [loading, setLoading] = useState(false);
+
+  const getBuildings = useCallback(() => {
+    setLoading(true) 
+    ref.onSnapshot((querySnapshot) => {
+    const items: Array<IBuilding> = [];
+    querySnapshot.forEach((doc) => {
+      items.push(doc.data() as IBuilding);
+    });
+    setBuildings(items)
+    setLoading(false)
+    });
+  }, []);
+
+  useEffect(() => {getBuildings()}, [getBuildings]); 
+  
+// const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
 
   useEffect(() => {
     logging.info(`Loading ${props.name}`);
   }, [props.name])
 
-  
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-  const [buildings, setBuildings] = useState([] as Array<IBuilding>);
-  // const [infoWindownContent, setInfoWindowContent] = useState('');
+  // useEffect(() => {
+  //   const googleMapScript = loadMapApi();
+  //   googleMapScript.addEventListener('load', function () {
+  //     setScriptLoaded(true);
+  //     // console.log('code is running!!!!!')
+  //   });
+  // }, []);
 
-  // const [buildings, setBuildings] = useState([] as any);
-// const [loading, setLoading] = useState(false);
-
-
-const getBuildings = useCallback(() => {   
-  ref.onSnapshot((querySnapshot) => {
-  const items: Array<IBuilding> = [];
-  querySnapshot.forEach((doc) => {
-    items.push(doc.data() as IBuilding);
-    // console.log(doc.data())
-  });
-  setBuildings(items)
-  // setLoading(false)
-});
-}, []) 
-
-
-useEffect(() => {
-  getBuildings(); 
-}, [getBuildings]); 
-
-  useEffect(() => {
-    const googleMapScript = loadMapApi();
-    googleMapScript.addEventListener('load', function () {
-      setScriptLoaded(true);
-      // console.log('code is running!!!!!')
-    });
-  }, []);
-
-  const [query, setQuery] = useState<string>("");
-  const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
-    property: "buildingName",
-    isDescending: false,
-  });
-  const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
-    []
-  );
+  // const [query, setQuery] = useState<string>("");
+  // const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
+  //   property: "buildingName",
+  //   isDescending: false,
+  // });
+  // const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
+  //   []
+  // );
 
   const resultBuildings = buildings
+  console.log(buildings)
 
 
 
@@ -122,6 +119,7 @@ useEffect(() => {
               {resultBuildings.length > 0 && (
                 <div>
                   {resultBuildings.map((building) => (
+          
                     <SavedHomesCard key={building.buildingName} {...building} />
                   ))}
                 </div>

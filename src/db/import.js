@@ -19,7 +19,9 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 buildings.forEach(function(obj) {
-  db.collection("buildings").add({
+
+  db.collection("buildingsTest").add({
+    id: obj.buildingID,
     buildingName: obj.buildingName,
     phone: obj.phone,
     residentialTargetedArea: obj.residentialTargetedArea,
@@ -38,6 +40,18 @@ buildings.forEach(function(obj) {
     zip: obj.zip
   }).then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
+
+    const currentBuilding = db.collection("buildingsTest").doc(docRef.id);
+
+    return currentBuilding.update({
+      buildingID: docRef.id
+    })
+    .then(() => {
+      console.log("Document successfully updated with id: ", docRef.id);
+    })
+    .catch((error) => {
+      console.error("Error updating document: ", error);
+    });
   })
   .catch(function(error) {
     console.error("Error adding document: ", error);
