@@ -69,7 +69,7 @@ export const Header = () => {
           { currentUser ? (
           <>
             <Button onClick={onClick} value="./saved-homes" variant="warning">Saved Homes</Button>
-            <Button onClick={onClick} value="./saved-searches" variant="warning">Saved Searches</Button>
+            {/* <Button onClick={onClick} value="./saved-searches" variant="warning">Saved Searches</Button> */}
             <DropdownButton 
               menuAlign="right"
               as={ButtonGroup} 

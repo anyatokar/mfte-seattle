@@ -10,7 +10,7 @@ import { useCallback } from 'react';
 import firebase from '../db/firebase';
 import 'firebase/firestore';
 import IBuilding from "../interfaces/IBuilding";
-import SavedHomesMap from "../components/SavedHomesMap";
+import SavedHomesMap from "../components/MapTab";
 import SavedHomesList from '../components/SavedHomesList';
 
 const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {

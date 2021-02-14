@@ -4,7 +4,6 @@ import AboutMFTEPage from '../pages/about-mfte';
 import AboutAppPage from '../pages/about-app';
 import HomePage from '../pages/home';
 import SavedHomesPage from '../pages/saved-homes';
-import SavedByUserPage from '../pages/saved-by-user';
 import SavedSearchesPage from '../pages/saved-searches';
 import DashboardPage from '../auth_components/Dashboard'
 // import LoginModal from '../auth_components/Login'
@@ -53,12 +52,6 @@ const routes: IRoute[] = [
       path: '/dashboard',
       name: 'Dashboard Page',
       component: DashboardPage,
-      exact: true
-    },
-    {
-      path: '/saved-by-user',
-      name: 'Saved Page',
-      component: SavedByUserPage,
       exact: true
     },
     {
