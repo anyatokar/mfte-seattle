@@ -76,7 +76,7 @@ const Application: React.FunctionComponent<{}> = props => {
               {/* <PrivateRoute path="/update-profile" component={UpdateProfile} /> */}
               <PrivateRoute path="/saved-homes" component={savedHomes} />
               <PrivateRoute path="/saved-searches" component={savedSearches} />
-              <PrivateRoute path="/saved" component={savedByUser} />
+              <PrivateRoute path="/saved-by-user" component={savedByUser} />
               {/* <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} /> */}

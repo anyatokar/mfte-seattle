@@ -1,46 +1,17 @@
-import React, { useState, useEffect } from "react"
-import { Card, Button, Alert, Modal, Nav, Tab, Row, Col } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
-import { render } from "@testing-library/react"
-import Login from "../auth_components/Login"
-import UpdateProfile from "../auth_components/UpdateProfile"
-import Profile from "../auth_components/Profile"
-
-
+import React, { useState, useEffect } from "react";
+import { Button, Modal, Nav, Tab, Row, Col } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
+import Login from "../auth_components/Login";
 import IPage from '../interfaces/IPage';
 import logging from '../config/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-
 import { useCallback } from 'react';
-// import IPage from '../interfaces/page';
-// import logging from '../config/logging';
-// import { RouteComponentProps, withRouter } from 'react-router-dom';
-import Map from "../Map/Map";
-import { loadMapApi } from "../utils/GoogleMapsUtils";
 import firebase from '../db/firebase';
 import 'firebase/firestore';
-
-
-import Sorters from "../components/Sorters";
-import SearchInput from "../components/SearchInput";
-import { SavedHomesCard } from "../components/SavedHomesCard";
 import IBuilding from "../interfaces/IBuilding";
-// import buildings from "../db/buildings";
-import { genericSort } from "../utils/genericSort";
-import { genericSearch } from "../utils/genericSearch";
-import { genericFilter } from "../utils/genericFilter";
-import { Filters } from "../components/Filters";
-import IFilter from "../interfaces/IFilter";
-import ISorter from "../interfaces/ISorter";
-import SavedHomesMap from "../components/SavedHomesMap"
-
-
-
-
+import SavedHomesMap from "../components/SavedHomesMap";
 import SavedHomesList from '../components/SavedHomesList';
-// import SavedSearchesPage from '../components/saved-searches';
-
 
 const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
   const [error, setError] = useState("")
@@ -48,7 +19,6 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
   const history = useHistory()
 
   const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
-  const [scriptLoaded, setScriptLoaded] = useState(false);
   const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
