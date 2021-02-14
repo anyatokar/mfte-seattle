@@ -2,26 +2,22 @@ import React, {useEffect, useRef, useState, useCallback} from 'react';
 import './Map.scss';
 import 'firebase/firestore';
 import IMap from "../interfaces/IMap";
-import IBuilding from '../interfaces/IBuilding';
-// import {InfoWindow} from 'google-map-react';
-// import {InfoWindow} from '@types/google-map-react'
-
+// import Moment from "react-moment";
+import IBuilding from "../interfaces/IBuilding";
+import firebase from "../db/firebase"
+import { useAuth } from "../contexts/AuthContext";
+import { Card, ListGroup, ListGroupItem, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
+import Login from "../auth_components/Login"
 
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
 type InfoWindow = google.maps.InfoWindow;
 
-
-
 let Markers:any = [];
 
-const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuildings}) => {
-
-  
-
+const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuildings }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
-  // const [infoWindow, setInfoWindow] = useState<InfoWindow>();
 
   const startMap = (): void => {
     if (!map) {
@@ -47,7 +43,6 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
           draggableCursor: 'pointer',
         })
       )
-      
     }
   }, [mapType, mapTypeControl]);
 
@@ -61,10 +56,9 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
   function setMapOnAll(map: google.maps.Map | null) {
     for (let i = 0; i < Markers.length; i++) {
       Markers[i].setMap(map);
-      
     }
   }
-  
+
   function clearMarkers() {
     setMapOnAll(null);
   }
@@ -74,8 +68,6 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
     Markers = [];
   }
 
-  // const [infoWindowContent, setInfoWindowContent] = useState("something about building")
-
   drop(filteredBuildings)
 
   function drop(filteredBuildings:Array<IBuilding>) {
@@ -83,6 +75,75 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
     deleteMarkers();
     for (let i = 0; i < filteredBuildings.length; i++) {
       addMarker(filteredBuildings[i], infoWindow);
+    }
+  }
+
+  const { currentUser } = useAuth() as any
+  // const {
+  //   buildingID,
+  //   buildingName,
+  //   phone,
+  //   residentialTargetedArea,
+  //   totalRestrictedUnits,
+  //   studioUnits,
+  //   oneBedroomUnits, 
+  //   twoBedroomUnits,
+  //   threePlusBedroomUnits,
+  //   urlforBuilding,
+  //   streetNum,
+  //   street, 
+  //   city,
+  //   state, 
+  //   zip,
+  //   lat, 
+  //   lng
+  // } = props;
+
+  function saveBuilding(buildingID: any) {
+    firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID).set(
+      {
+        // could not access data from buildingRef code below
+        // buildingRef: firebase.firestore().collection("buildings").doc(buildingID)
+        "buildingID": buildingID,
+        // "buildingName": buildingName,
+        // "phone": phone,
+        // "residentialTargetedArea": residentialTargetedArea,
+        // "totalRestrictedUnits": totalRestrictedUnits,
+        // "studioUnits": studioUnits,
+        // "oneBedroomUnits": oneBedroomUnits, 
+        // "twoBedroomUnits": twoBedroomUnits,
+        // "threePlusBedroomUnits": threePlusBedroomUnits,
+        // "urlforBuilding": urlforBuilding,
+        // "streetNum": streetNum,
+        // "street": street, 
+        // "city": city,
+        // "state": state, 
+        // "zip": zip,
+        // "lat": lat,
+        // "lng": lng
+      })
+    .then(() => {
+      console.log("Building saved to user");
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    })
+  }
+
+  const [showLogin, setShowLogin] = useState(false);
+
+  const handleCloseLogin = () => setShowLogin(false);
+  const handleShowLogin = () => setShowLogin(true);
+
+  function onClickInfowindow(buildingID: any) {
+    if (currentUser) {
+      saveBuilding(buildingID)
+    } else {
+      <>
+        <Modal show={showLogin} onHide={handleCloseLogin}>
+          <Login />
+        </Modal>
+      </>
     }
   }
 
@@ -102,20 +163,13 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
         '<p>' + building.streetNum + " "
         + building.street +
         '<br>' +
-        // TODO upload state to db
         building.city + ', ' +
         building.state + " " +
         building.zip  + '</p>' +
         building.phone +
-        '<a href=' + building.urlforBuilding + '>' +
         '<br>' +
-        building.urlforBuilding +
-        // '<br>' +
-        // '<button className="btn btn-info btn-sm">' + 
-        // 'Save to list' + 
-        // '</button>' +
+        // `<a onClick="onClickInfowindow("building.buildingID");">Save to List</a>` +
       '</div>'
-
 
     // mouseover
     marker.addListener("click", () => {

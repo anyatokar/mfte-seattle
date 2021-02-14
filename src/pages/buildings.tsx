@@ -72,16 +72,16 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   const resultBuildings = allBuildings
 
-    .filter((building) =>
-      genericSearch<IBuilding>(building, 
-        ["buildingName", "residentialTargetedArea", "streetNum", "street", "zip"],
-        query
-      )
+  .filter((building) =>
+    genericSearch<IBuilding>(building, 
+      ["buildingName", "residentialTargetedArea", "streetNum", "street", "zip"],
+      query
     )
-    .filter((building) => genericFilter<IBuilding>(building, activeFilters))
-    .sort((buildingA, buildingB) =>
-      genericSort<IBuilding>(buildingA, buildingB, activeSorter)
-    );
+  )
+  .filter((building) => genericFilter<IBuilding>(building, activeFilters))
+  .sort((buildingA, buildingB) =>
+    genericSort<IBuilding>(buildingA, buildingB, activeSorter)
+  );
 
   // Login
   const [showLogin, setShowLogin] = useState(false);
@@ -120,32 +120,17 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         </div>
 
         {/* sort */}
-        <section className="container-fluid">
-          <div className="row">
-            <div className="col-lg-4">
-              {/* <h3>Results:</h3> */}
-              {allBuildings.length > 0 && <Sorters<IBuilding>
-                object={allBuildings[0]}
-                onChangeSorter={(property, isDescending) => {
-                  setActiveSorter({
-                    property,
-                    isDescending,
-                  });
-                }}
-              />}
-            </div>
-          </div>
-        </section>
+
       </div>
       <Tab.Container id="sidebar" defaultActiveKey="map">
         <Row>
           <Col sm={3}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
-                <Nav.Link eventKey="map" className="tab">Map View</Nav.Link>
+                <Nav.Link eventKey="map" className="tab">Map MFTE Buildings</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="saved-homes" className="tab">MFTE Buildings</Nav.Link>
+                <Nav.Link eventKey="saved-homes" className="tab">View in List</Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>
@@ -155,7 +140,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               <MapTab savedBuildings={resultBuildings}/>
             </Tab.Pane>
             <Tab.Pane eventKey="saved-homes">
-              <AllBuildingsList resultBuildings={resultBuildings}/>
+              <AllBuildingsList allBuildings={allBuildings}/>
             </Tab.Pane>
           </Tab.Content>
           </Col>
