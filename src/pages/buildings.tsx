@@ -20,7 +20,7 @@ import IFilter from "../interfaces/IFilter";
 import ISorter from "../interfaces/ISorter";
 import { Button, Modal, Nav, Tab, Row, Col } from "react-bootstrap";
 import SavedHomesMap from "../components/SavedHomesMap";
-import SavedHomesList from '../components/SavedHomesList';
+import AllBuildingsList from '../components/SavedHomesList';
 import Login from "../auth_components/Login";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
@@ -86,10 +86,10 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               <Col sm={9}>
               <Tab.Content>
                 <Tab.Pane eventKey="saved-homes">
-                  <SavedHomesList savedBuildings={allBuildings}/>
+                  <AllBuildingsList allBuildings={allBuildings}/>
                 </Tab.Pane>
                 <Tab.Pane eventKey="map">
-                  <SavedHomesMap savedBuildings={allBuildings}/>
+                  <SavedHomesMap allBuildings={allBuildings}/>
                 </Tab.Pane>
               </Tab.Content>
               </Col>
