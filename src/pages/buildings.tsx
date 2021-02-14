@@ -24,7 +24,7 @@ import AllBuildingsList from '../components/SavedHomesList';
 import Login from "../auth_components/Login";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-
+import SavedHomesList from "../components/SavedHomesList";
 
 const ref = firebase.firestore().collection("buildings"); 
 
@@ -61,6 +61,28 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
     }
   }
 
+  const [query, setQuery] = useState<string>("");
+  const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
+    property: "buildingName",
+    isDescending: false,
+  });
+  const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
+    []
+  );
+
+  const resultBuildings = allBuildings
+
+    .filter((building) =>
+      genericSearch<IBuilding>(building, 
+        ["buildingName", "residentialTargetedArea", "streetNum", "street", "zip"],
+        query
+      )
+    )
+    .filter((building) => genericFilter<IBuilding>(building, activeFilters))
+    .sort((buildingA, buildingB) =>
+      genericSort<IBuilding>(buildingA, buildingB, activeSorter)
+    );
+
   // Login
   const [showLogin, setShowLogin] = useState(false);
 
@@ -69,6 +91,52 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   return (
     <>
+      <div>
+      {/* search filter container */}
+      <div className="container mx-auto my-2">
+
+        {/* search */}
+        <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
+
+        {/* filter */}
+        {allBuildings.length > 0 && <Filters<IBuilding>
+          object={allBuildings[0]}
+          filters={activeFilters}
+          onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
+            checked
+              ? setActiveFilters([
+                ...activeFilters.filter(
+                  (filter) => filter.property !== changedFilterProperty
+                ),
+                { property: changedFilterProperty, isTruthyPicked },
+              ])
+              : setActiveFilters(
+                activeFilters.filter(
+                  (filter) => filter.property !== changedFilterProperty
+                )
+              );
+          }}
+        />}
+      </div>
+
+      {/* sort */}
+      <section className="container-fluid">
+        <div className="row">
+          <div className="col-lg-4">
+            <h3>Results:</h3>
+            {allBuildings.length > 0 && <Sorters<IBuilding>
+              object={allBuildings[0]}
+              onChangeSorter={(property, isDescending) => {
+                setActiveSorter({
+                  property,
+                  isDescending,
+                });
+              }}
+            />}
+          </div>
+        </div>
+      </section>
+      </div>
 
         <>
           <Tab.Container id="sidebar" defaultActiveKey="saved-homes">
@@ -86,10 +154,10 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               <Col sm={9}>
               <Tab.Content>
                 <Tab.Pane eventKey="saved-homes">
-                  <AllBuildingsList allBuildings={allBuildings}/>
+                  <SavedHomesList savedBuildings={resultBuildings}/>
                 </Tab.Pane>
                 <Tab.Pane eventKey="map">
-                  <SavedHomesMap allBuildings={allBuildings}/>
+                  <SavedHomesMap savedBuildings={resultBuildings}/>
                 </Tab.Pane>
               </Tab.Content>
               </Col>

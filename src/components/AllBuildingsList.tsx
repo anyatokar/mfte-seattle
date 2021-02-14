@@ -11,16 +11,16 @@ export default function SavedHomesList(props:any) {
         <Row className="show-grid">
           <Col lg={12}>
             <Row className="show-grid">
-                {props.savedBuildings.length > 0 && (
+                {props.resultBuildings.length > 0 && (
                   <>
-                    {props.savedBuildings.map((building:any) => (
+                    {props.resultBuildings.map((building:any) => (
                       <Col md={4}  className="building-row">
                         <SavedHomesCard key={building.buildingName} {...building} />
                       </Col>
                     ))}
                   </>
                 )}
-                {props.savedBuildings.length === 0 && <p>No results found!</p>}
+                {props.resultBuildings.length === 0 && <p>No results found!</p>}
             </Row>
           </Col>
         </Row>
