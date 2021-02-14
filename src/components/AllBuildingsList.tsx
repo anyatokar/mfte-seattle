@@ -13,31 +13,26 @@ export default function SavedHomesList(props:any) {
     isDescending: false,
   });
 
-
-
   const resultBuildings = props.resultBuildingsUnsorted.sort((buildingA: any, buildingB: any) =>
   genericSort<IBuilding>(buildingA, buildingB, activeSorter)
 );
 
   return (
     <>
-            <section className="container-fluid">
-          <div className="row">
-            <div className="col-lg-4">
-              {/* <h3>Results:</h3> */}
-              {props.resultBuildingsUnsorted.length > 0 && <Sorters<IBuilding>
-                object={props.resultBuildingsUnsorted[0]}
-                onChangeSorter={(property, isDescending) => {
-                  setActiveSorter({
-                    property,
-                    isDescending,
-                  });
-                }}
-              />}
-            </div>
-          </div>
-        </section>
       <Container>
+        <Row className="show-grid sort-bar">
+          <Col lg={8}>
+            {props.resultBuildingsUnsorted.length > 0 && <Sorters<IBuilding>
+              object={props.resultBuildingsUnsorted[0]}
+              onChangeSorter={(property, isDescending) => {
+                setActiveSorter({
+                  property,
+                  isDescending,
+                });
+              }}
+            />}
+          </Col>
+        </Row>
         <Row className="show-grid">
           <Col lg={12}>
             <Row className="show-grid">

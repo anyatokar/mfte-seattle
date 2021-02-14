@@ -66,7 +66,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                   <Nav.Link eventKey="saved-homes" className="tab">Saved Homes</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="map" className="tab">Map View</Nav.Link>
+                  <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
                 </Nav.Item>
               </Nav>
               </Col>

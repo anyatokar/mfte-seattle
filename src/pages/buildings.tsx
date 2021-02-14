@@ -3,28 +3,21 @@ import IPage from '../interfaces/IPage';
 import logging from '../config/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Map from "../Map/Map";
-import { loadMapApi } from "../utils/GoogleMapsUtils";
 import firebase from '../db/firebase';
 import 'firebase/firestore';
 
-
-import Sorters from "../components/Sorters";
 import SearchInput from "../components/SearchInput";
-import { BuildingCard } from "../components/BuildingCard";
 import IBuilding from "../interfaces/IBuilding";
-import { genericSort } from "../utils/genericSort";
 import { genericSearch } from "../utils/genericSearch";
 import { genericFilter } from "../utils/genericFilter";
 import { Filters } from "../components/Filters";
 import IFilter from "../interfaces/IFilter";
-import ISorter from "../interfaces/ISorter";
-import { Button, Modal, Nav, Tab, Row, Col } from "react-bootstrap";
+import { Nav, Tab, Row, Col } from "react-bootstrap";
 import MapTab from "../components/MapTab";
 import AllBuildingsList from '../components/AllBuildingsList';
 import Login from "../auth_components/Login";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-import SavedHomesList from "../components/SavedHomesList";
 
 const ref = firebase.firestore().collection("buildings"); 
 
@@ -62,16 +55,11 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   }
 
   const [query, setQuery] = useState<string>("");
-  const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
-    property: "buildingName",
-    isDescending: false,
-  });
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
     []
   );
 
-  const resultBuildings = allBuildings
-
+  const resultBuildingsUnsorted = allBuildings
   .filter((building) =>
     genericSearch<IBuilding>(building, 
       ["buildingName", "residentialTargetedArea", "streetNum", "street", "zip"],
@@ -79,9 +67,6 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
     )
   )
   .filter((building) => genericFilter<IBuilding>(building, activeFilters))
-  .sort((buildingA, buildingB) =>
-    genericSort<IBuilding>(buildingA, buildingB, activeSorter)
-  );
 
   // Login
   const [showLogin, setShowLogin] = useState(false);
@@ -95,31 +80,29 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         {/* search filter container */}
         <div className="container mx-auto my-2">
 
-          {/* search */}
-          <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
+        {/* search */}
+        <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
 
-          {/* filter */}
-          {allBuildings.length > 0 && <Filters<IBuilding>
-            object={allBuildings[0]}
-            filters={activeFilters}
-            onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
-              checked
-                ? setActiveFilters([
-                  ...activeFilters.filter(
-                    (filter) => filter.property !== changedFilterProperty
-                  ),
-                  { property: changedFilterProperty, isTruthyPicked },
-                ])
-                : setActiveFilters(
-                  activeFilters.filter(
-                    (filter) => filter.property !== changedFilterProperty
-                  )
-                );
-            }}
-          />}
-        </div>
-
-        {/* sort */}
+        {/* filter */}
+        {allBuildings.length > 0 && <Filters<IBuilding>
+          object={allBuildings[0]}
+          filters={activeFilters}
+          onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
+            checked
+              ? setActiveFilters([
+                ...activeFilters.filter(
+                  (filter) => filter.property !== changedFilterProperty
+                ),
+                { property: changedFilterProperty, isTruthyPicked },
+              ])
+              : setActiveFilters(
+                activeFilters.filter(
+                  (filter) => filter.property !== changedFilterProperty
+                )
+              );
+          }}
+        />}
+      </div>
 
       </div>
       <Tab.Container id="sidebar" defaultActiveKey="map">
@@ -130,17 +113,17 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                 <Nav.Link eventKey="map" className="tab">Map MFTE Buildings</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="saved-homes" className="tab">View in List</Nav.Link>
+                <Nav.Link eventKey="saved-homes" className="tab">View as List</Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>
           <Col sm={9}>
           <Tab.Content>
             <Tab.Pane eventKey="map">
-              <MapTab savedBuildings={resultBuildings}/>
+              <MapTab savedBuildings={resultBuildingsUnsorted}/>
             </Tab.Pane>
             <Tab.Pane eventKey="saved-homes">
-              <AllBuildingsList resultBuildingsUnsorted={resultBuildings}/>
+              <AllBuildingsList resultBuildingsUnsorted={resultBuildingsUnsorted}/>
             </Tab.Pane>
           </Tab.Content>
           </Col>

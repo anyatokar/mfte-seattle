@@ -15,7 +15,7 @@ export default function Sorters<T>(props: ISortersProps<T>) {
       <label htmlFor="sorters" className="mt-3">Sort:</label>
       <select
         id="sorters"
-        className="custom-select form-control w-50"
+        className="custom-select form-control"
         onChange={(event) =>
           onChangeSorter(
             event.target.value.split(",")[0] as any,
@@ -28,7 +28,16 @@ export default function Sorters<T>(props: ISortersProps<T>) {
           if (!key) {
             return<></>
           }
-          if (key === 'buildingName') {
+          if (key === 'buildingName' || 
+            key === 'residentialTargetedArea' || 
+            key === 'zip') {
+
+          const keyToStringObj = { 
+            'buildingName': 'building name', 
+            'residentialTargetedArea': 'neighborhood',
+            'zip': 'zip code'
+          }
+        
             return(
               <>
                 <option
@@ -36,14 +45,14 @@ export default function Sorters<T>(props: ISortersProps<T>) {
                   value={[key, "true"]}
                 >
                   {/* sort by '{key}' descending */}
-                  descending by building name
+                  descending by {keyToStringObj[key]}
                 </option>
                 <option
                   key={`${key}-false`}
                   value={[key, "false"]}
                 >
                   {/* sort by '{key}' ascending */}
-                  ascending by building name
+                  ascending by {keyToStringObj[key]}
                 </option>
               </>
             );

@@ -32,7 +32,6 @@ img {
   margin: none;
 }
 
-
 .saved-homes-header {
   margin-top: 4em
 }
@@ -52,5 +51,9 @@ img {
 }
 
 .building-row {
+  padding-bottom: 2em;
+}
+
+.sort-bar {
   padding-bottom: 2em;
 }
