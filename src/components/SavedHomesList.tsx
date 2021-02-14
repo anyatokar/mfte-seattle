@@ -32,26 +32,26 @@ import { Container, Row, Col, CardDeck, Card, ListGroup, ListGroupItem, Navbar, 
 
 
 
-export default function SavedHomesList() {
-  const { currentUser } = useAuth() as any
-  const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-  const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);
-  const [loading, setLoading] = useState(false);
+export default function SavedHomesList(props:any) {
+  // const { currentUser } = useAuth() as any
+  // const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
+  // const [scriptLoaded, setScriptLoaded] = useState(false);
+  // const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);
+  // const [loading, setLoading] = useState(false);
 
-  const getSavedBuildings = useCallback(() => {
-    setLoading(true) 
-    ref.onSnapshot((querySnapshot) => {
-    const items: Array<IBuilding> = [];
-    querySnapshot.forEach((doc) => {
-      items.push(doc.data() as IBuilding);
-    });
-    setSavedBuildings(items)
-    setLoading(false)
-    });
-  }, []);
+  // const getSavedBuildings = useCallback(() => {
+  //   setLoading(true) 
+  //   ref.onSnapshot((querySnapshot) => {
+  //   const items: Array<IBuilding> = [];
+  //   querySnapshot.forEach((doc) => {
+  //     items.push(doc.data() as IBuilding);
+  //   });
+  //   setSavedBuildings(items)
+  //   setLoading(false)
+  //   });
+  // }, []);
 
-  useEffect(() => {getSavedBuildings()}, [getSavedBuildings]); 
+  // useEffect(() => {getSavedBuildings()}, [getSavedBuildings]); 
 
   return (
     <>
@@ -59,9 +59,9 @@ export default function SavedHomesList() {
         <Row className="show-grid">
           <Col lg={12}>
             <Row className="show-grid">
-                {savedBuildings.length > 0 && (
+                {props.savedBuildings.length > 0 && (
                   <>
-                    {savedBuildings.map((building) => (
+                    {props.savedBuildings.map((building:any) => (
                       <>
                       <Col md={4}  className="building-row">
                         <SavedHomesCard key={building.buildingName} {...building} />
@@ -70,7 +70,7 @@ export default function SavedHomesList() {
                     ))}
                   </>
                 )}
-                {savedBuildings.length === 0 && <p>No results found!</p>}
+                {props.savedBuildings.length === 0 && <p>No results found!</p>}
             </Row>
           </Col>
         </Row>

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Card, Button, Alert, Modal, Nav, Tab, Row, Col } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
@@ -36,6 +36,8 @@ import ISorter from "../interfaces/ISorter";
 import SavedHomesMap from "../components/SavedHomesMap"
 
 
+
+
 import SavedHomesList from '../components/SavedHomesList';
 // import SavedSearchesPage from '../components/saved-searches';
 
@@ -44,6 +46,26 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth() as any
   const history = useHistory()
+
+  const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);
+  const [loading, setLoading] = useState(false);
+
+  const getSavedBuildings = useCallback(() => {
+    setLoading(true) 
+    ref.onSnapshot((querySnapshot) => {
+    const items: Array<IBuilding> = [];
+    querySnapshot.forEach((doc) => {
+      items.push(doc.data() as IBuilding);
+    });
+    setSavedBuildings(items)
+    setLoading(false)
+    });
+  }, []);
+
+  useEffect(() => {getSavedBuildings()}, [getSavedBuildings]); 
+
 
   async function handleLogout() {
     setError("")
@@ -87,11 +109,11 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
               <Tab.Pane eventKey="saved-homes">
                 {/* <h3>Profile</h3> */}
                 
-                <SavedHomesList />
+                <SavedHomesList savedBuildings={savedBuildings}/>
               </Tab.Pane>
               <Tab.Pane eventKey="update">
               {/* <h3 className="display-6">Update</h3> */}
-              <SavedHomesMap/>
+              <SavedHomesMap savedBuildings={savedBuildings}/>
               </Tab.Pane>
             </Tab.Content>
             </Col>
