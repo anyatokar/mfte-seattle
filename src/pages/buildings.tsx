@@ -77,6 +77,10 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   return (
     <>
+      {loading ? (
+        <Spinner animation="border" variant="warning" />
+        ) : (<></>)
+      }
       <div>
         {/* search filter container */}
         <div className="container mx-auto my-2">

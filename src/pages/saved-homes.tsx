@@ -58,7 +58,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
     <>
       {loading ? (
         <Spinner animation="border" variant="warning" />
-        ) : ('')
+        ) : (<></>)
       }
 
       {currentUser

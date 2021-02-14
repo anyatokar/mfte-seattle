@@ -88,10 +88,10 @@ export const Header = () => {
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />
               </Modal>
-            <Button onClick={handleShowLogin}  variant="info">Saved Searches</Button>
+            {/* <Button onClick={handleShowLogin}  variant="info">Saved Searches</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />
-              </Modal>
+              </Modal> */}
             <Button onClick={handleShowLogin} variant="info">Log in or Sign up</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />
