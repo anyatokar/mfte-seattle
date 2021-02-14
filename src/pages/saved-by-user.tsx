@@ -7,7 +7,40 @@ import Login from "../auth_components/Login"
 import UpdateProfile from "../auth_components/UpdateProfile"
 import Profile from "../auth_components/Profile"
 
-export default function SavedByUser() {
+
+import IPage from '../interfaces/IPage';
+import logging from '../config/logging';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+
+import { useCallback } from 'react';
+// import IPage from '../interfaces/page';
+// import logging from '../config/logging';
+// import { RouteComponentProps, withRouter } from 'react-router-dom';
+import Map from "../Map/Map";
+import { loadMapApi } from "../utils/GoogleMapsUtils";
+import firebase from '../db/firebase';
+import 'firebase/firestore';
+
+
+import Sorters from "../components/Sorters";
+import SearchInput from "../components/SearchInput";
+import { SavedHomesCard } from "../components/SavedHomesCard";
+import IBuilding from "../interfaces/IBuilding";
+// import buildings from "../db/buildings";
+import { genericSort } from "../utils/genericSort";
+import { genericSearch } from "../utils/genericSearch";
+import { genericFilter } from "../utils/genericFilter";
+import { Filters } from "../components/Filters";
+import IFilter from "../interfaces/IFilter";
+import ISorter from "../interfaces/ISorter";
+import SavedHomesMap from "../components/SavedHomesMap"
+
+
+import SavedHomesList from '../components/SavedHomesList';
+// import SavedSearchesPage from '../components/saved-searches';
+
+
+const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth() as any
   const history = useHistory()
@@ -34,15 +67,15 @@ export default function SavedByUser() {
       {currentUser
         ? (
         <>
-        <Tab.Container id="sidebar" defaultActiveKey="profile">
+        <Tab.Container id="sidebar" defaultActiveKey="saved-homes">
           <Row>
             <Col sm={3}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
-                <Nav.Link eventKey="profile" className="tab">Profile</Nav.Link>
+                <Nav.Link eventKey="saved-homes" className="tab">Saved Homes</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="update" className="tab">Update Profile</Nav.Link>
+                <Nav.Link eventKey="update" className="tab">Map View</Nav.Link>
               </Nav.Item>
               {/* <Nav.Item>
                 <Nav.Link eventKey="third" className="tab">Tab 3</Nav.Link>
@@ -51,13 +84,14 @@ export default function SavedByUser() {
             </Col>
             <Col sm={9} className="profile-email">
             <Tab.Content>
-              <Tab.Pane eventKey="profile">
+              <Tab.Pane eventKey="saved-homes">
                 {/* <h3>Profile</h3> */}
-                <Profile />
+                
+                <SavedHomesList />
               </Tab.Pane>
               <Tab.Pane eventKey="update">
               {/* <h3 className="display-6">Update</h3> */}
-              <UpdateProfile />
+              <SavedHomesMap/>
               </Tab.Pane>
             </Tab.Content>
             </Col>
@@ -77,3 +111,5 @@ export default function SavedByUser() {
     </>
   )
 }
+
+export default withRouter(SavedByUserPage);

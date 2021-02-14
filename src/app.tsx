@@ -23,6 +23,8 @@ import { Component, FunctionComponent, useState } from "react";
 import { render } from "react-dom";
 import savedHomes from './pages/saved-homes';
 import savedSearches from './pages/saved-searches';
+import savedByUser from './pages/saved-by-user';
+
 
 
 const Application: React.FunctionComponent<{}> = props => {
@@ -74,6 +76,7 @@ const Application: React.FunctionComponent<{}> = props => {
               {/* <PrivateRoute path="/update-profile" component={UpdateProfile} /> */}
               <PrivateRoute path="/saved-homes" component={savedHomes} />
               <PrivateRoute path="/saved-searches" component={savedSearches} />
+              <PrivateRoute path="/saved" component={savedByUser} />
               {/* <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} /> */}

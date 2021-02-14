@@ -26,6 +26,8 @@ export function BuildingCard(props: IBuilding) {
     city,
     state, 
     zip,
+    lat,
+    lng
   } = props;
 
   function saveBuilding(e: any) {
@@ -49,7 +51,9 @@ export function BuildingCard(props: IBuilding) {
         "street": street, 
         "city": city,
         "state": state, 
-        "zip": zip
+        "zip": zip,
+        "lat": lat,
+        "lng": lng
       })
     .then(() => {
       

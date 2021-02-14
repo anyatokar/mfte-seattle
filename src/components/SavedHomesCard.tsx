@@ -7,6 +7,8 @@ import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
 import { Card, ListGroup, ListGroupItem, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
 import { MDBCloseIcon } from "mdbreact"
+import Map from "../Map/Map";
+import { loadMapApi } from "../utils/GoogleMapsUtils";
 
 export function SavedHomesCard(props: IBuilding) {
   const { currentUser } = useAuth() as any
@@ -36,11 +38,11 @@ export function SavedHomesCard(props: IBuilding) {
       });
     });
 
-
+    
   }
   return (
-    <div>
-      <Card style={{ width: '18rem' }}>
+<div className="building-card">
+      <Card>
         <Card.Img variant="top" src="" />
         <Card.Body>
           <MDBCloseIcon onClick={deleteBuilding}/>
@@ -75,15 +77,15 @@ export function SavedHomesCard(props: IBuilding) {
               <text>Three+ beds: {threePlusBedroomUnits}</text>
             </ListGroupItem>
           </ListGroup>
-        <Card.Body>
+        {/* <Card.Body>
           <a className="btn btn-outline-secondary btn-sm standalone-btn" 
             href={urlforBuilding} 
             target="_blank" 
             rel="noreferrer">
             Open Website
           </a>
-        </Card.Body>
+        </Card.Body> */}
       </Card>
-    </div>
+      </div>
   );
 }
