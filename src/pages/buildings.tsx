@@ -140,7 +140,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               <MapTab savedBuildings={resultBuildings}/>
             </Tab.Pane>
             <Tab.Pane eventKey="saved-homes">
-              <AllBuildingsList allBuildings={allBuildings}/>
+              <AllBuildingsList resultBuildingsUnsorted={resultBuildings}/>
             </Tab.Pane>
           </Tab.Content>
           </Col>

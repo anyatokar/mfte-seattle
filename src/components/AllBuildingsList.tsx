@@ -15,7 +15,7 @@ export default function SavedHomesList(props:any) {
 
 
 
-  const resultBuildings = props.allBuildings.sort((buildingA: any, buildingB: any) =>
+  const resultBuildings = props.resultBuildingsUnsorted.sort((buildingA: any, buildingB: any) =>
   genericSort<IBuilding>(buildingA, buildingB, activeSorter)
 );
 
@@ -25,8 +25,8 @@ export default function SavedHomesList(props:any) {
           <div className="row">
             <div className="col-lg-4">
               {/* <h3>Results:</h3> */}
-              {props.allBuildings.length > 0 && <Sorters<IBuilding>
-                object={props.allBuildings[0]}
+              {props.resultBuildingsUnsorted.length > 0 && <Sorters<IBuilding>
+                object={props.resultBuildingsUnsorted[0]}
                 onChangeSorter={(property, isDescending) => {
                   setActiveSorter({
                     property,
