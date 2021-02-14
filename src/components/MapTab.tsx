@@ -8,6 +8,7 @@ export default function SavedHomesMap(props:any) {
   const [scriptLoaded, setScriptLoaded] = useState(false);
 
   useEffect(() => {
+    
     const googleMapScript = loadMapApi();
     googleMapScript.addEventListener('load', function () {
       setScriptLoaded(true);
