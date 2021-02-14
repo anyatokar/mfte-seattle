@@ -42,31 +42,30 @@ export default function ForgotPassword() {
 
   return (
     <>
-            <Modal.Header closeButton>
-          <Modal.Title>Password Reset</Modal.Title>
-        </Modal.Header>
+      <Modal.Header closeButton>
+        <Modal.Title>Password Reset</Modal.Title>
+      </Modal.Header>
 
-        <Modal.Body>
-          {/* <h2 className="text-center mb-4">Password Reset</h2> */}
-          {error && <Alert variant="danger">{error}</Alert>}
-          {message && <Alert variant="success">{message}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
-            </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
-              Reset Password
-            </Button>
-          </Form>
-          </Modal.Body>
-          <Modal.Footer>
-          <div className="w-100 text-center mt-3">
-            Already have an account? <Button onClick={handleShowLogin} variant="link">Log In</Button>
-            <Modal show={showLogin} onHide={handleCloseLogin}>
-              <Login/>
-            </Modal>
-          </div>
+      <Modal.Body>
+        {error && <Alert variant="danger">{error}</Alert>}
+        {message && <Alert variant="success">{message}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group id="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="email" ref={emailRef} required />
+          </Form.Group>
+          <Button disabled={loading} className="w-100" type="submit">
+            Reset Password
+          </Button>
+        </Form>
+        </Modal.Body>
+        <Modal.Footer>
+        <div className="w-100 text-center mt-3">
+          Already have an account? <Button onClick={handleShowLogin} variant="link">Log In</Button>
+          <Modal show={showLogin} onHide={handleCloseLogin}>
+            <Login/>
+          </Modal>
+        </div>
 
       <div className="w-100 text-center mt-2">
         Need an account? <Button onClick={handleShowSignup} variant="link">Sign Up</Button>

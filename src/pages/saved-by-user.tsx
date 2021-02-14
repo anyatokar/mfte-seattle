@@ -36,7 +36,6 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
 
   useEffect(() => {getSavedBuildings()}, [getSavedBuildings]); 
 
-
   async function handleLogout() {
     setError("")
 
@@ -59,37 +58,30 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
       {currentUser
         ? (
         <>
-        <Tab.Container id="sidebar" defaultActiveKey="saved-homes">
-          <Row>
-            <Col sm={3}>
-            <Nav variant="pills" className="flex-column">
-              <Nav.Item>
-                <Nav.Link eventKey="saved-homes" className="tab">Saved Homes</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="update" className="tab">Map View</Nav.Link>
-              </Nav.Item>
-              {/* <Nav.Item>
-                <Nav.Link eventKey="third" className="tab">Tab 3</Nav.Link>
-              </Nav.Item> */}
-            </Nav>
-            </Col>
-            <Col sm={9} className="profile-email">
-            <Tab.Content>
-              <Tab.Pane eventKey="saved-homes">
-                {/* <h3>Profile</h3> */}
-                
-                <SavedHomesList savedBuildings={savedBuildings}/>
-              </Tab.Pane>
-              <Tab.Pane eventKey="update">
-              {/* <h3 className="display-6">Update</h3> */}
-              <SavedHomesMap savedBuildings={savedBuildings}/>
-              </Tab.Pane>
-            </Tab.Content>
-            </Col>
-          </Row>
-        </Tab.Container>
-
+          <Tab.Container id="sidebar" defaultActiveKey="saved-homes">
+            <Row>
+              <Col sm={3}>
+              <Nav variant="pills" className="flex-column">
+                <Nav.Item>
+                  <Nav.Link eventKey="saved-homes" className="tab">Saved Homes</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="map" className="tab">Map View</Nav.Link>
+                </Nav.Item>
+              </Nav>
+              </Col>
+              <Col sm={9}>
+              <Tab.Content>
+                <Tab.Pane eventKey="saved-homes">
+                  <SavedHomesList savedBuildings={savedBuildings}/>
+                </Tab.Pane>
+                <Tab.Pane eventKey="map">
+                  <SavedHomesMap savedBuildings={savedBuildings}/>
+                </Tab.Pane>
+              </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
         </>
         ) : (
         <>
