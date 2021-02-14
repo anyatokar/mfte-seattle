@@ -12,6 +12,7 @@ import 'firebase/firestore';
 import IBuilding from "../interfaces/IBuilding";
 import MapTab from "../components/MapTab";
 import SavedHomesList from '../components/SavedHomesList';
+import { Spinner } from "react-bootstrap"
 
 const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
   const [error, setError] = useState("")
@@ -55,6 +56,11 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
 
   return (
     <>
+      {loading ? (
+        <Spinner animation="border" variant="warning" />
+        ) : ('')
+      }
+
       {currentUser
         ? (
         <>

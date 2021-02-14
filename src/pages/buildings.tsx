@@ -5,6 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Map from "../Map/Map";
 import firebase from '../db/firebase';
 import 'firebase/firestore';
+import { Spinner } from "react-bootstrap"
 
 import SearchInput from "../components/SearchInput";
 import IBuilding from "../interfaces/IBuilding";
