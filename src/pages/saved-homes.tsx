@@ -37,17 +37,6 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
 
   useEffect(() => {getSavedBuildings()}, [getSavedBuildings]); 
 
-  async function handleLogout() {
-    setError("")
-
-    try {
-      await logout()
-      history.push("./")
-    } catch {
-      setError("Failed to log out")
-    }
-  }
-
   // Login
   const [showLogin, setShowLogin] = useState(false);
 
@@ -93,9 +82,9 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
         ) : (
         <>
           <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
-          <Modal show={showLogin} onHide={handleCloseLogin}>
-            <Login />
-          </Modal>
+            <Modal show={showLogin} onHide={handleCloseLogin}>
+              <Login />
+            </Modal>
         </>
         )
       }

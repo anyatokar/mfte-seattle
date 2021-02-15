@@ -12,7 +12,7 @@ import { AuthProvider } from "./contexts/AuthContext"
 import Dashboard from "./auth_components/Dashboard"
 import Login from "./auth_components/Login"
 import PrivateRoute from "./auth_components/PrivateRoute"
-import ForgotPassword from "./auth_components/ForgotPassword"
+import PasswordReset from "./auth_components/PasswordReset"
 import UpdateProfile from "./auth_components/UpdateProfile"
 import { useAuth } from "./contexts/AuthContext"
 
@@ -77,7 +77,7 @@ const Application: React.FunctionComponent<{}> = props => {
               <PrivateRoute path="/saved-searches" component={savedSearches} />
               {/* <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
-              <Route path="/forgot-password" component={ForgotPassword} /> */}
+              <Route path="/forgot-password" component={PasswordReset} /> */}
               
               {routes.map((route, index) => {
             return (

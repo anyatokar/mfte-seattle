@@ -44,17 +44,6 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   useEffect(() => {getAllBuildings()}, [getAllBuildings]); 
 
-  async function handleLogout() {
-    setError("")
-
-    try {
-      await logout()
-      history.push("./")
-    } catch {
-      setError("Failed to log out")
-    }
-  }
-
   const [query, setQuery] = useState<string>("");
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
     []

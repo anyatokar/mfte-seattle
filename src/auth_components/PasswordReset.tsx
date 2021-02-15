@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom"
 import Signup from "./Signup"
 import Login from "./Login"
 
-export default function ForgotPassword() {
+export default function PasswordReset() {
   const emailRef = useRef() as any
   const { resetPassword } = useAuth() as any
   const [error, setError] = useState("")
@@ -58,21 +58,19 @@ export default function ForgotPassword() {
             Reset Password
           </Button>
         </Form>
-        </Modal.Body>
-        <Modal.Footer>
-        <div className="w-100 text-center mt-3">
-          Already have an account? <Button onClick={handleShowLogin} variant="link">Log In</Button>
-          <Modal show={showLogin} onHide={handleCloseLogin}>
-            <Login/>
-          </Modal>
-        </div>
-
-      <div className="w-100 text-center mt-2">
-        Need an account? <Button onClick={handleShowSignup} variant="link">Sign Up</Button>
-        <Modal show={showSignup} onHide={handleCloseSignup}>
+      </Modal.Body>
+      <Modal.Footer>
+        <div className="w-100 text-center">
+          <Button onClick={handleShowLogin} variant="link">Log In</Button>
+            <Modal show={showLogin} onHide={handleCloseLogin}>
+              <Login/>
+            </Modal>
+          <br></br>
+          <Button onClick={handleShowSignup} variant="link">Sign Up</Button>
+            <Modal show={showSignup} onHide={handleCloseSignup}>
               <Signup />
             </Modal>
-      </div>
+        </div>
       </Modal.Footer>
     </>
   )

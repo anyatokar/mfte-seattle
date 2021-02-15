@@ -1,8 +1,8 @@
-import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
+import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import Signup from '../auth_components/Signup';
 
-import { Component, FunctionComponent, useState } from "react";
+import { Component, FunctionComponent, useState, useEffect } from "react";
 import Login from "../auth_components/Login"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
@@ -14,7 +14,7 @@ export const Header = () => {
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowLogin = () => setShowLogin(true);
 
-  const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
   const history = useHistory()
 
@@ -30,20 +30,16 @@ export const Header = () => {
     history.push("./dashboard")
   };
 
-  // Update Profile onClick and redirect
-  // function onClickUpdateProfile(e: any) {
-  //   e.preventDefault()
-  //   history.push("./update-profile")
-  // };
-
   // Logout
   async function handleLogout() {
-    setError("")
+    setMessage("")
+    setShowLogin(false)
     try {
       await logout()
-      history.push("/login")
+        setMessage("Logged out successfully")
+        history.push("/")
     } catch {
-      setError("Failed to log out")
+      setMessage("Failed to log out")
     }
   }
 
@@ -74,16 +70,14 @@ export const Header = () => {
         <ButtonGroup >
           { currentUser ? (
           <>
-            <Button onClick={onClick} value="./saved-homes" variant="warning">Saved</Button>
-            {/* <Button onClick={onClick} value="./saved-searches" variant="warning">Saved Searches</Button> */}
+            <Button onClick={onClick} value="./saved-homes" variant="info">Saved</Button>
             <DropdownButton 
               menuAlign="right"
               as={ButtonGroup} 
               title={"Logged in as: ".concat(`${currentUser.email}`)}
               id="bg-nested-dropdown" 
-              variant="warning">
+              variant="info">
               <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Dashboard</Dropdown.Item>
-              {/* <Dropdown.Item onClick={onClickUpdateProfile} value="./UpdateProfile" eventKey="2">Update Profile</Dropdown.Item> */}
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
             </DropdownButton>
@@ -94,10 +88,6 @@ export const Header = () => {
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />
               </Modal>
-            {/* <Button onClick={handleShowLogin}  variant="info">Saved Searches</Button>
-              <Modal show={showLogin} onHide={handleCloseLogin}>
-                <Login />
-              </Modal> */}
             <Button onClick={handleShowLogin} variant="info">Log in / Sign up</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />

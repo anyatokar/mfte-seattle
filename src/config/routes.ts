@@ -8,7 +8,7 @@ import SavedSearchesPage from '../pages/saved-searches';
 import DashboardPage from '../auth_components/Dashboard'
 // import LoginModal from '../auth_components/Login'
 // import SignupModal from '../auth_components/Signup'
-// import ForgotPasswordModal from '../auth_components/ForgotPassword'
+// import PasswordResetModal from '../auth_components/PasswordReset'
 
 
 const routes: IRoute[] = [
@@ -70,7 +70,7 @@ const routes: IRoute[] = [
     // {
     //   path: '/../password-reset',
     //   name: 'Forgot Password Modal',
-    //   component: ForgotPasswordModal,
+    //   component: PasswordResetModal,
     //   exact: true
     // },
 //     {

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Alert, Modal } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
-import ForgotPassword from "./ForgotPassword"
+import PasswordReset from "./PasswordReset"
 import Signup from "./Signup"
 
 export default function Login() {
@@ -66,19 +66,16 @@ export default function Login() {
       </Modal.Body>
 
       <Modal.Footer>
-        <div className="w-100 text-center mt-3">
-          <Button onClick={handleShowPassReset} variant="link">Forgot Password?</Button>
-          <Modal show={showPassReset} onHide={handleClosePassReset}>
-            <ForgotPassword />
-          </Modal>
-        </div>
-
-        <div className="w-100 text-center mt-2">
-          Need an account? 
+        <div className="w-100 text-center">
+          <Button onClick={handleShowPassReset} variant="link">Reset Password</Button>
+            <Modal show={showPassReset} onHide={handleClosePassReset}>
+              <PasswordReset />
+            </Modal>
+          <br></br>
           <Button onClick={handleShowSignup} variant="link">Sign Up</Button>
-          <Modal show={showSignup} onHide={handleCloseSignup}>
-            <Signup />
-          </Modal>
+            <Modal show={showSignup} onHide={handleCloseSignup}>
+              <Signup />
+            </Modal>
         </div>
       </Modal.Footer>
     </>
