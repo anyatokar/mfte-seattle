@@ -58,12 +58,6 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   )
   .filter((building) => genericFilter<IBuilding>(building, activeFilters))
 
-  // Login
-  const [showLogin, setShowLogin] = useState(false);
-
-  const handleCloseLogin = () => setShowLogin(false);
-  const handleShowLogin = () => setShowLogin(true);
-
   return (
     <>
       {loading ? (
