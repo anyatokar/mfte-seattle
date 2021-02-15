@@ -98,7 +98,7 @@ export function AllBuildingsCard(props: IBuilding) {
             </Button>
             ) : (
             <>
-              <Button onClick={handleShowLogin}  variant="btn btn-outline-warning btn-sm standalone-btn">Saved Searches</Button>
+              <Button onClick={handleShowLogin}  variant="btn btn-outline-warning btn-sm standalone-btn">Save</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />
               </Modal>
