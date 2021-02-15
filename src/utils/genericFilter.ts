@@ -11,3 +11,5 @@ export function genericFilter<T>(object: T, filters: Array<IFilter<T>>) {
     return filter.isTruthyPicked ? object[filter.property] : !object[filter.property];
   });
 }
+
+// look here for the or instead of and 

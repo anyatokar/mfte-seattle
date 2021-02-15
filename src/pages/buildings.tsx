@@ -44,11 +44,44 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   useEffect(() => {getAllBuildings()}, [getAllBuildings]); 
 
+// firebase try
+// const [filteredBuildings, setFilteredBuildings] = useState([] as Array<IBuilding>);
+
+//   const getFilteredBuildings = useCallback(() => {
+//     setLoading(true) 
+//     const items: Array<IBuilding> = [];
+//   ref.where("twoBedroomUnits", ">", 0)
+
+//   .get()
+
+//   .then((querySnapshot) => {
+//       querySnapshot.forEach((doc) => {
+
+//         items.push(doc.data() as IBuilding);
+//           // doc.data() is never undefined for query doc snapshots
+//           console.log(doc.id, " => ", doc.data());
+//       });
+//   })
+//   .catch((error) => {
+//       console.log("Error getting documents: ", error);
+//   });
+//   setFilteredBuildings(items)
+//   setLoading(false)
+
+// }, []);
+
+// useEffect(() => {getFilteredBuildings()}, [getFilteredBuildings]); 
+// console.log(allBuildings)
+// console.log(filteredBuildings)
+// ------
+
+
+
   const [query, setQuery] = useState<string>("");
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
     []
   );
-
+  // const dotSortBuildings = allBuildings.sort((a, b) => (a.buildingID > b.buildingID) ? 1 : -1)
   const resultBuildingsUnsorted = allBuildings
   .filter((building) =>
     genericSearch<IBuilding>(building, 
@@ -57,7 +90,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
     )
   )
   .filter((building) => genericFilter<IBuilding>(building, activeFilters))
-
+  console.log(activeFilters)
   return (
     <>
       {loading ? (
@@ -89,6 +122,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                   ? setActiveFilters([
                     ...activeFilters.filter(
                       (filter) => filter.property !== changedFilterProperty
+                      // .sort on 92
                     ),
                     { property: changedFilterProperty, isTruthyPicked },
                   ])

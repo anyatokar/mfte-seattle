@@ -26,12 +26,13 @@ export function Filters<T>(props: IFiltersProps<T>) {
       is <b>falsy</b>
     </>
   );
-
+  const objectKeys = ["studioUnits", "oneBedroomUnits", "twoBedroomUnits", "threePlusBedroomUnits"]
   return (
     <div className="p-1 my-2">
       
       <label className="mt-3">Filter by number of bedrooms:</label>
-      {Object.keys(object).map((key) => {
+      {/* Object is a class that is calling method keys on object (which is all the buildings) */}
+      {objectKeys.map((key) => {
         if (key !== 'studioUnits' && 
             key !== 'oneBedroomUnits' && 
             key !== 'twoBedroomUnits' && 
