@@ -66,7 +66,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
         <>
           <Tab.Container id="sidebar" defaultActiveKey="map">
             <Row>
-              <Col sm={3}>
+              <Col sm={2}>
                 <Nav variant="pills" className="flex-column">
                   < Nav.Item>
                     <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
@@ -76,7 +76,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                   </Nav.Item>
                 </Nav>
               </Col>
-              <Col sm={9}>
+              <Col sm={10}>
               <Tab.Content>
                 <Tab.Pane eventKey="map">
                   <MapTab savedBuildings={savedBuildings}/>

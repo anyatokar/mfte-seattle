@@ -1,4 +1,4 @@
-import { Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
+import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import Signup from '../auth_components/Signup';
 
@@ -55,14 +55,20 @@ export const Header = () => {
             <Nav.Link><strong>MFTE Simple</strong></Nav.Link>
           </LinkContainer>
           <LinkContainer to='/buildings'>
-            <Nav.Link>All Buildings</Nav.Link>
+            <Nav.Link>Buildings</Nav.Link>
           </LinkContainer>
-          <LinkContainer to='/about-mfte'>
-            <Nav.Link>About MFTE</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to='/about-app'>
-            <Nav.Link>About this app</Nav.Link>
-          </LinkContainer>
+          <NavDropdown title="About" id="basic-nav-dropdown">
+            <NavDropdown.Item>
+              <LinkContainer to='/about-mfte'>
+                <Nav.Link>MFTE</Nav.Link>
+              </LinkContainer>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              <LinkContainer to='/about-app'>
+                <Nav.Link>This Website</Nav.Link>
+              </LinkContainer>
+            </NavDropdown.Item>
+          </NavDropdown>
         </Nav>
 
         <ButtonGroup >
@@ -76,10 +82,10 @@ export const Header = () => {
               title={"Logged in as: ".concat(`${currentUser.email}`)}
               id="bg-nested-dropdown" 
               variant="warning">
-              <Dropdown.Item onClick={onClickDashboard} eventKey="1">Dashboard</Dropdown.Item>
+              <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Dashboard</Dropdown.Item>
               {/* <Dropdown.Item onClick={onClickUpdateProfile} value="./UpdateProfile" eventKey="2">Update Profile</Dropdown.Item> */}
               <Dropdown.Divider />
-              <Dropdown.Item onClick={handleLogout} eventKey="3">Logout</Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
             </DropdownButton>
           </>
           ) : (
@@ -92,7 +98,7 @@ export const Header = () => {
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />
               </Modal> */}
-            <Button onClick={handleShowLogin} variant="info">Log in or Sign up</Button>
+            <Button onClick={handleShowLogin} variant="info">Log in / Sign up</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />
               </Modal>

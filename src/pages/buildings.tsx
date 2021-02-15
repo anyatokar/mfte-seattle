@@ -13,7 +13,7 @@ import { genericSearch } from "../utils/genericSearch";
 import { genericFilter } from "../utils/genericFilter";
 import { Filters } from "../components/Filters";
 import IFilter from "../interfaces/IFilter";
-import { Nav, Tab, Row, Col } from "react-bootstrap";
+import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import MapTab from "../components/MapTab";
 import AllBuildingsList from '../components/AllBuildingsList';
 import Login from "../auth_components/Login";
@@ -81,38 +81,48 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         <Spinner animation="border" variant="warning" />
         ) : (<></>)
       }
-      <div>
-        {/* search filter container */}
-        <div className="container mx-auto my-2">
-
+      {/* search filter container */}
+      <Container>
         {/* search */}
-        <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
-
+        <Row>
+          <Col>
+            <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            { loading ? '' : 
+              `${resultBuildingsUnsorted.length}`.concat(" buildings match your search") }
+          </Col>
+        </Row>
         {/* filter */}
-        {allBuildings.length > 0 && <Filters<IBuilding>
-          object={allBuildings[0]}
-          filters={activeFilters}
-          onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
-            checked
-              ? setActiveFilters([
-                ...activeFilters.filter(
-                  (filter) => filter.property !== changedFilterProperty
-                ),
-                { property: changedFilterProperty, isTruthyPicked },
-              ])
-              : setActiveFilters(
-                activeFilters.filter(
-                  (filter) => filter.property !== changedFilterProperty
-                )
-              );
-          }}
-        />}
-      </div>
+        <Row>
+          <Col>
+            {allBuildings.length > 0 && <Filters<IBuilding>
+              object={allBuildings[0]}
+              filters={activeFilters}
+              onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
+                checked
+                  ? setActiveFilters([
+                    ...activeFilters.filter(
+                      (filter) => filter.property !== changedFilterProperty
+                    ),
+                    { property: changedFilterProperty, isTruthyPicked },
+                  ])
+                  : setActiveFilters(
+                    activeFilters.filter(
+                      (filter) => filter.property !== changedFilterProperty
+                    )
+                  );
+                }}
+              />}
+          </Col>
+        </Row>
+      </Container>
 
-      </div>
       <Tab.Container id="sidebar" defaultActiveKey="map">
         <Row>
-          <Col sm={3}>
+          <Col sm={2}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
                 <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
@@ -122,7 +132,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               </Nav.Item>
             </Nav>
           </Col>
-          <Col sm={9}>
+          <Col sm={10}>
           <Tab.Content>
             <Tab.Pane eventKey="map">
               <MapTab savedBuildings={resultBuildingsUnsorted}/>

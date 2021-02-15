@@ -36,7 +36,7 @@ export default function Dashboard() {
         <>
         <Tab.Container id="sidebar" defaultActiveKey="profile">
           <Row>
-            <Col sm={3}>
+            <Col sm={2}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
                 <Nav.Link eventKey="profile" className="tab">Profile</Nav.Link>
@@ -49,7 +49,7 @@ export default function Dashboard() {
               </Nav.Item> */}
             </Nav>
             </Col>
-            <Col sm={9} className="profile-email">
+            <Col sm={10} className="profile-email">
             <Tab.Content>
               <Tab.Pane eventKey="profile">
                 {/* <h3>Profile</h3> */}

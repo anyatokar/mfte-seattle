@@ -157,23 +157,25 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
     Markers.push(marker);
 
     let contentString = 
-      '<div>' +
-        '<h6><a href=' + 
+        '<strong><a href=' + 
         building.urlforBuilding + ' ' +
         `target='_blank' rel='noreferrer'>` +
         '<br>' +
-        building.buildingName + '</a></h6>' + 
-        '<p><strong>' + building.residentialTargetedArea + '</strong></p>' + 
-        '<p>' + building.streetNum + " "
+        building.buildingName + '</a></strong>' + 
+        '<br>' +
+        '<strong>' + building.residentialTargetedArea + '</strong>' + 
+        '<br>' +
+        + building.streetNum + " "
         + building.street +
         '<br>' +
         building.city + ', ' +
         building.state + ' ' +
-        building.zip  + '</p>' +
-        building.phone +
+        building.zip  + 
         '<br>' +
+        building.phone +
+        '<br>'
         // `<a onClick="onClickInfowindow("building.buildingID");">Save to List</a>` +
-      '</div>'
+  
 
     // mouseover
     marker.addListener("click", () => {

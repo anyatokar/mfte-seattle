@@ -14,7 +14,7 @@ export default function SavedHomesList(props:any) {
                 {props.savedBuildings.length > 0 && (
                   <>
                     {props.savedBuildings.map((building:any) => (
-                      <Col md={4}  className="building-row">
+                      <Col md={4} className="building-row">
                         <SavedHomesCard key={building.buildingName} {...building} />
                       </Col>
                     ))}
