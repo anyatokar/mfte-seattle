@@ -50,7 +50,6 @@ export function Filters<T>(props: IFiltersProps<T>) {
           styledKey = 'Three or more bedrooms' 
         }
 
-
         const getRadioButton = (isTruthyPicked: boolean): ReactNode => {
           const id = isTruthyPicked
             ? `radio-defined-${key}`

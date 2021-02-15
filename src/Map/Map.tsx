@@ -158,13 +158,17 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
 
     let contentString = 
       '<div>' +
-        '<h5>' + building.buildingName + '</h5>' + 
-        '<h6>' + building.residentialTargetedArea + '</h6>' + 
+        '<h6><a href=' + 
+        building.urlforBuilding + ' ' +
+        `target='_blank' rel='noreferrer'>` +
+        '<br>' +
+        building.buildingName + '</a></h6>' + 
+        '<p><strong>' + building.residentialTargetedArea + '</strong></p>' + 
         '<p>' + building.streetNum + " "
         + building.street +
         '<br>' +
         building.city + ', ' +
-        building.state + " " +
+        building.state + ' ' +
         building.zip  + '</p>' +
         building.phone +
         '<br>' +

@@ -29,30 +29,31 @@ export default function Sorters<T>(props: ISortersProps<T>) {
             return<></>
           }
           if (key === 'buildingName' || 
-            key === 'residentialTargetedArea' || 
-            key === 'zip') {
+            key === 'residentialTargetedArea' 
+            // key === 'zip'
+          ) {
 
           const keyToStringObj = { 
             'buildingName': 'building name', 
             'residentialTargetedArea': 'neighborhood',
-            'zip': 'zip code'
+            // 'zip': 'zip code'
           }
         
             return(
               <>
                 <option
-                  key={`${key}-true`}
-                  value={[key, "true"]}
-                >
-                  {/* sort by '{key}' descending */}
-                  descending by {keyToStringObj[key]}
-                </option>
-                <option
                   key={`${key}-false`}
                   value={[key, "false"]}
                 >
                   {/* sort by '{key}' ascending */}
-                  ascending by {keyToStringObj[key]}
+                  {keyToStringObj[key]} (a-z)
+                </option>
+                <option
+                  key={`${key}-true`}
+                  value={[key, "true"]}
+                >
+                  {/* sort by '{key}' descending */}
+                  {keyToStringObj[key]} (z-a)
                 </option>
               </>
             );

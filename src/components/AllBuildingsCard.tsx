@@ -90,6 +90,21 @@ export function AllBuildingsCard(props: IBuilding) {
               <p>{city}, {state} {zip}</p>
               <p>{phone}</p>
           </Card.Text>
+          { currentUser ? (
+            <Button variant="btn btn-outline-warning btn-sm standalone-btn"
+              onClick={saveBuilding}
+              role="button">
+              Save
+            </Button>
+            ) : (
+            <>
+              <Button onClick={handleShowLogin}  variant="btn btn-outline-warning btn-sm standalone-btn">Saved Searches</Button>
+              <Modal show={showLogin} onHide={handleCloseLogin}>
+                <Login />
+              </Modal>
+            </>
+            )
+          }
         </Card.Body>
         <ListGroup className="list-group-flush">
           <ListGroupItem>
@@ -103,23 +118,6 @@ export function AllBuildingsCard(props: IBuilding) {
             <text>Three+ beds: {threePlusBedroomUnits}</text>
           </ListGroupItem>
         </ListGroup>
-        <Card.Body>
-          { currentUser ? (
-            <Button variant="btn btn-outline-warning btn-sm standalone-btn"
-              onClick={saveBuilding}
-              role="button">
-              Save to List
-            </Button>
-            ) : (
-            <>
-              <Button onClick={handleShowLogin}  variant="btn btn-outline-warning btn-sm standalone-btn">Saved Searches</Button>
-              <Modal show={showLogin} onHide={handleCloseLogin}>
-                <Login />
-              </Modal>
-            </>
-            )
-          }
-        </Card.Body>
       </Card>
     </div>
   );

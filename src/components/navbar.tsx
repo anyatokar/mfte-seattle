@@ -68,12 +68,12 @@ export const Header = () => {
         <ButtonGroup >
           { currentUser ? (
           <>
-            <Button onClick={onClick} value="./saved-homes" variant="warning">Saved Homes</Button>
+            <Button onClick={onClick} value="./saved-homes" variant="warning">Saved</Button>
             {/* <Button onClick={onClick} value="./saved-searches" variant="warning">Saved Searches</Button> */}
             <DropdownButton 
               menuAlign="right"
               as={ButtonGroup} 
-              title={currentUser.email}
+              title={"Logged in as: ".concat(`${currentUser.email}`)}
               id="bg-nested-dropdown" 
               variant="warning">
               <Dropdown.Item onClick={onClickDashboard} eventKey="1">Dashboard</Dropdown.Item>
@@ -84,7 +84,7 @@ export const Header = () => {
           </>
           ) : (
           <>
-            <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
+            <Button onClick={handleShowLogin} variant="info">Saved</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 <Login />
               </Modal>

@@ -64,26 +64,27 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
       {currentUser
         ? (
         <>
-          <Tab.Container id="sidebar" defaultActiveKey="saved-homes">
+          <Tab.Container id="sidebar" defaultActiveKey="map">
             <Row>
               <Col sm={3}>
-              <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey="saved-homes" className="tab">Saved Homes</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
-                </Nav.Item>
-              </Nav>
+                <Nav variant="pills" className="flex-column">
+                  < Nav.Item>
+                    <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="list" className="tab">List</Nav.Link>
+                  </Nav.Item>
+                </Nav>
               </Col>
               <Col sm={9}>
               <Tab.Content>
-                <Tab.Pane eventKey="saved-homes">
-                  <SavedHomesList savedBuildings={savedBuildings}/>
-                </Tab.Pane>
                 <Tab.Pane eventKey="map">
                   <MapTab savedBuildings={savedBuildings}/>
                 </Tab.Pane>
+                <Tab.Pane eventKey="list">
+                  <SavedHomesList savedBuildings={savedBuildings}/>
+                </Tab.Pane>
+
               </Tab.Content>
               </Col>
             </Row>

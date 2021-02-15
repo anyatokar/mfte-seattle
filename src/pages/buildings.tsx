@@ -115,10 +115,10 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
           <Col sm={3}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
-                <Nav.Link eventKey="map" className="tab">Map MFTE Buildings</Nav.Link>
+                <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="saved-homes" className="tab">View as List</Nav.Link>
+                <Nav.Link eventKey="saved-homes" className="tab">List</Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>
