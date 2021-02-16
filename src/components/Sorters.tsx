@@ -35,8 +35,8 @@ export default function Sorters<T>(props: ISortersProps<T>) {
           ) {
 
           const keyToStringObj = { 
-            'buildingName': 'building name', 
-            'residentialTargetedArea': 'neighborhood',
+            'buildingName': 'Building Name', 
+            'residentialTargetedArea': 'Neighborhood',
             // 'zip': 'zip code'
           }
         
@@ -47,14 +47,14 @@ export default function Sorters<T>(props: ISortersProps<T>) {
                   value={[key, "false"]}
                 >
                   {/* sort by '{key}' ascending */}
-                  {keyToStringObj[key]} (a-z)
+                  {keyToStringObj[key]} (A to Z)
                 </option>
                 <option
                   key={`${key}-true`}
                   value={[key, "true"]}
                 >
                   {/* sort by '{key}' descending */}
-                  {keyToStringObj[key]} (z-a)
+                  {keyToStringObj[key]} (Z to A)
                 </option>
               </>
             );

@@ -21,7 +21,7 @@ export default function SavedHomesList(props:any) {
     <>
       <Container>
         <Row className="show-grid sort-bar">
-          <Col lg={8}>
+          <Col lg={4}>
             {props.resultBuildingsUnsorted.length > 0 && <Sorters<IBuilding>
               object={props.resultBuildingsUnsorted[0]}
               onChangeSorter={(property, isDescending) => {
@@ -39,7 +39,7 @@ export default function SavedHomesList(props:any) {
                 {resultBuildings.length > 0 && (
                   <>
                     {resultBuildings.map((building:any) => (
-                      <Col md={4}  className="building-row">
+                      <Col md={4} lg={3} className="building-row">
                         <AllBuildingsCard key={building.buildingID} {...building} />
                       </Col>
                     ))}

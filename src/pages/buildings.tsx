@@ -65,14 +65,14 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
       {/* search filter container */}
       <Container>
         {/* search */}
-        <Row>
-          <Col>
+        <Row  className="justify-content-center">
+          <Col sm={8}>
             <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
           </Col>
-        </Row>
+        </Row >
         {/* filter */}
-        <Row>
-          <Col>
+        <Row className="justify-content-center">
+          <Col sm={8}>
             {allBuildings.length > 0 && <Filters<IBuilding>
               object={allBuildings[0]}
               filters={activeFilters}
@@ -81,7 +81,6 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                   ? setActiveFilters([
                     ...activeFilters.filter(
                       (filter) => filter.property !== changedFilterProperty
-                      // .sort on 92
                     ),
                     { property: changedFilterProperty, isTruthyPicked },
                   ])
@@ -94,8 +93,8 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               />}
           </Col>
         </Row>
-        <Row>
-          <Col>
+        <Row className="justify-content-md-center">
+          <Col sm={8}>
             { loading ? '' : 
               `${resultBuildingsUnsorted.length}`.concat(" buildings match your search") }
           </Col>
@@ -116,14 +115,14 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             </Nav>
           </Col>
           <Col sm={10}>
-          <Tab.Content>
-            <Tab.Pane eventKey="map">
-              <MapTab savedBuildings={resultBuildingsUnsorted}/>
-            </Tab.Pane>
-            <Tab.Pane eventKey="saved-homes">
-              <AllBuildingsList resultBuildingsUnsorted={resultBuildingsUnsorted}/>
-            </Tab.Pane>
-          </Tab.Content>
+            <Tab.Content>
+              <Tab.Pane eventKey="map">
+                <MapTab savedBuildings={resultBuildingsUnsorted}/>
+              </Tab.Pane>
+              <Tab.Pane eventKey="saved-homes">
+                <AllBuildingsList resultBuildingsUnsorted={resultBuildingsUnsorted}/>
+              </Tab.Pane>
+            </Tab.Content>
           </Col>
         </Row>
       </Tab.Container>
