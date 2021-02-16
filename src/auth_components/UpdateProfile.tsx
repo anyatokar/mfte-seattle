@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import firebase from "../db/firebase"
 
 export default function UpdateProfile() {
@@ -32,14 +32,12 @@ export default function UpdateProfile() {
 
     Promise.all(promises)
       .then(() => {
-        // history.push("/")
-        setMessage("Update successful")
+        setMessage("Success: account updated")
       })
       .catch((error) => {
-        console.log(error.code)
-        console.log(error.message)
+        // console.log(error.code)
+        // console.log(error.message)
         setMessage(error.message)
-        // setMessage("Failed to update account")
       })
       .finally(() => {
         setLoading(false)
@@ -52,12 +50,16 @@ export default function UpdateProfile() {
       console.log("User successfully deleted from Firestore.");
     }).catch((error) => {
       console.error("Error removing user from Firestore: ", error);
+      setMessage(error.message);
     });
 
     currentUser.delete().then(() => {
       console.log("User successfully deleted from Auth.");
+      setMessage("Success: account deleted")
+      history.push("/")
     }).catch((error: any) => {
       console.error("Error removing user from Auth: ", error);
+      setMessage(error.message);
     });
   }
   return (
@@ -65,8 +67,8 @@ export default function UpdateProfile() {
       <Card style={{ width: '25rem' }}>
         <Card.Body>
           {/* <h2 className="text-center mb-4">Update Profile</h2> */}
-          {message === "Update successful" && <Alert variant="success">{message}</Alert>}
-          {message && message !== "Update successful" && <Alert variant="danger">{message}</Alert>}
+          {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
+          {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
@@ -100,9 +102,8 @@ export default function UpdateProfile() {
             </div>
           </Form>
           <div className="w-100 text-center mt-2">
-          {/* <Link to="/">Cancel</Link> */}
-        <Button onClick={onDelete} variant="link">Delete Account</Button>
-      </div>
+            <Button onClick={onDelete} variant="link">Delete Account</Button>
+          </div>
         </Card.Body>
       </Card>
     </>

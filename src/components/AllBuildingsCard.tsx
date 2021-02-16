@@ -19,11 +19,12 @@ export function AllBuildingsCard(props: IBuilding) {
     phone,
     residentialTargetedArea,
     totalRestrictedUnits,
+    sedu,
     studioUnits,
     oneBedroomUnits, 
     twoBedroomUnits,
     threePlusBedroomUnits,
-    urlforBuilding,
+    urlForBuilding,
     streetNum,
     street, 
     city,
@@ -43,18 +44,19 @@ export function AllBuildingsCard(props: IBuilding) {
         "phone": phone,
         "residentialTargetedArea": residentialTargetedArea,
         "totalRestrictedUnits": totalRestrictedUnits,
+        "sedu": sedu,
         "studioUnits": studioUnits,
         "oneBedroomUnits": oneBedroomUnits, 
         "twoBedroomUnits": twoBedroomUnits,
         "threePlusBedroomUnits": threePlusBedroomUnits,
-        "urlforBuilding": urlforBuilding,
+        "urlForBuilding": urlForBuilding,
         "streetNum": streetNum,
         "street": street, 
         "city": city,
         "state": state, 
         "zip": zip,
         "lat": lat,
-        "lng": lng
+        "lng": lng, 
       })
     .then(() => {
       console.log("Building saved to user");
@@ -76,7 +78,7 @@ export function AllBuildingsCard(props: IBuilding) {
           <Card.Title>
             <h5 className="card-title"> {
               <a id="myLink" 
-                href={urlforBuilding} 
+                href={urlForBuilding} 
                 target="_blank" 
                 rel="noreferrer">
                 {buildingName}
@@ -109,6 +111,8 @@ export function AllBuildingsCard(props: IBuilding) {
         <ListGroup className="list-group-flush">
           <ListGroupItem>
             <h6> Total MFTE Units: {totalRestrictedUnits}</h6>
+            <text> Pods: {sedu}</text>
+            <br></br>
             <text> Studios: {studioUnits}</text>
             <br></br>
             <text>One beds: {oneBedroomUnits}</text>

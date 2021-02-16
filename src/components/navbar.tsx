@@ -10,7 +10,7 @@ import { Link, useHistory } from "react-router-dom"
 export const Header = () => {
 
   const [showLogin, setShowLogin] = useState(false);
-
+console.log(showLogin)
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowLogin = () => setShowLogin(true);
 
@@ -42,7 +42,7 @@ export const Header = () => {
       setMessage("Failed to log out")
     }
   }
-
+console.log(showLogin)
   return (
     <div>
       <Navbar variant="light">

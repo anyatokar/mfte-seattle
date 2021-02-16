@@ -30,7 +30,7 @@ buildings.forEach(function(obj) {
     oneBedroomUnits: obj.oneBedroomUnits,
     twoBedroomUnits: obj.twoBedroomUnits,
     threePlusBedroomUnits: obj.threePlusBedroomUnits,
-    urlforBuilding: obj.urlforBuilding,
+    urlForBuilding: obj.urlForBuilding,
     lat: obj.lat,
     lng: obj.lng,
     streetNum: obj.number,

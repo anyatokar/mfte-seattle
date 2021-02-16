@@ -89,7 +89,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
   //   oneBedroomUnits, 
   //   twoBedroomUnits,
   //   threePlusBedroomUnits,
-  //   urlforBuilding,
+  //   urlForBuilding,
   //   streetNum,
   //   street, 
   //   city,
@@ -113,7 +113,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
         // "oneBedroomUnits": oneBedroomUnits, 
         // "twoBedroomUnits": twoBedroomUnits,
         // "threePlusBedroomUnits": threePlusBedroomUnits,
-        // "urlforBuilding": urlforBuilding,
+        // "urlForBuilding": urlForBuilding,
         // "streetNum": streetNum,
         // "street": street, 
         // "city": city,
@@ -158,7 +158,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
 
     let contentString = 
         '<strong><a href=' + 
-        building.urlforBuilding + ' ' +
+        building.urlForBuilding + ' ' +
         `target='_blank' rel='noreferrer'>` +
         '<br>' +
         building.buildingName + '</a></strong>' + 

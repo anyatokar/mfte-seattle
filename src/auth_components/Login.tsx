@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Alert, Modal } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
 import PasswordReset from "./PasswordReset"
 import Signup from "./Signup"
 
@@ -12,8 +11,6 @@ export default function Login() {
 
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
-
-  const history = useHistory()
 
   // Signup
   const [showSignup, setShowSignup] = useState(false);
@@ -33,7 +30,6 @@ export default function Login() {
       setMessage("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-      // history.push("/")
     } catch(error) {
       console.log(error.code)
       console.log(error.message)

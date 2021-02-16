@@ -43,7 +43,7 @@ export function Filters<T>(props: IFiltersProps<T>) {
         let styledKey = ''
 
         if (key === 'sedu') { 
-          styledKey = 'SEDU'
+          styledKey = 'Pod'
         } else if (key === 'studioUnits') {
           styledKey = 'Studio'
         } else if (key === 'oneBedroomUnits') {
