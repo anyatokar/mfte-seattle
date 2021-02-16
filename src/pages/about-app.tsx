@@ -14,7 +14,7 @@ const AboutAppPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = 
   return (
     <div className="jumbotron">
       <div className="container">
-        <h1 className="display-4">About this App</h1>
+        <h1 className="display-6">About</h1>
         <hr className="my-4"></hr>
         <p className="lead">
           MFTE Simple is intended to help people find safe, comfortable, and affordable housing for rent in Seattle. It focuses on the MFTE (Multifamily Tax Exemption) program because of the relatively quick application turnaround, high availability, and desirable buildings and locations of homes.
@@ -22,6 +22,52 @@ const AboutAppPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = 
         <p className="lead">
           All data is sourced from the list of properties participating in the MFTE and Incentive Zoning programs most recently updated by the City of Seattle Office of Housing on 12/31/2020. 
         </p>
+        <p className="lead">
+          <strong>Resources from Seattle Office of Housing: </strong>
+        </p>
+        <h6 className="helpful-links">   </h6>
+        <ul>
+          <li>
+            <a id="myLink" 
+              href="https://www.seattle.gov/Documents/Departments/Housing/HousingDevelopers/MultifamilyTaxExemption/MFTEParticipantContact.pdf" 
+              target="_blank" 
+              rel="noreferrer">
+              List of Properties
+            </a>
+          </li>
+          <li>
+            <a id="myLink" 
+              href="https://www.seattle.gov/housing/renters/find-housing#multifamilytaxexemptionmfteincentivezoning" 
+              target="_blank" 
+              rel="noreferrer">
+              Main Resources Page
+            </a>
+          </li>
+          <li>
+            <a id="myLink" 
+              href="http://www.seattle.gov/Documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2019%20MFTE%20Income%20Limits.pdf" 
+              target="_blank" 
+              rel="noreferrer">
+              Income and Rent Limits
+            </a>
+          </li>
+          <li>
+            <a id="myLink" 
+              href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf" 
+              target="_blank" 
+              rel="noreferrer">
+              MFTE FAQs
+            </a>
+          </li>
+          <li>
+            <a id="myLink" 
+              href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE.IZ.RentersGuide.pdf" 
+              target="_blank" 
+              rel="noreferrer">
+              Detailed Rent's Guide
+            </a>
+          </li>   
+        </ul>
       </div>
     </div>
   )
