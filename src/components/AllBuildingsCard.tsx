@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import Iframe from 'react-iframe'
-import app from "../db/firebase";
-// import Moment from "react-moment";
 import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, ListGroup, ListGroupItem, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
-import Map from "../Map/Map";
-import { loadMapApi } from "../utils/GoogleMapsUtils";
+import { Card, ListGroup, ListGroupItem, Button, Modal } from 'react-bootstrap';
 import Login from "../auth_components/Login"
 
 export function AllBuildingsCard(props: IBuilding) {
@@ -87,10 +82,10 @@ export function AllBuildingsCard(props: IBuilding) {
           </Card.Title>
           <Card.Text>
           <h6 className="card-title">{residentialTargetedArea}</h6>
-            <text>{streetNum} {street}</text>
-              <br></br>
-              <p>{city}, {state} {zip}</p>
-              <p>{phone}</p>
+            {streetNum} {street}
+            <br></br>
+            <p>{city}, {state} {zip}</p>
+            <p>{phone}</p>
           </Card.Text>
           { currentUser ? (
             <Button variant="btn btn-outline-warning btn-sm standalone-btn"
@@ -111,15 +106,15 @@ export function AllBuildingsCard(props: IBuilding) {
         <ListGroup className="list-group-flush">
           <ListGroupItem>
             <h6> Total MFTE Units: {totalRestrictedUnits}</h6>
-            <text> Pods: {sedu}</text>
+            Pods: {sedu}
             <br></br>
-            <text> Studios: {studioUnits}</text>
+            Studios: {studioUnits}
             <br></br>
-            <text>One beds: {oneBedroomUnits}</text>
+            One beds: {oneBedroomUnits}
             <br></br>
-            <text>Two beds: {twoBedroomUnits}</text>
+            Two beds: {twoBedroomUnits}
             <br></br>
-            <text>Three+ beds: {threePlusBedroomUnits}</text>
+            Three+ beds: {threePlusBedroomUnits}
           </ListGroupItem>
         </ListGroup>
       </Card>

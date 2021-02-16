@@ -1,12 +1,12 @@
 export const loadMapApi = () => {
   const mapsURL = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_APIKEY}&libraries=places&language=en&v=quarterly`;
-  const scripts = document.getElementsByTagName('script');
+  // const scripts = document.getElementsByTagName('script');
   // Go through existing script tags, and return google maps api tag when found.
-  for (let i = 0; i < scripts.length; i++) {
-    if (scripts[i].src.indexOf(mapsURL) === 0) {
-      return scripts[i];
-    }
-  }
+  // for (let i = 0; i < scripts.length; i++) {
+  //   if (scripts[i].src.indexOf(mapsURL) === 0) {
+  //     return scripts[i];
+  //   }
+  // }
 
   const googleMapScript = document.createElement('script');
   googleMapScript.src = mapsURL;

@@ -6,7 +6,6 @@ import UpdateProfile from "./UpdateProfile"
 import Profile from "./Profile"
 
 export default function Dashboard() {
-  const [error, setError] = useState("")
   const { currentUser } = useAuth() as any
 
   // Login

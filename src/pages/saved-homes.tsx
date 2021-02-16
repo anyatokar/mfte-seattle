@@ -57,7 +57,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
             <Row>
               <Col sm={2}>
                 <Nav variant="pills" className="flex-column">
-                  < Nav.Item>
+                  <Nav.Item>
                     <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>

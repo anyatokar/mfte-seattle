@@ -84,10 +84,10 @@ export function SavedHomesCard(props: IBuilding) {
           </Card.Title>
           <Card.Text>
           <h6 className="card-title">{residentialTargetedArea}</h6>
-            <text>{streetNum} {street}</text>
-              <br></br>
-              <p>{city}, {state} {zip}</p>
-              <p>{phone}</p>
+            {streetNum} {street}
+            <br></br>
+            <p>{city}, {state} {zip}</p>
+            <p>{phone}</p>
           </Card.Text>
           <Form onSubmit={handleSubmit}>
             <Form.Group>
@@ -106,15 +106,15 @@ export function SavedHomesCard(props: IBuilding) {
         <ListGroup className="list-group-flush">
           <ListGroupItem>
             <h6> Total MFTE Units: {totalRestrictedUnits}</h6>
-            <text> Pods: {sedu}</text>
+            Pods: {sedu}
             <br></br>
-            <text> Studios: {studioUnits}</text>
+            Studios: {studioUnits}
             <br></br>
-            <text>One beds: {oneBedroomUnits}</text>
+            One beds: {oneBedroomUnits}
             <br></br>
-            <text>Two beds: {twoBedroomUnits}</text>
+            Two beds: {twoBedroomUnits}
             <br></br>
-            <text>Three+ beds: {threePlusBedroomUnits}</text>
+            Three+ beds: {threePlusBedroomUnits}
           </ListGroupItem>
         </ListGroup>
       </Card>
