@@ -90,7 +90,6 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
     )
   )
   .filter((building) => genericFilter<IBuilding>(building, activeFilters))
-  console.log(activeFilters)
   return (
     <>
       {loading ? (
@@ -103,12 +102,6 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         <Row>
           <Col>
             <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            { loading ? '' : 
-              `${resultBuildingsUnsorted.length}`.concat(" buildings match your search") }
           </Col>
         </Row>
         {/* filter */}
@@ -135,6 +128,13 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               />}
           </Col>
         </Row>
+        <Row>
+          <Col>
+            { loading ? '' : 
+              `${resultBuildingsUnsorted.length}`.concat(" buildings match your search") }
+          </Col>
+        </Row>
+        <hr className="my-4"></hr>
       </Container>
 
       <Tab.Container id="sidebar" defaultActiveKey="map">

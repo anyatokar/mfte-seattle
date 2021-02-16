@@ -10,6 +10,7 @@ export interface ISortersProps<T> {
 
 export default function Sorters<T>(props: ISortersProps<T>) {
   const { object, onChangeSorter } = props;
+  const objectKeys = ["buildingName", "residentialTargetedArea"]
   return (
     <>
       <label htmlFor="sorters" className="mt-3">Sort:</label>
@@ -24,7 +25,7 @@ export default function Sorters<T>(props: ISortersProps<T>) {
         }
         defaultValue={["title", "true"]}
       >
-        {Object.keys(object).map((key) => {
+        {objectKeys.map((key) => {
           if (!key) {
             return<></>
           }
