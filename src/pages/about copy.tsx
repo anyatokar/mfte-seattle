@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import IPage from '../interfaces/page';
+import IPage from '../interfaces/IPage';
 import logging from '../config/logging';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 // import firebase from "./firebase";

@@ -1,8 +1,15 @@
-import IRoute from '../interfaces/route';
+import IRoute from '../interfaces/IRoute';
 import BuildingsPage from '../pages/buildings';
 import AboutMFTEPage from '../pages/about-mfte';
 import AboutAppPage from '../pages/about-app';
 import HomePage from '../pages/home';
+import SavedHomesPage from '../pages/saved-homes';
+import SavedSearchesPage from '../pages/saved-searches';
+import DashboardPage from '../auth_components/Dashboard'
+// import LoginModal from '../auth_components/Login'
+// import SignupModal from '../auth_components/Signup'
+// import PasswordResetModal from '../auth_components/PasswordReset'
+
 
 const routes: IRoute[] = [
     {
@@ -29,12 +36,49 @@ const routes: IRoute[] = [
       component: AboutAppPage,
       exact: true
     },
+    {
+      path: '/saved-homes',
+      name: 'Saved Homes Page',
+      component: SavedHomesPage,
+      exact: true
+    },
+    {
+      path: '/saved-searches',
+      name: 'Saved Searches Page',
+      component: SavedSearchesPage,
+      exact: true
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard Page',
+      component: DashboardPage,
+      exact: true
+    },
+    {
+      path: '*',
+      name: 'Home Page',
+      component: HomePage,
+      exact: true
+    },
+
     // {
-    //     path: '/buildings/:number',
-    //     name: 'Building Details Page',
-    //     component: BuildingsPage,
-    //     exact: true
+    //   path: '/buildings/signup',
+    //   name: 'Signup Modal',
+    //   component: SignupModal,
+    //   exact: true
     // },
+    // {
+    //   path: '/../password-reset',
+    //   name: 'Forgot Password Modal',
+    //   component: PasswordResetModal,
+    //   exact: true
+    // },
+//     {
+//         path: '/buildings/:number',
+//         name: 'Building Details Page',
+//         component: BuildingsPage,
+//         exact: true
+//     },
 ]
 
 export default routes;

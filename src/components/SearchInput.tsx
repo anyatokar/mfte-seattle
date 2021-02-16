@@ -19,12 +19,12 @@ export default function SearchInput(props: ISearchProps) {
 
   return (
     <>
-      <label htmlFor="search" className="mt-3">Enter neighborhood, building name, street address, or zip code:</label>
+      <label htmlFor="search" className="mt-3"></label>
       <input
         id="search"
         className="form-control"
         type="search"
-        placeholder="Search"
+        placeholder="Search by neighborhood, building name, address, or zip code"
         aria-label="Search"
         onChange={(event) => setSearchQuery(event.target.value)}
       />

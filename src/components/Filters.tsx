@@ -26,13 +26,15 @@ export function Filters<T>(props: IFiltersProps<T>) {
       is <b>falsy</b>
     </>
   );
-
+  const objectKeys = ["sedu", "studioUnits", "oneBedroomUnits", "twoBedroomUnits", "threePlusBedroomUnits"]
   return (
     <div className="p-1 my-2">
       
-      <label className="mt-3">Filter by number of bedrooms:</label>
-      {Object.keys(object).map((key) => {
-        if (key !== 'studioUnits' && 
+      <label className="mt-3">Number of bedrooms:</label>
+      {/* Object is a class that is calling method keys on object (which is all the buildings) */}
+      {objectKeys.map((key) => {
+        if (key !== 'sedu' && 
+            key !== 'studioUnits' && 
             key !== 'oneBedroomUnits' && 
             key !== 'twoBedroomUnits' && 
             key !== 'threePlusBedroomUnits') 
@@ -40,16 +42,17 @@ export function Filters<T>(props: IFiltersProps<T>) {
         
         let styledKey = ''
 
-        if (key === 'studioUnits') { 
-          styledKey = 'Studios'
+        if (key === 'sedu') { 
+          styledKey = 'Pod'
+        } else if (key === 'studioUnits') {
+          styledKey = 'Studio'
         } else if (key === 'oneBedroomUnits') {
-          styledKey = 'One bedrooms'
+          styledKey = 'One'
         } else if (key === 'twoBedroomUnits') {
-          styledKey = 'Two bedrooms' 
+          styledKey = 'Two' 
         } else if (key === 'threePlusBedroomUnits') {
-          styledKey = 'Three or more bedrooms' 
+          styledKey = 'Three or more' 
         }
-
 
         const getRadioButton = (isTruthyPicked: boolean): ReactNode => {
           const id = isTruthyPicked
@@ -85,10 +88,8 @@ export function Filters<T>(props: IFiltersProps<T>) {
 
         return (
           <section className="form-check-inline">
-          {/* <section className="form-check"> */}
             <div key={key} >
               {getRadioButton(true)}
-              {/* {getRadioButton(false)} */}
             </div>
           </section>
         );

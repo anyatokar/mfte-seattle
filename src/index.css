@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 img {
@@ -30,4 +32,35 @@ img {
 
 .btn-group-btn {
   margin: none;
+}
+
+.saved-homes-header {
+  margin-top: 4em
+}
+
+.nav.nav-pills .nav-link {
+  background-color: white;
+  color: #06253e;
+}
+
+.nav.nav-pills .nav-link.active {
+  background-color: #06253e;
+  color: white;
+}
+
+.profile-email {
+  padding: 2em;
+}
+
+.building-row {
+  padding-bottom: 2em;
+}
+
+.sort-bar {
+  padding-bottom: 2em;
+}
+
+.col-no-padding {
+  padding-right: 0px;
+  padding-left: 0px;
 }
