@@ -1,6 +1,6 @@
 import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
-import Signup from '../auth_components/Signup';
+import firebase from "../db/firebase";
 
 import { Component, FunctionComponent, useState, useEffect } from "react";
 import Login from "../auth_components/Login"
@@ -16,7 +16,26 @@ console.log(showLogin)
 
   const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
+  const [userData, setUserData] = useState("")as any
   const history = useHistory()
+
+  // get user Name
+  if (currentUser) {
+    const docRef = firebase.firestore().collection("users").doc(currentUser.uid)
+
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+            setUserData(doc.data())
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+  }
+  //
 
   // generic onClick and redirect
   function onClick(e: any) {
@@ -42,7 +61,7 @@ console.log(showLogin)
       setMessage("Failed to log out")
     }
   }
-console.log(showLogin)
+
   return (
     <div>
       <Navbar variant="light">
@@ -74,7 +93,7 @@ console.log(showLogin)
             <DropdownButton 
               menuAlign="right"
               as={ButtonGroup} 
-              title={"Logged in as: ".concat(`${currentUser.email}`)}
+              title= {userData.name ? "Hi, ".concat(`${userData.name}`) : ''}
               id="bg-nested-dropdown" 
               variant="info">
               <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Dashboard</Dropdown.Item>

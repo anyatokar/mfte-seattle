@@ -17,15 +17,18 @@ export function AuthProvider({ children}: IProps) {
   //   return auth.createUserWithEmailAndPassword(email, password)
   // }
 
-  async function signup(email: string, password: string) {
+  async function signup(email: string, password: string, name: string) {
+    console.log(name)
     const user = firebase.auth().createUserWithEmailAndPassword(email, 
       password).then(cred => {
         if (cred.user) {
-      return firebase.firestore().collection('users').doc(cred.user.uid).set({
-        email: cred.user.email
+          return firebase.firestore().collection('users').doc(cred.user.uid).set({
+            email: cred.user.email,
+            name: name
+          })
+        }
       })
-      }})
-      return { user }
+    return { user }
   }
 
   function login(email: string, password: string) {
