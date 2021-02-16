@@ -10,7 +10,6 @@ import { Link, useHistory } from "react-router-dom"
 export const Header = () => {
 
   const [showLogin, setShowLogin] = useState(false);
-console.log(showLogin)
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowLogin = () => setShowLogin(true);
 
@@ -20,6 +19,7 @@ console.log(showLogin)
   const history = useHistory()
 
   // get user Name
+  
   if (currentUser) {
     const docRef = firebase.firestore().collection("users").doc(currentUser.uid)
 
