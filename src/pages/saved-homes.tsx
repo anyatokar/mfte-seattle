@@ -53,7 +53,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
       {currentUser
         ? (
         <>
-          <Tab.Container id="sidebar" defaultActiveKey="map">
+          <Tab.Container id="sidebar" defaultActiveKey="list">
             <Row>
               <Col sm={2}>
                 <Nav variant="pills" className="flex-column">
