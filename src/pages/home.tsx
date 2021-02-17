@@ -22,7 +22,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
       <div className="container">
         <h1 className="display-5">MFTE Simple</h1>
         <p className="lead">
-          Find modern, rent-reduced apartments in Seattle through the Multifamily Tax Exemption Program.
+          Find modern rent-reduced apartments in Seattle through the Multifamily Tax Exemption Program.
         </p>
         <hr className="my-4"></hr>
         <p className="lead">
