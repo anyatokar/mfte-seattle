@@ -74,3 +74,8 @@ img {
   padding-top: 3em;
   padding-bottom: 4em
 }
+
+.btn-save-building-card {
+  padding: none;
+  margin: none;
+}

@@ -84,11 +84,12 @@ export function AllBuildingsCard(props: IBuilding) {
           <h6 className="card-title">{residentialTargetedArea}</h6>
             {streetNum} {street}
             <br></br>
-            <p>{city}, {state} {zip}</p>
-            <p>{phone}</p>
+            {city}, {state} {zip}
+            <br></br>
+            {phone}
           </Card.Text>
           { currentUser ? (
-            <Button variant="btn btn-outline-warning btn-sm standalone-btn"
+            <Button variant="btn btn-outline-warning btn-sm btn-save-building-card"
               onClick={saveBuilding}
               role="button">
               Save
@@ -96,15 +97,14 @@ export function AllBuildingsCard(props: IBuilding) {
             ) : (
             <>
               <Button onClick={handleShowLogin}  variant="btn btn-outline-warning btn-sm standalone-btn">Save</Button>
-              <Modal show={showLogin} onHide={handleCloseLogin}>
-                <Login />
-              </Modal>
+                <Modal show={showLogin} onHide={handleCloseLogin}>
+                  <Login />
+                </Modal>
             </>
             )
           }
-        </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>
+          <Card.Text>
+            <br></br>
             <h6> Total MFTE Units: {totalRestrictedUnits}</h6>
             Pods: {sedu}
             <br></br>
@@ -115,8 +115,13 @@ export function AllBuildingsCard(props: IBuilding) {
             Two beds: {twoBedroomUnits}
             <br></br>
             Three+ beds: {threePlusBedroomUnits}
-          </ListGroupItem>
-        </ListGroup>
+          </Card.Text>
+        </Card.Body>
+        {/* <ListGroup className="list-group-flush">
+          <ListGroupItem> */}
+
+          {/* </ListGroupItem>
+        </ListGroup> */}
       </Card>
     </div>
   );

@@ -19,7 +19,10 @@ export const Header = () => {
   const history = useHistory()
   const [modalState, setModalState] = useState("Login")
 
-  // get user Name
+  useEffect(() => {
+    setShowLogin(false)
+  }, [currentUser])
+
   useEffect(() => {
     if (currentUser) {
       const docRef = firebase.firestore().collection("users").doc(currentUser.uid)

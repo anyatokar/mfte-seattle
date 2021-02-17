@@ -17,7 +17,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
         <h1 className="display-6">About</h1>
         <hr className="my-4"></hr>
         <p className="lead">
-          MFTE Simple is intended to help people find safe, comfortable, and affordable housing for rent in Seattle. It focuses on the MFTE (Multifamily Tax Exemption) program because of the relatively quick application turnaround, high availability, and desirable buildings and locations of homes.
+          MFTE Simple is intended to help people find safe and comfortable rent-reduced housing in Seattle. It focuses on the MFTE (Multifamily Tax Exemption) program because of the relatively quick application turnaround, high availability, and desirable buildings and locations.
         </p>
         <p className="lead">
           All data is sourced from the list of properties participating in the MFTE and Incentive Zoning programs most recently updated by the City of Seattle Office of Housing on 12/31/2020. 

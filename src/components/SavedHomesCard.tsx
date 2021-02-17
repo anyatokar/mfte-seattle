@@ -86,8 +86,9 @@ export function SavedHomesCard(props: IBuilding) {
           <h6 className="card-title">{residentialTargetedArea}</h6>
             {streetNum} {street}
             <br></br>
-            <p>{city}, {state} {zip}</p>
-            <p>{phone}</p>
+            {city}, {state} {zip}
+            <br></br>
+            {phone}
           </Card.Text>
           <Form onSubmit={handleSubmit}>
             <Form.Group>
@@ -102,9 +103,8 @@ export function SavedHomesCard(props: IBuilding) {
             </Form.Group>
             <Button variant="primary" size="sm" type="submit" value="Submit">Update Note</Button>
           </Form>
-        </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>
+          <Card.Text>
+            <br></br>
             <h6> Total MFTE Units: {totalRestrictedUnits}</h6>
             Pods: {sedu}
             <br></br>
@@ -115,8 +115,8 @@ export function SavedHomesCard(props: IBuilding) {
             Two beds: {twoBedroomUnits}
             <br></br>
             Three+ beds: {threePlusBedroomUnits}
-          </ListGroupItem>
-        </ListGroup>
+          </Card.Text>
+        </Card.Body>
       </Card>
     </div>
   );

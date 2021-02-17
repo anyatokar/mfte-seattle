@@ -10,7 +10,7 @@ export default function Signup() {
   const nameRef = useRef() as any
   const passwordConfirmRef = useRef() as any
   const { signup } = useAuth() as any
-  const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
@@ -23,18 +23,23 @@ export default function Signup() {
     e.preventDefault()
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match")
+      return setMessage("Passwords do not match")
+    }
+
+    if (passwordRef.current.value.length < 6) {
+      return setMessage("Password must be 6 characters or more")
     }
 
     try {
-      setError("")
+      setMessage("")
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
       history.push("/")
-    } catch {
-      setError("Failed to create an account")
+    } catch(error) {
+      console.log(error.code)
+      console.log(error.message)
+      setMessage(error.message)
     }
-
     setLoading(false)
   }
 
@@ -44,10 +49,9 @@ export default function Signup() {
         <Modal.Title>Sign Up</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* <h2 className="text-center mb-4">Sign Up</h2> */}
-        {error && <Alert variant="danger">{error}</Alert>}
+        {message && <Alert variant="danger">{message}</Alert>}
         <Form onSubmit={handleSubmit}>
-          <Form.Group id="email">
+          <Form.Group id="name">
             <Form.Label>Name</Form.Label>
             <Form.Control type="name" ref={nameRef} required />
           </Form.Group>
@@ -57,11 +61,11 @@ export default function Signup() {
           </Form.Group>
           <Form.Group id="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" ref={passwordRef} required />
+            <Form.Control type="password" ref={passwordRef} placeholder="6 or more characters"required />
           </Form.Group>
           <Form.Group id="password-confirm">
             <Form.Label>Password Confirmation</Form.Label>
-            <Form.Control type="password" ref={passwordConfirmRef} required />
+            <Form.Control type="password" ref={passwordConfirmRef} placeholder="6 or more characters"required />
           </Form.Group>
           <Button disabled={loading} className="w-100" type="submit">
             Sign Up
