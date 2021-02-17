@@ -23,7 +23,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
           The website focuses on the MFTE (Multifamily Tax Exemption) program because of the relatively quick application turnaround, high availability, and desirable buildings and locations.
         </p>
         <p className="lead">
-          All data is sourced from the list of properties participating in the MFTE and Incentive Zoning programs distributed by the City of Seattle Office of Housing (linked below). 
+          All data is sourced from the list of properties participating in the MFTE and Incentive Zoning programs distributed by the City of Seattle Office of Housing. 
         </p>
         <p className="lead">
           <strong>Resources from the Seattle Office of Housing: </strong>
