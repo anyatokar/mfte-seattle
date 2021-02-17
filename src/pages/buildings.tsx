@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import IPage from '../interfaces/IPage';
-import logging from '../config/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import Map from "../Map/Map";
 import firebase from '../db/firebase';
 import 'firebase/firestore';
 import { Spinner } from "react-bootstrap"
@@ -16,16 +14,10 @@ import IFilter from "../interfaces/IFilter";
 import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import MapTab from "../components/MapTab";
 import AllBuildingsList from '../components/AllBuildingsList';
-import Login from "../auth_components/Login";
-import { useAuth } from "../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 
 const ref = firebase.firestore().collection("buildings"); 
 
 const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
-  const [error, setError] = useState("")
-  const { currentUser, logout } = useAuth() as any
-  const history = useHistory()
 
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);

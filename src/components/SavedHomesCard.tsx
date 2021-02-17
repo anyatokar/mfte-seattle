@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-// import Moment from "react-moment";
 import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, ListGroup, ListGroupItem, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button } from 'react-bootstrap';
 import { MDBCloseIcon } from "mdbreact"
 
 export function SavedHomesCard(props: IBuilding) {

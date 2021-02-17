@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, ListGroup, ListGroupItem, Button, Modal } from 'react-bootstrap';
+import { Card, Button, Modal } from 'react-bootstrap';
 import Login from "../auth_components/Login"
 
 export function AllBuildingsCard(props: IBuilding) {
@@ -32,8 +32,6 @@ export function AllBuildingsCard(props: IBuilding) {
   function saveBuilding(e: any) {
     firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID).set(
       {
-        // could not access data from buildingRef code below
-        // buildingRef: firebase.firestore().collection("buildings").doc(buildingID)
         "buildingID": buildingID,
         "buildingName": buildingName,
         "phone": phone,
@@ -117,11 +115,6 @@ export function AllBuildingsCard(props: IBuilding) {
             Three+ beds: {threePlusBedroomUnits}
           </Card.Text>
         </Card.Body>
-        {/* <ListGroup className="list-group-flush">
-          <ListGroupItem> */}
-
-          {/* </ListGroupItem>
-        </ListGroup> */}
       </Card>
     </div>
   );

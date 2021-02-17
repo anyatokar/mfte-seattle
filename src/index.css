@@ -79,3 +79,7 @@ img {
   padding: none;
   margin: none;
 }
+
+.resources-list {
+  list-style-type: none;
+}

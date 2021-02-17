@@ -17,17 +17,20 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
         <h1 className="display-5">About</h1>
         <hr className="my-4"></hr>
         <p className="lead">
-          MFTE Simple is intended to help people find safe and comfortable rent-reduced housing in Seattle. It focuses on the MFTE (Multifamily Tax Exemption) program because of the relatively quick application turnaround, high availability, and desirable buildings and locations.
+          MFTE Simple is intended to help people find safe and comfortable rent-reduced housing in Seattle. 
         </p>
         <p className="lead">
-          All data is sourced from the list of properties participating in the MFTE and Incentive Zoning programs most recently updated by the City of Seattle Office of Housing on 12/31/2020. 
+          The website focuses on the MFTE (Multifamily Tax Exemption) program because of the relatively quick application turnaround, high availability, and desirable buildings and locations.
+        </p>
+        <p className="lead">
+          All data is sourced from the list of properties participating in the MFTE and Incentive Zoning programs distributed by the City of Seattle Office of Housing (linked below). 
         </p>
         <p className="lead">
           <strong>Resources from the Seattle Office of Housing: </strong>
         </p>
-        <ul className="helpful-links">
+        <ul className="resources-list lead">
           <li>
-            <a id="myLink" 
+            <a id="list-of-properties" 
               href="https://www.seattle.gov/Documents/Departments/Housing/HousingDevelopers/MultifamilyTaxExemption/MFTEParticipantContact.pdf" 
               target="_blank" 
               rel="noreferrer">
@@ -35,7 +38,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
             </a>
           </li>
           <li>
-            <a id="myLink" 
+            <a id="main-resources" 
               href="https://www.seattle.gov/housing/renters/find-housing#multifamilytaxexemptionmfteincentivezoning" 
               target="_blank" 
               rel="noreferrer">
@@ -43,7 +46,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
             </a>
           </li>
           <li>
-            <a id="myLink" 
+            <a id="income-and-rent-limits" 
               href="http://www.seattle.gov/Documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2019%20MFTE%20Income%20Limits.pdf" 
               target="_blank" 
               rel="noreferrer">
@@ -51,7 +54,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
             </a>
           </li>
           <li>
-            <a id="myLink" 
+            <a id="mfte-faqs" 
               href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf" 
               target="_blank" 
               rel="noreferrer">
@@ -59,11 +62,11 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
             </a>
           </li>
           <li>
-            <a id="myLink" 
+            <a id="renters-guide" 
               href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE.IZ.RentersGuide.pdf" 
               target="_blank" 
               rel="noreferrer">
-              Detailed Rent's Guide
+              Detailed Renter's Guide
             </a>
           </li>   
         </ul>

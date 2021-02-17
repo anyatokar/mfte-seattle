@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Nav, Tab, Row, Col } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 import Login from "../auth_components/Login";
 import IPage from '../interfaces/IPage';
-import logging from '../config/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { useCallback } from 'react';
 import firebase from '../db/firebase';
@@ -15,9 +13,7 @@ import SavedHomesList from '../components/SavedHomesList';
 import { Spinner } from "react-bootstrap"
 
 const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
-  const [error, setError] = useState("")
-  const { currentUser, logout } = useAuth() as any
-  const history = useHistory()
+  const { currentUser } = useAuth() as any
 
   const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
   const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);

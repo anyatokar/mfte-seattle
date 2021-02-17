@@ -2,12 +2,7 @@ import React, {useEffect, useRef, useState, useCallback} from 'react';
 import './Map.scss';
 import 'firebase/firestore';
 import IMap from "../interfaces/IMap";
-// import Moment from "react-moment";
 import IBuilding from "../interfaces/IBuilding";
-import firebase from "../db/firebase"
-import { useAuth } from "../contexts/AuthContext";
-import { Card, ListGroup, ListGroupItem, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
-import Login from "../auth_components/Login"
 
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
@@ -78,75 +73,6 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
     }
   }
 
-  const { currentUser } = useAuth() as any
-  // const {
-  //   buildingID,
-  //   buildingName,
-  //   phone,
-  //   residentialTargetedArea,
-  //   totalRestrictedUnits,
-  //   studioUnits,
-  //   oneBedroomUnits, 
-  //   twoBedroomUnits,
-  //   threePlusBedroomUnits,
-  //   urlForBuilding,
-  //   streetNum,
-  //   street, 
-  //   city,
-  //   state, 
-  //   zip,
-  //   lat, 
-  //   lng
-  // } = props;
-
-  function saveBuilding(buildingID: any) {
-    firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID).set(
-      {
-        // could not access data from buildingRef code below
-        // buildingRef: firebase.firestore().collection("buildings").doc(buildingID)
-        "buildingID": buildingID,
-        // "buildingName": buildingName,
-        // "phone": phone,
-        // "residentialTargetedArea": residentialTargetedArea,
-        // "totalRestrictedUnits": totalRestrictedUnits,
-        // "studioUnits": studioUnits,
-        // "oneBedroomUnits": oneBedroomUnits, 
-        // "twoBedroomUnits": twoBedroomUnits,
-        // "threePlusBedroomUnits": threePlusBedroomUnits,
-        // "urlForBuilding": urlForBuilding,
-        // "streetNum": streetNum,
-        // "street": street, 
-        // "city": city,
-        // "state": state, 
-        // "zip": zip,
-        // "lat": lat,
-        // "lng": lng
-      })
-    .then(() => {
-      console.log("Building saved to user");
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    })
-  }
-
-  const [showLogin, setShowLogin] = useState(false);
-
-  const handleCloseLogin = () => setShowLogin(false);
-  const handleShowLogin = () => setShowLogin(true);
-
-  function onClickInfowindow(buildingID: any) {
-    if (currentUser) {
-      saveBuilding(buildingID)
-    } else {
-      <>
-        <Modal show={showLogin} onHide={handleCloseLogin}>
-          <Login />
-        </Modal>
-      </>
-    }
-  }
-
   function addMarker(building:IBuilding, infoWindow:InfoWindow) {
     const marker = new google.maps.Marker({ 
       position: new google.maps.LatLng({lat: building.lat, lng: building.lng}),
@@ -174,10 +100,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
         '<br>' +
         building.phone +
         '<br>'
-        // `<a onClick="onClickInfowindow("building.buildingID");">Save to List</a>` +
   
-
-    // mouseover
     marker.addListener("click", () => {
       infoWindow.setContent(contentString)
       infoWindow.open(map, marker);
