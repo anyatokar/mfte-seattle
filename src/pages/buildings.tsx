@@ -93,10 +93,10 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               />}
           </Col>
         </Row>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-center">
           <Col sm={8}>
             { loading ? '' : 
-              `${resultBuildingsUnsorted.length}`.concat(" buildings match your search") }
+              `${resultBuildingsUnsorted.length} buildings match your search`}
           </Col>
         </Row>
         <hr className="my-4"></hr>

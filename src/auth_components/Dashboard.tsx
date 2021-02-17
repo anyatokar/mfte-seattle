@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Button, Alert, Modal, Nav, Tab, Row, Col } from "react-bootstrap"
+import React, { useState, useEffect } from "react"
+import { Button, Modal, Nav, Tab, Row, Col } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import Login from "./Login"
 import UpdateProfile from "./UpdateProfile"
@@ -34,7 +34,7 @@ export default function Dashboard() {
               <Col sm={10} className="profile-email">
                 <Tab.Content>
                   <Tab.Pane eventKey="profile">
-                    <Profile />
+                    <Profile/>
                   </Tab.Pane>
                   <Tab.Pane eventKey="update">
                     <UpdateProfile />

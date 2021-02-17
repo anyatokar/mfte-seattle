@@ -9,7 +9,6 @@ import { useHistory } from "react-router-dom"
 import PasswordReset from "../auth_components/PasswordReset"
 
 export const Header = () => {
-
   const [showLogin, setShowLogin] = useState(false);
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowLogin = () => setShowLogin(true);
