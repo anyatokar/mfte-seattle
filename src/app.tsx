@@ -9,6 +9,7 @@ import { AuthProvider } from "./contexts/AuthContext"
 import Dashboard from "./auth_components/Dashboard"
 import PrivateRoute from "./auth_components/PrivateRoute"
 import savedHomes from './pages/saved-homes';
+
 const Application: React.FunctionComponent<{}> = props => {
 
   
@@ -22,29 +23,6 @@ const Application: React.FunctionComponent<{}> = props => {
 
   return (
     <div>
-
-      {/* <Router>
-      <Header />
-
-        <Switch>
-          {routes.map((route, index) => {
-            return (
-              <Route 
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                render={(props: RouteComponentProps<any>) => (
-                  <route.component
-                    name={route.name} 
-                    {...props}
-                    {...route.props}
-                  />
-                )}
-              />
-            );
-          })}
-        </Switch>
-      </Router> */}
 
 
       <div>

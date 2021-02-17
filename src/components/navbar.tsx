@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Login from "../auth_components/Login"
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
+import PasswordReset from "../auth_components/PasswordReset"
 
 export const Header = () => {
 
@@ -15,8 +16,9 @@ export const Header = () => {
 
   const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
-  const [userData, setUserData] = useState(null)as any
+  const [userData, setUserData] = useState(null) as any
   const history = useHistory()
+  const [modalState, setModalState] = useState("Login")
 
   // get user Name
   useEffect(() => {
@@ -66,6 +68,15 @@ export const Header = () => {
     }
   }
 
+  // modal
+  function chooseModalComponent() {
+    if (modalState === "Login") {
+      return(<Login />)
+    } else if (modalState === "Reset") {
+      return(<PasswordReset />)
+    }
+  }
+
   return (
     <div>
       <Navbar variant="light">
@@ -78,18 +89,9 @@ export const Header = () => {
           <LinkContainer to='/buildings'>
             <Nav.Link>Buildings</Nav.Link>
           </LinkContainer>
-          <NavDropdown title="About" id="basic-nav-dropdown">
-            <NavDropdown.Item>
-              <LinkContainer to="about-mfte">
-                <Nav.Link>MFTE</Nav.Link>
-              </LinkContainer>
-            </NavDropdown.Item>
-          <NavDropdown.Item>
-            <LinkContainer to="/about-app">
-              <Nav.Link>This Website</Nav.Link>
-              </LinkContainer>
-            </NavDropdown.Item>
-          </NavDropdown>
+          <LinkContainer to='/about'>
+            <Nav.Link>About</Nav.Link>
+          </LinkContainer>
         </Nav>
 
         <ButtonGroup >
@@ -111,11 +113,11 @@ export const Header = () => {
           <>
             <Button onClick={handleShowLogin} variant="info">Saved</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
-                <Login />
+                {chooseModalComponent()}
               </Modal>
             <Button onClick={handleShowLogin} variant="info">Log in / Sign up</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
-                <Login />
+                {chooseModalComponent()}
               </Modal>
           </>
           )}

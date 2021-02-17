@@ -50,7 +50,9 @@ export default function PasswordReset() {
         {error && <Alert variant="danger">{error}</Alert>}
         {message && <Alert variant="success">{message}</Alert>}
         <Form onSubmit={handleSubmit}>
-          <Form.Group id="email">
+          <Form.Group id="email" className="emailField">
+            <h6>Enter your email to recieve a reset link in your inbox.</h6>
+            <br></br>
             <Form.Label>Email</Form.Label>
             <Form.Control type="email" ref={emailRef} required />
           </Form.Group>

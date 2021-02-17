@@ -3,7 +3,7 @@ import IPage from '../interfaces/IPage';
 import logging from '../config/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-const AboutAppPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
+const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
   useEffect(() => {
     logging.info(`Loading ${props.name}`);
@@ -25,8 +25,7 @@ const AboutAppPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = 
         <p className="lead">
           <strong>Resources from Seattle Office of Housing: </strong>
         </p>
-        <h6 className="helpful-links">   </h6>
-        <ul>
+        <ul className="helpful-links">
           <li>
             <a id="myLink" 
               href="https://www.seattle.gov/Documents/Departments/Housing/HousingDevelopers/MultifamilyTaxExemption/MFTEParticipantContact.pdf" 
@@ -73,4 +72,4 @@ const AboutAppPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = 
   )
 }
 
-export default withRouter(AboutAppPage);
+export default withRouter(AboutPage);

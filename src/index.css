@@ -64,3 +64,8 @@ img {
   padding-right: 0px;
   padding-left: 0px;
 }
+
+.emailField {
+  padding-top: 1em;
+  padding-bottom: 1.5em
+}
