@@ -20,7 +20,9 @@ export default function SavedHomesList(props:any) {
                     ))}
                   </>
                 )}
-                {props.savedBuildings.length === 0 && <p>No results found!</p>}
+                <div className="saved-homes-empty">
+                  {props.savedBuildings.length === 0 && <p>Use the buildings tab to start adding to your list!</p>}
+                </div>
             </Row>
           </Col>
         </Row>

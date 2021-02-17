@@ -94,13 +94,13 @@ export const Header = () => {
         </Nav>
 
         <ButtonGroup >
-          { currentUser ? (
+          { currentUser && userData ? (
           <>
             <Button onClick={onClick} value="./saved-homes" variant="info">Saved</Button>
             <DropdownButton 
               menuAlign="right"
               as={ButtonGroup} 
-              title= {userData ? `Hi, ${userData.name}` : ''}
+              title= {`Hi, ${userData.name}`}
               id="bg-nested-dropdown" 
               variant="info">
               <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Dashboard</Dropdown.Item>

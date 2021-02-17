@@ -23,7 +23,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
           All data is sourced from the list of properties participating in the MFTE and Incentive Zoning programs most recently updated by the City of Seattle Office of Housing on 12/31/2020. 
         </p>
         <p className="lead">
-          <strong>Resources from Seattle Office of Housing: </strong>
+          <strong>Resources from the Seattle Office of Housing: </strong>
         </p>
         <ul className="helpful-links">
           <li>
