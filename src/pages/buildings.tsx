@@ -96,7 +96,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         <Row className="justify-content-center">
           <Col sm={8}>
             { loading ? '' : 
-              `${resultBuildingsUnsorted.length} buildings match your search`}
+              `${resultBuildingsUnsorted.length} buildings found`}
           </Col>
         </Row>
         <hr className="my-4"></hr>
