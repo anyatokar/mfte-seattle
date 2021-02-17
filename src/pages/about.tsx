@@ -14,7 +14,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
   return (
     <div className="jumbotron">
       <div className="container">
-        <h1 className="display-6">About</h1>
+        <h1 className="display-5">About</h1>
         <hr className="my-4"></hr>
         <p className="lead">
           MFTE Simple is intended to help people find safe and comfortable rent-reduced housing in Seattle. It focuses on the MFTE (Multifamily Tax Exemption) program because of the relatively quick application turnaround, high availability, and desirable buildings and locations.
