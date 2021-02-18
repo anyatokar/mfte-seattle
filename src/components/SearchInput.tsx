@@ -24,7 +24,7 @@ export default function SearchInput(props: ISearchProps) {
         id="search"
         className="form-control"
         type="search"
-        placeholder="Search by neighborhood, building name, address, or zip code"
+        placeholder="Search by neighborhood, building, address, or zip"
         aria-label="Search"
         onChange={(event) => setSearchQuery(event.target.value)}
       />
