@@ -105,6 +105,7 @@ export function SavedHomesCard(props: IBuilding) {
           <Card.Text>
             <br></br>
             Total MFTE Units: {totalRestrictedUnits}
+            <br></br>
             Pods: {sedu}
             <br></br>
             Studios: {studioUnits}
