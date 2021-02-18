@@ -34,7 +34,6 @@ export default function Signup() {
       setMessage("")
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
-      history.push("/")
     } catch(error) {
       console.log(error.code)
       console.log(error.message)
