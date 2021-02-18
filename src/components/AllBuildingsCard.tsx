@@ -103,7 +103,7 @@ export function AllBuildingsCard(props: IBuilding) {
           }
           <Card.Text>
             <br></br>
-            <h6> Total MFTE Units: {totalRestrictedUnits}</h6>
+            Total MFTE Units: {totalRestrictedUnits}
             Pods: {sedu}
             <br></br>
             Studios: {studioUnits}
