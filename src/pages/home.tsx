@@ -20,7 +20,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
   return (
     <div className="jumbotron">
       <div className="container">
-        <h1 className="display-5">MFTE Simple</h1>
+        <h1 className="display-5">MFTE Seattle</h1>
         <p className="lead">
           Find modern rent-reduced apartments in Seattle through the Multifamily Tax Exemption Program.
         </p>

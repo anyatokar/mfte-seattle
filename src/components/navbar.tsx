@@ -85,7 +85,7 @@ export const Header = () => {
         <Nav className="mr-auto">
           <LinkContainer to="/">
             <Navbar.Brand className="font-weight-bold text-muted">
-              MFTE Simple
+              MFTE Seattle
             </Navbar.Brand>
           </LinkContainer>
           <LinkContainer to='/buildings'>
@@ -102,10 +102,11 @@ export const Header = () => {
             <Button onClick={onClick} value="./saved-homes" variant="info">Saved</Button>
             <DropdownButton 
               menuAlign="right"
+              id="dropdown-menu-align-right"
               as={ButtonGroup} 
               title= {userData ? `Hi, ${userData.name}` : ''}
-              id="bg-nested-dropdown" 
-              variant="info">
+              variant="info"
+            >
               <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Dashboard</Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
