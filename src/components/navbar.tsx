@@ -1,41 +1,49 @@
-import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton, Alert } from 'react-bootstrap';
+import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import firebase from "../db/firebase";
 
-import { Component, FunctionComponent, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Login from "../auth_components/Login"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
+import PasswordReset from "../auth_components/PasswordReset"
 
 export const Header = () => {
-
   const [showLogin, setShowLogin] = useState(false);
-console.log(showLogin)
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowLogin = () => setShowLogin(true);
 
   const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
-  const [userData, setUserData] = useState("")as any
+  const [userData, setUserData] = useState(null) as any
   const history = useHistory()
+  const [modalState, setModalState] = useState("Login")
 
-  // get user Name
-  if (currentUser) {
-    const docRef = firebase.firestore().collection("users").doc(currentUser.uid)
+  useEffect(() => {
+    setShowLogin(false)
+  }, [currentUser])
 
-    docRef.get().then((doc) => {
+  useEffect(() => {
+    if (currentUser) {
+      const docRef = firebase.firestore().collection("users").doc(currentUser.uid)
+
+      docRef.get().then((doc) => {
         if (doc.exists) {
-            console.log("Document data:", doc.data());
-            setUserData(doc.data())
+          const data = doc.data()
+          setUserData(data)
+          console.log("Document data:", data);
         } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
         }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-  }
-  //
+      }).catch((error) => {
+          console.log("Error getting document:", error);
+      });
+    } else {(
+      setUserData(null)
+    )}
+  }, [currentUser])
+  
 
   // generic onClick and redirect
   function onClick(e: any) {
@@ -62,28 +70,30 @@ console.log(showLogin)
     }
   }
 
+  // modal
+  function chooseModalComponent() {
+    if (modalState === "Login") {
+      return(<Login />)
+    } else if (modalState === "Reset") {
+      return(<PasswordReset />)
+    }
+  }
+
   return (
     <div>
       <Navbar variant="light">
         <Nav className="mr-auto">
-          <LinkContainer to='/'>
-            <Nav.Link><strong>MFTE Simple</strong></Nav.Link>
+          <LinkContainer to="/">
+            <Navbar.Brand className="font-weight-bold text-muted">
+              MFTE Simple
+            </Navbar.Brand>
           </LinkContainer>
           <LinkContainer to='/buildings'>
             <Nav.Link>Buildings</Nav.Link>
           </LinkContainer>
-          <NavDropdown title="About" id="basic-nav-dropdown">
-            <NavDropdown.Item>
-              <LinkContainer to='/about-mfte'>
-                <Nav.Link>MFTE</Nav.Link>
-              </LinkContainer>
-            </NavDropdown.Item>
-            <NavDropdown.Item>
-              <LinkContainer to='/about-app'>
-                <Nav.Link>This Website</Nav.Link>
-              </LinkContainer>
-            </NavDropdown.Item>
-          </NavDropdown>
+          <LinkContainer to='/about'>
+            <Nav.Link>About</Nav.Link>
+          </LinkContainer>
         </Nav>
 
         <ButtonGroup >
@@ -93,7 +103,7 @@ console.log(showLogin)
             <DropdownButton 
               menuAlign="right"
               as={ButtonGroup} 
-              title= {userData.name ? "Hi, ".concat(`${userData.name}`) : ''}
+              title= {userData ? `Hi, ${userData.name}` : ''}
               id="bg-nested-dropdown" 
               variant="info">
               <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Dashboard</Dropdown.Item>
@@ -105,11 +115,11 @@ console.log(showLogin)
           <>
             <Button onClick={handleShowLogin} variant="info">Saved</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
-                <Login />
+                {chooseModalComponent()}
               </Modal>
             <Button onClick={handleShowLogin} variant="info">Log in / Sign up</Button>
               <Modal show={showLogin} onHide={handleCloseLogin}>
-                <Login />
+                {chooseModalComponent()}
               </Modal>
           </>
           )}

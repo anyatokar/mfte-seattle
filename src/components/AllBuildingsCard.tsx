@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import Iframe from 'react-iframe'
-import app from "../db/firebase";
-// import Moment from "react-moment";
 import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, ListGroup, ListGroupItem, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
-import Map from "../Map/Map";
-import { loadMapApi } from "../utils/GoogleMapsUtils";
+import { Card, Button, Modal } from 'react-bootstrap';
 import Login from "../auth_components/Login"
 
 export function AllBuildingsCard(props: IBuilding) {
@@ -34,11 +29,12 @@ export function AllBuildingsCard(props: IBuilding) {
     lng
   } = props;
 
+  const [buttonFill, setButtonFill] = useState(false) as any
+
   function saveBuilding(e: any) {
+    setButtonFill(true)
     firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID).set(
       {
-        // could not access data from buildingRef code below
-        // buildingRef: firebase.firestore().collection("buildings").doc(buildingID)
         "buildingID": buildingID,
         "buildingName": buildingName,
         "phone": phone,
@@ -87,13 +83,22 @@ export function AllBuildingsCard(props: IBuilding) {
           </Card.Title>
           <Card.Text>
           <h6 className="card-title">{residentialTargetedArea}</h6>
-            <text>{streetNum} {street}</text>
-              <br></br>
-              <p>{city}, {state} {zip}</p>
-              <p>{phone}</p>
+            {streetNum} {street}
+            <br></br>
+            {city}, {state} {zip}
+            <br></br>
+            {phone}
           </Card.Text>
           { currentUser ? (
-            <Button variant="btn btn-outline-warning btn-sm standalone-btn"
+            buttonFill ?
+              <Button 
+                variant="btn btn-warning btn-sm btn-save-building-card"
+                onClick={saveBuilding}
+                role="button">
+                Saved
+              </Button>
+              :               <Button 
+              variant="btn btn-outline-warning btn-sm btn-save-building-card"
               onClick={saveBuilding}
               role="button">
               Save
@@ -101,27 +106,27 @@ export function AllBuildingsCard(props: IBuilding) {
             ) : (
             <>
               <Button onClick={handleShowLogin}  variant="btn btn-outline-warning btn-sm standalone-btn">Save</Button>
-              <Modal show={showLogin} onHide={handleCloseLogin}>
-                <Login />
-              </Modal>
+                <Modal show={showLogin} onHide={handleCloseLogin}>
+                  <Login />
+                </Modal>
             </>
             )
           }
+          <Card.Text>
+            <br></br>
+            Total MFTE Units: {totalRestrictedUnits}
+            <br></br>
+            Pods: {sedu}
+            <br></br>
+            Studios: {studioUnits}
+            <br></br>
+            One beds: {oneBedroomUnits}
+            <br></br>
+            Two beds: {twoBedroomUnits}
+            <br></br>
+            Three+ beds: {threePlusBedroomUnits}
+          </Card.Text>
         </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>
-            <h6> Total MFTE Units: {totalRestrictedUnits}</h6>
-            <text> Pods: {sedu}</text>
-            <br></br>
-            <text> Studios: {studioUnits}</text>
-            <br></br>
-            <text>One beds: {oneBedroomUnits}</text>
-            <br></br>
-            <text>Two beds: {twoBedroomUnits}</text>
-            <br></br>
-            <text>Three+ beds: {threePlusBedroomUnits}</text>
-          </ListGroupItem>
-        </ListGroup>
       </Card>
     </div>
   );

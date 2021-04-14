@@ -28,17 +28,13 @@ export default function Sorters<T>(props: ISortersProps<T>) {
         {objectKeys.map((key) => {
           if (!key) {
             return<></>
-          }
-          if (key === 'buildingName' || 
+          } else if (key === 'buildingName' || 
             key === 'residentialTargetedArea' 
-            // key === 'zip'
           ) {
-
-          const keyToStringObj = { 
-            'buildingName': 'Building Name', 
-            'residentialTargetedArea': 'Neighborhood',
-            // 'zip': 'zip code'
-          }
+            const keyToStringObj = { 
+              'buildingName': 'Building Name', 
+              'residentialTargetedArea': 'Neighborhood',
+            }
         
             return(
               <>
@@ -46,20 +42,18 @@ export default function Sorters<T>(props: ISortersProps<T>) {
                   key={`${key}-false`}
                   value={[key, "false"]}
                 >
-                  {/* sort by '{key}' ascending */}
                   {keyToStringObj[key]} (A to Z)
                 </option>
                 <option
                   key={`${key}-true`}
                   value={[key, "true"]}
                 >
-                  {/* sort by '{key}' descending */}
                   {keyToStringObj[key]} (Z to A)
                 </option>
               </>
             );
-          }
-        return<></>
+          } else {
+            return (<></>)}
         })}
       </select>
     </>

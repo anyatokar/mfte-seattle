@@ -32,11 +32,11 @@ export default function UpdateProfile() {
 
     Promise.all(promises)
       .then(() => {
-        setMessage("Success: account updated")
+        setMessage("Success: account updated. You'll receive an email confirmation")
       })
       .catch((error) => {
-        // console.log(error.code)
-        // console.log(error.message)
+        console.log(error.code)
+        console.log(error.message)
         setMessage(error.message)
       })
       .finally(() => {
