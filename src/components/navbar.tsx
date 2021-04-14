@@ -1,5 +1,5 @@
-import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap';
+import { NavDropdown, Navbar, Nav, Modal, Dropdown } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import firebase from "../db/firebase";
 
 import { useState, useEffect } from "react";
@@ -81,50 +81,50 @@ export const Header = () => {
 
   return (
     <div>
-      <Navbar variant="light">
-        <Nav className="mr-auto">
-          <LinkContainer to="/">
-            <Navbar.Brand className="font-weight-bold text-muted">
-              MFTE Seattle
-            </Navbar.Brand>
-          </LinkContainer>
-          <LinkContainer to='/buildings'>
-            <Nav.Link>Buildings</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to='/about'>
-            <Nav.Link>About</Nav.Link>
-          </LinkContainer>
-        </Nav>
-
-        <ButtonGroup >
+      <Navbar variant="light" collapseOnSelect expand="md" className="mb-3">
+        <LinkContainer to="/">
+          <Navbar.Brand className="font-weight-bold text-muted">
+            MFTE Seattle
+          </Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Toggle />
+        <Navbar.Collapse>
+          <Nav activeKey={window.location.pathname} className="mr-auto">
+            <LinkContainer to='/buildings'>
+              <Nav.Link>Buildings</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/about'>
+              <Nav.Link>About</Nav.Link>
+            </LinkContainer>
+          </Nav>
           { currentUser ? (
           <>
-            <Button onClick={onClick} value="./saved-homes" variant="info">Saved</Button>
-            <DropdownButton 
-              menuAlign="right"
-              id="dropdown-menu-align-right"
-              as={ButtonGroup} 
-              title= {userData ? `Hi, ${userData.name}` : ''}
-              variant="info"
-            >
-              <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Dashboard</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
-            </DropdownButton>
+            <Nav>
+              <LinkContainer to='./saved-homes'>
+                <Nav.Link>Saved</Nav.Link>
+              </LinkContainer>
+              <NavDropdown
+                id="dropdown-menu-align-right"
+                title= {userData ? `Hello, ${userData.name}` : ''}
+              >
+                <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Profile</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
+              </NavDropdown>
+            </Nav>
           </>
           ) : (
           <>
-            <Button onClick={handleShowLogin} variant="info">Saved</Button>
+            <Nav>
+              <Nav.Link onClick={handleShowLogin}>Saved</Nav.Link>
+              <Nav.Link onClick={handleShowLogin}>Log in / Sign up</Nav.Link>
               <Modal show={showLogin} onHide={handleCloseLogin}>
                 {chooseModalComponent()}
               </Modal>
-            <Button onClick={handleShowLogin} variant="info">Log in / Sign up</Button>
-              <Modal show={showLogin} onHide={handleCloseLogin}>
-                {chooseModalComponent()}
-              </Modal>
+            </Nav>
           </>
           )}
-        </ButtonGroup>
+        </Navbar.Collapse>
       </Navbar>
     </div>
   )
