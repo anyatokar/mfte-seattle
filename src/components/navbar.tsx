@@ -8,16 +8,22 @@ import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import PasswordReset from "../auth_components/PasswordReset"
 
-export const Header = () => {
-  const [shouldShowLogin, setShowLogin] = useState(false);
+const ModalState = {
+  HIDDEN: 'HIDDEN',
+  LOGIN: 'LOGIN',
+  RESET: 'RESET'
+}
 
+export const Header = () => {
   const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
   const [userData, setUserData] = useState(null) as any
   const history = useHistory()
-  const [modalState, setModalState] = useState("Login")
-  const showLogin = () => setShowLogin(true);
-  const closeLogin = () => setShowLogin(false);
+  const [modalState, setModalState] = useState(ModalState.HIDDEN)
+
+  const showModal = modalState !== ModalState.HIDDEN
+  const showLogin = () => setModalState(ModalState.LOGIN);
+  const closeLogin = () => setModalState(ModalState.HIDDEN);
 
   useEffect(() => {
     closeLogin()
@@ -72,9 +78,9 @@ export const Header = () => {
 
   // modal
   function chooseModalComponent() {
-    if (modalState === "Login") {
+    if (modalState === ModalState.LOGIN) {
       return(<Login />)
-    } else if (modalState === "Reset") {
+    } else if (modalState === ModalState.RESET) {
       return(<PasswordReset />)
     }
   }
@@ -119,7 +125,7 @@ export const Header = () => {
           </>
           )}
         </ButtonGroup>
-        <Modal show={shouldShowLogin} onHide={closeLogin}>
+        <Modal show={showModal} onHide={closeLogin}>
           {chooseModalComponent()}
         </Modal>
       </Navbar>
