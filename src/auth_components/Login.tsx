@@ -4,25 +4,21 @@ import { useAuth } from "../contexts/AuthContext"
 import PasswordReset from "./PasswordReset"
 import Signup from "./Signup"
 
-export default function Login() {
+type Props = {
+  onResetClicked?: () => void,
+  onSignupClicked?: () => void
+}
+
+export default function Login({
+  onResetClicked,
+  onSignupClicked
+}: Props) {
   const emailRef = useRef() as any
   const passwordRef = useRef() as any
   const { login } = useAuth() as any
 
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
-
-  // Signup
-  const [showSignup, setShowSignup] = useState(false);
-
-  const handleCloseSignup = () => setShowSignup(false);
-  const handleShowSignup = () => setShowSignup(true);
-
-  // Password Reset
-  const [showPassReset, setShowPassReset] = useState(false);
-
-  const handleClosePassReset = () => setShowPassReset(false);
-  const handleShowPassReset = () => setShowPassReset(true);
 
   async function handleSubmit(e: any) {
     e.preventDefault()
@@ -63,15 +59,9 @@ export default function Login() {
 
       <Modal.Footer>
         <div className="w-100 text-center">
-          <Button onClick={handleShowPassReset} variant="link">Reset Password</Button>
-            <Modal show={showPassReset} onHide={handleClosePassReset}>
-              <PasswordReset />
-            </Modal>
+          <Button onClick={onResetClicked} variant="link">Reset Password</Button>
           <br></br>
-          <Button onClick={handleShowSignup} variant="link">Sign Up</Button>
-            <Modal show={showSignup} onHide={handleCloseSignup}>
-              <Signup />
-            </Modal>
+          <Button onClick={onSignupClicked} variant="link">Sign Up</Button>
         </div>
       </Modal.Footer>
     </>

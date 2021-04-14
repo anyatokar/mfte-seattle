@@ -4,7 +4,13 @@ import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import Login from "./Login"
 
-export default function Signup() {
+type Props = {
+  onLoginClicked?: () => void
+}
+
+export default function Signup({
+  onLoginClicked
+}: Props) {
   const emailRef = useRef() as any
   const passwordRef = useRef() as any
   const nameRef = useRef() as any
@@ -13,11 +19,6 @@ export default function Signup() {
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   async function handleSubmit(e: any) {
     e.preventDefault()
@@ -73,10 +74,7 @@ export default function Signup() {
       </Modal.Body>
       <Modal.Footer>
         <div className="w-100 text-center">
-          <Button onClick={handleShow} variant="link">Log In</Button>
-          <Modal show={show} onHide={handleClose}>
-            <Login/>
-          </Modal>
+          <Button onClick={onLoginClicked} variant="link">Log In</Button>
         </div>
       </Modal.Footer>
     </>

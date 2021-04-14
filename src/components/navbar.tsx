@@ -7,11 +7,13 @@ import Login from "../auth_components/Login"
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import PasswordReset from "../auth_components/PasswordReset"
+import Signup from "../auth_components/Signup"
 
 const ModalState = {
   HIDDEN: 'HIDDEN',
   LOGIN: 'LOGIN',
-  RESET: 'RESET'
+  RESET: 'RESET',
+  SIGNUP: 'SIGNUP'
 }
 
 export const Header = () => {
@@ -23,6 +25,8 @@ export const Header = () => {
 
   const showModal = modalState !== ModalState.HIDDEN
   const showLogin = () => setModalState(ModalState.LOGIN);
+  const showReset = () => setModalState(ModalState.RESET);
+  const showSignup = () => setModalState(ModalState.SIGNUP);
   const closeLogin = () => setModalState(ModalState.HIDDEN);
 
   useEffect(() => {
@@ -79,9 +83,11 @@ export const Header = () => {
   // modal
   function chooseModalComponent() {
     if (modalState === ModalState.LOGIN) {
-      return(<Login />)
+      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } />
     } else if (modalState === ModalState.RESET) {
-      return(<PasswordReset />)
+      return <PasswordReset onLoginClicked={ showLogin } onSignupClicked={ showSignup } />
+    } else if (modalState === ModalState.SIGNUP) {
+      return <Signup onLoginClicked={ showLogin }/>
     }
   }
 
