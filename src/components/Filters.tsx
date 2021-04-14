@@ -30,7 +30,7 @@ export function Filters<T>(props: IFiltersProps<T>) {
   return (
     <div className="p-1 my-2">
       
-      <label className="mt-3">Number of bedrooms:</label>
+      {/* <label className="mt-3">Number of bedrooms:</label> */}
       {/* Object is a class that is calling method keys on object (which is all the buildings) */}
       {objectKeys.map((key) => {
         if (key !== 'sedu' && 
@@ -47,9 +47,9 @@ export function Filters<T>(props: IFiltersProps<T>) {
         } else if (key === 'studioUnits') {
           styledKey = 'Studio'
         } else if (key === 'oneBedroomUnits') {
-          styledKey = 'One'
+          styledKey = 'One bedroom'
         } else if (key === 'twoBedroomUnits') {
-          styledKey = 'Two' 
+          styledKey = 'Two bedroom' 
         } else if (key === 'threePlusBedroomUnits') {
           styledKey = 'Three or more' 
         }

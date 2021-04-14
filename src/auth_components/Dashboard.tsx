@@ -1,12 +1,11 @@
 import React, { useState } from "react"
-import { Button, Alert, Modal, Nav, Tab, Row, Col } from "react-bootstrap"
+import { Button, Modal, Nav, Tab, Row, Col } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import Login from "./Login"
 import UpdateProfile from "./UpdateProfile"
 import Profile from "./Profile"
 
 export default function Dashboard() {
-  const [error, setError] = useState("")
   const { currentUser } = useAuth() as any
 
   // Login
@@ -35,7 +34,7 @@ export default function Dashboard() {
               <Col sm={10} className="profile-email">
                 <Tab.Content>
                   <Tab.Pane eventKey="profile">
-                    <Profile />
+                    <Profile/>
                   </Tab.Pane>
                   <Tab.Pane eventKey="update">
                     <UpdateProfile />
@@ -47,10 +46,10 @@ export default function Dashboard() {
         </>
         ) : (
         <>
-          <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
+          {/* <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
             <Modal show={showLogin} onHide={handleCloseLogin}>
               <Login />
-            </Modal>
+            </Modal> */}
         </>
         )
       }

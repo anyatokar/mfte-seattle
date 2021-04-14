@@ -45,7 +45,7 @@ export default function SavedHomesList(props:any) {
                     ))}
                   </>
                 )}
-                {resultBuildings.length === 0 && <p>No results found!</p>}
+                {resultBuildings.length === 0 && <p>Try expanding your search criteria!</p>}
             </Row>
           </Col>
         </Row>

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-// import Moment from "react-moment";
 import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, ListGroup, ListGroupItem, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button } from 'react-bootstrap';
 import { MDBCloseIcon } from "mdbreact"
 
 export function SavedHomesCard(props: IBuilding) {
@@ -84,10 +83,11 @@ export function SavedHomesCard(props: IBuilding) {
           </Card.Title>
           <Card.Text>
           <h6 className="card-title">{residentialTargetedArea}</h6>
-            <text>{streetNum} {street}</text>
-              <br></br>
-              <p>{city}, {state} {zip}</p>
-              <p>{phone}</p>
+            {streetNum} {street}
+            <br></br>
+            {city}, {state} {zip}
+            <br></br>
+            {phone}
           </Card.Text>
           <Form onSubmit={handleSubmit}>
             <Form.Group>
@@ -102,21 +102,21 @@ export function SavedHomesCard(props: IBuilding) {
             </Form.Group>
             <Button variant="primary" size="sm" type="submit" value="Submit">Update Note</Button>
           </Form>
+          <Card.Text>
+            <br></br>
+            Total MFTE Units: {totalRestrictedUnits}
+            <br></br>
+            Pods: {sedu}
+            <br></br>
+            Studios: {studioUnits}
+            <br></br>
+            One beds: {oneBedroomUnits}
+            <br></br>
+            Two beds: {twoBedroomUnits}
+            <br></br>
+            Three+ beds: {threePlusBedroomUnits}
+          </Card.Text>
         </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>
-            <h6> Total MFTE Units: {totalRestrictedUnits}</h6>
-            <text> Pods: {sedu}</text>
-            <br></br>
-            <text> Studios: {studioUnits}</text>
-            <br></br>
-            <text>One beds: {oneBedroomUnits}</text>
-            <br></br>
-            <text>Two beds: {twoBedroomUnits}</text>
-            <br></br>
-            <text>Three+ beds: {threePlusBedroomUnits}</text>
-          </ListGroupItem>
-        </ListGroup>
       </Card>
     </div>
   );

@@ -18,9 +18,9 @@ export function AuthProvider({ children}: IProps) {
   // }
 
   async function signup(email: string, password: string, name: string) {
-    console.log(name)
     const user = firebase.auth().createUserWithEmailAndPassword(email, 
-      password).then(cred => {
+      password)
+      .then(cred => {
         if (cred.user) {
           return firebase.firestore().collection('users').doc(cred.user.uid).set({
             email: cred.user.email,
