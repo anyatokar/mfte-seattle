@@ -77,10 +77,10 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
         </>
         ) : (
         <>
-          <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
+          {/* <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
             <Modal show={showLogin} onHide={handleCloseLogin}>
               <Login />
-            </Modal>
+            </Modal> */}
         </>
         )
       }
