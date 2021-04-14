@@ -115,16 +115,13 @@ export const Header = () => {
           ) : (
           <>
             <Button onClick={handleShowLogin} variant="info">Saved</Button>
-              <Modal show={showLogin} onHide={handleCloseLogin}>
-                {chooseModalComponent()}
-              </Modal>
             <Button onClick={handleShowLogin} variant="info">Log in / Sign up</Button>
-              <Modal show={showLogin} onHide={handleCloseLogin}>
-                {chooseModalComponent()}
-              </Modal>
           </>
           )}
         </ButtonGroup>
+        <Modal show={showLogin} onHide={handleCloseLogin}>
+          {chooseModalComponent()}
+        </Modal>
       </Navbar>
     </div>
   )
