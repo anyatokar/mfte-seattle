@@ -9,18 +9,18 @@ import { useHistory } from "react-router-dom"
 import PasswordReset from "../auth_components/PasswordReset"
 
 export const Header = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const handleCloseLogin = () => setShowLogin(false);
-  const handleShowLogin = () => setShowLogin(true);
+  const [shouldShowLogin, setShowLogin] = useState(false);
 
   const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
   const [userData, setUserData] = useState(null) as any
   const history = useHistory()
   const [modalState, setModalState] = useState("Login")
+  const showLogin = () => setShowLogin(true);
+  const closeLogin = () => setShowLogin(false);
 
   useEffect(() => {
-    setShowLogin(false)
+    closeLogin()
   }, [currentUser])
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export const Header = () => {
   // Logout
   async function handleLogout() {
     setMessage("")
-    setShowLogin(false)
+    closeLogin()
     try {
       await logout()
         setMessage("Logged out successfully")
@@ -114,12 +114,12 @@ export const Header = () => {
           </>
           ) : (
           <>
-            <Button onClick={handleShowLogin} variant="info">Saved</Button>
-            <Button onClick={handleShowLogin} variant="info">Log in / Sign up</Button>
+            <Button onClick={showLogin} variant="info">Saved</Button>
+            <Button onClick={showLogin} variant="info">Log in / Sign up</Button>
           </>
           )}
         </ButtonGroup>
-        <Modal show={showLogin} onHide={handleCloseLogin}>
+        <Modal show={shouldShowLogin} onHide={closeLogin}>
           {chooseModalComponent()}
         </Modal>
       </Navbar>
