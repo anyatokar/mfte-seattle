@@ -1,5 +1,5 @@
 import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import firebase from "../db/firebase";
 
 import { useState, useEffect } from "react";
@@ -81,22 +81,27 @@ export const Header = () => {
 
   return (
     <div>
-      <Navbar variant="light">
-        <Nav className="mr-auto">
+      <Navbar variant="light" collapseOnSelect expand="md" className="mb-3">
+        {/* <Nav className="mr-auto"> */}
           <LinkContainer to="/">
             <Navbar.Brand className="font-weight-bold text-muted">
               MFTE Seattle
             </Navbar.Brand>
           </LinkContainer>
-          <LinkContainer to='/buildings'>
-            <Nav.Link>Buildings</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to='/about'>
-            <Nav.Link>About</Nav.Link>
-          </LinkContainer>
-        </Nav>
+          <Navbar.Toggle />
+          <Navbar.Collapse className="justify-content-end">
+          <Nav activeKey={window.location.pathname}>
+            <LinkContainer to='/buildings'>
+              <Nav.Link>Buildings</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/about'>
+              <Nav.Link>About</Nav.Link>
+            </LinkContainer>
+            </Nav>
+          </Navbar.Collapse>
+        {/* </Nav> */}
 
-        <ButtonGroup >
+        {/* <ButtonGroup >
           { currentUser ? (
           <>
             <Button onClick={onClick} value="./saved-homes" variant="info">Saved</Button>
@@ -124,7 +129,7 @@ export const Header = () => {
               </Modal>
           </>
           )}
-        </ButtonGroup>
+        </ButtonGroup> */}
       </Navbar>
     </div>
   )
