@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext"
 import Login from "./Login"
 import firebase from "../db/firebase";
 
-export default function Dashboard() {
+export default function Profile() {
   const { currentUser } = useAuth() as any
 
   // Login
