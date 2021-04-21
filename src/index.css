@@ -19,7 +19,6 @@ img {
 
 .standalone-btn {
   margin: .5em;
-  outline: #f47591;
 }
 
 .nav-buttons {
@@ -49,7 +48,8 @@ img {
 }
 
 .profile-email {
-  padding: 2em;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
 .building-row {
