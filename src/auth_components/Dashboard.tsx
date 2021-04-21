@@ -1,7 +1,5 @@
-import React, { useState } from "react"
-import { Button, Modal, Nav, Tab, Row, Col } from "react-bootstrap"
+import { Nav, Tab, Row, Col } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import Login from "./Login"
 import UpdateProfile from "./UpdateProfile"
 import Profile from "./Profile"
 

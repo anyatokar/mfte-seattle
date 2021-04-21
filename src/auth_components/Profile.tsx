@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react"
-import { Card, Button, Modal } from "react-bootstrap"
+import { useState, useEffect } from "react"
+import { Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import Login from "./Login"
 import firebase from "../db/firebase";
 
 export default function Profile() {

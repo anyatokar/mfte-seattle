@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import Map from "../Map/Map";
 import { loadMapApi } from "../utils/GoogleMapsUtils";

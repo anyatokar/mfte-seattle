@@ -1,8 +1,6 @@
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { Form, Button, Modal, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import Signup from "./Signup"
-import Login from "./Login"
 
 type Props = {
   onLoginClicked?: () => void,

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, createContext } from "react"
+import { useContext, useState, useEffect, createContext } from "react"
 import { auth } from "../db/firebase"
 import IProps from "../interfaces/IProps"
 import firebase from "../db/firebase"
@@ -12,10 +12,6 @@ export function useAuth() {
 export function AuthProvider({ children}: IProps) {
   const [currentUser, setCurrentUser] = useState() as any
   const [loading, setLoading] = useState(true)
-
-  // function signup(email: string, password: string) {
-  //   return auth.createUserWithEmailAndPassword(email, password)
-  // }
 
   async function signup(email: string, password: string, name: string) {
     const user = firebase.auth().createUserWithEmailAndPassword(email, 

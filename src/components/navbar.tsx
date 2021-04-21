@@ -1,4 +1,4 @@
-import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import firebase from "../db/firebase";
 
