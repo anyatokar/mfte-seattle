@@ -45,9 +45,8 @@ export default function Dashboard() {
           <Container>
             <Row>
               <Col md={5} lg={6}>
-                <Card>
+                <Card className="saved-homes-profile-update-card">
                   <Card.Body>
-                    <Card.Title></Card.Title>
                     <Card.Text>
                       <strong>Name: </strong>{userData.name}
                     </Card.Text>

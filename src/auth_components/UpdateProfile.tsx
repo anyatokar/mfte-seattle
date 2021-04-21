@@ -68,9 +68,8 @@ export default function UpdateProfile() {
       <Container>
         <Row>
           <Col md={5} lg={6}>
-            <Card>
+            <Card className="saved-homes-profile-update-card">
               <Card.Body>
-                {/* <h2 className="text-center mb-4">Update Profile</h2> */}
                 {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
                 {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
                 <Form onSubmit={handleSubmit}>
