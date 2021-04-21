@@ -66,8 +66,8 @@ export function SavedHomesCard(props: IBuilding) {
   }
 
   return (
-    <div className="building-card">
-      <Card>
+    <div>
+      <Card className="saved-homes-profile-update-card">
         <Card.Img variant="top" src="" />
         <Card.Body>
           <MDBCloseIcon onClick={deleteBuilding}/>

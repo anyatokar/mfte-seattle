@@ -1,4 +1,4 @@
-body {
+html, body {
   margin: 0;
   max-width: 100%;
   overflow-x: hidden;
@@ -19,7 +19,6 @@ img {
 
 .standalone-btn {
   margin: .5em;
-  outline: #f47591;
 }
 
 .nav-buttons {
@@ -48,8 +47,9 @@ img {
   color: white;
 }
 
-.profile-email {
-  padding: 2em;
+.saved-homes-profile-update-card {
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .building-row {

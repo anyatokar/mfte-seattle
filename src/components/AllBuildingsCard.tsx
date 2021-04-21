@@ -67,7 +67,7 @@ export function AllBuildingsCard(props: IBuilding) {
   const handleCloseLogin = () => setShowLogin(false);
   const handleShowLogin = () => setShowLogin(true);
   return (
-    <div className="building-card">
+    <div>
       <Card>
         <Card.Img variant="top" src="" />
         <Card.Body>
@@ -97,7 +97,8 @@ export function AllBuildingsCard(props: IBuilding) {
                 role="button">
                 Saved
               </Button>
-              :               <Button 
+              :
+              <Button 
               variant="btn btn-outline-warning btn-sm btn-save-building-card"
               onClick={saveBuilding}
               role="button">
