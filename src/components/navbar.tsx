@@ -9,19 +9,25 @@ import { useHistory } from "react-router-dom"
 import PasswordReset from "../auth_components/PasswordReset"
 import Signup from "../auth_components/Signup"
 
-const ModalState = {
-  HIDDEN: 'HIDDEN',
-  LOGIN: 'LOGIN',
-  RESET: 'RESET',
-  SIGNUP: 'SIGNUP'
+export enum ModalState {
+  HIDDEN = 'HIDDEN',
+  LOGIN = 'LOGIN',
+  RESET = 'RESET',
+  SIGNUP = 'SIGNUP'
 }
 
-export const Header = () => {
+type HeaderProps = {
+  modal?: ModalState
+}
+
+export const Header = ({
+  modal = ModalState.HIDDEN
+} : HeaderProps) => {
   const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
   const [userData, setUserData] = useState(null) as any
   const history = useHistory()
-  const [modalState, setModalState] = useState(ModalState.HIDDEN)
+  const [modalState, setModalState] = useState(modal)
 
   const showModal = modalState !== ModalState.HIDDEN
   const showLogin = () => setModalState(ModalState.LOGIN);
