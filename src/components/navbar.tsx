@@ -2,13 +2,13 @@ import { NavDropdown, Navbar, Nav, ButtonGroup, Button, Modal, Dropdown, Dropdow
 import {LinkContainer} from 'react-router-bootstrap';
 import firebase from "../db/firebase";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Login from "../auth_components/Login"
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import PasswordReset from "../auth_components/PasswordReset"
 import Signup from "../auth_components/Signup"
-import { ModalState } from "../contexts/ModalContext"
+import { ModalContext, ModalState } from "../contexts/ModalContext"
 
 type HeaderProps = {
   modal?: ModalState
@@ -21,7 +21,7 @@ export const Header = ({
   const { currentUser, logout } = useAuth() as any
   const [userData, setUserData] = useState(null) as any
   const history = useHistory()
-  const [modalState, setModalState] = useState(modal)
+  const [modalState, setModalState] = useContext(ModalContext)
 
   const showModal = modalState !== ModalState.HIDDEN
   const showLogin = () => setModalState(ModalState.LOGIN);
