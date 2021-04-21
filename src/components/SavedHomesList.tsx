@@ -1,4 +1,3 @@
-import React from 'react';
 import 'firebase/firestore';
 import { SavedHomesCard } from "./SavedHomesCard";
 import { Container, Row, Col } from 'react-bootstrap';

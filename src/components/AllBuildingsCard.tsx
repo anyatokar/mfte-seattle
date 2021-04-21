@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, Button, Modal } from 'react-bootstrap';
-import Login from "../auth_components/Login"
+import { ModalContext, ModalState } from "../contexts/ModalContext";
+import { Card, Button } from 'react-bootstrap';
 
 export function AllBuildingsCard(props: IBuilding) {
 
@@ -62,10 +62,9 @@ export function AllBuildingsCard(props: IBuilding) {
     });
   }
 
-  const [showLogin, setShowLogin] = useState(false);
+  const [/* modalState */, setModalState] = useContext(ModalContext);
+  const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  const handleCloseLogin = () => setShowLogin(false);
-  const handleShowLogin = () => setShowLogin(true);
   return (
     <div>
       <Card>
@@ -93,23 +92,22 @@ export function AllBuildingsCard(props: IBuilding) {
             buttonFill ?
               <Button 
                 variant="btn btn-warning btn-sm btn-save-building-card"
-                onClick={saveBuilding}
+                onClick={ saveBuilding }
                 role="button">
                 Saved
               </Button>
               :
               <Button 
-              variant="btn btn-outline-warning btn-sm btn-save-building-card"
-              onClick={saveBuilding}
-              role="button">
-              Save
-            </Button>
+                variant="btn btn-outline-warning btn-sm btn-save-building-card"
+                onClick={saveBuilding}
+                role="button">
+                Save
+              </Button>
             ) : (
             <>
-              <Button onClick={handleShowLogin}  variant="btn btn-outline-warning btn-sm standalone-btn">Save</Button>
-                <Modal show={showLogin} onHide={handleCloseLogin}>
-                  <Login />
-                </Modal>
+              <Button onClick={ handleShowLogin } variant="btn btn-outline-warning btn-sm standalone-btn">
+                Save
+              </Button>
             </>
             )
           }

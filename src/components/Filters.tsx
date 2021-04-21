@@ -1,4 +1,3 @@
-import * as React from "react";
 import { ReactNode } from "react";
 import IFilter from "../interfaces/IFilter";
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";

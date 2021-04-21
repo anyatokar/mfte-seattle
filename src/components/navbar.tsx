@@ -2,25 +2,29 @@ import { NavDropdown, Navbar, Nav, Modal, Dropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import firebase from "../db/firebase";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Login from "../auth_components/Login"
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import PasswordReset from "../auth_components/PasswordReset"
+import Signup from "../auth_components/Signup"
+import { ModalContext, ModalState } from "../contexts/ModalContext"
 
 export const Header = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const handleCloseLogin = () => setShowLogin(false);
-  const handleShowLogin = () => setShowLogin(true);
-
   const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
   const [userData, setUserData] = useState(null) as any
   const history = useHistory()
-  const [modalState, setModalState] = useState("Login")
+  const [modalState, setModalState] = useContext(ModalContext);
+
+  const showModal = modalState !== ModalState.HIDDEN
+  const showLogin = () => setModalState(ModalState.LOGIN);
+  const showReset = () => setModalState(ModalState.RESET);
+  const showSignup = () => setModalState(ModalState.SIGNUP);
+  const closeLogin = () => setModalState(ModalState.HIDDEN);
 
   useEffect(() => {
-    setShowLogin(false)
+    closeLogin()
   }, [currentUser])
 
   useEffect(() => {
@@ -60,7 +64,7 @@ export const Header = () => {
   // Logout
   async function handleLogout() {
     setMessage("")
-    setShowLogin(false)
+    closeLogin()
     try {
       await logout()
         setMessage("Logged out successfully")
@@ -72,10 +76,12 @@ export const Header = () => {
 
   // modal
   function chooseModalComponent() {
-    if (modalState === "Login") {
-      return(<Login />)
-    } else if (modalState === "Reset") {
-      return(<PasswordReset />)
+    if (modalState === ModalState.LOGIN) {
+      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } />
+    } else if (modalState === ModalState.RESET) {
+      return <PasswordReset onLoginClicked={ showLogin } onSignupClicked={ showSignup } />
+    } else if (modalState === ModalState.SIGNUP) {
+      return <Signup onLoginClicked={ showLogin }/>
     }
   }
 
@@ -116,9 +122,9 @@ export const Header = () => {
           ) : (
           <>
             <Nav>
-              <Nav.Link onClick={handleShowLogin}>Saved</Nav.Link>
-              <Nav.Link onClick={handleShowLogin}>Log in / Sign up</Nav.Link>
-              <Modal show={showLogin} onHide={handleCloseLogin}>
+              <Nav.Link onClick={showLogin}>Saved</Nav.Link>
+              <Nav.Link onClick={showLogin}>Log in / Sign up</Nav.Link>
+              <Modal show={showModal} onHide={closeLogin}>
                 {chooseModalComponent()}
               </Modal>
             </Nav>

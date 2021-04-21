@@ -31,59 +31,42 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
     });
   }, []);
 
-  useEffect(() => {getSavedBuildings()}, [getSavedBuildings]); 
+  useEffect(() => {getSavedBuildings()}, [getSavedBuildings]);
 
-  // Login
-  const [showLogin, setShowLogin] = useState(false);
-
-  const handleCloseLogin = () => setShowLogin(false);
-  const handleShowLogin = () => setShowLogin(true);
+  if (!currentUser) {
+    return null;
+  }
 
   return (
     <>
-      {loading ? (
-        <Spinner animation="border" variant="warning" />
-        ) : (<></>)
+      {
+        loading && <Spinner animation="border" variant="warning" />
       }
+      <Tab.Container id="sidebar" defaultActiveKey="list">
+        <Row>
+          <Col sm={2}>
+            <Nav variant="pills" className="flex-column">
+              <Nav.Item>
+                <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="list" className="tab">List</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+          <Col sm={10}>
+          <Tab.Content>
+            <Tab.Pane eventKey="map">
+              <MapTab savedBuildings={savedBuildings}/>
+            </Tab.Pane>
+            <Tab.Pane eventKey="list">
+              <SavedHomesList savedBuildings={savedBuildings}/>
+            </Tab.Pane>
 
-      {currentUser
-        ? (
-        <>
-          <Tab.Container id="sidebar" defaultActiveKey="list">
-            <Row>
-              <Col sm={2}>
-                <Nav variant="pills" className="flex-column">
-                  <Nav.Item>
-                    <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="list" className="tab">List</Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </Col>
-              <Col sm={10}>
-              <Tab.Content>
-                <Tab.Pane eventKey="map">
-                  <MapTab savedBuildings={savedBuildings}/>
-                </Tab.Pane>
-                <Tab.Pane eventKey="list">
-                  <SavedHomesList savedBuildings={savedBuildings}/>
-                </Tab.Pane>
-
-              </Tab.Content>
-              </Col>
-            </Row>
-          </Tab.Container>
-        </>
-        ) : (
-        <>
-          {/* <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
-            <Modal show={showLogin} onHide={handleCloseLogin}>
-              <Login />
-            </Modal> */}
-        </>
-        )
-      }
+          </Tab.Content>
+          </Col>
+        </Row>
+      </Tab.Container>
     </>
   )
 }

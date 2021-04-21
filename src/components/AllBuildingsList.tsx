@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import 'firebase/firestore';
 import { AllBuildingsCard } from "./AllBuildingsCard";
 import { Container, Row, Col } from 'react-bootstrap';
