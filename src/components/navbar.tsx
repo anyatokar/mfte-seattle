@@ -21,7 +21,7 @@ export const Header = ({
   const { currentUser, logout } = useAuth() as any
   const [userData, setUserData] = useState(null) as any
   const history = useHistory()
-  const [modalState, setModalState] = useContext(ModalContext)
+  const [modalState, setModalState] = useContext(ModalContext);
 
   const showModal = modalState !== ModalState.HIDDEN
   const showLogin = () => setModalState(ModalState.LOGIN);
