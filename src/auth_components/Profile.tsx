@@ -6,12 +6,6 @@ import firebase from "../db/firebase";
 
 export default function Profile() {
   const { currentUser } = useAuth() as any
-
-  // Login
-  const [showLogin, setShowLogin] = useState(false);
-  const handleCloseLogin = () => setShowLogin(false);
-  const handleShowLogin = () => setShowLogin(true);
-
   const [userData, setUserData] = useState(null) as any
 
   // get user Name
@@ -37,31 +31,17 @@ export default function Profile() {
   }, [currentUser])
 
   return (
-    <>
-      {currentUser && userData
-        ? (
-        <>
-          <Card style={{ width: '25rem' }}>
-            <Card.Body>
-              <Card.Title></Card.Title>
-              <Card.Text>
-                <strong>Name: </strong>{userData.name}
-              </Card.Text>
-              <Card.Text>
-                <strong>Email: </strong>{currentUser.email}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </>
-        ) : (
-        <>
-          {/* <Button onClick={handleShowLogin} variant="info">Saved Homes</Button>
-            <Modal show={showLogin} onHide={handleCloseLogin}>
-              <Login />
-            </Modal> */}
-        </>
-        )
-      }
-    </>
-  )
+    currentUser && userData &&
+      <Card style={{ width: '25rem' }}>
+        <Card.Body>
+          <Card.Title></Card.Title>
+          <Card.Text>
+            <strong>Name: </strong>{userData.name}
+          </Card.Text>
+          <Card.Text>
+            <strong>Email: </strong>{currentUser.email}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+  );
 }
