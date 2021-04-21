@@ -8,13 +8,7 @@ import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import PasswordReset from "../auth_components/PasswordReset"
 import Signup from "../auth_components/Signup"
-
-export enum ModalState {
-  HIDDEN = 'HIDDEN',
-  LOGIN = 'LOGIN',
-  RESET = 'RESET',
-  SIGNUP = 'SIGNUP'
-}
+import { ModalState } from "../contexts/ModalContext"
 
 type HeaderProps = {
   modal?: ModalState
