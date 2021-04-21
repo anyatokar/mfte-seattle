@@ -10,13 +10,7 @@ import PasswordReset from "../auth_components/PasswordReset"
 import Signup from "../auth_components/Signup"
 import { ModalContext, ModalState } from "../contexts/ModalContext"
 
-type HeaderProps = {
-  modal?: ModalState
-}
-
-export const Header = ({
-  modal = ModalState.HIDDEN
-} : HeaderProps) => {
+export const Header = () => {
   const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
   const [userData, setUserData] = useState(null) as any
