@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import firebase from "../db/firebase"
+import { Container, Row, Col } from 'react-bootstrap';
 
 export default function UpdateProfile() {
   const emailRef = useRef() as any
@@ -64,48 +65,53 @@ export default function UpdateProfile() {
   }
   return (
     <>
-      <Card style={{ width: '25rem' }}>
-        <Card.Body>
-          {/* <h2 className="text-center mb-4">Update Profile</h2> */}
-          {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
-          {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                ref={emailRef}
-                required
-                defaultValue={currentUser.email}
-              />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                ref={passwordRef}
-                placeholder="Leave blank to keep the same"
-              />
-            </Form.Group>
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control
-                type="password"
-                ref={passwordConfirmRef}
-                placeholder="Leave blank to keep the same"
-              />
-            </Form.Group>
-            <div className="text-center">
-            <Button disabled={loading} className="w-40 btn btn-info" type="submit">
-              Update
-            </Button>
-            </div>
-          </Form>
-          <div className="w-100 text-center mt-2">
-            <Button onClick={onDelete} variant="link">Delete Account</Button>
-          </div>
-        </Card.Body>
-      </Card>
+      <Container>
+        <Row>
+          <Col md={5} lg={6}>
+            <Card className="saved-homes-profile-update-card">
+              <Card.Body>
+                {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
+                {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group id="email">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      type="email"
+                      ref={emailRef}
+                      required
+                      defaultValue={currentUser.email}
+                    />
+                  </Form.Group>
+                  <Form.Group id="password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      ref={passwordRef}
+                      placeholder="Leave blank to keep the same"
+                    />
+                  </Form.Group>
+                  <Form.Group id="password-confirm">
+                    <Form.Label>Password Confirmation</Form.Label>
+                    <Form.Control
+                      type="password"
+                      ref={passwordConfirmRef}
+                      placeholder="Leave blank to keep the same"
+                    />
+                  </Form.Group>
+                  <div className="text-center">
+                  <Button disabled={loading} className="w-40 btn btn-info" type="submit">
+                    Update
+                  </Button>
+                  </div>
+                </Form>
+                <div className="w-100 text-center mt-2">
+                  <Button onClick={onDelete} variant="link">Delete Account</Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import firebase from "../db/firebase";
+import { Container, Row, Col } from 'react-bootstrap';
 
 export default function Profile() {
   const { currentUser } = useAuth() as any
@@ -31,16 +32,21 @@ export default function Profile() {
 
   return (
     currentUser && userData &&
-      <Card style={{ width: '25rem' }}>
-        <Card.Body>
-          <Card.Title></Card.Title>
-          <Card.Text>
-            <strong>Name: </strong>{userData.name}
-          </Card.Text>
-          <Card.Text>
-            <strong>Email: </strong>{currentUser.email}
-          </Card.Text>
-        </Card.Body>
-      </Card>
+    <Container>
+      <Row>
+        <Col md={5} lg={6}>
+          <Card className="saved-homes-profile-update-card">
+            <Card.Body>
+              <Card.Text>
+                <strong>Name: </strong>{userData.name}
+              </Card.Text>
+              <Card.Text>
+                <strong>Email: </strong>{currentUser.email}
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }

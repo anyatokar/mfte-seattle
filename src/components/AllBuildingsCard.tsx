@@ -66,7 +66,7 @@ export function AllBuildingsCard(props: IBuilding) {
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
   return (
-    <div className="building-card">
+    <div>
       <Card>
         <Card.Img variant="top" src="" />
         <Card.Body>
