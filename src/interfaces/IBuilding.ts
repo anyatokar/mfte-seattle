@@ -2,6 +2,7 @@ export default interface IBuilding {
   buildingID: string;
   buildingName: string;
   phone: string;
+  phone2: string;
   residentialTargetedArea: string;
   totalRestrictedUnits: number;
   sedu: number;

@@ -3,7 +3,7 @@ import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 export function AllBuildingsCard(props: IBuilding) {
 
@@ -12,6 +12,7 @@ export function AllBuildingsCard(props: IBuilding) {
     buildingID,
     buildingName,
     phone,
+    phone2,
     residentialTargetedArea,
     totalRestrictedUnits,
     sedu,
@@ -38,6 +39,7 @@ export function AllBuildingsCard(props: IBuilding) {
         "buildingID": buildingID,
         "buildingName": buildingName,
         "phone": phone,
+        "phone2": phone2,
         "residentialTargetedArea": residentialTargetedArea,
         "totalRestrictedUnits": totalRestrictedUnits,
         "sedu": sedu,
@@ -65,14 +67,15 @@ export function AllBuildingsCard(props: IBuilding) {
   const [/* modalState */, setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
+  const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${streetNum}+${street}+${city}+${state}+${zip}`
+
   return (
     <div>
       <Card>
-        <Card.Img variant="top" src="" />
-        <Card.Body>
+        <Card.Header>
           <Card.Title>
             <h5 className="card-title"> {
-              <a id="myLink" 
+              <a id="buildingLink" 
                 href={urlForBuilding} 
                 target="_blank" 
                 rel="noreferrer">
@@ -80,40 +83,54 @@ export function AllBuildingsCard(props: IBuilding) {
               </a>
             }</h5>
           </Card.Title>
-          <Card.Text>
           <h6 className="card-title">{residentialTargetedArea}</h6>
-            {streetNum} {street}
-            <br></br>
-            {city}, {state} {zip}
-            <br></br>
-            {phone}
-          </Card.Text>
           { currentUser ? (
             buttonFill ?
               <Button 
-                variant="btn btn-warning btn-sm btn-save-building-card"
+                variant="btn btn-info btn-sm btn-save-building-card"
                 onClick={ saveBuilding }
                 role="button">
                 Saved
               </Button>
               :
               <Button 
-                variant="btn btn-outline-warning btn-sm btn-save-building-card"
+                variant="btn btn-outline-info btn-sm btn-save-building-card"
                 onClick={saveBuilding}
                 role="button">
                 Save
               </Button>
             ) : (
             <>
-              <Button onClick={ handleShowLogin } variant="btn btn-outline-warning btn-sm standalone-btn">
+              <Button onClick={ handleShowLogin } variant="btn btn-outline-info btn-sm standalone-btn">
                 Save
               </Button>
             </>
             )
           }
-          <Card.Text>
+        </Card.Header>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem>
+            <a id="addressLink"
+                href={mapViewUrl}
+                target="_blank" 
+                rel="noreferrer">
+              {streetNum} {street}
+              <br></br>
+              {city}, {state} {zip}
+            </a>
             <br></br>
-            Total MFTE Units: {totalRestrictedUnits}
+            <a href="tel:{phone}">{phone}</a>
+            { phone2 ? (
+              <>
+                <br></br>
+                <a href="tel:{phone2}">
+                {phone2}</a>
+              </> 
+              ) : ('') 
+              }
+          </ListGroupItem>
+          <ListGroupItem>
+            Total MFTE: {totalRestrictedUnits}
             <br></br>
             Pods: {sedu}
             <br></br>
@@ -124,8 +141,8 @@ export function AllBuildingsCard(props: IBuilding) {
             Two beds: {twoBedroomUnits}
             <br></br>
             Three+ beds: {threePlusBedroomUnits}
-          </Card.Text>
-        </Card.Body>
+          </ListGroupItem>
+        </ListGroup>
       </Card>
     </div>
   );
