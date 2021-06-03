@@ -67,6 +67,8 @@ export function AllBuildingsCard(props: IBuilding) {
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
   const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${streetNum}+${street}+${city}+${state}+${zip}`;
+  const phone1Ref = `tel:${phone}`
+  const phone2Ref = `tel:${phone2}`
 
   return (
     <div>
@@ -116,14 +118,14 @@ export function AllBuildingsCard(props: IBuilding) {
               {city}, {state} {zip}
             </a>
             <br></br>
-            <a href=`tel:${phone}`>
+            <a href={phone1Ref}>
               {phone}
             </a>
             {
               phone2 &&
               <>
                 <br></br>
-                <a href=`tel:${phone2}`>
+                <a href={phone2Ref}>
                   {phone2}
                 </a>
               </>
