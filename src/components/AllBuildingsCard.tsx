@@ -119,14 +119,14 @@ export function AllBuildingsCard(props: IBuilding) {
             <a href=`tel:${phone}`>
               {phone}
             </a>
-            { phone2 ? (
+            {
+              phone2 &&
               <>
                 <br></br>
-                <a href="tel:{phone2}">
+                <a href=`tel:${phone2}`>
                   {phone2}
                 </a>
-              </> 
-              ) : ('') 
+              </>
             }
           </ListGroupItem>
           <ListGroupItem>
