@@ -71,10 +71,10 @@ export function SavedHomesCard(props: IBuilding) {
   const phone2Ref = `tel:${phone2}`
 
   return (
-    <>
     <div>
       <Card>
         <Card.Header>
+          <MDBCloseIcon onClick={deleteBuilding}/>
           <Card.Title>
             <a id="buildingLink" 
               href={urlForBuilding} 
@@ -84,29 +84,6 @@ export function SavedHomesCard(props: IBuilding) {
             </a>
           </Card.Title>
           <h6>{residentialTargetedArea}</h6>
-          {/* { currentUser ? (
-            buttonFill ?
-              <Button 
-                variant="btn btn-info btn-sm btn-save-building-card"
-                onClick={saveBuilding}
-                role="button">
-                Saved
-              </Button>
-              :
-              <Button 
-                variant="btn btn-outline-info btn-sm btn-save-building-card"
-                onClick={saveBuilding}
-                role="button">
-                Save
-              </Button>
-            ) : (
-            <>
-              <Button onClick={handleShowLogin} variant="btn btn-outline-info btn-sm standalone-btn">
-                Save
-              </Button>
-            </>
-            )
-          } */}
         </Card.Header>
         <ListGroup className="list-group-flush">
           <ListGroupItem>
@@ -163,60 +140,5 @@ export function SavedHomesCard(props: IBuilding) {
         </ListGroup>
       </Card>
     </div>
-
-    <div>
-      <Card className="saved-homes-profile-update-card">
-        <Card.Img variant="top" src="" />
-        <Card.Body>
-          <MDBCloseIcon onClick={deleteBuilding}/>
-          <Card.Title>
-            <h5 className="card-title"> {
-              <a id="myLink" 
-                href={urlForBuilding} 
-                target="_blank" 
-                rel="noreferrer">
-                {buildingName}
-              </a>
-            }</h5>
-          </Card.Title>
-          <Card.Text>
-          <h6 className="card-title">{residentialTargetedArea}</h6>
-            {streetNum} {street}
-            <br></br>
-            {city}, {state} {zip}
-            <br></br>
-            {phone}
-          </Card.Text>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group>
-              <Form.Control 
-                as="textarea"
-                name="note"
-                rows={3}
-                value={noteToAdd}
-                placeholder="Your notes here"
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Button variant="primary" size="sm" type="submit" value="Submit">Update Note</Button>
-          </Form>
-          <Card.Text>
-            <br></br>
-            Total MFTE Units: {totalRestrictedUnits}
-            <br></br>
-            Pods: {sedu}
-            <br></br>
-            Studios: {studioUnits}
-            <br></br>
-            One beds: {oneBedroomUnits}
-            <br></br>
-            Two beds: {twoBedroomUnits}
-            <br></br>
-            Three+ beds: {threePlusBedroomUnits}
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </div>
-</>
   );
 }
