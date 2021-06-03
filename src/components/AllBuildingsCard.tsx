@@ -116,7 +116,7 @@ export function AllBuildingsCard(props: IBuilding) {
               {city}, {state} {zip}
             </a>
             <br></br>
-            <a href="tel:{phone}">
+            <a href=`tel:${phone}`>
               {phone}
             </a>
             { phone2 ? (
