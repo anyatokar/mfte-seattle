@@ -2,7 +2,7 @@ import { useState } from "react";
 import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { MDBCloseIcon } from "mdbreact"
 
 export function SavedHomesCard(props: IBuilding) {
@@ -11,6 +11,7 @@ export function SavedHomesCard(props: IBuilding) {
     buildingID,
     buildingName,
     phone,
+    phone2,
     residentialTargetedArea,
     totalRestrictedUnits,
     sedu,
@@ -65,46 +66,66 @@ export function SavedHomesCard(props: IBuilding) {
     });
   }
 
+  const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${streetNum}+${street}+${city}+${state}+${zip}`;
+  const phone1Ref = `tel:${phone}`
+  const phone2Ref = `tel:${phone2}`
+
   return (
     <div>
-      <Card className="saved-homes-profile-update-card">
-        <Card.Img variant="top" src="" />
-        <Card.Body>
+      <Card>
+        <Card.Header>
           <MDBCloseIcon onClick={deleteBuilding}/>
           <Card.Title>
-            <h5 className="card-title"> {
-              <a id="myLink" 
-                href={urlForBuilding} 
+            <a id="buildingLink" 
+              href={urlForBuilding} 
+              target="_blank" 
+              rel="noreferrer">
+              {buildingName}
+            </a>
+          </Card.Title>
+          <h6>{residentialTargetedArea}</h6>
+        </Card.Header>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem>
+            <a id="addressLink"
+                href={mapViewUrl}
                 target="_blank" 
                 rel="noreferrer">
-                {buildingName}
-              </a>
-            }</h5>
-          </Card.Title>
-          <Card.Text>
-          <h6 className="card-title">{residentialTargetedArea}</h6>
-            {streetNum} {street}
+              {streetNum} {street}
+              <br></br>
+              {city}, {state} {zip}
+            </a>
             <br></br>
-            {city}, {state} {zip}
-            <br></br>
-            {phone}
-          </Card.Text>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group>
-              <Form.Control 
-                as="textarea"
-                name="note"
-                rows={3}
-                value={noteToAdd}
-                placeholder="Your notes here"
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Button variant="primary" size="sm" type="submit" value="Submit">Update Note</Button>
-          </Form>
-          <Card.Text>
-            <br></br>
-            Total MFTE Units: {totalRestrictedUnits}
+            <a href={phone1Ref}>
+              {phone}
+            </a>
+            {
+              phone2 &&
+              <>
+                <br></br>
+                <a href={phone2Ref}>
+                  {phone2}
+                </a>
+              </>
+            }
+          </ListGroupItem>
+          <ListGroupItem>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group>
+                <Form.Control 
+                  as="textarea"
+                  name="note"
+                  rows={3}
+                  value={noteToAdd}
+                  placeholder="Your notes here"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Button variant="primary" size="sm" type="submit" value="Submit">Update Note</Button>
+            </Form>
+          </ListGroupItem>
+          <ListGroupItem>
+            Total MFTE: {totalRestrictedUnits}
             <br></br>
             Pods: {sedu}
             <br></br>
@@ -115,8 +136,8 @@ export function SavedHomesCard(props: IBuilding) {
             Two beds: {twoBedroomUnits}
             <br></br>
             Three+ beds: {threePlusBedroomUnits}
-          </Card.Text>
-        </Card.Body>
+          </ListGroupItem>
+        </ListGroup>
       </Card>
     </div>
   );

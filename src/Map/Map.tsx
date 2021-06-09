@@ -82,24 +82,30 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
     
     Markers.push(marker);
 
+    const phone1Ref = `tel:${building.phone}`;
+    const phone2Ref = `tel:${building.phone2}`;
+
     let contentString = 
-        '<strong><a href=' + 
-        building.urlForBuilding + ' ' +
-        `target='_blank' rel='noreferrer'>` +
-        '<br>' +
-        building.buildingName + '</a></strong>' + 
-        '<br>' +
-        '<strong>' + building.residentialTargetedArea + '</strong>' + 
-        '<br>' +
-        + building.streetNum + " "
-        + building.street +
-        '<br>' +
-        building.city + ', ' +
-        building.state + ' ' +
-        building.zip  + 
-        '<br>' +
-        building.phone +
-        '<br>'
+      '<strong><a href=' + 
+      building.urlForBuilding + ' ' +
+      `target='_blank' rel='noreferrer'>` +
+      '<br>' +
+      building.buildingName + '</a></strong>' + 
+      '<br>' +
+      '<strong>' + building.residentialTargetedArea + '</strong>' + 
+      '<br>' +
+      building.streetNum + " " +
+      building.street +
+      '<br>' +
+      building.city + ', ' +
+      building.state + ' ' +
+      building.zip  + 
+      '<br>' +
+      '<a href=' + 
+      phone1Ref + ' ' +
+      '<br>' +
+      building.phone + '</a>' + 
+      '<br>'
   
     marker.addListener("click", () => {
       infoWindow.setContent(contentString)
