@@ -17,7 +17,6 @@ export default function SavedHomesMap(props:any) {
 
   return (
     <>
-      {/* map */}
       <div className="col col-no-padding">
         {scriptLoaded && (
           <Map

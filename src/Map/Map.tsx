@@ -8,11 +8,10 @@ type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
 type InfoWindow = google.maps.InfoWindow;
 
-let Markers:any = [];
-
 const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuildings }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
+  const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
 
   const startMap = (): void => {
     if (!map) {
@@ -27,11 +26,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
           zoom: zoomLevel,
           center: address,
           mapTypeControl: mapTypeControl,
-          // streetViewControl: false,
-          // rotateControl: false,
           scaleControl: true,
-          // fullscreenControl: false,
-          // panControl: false,
           zoomControl: true,
           gestureHandling: 'cooperative',
           mapTypeId: mapType,
@@ -49,9 +44,9 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
   useEffect(startMap, [map, defaultMapStart]);
 
   function setMapOnAll(map: google.maps.Map | null) {
-    for (let i = 0; i < Markers.length; i++) {
-      Markers[i].setMap(map);
-    }
+    markers.forEach((marker: any) => {
+      marker.setMap(map);
+    });
   }
 
   function clearMarkers() {
@@ -60,17 +55,18 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
 
   function deleteMarkers() {
     clearMarkers();
-    Markers = [];
+    setMarkers([]);
   }
 
-  drop(filteredBuildings)
+  useEffect(() => {
+    drop(filteredBuildings);
+  }, [filteredBuildings]);
 
   function drop(filteredBuildings:Array<IBuilding>) {
     const infoWindow = new google.maps.InfoWindow({content: ''});
     deleteMarkers();
-    for (let i = 0; i < filteredBuildings.length; i++) {
-      addMarker(filteredBuildings[i], infoWindow);
-    }
+    const newMarkers = filteredBuildings.map(building => addMarker(building, infoWindow));
+    setMarkers(newMarkers);
   }
 
   function addMarker(building:IBuilding, infoWindow:InfoWindow) {
@@ -79,8 +75,6 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
       map: map,
       animation: google.maps.Animation.DROP,
     });
-    
-    Markers.push(marker);
 
     const phone1Ref = `tel:${building.phone}`;
     const phone2Ref = `tel:${building.phone2}`;
@@ -111,6 +105,8 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
       infoWindow.setContent(contentString)
       infoWindow.open(map, marker);
     });
+
+    return marker;
   }
 
   return (
