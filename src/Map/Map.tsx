@@ -7,11 +7,12 @@ import IBuilding from "../interfaces/IBuilding";
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
 type InfoWindow = google.maps.InfoWindow;
+type Marker = google.maps.Marker;
 
 const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuildings }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
-  const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
+  const [markers, setMarkers] = useState<Marker[]>([]);
 
   const startMap = (): void => {
     if (!map) {
@@ -44,7 +45,7 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false, filteredBuilding
   useEffect(startMap, [map, defaultMapStart]);
 
   function setMapOnAll(map: google.maps.Map | null) {
-    markers.forEach((marker: any) => {
+    markers.forEach((marker: Marker) => {
       marker.setMap(map);
     });
   }
