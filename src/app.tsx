@@ -18,37 +18,38 @@ const Application: React.FunctionComponent<{}> = props => {
   const modalStateHook = useState(ModalState.HIDDEN);
 
   return (
-    <ModalContext.Provider value={ modalStateHook } >
-      <div>
-          <Router>
-            <AuthProvider>
+    <div>
+      <Router>
+        <AuthProvider>
+          <ModalContext.Provider value={ modalStateHook }>
             <Header />
-              <Switch>
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <PrivateRoute exact path="/saved-homes" component={savedHomes} />
-
-                {routes.map((route, index) => {
-                  return (
-                    <Route
-                      key={index}
-                      path={route.path}
-                      exact={route.exact}
-                      render={(props: RouteComponentProps<any>) => (
-                        <route.component
-                          name={route.name}
-                          {...props}
-                          {...route.props}
-                        />
-                      )}
-                    />
-                  );
-                })}
-              </Switch>
-            </AuthProvider>
-          </Router>
-        <Footer />
-      </div>
-    </ModalContext.Provider>
+          </ModalContext.Provider>
+          <Switch>
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/saved-homes" component={savedHomes} />
+            {
+              routes.map((route, index) => {
+                return (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    render={(props: RouteComponentProps<any>) => (
+                      <route.component
+                        name={route.name}
+                        {...props}
+                        {...route.props}
+                      />
+                    )}
+                  />
+                );
+              })
+            }
+          </Switch>
+        </AuthProvider>
+      </Router>
+      <Footer />
+    </div>
   );
 }
 

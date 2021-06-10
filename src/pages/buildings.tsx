@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import IPage from '../interfaces/IPage';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import firebase from '../db/firebase';
@@ -40,14 +40,20 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
     []
   );
-  const resultBuildingsUnsorted = allBuildings
-  .filter((building) =>
-    genericSearch<IBuilding>(building, 
-      ["buildingName", "residentialTargetedArea", "streetNum", "street", "zip"],
-      query
-    )
-  )
-  .filter((building) => genericFilter<IBuilding>(building, activeFilters))
+  const resultBuildingsUnsorted = useMemo(
+    () => {
+      return allBuildings
+        .filter((building) =>
+          genericSearch<IBuilding>(
+            building,
+            ["buildingName", "residentialTargetedArea", "streetNum", "street", "zip"],
+            query
+          )
+        )
+        .filter((building) => genericFilter<IBuilding>(building, activeFilters));
+    },
+    [allBuildings, query, activeFilters]
+  );
   return (
     <>
       {loading ? (
