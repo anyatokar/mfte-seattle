@@ -23,29 +23,29 @@ const Application: React.FunctionComponent<{}> = props => {
         <AuthProvider>
           <ModalContext.Provider value={ modalStateHook }>
             <Header />
+            <Switch>
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/saved-homes" component={savedHomes} />
+              {
+                routes.map((route, index) => {
+                  return (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      exact={route.exact}
+                      render={(props: RouteComponentProps<any>) => (
+                        <route.component
+                          name={route.name}
+                          {...props}
+                          {...route.props}
+                        />
+                      )}
+                    />
+                  );
+                })
+              }
+            </Switch>
           </ModalContext.Provider>
-          <Switch>
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            <PrivateRoute exact path="/saved-homes" component={savedHomes} />
-            {
-              routes.map((route, index) => {
-                return (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    render={(props: RouteComponentProps<any>) => (
-                      <route.component
-                        name={route.name}
-                        {...props}
-                        {...route.props}
-                      />
-                    )}
-                  />
-                );
-              })
-            }
-          </Switch>
         </AuthProvider>
       </Router>
       <Footer />
