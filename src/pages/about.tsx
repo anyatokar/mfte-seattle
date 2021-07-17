@@ -47,7 +47,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
           </li>
           <li>
             <a id="income-and-rent-limits" 
-              href="http://www.seattle.gov/Documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2019%20MFTE%20Income%20Limits.pdf" 
+              href="http://www.seattle.gov/housing/property-managers/income-and-rent-limits#multifamilypropertytaxexemptionmfteprogram" 
               target="_blank" 
               rel="noreferrer">
               Income and Rent Limits
