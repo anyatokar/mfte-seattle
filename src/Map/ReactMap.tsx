@@ -35,7 +35,7 @@ export function ReactMap(props: IMap) {
           {
             filteredBuildings.map(building => 
               <Marker
-                animation={ google.maps.Animation.DROP }
+                animation={ 2 /* google.maps.Animation.DROP */ }
                 position={{
                   lat: building.lat,
                   lng: building.lng
