@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import IMap from '../interfaces/IMap';
 import IBuilding from '../interfaces/IBuilding';
@@ -16,6 +16,12 @@ const center = {
 export function ReactMap(props: IMap) {
   const { filteredBuildings = [] } = props;
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(null);
+
+  useEffect(() => {
+    if (selectedBuilding && !filteredBuildings.includes(selectedBuilding)) {
+      setSelectedBuilding(null);
+    }
+  }, [filteredBuildings]);
 
   const clearSelection = () => { setSelectedBuilding(null) };
 
