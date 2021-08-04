@@ -14,6 +14,10 @@ const center = {
   lng: -122.315
 };
 
+// Statically define libraries to avoid the "LoadScript has been reloaded
+// unintentionally!" performance warning.
+const LIBRARIES: ("places")[] = ["places"];
+
 export function ReactMap(props: IMap) {
   const { filteredBuildings = [] } = props;
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(null);
@@ -28,7 +32,7 @@ export function ReactMap(props: IMap) {
   return (
     <LoadScript
       googleMapsApiKey={ `${process.env.REACT_APP_APIKEY}` }
-      libraries={ ["places"] }
+      libraries={ LIBRARIES }
       language="en"
       version="quarterly"
     >
