@@ -22,6 +22,7 @@ export function ReactMap(props: IMap) {
     if (selectedBuilding && !filteredBuildings.includes(selectedBuilding)) {
       setSelectedBuilding(null);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- No need for selectedBuilding in the deps list
   }, [filteredBuildings]);
 
   return (
