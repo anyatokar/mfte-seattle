@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { BuildingMarker } from './BuildingMarker';
 import IMap from '../interfaces/IMap';
 import IBuilding from '../interfaces/IBuilding';
 
@@ -23,8 +24,6 @@ export function ReactMap(props: IMap) {
     }
   }, [filteredBuildings]);
 
-  const clearSelection = () => { setSelectedBuilding(null) };
-
   return (
     <LoadScript
       googleMapsApiKey={ `${process.env.REACT_APP_APIKEY}` }
@@ -40,49 +39,13 @@ export function ReactMap(props: IMap) {
         <>
           {
             filteredBuildings.map(building => 
-              <Marker
-                animation={ 2 /* google.maps.Animation.DROP */ }
-                position={{
-                  lat: building.lat,
-                  lng: building.lng
-                }}
-                onClick={() => setSelectedBuilding(building)}
+              <BuildingMarker
                 key={ building.buildingID }
-              >
-                
-              </Marker>)
-          }
-          {
-            selectedBuilding &&
-            <InfoWindow
-              position={{
-                lat: selectedBuilding.lat,
-                lng: selectedBuilding.lng
-              }}
-              onCloseClick={clearSelection}
-            >
-              <>
-              <strong>
-                <a
-                  href={ selectedBuilding.urlForBuilding }
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <br/>{ selectedBuilding.buildingName }
-                </a>
-              </strong>
-              <br/>
-              <strong>{ selectedBuilding.residentialTargetedArea }</strong>
-              <br/>
-              { selectedBuilding.streetNum } { selectedBuilding.street }
-              <br/>
-              { selectedBuilding.city }, { selectedBuilding.state } { selectedBuilding.zip }
-              <br/>
-              <br/>
-              <a href={ `tel:${selectedBuilding.phone}` }>{ selectedBuilding.phone }</a>
-              <br/>
-              </>
-            </InfoWindow>
+                building={ building }
+                isSelected={ building === selectedBuilding }
+                setSelectedBuilding={ setSelectedBuilding }
+              />
+            )
           }
         </>
       </GoogleMap>
