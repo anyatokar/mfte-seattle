@@ -1,3 +1,4 @@
+/// <reference types="googlemaps" />
 import { useCallback } from 'react';
 import { InfoWindow, Marker } from '@react-google-maps/api';
 import IBuilding from '../interfaces/IBuilding';
@@ -23,7 +24,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
 
   return (
     <Marker
-      animation={ 2 /* google.maps.Animation.DROP */ }
+      animation={ google.maps.Animation.DROP }
       position={{
         lat: building.lat,
         lng: building.lng
