@@ -26,8 +26,9 @@ export default function Login({
       await login(emailRef.current.value, passwordRef.current.value)
     } catch(error) {
       console.log(error.code)
+      const alteredMessage = error.message === 'The password is invalid or the user does not have a password.'? 'Wrong password, please try again.' : error.message
       console.log(error.message)
-      setMessage(error.message)
+      setMessage(alteredMessage)
     }
     setLoading(false)
   }
