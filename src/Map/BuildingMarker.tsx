@@ -41,7 +41,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
                 target='_blank'
                 rel='noreferrer'
               >
-                <br/>{ building.buildingName }
+                { building.buildingName }
               </a>
             </strong>
             <br/>
