@@ -29,10 +29,10 @@ export function AllBuildingsCard(props: IBuilding) {
     lng
   } = props;
 
-  const [buttonFill, setButtonFill] = useState(false) as any;
+  const [isSaved, setIsSaved] = useState(false) as any;
 
   function saveBuilding(e: any) {
-    setButtonFill(true);
+    setIsSaved(true);
     firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID)
     .set({
         "buildingID": buildingID,
@@ -84,7 +84,7 @@ export function AllBuildingsCard(props: IBuilding) {
           </Card.Title>
           <h6>{residentialTargetedArea}</h6>
           { currentUser ? (
-            buttonFill ?
+            isSaved ?
               <Button 
                 variant="btn btn-info btn-sm btn-save-building-card"
                 onClick={saveBuilding}
