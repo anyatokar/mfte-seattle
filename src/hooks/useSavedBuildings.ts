@@ -5,7 +5,7 @@ import 'firebase/firestore';
 import IBuilding from "../interfaces/IBuilding";
 
 export function useSavedBuildings(currentUser: any): [IBuilding[], boolean] {
-  const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
+  const ref = firebase.firestore().collection("users").doc(currentUser?.uid).collection("savedHomes")
   const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
