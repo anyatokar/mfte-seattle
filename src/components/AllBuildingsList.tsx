@@ -14,8 +14,8 @@ export default function SavedHomesList(props:any) {
   });
 
   const resultBuildings = props.resultBuildingsUnsorted.sort((buildingA: any, buildingB: any) =>
-  genericSort<IBuilding>(buildingA, buildingB, activeSorter)
-);
+    genericSort<IBuilding>(buildingA, buildingB, activeSorter)
+  );
 
   return (
     <>
