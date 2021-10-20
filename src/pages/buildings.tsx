@@ -14,6 +14,8 @@ import IFilter from "../interfaces/IFilter";
 import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import MapTab from "../components/MapTab";
 import AllBuildingsList from '../components/AllBuildingsList';
+import { useSavedBuildings } from '../hooks/useSavedBuildings';
+import { useAuth } from '../contexts/AuthContext';
 
 const ref = firebase.firestore().collection("buildings"); 
 
@@ -54,6 +56,10 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
     },
     [allBuildings, query, activeFilters]
   );
+
+  const { currentUser } = useAuth() as any
+  const [ savedBuildings ] = useSavedBuildings(currentUser);
+
   return (
     <>
       {loading ? (
@@ -118,7 +124,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                 <MapTab savedBuildings={resultBuildingsUnsorted}/>
               </Tab.Pane>
               <Tab.Pane eventKey="saved-homes">
-                <AllBuildingsList resultBuildingsUnsorted={resultBuildingsUnsorted}/>
+                <AllBuildingsList resultBuildingsUnsorted={ resultBuildingsUnsorted } savedBuildings={ savedBuildings }/>
               </Tab.Pane>
             </Tab.Content>
           </Col>
