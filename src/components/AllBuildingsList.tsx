@@ -7,7 +7,12 @@ import Sorters from "../components/Sorters";
 import ISorter from "../interfaces/ISorter";
 import { genericSort } from "../utils/genericSort";
 
-export default function SavedHomesList(props:any) {
+export type SavedHomesListProps = {
+  resultBuildingsUnsorted: IBuilding[],
+  savedBuildings?: IBuilding[]
+};
+
+export default function SavedHomesList(props: SavedHomesListProps) {
   const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
     property: "buildingName",
     isDescending: false,
@@ -16,6 +21,10 @@ export default function SavedHomesList(props:any) {
   const resultBuildings = props.resultBuildingsUnsorted.sort((buildingA: any, buildingB: any) =>
     genericSort<IBuilding>(buildingA, buildingB, activeSorter)
   );
+
+  const checkIsSaved = (building: IBuilding) => {
+    return !!props.savedBuildings?.find((savedBuilding: IBuilding) => savedBuilding.buildingID === building.buildingID);
+  }
 
   return (
     <>
@@ -40,7 +49,7 @@ export default function SavedHomesList(props:any) {
                   <>
                     {resultBuildings.map((building:any) => (
                       <Col md={4} lg={3} className="building-row">
-                        <AllBuildingsCard key={building.buildingID} {...building} />
+                        <AllBuildingsCard key={building.buildingID} {...building} isSaved={checkIsSaved(building)} />
                       </Col>
                     ))}
                   </>

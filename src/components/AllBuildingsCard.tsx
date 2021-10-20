@@ -5,7 +5,11 @@ import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { Card, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 
-export function AllBuildingsCard(props: IBuilding) {
+interface AllBuildingsCardProps extends IBuilding {
+  isSaved?: boolean
+}
+
+export function AllBuildingsCard(props: AllBuildingsCardProps) {
   const {currentUser} = useAuth() as any;
   const {
     buildingID,
@@ -26,7 +30,8 @@ export function AllBuildingsCard(props: IBuilding) {
     state, 
     zip,
     lat, 
-    lng
+    lng,
+    isSaved: wasOriginallySaved
   } = props;
 
   const [isSaved, setIsSaved] = useState(false) as any;
@@ -84,7 +89,7 @@ export function AllBuildingsCard(props: IBuilding) {
           </Card.Title>
           <h6>{residentialTargetedArea}</h6>
           { currentUser ? (
-            isSaved ?
+            (wasOriginallySaved || isSaved) ?
               <Button 
                 variant="btn btn-info btn-sm btn-save-building-card"
                 onClick={saveBuilding}
