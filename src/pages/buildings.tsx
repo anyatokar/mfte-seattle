@@ -56,11 +56,11 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
     [allBuildings, query, activeFilters]
   );
 
-  const [ savedBuildings ] = useSavedBuildings();
+  const [ savedBuildings, loadingSavedBuildings ] = useSavedBuildings();
 
   return (
     <>
-      {loading ? (
+      {loading || loadingSavedBuildings ? (
         <Spinner animation="border" variant="warning" />
         ) : (<></>)
       }
