@@ -15,7 +15,6 @@ import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import MapTab from "../components/MapTab";
 import AllBuildingsList from '../components/AllBuildingsList';
 import { useSavedBuildings } from '../hooks/useSavedBuildings';
-import { useAuth } from '../contexts/AuthContext';
 
 const ref = firebase.firestore().collection("buildings"); 
 
@@ -57,8 +56,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
     [allBuildings, query, activeFilters]
   );
 
-  const { currentUser } = useAuth() as any
-  const [ savedBuildings ] = useSavedBuildings(currentUser);
+  const [ savedBuildings ] = useSavedBuildings();
 
   return (
     <>

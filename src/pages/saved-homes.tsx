@@ -10,8 +10,7 @@ import { Spinner } from "react-bootstrap"
 
 const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
   const { currentUser } = useAuth() as any
-
-  const [savedBuildings, loading] = useSavedBuildings(currentUser);
+  const [savedBuildings, loading] = useSavedBuildings();
 
   if (!currentUser) {
     return null;
