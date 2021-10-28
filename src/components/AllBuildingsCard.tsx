@@ -5,7 +5,11 @@ import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { Card, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 
-export function AllBuildingsCard(props: IBuilding) {
+interface AllBuildingsCardProps extends IBuilding {
+  isSaved?: boolean
+}
+
+export function AllBuildingsCard(props: AllBuildingsCardProps) {
   const {currentUser} = useAuth() as any;
   const {
     buildingID,
@@ -26,13 +30,14 @@ export function AllBuildingsCard(props: IBuilding) {
     state, 
     zip,
     lat, 
-    lng
+    lng,
+    isSaved: wasOriginallySaved
   } = props;
 
-  const [buttonFill, setButtonFill] = useState(false) as any;
+  const [isSaved, setIsSaved] = useState(false) as any;
 
   function saveBuilding(e: any) {
-    setButtonFill(true);
+    setIsSaved(true);
     firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID)
     .set({
         "buildingID": buildingID,
@@ -84,7 +89,7 @@ export function AllBuildingsCard(props: IBuilding) {
           </Card.Title>
           <h6>{residentialTargetedArea}</h6>
           { currentUser ? (
-            buttonFill ?
+            (wasOriginallySaved || isSaved) ?
               <Button 
                 variant="btn btn-info btn-sm btn-save-building-card"
                 onClick={saveBuilding}

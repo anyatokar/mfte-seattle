@@ -1,37 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Button, Modal, Nav, Tab, Row, Col } from "react-bootstrap";
+import React from "react";
+import { Nav, Tab, Row, Col } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import Login from "../auth_components/Login";
 import IPage from '../interfaces/IPage';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { useCallback } from 'react';
-import firebase from '../db/firebase';
-import 'firebase/firestore';
-import IBuilding from "../interfaces/IBuilding";
 import MapTab from "../components/MapTab";
 import SavedHomesList from '../components/SavedHomesList';
+import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { Spinner } from "react-bootstrap"
 
 const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
   const { currentUser } = useAuth() as any
-
-  const ref = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes")
-  const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);
-  const [loading, setLoading] = useState(false);
-
-  const getSavedBuildings = useCallback(() => {
-    setLoading(true) 
-    ref.onSnapshot((querySnapshot) => {
-    const items: Array<IBuilding> = [];
-    querySnapshot.forEach((doc) => {
-      items.push(doc.data() as IBuilding);
-    });
-    setSavedBuildings(items)
-    setLoading(false)
-    });
-  }, []);
-
-  useEffect(() => {getSavedBuildings()}, [getSavedBuildings]);
+  const [savedBuildings, loading] = useSavedBuildings();
 
   if (!currentUser) {
     return null;
