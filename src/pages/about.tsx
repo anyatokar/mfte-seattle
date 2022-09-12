@@ -30,41 +30,41 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
         </p>
         <ul className="resources-list lead">
           <li>
-            <a id="list-of-properties" 
-              href="https://www.seattle.gov/Documents/Departments/Housing/HousingDevelopers/MultifamilyTaxExemption/MFTEParticipantContact.pdf" 
-              target="_blank" 
+            <a id="list-of-properties"
+              href="https://www.seattle.gov/Documents/Departments/Housing/HousingDevelopers/MultifamilyTaxExemption/MFTEParticipantContact.pdf"
+              target="_blank"
               rel="noreferrer">
               List of Properties
             </a>
           </li>
           <li>
-            <a id="main-resources" 
-              href="https://www.seattle.gov/housing/renters/find-housing#multifamilytaxexemptionmfteincentivezoning" 
-              target="_blank" 
+            <a id="main-resources"
+              href="https://www.seattle.gov/housing/renters/find-housing#multifamilytaxexemptionmfteincentivezoning"
+              target="_blank"
               rel="noreferrer">
               Main Resources Page
             </a>
           </li>
           <li>
-            <a id="income-and-rent-limits" 
-              href="http://www.seattle.gov/housing/property-managers/income-and-rent-limits#multifamilypropertytaxexemptionmfteprogram" 
-              target="_blank" 
+            <a id="income-and-rent-limits"
+              href="http://www.seattle.gov/housing/property-managers/income-and-rent-limits#multifamilypropertytaxexemptionmfteprogram"
+              target="_blank"
               rel="noreferrer">
               Income and Rent Limits
             </a>
           </li>
           <li>
-            <a id="mfte-faqs" 
-              href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf" 
-              target="_blank" 
+            <a id="mfte-faqs"
+              href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
+              target="_blank"
               rel="noreferrer">
               MFTE FAQs
             </a>
           </li>
           <li>
-            <a id="renters-guide" 
-              href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE.IZ.RentersGuide.pdf" 
-              target="_blank" 
+            <a id="renters-guide"
+              href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE.IZ.RentersGuide.pdf"
+              target="_blank"
               rel="noreferrer">
               Detailed Renter's Guide
             </a>
