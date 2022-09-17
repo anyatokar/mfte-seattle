@@ -18,21 +18,34 @@ gcloud config set project mfte-simple-92c08
 
 ## Deploying
 
-Make sure the app and docker containers are built:
+You can deploy if your Google account has been added to the MFTE Seattle Firebase project.
+
+Install Firebase CLI if you haven't already: https://firebase.google.com/docs/hosting/quickstart#install-cli
+
+Note: Firebase hosting is already initialized so don't do Step 2 in the above doc.
+
+Using the terminal, login to your Google account:
+
+```
+firebase login
+```
+
+If that doesn't work, try:
+
+```
+firebase login --reauth
+```
+
+Build the app:
+
 ```
 yarn build
 ```
 
-Log in to the Google account that has been added to the MFTE Seattle Firebase project:
+Test the build locally. TODO: Add emulator instructions.
+
+Deploy the build:
 
 ```
-gcloud auth login
-```
-
-Assuming you have tested this build, now submit the build to GCloud and deploy it:
-
-```
-gcloud builds submit --tag gcr.io/mfte-simple-92c08/mfte-simple/deploy-image .docker
-
-gcloud run deploy mfte-simple --image gcr.io/mfte-simple-92c08/mfte-simple/deploy-image --platform "managed" --allow-unauthenticated --region us-west1
+firebase deploy --only hosting
 ```
