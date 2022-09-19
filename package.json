@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "PORT=8080 react-scripts start",
-    "build": "rm -rf .docker/build && react-scripts build && mv build .docker",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
