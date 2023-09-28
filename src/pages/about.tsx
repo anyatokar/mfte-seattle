@@ -18,7 +18,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
           The purpose of this website is to help people in their search for safe and comfortable rent-reduced housing. It aims to supplement existing government resources by mapping all MFTE (Multifamily Tax Exemption) properties, with the option to search and filter for apartments that fit given criteria (e.g. number of bedrooms, neighborhood, building name). To keep a shortlist of properties, users can create a (free) login to view a personalized map and add notes.
         </p>
         <p className="lead">
-          We chose to highlight the MFTE program because of the relatively quick application turnaround, higher availability, and modern apartments in sought-after locations. However, MFTE is not the only rent-reduced program available, and it's not accessible to everyone. Please view official government resources for complete information on rent-reduced and affordable housing programs in Seattle.
+          We chose to highlight the MFTE program because of the relatively quick application turnaround, higher availability, and modern apartments in sought-after locations. However, MFTE is not the only rent-reduced program, and it's not available to everyone. Please view official government resources for complete information on rent-reduced and affordable housing programs in Seattle.
         </p>
         <p className="lead">Buildings shown on&nbsp;
           <a id="Buildings_tab"

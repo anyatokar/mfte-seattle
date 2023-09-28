@@ -22,13 +22,13 @@ const HomePage: React.FunctionComponent<IPage> = props => {
       <div className="container">
         <h1 className="display-5">MFTE Seattle</h1>
         <hr className="my-4"></hr>
-        <p className="lead">Find modern rent-reduced apartments in Seattle through the Multifamily Tax Exemption program.</p>
+        <p className="lead">Find modern rent-reduced apartments in Seattle through the Multifamily Tax Exemption (MFTE) program.</p>
         <p className="lead">Use the&nbsp;
           <a id="Buildings_tab"
             href="./Buildings"
             title="View the map of MFTE properties">
             Buildings tab
-          </a>&nbsp;to view a map of properties which participate in the MFTE (Multifamily Tax Exemption) program. You can create an account to save properties to your own map and keep notes.
+          </a>&nbsp;to view a map of participating properties. Create an account to save properties to your own map and keep notes.
         </p>
         <p className="lead">
           While the property data for this website is sourced from the City of Seattle&nbsp;
