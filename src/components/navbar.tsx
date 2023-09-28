@@ -102,6 +102,9 @@ export const Header = () => {
             <LinkContainer to='/about'>
               <Nav.Link>About</Nav.Link>
             </LinkContainer>
+            <LinkContainer to='/resources'>
+              <Nav.Link>Resources</Nav.Link>
+            </LinkContainer>
           </Nav>
           { currentUser ? (
           <>
