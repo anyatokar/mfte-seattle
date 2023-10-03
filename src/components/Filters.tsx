@@ -12,7 +12,7 @@ export interface IFiltersProps<T> {
 }
 
 export function Filters<T>(props: IFiltersProps<T>) {
-  const { object, filters, onChangeFilter } = props;
+  const { filters, onChangeFilter } = props;
 
   const labelTruthy = (
     <>
@@ -25,10 +25,11 @@ export function Filters<T>(props: IFiltersProps<T>) {
       is <b>falsy</b>
     </>
   );
+
   const objectKeys = ["sedu", "studioUnits", "oneBedroomUnits", "twoBedroomUnits", "threePlusBedroomUnits"]
+
   return (
     <div className="p-1 my-2">
-      
       {/* <label className="mt-3">Number of bedrooms:</label> */}
       {/* Object is a class that is calling method keys on object (which is all the buildings) */}
       {objectKeys.map((key) => {
