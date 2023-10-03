@@ -1,8 +1,6 @@
 import { useRef, useState } from "react"
 import { Form, Button, Modal, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
-import Login from "./Login"
 
 type Props = {
   onLoginClicked?: () => void
@@ -18,7 +16,6 @@ export default function Signup({
   const { signup } = useAuth() as any
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
-  const history = useHistory()
 
   async function handleSubmit(e: any) {
     e.preventDefault()
@@ -35,7 +32,7 @@ export default function Signup({
       setMessage("")
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value, nameRef.current.value)
-    } catch(error) {
+    } catch(error:any) {
       console.log(error.code)
       console.log(error.message)
       setMessage(error.message)
