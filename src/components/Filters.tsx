@@ -7,7 +7,7 @@ export interface IFiltersProps<T> {
     filterProperty: keyof T,
     checked: boolean,
   ) => void;
-}
+};
 
 type radioButtonKeyType =
   'sedu' |
@@ -25,7 +25,7 @@ type radioButtonUILabelType =
 
 type radioButtonMapType = {
   [key in radioButtonKeyType]: radioButtonUILabelType
-}
+};
 
 const radioButtonKeys: radioButtonKeyType[] = ['sedu', 'studioUnits', 'oneBedroomUnits', 'twoBedroomUnits', 'threePlusBedroomUnits']
 
@@ -33,7 +33,7 @@ const radioButtonUILabels: radioButtonMapType = {
   sedu: 'Pod',
   studioUnits: 'Studio',
   oneBedroomUnits: 'One bedroom',
-  twoBedroomUnits: 'Two bedroom', 
+  twoBedroomUnits: 'Two bedroom',
   threePlusBedroomUnits: 'Three or more',
 };
 
@@ -43,11 +43,11 @@ export function Filters<T>(props: IFiltersProps<T>) {
   const getChecked = (radioButtonKey: radioButtonKeyType) => {
     const x = filters.filter(x => x.property === radioButtonKey);
     return x.length === 1;
-  }
+  };
   
   const getID = (radioButtonKey: radioButtonKeyType): radioButtonKeyType => {
-      return radioButtonKey;
-  }
+    return radioButtonKey;
+  };
 
   return (
     <div className="p-1 my-2">
@@ -56,22 +56,26 @@ export function Filters<T>(props: IFiltersProps<T>) {
         let id = getID(radioButtonKey)
 
           return (
-            <div key={id}>
-              <input
-                type="checkbox"
-                value={radioButtonKey}
-                checked={getChecked(radioButtonKey)}
-                onChange={(event) => 
-                  onChangeFilter(radioButtonKey as any, event.target.checked)
-                }
-                className={"m-1 ml-3"}
-              />
-              <label htmlFor={id}>
-                {styledKey}
-              </label>
-            </div>
+            <section key={id} className="form-check-inline">
+              <div>
+                <input
+                  type="checkbox"
+                  id={id}
+                  value={radioButtonKey}
+                  checked={getChecked(radioButtonKey)}
+                  onChange={(event) => 
+                    onChangeFilter(radioButtonKey as any, event.target.checked)
+                  }
+                  className={"m-1 ml-3"}
+                />
+                <label htmlFor={id}>
+                  {styledKey}
+                </label>
+              </div>
+            </section>
           );
-      })}
+        }
+      )}
     </div>
   );
-}
+};
