@@ -46,7 +46,7 @@ export function SavedHomesCard(props: IBuilding) {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    updateNote(noteToAdd);
+    if (noteToAdd !== undefined) { updateNote(noteToAdd) }
   };
 
   const updateNote = (noteToAdd: string) => {

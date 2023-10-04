@@ -7,12 +7,13 @@ import Sorters from "../components/Sorters";
 import ISorter from "../interfaces/ISorter";
 import { genericSort } from "../utils/genericSort";
 
-export type SavedHomesListProps = {
+//TODO: Maybe move this type since it's used in SavedHomesCard component as well.
+export type BuildingsListProps = {
   resultBuildingsUnsorted: IBuilding[],
   savedBuildings?: IBuilding[]
 };
 
-export default function SavedHomesList(props: SavedHomesListProps) {
+export default function AllBuildingsList(props: BuildingsListProps) {
   const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
     property: "buildingName",
     isDescending: false,
@@ -48,8 +49,8 @@ export default function SavedHomesList(props: SavedHomesListProps) {
                 {resultBuildings.length > 0 && (
                   <>
                     {resultBuildings.map((building:any) => (
-                      <Col md={4} lg={3} className="building-row">
-                        <AllBuildingsCard key={building.buildingID} {...building} isSaved={checkIsSaved(building)} />
+                      <Col key={building.buildingID} md={4} lg={3} className="building-row">
+                        <AllBuildingsCard {...building} isSaved={checkIsSaved(building)} />
                       </Col>
                     ))}
                   </>
