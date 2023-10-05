@@ -48,7 +48,7 @@ export default function AllBuildingsList(props: BuildingsListProps) {
             <Row className="show-grid">
                 {resultBuildings.length > 0 && (
                   <>
-                    {resultBuildings.map((building:any) => (
+                    {resultBuildings.map((building:IBuilding) => (
                       <Col key={building.buildingID} md={4} lg={3} className="building-row">
                         <AllBuildingsCard {...building} isSaved={checkIsSaved(building)} />
                       </Col>
