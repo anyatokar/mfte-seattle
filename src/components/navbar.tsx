@@ -67,10 +67,12 @@ export const Header = () => {
     closeLogin()
     try {
       await logout()
-        setMessage("Logged out successfully")
+        setMessage("Logged out successfully.")
+        console.log(message)
         history.push("/")
     } catch {
-      setMessage("Failed to log out")
+      setMessage("Failed to log out.")
+      console.log(message)
     }
   }
 
@@ -99,11 +101,14 @@ export const Header = () => {
             <LinkContainer to='/buildings'>
               <Nav.Link>Buildings</Nav.Link>
             </LinkContainer>
+            <LinkContainer to='/resources'>
+              <Nav.Link>Resources</Nav.Link>
+            </LinkContainer>
             <LinkContainer to='/about'>
               <Nav.Link>About</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/resources'>
-              <Nav.Link>Resources</Nav.Link>
+            <LinkContainer to='/contact-us'>
+              <Nav.Link>Contact</Nav.Link>
             </LinkContainer>
           </Nav>
           { currentUser ? (
