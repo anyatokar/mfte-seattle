@@ -1,7 +1,12 @@
 html, body {
   margin: 0;
   max-width: 100%;
-  overflow-x: hidden;
+  padding-top: 2em;
+  background: #ecf9f9;
+}
+
+.map-page {
+  padding-top: 3em;
 }
 
 img {
@@ -13,8 +18,7 @@ img {
 }
 
 .navbar {
-  color: #0e365d;
-  background: #bceeeb;
+  background: #ecf9f9;
 }
 
 .standalone-btn {
@@ -38,13 +42,13 @@ img {
 }
 
 .nav.nav-pills .nav-link {
-  background-color: white;
+  background-color: #ecf9f9;
   color: #06253e;
 }
 
 .nav.nav-pills .nav-link.active {
   background-color: #06253e;
-  color: white;
+  color: #ecf9f9;
 }
 
 .saved-homes-profile-update-card {

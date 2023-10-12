@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import IPage from '../interfaces/IPage';
 import logging from '../config/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Container} from "react-bootstrap";
 
 const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
@@ -11,8 +12,8 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   return (
     <div className="jumbotron">
-      <div className="container">
-      <h1 className="display-5">Resources</h1>
+      <Container>
+        <h1 className="display-5">Resources</h1>
         <hr className="my-4"></hr>
         <p className="lead">
           From the Seattle Office of Housing:
@@ -62,7 +63,7 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             </a>
           </li>
         </ul>
-      </div>
+      </Container>
     </div>
   )
 }

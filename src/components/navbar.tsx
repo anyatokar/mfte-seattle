@@ -3,12 +3,13 @@ import { LinkContainer } from 'react-router-bootstrap';
 import firebase from "../db/firebase";
 
 import { useState, useEffect, useContext } from "react";
-import Login from "../auth_components/Login"
-import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
-import PasswordReset from "../auth_components/PasswordReset"
-import Signup from "../auth_components/Signup"
-import { ModalContext, ModalState } from "../contexts/ModalContext"
+import Login from "../auth_components/Login";
+import { useAuth } from "../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
+import PasswordReset from "../auth_components/PasswordReset";
+import Signup from "../auth_components/Signup";
+import { ModalContext, ModalState } from "../contexts/ModalContext";
+import mftelogo from '../assets/images/mftelogo23.svg';
 
 export const Header = () => {
   const [message, setMessage] = useState("")
@@ -82,27 +83,35 @@ export const Header = () => {
 
   return (
     <div>
-      <Navbar variant="light" collapseOnSelect expand="md" className="mb-3">
+      <Navbar fixed="top" variant="light" collapseOnSelect expand="md" className="mb-3">
         <LinkContainer to="/">
-          <Navbar.Brand className="font-weight-bold text-muted">
-            MFTE Seattle
+          <Navbar.Brand href="#home">
+            <img
+              src={mftelogo}
+              width="80"
+              height="80"
+              className="d-inline-block align-top"
+              alt="MFTE Seattle website logo: a teal map pin with a house on it"
+            />
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle />
         <Navbar.Collapse>
-          <Nav activeKey={window.location.pathname} className="mr-auto">
+          <Nav className="mr-auto">
             <LinkContainer to='/buildings'>
               <Nav.Link>Buildings</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/resources'>
               <Nav.Link>Resources</Nav.Link>
             </LinkContainer>
+            <Dropdown.Divider />
             <LinkContainer to='/about'>
               <Nav.Link>About</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/contact-us'>
               <Nav.Link>Contact</Nav.Link>
             </LinkContainer>
+            <Dropdown.Divider />
           </Nav>
           { currentUser ? (
           <>
