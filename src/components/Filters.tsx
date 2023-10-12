@@ -44,16 +44,12 @@ export function Filters<T>(props: IFiltersProps<T>) {
     const x = filters.filter(x => x.property === radioButtonKey);
     return x.length === 1;
   };
-  
-  const getID = (radioButtonKey: radioButtonKeyType): radioButtonKeyType => {
-    return radioButtonKey;
-  };
 
   return (
     <div className="p-1 my-2">
       {radioButtonKeys.map((radioButtonKey: radioButtonKeyType) => {
         let styledKey = radioButtonUILabels[radioButtonKey]
-        let id = getID(radioButtonKey)
+        let id = radioButtonKey
 
           return (
             <section key={id} className="form-check-inline">
