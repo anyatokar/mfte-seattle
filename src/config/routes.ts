@@ -2,6 +2,7 @@ import IRoute from '../interfaces/IRoute';
 import HomePage from '../pages/home';
 import BuildingsPage from '../pages/buildings';
 import AboutPage from '../pages/about';
+import ContactPage from '../pages/contact';
 import ResourcesPage from '../pages/resources';
 import SavedHomesPage from '../pages/saved-homes';
 import DashboardPage from '../auth_components/Dashboard'
@@ -23,6 +24,12 @@ const routes: IRoute[] = [
     path: '/about',
     name: 'About Page',
     component: AboutPage,
+    exact: true
+  },
+  {
+    path: '/contact-us',
+    name: 'Contact Page',
+    component: ContactPage,
     exact: true
   },
   {

@@ -58,7 +58,7 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
         "state": state, 
         "zip": zip,
         "lat": lat,
-        "lng": lng, 
+        "lng": lng,
     })
     .then(() => {
       console.log("Building saved to user");
