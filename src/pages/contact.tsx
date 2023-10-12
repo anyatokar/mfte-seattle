@@ -77,16 +77,18 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
         <Form onSubmit={onformSubmit}>
           <Form.Group className="form-row">
             <Form.Group className="form-group col-md-6">
+            <Form.Label>Name</Form.Label>
             <Form.Control
               required
               name="authorName"
               id="authorName"
               onChange={onInputChange}
               value={formFields.authorName}
-              placeholder="Name"
+              placeholder="required"
               />
             </Form.Group>
             <Form.Group className="form-group col-md-6">
+            <Form.Label>Email</Form.Label>
               <Form.Control
                 required
                 type="email"
@@ -94,12 +96,12 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
                 id="email"
                 onChange={onInputChange}
                 value={formFields.email}
-                placeholder="Email"
+                placeholder="required"
                 />
             </Form.Group>
           </Form.Group>
           <Form.Group className="form-group">
-            <Form.Label>Subject</Form.Label>
+            <Form.Label>Subject (required)</Form.Label>
             <Form.Control
               required
               as="select"
@@ -112,11 +114,13 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
               <option>Feature suggestion</option>
               <option>Incorrect building data</option>
               <option>Website bug report</option>
+              <option>Help with using this website</option>
               <option>Kind words</option>
               <option>Other</option>
             </Form.Control>
           </Form.Group>
           <Form.Group className="form-group col-mb-3">
+            <Form.Label>Message</Form.Label>
             <Form.Control
               required
               as="textarea"
@@ -125,7 +129,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
               rows={5}
               onChange={onInputChange}
               value={formFields.message}
-              placeholder="Message"
+              placeholder="required"
             />
           </Form.Group>
           <Button type="submit" variant="info" className="btn-md standalone-btn">Send</Button>
