@@ -47,13 +47,6 @@ export const Header = () => {
       setUserData(null)
     )}
   }, [currentUser])
-  
-
-  // generic onClick and redirect
-  function onClick(e: any) {
-    e.preventDefault()
-    history.push(e.target.value)
-  };
 
   // Dashboard onClick and redirect
   function onClickDashboard(e: any) {

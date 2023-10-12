@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 export interface ISortersProps<T> {
   object: T;
   onChangeSorter: (
@@ -6,9 +8,15 @@ export interface ISortersProps<T> {
   ) => void;
 }
 
+type DropdownButtonKeyType =
+  'buildingName' |
+  'residentialTargetedArea'
+
+const dropdownMenuKeys: DropdownButtonKeyType[]= ["buildingName", "residentialTargetedArea"]
+
 export default function Sorters<T>(props: ISortersProps<T>) {
-  const { object, onChangeSorter } = props;
-  const objectKeys = ["buildingName", "residentialTargetedArea"]
+  const { onChangeSorter } = props;
+
   return (
     <>
       <label htmlFor="sorters" className="mt-3">Sort:</label>
@@ -21,34 +29,29 @@ export default function Sorters<T>(props: ISortersProps<T>) {
             event.target.value.split(",")[1] === "true"
           )
         }
-        defaultValue={["title", "true"]}
+
       >
-        {objectKeys.map((key) => {
-          if (!key) {
-            return<></>
-          } else if (key === 'buildingName' || 
-            key === 'residentialTargetedArea' 
+        {dropdownMenuKeys.map((dropdownMenuKey) => {
+          if (dropdownMenuKey === 'buildingName' ||
+            dropdownMenuKey === 'residentialTargetedArea'
           ) {
-            const keyToStringObj = { 
-              'buildingName': 'Building Name', 
-              'residentialTargetedArea': 'Neighborhood',
+            const dropdownMenuUILabels = {
+              buildingName: 'Building Name',
+              residentialTargetedArea: 'Neighborhood',
             }
-        
             return(
-              <>
+              <Fragment key={dropdownMenuKey}>
                 <option
-                  key={`${key}-false`}
-                  value={[key, "false"]}
+                  value={[dropdownMenuKey, "false"]}
                 >
-                  {keyToStringObj[key]} (A to Z)
+                  {dropdownMenuUILabels[dropdownMenuKey]} (A to Z)
                 </option>
                 <option
-                  key={`${key}-true`}
-                  value={[key, "true"]}
+                  value={[dropdownMenuKey, "true"]}
                 >
-                  {keyToStringObj[key]} (Z to A)
+                  {dropdownMenuUILabels[dropdownMenuKey]} (Z to A)
                 </option>
-              </>
+              </Fragment>
             );
           } else {
             return (<></>)}

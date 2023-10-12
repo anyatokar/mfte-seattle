@@ -78,13 +78,13 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             {allBuildings.length > 0 && <Filters<IBuilding>
               object={allBuildings[0]}
               filters={activeFilters}
-              onChangeFilter={(changedFilterProperty, checked, isTruthyPicked) => {
+              onChangeFilter={(changedFilterProperty, checked) => {
                 checked
                   ? setActiveFilters([
                     ...activeFilters.filter(
                       (filter) => filter.property !== changedFilterProperty
                     ),
-                    { property: changedFilterProperty, isTruthyPicked },
+                    { property: changedFilterProperty },
                   ])
                   : setActiveFilters(
                     activeFilters.filter(
