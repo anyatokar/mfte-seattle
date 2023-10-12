@@ -61,7 +61,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
     setformFields(newformFields);
   }
 
-  const onformSubmit: React.FormEventHandler<HTMLFormElement> = (event): void => {
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event): void => {
     event.preventDefault();
     sendMessageToDb(formFields)
   };
@@ -74,7 +74,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
         <p className="lead">
           We are always looking to improve this resource — your feedback is welcome and appreciated.
         </p>
-        <Form onSubmit={onformSubmit}>
+        <Form onSubmit={handleFormSubmit}>
           <Form.Group className="form-row">
             <Form.Group className="form-group col-md-6">
             <Form.Label>Name</Form.Label>

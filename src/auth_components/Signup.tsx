@@ -17,8 +17,8 @@ export default function Signup({
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e: any) {
-    e.preventDefault()
+  async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setMessage("Passwords do not match")
@@ -47,7 +47,7 @@ export default function Signup({
       </Modal.Header>
       <Modal.Body>
         {message && <Alert variant="danger">{message}</Alert>}
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleFormSubmit}>
           <Form.Group id="name">
             <Form.Label>Name</Form.Label>
             <Form.Control type="name" ref={nameRef} required />
