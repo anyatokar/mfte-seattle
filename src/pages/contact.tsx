@@ -29,11 +29,21 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
     })
     .then(() => {
       console.log('Message successfully submitted!');
+      clearFields()
     })
     .catch((error) => {
       console.error("Error sending message: ", error);
     });
   };
+
+  function clearFields(): void {
+    setformFields({
+      authorName: '',
+      email: '',
+      subject: '',
+      message: '',
+    });
+  }
 
   const [formFields, setformFields] = useState({
     authorName: '',
@@ -54,13 +64,6 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
   const onformSubmit: React.FormEventHandler<HTMLFormElement> = (event): void => {
     event.preventDefault();
     sendMessageToDb(formFields)
-
-    setformFields({
-      authorName: '',
-      email: '',
-      subject: '',
-      message: '',
-    });
   };
 
   return (
@@ -86,6 +89,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
             <Form.Group className="form-group col-md-6">
               <Form.Control
                 required
+                type="email"
                 name="email"
                 id="email"
                 onChange={onInputChange}
