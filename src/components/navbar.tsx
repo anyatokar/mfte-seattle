@@ -88,7 +88,7 @@ export const Header = () => {
     <div>
       <Navbar fixed="top" variant="light" collapseOnSelect expand="md" className="mb-3">
         <LinkContainer to="/">
-          <Navbar.Brand href="#home">
+          <Navbar.Brand>
             <img
               src={mftelogo}
               width="80"
@@ -143,6 +143,7 @@ export const Header = () => {
             </Nav>
           </>
           )}
+        <Dropdown.Divider />
         </Navbar.Collapse>
       </Navbar>
     </div>

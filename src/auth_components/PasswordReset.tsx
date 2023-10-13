@@ -19,7 +19,6 @@ export default function PasswordReset({
 
   async function handleFormSubmit (event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-
     try {
       setMessage("")
       setError("")
@@ -44,7 +43,7 @@ export default function PasswordReset({
         {message && <Alert variant="success">{message}</Alert>}
         <Form onSubmit={handleFormSubmit}>
           <Form.Group id="email" className="emailField">
-            <h6>Enter your email to recieve a reset link in your inbox.</h6>
+            <p>Enter your email to recieve a reset link in your inbox.</p>
             <br></br>
             <Form.Label>Email</Form.Label>
             <Form.Control type="email" ref={emailRef} required />

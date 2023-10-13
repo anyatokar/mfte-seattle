@@ -31,7 +31,7 @@ export default function Login({
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
       if (didClickSavedBuildings) { history.push("./saved-homes") }
-    } catch(error:unknown) {
+    } catch(error: unknown) {
       if (error instanceof FirebaseError) {
         console.log(error.code)
         const userMessage = error.code === 'auth/wrong-password' ? 'Wrong password, please try again.' : error.message
@@ -45,7 +45,7 @@ export default function Login({
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title>Login</Modal.Title>
+        <Modal.Title>Log In</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
