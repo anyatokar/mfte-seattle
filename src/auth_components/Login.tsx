@@ -1,15 +1,19 @@
-import { useRef, useState } from "react"
-import { Form, Button, Alert, Modal } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useRef, useState } from "react";
+import { Form, Button, Alert, Modal } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
+import { FirebaseError } from '@firebase/util';
 
 type Props = {
   onResetClicked?: () => void,
-  onSignupClicked?: () => void
+  onSignupClicked?: () => void,
+  didClickSavedBuildings: boolean
 }
 
 export default function Login({
   onResetClicked,
-  onSignupClicked
+  onSignupClicked,
+  didClickSavedBuildings
 }: Props) {
   const emailRef = useRef() as any
   const passwordRef = useRef() as any
@@ -18,17 +22,22 @@ export default function Login({
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e: any) {
-    e.preventDefault()
+  const history = useHistory()
+
+  async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
     try {
       setMessage("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-    } catch(error) {
-      console.log(error.code)
-      const userMessage = error.code === 'auth/wrong-password'? 'Wrong password, please try again.' : error.message
-      console.log(error.message)
-      setMessage(userMessage)
+      if (didClickSavedBuildings) { history.push("./saved-homes") }
+    } catch(error:unknown) {
+      if (error instanceof FirebaseError) {
+        console.log(error.code)
+        const userMessage = error.code === 'auth/wrong-password' ? 'Wrong password, please try again.' : error.message
+        console.log(error.message)
+        setMessage(userMessage)
+      }
     }
     setLoading(false)
   }

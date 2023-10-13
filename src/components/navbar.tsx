@@ -20,6 +20,7 @@ export const Header = () => {
 
   const showModal = modalState !== ModalState.HIDDEN
   const showLogin = () => setModalState(ModalState.LOGIN);
+  const showLoginSavedBuildings = () => setModalState(ModalState.LOGIN_SAVED_BUILDINGS);
   const showReset = () => setModalState(ModalState.RESET);
   const showSignup = () => setModalState(ModalState.SIGNUP);
   const closeLogin = () => setModalState(ModalState.HIDDEN);
@@ -50,8 +51,8 @@ export const Header = () => {
   }, [currentUser])
 
   // Dashboard onClick and redirect
-  function onClickDashboard(e: any) {
-    e.preventDefault()
+  function onClickDashboard(event: any) {
+    event.preventDefault()
     history.push("./dashboard")
   };
 
@@ -73,7 +74,9 @@ export const Header = () => {
   // modal
   function chooseModalComponent() {
     if (modalState === ModalState.LOGIN) {
-      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } />
+      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } didClickSavedBuildings = {false}/>
+    } else if (modalState === ModalState.LOGIN_SAVED_BUILDINGS) {
+      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } didClickSavedBuildings = {true}/>
     } else if (modalState === ModalState.RESET) {
       return <PasswordReset onLoginClicked={ showLogin } onSignupClicked={ showSignup } />
     } else if (modalState === ModalState.SIGNUP) {
@@ -99,7 +102,7 @@ export const Header = () => {
         <Navbar.Collapse>
           <Nav className="mr-auto">
             <LinkContainer to='/buildings'>
-              <Nav.Link>Buildings</Nav.Link>
+              <Nav.Link>All Buildings</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/resources'>
               <Nav.Link>Resources</Nav.Link>
@@ -116,24 +119,24 @@ export const Header = () => {
           { currentUser ? (
           <>
             <Nav>
-              <LinkContainer to='./saved-homes'>
-                <Nav.Link>Saved</Nav.Link>
-              </LinkContainer>
               <NavDropdown
                 id="dropdown-menu-align-right"
-                title= {userData ? `Hello, ${userData.name}` : ''}
+                title= {userData ? `Hi ${userData.name}!` : ''}
               >
                 <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Profile</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
               </NavDropdown>
+              <LinkContainer to='./saved-homes'>
+                <Nav.Link>Saved Buildings</Nav.Link>
+              </LinkContainer>
             </Nav>
           </>
           ) : (
           <>
             <Nav>
-              <Nav.Link onClick={showLogin}>Saved</Nav.Link>
-              <Nav.Link onClick={showLogin}>Log in / Sign up</Nav.Link>
+              <Nav.Link onClick={showLogin}>Log In / Sign Up</Nav.Link>
+              <Nav.Link onClick={showLoginSavedBuildings}>Saved Buildings</Nav.Link>
               <Modal show={showModal} onHide={closeLogin}>
                 {chooseModalComponent()}
               </Modal>

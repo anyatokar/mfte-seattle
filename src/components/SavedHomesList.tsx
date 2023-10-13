@@ -12,7 +12,7 @@ export default function SavedHomesList(props:BuildingsListProps) {
         <Row className="show-grid">
           <Col lg={12}>
             <Row className="show-grid">
-                {props.savedBuildings?.length && (
+                {props.savedBuildings?.length !== 0 && (
                   <>
                     {props.savedBuildings?.map((building:IBuilding) => (
                       <Col key={building.buildingID} md={4} className="building-row">
@@ -22,7 +22,7 @@ export default function SavedHomesList(props:BuildingsListProps) {
                   </>
                 )}
                 <div className="saved-homes-empty">
-                  {props.savedBuildings?.length === 0 && <p>Use the Buildings tab to start adding to your list!</p>}
+                  {props.savedBuildings?.length === 0 && <p>Use the All Buildings tab to start adding to your list!</p>}
                 </div>
             </Row>
           </Col>
