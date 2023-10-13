@@ -59,7 +59,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   const [ savedBuildings, loadingSavedBuildings ] = useSavedBuildings();
 
   return (
-    <div className={"map-page"}>
+    <div className={"pills-page"}>
       {loading || loadingSavedBuildings ? (
         <Spinner animation="border" variant="warning" />
         ) : (<></>)

@@ -17,7 +17,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
   }
 
   return (
-    <div className={"map-page"}>
+    <div className={"pills-page"}>
       {
         loading && <Spinner animation="border" variant="warning" />
       }
