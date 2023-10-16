@@ -25,6 +25,8 @@ export const Header = () => {
   const showSignup = () => setModalState(ModalState.SIGNUP);
   const closeLogin = () => setModalState(ModalState.HIDDEN);
 
+  const afterLogin = () =>  history.push("./saved-homes");
+
   useEffect(() => {
     closeLogin()
   }, [currentUser])
@@ -74,9 +76,9 @@ export const Header = () => {
   // modal
   function chooseModalComponent() {
     if (modalState === ModalState.LOGIN) {
-      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } didClickSavedBuildings = {false}/>
+      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup }/>
     } else if (modalState === ModalState.LOGIN_SAVED_BUILDINGS) {
-      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } didClickSavedBuildings = {true}/>
+      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } afterLogin={ afterLogin }/>
     } else if (modalState === ModalState.RESET) {
       return <PasswordReset onLoginClicked={ showLogin } onSignupClicked={ showSignup } />
     } else if (modalState === ModalState.SIGNUP) {

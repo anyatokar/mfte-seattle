@@ -1,19 +1,18 @@
 import { useRef, useState } from "react";
 import { Form, Button, Alert, Modal } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 import { FirebaseError } from '@firebase/util';
 
 type Props = {
-  onResetClicked?: () => void,
-  onSignupClicked?: () => void,
-  didClickSavedBuildings: boolean
+  onResetClicked: () => void,
+  onSignupClicked: () => void,
+  afterLogin?: () => void
 }
 
 export default function Login({
   onResetClicked,
   onSignupClicked,
-  didClickSavedBuildings
+  afterLogin
 }: Props) {
   const emailRef = useRef() as any
   const passwordRef = useRef() as any
@@ -22,15 +21,13 @@ export default function Login({
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
-  const history = useHistory()
-
   async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     try {
       setMessage("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-      if (didClickSavedBuildings) { history.push("./saved-homes") }
+      if (afterLogin) { afterLogin() }
     } catch(error: unknown) {
       if (error instanceof FirebaseError) {
         console.log(error.code)
