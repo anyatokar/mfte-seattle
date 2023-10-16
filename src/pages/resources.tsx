@@ -28,13 +28,15 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               Main Resources Page
             </a>
           </li>
-          <a id="properties-spreadsheet-may-2023"
-            href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
-            title="Market-Rate Rental Properties with Affordable Housing Units spreadsheet by the City of Seattle - May 2023 update - PDF"
-            target="_blank"
-            rel="noreferrer">
-            MFTE Spreadsheet of Properties (May 2023)
-          </a>
+          <li>
+            <a id="properties-spreadsheet-may-2023"
+              href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
+              title="Market-Rate Rental Properties with Affordable Housing Units spreadsheet by the City of Seattle - May 2023 update - PDF"
+              target="_blank"
+              rel="noreferrer">
+              MFTE Spreadsheet of Properties (May 2023)
+            </a>
+          </li>
           <li>
             <a id="income-and-rent-limits"
               href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2023_Income_Rent_Limits_Rental.pdf"

@@ -1,14 +1,17 @@
 import { ReactMap } from "../Map/ReactMap";
 import 'firebase/firestore';
+import { Col, Container, Row } from 'react-bootstrap';
 
 export default function SavedHomesMap(props:any) {
   return (
-    <>
-      <div className="col col-no-padding">
-        <ReactMap
-          filteredBuildings={props.savedBuildings}
-        />
-      </div>
-    </>
+    <Container>
+      <Row>
+        <Col className="p-0">
+          <ReactMap
+            filteredBuildings={props.savedBuildings}
+          />
+        </Col>
+      </Row>
+    </Container>
   );
 }

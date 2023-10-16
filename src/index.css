@@ -20,22 +20,6 @@ img {
   margin: .5em;
 }
 
-.nav-buttons {
-  margin-right: auto;
-}
-
-.buildings-list {
-  height: 70vh;
-}
-
-.btn-group-btn {
-  margin: none;
-}
-
-.saved-homes-header {
-  margin-top: 4em;
-}
-
 .nav.nav-pills .nav-link {
   background-color: #eef6f6;
   color: #06253e;
@@ -59,26 +43,19 @@ img {
   padding-bottom: 2em;
 }
 
-.col-no-padding {
-  padding-right: 0px;
-  padding-left: 0px;
-}
-
-.emailField {
+.email-field {
   padding-top: 1em;
   padding-bottom: 1.5em;
 }
 
 .saved-homes-empty {
   padding-top: 3em;
-  padding-bottom: 4em;
-}
-
-.btn-save-building-card {
-  padding: none;
-  margin: none;
 }
 
 .resources-list {
   list-style-type: none;
+}
+
+.footer {
+  padding-top: 3em;
 }

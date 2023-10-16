@@ -3,7 +3,7 @@ import { Col, Container, Image, Row } from 'react-bootstrap';
 
 export const Footer = () => {
   return (
-    <Container fluid>
+    <Container fluid className="footer">
       <Row>
         <Col className="p-0">
           <Image src={houses} alt="Bright houses in a neighborhood" />
