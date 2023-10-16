@@ -88,7 +88,7 @@ export const Header = () => {
 
   return (
     <div>
-      <Navbar fixed="top" variant="light" collapseOnSelect expand="md" className="mb-3">
+      <Navbar variant="light" collapseOnSelect expand="lg" className="mb-3">
         <LinkContainer to="/">
           <Navbar.Brand>
             <img

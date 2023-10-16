@@ -11,7 +11,7 @@ export default function Dashboard() {
   }
 
   return (
-    <Container fluid className={"pills-page"}>
+    <Container fluid>
       <Tab.Container id="sidebar" defaultActiveKey="profile">
         <Row>
           <Col sm={2}>

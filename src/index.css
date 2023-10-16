@@ -1,7 +1,6 @@
 html, body {
   margin: 0;
   max-width: 100%;
-  padding-top: 2em;
   background: #eef6f6;
 }
 
@@ -35,11 +34,6 @@ img {
 
 .saved-homes-header {
   margin-top: 4em
-}
-
-
-.pills-page {
-  padding-top: 3em;
 }
 
 .nav.nav-pills .nav-link {
