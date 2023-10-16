@@ -9,7 +9,7 @@ import { genericSort } from "../utils/genericSort";
 
 //TODO: Maybe move this type since it's used in SavedHomesCard component as well.
 export type BuildingsListProps = {
-  resultBuildingsUnsorted: IBuilding[],
+  resultBuildingsUnsorted?: IBuilding[],
   savedBuildings?: IBuilding[]
 };
 
@@ -18,6 +18,10 @@ export default function AllBuildingsList(props: BuildingsListProps) {
     property: "buildingName",
     isDescending: false,
   });
+
+  if (!props.resultBuildingsUnsorted) {
+    return null;
+  };
 
   const resultBuildings = props.resultBuildingsUnsorted.sort((buildingA: any, buildingB: any) =>
     genericSort<IBuilding>(buildingA, buildingB, activeSorter)
