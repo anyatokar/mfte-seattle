@@ -11,10 +11,9 @@ const HomePage: React.FunctionComponent<IPage> = props => {
 
   const history = useHistory()
 
-  // const [query, setQuery] = useState<string>("");
-  function onClick(e: any) {
-    e.preventDefault()
-    history.push(e.target.value)
+  function onClick(event: any) {
+    event.preventDefault()
+    history.push(event.target.value)
   };
 
   return (
@@ -27,8 +26,8 @@ const HomePage: React.FunctionComponent<IPage> = props => {
           <a id="Buildings_tab"
             href="./Buildings"
             title="View the map of MFTE properties">
-            Buildings tab
-          </a>&nbsp;to view a map of participating properties. Create an account to save properties to your own map and keep notes.
+            All Buildings
+          </a>&nbsp;tab to view a map of participating properties. Create an account to save properties to your own map and keep notes.
         </p>
         <p className="lead">
           While the property data for this website is sourced from the City of Seattle&nbsp;

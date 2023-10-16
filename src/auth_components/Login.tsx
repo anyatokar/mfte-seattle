@@ -1,15 +1,18 @@
-import { useRef, useState } from "react"
-import { Form, Button, Alert, Modal } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useRef, useState } from "react";
+import { Form, Button, Alert, Modal } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { FirebaseError } from '@firebase/util';
 
 type Props = {
-  onResetClicked?: () => void,
-  onSignupClicked?: () => void
+  onResetClicked: () => void,
+  onSignupClicked: () => void,
+  afterLogin?: () => void
 }
 
 export default function Login({
   onResetClicked,
-  onSignupClicked
+  onSignupClicked,
+  afterLogin
 }: Props) {
   const emailRef = useRef() as any
   const passwordRef = useRef() as any
@@ -18,17 +21,20 @@ export default function Login({
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e: any) {
-    e.preventDefault()
+  async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
     try {
       setMessage("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-    } catch(error) {
-      console.log(error.code)
-      const userMessage = error.code === 'auth/wrong-password'? 'Wrong password, please try again.' : error.message
-      console.log(error.message)
-      setMessage(userMessage)
+      if (afterLogin) { afterLogin() }
+    } catch(error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.log(error.code)
+        const userMessage = error.code === 'auth/wrong-password' ? 'Wrong password, please try again.' : error.message
+        console.log(error.message)
+        setMessage(userMessage)
+      }
     }
     setLoading(false)
   }
@@ -36,7 +42,7 @@ export default function Login({
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title>Login</Modal.Title>
+        <Modal.Title>Log In</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
-import firebase from "../db/firebase"
+import React, { useRef, useState } from "react";
+import { Form, Button, Card, Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
+import firebase from "../db/firebase";
 import { Container, Row, Col } from 'react-bootstrap';
+import { FirebaseError } from '@firebase/util';
 
 export default function UpdateProfile() {
   const emailRef = useRef() as any
@@ -14,8 +15,8 @@ export default function UpdateProfile() {
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
-  function handleSubmit(e: any) {
-    e.preventDefault()
+  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setMessage("Passwords do not match")
     }
@@ -45,13 +46,15 @@ export default function UpdateProfile() {
       })
   }
 
-  function onDelete(e: any) {
-    e.preventDefault()
+  function onDelete(event: any) {
+    event.preventDefault()
     firebase.firestore().collection("users").doc(currentUser.uid).delete().then(() => {
       console.log("User successfully deleted from Firestore.");
-    }).catch((error) => {
-      console.error("Error removing user from Firestore: ", error);
-      setMessage(error.message);
+    }).catch((error: unknown) => {
+      if (error instanceof FirebaseError) {
+        console.error("Error removing user from Firestore: ", error);
+        setMessage(error.message);
+      }
     });
 
     currentUser.delete().then(() => {
@@ -72,7 +75,7 @@ export default function UpdateProfile() {
               <Card.Body>
                 {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
                 {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleFormSubmit}>
                   <Form.Group id="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control

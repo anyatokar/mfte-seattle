@@ -17,9 +17,8 @@ export default function PasswordReset({
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e: any) {
-    e.preventDefault()
-
+  async function handleFormSubmit (event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
     try {
       setMessage("")
       setError("")
@@ -42,9 +41,9 @@ export default function PasswordReset({
       <Modal.Body>
         {error && <Alert variant="danger">{error}</Alert>}
         {message && <Alert variant="success">{message}</Alert>}
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleFormSubmit}>
           <Form.Group id="email" className="emailField">
-            <h6>Enter your email to recieve a reset link in your inbox.</h6>
+            <p>Enter your email to recieve a reset link in your inbox.</p>
             <br></br>
             <Form.Label>Email</Form.Label>
             <Form.Control type="email" ref={emailRef} required />

@@ -1,7 +1,8 @@
 html, body {
   margin: 0;
   max-width: 100%;
-  overflow-x: hidden;
+  padding-top: 2em;
+  background: #eef6f6;
 }
 
 img {
@@ -13,8 +14,7 @@ img {
 }
 
 .navbar {
-  color: #0e365d;
-  background: #bceeeb;
+  background: #eef6f6;
 }
 
 .standalone-btn {
@@ -37,14 +37,19 @@ img {
   margin-top: 4em
 }
 
+
+.pills-page {
+  padding-top: 3em;
+}
+
 .nav.nav-pills .nav-link {
-  background-color: white;
+  background-color: #eef6f6;
   color: #06253e;
 }
 
 .nav.nav-pills .nav-link.active {
   background-color: #06253e;
-  color: white;
+  color: #eef6f6;
 }
 
 .saved-homes-profile-update-card {

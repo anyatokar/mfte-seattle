@@ -1,6 +1,6 @@
-import { useRef, useState } from "react"
-import { Form, Button, Modal, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useRef, useState } from "react";
+import { Form, Button, Modal, Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
 
 type Props = {
   onLoginClicked?: () => void
@@ -17,8 +17,8 @@ export default function Signup({
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e: any) {
-    e.preventDefault()
+  async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setMessage("Passwords do not match")
@@ -47,7 +47,7 @@ export default function Signup({
       </Modal.Header>
       <Modal.Body>
         {message && <Alert variant="danger">{message}</Alert>}
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleFormSubmit}>
           <Form.Group id="name">
             <Form.Label>Name</Form.Label>
             <Form.Control type="name" ref={nameRef} required />
@@ -58,11 +58,11 @@ export default function Signup({
           </Form.Group>
           <Form.Group id="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" ref={passwordRef} placeholder="6 or more characters"required />
+            <Form.Control type="password" ref={passwordRef} placeholder="6 or more characters" required />
           </Form.Group>
           <Form.Group id="password-confirm">
             <Form.Label>Password Confirmation</Form.Label>
-            <Form.Control type="password" ref={passwordConfirmRef} placeholder="6 or more characters"required />
+            <Form.Control type="password" ref={passwordConfirmRef} placeholder="6 or more characters" required />
           </Form.Group>
           <Button disabled={loading} className="w-100" type="submit">
             Sign Up

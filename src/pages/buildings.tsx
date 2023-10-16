@@ -3,7 +3,7 @@ import IPage from '../interfaces/IPage';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import firebase from '../db/firebase';
 import 'firebase/firestore';
-import { Spinner } from "react-bootstrap"
+import { Spinner } from "react-bootstrap";
 
 import SearchInput from "../components/SearchInput";
 import IBuilding from "../interfaces/IBuilding";
@@ -59,13 +59,13 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   const [ savedBuildings, loadingSavedBuildings ] = useSavedBuildings();
 
   return (
-    <>
+    <div className={"pills-page"}>
       {loading || loadingSavedBuildings ? (
         <Spinner animation="border" variant="warning" />
         ) : (<></>)
       }
       {/* search filter container */}
-      <Container>
+      <Container fluid>
         {/* search */}
         <Row  className="justify-content-center">
           <Col sm={8}>
@@ -104,31 +104,33 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         <hr className="my-4"></hr>
       </Container>
 
-      <Tab.Container id="sidebar" defaultActiveKey="map">
-        <Row>
-          <Col sm={2}>
-            <Nav variant="pills" className="flex-column">
-              <Nav.Item>
-                <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="saved-homes" className="tab">List</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col sm={10}>
-            <Tab.Content>
-              <Tab.Pane eventKey="map">
-                <MapTab savedBuildings={resultBuildingsUnsorted}/>
-              </Tab.Pane>
-              <Tab.Pane eventKey="saved-homes">
-                <AllBuildingsList resultBuildingsUnsorted={ resultBuildingsUnsorted } savedBuildings={ savedBuildings }/>
-              </Tab.Pane>
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
-    </>
+      <Container fluid>
+        <Tab.Container id="sidebar" defaultActiveKey="map">
+          <Row>
+            <Col sm={2}>
+              <Nav variant="pills" className="flex-column">
+                <Nav.Item>
+                  <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="saved-homes" className="tab">List</Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Col>
+            <Col sm={10}>
+              <Tab.Content>
+                <Tab.Pane eventKey="map">
+                  <MapTab savedBuildings={resultBuildingsUnsorted}/>
+                </Tab.Pane>
+                <Tab.Pane eventKey="saved-homes">
+                  <AllBuildingsList resultBuildingsUnsorted={ resultBuildingsUnsorted } savedBuildings={ savedBuildings }/>
+                </Tab.Pane>
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
+      </Container>
+    </div>
   )
 }
 
