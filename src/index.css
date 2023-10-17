@@ -18,6 +18,7 @@ img {
 
 .standalone-btn {
   margin: .5em;
+  padding: .5em;
 }
 
 .nav.nav-pills .nav-link {
@@ -58,4 +59,15 @@ img {
 
 .footer {
   padding-top: 3em;
+}
+
+.card-close-icon { 
+  color:grey;
+  text-align: justify;
+  float: right;
+}
+
+.card-close-icon:hover { 
+  color:black;
+  cursor: pointer;
 }
