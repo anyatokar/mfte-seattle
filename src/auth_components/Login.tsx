@@ -80,7 +80,7 @@ export default function Login({
           <Button onClick={onResetClicked} variant="link">Reset Password</Button>
           <br></br>
           <Button onClick={onSignupClicked} variant="link">Sign Up</Button>
-        </div >
+        </div>
       </Modal.Footer>
     </>
   )

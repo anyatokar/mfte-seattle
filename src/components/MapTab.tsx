@@ -2,6 +2,7 @@ import { ReactMap } from "../Map/ReactMap";
 import 'firebase/firestore';
 import { Col, Container, Row } from 'react-bootstrap';
 
+// TODO: This is used for All Buildings and Saved Homes so the prop name is confusing.
 export default function SavedHomesMap(props:any) {
   return (
     <Container>

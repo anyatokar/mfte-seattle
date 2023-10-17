@@ -32,38 +32,36 @@ export default function AllBuildingsList(props: BuildingsListProps) {
   }
 
   return (
-    <>
-      <Container>
-        <Row className="show-grid sort-bar">
-          <Col lg={4}>
-            {props.resultBuildingsUnsorted.length > 0 && <Sorters<IBuilding>
-              object={props.resultBuildingsUnsorted[0]}
-              onChangeSorter={(property, isDescending) => {
-                setActiveSorter({
-                  property,
-                  isDescending,
-                });
-              }}
-            />}
-          </Col>
-        </Row>
-        <Row className="show-grid">
-          <Col lg={12}>
-            <Row className="show-grid">
-                {resultBuildings.length > 0 && (
-                  <>
-                    {resultBuildings.map((building:IBuilding) => (
-                      <Col key={building.buildingID} md={4} lg={3} className="building-row">
-                        <AllBuildingsCard {...building} isSaved={checkIsSaved(building)} />
-                      </Col>
-                    ))}
-                  </>
-                )}
-                {resultBuildings.length === 0 && <p>Try expanding your search criteria!</p>}
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container fluid>
+      <Row className="show-grid sort-bar">
+        <Col lg={4}>
+          {props.resultBuildingsUnsorted.length > 0 && <Sorters<IBuilding>
+            object={props.resultBuildingsUnsorted[0]}
+            onChangeSorter={(property, isDescending) => {
+              setActiveSorter({
+                property,
+                isDescending,
+              });
+            }}
+          />}
+        </Col>
+      </Row>
+      <Row className="show-grid">
+        <Col lg={12}>
+          <Row className="show-grid">
+              {resultBuildings.length > 0 && (
+                <>
+                  {resultBuildings.map((building:IBuilding) => (
+                    <Col key={building.buildingID} md={4} lg={3} className="building-row">
+                      <AllBuildingsCard {...building} isSaved={checkIsSaved(building)} />
+                    </Col>
+                  ))}
+                </>
+              )}
+              {resultBuildings.length === 0 && <p>Try expanding your search criteria!</p>}
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   );
 }
