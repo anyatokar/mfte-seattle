@@ -47,16 +47,29 @@ export default function Login({
 
       <Modal.Body>
         {message && <Alert variant="danger">{message}</Alert>}
+
         <Form onSubmit={handleSubmit}>
-          <Form.Group id="email">
+          <Form.Group id="email" className="form-group">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" ref={emailRef} required />
+            <Form.Control
+              required
+              type="email"
+              ref={emailRef}
+            />
           </Form.Group>
-          <Form.Group id="password">
+          <Form.Group id="password" className="form-group">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" ref={passwordRef} required />
+            <Form.Control
+              required
+              type="password"
+              ref={passwordRef}
+            />
           </Form.Group>
-          <Button disabled={loading} className="w-100 btn-modal btn btn-outline" type="submit">
+          <Button
+            disabled={loading}
+            className="w-100"
+            type="submit"
+          >
             Log In
           </Button>
         </Form>
@@ -67,7 +80,7 @@ export default function Login({
           <Button onClick={onResetClicked} variant="link">Reset Password</Button>
           <br></br>
           <Button onClick={onSignupClicked} variant="link">Sign Up</Button>
-        </div>
+        </div >
       </Modal.Footer>
     </>
   )

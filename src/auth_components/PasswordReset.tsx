@@ -41,23 +41,31 @@ export default function PasswordReset({
       <Modal.Body>
         {error && <Alert variant="danger">{error}</Alert>}
         {message && <Alert variant="success">{message}</Alert>}
+
         <Form onSubmit={handleFormSubmit}>
-          <Form.Group id="email" className="email-field">
+          <Form.Group id="email" className="form-group">
             <p>Enter your email to receive a reset link in your inbox.</p>
-            <br></br>
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="email" ref={emailRef} required />
+            <Form.Control
+              required
+              type="email"
+              ref={emailRef}
+            />
           </Form.Group>
-          <Button disabled={loading} className="w-100" type="submit">
+          <Button
+            disabled={loading}
+            className="w-100"
+            type="submit"
+          >
             Reset Password
           </Button>
         </Form>
       </Modal.Body>
+      
       <Modal.Footer>
         <div className="w-100 text-center">
-          <Button onClick={onLoginClicked} variant="link">Log In</Button>
-          <br></br>
           <Button onClick={onSignupClicked} variant="link">Sign Up</Button>
+          <br></br>
+          <Button onClick={onLoginClicked} variant="link">Log In</Button>
         </div>
       </Modal.Footer>
     </>
