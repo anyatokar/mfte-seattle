@@ -8,8 +8,10 @@ img {
   width: 100%;
 }
 
-.jumbotron {
-  background: none;
+.diy-jumbotron {
+  margin-top: 2em;
+  text-align: justify;
+  max-width: 80%;
 }
 
 .navbar {
