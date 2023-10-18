@@ -88,7 +88,7 @@ export const Header = () => {
 
   return (
     <Container fluid className="p-0">
-      <Navbar data-bs-theme="light" collapseOnSelect expand="lg">
+      <Navbar data-bs-theme="light" collapseOnSelect expand="md">
         <LinkContainer to='/'>
           <Navbar.Brand>
             <Image

@@ -10,7 +10,7 @@ img {
 
 .diy-jumbotron {
   margin-top: 2em;
-  max-width: 80%;
+  max-width: 90%;
 }
 
 .navbar {
@@ -20,6 +20,10 @@ img {
 .standalone-btn {
   margin: .5em;
   padding: .5em;
+}
+
+.notes-form-btn {
+  margin-top: .5em;
 }
 
 .nav.nav-pills .nav-link {
@@ -50,10 +54,6 @@ img {
   padding-bottom: 1.5em;
 }
 
-.saved-homes-empty {
-  padding-top: 3em;
-}
-
 .resources-list {
   list-style-type: none;
 }
@@ -64,7 +64,6 @@ img {
 
 .card-close-icon { 
   color:grey;
-  text-align: justify;
   float: right;
 }
 

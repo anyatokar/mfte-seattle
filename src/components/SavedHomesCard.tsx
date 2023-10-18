@@ -123,17 +123,17 @@ export function SavedHomesCard(props: IBuilding) {
           </ListGroupItem>
           <ListGroupItem>
             <Form onSubmit={handleSubmit}>
+              <Form.Label>Notes</Form.Label>
               <Form.Group>
                 <Form.Control 
                   as="textarea"
                   name="note"
                   rows={3}
                   value={noteToAdd}
-                  placeholder="Your notes here"
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Button variant="primary" size="sm" type="submit" value="Submit">Update Note</Button>
+              <Button variant="primary" type="submit" value="Submit" className="btn-sm notes-form-btn">Update Note</Button>
             </Form>
           </ListGroupItem>
           <ListGroupItem>
