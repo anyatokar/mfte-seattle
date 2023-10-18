@@ -19,7 +19,7 @@ export default function Sorters<T>(props: ISortersProps<T>) {
 
   return (
     <>
-      <label htmlFor="sorters" className="mt-3">Sort:</label>
+      <label htmlFor="sorters" className="mt-3">Sort buildings by name or neighborhood:</label>
       <select
         id="sorters"
         className="custom-select form-control"
@@ -36,7 +36,7 @@ export default function Sorters<T>(props: ISortersProps<T>) {
             dropdownMenuKey === 'residentialTargetedArea'
           ) {
             const dropdownMenuUILabels = {
-              buildingName: 'Building Name',
+              buildingName: 'Building name',
               residentialTargetedArea: 'Neighborhood',
             }
             return(

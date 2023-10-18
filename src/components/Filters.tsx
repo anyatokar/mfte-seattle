@@ -1,4 +1,5 @@
 import IFilter from "../interfaces/IFilter";
+import { Form } from 'react-bootstrap';
 
 export interface IFiltersProps<T> {
   object: T;
@@ -47,28 +48,25 @@ export function Filters<T>(props: IFiltersProps<T>) {
 
   return (
     <div className="p-1 my-2">
+      <p>Filter by number of bedrooms:</p>
       {radioButtonKeys.map((radioButtonKey: radioButtonKeyType) => {
         let styledKey = radioButtonUILabels[radioButtonKey]
         let id = radioButtonKey
 
           return (
-            <section key={id} className="form-check-inline">
-              <div>
-                <input
-                  type="checkbox"
-                  id={id}
-                  value={radioButtonKey}
-                  checked={getChecked(radioButtonKey)}
-                  onChange={(event) => 
-                    onChangeFilter(radioButtonKey as any, event.target.checked)
-                  }
-                  className={"m-1 ml-3"}
-                />
-                <label htmlFor={id}>
-                  {styledKey}
-                </label>
-              </div>
-            </section>
+            <Form key={id} className="form-check-inline">
+              <Form.Check
+                type="checkbox"
+                id={id}
+                value={radioButtonKey}
+                checked={getChecked(radioButtonKey)}
+                onChange={(event) => 
+                  onChangeFilter(radioButtonKey as any, event.target.checked)
+                }
+                className={"m-1 ml-3"}
+              />
+              <Form.Label htmlFor={id}>{styledKey}</Form.Label>
+            </Form>
           );
         }
       )}

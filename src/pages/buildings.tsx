@@ -67,7 +67,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
       {/* search filter container */}
       <Container fluid>
         {/* search */}
-        <Row  className="justify-content-center">
+        <Row className="justify-content-center">
           <Col sm={8}>
             <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
           </Col>
@@ -97,8 +97,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         </Row>
         <Row className="justify-content-center">
           <Col sm={8}>
-            { loading ? '' : 
-              `${resultBuildingsUnsorted.length} buildings found`}
+            <p>{ loading ? '' : `Results: ${resultBuildingsUnsorted.length} buildings found`}</p>
           </Col>
         </Row>
         <hr className="my-4"></hr>
