@@ -131,7 +131,12 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
             value={formFields.message}
           />
         </Form.Group>
-        <Button type="submit" variant="info" className="btn-md standalone-btn">Send</Button>
+        <Button
+          type="submit"
+          variant="info"
+          className="btn-lg">
+          Send message
+        </Button>
       </Form>
     </Container>
   )

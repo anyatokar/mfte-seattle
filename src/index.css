@@ -18,8 +18,8 @@ img {
 }
 
 .standalone-btn {
-  margin: .5em;
-  padding: .5em;
+  margin-right: .5em;
+  margin-left: .5em;
 }
 
 .notes-form-btn {

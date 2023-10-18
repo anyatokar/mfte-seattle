@@ -133,7 +133,13 @@ export function SavedHomesCard(props: IBuilding) {
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" value="Submit" className="btn-sm notes-form-btn">Update Note</Button>
+              <Button
+                variant="info"
+                type="submit"
+                value="Submit"
+                className="btn-sm notes-form-btn">
+                  Update note
+              </Button>
             </Form>
           </ListGroupItem>
           <ListGroupItem>
