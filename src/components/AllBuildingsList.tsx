@@ -33,8 +33,8 @@ export default function AllBuildingsList(props: BuildingsListProps) {
 
   return (
     <Container fluid>
-      <Row className="show-grid sort-bar">
-        <Col lg={4}>
+      <Row className="show-grid">
+        <Col lg={6}>
           {props.resultBuildingsUnsorted.length > 0 && <Sorters<IBuilding>
             object={props.resultBuildingsUnsorted[0]}
             onChangeSorter={(property, isDescending) => {

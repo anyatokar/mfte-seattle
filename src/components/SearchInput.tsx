@@ -20,11 +20,8 @@ export default function SearchInput(props: ISearchProps) {
   return (
     <Form>
       <Form.Label htmlFor="search" className="mt-3">
-        Search for buildings with MFTE apartments: 
+        Search by neighborhood, building name, address or zip code:
       </Form.Label>
-      <Form.Text id="search-suggestions" muted>
-        Enter neighborhood, building name, address or zip code.
-      </Form.Text>
       <Form.Control
         id="search"
         className="form-control"
