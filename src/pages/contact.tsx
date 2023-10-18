@@ -73,6 +73,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
       <p className="lead">
         We are always looking to improve this resource — your feedback is welcome and appreciated.
       </p>
+      <p>All fields are required.</p>
       <Form onSubmit={handleFormSubmit}>
 
         <Form.Group className="form-row">
@@ -84,7 +85,6 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
               id="authorName"
               onChange={onInputChange}
               value={formFields.authorName}
-              placeholder="required"
             />
           </Form.Group>
           <Form.Group className="form-group col-md-6">
@@ -96,13 +96,12 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
               id="email"
               onChange={onInputChange}
               value={formFields.email}
-              placeholder="required"
             />
           </Form.Group>
         </Form.Group>
 
         <Form.Group className="form-group">
-          <Form.Label>Subject (required)</Form.Label>
+          <Form.Label>Subject</Form.Label>
           <Form.Control
             required
             as="select"
@@ -130,7 +129,6 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
             rows={5}
             onChange={onInputChange}
             value={formFields.message}
-            placeholder="required"
           />
         </Form.Group>
         <Button type="submit" variant="info" className="btn-md standalone-btn">Send</Button>
