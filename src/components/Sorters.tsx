@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { Col, Form, Row } from 'react-bootstrap';
 
 export interface ISortersProps<T> {
   object: T;
@@ -19,44 +20,48 @@ export default function Sorters<T>(props: ISortersProps<T>) {
 
   return (
     <>
-      <label htmlFor="sorters" className="mt-3">Sort buildings by name or neighborhood:</label>
-      <select
-        id="sorters"
-        className="custom-select form-control"
-        onChange={(event) =>
-          onChangeSorter(
-            event.target.value.split(",")[0] as any,
-            event.target.value.split(",")[1] === "true"
-          )
-        }
-
-      >
-        {dropdownMenuKeys.map((dropdownMenuKey) => {
-          if (dropdownMenuKey === 'buildingName' ||
-            dropdownMenuKey === 'residentialTargetedArea'
-          ) {
-            const dropdownMenuUILabels = {
-              buildingName: 'Building name',
-              residentialTargetedArea: 'Neighborhood',
-            }
-            return(
-              <Fragment key={dropdownMenuKey}>
-                <option
-                  value={[dropdownMenuKey, "false"]}
-                >
-                  {dropdownMenuUILabels[dropdownMenuKey]} (A to Z)
-                </option>
-                <option
-                  value={[dropdownMenuKey, "true"]}
-                >
-                  {dropdownMenuUILabels[dropdownMenuKey]} (Z to A)
-                </option>
-              </Fragment>
-            );
-          } else {
-            return (<></>)}
-        })}
-      </select>
+      <Row className="mt-3 mt-md-0 sort-bar">
+        <Col>
+          <Form>
+            <Form.Label htmlFor="sorters">Sort buildings by name or neighborhood:</Form.Label>
+            <Form.Select
+              id="sorters"
+              onChange={(event) =>
+                onChangeSorter(
+                  event.target.value.split(",")[0] as any,
+                  event.target.value.split(",")[1] === "true"
+                )
+              }
+            >
+              {dropdownMenuKeys.map((dropdownMenuKey) => {
+                if (dropdownMenuKey === 'buildingName' ||
+                  dropdownMenuKey === 'residentialTargetedArea'
+                ) {
+                  const dropdownMenuUILabels = {
+                    buildingName: 'Building name',
+                    residentialTargetedArea: 'Neighborhood',
+                  }
+                  return(
+                    <Fragment key={dropdownMenuKey}>
+                      <option
+                        value={[dropdownMenuKey, "false"]}
+                      >
+                        {dropdownMenuUILabels[dropdownMenuKey]} (A to Z)
+                      </option>
+                      <option
+                        value={[dropdownMenuKey, "true"]}
+                      >
+                        {dropdownMenuUILabels[dropdownMenuKey]} (Z to A)
+                      </option>
+                    </Fragment>
+                  );
+                } else {
+                  return (<></>)}
+              })}
+            </Form.Select>
+          </Form>
+        </Col>
+      </Row>
     </>
   );
 }
