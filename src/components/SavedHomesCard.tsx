@@ -2,8 +2,8 @@ import { useState } from "react";
 import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, Form, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { MDBCloseIcon } from "mdbreact"
+import { Card, Col, Container, Form, Button, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
+import { XLg} from "react-bootstrap-icons"
 
 export function SavedHomesCard(props: IBuilding) {
   const { currentUser } = useAuth() as any
@@ -57,7 +57,7 @@ export function SavedHomesCard(props: IBuilding) {
           note: noteToAdd
         })
         .then(() => {
-            console.log("Note successfully updated!");
+          console.log("Note successfully updated!");
         })
         .catch((error) => {
           console.error("Error updating document: ", error);
@@ -74,16 +74,28 @@ export function SavedHomesCard(props: IBuilding) {
     <div>
       <Card>
         <Card.Header>
-          <MDBCloseIcon onClick={deleteBuilding}/>
-          <Card.Title>
-            <a id="buildingLink" 
-              href={urlForBuilding} 
-              target="_blank" 
-              rel="noreferrer">
-              {buildingName}
-            </a>
-          </Card.Title>
-          <h6>{residentialTargetedArea}</h6>
+          <Container fluid>
+            <Row>
+              <Col className="p-0">
+                <Card.Title>
+                  <a id="buildingLink" 
+                    href={urlForBuilding} 
+                    target="_blank" 
+                    rel="noreferrer">
+                    {buildingName}
+                  </a>
+                </Card.Title>
+              </Col>
+              <Col className="p-0 col-1">
+                <XLg onClick={deleteBuilding} className="card-close-icon"/>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="p-0">
+                <h6>{residentialTargetedArea}</h6>
+              </Col>
+            </Row>
+          </Container>
         </Card.Header>
         <ListGroup className="list-group-flush">
           <ListGroupItem>

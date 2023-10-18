@@ -91,21 +91,21 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
           { currentUser ? (
             (wasOriginallySaved || isSaved) ?
               <Button 
-                variant="btn btn-info btn-sm btn-save-building-card"
+                variant="btn btn-info btn-sm"
                 onClick={saveBuilding}
                 role="button">
                 Saved
               </Button>
               :
               <Button 
-                variant="btn btn-outline-info btn-sm btn-save-building-card"
+                variant="btn btn-outline-info btn-sm"
                 onClick={saveBuilding}
                 role="button">
                 Save
               </Button>
             ) : (
             <>
-              <Button onClick={handleShowLogin} variant="btn btn-outline-info btn-sm standalone-btn">
+              <Button onClick={handleShowLogin} variant="btn btn-outline-info btn-sm">
                 Save
               </Button>
             </>

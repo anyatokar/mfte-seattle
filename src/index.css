@@ -1,7 +1,6 @@
 html, body {
   margin: 0;
   max-width: 100%;
-  padding-top: 2em;
   background: #eef6f6;
 }
 
@@ -9,8 +8,9 @@ img {
   width: 100%;
 }
 
-.jumbotron {
-  background: none;
+.diy-jumbotron {
+  margin-top: 2em;
+  max-width: 80%;
 }
 
 .navbar {
@@ -19,27 +19,7 @@ img {
 
 .standalone-btn {
   margin: .5em;
-}
-
-.nav-buttons {
-  margin-right: auto;
-}
-
-.buildings-list {
-  height: 70vh;
-}
-
-.btn-group-btn {
-  margin: none;
-}
-
-.saved-homes-header {
-  margin-top: 4em
-}
-
-
-.pills-page {
-  padding-top: 3em;
+  padding: .5em;
 }
 
 .nav.nav-pills .nav-link {
@@ -52,7 +32,7 @@ img {
   color: #eef6f6;
 }
 
-.saved-homes-profile-update-card {
+.profile-card {
   margin-top: 2em;
   margin-bottom: 2em;
 }
@@ -65,26 +45,30 @@ img {
   padding-bottom: 2em;
 }
 
-.col-no-padding {
-  padding-right: 0px;
-  padding-left: 0px;
-}
-
-.emailField {
+.email-field {
   padding-top: 1em;
-  padding-bottom: 1.5em
+  padding-bottom: 1.5em;
 }
 
 .saved-homes-empty {
   padding-top: 3em;
-  padding-bottom: 4em
-}
-
-.btn-save-building-card {
-  padding: none;
-  margin: none;
 }
 
 .resources-list {
   list-style-type: none;
+}
+
+.footer {
+  padding-top: 3em;
+}
+
+.card-close-icon { 
+  color:grey;
+  text-align: justify;
+  float: right;
+}
+
+.card-close-icon:hover { 
+  color:black;
+  cursor: pointer;
 }

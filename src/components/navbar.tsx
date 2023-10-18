@@ -1,4 +1,4 @@
-import { NavDropdown, Navbar, Nav, Modal, Dropdown } from 'react-bootstrap';
+import { Container, Image, NavDropdown, Navbar, Nav, Modal, Dropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import firebase from "../db/firebase";
 
@@ -87,15 +87,13 @@ export const Header = () => {
   }
 
   return (
-    <div>
-      <Navbar fixed="top" variant="light" collapseOnSelect expand="md" className="mb-3">
-        <LinkContainer to="/">
+    <Container fluid className="p-0">
+      <Navbar data-bs-theme="light" collapseOnSelect expand="lg">
+        <LinkContainer to='/'>
           <Navbar.Brand>
-            <img
+            <Image
               src={mftelogo}
-              width="80"
-              height="80"
-              className="d-inline-block align-top"
+              height="70"
               alt="MFTE Seattle website logo: a teal map pin with a house on it"
             />
           </Navbar.Brand>
@@ -148,6 +146,6 @@ export const Header = () => {
         <Dropdown.Divider />
         </Navbar.Collapse>
       </Navbar>
-    </div>
+    </Container>
   )
 }

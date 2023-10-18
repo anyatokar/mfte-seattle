@@ -45,30 +45,52 @@ export default function Signup({
       <Modal.Header closeButton>
         <Modal.Title>Sign Up</Modal.Title>
       </Modal.Header>
+
       <Modal.Body>
         {message && <Alert variant="danger">{message}</Alert>}
         <Form onSubmit={handleFormSubmit}>
-          <Form.Group id="name">
+          <Form.Group id="name" className="form-group">
             <Form.Label>Name</Form.Label>
-            <Form.Control type="name" ref={nameRef} required />
+            <Form.Control
+              required
+              type="name"
+              ref={nameRef}
+              placeholder="required"
+            />
           </Form.Group>
-          <Form.Group id="email">
+          <Form.Group id="email" className="form-group">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" ref={emailRef} required />
+            <Form.Control
+              required
+              type="email"
+              ref={emailRef}
+              placeholder="required"
+            />
           </Form.Group>
-          <Form.Group id="password">
+          <Form.Group id="password" className="form-group">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" ref={passwordRef} placeholder="6 or more characters" required />
+            <Form.Control
+              required
+              type="password"
+              ref={passwordRef}
+              placeholder="6 or more characters"
+            />
           </Form.Group>
-          <Form.Group id="password-confirm">
-            <Form.Label>Password Confirmation</Form.Label>
-            <Form.Control type="password" ref={passwordConfirmRef} placeholder="6 or more characters" required />
+          <Form.Group id="password-confirm" className="form-group">
+            <Form.Label>Confirm password</Form.Label>
+            <Form.Control
+              required
+              type="password"
+              ref={passwordConfirmRef}
+              placeholder="6 or more characters"
+            />
           </Form.Group>
           <Button disabled={loading} className="w-100" type="submit">
             Sign Up
           </Button>
         </Form>
       </Modal.Body>
+
       <Modal.Footer>
         <div className="w-100 text-center">
           <Button onClick={onLoginClicked} variant="link">Log In</Button>

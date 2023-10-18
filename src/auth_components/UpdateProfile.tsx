@@ -67,54 +67,59 @@ export default function UpdateProfile() {
     });
   }
   return (
-    <>
-      <Container>
-        <Row>
-          <Col md={5} lg={6}>
-            <Card className="saved-homes-profile-update-card">
-              <Card.Body>
-                {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
-                {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
-                <Form onSubmit={handleFormSubmit}>
-                  <Form.Group id="email">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type="email"
-                      ref={emailRef}
-                      required
-                      defaultValue={currentUser.email}
-                    />
-                  </Form.Group>
-                  <Form.Group id="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      ref={passwordRef}
-                      placeholder="Leave blank to keep the same"
-                    />
-                  </Form.Group>
-                  <Form.Group id="password-confirm">
-                    <Form.Label>Password Confirmation</Form.Label>
-                    <Form.Control
-                      type="password"
-                      ref={passwordConfirmRef}
-                      placeholder="Leave blank to keep the same"
-                    />
-                  </Form.Group>
-                  <div className="text-center">
-                  <Button disabled={loading} className="w-40 btn btn-info" type="submit">
+    <Container fluid>
+      <Row>
+        <Col lg={6}>
+          <Card className="profile-card">
+            <Card.Body>
+              {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
+              {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
+
+              <Form onSubmit={handleFormSubmit}>
+                <Form.Group id="email" className="form-group">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    required
+                    type="email"
+                    ref={emailRef}
+                    defaultValue={currentUser.email}
+                  />
+                </Form.Group>
+                <Form.Group id="password" className="form-group">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={passwordRef}
+                    placeholder="Leave blank to keep the same"
+                  />
+                </Form.Group>
+                <Form.Group id="password-confirm" className="form-group">
+                  <Form.Label>Confirm password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={passwordConfirmRef}
+                    placeholder="Leave blank to keep the same"
+                  />
+                </Form.Group>
+                <div className="text-center">
+                  <Button
+                    disabled={loading}
+                    className="btn btn-info"
+                    type="submit">
                     Update
                   </Button>
-                  </div>
-                </Form>
-                <div className="w-100 text-center mt-2">
-                  <Button onClick={onDelete} variant="link">Delete Account</Button>
                 </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
+              </Form>
+            </Card.Body>
+
+            <Card.Footer>
+              <div className="w-100 text-center">
+                <Button onClick={onDelete} variant="link">Delete Account</Button>
+              </div>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   )
 }

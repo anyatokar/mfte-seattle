@@ -32,10 +32,10 @@ export default function Profile() {
 
   return (
     currentUser && userData &&
-    <Container>
+    <Container fluid>
       <Row>
-        <Col md={5} lg={6}>
-          <Card className="saved-homes-profile-update-card">
+        <Col lg={6}>
+          <Card className="profile-card">
             <Card.Body>
               <Card.Text>
                 <strong>Name: </strong>{userData.name}
