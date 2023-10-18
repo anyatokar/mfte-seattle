@@ -20,7 +20,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
     <div>
       <Container fluid>
         <Tab.Container id="sidebar" defaultActiveKey="list">
-         a <Row>
+          <Row>
             <Col sm={2}>
               <Nav variant="pills" className="flex-column">
                 <Nav.Item>
