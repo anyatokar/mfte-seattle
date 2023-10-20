@@ -27,7 +27,7 @@ export default function Dashboard() {
           <Col sm={10} className="p-0">
             <Tab.Content>
               <Tab.Pane eventKey="profile">
-                <Profile/>
+                <Profile />
               </Tab.Pane>
               <Tab.Pane eventKey="update">
                 <UpdateProfile />

@@ -70,7 +70,7 @@ export default function UpdateProfile() {
   return (
     <Container fluid>
       <Row>
-        <Col lg={6}>
+        <Col lg={6} className="mt-3 mt-md-0">
           <Card>
             <Card.Body>
               {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
