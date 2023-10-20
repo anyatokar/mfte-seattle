@@ -6,7 +6,7 @@ export const Footer = () => {
     <Container fluid className="footer">
       <Row>
         <Col className="p-0">
-          <Image src={houses} alt="Bright houses in a neighborhood" />
+          <Image src={houses} alt="Colorful houses in a neighborhood" className="footer-img"/>
         </Col>
       </Row>
       <Row>
