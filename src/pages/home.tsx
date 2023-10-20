@@ -32,7 +32,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
         While the property data for this website is sourced from the City of Seattle&nbsp;
         <a id="properties-spreadsheet-may-2023"
           href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
-          title="Market-Rate Rental Properties with Affordable Housing Units spreadsheet by the City of Seattle - May 2023 update - PDF"
+          title="Market-Rate Rental Properties with Affordable Housing Units spreadsheet by the City of Seattle - November 2023 update - PDF"
           target="_blank"
           rel="noreferrer">
           property spreadsheet
