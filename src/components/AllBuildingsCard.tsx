@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import IBuilding from "../interfaces/IBuilding";
-import firebase from "../db/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { Card, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 
-interface AllBuildingsCardProps extends IBuilding {
+export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean
 }
 
@@ -20,73 +20,17 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
     totalRestrictedUnits,
     sedu,
     studioUnits,
-    oneBedroomUnits, 
+    oneBedroomUnits,
     twoBedroomUnits,
     threePlusBedroomUnits,
     urlForBuilding,
     streetNum,
-    street, 
+    street,
     city,
-    state, 
+    state,
     zip,
-    lat, 
-    lng,
     isSaved: wasOriginallySaved
   } = props;
-
-  const [isSaved, setIsSaved] = useState(false) as any;
-
-  function toggleSave() {
-    (wasOriginallySaved || isSaved) ? deleteBuilding() : saveBuilding();
-  }
-
-  function saveBuilding() {
-    setIsSaved(true);
-    firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID)
-    .set({
-        "buildingID": buildingID,
-        "buildingName": buildingName,
-        "phone": phone,
-        "phone2": phone2,
-        "residentialTargetedArea": residentialTargetedArea,
-        "totalRestrictedUnits": totalRestrictedUnits,
-        "sedu": sedu,
-        "studioUnits": studioUnits,
-        "oneBedroomUnits": oneBedroomUnits, 
-        "twoBedroomUnits": twoBedroomUnits,
-        "threePlusBedroomUnits": threePlusBedroomUnits,
-        "urlForBuilding": urlForBuilding,
-        "streetNum": streetNum,
-        "street": street, 
-        "city": city,
-        "state": state, 
-        "zip": zip,
-        "lat": lat,
-        "lng": lng,
-    })
-    .then(() => {
-      console.log("Building saved to user");
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    });
-  };
-
-  function deleteBuilding() {
-    setIsSaved(false);
-    const savedHomesQuery = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where('buildingID','==', buildingID);
-    savedHomesQuery.get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        doc.ref.delete()
-        .then(() => {
-          console.log(`${buildingName} deleted from user list`);
-        })
-        .catch((error) => {
-          console.error("Error deleting document: ", error);
-        });
-      });
-    });
-  };
 
   const [/* modalState */, setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
@@ -94,6 +38,18 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
   const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${streetNum}+${street}+${city}+${state}+${zip}`;
   const phone1Ref = `tel:${phone}`
   const phone2Ref = `tel:${phone2}`
+
+  const [isSaved, setIsSaved] = useState(false) as any;
+
+  function toggleSave() {
+    if (wasOriginallySaved || isSaved) {
+      setIsSaved(false);
+      deleteBuilding(currentUser, buildingID, buildingName);
+    } else {
+      setIsSaved(true);
+      saveBuilding(currentUser, props);
+    }
+  };
 
   return (
     <div>
