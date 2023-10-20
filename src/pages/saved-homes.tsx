@@ -37,7 +37,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                   {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for medium screens and up */}
                   <Col className="mt-3 mt-md-0">
                     <p className="lead">Saved Buildings — your short list of apartment buildings.</p>
-                    <p>This list and notes are private to your profile.</p>
+                    <p>The list and notes are private to your profile.</p>
                   </Col>
                 </Row>
                 {loading && <Spinner animation="border" variant="warning" />}
