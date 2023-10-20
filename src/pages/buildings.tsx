@@ -68,13 +68,13 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
       <Container fluid>
         {/* search */}
         <Row className="justify-content-center">
-          <Col sm={9}>
+          <Col sm md={9} lg={8}>
             <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
           </Col>
         </Row >
         {/* filter */}
         <Row className="justify-content-center">
-          <Col sm={9}>
+          <Col sm md={9} lg={8}>
             {allBuildings.length > 0 && <Filters<IBuilding>
               object={allBuildings[0]}
               filters={activeFilters}
@@ -96,7 +96,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
           </Col>
         </Row>
         <Row className="justify-content-center">
-          <Col sm={9}>
+          <Col sm md={9} lg={8}>
             <p>
               { loading ? '' : `Results: ${resultBuildingsUnsorted.length} buildings found`}
               { !loading && resultBuildingsUnsorted.length === 0 ? '. Try expanding your search criteria!' : ''}
