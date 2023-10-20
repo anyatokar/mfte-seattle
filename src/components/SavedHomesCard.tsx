@@ -32,10 +32,16 @@ export function SavedHomesCard(props: ISavedBuilding) {
     const savedHomesQuery = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where('buildingID','==', buildingID);
     savedHomesQuery.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-        doc.ref.delete();
+        doc.ref.delete()
+        .then(() => {
+          console.log(`${buildingName} deleted from user list`);
+        })
+        .catch((error) => {
+          console.error("Error deleting document: ", error);
+        });
       });
     });
-  }
+  };
 
   const [noteToAdd, setNoteToAdd] = useState(note)
 

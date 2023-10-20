@@ -8,7 +8,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState, useContext } from "react";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
-// TODO: Having a Saved button is useless here BUT it's for an upcoming toggle.
 interface IBuildingMarkerProps {
   building: IBuilding,
   isSelected: boolean,
@@ -57,7 +56,11 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
 
   const [isSaved, setIsSaved] = useState(false);
 
-  function saveBuilding(e: any) {
+  function toggleSave() {
+    (wasOriginallySaved || isSaved) ? deleteBuilding() : saveBuilding(); 
+  }
+
+  function saveBuilding() {
     setIsSaved(true);
     firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID)
     .set({
@@ -82,10 +85,26 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
       "lng": lng,
     })
     .then(() => {
-      console.log("Building saved to user");
+      console.log(`${buildingName} saved to user list`);
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
+    });
+  };
+
+  function deleteBuilding() {
+    setIsSaved(false);
+    const savedHomesQuery = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where('buildingID','==', buildingID);
+    savedHomesQuery.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete()
+        .then(() => {
+          console.log(`${buildingName} deleted from user list`);
+        })
+        .catch((error) => {
+          console.error("Error deleting document: ", error);
+        });
+      });
     });
   };
 
@@ -126,14 +145,14 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
             (wasOriginallySaved || isSaved) ?
               <Button 
                 variant="btn btn-info btn-sm"
-                onClick={saveBuilding}
+                onClick={toggleSave}
                 role="button">
                 Saved
               </Button>
               :
               <Button 
                 variant="btn btn-outline-info btn-sm"
-                onClick={saveBuilding}
+                onClick={toggleSave}
                 role="button">
                 Save
               </Button>
