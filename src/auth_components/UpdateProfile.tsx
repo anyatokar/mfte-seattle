@@ -66,11 +66,12 @@ export default function UpdateProfile() {
       setMessage(error.message);
     });
   }
+
   return (
     <Container fluid>
       <Row>
         <Col lg={6}>
-          <Card className="profile-card">
+          <Card>
             <Card.Body>
               {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
               {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}

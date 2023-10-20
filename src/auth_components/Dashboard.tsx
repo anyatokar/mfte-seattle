@@ -11,7 +11,7 @@ export default function Dashboard() {
   }
 
   return (
-    <Container fluid>
+    <Container fluid className="pills-page">
       <Tab.Container id="sidebar" defaultActiveKey="profile">
         <Row>
           <Col sm={2} className="p-0">
@@ -24,7 +24,7 @@ export default function Dashboard() {
             </Nav.Item>
           </Nav>
           </Col>
-          <Col sm={10} className="p-0 profile-email">
+          <Col sm={10} className="p-0">
             <Tab.Content>
               <Tab.Pane eventKey="profile">
                 <Profile/>

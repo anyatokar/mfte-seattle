@@ -87,13 +87,14 @@ export const Header = () => {
   }
 
   return (
-    <Container fluid className="p-0">
-      <Navbar data-bs-theme="light" collapseOnSelect expand="md">
+      <Navbar data-bs-theme="light" collapseOnSelect expand="lg">
+        <Container fluid>
         <LinkContainer to='/'>
           <Navbar.Brand>
             <Image
               src={mftelogo}
-              height="70"
+              height="80"
+              width="80"
               alt="MFTE Seattle website logo: a teal map pin with a house on it"
             />
           </Navbar.Brand>
@@ -102,7 +103,7 @@ export const Header = () => {
         <Navbar.Collapse>
           <Nav className="mr-auto">
             <LinkContainer to='/buildings'>
-              <Nav.Link>All Buildings</Nav.Link>
+              <Nav.Link>Buildings Map</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/resources'>
               <Nav.Link>Resources</Nav.Link>
@@ -120,7 +121,6 @@ export const Header = () => {
           <>
             <Nav>
               <NavDropdown
-                id="dropdown-menu-align-right"
                 title= {userData ? `Hi ${userData.name}!` : ''}
               >
                 <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Profile</Dropdown.Item>
@@ -145,7 +145,7 @@ export const Header = () => {
           )}
         <Dropdown.Divider />
         </Navbar.Collapse>
-      </Navbar>
-    </Container>
+      </Container>
+    </Navbar>
   )
 }

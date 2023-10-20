@@ -35,7 +35,7 @@ export default function Profile() {
     <Container fluid>
       <Row>
         <Col lg={6}>
-          <Card className="profile-card">
+          <Card>
             <Card.Body>
               <Card.Text>
                 <strong>Name: </strong>{userData.name}
