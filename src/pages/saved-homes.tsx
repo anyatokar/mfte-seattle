@@ -36,7 +36,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 <Row>
                   {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for medium screens and up */}
                   <Col className="mt-3 mt-md-0">
-                    <p className="lead">Saved Buildings — your short list of apartment buildings.</p>
+                    <p className="lead">Your List — your short list of apartment buildings.</p>
                     <p>The list and notes are private to your profile.</p>
                   </Col>
                 </Row>
@@ -48,7 +48,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                       <a id="Buildings_tab"
                         href="./Buildings"
                         title="View the map of MFTE properties">
-                        Buildings Map
+                        MFTE Map
                       </a>&nbsp;tab.
                     </p>
                   </>}

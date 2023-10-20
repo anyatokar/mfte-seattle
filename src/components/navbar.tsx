@@ -103,7 +103,7 @@ export const Header = () => {
         <Navbar.Collapse>
           <Nav className="mr-auto">
             <LinkContainer to='/buildings'>
-              <Nav.Link>Buildings Map</Nav.Link>
+              <Nav.Link>MFTE Map</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/resources'>
               <Nav.Link>Resources</Nav.Link>
@@ -128,7 +128,7 @@ export const Header = () => {
                 <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
               </NavDropdown>
               <LinkContainer to='./saved-homes'>
-                <Nav.Link>Saved Buildings</Nav.Link>
+                <Nav.Link>Your List</Nav.Link>
               </LinkContainer>
             </Nav>
           </>
@@ -136,7 +136,7 @@ export const Header = () => {
           <>
             <Nav>
               <Nav.Link onClick={showLogin}>Log In / Sign Up</Nav.Link>
-              <Nav.Link onClick={showLoginSavedBuildings}>Saved Buildings</Nav.Link>
+              <Nav.Link onClick={showLoginSavedBuildings}>Your List</Nav.Link>
               <Modal show={showModal} onHide={closeLogin}>
                 {chooseModalComponent()}
               </Modal>
