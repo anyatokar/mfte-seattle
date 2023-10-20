@@ -20,8 +20,8 @@ export default function Sorters<T>(props: ISortersProps<T>) {
 
   return (
     <>
-      <Row className="mt-3 mt-md-0 sort-bar">
-        <Col>
+      <Row className="sort-bar">
+        <Col className="mt-3 mt-md-0">
           <Form>
             <Form.Label htmlFor="sorters">Sort buildings by name or neighborhood:</Form.Label>
             <Form.Select
