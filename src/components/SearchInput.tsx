@@ -24,7 +24,6 @@ export default function SearchInput(props: ISearchProps) {
       </Form.Label>
       <Form.Control
         id="search"
-        className="form-control"
         type="search"
         aria-label="Search"
         onChange={(event) => setSearchQuery(event.target.value)}

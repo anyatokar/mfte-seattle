@@ -18,7 +18,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
 
   return (
     <div>
-      <Container fluid>
+      <Container fluid className="pills-page">
         <Tab.Container id="sidebar" defaultActiveKey="list">
           <Row>
             <Col sm={2}>
@@ -36,19 +36,20 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 <Row>
                   {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for medium screens and up */}
                   <Col className="mt-3 mt-md-0">
-                    <p className="lead">Saved Buildings — your short list of apartment buildings. This list is private to your profile.</p>
+                    <p className="lead">Saved Buildings — your short list of apartment buildings.</p>
+                    <p>This list and notes are private to your profile.</p>
                   </Col>
                 </Row>
                 {loading && <Spinner animation="border" variant="warning" />}
                 {!loading && savedBuildings.length === 0 &&
                   <>
                     <br></br>
-                    <p>Nothing yet! Use the Save button in the&nbsp;
+                    <p>Empty for now! To start your list, use the Save button in the&nbsp;
                       <a id="Buildings_tab"
                         href="./Buildings"
                         title="View the map of MFTE properties">
-                        All Buildings
-                      </a>&nbsp;tab to start adding properties.
+                        Buildings Map
+                      </a>&nbsp;tab.
                     </p>
                   </>}
                 <Tab.Pane eventKey="map">

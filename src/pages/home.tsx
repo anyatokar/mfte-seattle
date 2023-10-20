@@ -25,7 +25,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
         <a id="Buildings_tab"
           href="./Buildings"
           title="View the map of MFTE properties">
-          All Buildings
+          Buildings Map
         </a>&nbsp;tab to view a map of participating properties. Create an account to save properties to your own map and keep notes. Contact each property directly for current availability.
       </p>
       <p className="lead">
