@@ -16,7 +16,7 @@ import MapTab from "../components/MapTab";
 import AllBuildingsList from '../components/AllBuildingsList';
 import { useSavedBuildings } from '../hooks/useSavedBuildings';
 
-const ref = firebase.firestore().collection("buildings"); 
+const ref = firebase.firestore().collection("buildings");
 
 const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
@@ -35,7 +35,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
     });
   }, []);
 
-  useEffect(() => {getAllBuildings()}, [getAllBuildings]); 
+  useEffect(() => {getAllBuildings()}, [getAllBuildings]);
 
   const [query, setQuery] = useState<string>("");
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(

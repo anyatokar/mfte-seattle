@@ -36,7 +36,11 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
 
   const [isSaved, setIsSaved] = useState(false) as any;
 
-  function saveBuilding(e: any) {
+  function toggleSave() {
+    (wasOriginallySaved || isSaved) ? deleteBuilding() : saveBuilding();
+  }
+
+  function saveBuilding() {
     setIsSaved(true);
     firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").doc(buildingID)
     .set({
@@ -68,6 +72,22 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
     });
   };
 
+  function deleteBuilding() {
+    setIsSaved(false);
+    const savedHomesQuery = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where('buildingID','==', buildingID);
+    savedHomesQuery.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        doc.ref.delete()
+        .then(() => {
+          console.log(`${buildingName} deleted from user list`);
+        })
+        .catch((error) => {
+          console.error("Error deleting document: ", error);
+        });
+      });
+    });
+  };
+
   const [/* modalState */, setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
@@ -92,14 +112,14 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
             (wasOriginallySaved || isSaved) ?
               <Button 
                 variant="btn btn-info btn-sm"
-                onClick={saveBuilding}
+                onClick={toggleSave}
                 role="button">
                 Saved
               </Button>
               :
               <Button 
                 variant="btn btn-outline-info btn-sm"
-                onClick={saveBuilding}
+                onClick={toggleSave}
                 role="button">
                 Save
               </Button>

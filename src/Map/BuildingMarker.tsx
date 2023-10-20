@@ -57,7 +57,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   const [isSaved, setIsSaved] = useState(false);
 
   function toggleSave() {
-    (wasOriginallySaved || isSaved) ? deleteBuilding() : saveBuilding(); 
+    (wasOriginallySaved || isSaved) ? deleteBuilding() : saveBuilding();
   }
 
   function saveBuilding() {
