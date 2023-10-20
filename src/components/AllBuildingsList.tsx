@@ -6,14 +6,18 @@ import IBuilding from "../interfaces/IBuilding";
 import Sorters from "../components/Sorters";
 import ISorter from "../interfaces/ISorter";
 import { genericSort } from "../utils/genericSort";
+import ISavedBuilding from '../interfaces/ISavedBuilding';
 
-//TODO: Maybe move this type since it's used in SavedHomesCard component as well.
-export type BuildingsListProps = {
-  resultBuildingsUnsorted?: IBuilding[],
-  savedBuildings?: IBuilding[]
+type allBuildingsListProps = {
+  resultBuildingsUnsorted: IBuilding[],
+  savedBuildings: ISavedBuilding[]
 };
 
-export default function AllBuildingsList(props: BuildingsListProps) {
+export const checkIsSaved = (savedBuildings: ISavedBuilding[], building: IBuilding) => {
+  return !!savedBuildings.find((savedBuilding: IBuilding) => savedBuilding.buildingID === building.buildingID);
+}
+
+export default function AllBuildingsList(props: allBuildingsListProps) {
   const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
     property: "buildingName",
     isDescending: false,
@@ -27,9 +31,7 @@ export default function AllBuildingsList(props: BuildingsListProps) {
     genericSort<IBuilding>(buildingA, buildingB, activeSorter)
   );
 
-  const checkIsSaved = (building: IBuilding) => {
-    return !!props.savedBuildings?.find((savedBuilding: IBuilding) => savedBuilding.buildingID === building.buildingID);
-  }
+
 
   return (
     <Container fluid>
@@ -53,7 +55,7 @@ export default function AllBuildingsList(props: BuildingsListProps) {
               <>
                 {resultBuildings.map((building:IBuilding) => (
                   <Col key={building.buildingID} md={4} lg={3} className="building-row">
-                    <AllBuildingsCard {...building} isSaved={checkIsSaved(building)} />
+                    <AllBuildingsCard {...building} isSaved={checkIsSaved(props.savedBuildings, building)} />
                   </Col>
                 ))}
               </>

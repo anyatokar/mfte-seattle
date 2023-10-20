@@ -3,6 +3,7 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { BuildingMarker } from './BuildingMarker';
 import IMap from '../interfaces/IMap';
 import IBuilding from '../interfaces/IBuilding';
+import { checkIsSaved } from '../components/AllBuildingsList';
 
 const containerStyle = {
   width: '100%',
@@ -19,15 +20,15 @@ const center = {
 const LIBRARIES: ("places")[] = ["places"];
 
 export function ReactMap(props: IMap) {
-  const { filteredBuildings = [] } = props;
+  const { buildingsToMap = [] } = props;
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(null);
 
   useEffect(() => {
-    if (selectedBuilding && !filteredBuildings.includes(selectedBuilding)) {
+    if (selectedBuilding && !buildingsToMap.includes(selectedBuilding)) {
       setSelectedBuilding(null);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps -- No need for selectedBuilding in the deps list
-  }, [filteredBuildings]);
+  }, [buildingsToMap]);
 
   return (
     <LoadScript
@@ -43,12 +44,13 @@ export function ReactMap(props: IMap) {
       >
         <>
           {
-            filteredBuildings.map(building => 
+            buildingsToMap.map(building => 
               <BuildingMarker
                 key={ building.buildingID }
                 building={ building }
                 isSelected={ building === selectedBuilding }
                 setSelectedBuilding={ setSelectedBuilding }
+                isSaved={ checkIsSaved(props.savedBuildings, building) }
               />
             )
           }

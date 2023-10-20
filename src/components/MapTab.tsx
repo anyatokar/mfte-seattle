@@ -1,15 +1,16 @@
 import { ReactMap } from "../Map/ReactMap";
 import 'firebase/firestore';
 import { Col, Container, Row } from 'react-bootstrap';
+import IMap from "../interfaces/IMap";
 
-// TODO: This is used for All Buildings and Saved Homes so the prop name is confusing.
-export default function SavedHomesMap(props:any) {
+export default function MapTab(props: IMap) {
   return (
     <Container>
       <Row>
         <Col className="p-0">
           <ReactMap
-            filteredBuildings={props.savedBuildings}
+            buildingsToMap={props.buildingsToMap}
+            savedBuildings={props.savedBuildings}
           />
         </Col>
       </Row>

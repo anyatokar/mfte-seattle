@@ -6,7 +6,7 @@ import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { Card, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 interface AllBuildingsCardProps extends IBuilding {
-  isSaved?: boolean
+  isSaved: boolean
 }
 
 export function AllBuildingsCard(props: AllBuildingsCardProps) {

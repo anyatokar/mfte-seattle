@@ -1,30 +1,31 @@
 import 'firebase/firestore';
 import { SavedHomesCard } from "./SavedHomesCard";
 import { Container, Row, Col } from 'react-bootstrap';
-import IBuilding from "../interfaces/IBuilding";
-import { BuildingsListProps } from './AllBuildingsList';
+import ISavedBuilding from '../interfaces/ISavedBuilding';
 
-export default function SavedHomesList(props:BuildingsListProps) {
+type SavedHomesListProps = {
+  savedBuildings: Array<ISavedBuilding>
+};
+
+export default function SavedHomesList(props: SavedHomesListProps) {
 
   return (
-    <>
-      <Container>
-        <Row className="show-grid">
-          <Col lg={12}>
-            <Row className="show-grid">
-              {props.savedBuildings?.length !== 0 && (
-                <>
-                  {props.savedBuildings?.map((building:IBuilding) => (
-                    <Col key={building.buildingID} md={4} className="building-row">
-                      <SavedHomesCard {...building} />
-                    </Col>
-                  ))}
-                </>
-              )}
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container>
+      <Row className="show-grid">
+        <Col lg={12}>
+          <Row className="show-grid">
+            {props.savedBuildings?.length !== 0 && (
+            <>
+              {props.savedBuildings?.map((building: ISavedBuilding) => (
+                <Col key={building.buildingID} md={4} className="building-row">
+                  <SavedHomesCard {...building} />
+                </Col>
+              ))}
+            </>
+            )}
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   );
 }

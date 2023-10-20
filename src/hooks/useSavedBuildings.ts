@@ -15,6 +15,7 @@ export function useSavedBuildings(): [IBuilding[], boolean] {
     if (!currentUser) return;
 
     setLoading(true);
+
     const ref = firebase.firestore().collection("users").doc(currentUser?.uid).collection("savedHomes");
     ref?.onSnapshot((querySnapshot) => {
       const items: Array<IBuilding> = [];
