@@ -17,10 +17,21 @@ html, body {
   background: white;
   border-bottom-right-radius: 15%;
   border-bottom-left-radius: 15%;
+  padding-right: 0em;
+  padding-left: 0em;
+}
+
+.navbar-brand {
+  margin-left: 1em;
+}
+
+.navbar-toggler {
+  margin-right: 1em;
 }
 
 .navbar .nav-link {
   color: black !important;
+  text-align: center;
 }
 
 .navbar .nav-link:hover {
