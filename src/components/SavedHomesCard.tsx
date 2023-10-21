@@ -1,11 +1,13 @@
 import { useState } from "react";
-import IBuilding from "../interfaces/IBuilding";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
 import { Card, Col, Container, Form, Button, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
 import { XLg} from "react-bootstrap-icons"
+import ISavedBuilding from "../interfaces/ISavedBuilding";
+import { deleteBuilding } from "../utils/firestoreUtils";
 
-export function SavedHomesCard(props: IBuilding) {
+
+export function SavedHomesCard(props: ISavedBuilding) {
   const { currentUser } = useAuth() as any
   const {
     buildingID,
@@ -28,16 +30,6 @@ export function SavedHomesCard(props: IBuilding) {
     note
   } = props;
 
-  function deleteBuilding(e: any) {
-    const savedHomesQuery = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where('buildingID','==', buildingID);
-    savedHomesQuery.get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        doc.ref.delete();
-      });
-    });
-  }
-
-  // Note form
   const [noteToAdd, setNoteToAdd] = useState(note)
 
   const handleChange = (event: any) => {
@@ -87,7 +79,10 @@ export function SavedHomesCard(props: IBuilding) {
                 </Card.Title>
               </Col>
               <Col className="p-0 col-1">
-                <XLg onClick={deleteBuilding} className="card-close-icon"/>
+                <XLg
+                  onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
+                  className="card-close-icon"
+                />
               </Col>
             </Row>
             <Row>
