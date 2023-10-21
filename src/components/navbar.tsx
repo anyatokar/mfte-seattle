@@ -87,8 +87,8 @@ export const Header = () => {
   }
 
   return (
-      <Navbar data-bs-theme="light" collapseOnSelect expand="lg">
-        <Container fluid>
+    <Navbar collapseOnSelect expand="lg">
+      <Container fluid>
         <LinkContainer to='/'>
           <Navbar.Brand>
             <Image
@@ -103,47 +103,40 @@ export const Header = () => {
         <Navbar.Collapse>
           <Nav className="mr-auto">
             <LinkContainer to='/buildings'>
-              <Nav.Link>MFTE Map</Nav.Link>
+              <Nav.Link active={false}>MFTE Map</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/resources'>
-              <Nav.Link>Resources</Nav.Link>
+              <Nav.Link active={false}>Resources</Nav.Link>
             </LinkContainer>
             <Dropdown.Divider />
             <LinkContainer to='/about'>
-              <Nav.Link>About</Nav.Link>
+              <Nav.Link active={false} >About</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/contact-us'>
-              <Nav.Link>Contact</Nav.Link>
+              <Nav.Link active={false}>Contact</Nav.Link>
             </LinkContainer>
             <Dropdown.Divider />
           </Nav>
           { currentUser ? (
-          <>
-            <Nav>
-              <NavDropdown
-                title= {userData ? `Hi ${userData.name}!` : ''}
-              >
-                <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Profile</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
-              </NavDropdown>
-              <LinkContainer to='./saved-homes'>
-                <Nav.Link>Your List</Nav.Link>
-              </LinkContainer>
-            </Nav>
-          </>
+          <Nav>
+            <NavDropdown title={userData ? `Hi ${userData.name}!` : ''}>
+              <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Profile</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
+            </NavDropdown>
+            <LinkContainer to='/saved-homes'>
+              <Nav.Link active={false}>Your List</Nav.Link>
+            </LinkContainer>
+          </Nav>
           ) : (
-          <>
-            <Nav>
-              <Nav.Link onClick={showLogin}>Log In / Sign Up</Nav.Link>
-              <Nav.Link onClick={showLoginSavedBuildings}>Your List</Nav.Link>
-              <Modal show={showModal} onHide={closeLogin}>
-                {chooseModalComponent()}
-              </Modal>
-            </Nav>
-          </>
+          <Nav>
+            <Nav.Link active={false} onClick={showLogin}>Log In / Sign Up</Nav.Link>
+            <Nav.Link active={false} onClick={showLoginSavedBuildings}>Your List</Nav.Link>
+            <Modal show={showModal} onHide={closeLogin}>
+              {chooseModalComponent()}
+            </Modal>
+          </Nav>
           )}
-        <Dropdown.Divider />
         </Navbar.Collapse>
       </Container>
     </Navbar>
