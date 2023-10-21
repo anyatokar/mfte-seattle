@@ -39,7 +39,7 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
   const phone1Ref = `tel:${phone}`
   const phone2Ref = `tel:${phone2}`
 
-  const [isSaved, setIsSaved] = useState(false) as any;
+  const [isSaved, setIsSaved] = useState(wasOriginallySaved);
 
   function toggleSave() {
     if (wasOriginallySaved || isSaved) {
