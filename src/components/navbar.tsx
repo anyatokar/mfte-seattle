@@ -52,12 +52,6 @@ export const Header = () => {
     )}
   }, [currentUser])
 
-  // Dashboard onClick and redirect
-  function onClickDashboard(event: any) {
-    event.preventDefault()
-    history.push("./dashboard")
-  };
-
   // Logout
   async function handleLogout() {
     setMessage("")
@@ -119,19 +113,19 @@ export const Header = () => {
           </Nav>
           { currentUser ? (
           <Nav>
-            <NavDropdown title={userData ? `Hi ${userData.name}!` : ''}>
-              <Dropdown.Item onClick={onClickDashboard} eventKey="dashboard">Profile</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={handleLogout} eventKey="logout">Logout</Dropdown.Item>
-            </NavDropdown>
-            <LinkContainer to='/saved-homes'>
-              <Nav.Link active={false}>Your List</Nav.Link>
+            <Navbar.Text>{userData ? `Hi, ${userData.name}!` : ''}</Navbar.Text>
+            <LinkContainer to='/dashboard'>
+              <Nav.Link active={false}>Profile</Nav.Link>
             </LinkContainer>
+            <LinkContainer to='/saved-homes'>
+              <Nav.Link active={false}>Saved</Nav.Link>
+            </LinkContainer>
+            <Nav.Link className="logout" active={false} onClick={handleLogout}>Logout</Nav.Link>
           </Nav>
           ) : (
           <Nav>
+            <Nav.Link active={false} onClick={showLoginSavedBuildings}>Saved</Nav.Link>
             <Nav.Link active={false} onClick={showLogin}>Log In / Sign Up</Nav.Link>
-            <Nav.Link active={false} onClick={showLoginSavedBuildings}>Your List</Nav.Link>
             <Modal show={showModal} onHide={closeLogin}>
               {chooseModalComponent()}
             </Modal>

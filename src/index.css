@@ -11,14 +11,14 @@ html, body {
   max-width: 90%;
 }
 
+/* main navbar */
 .navbar {
-  /* background: #eef6f6; */
-  /* background: rgba(68, 195, 194, .20); */
   background: white;
   border-bottom-right-radius: 15%;
   border-bottom-left-radius: 15%;
   padding-right: 0em;
   padding-left: 0em;
+  text-align: center;
 }
 
 .navbar-brand {
@@ -29,23 +29,30 @@ html, body {
   margin-right: 1em;
 }
 
+.navbar-text {
+  color: black !important;
+}
+
 .navbar .nav-link {
   color: black !important;
-  text-align: center;
+  text-align: inherit;
 }
 
 .navbar .nav-link:hover {
-  /* background: rgba(68, 195, 194, .25); */
   background: #eef6f6;
   border-radius: 10%;
 }
 
 .navbar .nav-link.active {
-  /* background: rgba(68, 195, 194, .25); */
-  /* background: #eef6f6; */
   border-radius: 10%;
   font-weight: 700;
 }
+
+.navbar .nav-link.logout:hover {
+  color: red !important;
+  background: none;
+}
+/* end of main navbar */
 
 .standalone-btn {
   margin: .5em;
