@@ -41,6 +41,7 @@ export function ReactMap(props: IMap) {
         mapContainerStyle={containerStyle}
         center={center}
         zoom={14}
+        options={{mapId: 'c8d48b060a22a457'}}
       >
         <>
           {
