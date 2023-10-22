@@ -5,7 +5,7 @@ import IMap from "../interfaces/IMap";
 
 export default function MapTab(props: IMap) {
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Col className="p-0">
           <ReactMap
