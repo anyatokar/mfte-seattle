@@ -26,7 +26,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
           href="./Buildings"
           title="View the map of MFTE properties">
           MFTE Map
-        </a>&nbsp;tab to view participating buildings. Create an account to save buildings to your list and keep notes.
+        </a>&nbsp;tab to view participating buildings. Create an account to save buildings and keep notes.
       </p>
       <p className="lead">
         While the property data for this website is sourced from the City of Seattle&nbsp;
