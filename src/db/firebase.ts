@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 import "firebase/database"
 import "firebase/auth"
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyCtmQ3YXaf4KxHfztDl2846q8Galz2HOuk",
   authDomain: "mfte-simple-92c08.firebaseapp.com",
   databaseURL: "https://mfte-simple-92c08-default-rtdb.firebaseio.com",

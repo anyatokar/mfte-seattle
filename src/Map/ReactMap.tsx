@@ -4,6 +4,7 @@ import { BuildingMarker } from './BuildingMarker';
 import IMap from '../interfaces/IMap';
 import IBuilding from '../interfaces/IBuilding';
 import { checkIsSaved } from '../components/AllBuildingsList';
+import { firebaseConfig } from '../db/firebase';
 
 const containerStyle = {
   width: '100%',
@@ -32,7 +33,7 @@ export function ReactMap(props: IMap) {
 
   return (
     <LoadScript
-      googleMapsApiKey={ `${process.env.REACT_APP_APIKEY}` }
+      googleMapsApiKey={ firebaseConfig.apiKey }
       libraries={ LIBRARIES }
       language="en"
       version="quarterly"
