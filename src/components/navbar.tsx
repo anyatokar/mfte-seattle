@@ -1,8 +1,8 @@
-import { Container, Image, NavDropdown, Navbar, Nav, Modal, Dropdown } from 'react-bootstrap';
+import { Container, Image, Navbar, Nav, Modal, Dropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import firebase from "../db/firebase";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import Login from "../auth_components/Login";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
@@ -23,13 +23,13 @@ export const Header = () => {
   const showLoginSavedBuildings = () => setModalState(ModalState.LOGIN_SAVED_BUILDINGS);
   const showReset = () => setModalState(ModalState.RESET);
   const showSignup = () => setModalState(ModalState.SIGNUP);
-  const closeLogin = () => setModalState(ModalState.HIDDEN);
+  const closeLogin = useCallback(() => setModalState(ModalState.HIDDEN), [setModalState]);
 
   const afterLogin = () =>  history.push("./saved-homes");
 
   useEffect(() => {
     closeLogin()
-  }, [currentUser])
+  }, [currentUser, closeLogin])
 
   useEffect(() => {
     if (currentUser) {
