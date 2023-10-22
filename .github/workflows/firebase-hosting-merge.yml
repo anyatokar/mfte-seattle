@@ -10,10 +10,12 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      - run: echo "node_version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
+        id: nvmrc-version
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '${{ steps.nvmrc-version.outputs.node_version }}'
       - run: yarn install && yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
