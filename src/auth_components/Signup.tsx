@@ -55,7 +55,6 @@ export default function Signup({
               required
               type="name"
               ref={nameRef}
-              placeholder="required"
             />
           </Form.Group>
           <Form.Group id="email" className="form-group">
@@ -64,7 +63,6 @@ export default function Signup({
               required
               type="email"
               ref={emailRef}
-              placeholder="required"
             />
           </Form.Group>
           <Form.Group id="password" className="form-group">

@@ -25,8 +25,8 @@ const HomePage: React.FunctionComponent<IPage> = props => {
         <a id="Buildings_tab"
           href="./Buildings"
           title="View the map of MFTE properties">
-          Buildings Map
-        </a>&nbsp;tab to view a map of participating properties. Create an account to save properties to your own map and keep notes. Contact each property directly for current availability.
+          MFTE Map
+        </a>&nbsp;tab to view participating buildings. Create an account to save buildings and keep notes.
       </p>
       <p className="lead">
         While the property data for this website is sourced from the City of Seattle&nbsp;
@@ -45,6 +45,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
           government site
         </a>&nbsp;for complete information on MFTE including current income and rent limits.
       </p>
+      <p className="lead"> Contact buildings directly for current availability.</p>
       <hr className="my-4"></hr>
       <div className="btn-toolbar">
         <Button onClick={onClick} value="./buildings" variant="outline-info" className="btn-lg standalone-btn">View Buildings</Button>
