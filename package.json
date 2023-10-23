@@ -20,12 +20,12 @@
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-router-modal": "^2.0.0-rc3",
-    "react-scripts": "4.0.1",
+    "react-scripts": "^5.0.1",
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
     "start": "PORT=8080 react-scripts start",
@@ -59,7 +59,7 @@
     "@types/google-map-react": "^2.1.9",
     "@types/googlemaps": "^3.43.2",
     "@types/jest": "^26.0.15",
-    "@types/node": "^16.0.0",
+    "@types/node": "^18.0.0",
     "@types/react": "^18.2.31",
     "@types/react-alert": "^5.2.0",
     "@types/react-bootstrap": "^0.32.33",
