@@ -1644,6 +1644,13 @@
   dependencies:
     tslib "^2.1.0"
 
+"@firebase/util@^1.9.3":
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/@firebase/util/-/util-1.9.3.tgz#45458dd5cd02d90e55c656e84adf6f3decf4b7ed"
+  integrity sha512-DY02CRhOZwpzO36fHpuVysz6JZrscPiBXD0fXp6qSrL9oNOx5KWICKdR95C0lSITzxp0TZosVyHqzatE8JbcjA==
+  dependencies:
+    tslib "^2.1.0"
+
 "@firebase/webchannel-wrapper@0.5.1":
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.5.1.tgz#a64d1af3c62e3bb89576ec58af880980a562bf4e"
