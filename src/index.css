@@ -1,8 +1,5 @@
 html, body {
   background: #eef6f6;
-}
-
-.footer-img {
   width: 100%;
 }
 
@@ -92,6 +89,10 @@ html, body {
 
 .resources-list {
   list-style-type: none;
+}
+
+.footer-img {
+  width: 100%;
 }
 
 .footer {

@@ -18,7 +18,7 @@ const Application: React.FunctionComponent<{}> = props => {
   const modalStateHook = useState(ModalState.HIDDEN);
 
   return (
-    <div>
+    <div className="m-0">
       <Router>
         <AuthProvider>
           <ModalContext.Provider value={ modalStateHook }>
