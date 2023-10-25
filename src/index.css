@@ -30,13 +30,8 @@ html, body {
   margin-right: 1em;
 }
 
-.navbar-text {
+.navbar .nav-link, .navbar-text {
   color: black !important;
-}
-
-.navbar .nav-link {
-  color: black !important;
-  text-align: inherit;
 }
 
 .navbar .nav-link:hover {
