@@ -2,12 +2,18 @@ html, body {
   background: #eef6f6;
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .diy-jumbotron {
   margin-top: 2em;
   max-width: 90%;
 }
 
-/* main navbar */
+/* navbar section */
 .navbar {
   background: white;
   border-bottom-right-radius: 15%;
@@ -47,7 +53,7 @@ html, body {
   color: red !important;
   background: none;
 }
-/* end of main navbar */
+/* end of navbar section */
 
 .standalone-btn {
   margin: .5em;
@@ -69,6 +75,7 @@ html, body {
 
 .pills-page {
   margin-top: 2em;
+  flex: 1;
 }
 
 .building-row {
