@@ -59,13 +59,13 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   const [ savedBuildings, loadingSavedBuildings ] = useSavedBuildings();
 
   return (
-    <div>
+    <>
       {loading || loadingSavedBuildings ? (
         <Spinner animation="border" variant="warning" />
         ) : (<></>)
       }
       {/* search filter container */}
-      <Container fluid>
+      <Container fluid className="pills-page">
         {/* search */}
         <Row className="justify-content-center">
           <Col sm md={9} lg={8}>
@@ -106,7 +106,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         <hr className="my-4"></hr>
       </Container>
 
-      <Container fluid>
+      <Container fluid className="pills-page">
         <Tab.Container id="sidebar" defaultActiveKey="map">
           <Row>
             <Col sm={2}>
@@ -132,7 +132,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
           </Row>
         </Tab.Container>
       </Container>
-    </div>
+    </>
   )
 }
 
