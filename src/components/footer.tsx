@@ -6,11 +6,17 @@ export const Footer = () => {
     <Container fluid className="footer">
       <Row>
         <Col className="p-0">
-          <Image src={houses} alt="Colorful houses in a neighborhood" className="footer-img"/>
+          <Image
+            className="footer-img"
+            src={houses}
+            alt="Colorful houses in a neighborhood"
+          />
         </Col>
       </Row>
       <Row>
-        <Col className="text-center p-0">Copyright © 2021-2023 Anya Tokar</Col>
+        <Col className="p-0 text-center">
+          Copyright © 2021-2023 Anya Tokar
+        </Col>
       </Row>
     </Container>
   )

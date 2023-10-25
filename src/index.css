@@ -2,10 +2,6 @@ html, body {
   background: #eef6f6;
 }
 
-.footer-img {
-  width: 100%;
-}
-
 .diy-jumbotron {
   margin-top: 2em;
   max-width: 90%;
@@ -16,8 +12,6 @@ html, body {
   background: white;
   border-bottom-right-radius: 15%;
   border-bottom-left-radius: 15%;
-  padding-right: 0em;
-  padding-left: 0em;
   text-align: center;
 }
 
@@ -92,6 +86,10 @@ html, body {
 
 .resources-list {
   list-style-type: none;
+}
+
+.footer-img {
+  width: 100%;
 }
 
 .footer {
