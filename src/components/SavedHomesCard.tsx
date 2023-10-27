@@ -67,6 +67,7 @@ export function SavedHomesCard(props: ISavedBuilding) {
         <Card.Title>
           <a id="buildingLink"
             href={urlForBuilding}
+            title={urlForBuilding}
             target="_blank"
             rel="noreferrer">
             {buildingName}
@@ -78,6 +79,7 @@ export function SavedHomesCard(props: ISavedBuilding) {
         <ListGroupItem>
           <a id="addressLink"
               href={mapViewUrl}
+              title={`${buildingName} on Google Maps`}
               target="_blank"
               rel="noreferrer">
             {streetNum} {street}
@@ -85,14 +87,24 @@ export function SavedHomesCard(props: ISavedBuilding) {
             {city}, {state} {zip}
           </a>
           <br />
-          <a href={phone1Ref}>
-            {phone}
-          </a>
+          {
+            phone &&
+            <>
+            <br />
+              <a href={phone1Ref}
+                title={`Call ${buildingName}`}
+              >
+                {phone}
+              </a>
+            </>
+          }
           {
             phone2 &&
             <>
               <br />
-              <a href={phone2Ref}>
+              <a href={phone2Ref}
+                title={`Call ${buildingName}`}
+              >
                 {phone2}
               </a>
             </>
