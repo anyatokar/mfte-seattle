@@ -21,8 +21,8 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
       <Container fluid className="pills-page">
         <Tab.Container id="sidebar" defaultActiveKey="list">
           <Row>
-            <Col sm={2}>
-              <Nav variant="pills" className="flex-column">
+            <Col lg={2}>
+              <Nav variant="pills" className="flex-column side-nav">
                 <Nav.Item>
                   <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
                 </Nav.Item>
@@ -31,7 +31,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 </Nav.Item>
               </Nav>
             </Col>
-            <Col sm={10}>
+            <Col lg={10}>
               <Tab.Content>
                 <Row>
                   {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for medium screens and up */}

@@ -36,16 +36,15 @@ html, body {
 .navbar .nav-link {
   color: black !important;
   text-align: inherit;
+  border-radius: 10%;
 }
 
 .navbar .nav-link:hover {
   background: #eef6f6;
-  border-radius: 10%;
 }
 
 .navbar .nav-link.active {
   background: #eef6f6;
-  border-radius: 10%;
   font-weight: 700;
 }
 
@@ -53,7 +52,12 @@ html, body {
   color: red !important;
   background: none;
 }
+
 /* end of main navbar */
+
+.side-nav {
+  margin-bottom: 1em;
+}
 
 .standalone-btn {
   margin: .5em;
@@ -66,11 +70,17 @@ html, body {
 .nav.nav-pills .nav-link {
   background-color: #eef6f6;
   color: #06253e;
+  border: 2px solid rgba(6, 37, 62, .1);
+}
+
+.nav.nav-pills .nav-link:hover {
+  font-weight: 700;
 }
 
 .nav.nav-pills .nav-link.active {
   background-color: #06253e;
   color: #eef6f6;
+  font-weight: 700;
 }
 
 .pills-page {
