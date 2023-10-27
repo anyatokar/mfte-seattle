@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import 'firebase/firestore';
-import { AllBuildingsCard } from "./AllBuildingsCard";
+import { BuildingCard } from "./BuildingCard";
 import { Container, Row, Col } from 'react-bootstrap';
 import IBuilding from "../interfaces/IBuilding";
 import Sorters from "../components/Sorters";
@@ -55,7 +55,7 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
               <>
                 {resultBuildings.map((building:IBuilding) => (
                   <Col key={building.buildingID} md={4} lg={3} className="building-row">
-                    <AllBuildingsCard {...building} isSaved={checkIsSaved(props.savedBuildings, building)} />
+                    <BuildingCard {...building} isSaved={checkIsSaved(props.savedBuildings, building)} pageType={"allBuildings"} />
                   </Col>
                 ))}
               </>

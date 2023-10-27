@@ -1,5 +1,5 @@
 import 'firebase/firestore';
-import { SavedHomesCard } from "./SavedHomesCard";
+import { BuildingCard } from "./BuildingCard";
 import { Container, Row, Col } from 'react-bootstrap';
 import ISavedBuilding from '../interfaces/ISavedBuilding';
 
@@ -18,7 +18,7 @@ export default function SavedHomesList(props: SavedHomesListProps) {
             <>
               {props.savedBuildings?.map((building: ISavedBuilding) => (
                 <Col key={building.buildingID} md={4} className="building-row">
-                  <SavedHomesCard {...building} />
+                  <BuildingCard {...building} pageType="savedHomes" />
                 </Col>
               ))}
             </>

@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
 import { Card, Form, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import ISavedBuilding from "../interfaces/ISavedBuilding";
-import { deleteBuilding } from "../utils/firestoreUtils";
+import IBuilding from "../interfaces/IBuilding";
+import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
+import { ModalContext, ModalState } from "../contexts/ModalContext";
 
+export interface AllBuildingsCardProps extends IBuilding {
+  isSaved: boolean
+  pageType: "allBuildings"
+}
 
-export function SavedHomesCard(props: ISavedBuilding) {
+export interface SavedHomesCardProps extends ISavedBuilding {
+  pageType: "savedHomes"
+}
+
+type BuildingsCardProps= AllBuildingsCardProps | SavedHomesCardProps;
+
+export function BuildingCard(props: BuildingsCardProps) {
   const { currentUser } = useAuth() as any
   const {
     buildingID,
@@ -26,9 +38,35 @@ export function SavedHomesCard(props: ISavedBuilding) {
     city,
     state, 
     zip,
-    note
+    pageType
   } = props;
 
+  // All Buildings Page - save/saved button
+  const [/* modalState */, setModalState] = useContext(ModalContext);
+  const handleShowLogin = () => setModalState(ModalState.LOGIN);
+
+  let wasOriginallySaved = false;
+  let note: string | undefined;
+
+  if (pageType === "allBuildings" ) {
+    wasOriginallySaved = props.isSaved;
+  } else if (pageType === "savedHomes") {
+    note = props.note;
+  }
+
+  const [isSaved, setIsSaved] = useState(wasOriginallySaved);
+
+  function toggleSave() {
+    if (wasOriginallySaved || isSaved) {
+      setIsSaved(false);
+      deleteBuilding(currentUser, buildingID, buildingName);
+    } else {
+      setIsSaved(true);
+      saveBuilding(currentUser, props);
+    }
+  };
+
+  // Saved Homes Page - note form
   const [noteToAdd, setNoteToAdd] = useState(note)
 
   const handleChange = (event: any) => {
@@ -74,6 +112,30 @@ export function SavedHomesCard(props: ISavedBuilding) {
           </a>
         </Card.Title>
         <h6>{residentialTargetedArea}</h6>
+        { pageType === "allBuildings" &&
+          (currentUser ? (
+            (wasOriginallySaved || isSaved) ?
+              <Button 
+                variant="btn btn-info btn-sm"
+                onClick={toggleSave}
+                role="button">
+                Saved
+              </Button>
+              :
+              <Button 
+                variant="btn btn-outline-info btn-sm"
+                onClick={toggleSave}
+                role="button">
+                Save
+              </Button>
+            ) : (
+            <>
+              <Button onClick={handleShowLogin} variant="btn btn-outline-info btn-sm">
+                Save
+              </Button>
+            </>
+            ))
+          }
       </Card.Header>
       <ListGroup className="list-group-flush">
         <ListGroupItem>
@@ -110,27 +172,29 @@ export function SavedHomesCard(props: ISavedBuilding) {
             </>
           }
         </ListGroupItem>
-        <ListGroupItem>
-          <Form onSubmit={handleSubmit}>
-            <Form.Label>Notes</Form.Label>
-            <Form.Group>
-              <Form.Control
-                as="textarea"
-                name="note"
-                rows={3}
-                value={noteToAdd}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Button
-              variant="info"
-              type="submit"
-              value="Update note"
-              className="btn-sm notes-form-btn">
-                Update note
-            </Button>
-          </Form>
-        </ListGroupItem>
+        {pageType === "savedHomes" && 
+          <ListGroupItem>
+            <Form onSubmit={handleSubmit}>
+              <Form.Label>Notes</Form.Label>
+              <Form.Group>
+                <Form.Control
+                  as="textarea"
+                  name="note"
+                  rows={3}
+                  value={noteToAdd}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Button
+                variant="info"
+                type="submit"
+                value="Update note"
+                className="btn-sm notes-form-btn">
+                  Update note
+              </Button>
+            </Form>
+          </ListGroupItem>
+        }
         <ListGroupItem>
           Total MFTE: {totalRestrictedUnits}
           <br />
@@ -144,17 +208,19 @@ export function SavedHomesCard(props: ISavedBuilding) {
           <br />
           Three+ beds: {threePlusBedroomUnits}
         </ListGroupItem>
-        <ListGroupItem>
-          <Button
-            className="btn-sm center"
-            variant="outline-danger"
-            type="button"
-            value="Delete"
-            onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
-            >
-            Delete
-          </Button>
-        </ListGroupItem>
+        {pageType === "savedHomes" && 
+          <ListGroupItem>
+            <Button
+              className="btn-sm center"
+              variant="outline-danger"
+              type="button"
+              value="Delete"
+              onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
+              >
+              Delete
+            </Button>
+          </ListGroupItem>
+        }
       </ListGroup>
     </Card>
   );
