@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, Form, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Card, Form, Button, ListGroup, ListGroupItem, Nav, Tabs, Tab } from 'react-bootstrap';
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IBuilding from "../interfaces/IBuilding";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
@@ -136,92 +136,101 @@ export function BuildingCard(props: BuildingsCardProps) {
             </>
             ))
           }
-      </Card.Header>
-      <ListGroup className="list-group-flush">
-        <ListGroupItem>
-          <a id="addressLink"
-              href={mapViewUrl}
-              title={`${buildingName} on Google Maps`}
-              target="_blank"
-              rel="noreferrer">
-            {streetNum} {street}
-            <br />
-            {city}, {state} {zip}
-          </a>
-          <br />
-          {
-            phone &&
-            <>
-            <br />
-              <a href={phone1Ref}
-                title={`Call ${buildingName}`}
-              >
-                {phone}
-              </a>
-            </>
-          }
-          {
-            phone2 &&
-            <>
+        </Card.Header>
+        <Card.Body>
+      {/* <ListGroup className="list-group-flush"> */}
+        <Tabs defaultActiveKey={"first"}>
+          <Tab eventKey="first" title="Contact">
+            {/* <ListGroupItem> */}
               <br />
-              <a href={phone2Ref}
-                title={`Call ${buildingName}`}
-              >
-                {phone2}
+              <a id="addressLink"
+                  href={mapViewUrl}
+                  title={`${buildingName} on Google Maps`}
+                  target="_blank"
+                  rel="noreferrer">
+                {streetNum} {street}
+                <br />
+                {city}, {state} {zip}
               </a>
+              <br />
+              {
+                phone &&
+                <>
+                <br />
+                  <a href={phone1Ref}
+                    title={`Call ${buildingName}`}
+                  >
+                    {phone}
+                  </a>
+                </>
+              }
+              {
+                phone2 &&
+                <>
+                  <br />
+                  <a href={phone2Ref}
+                    title={`Call ${buildingName}`}
+                  >
+                    {phone2}
+                  </a>
+                </>
+              }
+            {/* </ListGroupItem> */}
+            {pageType === "savedHomes" &&
+            <>
+              {/* <ListGroupItem> */}
+                <Form onSubmit={handleSubmit}>
+                  <Form.Label>Notes</Form.Label>
+                  <Form.Group>
+                    <Form.Control
+                      as="textarea"
+                      name="note"
+                      rows={3}
+                      value={noteToAdd}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                  <Button
+                    variant="info"
+                    type="submit"
+                    value="Update note"
+                    className="btn-sm notes-form-btn">
+                      Update note
+                  </Button>
+                </Form>
+              {/* </ListGroupItem> */}
+              {/* <ListGroupItem> */}
+                <Button
+                  className="btn-sm center"
+                  variant="outline-danger"
+                  type="button"
+                  value="Delete"
+                  onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
+                  >
+                  Delete card
+                </Button>
+              {/* </ListGroupItem> */}
             </>
-          }
-        </ListGroupItem>
-        {pageType === "savedHomes" && 
-          <ListGroupItem>
-            <Form onSubmit={handleSubmit}>
-              <Form.Label>Notes</Form.Label>
-              <Form.Group>
-                <Form.Control
-                  as="textarea"
-                  name="note"
-                  rows={3}
-                  value={noteToAdd}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Button
-                variant="info"
-                type="submit"
-                value="Update note"
-                className="btn-sm notes-form-btn">
-                  Update note
-              </Button>
-            </Form>
-          </ListGroupItem>
-        }
-        <ListGroupItem>
-          Total MFTE: {totalRestrictedUnits}
-          <br />
-          Pods: {sedu}
-          <br />
-          Studios: {studioUnits}
-          <br />
-          One beds: {oneBedroomUnits}
-          <br />
-          Two beds: {twoBedroomUnits}
-          <br />
-          Three+ beds: {threePlusBedroomUnits}
-        </ListGroupItem>
-        {pageType === "savedHomes" && 
-          <ListGroupItem>
-            <Button
-              className="btn-sm center"
-              variant="outline-danger"
-              type="button"
-              value="Delete"
-              onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
-              >
-              Delete
-            </Button>
-          </ListGroupItem>
-        }
-      </ListGroup>
+            }
+          </Tab>
+          <Tab eventKey="link" title="AMI">
+            {/* <ListGroupItem> */}
+              Total MFTE: {totalRestrictedUnits}
+              <br />
+              Pods: {sedu}
+              <br />
+              Studios: {studioUnits}
+              <br />
+              One beds: {oneBedroomUnits}
+              <br />
+              Two beds: {twoBedroomUnits}
+              <br />
+              Three+ beds: {threePlusBedroomUnits}
+            {/* </ListGroupItem> */}
+          </Tab>
+        </Tabs>
+      {/* </ListGroup> */}
+      </Card.Body>
     </Card>
   );
 }
