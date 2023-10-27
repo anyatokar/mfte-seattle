@@ -54,7 +54,7 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
             {resultBuildings.length > 0 && (
               <>
                 {resultBuildings.map((building:IBuilding) => (
-                  <Col key={building.buildingID} md={4} lg={3} className="building-row">
+                  <Col key={building.buildingID} xs={12} sm={6} lg={4} xl={3} xxl={1} className="building-row">
                     <BuildingCard {...building} isSaved={checkIsSaved(props.savedBuildings, building)} pageType={"allBuildings"} />
                   </Col>
                 ))}

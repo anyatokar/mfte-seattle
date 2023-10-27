@@ -47,7 +47,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
       </p>
       <p className="lead"> Contact buildings directly for current availability.</p>
       <hr className="my-4"></hr>
-      <Stack gap={3} >
+      <Stack gap={2}>
         <Button
           className="btn-lg col-lg-4 col-xl-3"
           variant="outline-info"

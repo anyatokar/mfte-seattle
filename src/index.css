@@ -54,6 +54,10 @@ html, body {
   margin-top: .5em;
 }
 
+.notes-form {
+  margin-top: 1em;
+}
+
 .nav.nav-pills .nav-link {
   background-color: #eef6f6;
   color: #06253e;

@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, Form, Button, ListGroup, ListGroupItem, Nav, Tabs, Tab } from 'react-bootstrap';
+import { Card, Form, Button, Table, Tabs, Tab } from 'react-bootstrap';
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IBuilding from "../interfaces/IBuilding";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
@@ -187,7 +187,7 @@ export function BuildingCard(props: BuildingsCardProps) {
               }
               {pageType === "savedHomes" &&
               <>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} className="notes-form">
                   <Form.Label>Notes</Form.Label>
                   <Form.Group>
                     <Form.Control
@@ -210,19 +210,43 @@ export function BuildingCard(props: BuildingsCardProps) {
               </>
               }
             </Tab>
-            <Tab eventKey="link" title="AMI">
+            <Tab eventKey="link" title="# of Units">
               <br />
-              Total MFTE: {totalRestrictedUnits}
-              <br />
-              Pods: {sedu}
-              <br />
-              Studios: {studioUnits}
-              <br />
-              One beds: {oneBedroomUnits}
-              <br />
-              Two beds: {twoBedroomUnits}
-              <br />
-              Three+ beds: {threePlusBedroomUnits}
+              <Table bordered hover size="sm">
+                <thead>
+                  <tr>
+                    <th>Apt Size</th>
+                    <th># of Units*</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Pod</td>
+                    <td>{sedu}</td>
+                  </tr>
+                  <tr>
+                    <td>Studio</td>
+                    <td>{studioUnits}</td>
+                  </tr>
+                  <tr>
+                    <td>One bedroom</td>
+                    <td>{oneBedroomUnits}</td>
+                  </tr>
+                  <tr>
+                    <td>Two bedroom</td>
+                    <td>{twoBedroomUnits}</td>
+                  </tr>
+                  <tr>
+                    <td>Three+ bedroom</td>
+                    <td>{threePlusBedroomUnits}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>{totalRestrictedUnits}</strong></td>
+                  </tr>
+                </tbody>
+              </Table>
+              <p>*Column signifies # of MFTE units in the building. Contact buildings directly for current availability.</p>
             </Tab>
           </Tabs>
       </Card.Body>
