@@ -2,22 +2,23 @@ html, body {
   background: #eef6f6;
 }
 
-.footer-img {
-  width: 100%;
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .diy-jumbotron {
   margin-top: 2em;
   max-width: 90%;
+  flex: 1;
 }
 
-/* main navbar */
+/* navbar section */
 .navbar {
   background: white;
   border-bottom-right-radius: 15%;
   border-bottom-left-radius: 15%;
-  padding-right: 0em;
-  padding-left: 0em;
   text-align: center;
 }
 
@@ -29,14 +30,8 @@ html, body {
   margin-right: 1em;
 }
 
-.navbar-text {
+.navbar .nav-link, .navbar-text {
   color: black !important;
-}
-
-.navbar .nav-link {
-  color: black !important;
-  text-align: inherit;
-  border-radius: 10%;
 }
 
 .navbar .nav-link:hover {
@@ -52,16 +47,8 @@ html, body {
   color: red !important;
   background: none;
 }
+/* end of navbar section */
 
-/* end of main navbar */
-
-.side-nav {
-  margin-bottom: 1em;
-}
-
-.standalone-btn {
-  margin: .5em;
-}
 
 .notes-form-btn {
   margin-top: .5em;
@@ -85,6 +72,7 @@ html, body {
 
 .pills-page {
   margin-top: 2em;
+  flex: 1;
 }
 
 .building-row {
@@ -104,8 +92,12 @@ html, body {
   list-style-type: none;
 }
 
+.footer-img {
+  width: 100%;
+}
+
 .footer {
-  padding-top: 3em;
+  padding-top: 1em;
 }
 
 .card-close-icon { 

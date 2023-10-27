@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { BuildingMarker } from './BuildingMarker';
 import IMap from '../interfaces/IMap';
 import IBuilding from '../interfaces/IBuilding';
@@ -31,33 +31,36 @@ export function ReactMap(props: IMap) {
   // eslint-disable-next-line react-hooks/exhaustive-deps -- No need for selectedBuilding in the deps list
   }, [buildingsToMap]);
 
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: firebaseConfig.apiKey,
+    libraries: LIBRARIES
+  })
+
+  if (!isLoaded) {
+    return null
+  }
+
   return (
-    <LoadScript
-      googleMapsApiKey={ firebaseConfig.apiKey }
-      libraries={ LIBRARIES }
-      language="en"
-      version="quarterly"
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={14}
+      options={{mapId: 'c8d48b060a22a457'}}
     >
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={14}
-        options={{mapId: 'c8d48b060a22a457'}}
-      >
-        <>
-          {
-            buildingsToMap.map(building => 
-              <BuildingMarker
-                key={ building.buildingID }
-                building={ building }
-                isSelected={ building === selectedBuilding }
-                setSelectedBuilding={ setSelectedBuilding }
-                isSaved={ checkIsSaved(props.savedBuildings, building) }
-              />
-            )
-          }
-        </>
-      </GoogleMap>
-    </LoadScript>
+      <>
+        {
+          buildingsToMap.map(building =>
+            <BuildingMarker
+              key={ building.buildingID }
+              building={ building }
+              isSelected={ building === selectedBuilding }
+              setSelectedBuilding={ setSelectedBuilding }
+              isSaved={ checkIsSaved(props.savedBuildings, building) }
+            />
+          )
+        }
+      </>
+    </GoogleMap>
   )
 };

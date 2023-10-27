@@ -17,7 +17,7 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
       <p className="lead">
         From the Seattle Office of Housing:
       </p>
-      <ul className="resources-list lead">
+      <ul className="resources-list">
         <li>
           <a id="mfte-city-website"
             href="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
