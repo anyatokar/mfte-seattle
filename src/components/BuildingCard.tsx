@@ -105,7 +105,7 @@ export function BuildingCard(props: BuildingsCardProps) {
         <Card.Title>
           <a id="buildingLink"
             href={urlForBuilding}
-            title={urlForBuilding}
+            title={`Open new tab: ${urlForBuilding}`}
             target="_blank"
             rel="noreferrer">
             {buildingName}
@@ -136,16 +136,26 @@ export function BuildingCard(props: BuildingsCardProps) {
             </>
             ))
           }
+          { pageType === "savedHomes" &&
+            <Button
+              className="btn-sm center"
+              variant="outline-danger"
+              title={`Delete ${buildingName} from saved buildings list`}
+              type="button"
+              value="Unsave"
+              onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
+              >
+              Unsave
+            </Button>
+          }
         </Card.Header>
         <Card.Body>
-      {/* <ListGroup className="list-group-flush"> */}
-        <Tabs defaultActiveKey={"first"}>
-          <Tab eventKey="first" title="Contact">
-            {/* <ListGroupItem> */}
+          <Tabs defaultActiveKey={"first"}>
+            <Tab eventKey="first" title="Contact">
               <br />
               <a id="addressLink"
                   href={mapViewUrl}
-                  title={`${buildingName} on Google Maps`}
+                  title={`Open new tab: ${buildingName} on Google Maps`}
                   target="_blank"
                   rel="noreferrer">
                 {streetNum} {street}
@@ -175,10 +185,8 @@ export function BuildingCard(props: BuildingsCardProps) {
                   </a>
                 </>
               }
-            {/* </ListGroupItem> */}
-            {pageType === "savedHomes" &&
-            <>
-              {/* <ListGroupItem> */}
+              {pageType === "savedHomes" &&
+              <>
                 <Form onSubmit={handleSubmit}>
                   <Form.Label>Notes</Form.Label>
                   <Form.Group>
@@ -193,28 +201,17 @@ export function BuildingCard(props: BuildingsCardProps) {
                   <Button
                     variant="info"
                     type="submit"
-                    value="Update note"
+                    title={`Save or update your note!`}
+                    value="Save note"
                     className="btn-sm notes-form-btn">
-                      Update note
+                      Save note
                   </Button>
                 </Form>
-              {/* </ListGroupItem> */}
-              {/* <ListGroupItem> */}
-                <Button
-                  className="btn-sm center"
-                  variant="outline-danger"
-                  type="button"
-                  value="Delete"
-                  onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
-                  >
-                  Delete card
-                </Button>
-              {/* </ListGroupItem> */}
-            </>
-            }
-          </Tab>
-          <Tab eventKey="link" title="AMI">
-            {/* <ListGroupItem> */}
+              </>
+              }
+            </Tab>
+            <Tab eventKey="link" title="AMI">
+              <br />
               Total MFTE: {totalRestrictedUnits}
               <br />
               Pods: {sedu}
@@ -226,10 +223,8 @@ export function BuildingCard(props: BuildingsCardProps) {
               Two beds: {twoBedroomUnits}
               <br />
               Three+ beds: {threePlusBedroomUnits}
-            {/* </ListGroupItem> */}
-          </Tab>
-        </Tabs>
-      {/* </ListGroup> */}
+            </Tab>
+          </Tabs>
       </Card.Body>
     </Card>
   );
