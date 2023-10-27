@@ -51,7 +51,6 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
 
   return (
     <Marker
-      animation={ google.maps.Animation.DROP }
       position={{
         lat: building.lat,
         lng: building.lng
@@ -73,14 +72,28 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
             </strong>
             <br/>
             <strong>{ building.residentialTargetedArea }</strong>
-            <br/>
+            <br/><br/>
             { building.streetNum } { building.street }
             <br/>
             { building.city }, { building.state } { building.zip }
             <br/>
-            <br/>
-            <a href={ `tel:${building.phone}` }>{ building.phone }</a>
-            <br/>
+            { building.phone ?
+              (
+                <>
+                  <br/>
+                  <a href={ `tel:${building.phone}` }>{ building.phone }</a>
+                  <br/>
+                </>
+              ) : ''
+            }
+            { building.phone2 ?
+              (
+                <>
+                  <a href={ `tel:${building.phone2}` }>{ building.phone2 }</a>
+                  <br/>
+                </>
+              ) : ''
+            }
             <br/>
             { currentUser ? (
             (wasOriginallySaved || isSaved) ?
@@ -103,8 +116,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
                 Save
               </Button>
             </>
-            )
-          }
+            )}
           </>
         </InfoWindow>
       }
