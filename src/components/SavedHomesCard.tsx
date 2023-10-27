@@ -1,8 +1,7 @@
 import { useState } from "react";
 import firebase from "../db/firebase"
 import { useAuth } from "../contexts/AuthContext";
-import { Card, Col, Container, Form, Button, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
-import { XLg} from "react-bootstrap-icons"
+import { Card, Form, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import { deleteBuilding } from "../utils/firestoreUtils";
 
@@ -63,95 +62,88 @@ export function SavedHomesCard(props: ISavedBuilding) {
   const phone2Ref = `tel:${phone2}`
 
   return (
-    <div>
-      <Card>
-        <Card.Header>
-          <Container fluid>
-            <Row>
-              <Col className="p-0">
-                <Card.Title>
-                  <a id="buildingLink" 
-                    href={urlForBuilding} 
-                    target="_blank" 
-                    rel="noreferrer">
-                    {buildingName}
-                  </a>
-                </Card.Title>
-              </Col>
-              <Col className="p-0 col-1">
-                <XLg
-                  onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
-                  className="card-close-icon"
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col className="p-0">
-                <h6>{residentialTargetedArea}</h6>
-              </Col>
-            </Row>
-          </Container>
-        </Card.Header>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>
-            <a id="addressLink"
-                href={mapViewUrl}
-                target="_blank" 
-                rel="noreferrer">
-              {streetNum} {street}
+    <Card>
+      <Card.Header>
+        <Card.Title>
+          <a id="buildingLink"
+            href={urlForBuilding}
+            target="_blank"
+            rel="noreferrer">
+            {buildingName}
+          </a>
+        </Card.Title>
+        <h6>{residentialTargetedArea}</h6>
+      </Card.Header>
+      <ListGroup className="list-group-flush">
+        <ListGroupItem>
+          <a id="addressLink"
+              href={mapViewUrl}
+              target="_blank"
+              rel="noreferrer">
+            {streetNum} {street}
+            <br></br>
+            {city}, {state} {zip}
+          </a>
+          <br></br>
+          <a href={phone1Ref}>
+            {phone}
+          </a>
+          {
+            phone2 &&
+            <>
               <br></br>
-              {city}, {state} {zip}
-            </a>
-            <br></br>
-            <a href={phone1Ref}>
-              {phone}
-            </a>
-            {
-              phone2 &&
-              <>
-                <br></br>
-                <a href={phone2Ref}>
-                  {phone2}
-                </a>
-              </>
-            }
-          </ListGroupItem>
-          <ListGroupItem>
-            <Form onSubmit={handleSubmit}>
-              <Form.Label>Notes</Form.Label>
-              <Form.Group>
-                <Form.Control 
-                  as="textarea"
-                  name="note"
-                  rows={3}
-                  value={noteToAdd}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Button
-                variant="info"
-                type="submit"
-                value="Submit"
-                className="btn-sm notes-form-btn">
-                  Update note
-              </Button>
-            </Form>
-          </ListGroupItem>
-          <ListGroupItem>
-            Total MFTE: {totalRestrictedUnits}
-            <br></br>
-            Pods: {sedu}
-            <br></br>
-            Studios: {studioUnits}
-            <br></br>
-            One beds: {oneBedroomUnits}
-            <br></br>
-            Two beds: {twoBedroomUnits}
-            <br></br>
-            Three+ beds: {threePlusBedroomUnits}
-          </ListGroupItem>
-        </ListGroup>
-      </Card>
-    </div>
+              <a href={phone2Ref}>
+                {phone2}
+              </a>
+            </>
+          }
+        </ListGroupItem>
+        <ListGroupItem>
+          <Form onSubmit={handleSubmit}>
+            <Form.Label>Notes</Form.Label>
+            <Form.Group>
+              <Form.Control
+                as="textarea"
+                name="note"
+                rows={3}
+                value={noteToAdd}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Button
+              variant="info"
+              type="submit"
+              value="Update note"
+              className="btn-sm notes-form-btn">
+                Update note
+            </Button>
+          </Form>
+        </ListGroupItem>
+        <ListGroupItem>
+          Total MFTE: {totalRestrictedUnits}
+          <br></br>
+          Pods: {sedu}
+          <br></br>
+          Studios: {studioUnits}
+          <br></br>
+          One beds: {oneBedroomUnits}
+          <br></br>
+          Two beds: {twoBedroomUnits}
+          <br></br>
+          Three+ beds: {threePlusBedroomUnits}
+        </ListGroupItem>
+        <ListGroupItem>
+          <Button
+            className="btn-sm center"
+            variant="outline-danger"
+            type="button"
+            value="Delete"
+            onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
+            >
+            Delete
+          </Button>
+        </ListGroupItem>
+      </ListGroup>
+    </Card>
   );
 }
