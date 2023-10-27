@@ -95,17 +95,17 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
                 target="_blank" 
                 rel="noreferrer">
               {streetNum} {street}
-              <br></br>
+              <br />
               {city}, {state} {zip}
             </a>
-            <br></br>
+            <br />
             <a href={phone1Ref}>
               {phone}
             </a>
             {
               phone2 &&
               <>
-                <br></br>
+                <br />
                 <a href={phone2Ref}>
                   {phone2}
                 </a>
@@ -114,15 +114,15 @@ export function AllBuildingsCard(props: AllBuildingsCardProps) {
           </ListGroupItem>
           <ListGroupItem>
             Total MFTE: {totalRestrictedUnits}
-            <br></br>
+            <br />
             Pods: {sedu}
-            <br></br>
+            <br />
             Studios: {studioUnits}
-            <br></br>
+            <br />
             One beds: {oneBedroomUnits}
-            <br></br>
+            <br />
             Two beds: {twoBedroomUnits}
-            <br></br>
+            <br />
             Three+ beds: {threePlusBedroomUnits}
           </ListGroupItem>
         </ListGroup>

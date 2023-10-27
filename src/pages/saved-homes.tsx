@@ -43,7 +43,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 {loading && <Spinner animation="border" variant="warning" />}
                 {!loading && savedBuildings.length === 0 &&
                   <>
-                    <br></br>
+                    <br />
                     <p>Empty for now! To start your list, use the Save button in the&nbsp;
                       <a id="Buildings_tab"
                         href="./Buildings"

@@ -70,19 +70,19 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
                 { building.buildingName }
               </a>
             </strong>
-            <br/>
+            <br />
             <strong>{ building.residentialTargetedArea }</strong>
-            <br/><br/>
+            <br /><br />
             { building.streetNum } { building.street }
-            <br/>
+            <br />
             { building.city }, { building.state } { building.zip }
-            <br/>
+            <br />
             { building.phone ?
               (
                 <>
-                  <br/>
+                  <br />
                   <a href={ `tel:${building.phone}` }>{ building.phone }</a>
-                  <br/>
+                  <br />
                 </>
               ) : ''
             }
@@ -90,11 +90,11 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
               (
                 <>
                   <a href={ `tel:${building.phone2}` }>{ building.phone2 }</a>
-                  <br/>
+                  <br />
                 </>
               ) : ''
             }
-            <br/>
+            <br />
             { currentUser ? (
             (wasOriginallySaved || isSaved) ?
               <Button 
