@@ -19,6 +19,15 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
       </p>
       <ul className="resources-list">
         <li>
+        <a id="seattle-housing-website"
+            href="https://seattle.gov/housing"
+            title="Seattle Office of Housing government website"
+            target="_blank"
+            rel="noreferrer">
+            Seattle Office of Housing
+          </a>
+        </li>
+        <li>
           <a id="mfte-city-website"
             href="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
             title="Information about the MFTE program and other income and rent restricted properties on the City of Seattle website"

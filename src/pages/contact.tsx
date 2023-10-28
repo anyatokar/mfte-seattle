@@ -82,7 +82,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
           Please contact the&nbsp;
           <a id="seattle-housing-website"
             href="https://seattle.gov/housing"
-            title="Seattle Office of Housing government website."
+            title="Seattle Office of Housing government website"
             target="_blank"
             rel="noreferrer">
             Seattle Office of Housing
