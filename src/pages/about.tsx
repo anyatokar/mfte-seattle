@@ -37,7 +37,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
       <p className="lead">
         We do not provide insight on current availability in each building or details on renter qualifications. The best way to learn this information is to get in touch with property management.
       </p>
-      <hr className="my-4"></hr>
+      <hr className="my-4 heavy-break-line"></hr>
       <p className="lead">This website was created by an&nbsp;
         <a id="ada-website"
           href="https://adadevelopersacademy.org/"
