@@ -49,13 +49,24 @@ html, body {
 }
 /* end of navbar section */
 
-
+/* notes form */
 .notes-form-btn {
   margin-top: .5em;
 }
 
 .notes-form {
   margin-top: 1em;
+}
+/* end of notes form */
+
+/* pills pages */
+.pills-page {
+  margin-top: 2em;
+  flex: 1;
+}
+
+.nav.nav-pills {
+  margin-bottom: 1em;
 }
 
 .nav.nav-pills .nav-link {
@@ -74,11 +85,6 @@ html, body {
   font-weight: 700;
 }
 
-.pills-page {
-  margin-top: 2em;
-  flex: 1;
-}
-
 .building-row {
   padding-bottom: 2em;
 }
@@ -91,6 +97,7 @@ html, body {
   padding-top: 1em;
   padding-bottom: 1.5em;
 }
+/* end of pills pages */
 
 .resources-list {
   list-style-type: none;

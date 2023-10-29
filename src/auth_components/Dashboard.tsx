@@ -14,7 +14,7 @@ export default function Dashboard() {
     <Container fluid className="pills-page">
       <Tab.Container id="sidebar" defaultActiveKey="profile">
         <Row>
-          <Col lg={2}>
+          <Col sm={12} lg={3}>
             <Nav variant="pills" className="flex-column side-nav">
               <Nav.Item>
                 <Nav.Link eventKey="profile" className="tab">Profile</Nav.Link>
@@ -24,7 +24,7 @@ export default function Dashboard() {
               </Nav.Item>
             </Nav>
           </Col>
-          <Col lg={10} className="p-0">
+          <Col sm={12} lg={9} className="p-0">
             <Tab.Content>
               <Tab.Pane eventKey="profile">
                 <Profile />

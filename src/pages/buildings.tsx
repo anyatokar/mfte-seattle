@@ -103,13 +103,12 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             </p>
           </Col>
         </Row>
-        <hr className="my-4"></hr>
       </Container>
 
       <Container fluid className="pills-page">
         <Tab.Container id="sidebar" defaultActiveKey="map">
           <Row>
-            <Col lg={2}>
+            <Col sm={12} lg={2}>
               <Nav variant="pills" className="flex-column side-nav">
                 <Nav.Item>
                   <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
@@ -119,7 +118,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                 </Nav.Item>
               </Nav>
             </Col>
-            <Col lg={10}>
+            <Col sm={12} lg={10}>
               <Tab.Content>
                 <Tab.Pane eventKey="map">
                   <MapTab buildingsToMap={resultBuildingsUnsorted} savedBuildings={savedBuildings} />

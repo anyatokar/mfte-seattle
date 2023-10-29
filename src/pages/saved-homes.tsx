@@ -20,7 +20,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
     <Container fluid className="pills-page">
       <Tab.Container id="sidebar" defaultActiveKey="list">
         <Row>
-          <Col sm={2}>
+          <Col sm={12} lg={2}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
                 <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
@@ -30,11 +30,11 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
               </Nav.Item>
             </Nav>
           </Col>
-          <Col sm={10}>
+          <Col sm={12} lg={10}>
             <Tab.Content>
               <Row>
-                {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for medium screens and up */}
-                <Col className="mt-3 mt-md-0">
+                {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for large screens and up */}
+                <Col className="mt-2 mt-lg-0">
                   <p className="lead">Saved buildings — your short list of apartment buildings.</p>
                   <p>The list and notes are private to your profile.</p>
                 </Col>
