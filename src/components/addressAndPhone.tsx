@@ -36,16 +36,16 @@ export default function AddressAndPhone(props: addressAndPhoneProps) {
       <br />
       {city}, {state} {zip}
       </a>
-      <div className='phones'>
+      <>
         {
           phone &&
-          <>
+          <div className='first-phone-num'>
             <a href={phone1Ref}
               title={`Call ${buildingName}`}
             >
               {phone}
             </a>
-          </>
+          </div>
         }
         {
           phone2 &&
@@ -57,7 +57,7 @@ export default function AddressAndPhone(props: addressAndPhoneProps) {
             </a>
           </>
         }
-      </div>
+      </>
     </div>
   )
 }
