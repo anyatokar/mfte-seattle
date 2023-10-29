@@ -105,3 +105,8 @@ html, body {
   color:black;
   cursor: pointer;
 }
+
+.heavy-break-line {
+  background-color: #06253e;
+  height: .5px;
+}
