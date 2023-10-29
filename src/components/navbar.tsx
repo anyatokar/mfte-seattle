@@ -70,13 +70,13 @@ export const Header = () => {
   // modal
   function chooseModalComponent() {
     if (modalState === ModalState.LOGIN) {
-      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup }/>
+      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } />
     } else if (modalState === ModalState.LOGIN_SAVED_BUILDINGS) {
-      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } afterLogin={ afterLogin }/>
+      return <Login onResetClicked={ showReset } onSignupClicked={ showSignup } afterLogin={ afterLogin } />
     } else if (modalState === ModalState.RESET) {
       return <PasswordReset onLoginClicked={ showLogin } onSignupClicked={ showSignup } />
     } else if (modalState === ModalState.SIGNUP) {
-      return <Signup onLoginClicked={ showLogin }/>
+      return <Signup onLoginClicked={ showLogin } />
     }
   }
 

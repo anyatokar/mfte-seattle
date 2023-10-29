@@ -6,6 +6,7 @@ import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IBuilding from "../interfaces/IBuilding";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
+import AddressAndPhone from './addressAndPhone';
 
 export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean
@@ -95,10 +96,6 @@ export function BuildingCard(props: BuildingsCardProps) {
     });
   }
 
-  const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${streetNum}+${street}+${city}+${state}+${zip}`;
-  const phone1Ref = `tel:${phone}`
-  const phone2Ref = `tel:${phone2}`
-
   return (
     <Card>
       <Card.Header>
@@ -152,39 +149,16 @@ export function BuildingCard(props: BuildingsCardProps) {
         <Card.Body>
           <Tabs defaultActiveKey={"first"}>
             <Tab eventKey="first" title="Contact">
-              <br />
-              <a id="addressLink"
-                  href={mapViewUrl}
-                  title={`Open new tab: ${buildingName} on Google Maps`}
-                  target="_blank"
-                  rel="noreferrer">
-                {streetNum} {street}
-                <br />
-                {city}, {state} {zip}
-              </a>
-              <br />
-              {
-                phone &&
-                <>
-                <br />
-                  <a href={phone1Ref}
-                    title={`Call ${buildingName}`}
-                  >
-                    {phone}
-                  </a>
-                </>
-              }
-              {
-                phone2 &&
-                <>
-                  <br />
-                  <a href={phone2Ref}
-                    title={`Call ${buildingName}`}
-                  >
-                    {phone2}
-                  </a>
-                </>
-              }
+              <AddressAndPhone
+                buildingName={buildingName}
+                streetNum={streetNum}
+                street={street}
+                city={city}
+                state={state}
+                zip={zip}
+                phone={phone}
+                phone2={phone2}
+              />
               {pageType === "savedHomes" &&
               <>
                 <Form onSubmit={handleSubmit} className="notes-form">

@@ -4,12 +4,12 @@ export default interface IBuilding {
   phone: string;
   phone2: string;
   residentialTargetedArea: string;
-  totalRestrictedUnits: number;
-  sedu: number;
-  studioUnits: number;
-  oneBedroomUnits: number;
-  twoBedroomUnits: number;
-  threePlusBedroomUnits: number;
+  totalRestrictedUnits: string;
+  sedu: string;
+  studioUnits: string;
+  oneBedroomUnits: string;
+  twoBedroomUnits: string;
+  threePlusBedroomUnits: string;
   urlForBuilding: string;
   lat: number;
   lng: number;
@@ -17,5 +17,5 @@ export default interface IBuilding {
   street: string;
   city: string;
   state: string;
-  zip: number;
+  zip: string;
 } 

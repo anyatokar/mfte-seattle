@@ -31,8 +31,6 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
     genericSort<IBuilding>(buildingA, buildingB, activeSorter)
   );
 
-
-
   return (
     <Container fluid>
       <Row className="show-grid">

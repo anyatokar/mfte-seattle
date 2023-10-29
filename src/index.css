@@ -113,3 +113,13 @@ html, body {
   color:black;
   cursor: pointer;
 }
+
+.address-phone-block {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.phones {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

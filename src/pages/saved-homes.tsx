@@ -58,7 +58,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="list">
-                <SavedHomesList savedBuildings={savedBuildings}/>
+                <SavedHomesList savedBuildings={savedBuildings} />
               </Tab.Pane>
             </Tab.Content>
           </Col>

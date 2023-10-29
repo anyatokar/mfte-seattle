@@ -7,6 +7,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState, useContext } from "react";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
+import AddressAndPhone from '../components/addressAndPhone';
 
 interface IBuildingMarkerProps {
   building: IBuilding,
@@ -17,6 +18,21 @@ interface IBuildingMarkerProps {
 
 export function BuildingMarker(props: IBuildingMarkerProps) {
   const { building, isSelected, setSelectedBuilding, isSaved: wasOriginallySaved } = props;
+  const {
+    buildingID,
+    buildingName,
+    urlForBuilding,
+    residentialTargetedArea,
+    streetNum,
+    street,
+    city,
+    state,
+    zip,
+    phone,
+    phone2,
+    lat,
+    lng
+  } = building;
 
   const onMarkerClick = useCallback(
     () => setSelectedBuilding(isSelected ? null : building),
@@ -32,11 +48,6 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
   const {currentUser} = useAuth() as any;
-  const {
-    buildingID,
-    buildingName,
-  } = building;
-
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
 
   function toggleSave() {
@@ -52,8 +63,8 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   return (
     <Marker
       position={{
-        lat: building.lat,
-        lng: building.lng
+        lat: lat,
+        lng: lng
       }}
       onClick={ onMarkerClick }
     >
@@ -63,38 +74,25 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
           <>
             <strong>
               <a
-                href={ building.urlForBuilding }
+                href={ urlForBuilding }
                 target='_blank'
                 rel='noreferrer'
               >
-                { building.buildingName }
+                { buildingName }
               </a>
             </strong>
             <br />
-            <strong>{ building.residentialTargetedArea }</strong>
-            <br /><br />
-            { building.streetNum } { building.street }
-            <br />
-            { building.city }, { building.state } { building.zip }
-            <br />
-            { building.phone ?
-              (
-                <>
-                  <br />
-                  <a href={ `tel:${building.phone}` }>{ building.phone }</a>
-                  <br />
-                </>
-              ) : ''
-            }
-            { building.phone2 ?
-              (
-                <>
-                  <a href={ `tel:${building.phone2}` }>{ building.phone2 }</a>
-                  <br />
-                </>
-              ) : ''
-            }
-            <br />
+            <strong>{ residentialTargetedArea }</strong>
+            <AddressAndPhone
+                buildingName={buildingName}
+                streetNum={streetNum}
+                street={street}
+                city={city}
+                state={state}
+                zip={zip}
+                phone={phone}
+                phone2={phone2}
+              />
             { currentUser ? (
             (wasOriginallySaved || isSaved) ?
               <Button 

@@ -122,10 +122,10 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             <Col lg={10}>
               <Tab.Content>
                 <Tab.Pane eventKey="map">
-                  <MapTab buildingsToMap={resultBuildingsUnsorted} savedBuildings={savedBuildings}/>
+                  <MapTab buildingsToMap={resultBuildingsUnsorted} savedBuildings={savedBuildings} />
                 </Tab.Pane>
                 <Tab.Pane eventKey="saved-homes">
-                  <AllBuildingsList resultBuildingsUnsorted={resultBuildingsUnsorted} savedBuildings={savedBuildings}/>
+                  <AllBuildingsList resultBuildingsUnsorted={resultBuildingsUnsorted} savedBuildings={savedBuildings} />
                 </Tab.Pane>
               </Tab.Content>
             </Col>
