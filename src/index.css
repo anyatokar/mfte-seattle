@@ -127,4 +127,8 @@ html, body {
 .table {
   margin-top: 1em;
   margin-bottom: 0em;
+
+.heavy-break-line {
+  background-color: #06253e;
+  height: .5px;
 }

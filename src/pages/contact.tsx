@@ -14,6 +14,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
   type formFieldsType = {
     authorName: string,
     email: string,
+    description: string,
     subject: string,
     message: string,
   }
@@ -24,6 +25,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
       authorName: formFields.authorName,
       email: formFields.email,
       subject: formFields.subject,
+      description: formFields.description,
       message: formFields.message,
       timestamp: new Date().toUTCString()
     })
@@ -40,6 +42,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
     setformFields({
       authorName: '',
       email: '',
+      description: '',
       subject: '',
       message: '',
     });
@@ -48,6 +51,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
   const [formFields, setformFields] = useState({
     authorName: '',
     email: '',
+    description: '',
     subject: '',
     message: '',
   });
@@ -73,7 +77,22 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
       <p className="lead">
         We are always looking to improve this resource — your feedback is welcome and appreciated.
       </p>
-      <p>All fields are required.</p>
+      <ul>
+        <li>
+          Please contact the&nbsp;
+          <a id="seattle-housing-website"
+            href="https://seattle.gov/housing"
+            title="Seattle Office of Housing government website"
+            target="_blank"
+            rel="noreferrer">
+            Seattle Office of Housing
+          </a>&nbsp;with general questions about the MFTE program.
+        </li>
+        <li>
+          Contact properties directly with building-specific questions including apartment availability, details on tenant eligibility, and the application process.
+        </li>
+      </ul>
+      <p>All fields are required</p>
       <Form onSubmit={handleFormSubmit}>
 
         <Form.Group className="form-row">
@@ -99,6 +118,26 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
             />
           </Form.Group>
         </Form.Group>
+
+        <Form.Group className="form-group">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            required
+            as="select"
+            name="description"
+            id="description"
+            onChange={onInputChange}
+            value={formFields.description}
+          >
+            <option key='blankChoice' hidden></option>
+            <option>Prospective renter</option>
+            <option>Company representative</option>
+            <option>Government representative</option>
+            <option>None of the above</option>
+          </Form.Control>
+        </Form.Group>
+
+        <hr className="my-4 break-line heavy-break-line"></hr>
 
         <Form.Group className="form-group">
           <Form.Label>Subject</Form.Label>
