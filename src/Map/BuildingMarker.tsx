@@ -7,7 +7,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState, useContext } from "react";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
-import AddressAndPhone from '../components/addressAndPhone';
+import { AddressAndPhone, BuildingName } from '../components/BuildingContactInfo';
 
 interface IBuildingMarkerProps {
   building: IBuilding,
@@ -73,15 +73,11 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
         <InfoWindow onCloseClick={ clearSelection }>
           <>
             <strong>
-              <a
-                href={ urlForBuilding }
-                target='_blank'
-                rel='noreferrer'
-              >
-                { buildingName }
-              </a>
+              <BuildingName
+                buildingName={buildingName}
+                urlForBuilding={urlForBuilding}
+              />
             </strong>
-            <br />
             <strong>{ residentialTargetedArea }</strong>
             <AddressAndPhone
                 buildingName={buildingName}

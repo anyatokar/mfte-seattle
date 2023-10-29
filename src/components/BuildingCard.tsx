@@ -6,7 +6,7 @@ import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IBuilding from "../interfaces/IBuilding";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
-import AddressAndPhone from './addressAndPhone';
+import { AddressAndPhone, BuildingName } from './BuildingContactInfo';
 
 export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean
@@ -100,13 +100,10 @@ export function BuildingCard(props: BuildingsCardProps) {
     <Card>
       <Card.Header>
         <Card.Title>
-          <a id="buildingLink"
-            href={urlForBuilding}
-            title={`Open new tab: ${urlForBuilding}`}
-            target="_blank"
-            rel="noreferrer">
-            {buildingName}
-          </a>
+          <BuildingName
+            buildingName={buildingName}
+            urlForBuilding={urlForBuilding}
+          />
         </Card.Title>
         <h6>{residentialTargetedArea}</h6>
         { pageType === "allBuildings" &&
@@ -185,7 +182,6 @@ export function BuildingCard(props: BuildingsCardProps) {
               }
             </Tab>
             <Tab eventKey="link" title="# of Units">
-              <br />
               <Table bordered hover size="sm">
                 <thead>
                   <tr>

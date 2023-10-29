@@ -1,3 +1,8 @@
+interface buildingNameProps {
+  urlForBuilding: string,
+  buildingName: string
+}
+
 interface addressAndPhoneProps {
   buildingName: string,
   streetNum: string,
@@ -9,7 +14,26 @@ interface addressAndPhoneProps {
   phone2: string
 }
 
-export default function AddressAndPhone(props: addressAndPhoneProps) {
+export function BuildingName(props: buildingNameProps) {
+  const {
+    buildingName,
+    urlForBuilding
+  } = props
+
+  return (
+    <div>
+      <a id="buildingLink"
+        href={urlForBuilding}
+        title={`Open new tab: ${urlForBuilding}`}
+        target="_blank"
+        rel="noreferrer">
+        {buildingName}
+      </a>
+    </div>
+  )
+}
+
+export function AddressAndPhone(props: addressAndPhoneProps) {
   const {
     buildingName,
     streetNum,
