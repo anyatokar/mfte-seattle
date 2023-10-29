@@ -66,44 +66,48 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
       }
       {/* search filter container */}
       <Container fluid>
-        {/* search */}
-        <Row className="justify-content-center">
-          <Col sm md={9} lg={8}>
-            <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
-          </Col>
-        </Row >
-        {/* filter */}
-        <Row className="justify-content-center">
-          <Col sm md={9} lg={8}>
-            {allBuildings.length > 0 && <Filters<IBuilding>
-              object={allBuildings[0]}
-              filters={activeFilters}
-              onChangeFilter={(changedFilterProperty, checked) => {
-                checked
-                  ? setActiveFilters([
-                    ...activeFilters.filter(
-                      (filter) => filter.property !== changedFilterProperty
-                    ),
-                    { property: changedFilterProperty },
-                  ])
-                  : setActiveFilters(
-                    activeFilters.filter(
-                      (filter) => filter.property !== changedFilterProperty
-                    )
-                  );
-                }}
-              />}
-          </Col>
-        </Row>
-        <Row className="justify-content-center">
-          <Col sm md={9} lg={8}>
-            <p>
-              { loading ? '' : `Results: ${resultBuildingsUnsorted.length} buildings found`}
-              { !loading && resultBuildingsUnsorted.length === 0 ? '. Try expanding your search criteria!' : ''}
-            </p>
-          </Col>
-        </Row>
-      </Container>
+          {/* search */}
+          <Row>
+            <Col sm={12} lg={{ span: 10, offset: 2 }}>
+              <Row>
+                <Col sm md={9} lg={8}>
+                  <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
+                </Col>
+              </Row >
+              {/* filter */}
+              <Row>
+                <Col sm md={9} lg={8}>
+                  {allBuildings.length > 0 && <Filters<IBuilding>
+                    object={allBuildings[0]}
+                    filters={activeFilters}
+                    onChangeFilter={(changedFilterProperty, checked) => {
+                      checked
+                        ? setActiveFilters([
+                          ...activeFilters.filter(
+                            (filter) => filter.property !== changedFilterProperty
+                          ),
+                          { property: changedFilterProperty },
+                        ])
+                        : setActiveFilters(
+                          activeFilters.filter(
+                            (filter) => filter.property !== changedFilterProperty
+                          )
+                        );
+                      }}
+                    />}
+                </Col>
+              </Row>
+              <Row>
+                <Col sm md={9} lg={8}>
+                  <p>
+                    { loading ? '' : `Results: ${resultBuildingsUnsorted.length} buildings found`}
+                    { !loading && resultBuildingsUnsorted.length === 0 ? '. Try expanding your search criteria!' : ''}
+                  </p>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
 
       <Container fluid className="pills-page">
         <Tab.Container id="sidebar" defaultActiveKey="map">
