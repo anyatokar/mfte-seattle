@@ -2028,7 +2028,7 @@
   dependencies:
     "@swc/helpers" "^0.5.0"
 
-"@react-google-maps/api@^2.2.0":
+"@react-google-maps/api@^2.19.0":
   version "2.19.2"
   resolved "https://registry.yarnpkg.com/@react-google-maps/api/-/api-2.19.2.tgz#678dc1871fbab72cd46d338eed687a36bf556ab1"
   integrity sha512-Vt57XWzCKfsUjKOmFUl2erVVfOePkPK5OigF/f+q7UuV/Nm9KDDy1PMFBx+wNahEqOd6a32BxfsykEhBnbU9wQ==

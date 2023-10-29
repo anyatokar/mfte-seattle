@@ -36,12 +36,10 @@ html, body {
 
 .navbar .nav-link:hover {
   background: #eef6f6;
-  border-radius: 10%;
 }
 
 .navbar .nav-link.active {
   background: #eef6f6;
-  border-radius: 10%;
   font-weight: 700;
 }
 
@@ -56,14 +54,24 @@ html, body {
   margin-top: .5em;
 }
 
+.notes-form {
+  margin-top: 1em;
+}
+
 .nav.nav-pills .nav-link {
   background-color: #eef6f6;
   color: #06253e;
+  border: 2px solid rgba(6, 37, 62, .1);
+}
+
+.nav.nav-pills .nav-link:hover {
+  font-weight: 700;
 }
 
 .nav.nav-pills .nav-link.active {
   background-color: #06253e;
   color: #eef6f6;
+  font-weight: 700;
 }
 
 .pills-page {
@@ -104,6 +112,21 @@ html, body {
 .card-close-icon:hover { 
   color:black;
   cursor: pointer;
+}
+
+.address-phone-block {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.first-phone-num {
+  margin-top: 1em;
+  margin-bottom: 0em;
+}
+
+.table {
+  margin-top: 1em;
+  margin-bottom: 0em;
 }
 
 .heavy-break-line {

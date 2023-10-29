@@ -64,7 +64,7 @@ export default function PasswordReset({
       <Modal.Footer>
         <div className="w-100 text-center">
           <Button onClick={onSignupClicked} variant="link">Sign Up</Button>
-          <br></br>
+          <br />
           <Button onClick={onLoginClicked} variant="link">Log In</Button>
         </div>
       </Modal.Footer>

@@ -78,7 +78,7 @@ export default function Login({
       <Modal.Footer>
         <div className="w-100 text-center">
           <Button onClick={onResetClicked} variant="link">Reset Password</Button>
-          <br></br>
+          <br />
           <Button onClick={onSignupClicked} variant="link">Sign Up</Button>
         </div>
       </Modal.Footer>

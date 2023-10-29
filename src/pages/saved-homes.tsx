@@ -42,7 +42,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
               {loading && <Spinner animation="border" variant="warning" />}
               {!loading && savedBuildings.length === 0 &&
                 <>
-                  <br></br>
+                  <br />
                   <p>Empty for now! To start your list, use the Save button in the&nbsp;
                     <a id="Buildings_tab"
                       href="./Buildings"
@@ -58,7 +58,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="list">
-                <SavedHomesList savedBuildings={savedBuildings}/>
+                <SavedHomesList savedBuildings={savedBuildings} />
               </Tab.Pane>
             </Tab.Content>
           </Col>

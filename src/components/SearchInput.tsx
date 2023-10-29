@@ -20,7 +20,7 @@ export default function SearchInput(props: ISearchProps) {
   return (
     <Form>
       <Form.Label htmlFor="search" className="mt-3">
-        Search by neighborhood, building name, address or zip code:
+        Search by neighborhood, address, building name, or zip code:
       </Form.Label>
       <Form.Control
         id="search"
