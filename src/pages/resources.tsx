@@ -11,7 +11,7 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   }, [props.name])
 
   return (
-    <Container className="diy-jumbotron">
+    <Container className="all-pages diy-jumbotron">
       <h1 className="display-5">Resources</h1>
       <hr className="my-4"></hr>
       <p className="lead">

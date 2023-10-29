@@ -17,7 +17,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
   };
 
   return (
-    <Container className="diy-jumbotron">
+    <Container className="all-pages diy-jumbotron">
       <h1 className="display-5">MFTE Seattle</h1>
       <hr className="my-4"></hr>
       <p className="lead">Find modern rent-reduced apartments in Seattle through the Multifamily Tax Exemption (MFTE) program.</p>

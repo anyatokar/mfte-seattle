@@ -17,7 +17,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
   }
 
   return (
-    <Container fluid className="pills-page">
+    <Container fluid className="all-pages pills-page">
       <Tab.Container id="sidebar" defaultActiveKey="list">
         <Row>
           <Col sm={12} lg={2}>

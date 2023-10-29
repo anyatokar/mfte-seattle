@@ -1,3 +1,4 @@
+/* entire app */
 html, body {
   background: #eef6f6;
 }
@@ -7,12 +8,7 @@ html, body {
   flex-direction: column;
   min-height: 100vh;
 }
-
-.diy-jumbotron {
-  margin-top: 2em;
-  max-width: 90%;
-  flex: 1;
-}
+/* end of entire app */
 
 /* navbar section */
 .navbar {
@@ -49,22 +45,19 @@ html, body {
 }
 /* end of navbar section */
 
-/* notes form */
-.notes-form-btn {
-  margin-top: .5em;
-}
-
-.notes-form {
-  margin-top: 1em;
-}
-/* end of notes form */
-
-/* pills pages */
-.pills-page {
+/* entire pages below navbar, above footer*/
+.all-pages {
   margin-top: 2em;
+  margin-bottom:0em;
   flex: 1;
 }
 
+.diy-jumbotron {
+  max-width: 90%;
+}
+/* end of entire pages, above footer */
+
+/* pills pages - navigation */
 .nav.nav-pills {
   margin-bottom: 1em;
 }
@@ -88,7 +81,9 @@ html, body {
 .building-row {
   padding-bottom: 2em;
 }
+/* end of pills pages - navigation */
 
+/* pills pages - sort misc fields */
 .sort-bar {
   padding-bottom: 2em;
 }
@@ -97,30 +92,17 @@ html, body {
   padding-top: 1em;
   padding-bottom: 1.5em;
 }
-/* end of pills pages */
 
-.resources-list {
-  list-style-type: none;
+.notes-form-btn {
+  margin-top: .5em;
 }
 
-.footer-img {
-  width: 100%;
+.notes-form {
+  margin-top: 1em;
 }
+/* end of pills pages - sort misc fields */
 
-.footer {
-  padding-top: 1em;
-}
-
-.card-close-icon { 
-  color:grey;
-  float: right;
-}
-
-.card-close-icon:hover { 
-  color:black;
-  cursor: pointer;
-}
-
+/* pills pages - building cards and info windows */
 .address-phone-block {
   margin-top: 1em;
   margin-bottom: 1em;
@@ -135,8 +117,25 @@ html, body {
   margin-top: 1em;
   margin-bottom: 0em;
 }
+/* pills pages - end of building cards and info windows */
+
+/* footer */
+.footer-img {
+  width: 100%;
+}
+
+.footer {
+  padding-top: 1em;
+}
+/* end of footer */
+
+/* misc */
+.resources-list {
+  list-style-type: none;
+}
 
 .heavy-break-line {
   background-color: #06253e;
   height: .5px;
 }
+/* end of misc */
