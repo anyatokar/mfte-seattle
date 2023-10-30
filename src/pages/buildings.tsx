@@ -68,7 +68,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
       <Container fluid>
         {/* search */}
         <Row>
-          <Col sm={12} md={{ span: 12, offset: 1 }} lg={{ span: 10, offset: 2 }}>
+          <Col sm={12} md={{ span: 11, offset: 1 }} lg={{ span: 10, offset: 2 }}>
             <Row>
               <Col sm md={9} lg={8}>
                 <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
@@ -99,11 +99,11 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             </Row>
             <Row>
               <Col>
-                { !loading &&
+                {!loading &&
                   <p>
                     <strong>Results: </strong>
                     {`${resultBuildingsUnsorted.length} buildings found`}
-                    { !loading && resultBuildingsUnsorted.length === 0 && '. Try expanding your search criteria!'}
+                    {resultBuildingsUnsorted.length === 0 && '. Try expanding your search criteria!'}
                   </p>
                 }
               </Col>
