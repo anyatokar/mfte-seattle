@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Col, Form, Row } from 'react-bootstrap';
+import { Col, Container, Form, Row } from 'react-bootstrap';
 
 export interface ISortersProps<T> {
   object: T;
@@ -19,9 +19,9 @@ export default function Sorters<T>(props: ISortersProps<T>) {
   const { onChangeSorter } = props;
 
   return (
-    <>
+    <Container fluid>
       <Row className="sort-bar">
-        <Col className="mt-2 mt-lg-0">
+        <Col className="mt-2 mt-lg-0 p-0">
           <Form>
             <Form.Label htmlFor="sorters">Sort buildings by name or neighborhood:</Form.Label>
             <Form.Select
@@ -62,6 +62,6 @@ export default function Sorters<T>(props: ISortersProps<T>) {
           </Form>
         </Col>
       </Row>
-    </>
+    </Container>
   );
 }
