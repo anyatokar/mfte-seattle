@@ -34,7 +34,7 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
   return (
     <Container fluid>
       <Row>
-        <Col sm md={9} lg={8} className='p-0'>
+        <Col sm={12} md={{ span: 9, offset: 1 }} lg={{ span: 8, offset: 0 }} className='p-0'>
           {props.resultBuildingsUnsorted.length > 0 && <Sorters<IBuilding>
             object={props.resultBuildingsUnsorted[0]}
             onChangeSorter={(property, isDescending) => {
