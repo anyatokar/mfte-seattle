@@ -59,57 +59,65 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   const [ savedBuildings, loadingSavedBuildings ] = useSavedBuildings();
 
   return (
-    <>
+    <div className='all-pages'>
       {loading || loadingSavedBuildings ? (
         <Spinner animation="border" variant="warning" />
         ) : (<></>)
       }
       {/* search filter container */}
-      <Container fluid className="pills-page">
+      <Container fluid>
         {/* search */}
-        <Row className="justify-content-center">
-          <Col sm md={9} lg={8}>
-            <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
-          </Col>
-        </Row >
-        {/* filter */}
-        <Row className="justify-content-center">
-          <Col sm md={9} lg={8}>
-            {allBuildings.length > 0 && <Filters<IBuilding>
-              object={allBuildings[0]}
-              filters={activeFilters}
-              onChangeFilter={(changedFilterProperty, checked) => {
-                checked
-                  ? setActiveFilters([
-                    ...activeFilters.filter(
-                      (filter) => filter.property !== changedFilterProperty
-                    ),
-                    { property: changedFilterProperty },
-                  ])
-                  : setActiveFilters(
-                    activeFilters.filter(
-                      (filter) => filter.property !== changedFilterProperty
-                    )
-                  );
-                }}
-              />}
+        <Row>
+          <Col sm={12} lg={{ span: 10, offset: 2 }}>
+            <Row>
+              <Col sm md={9} lg={8}>
+                <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
+              </Col>
+            </Row >
+            {/* filter */}
+            <Row>
+              <Col>
+                {allBuildings.length > 0 && <Filters<IBuilding>
+                  object={allBuildings[0]}
+                  filters={activeFilters}
+                  onChangeFilter={(changedFilterProperty, checked) => {
+                    checked
+                      ? setActiveFilters([
+                        ...activeFilters.filter(
+                          (filter) => filter.property !== changedFilterProperty
+                        ),
+                        { property: changedFilterProperty },
+                      ])
+                      : setActiveFilters(
+                        activeFilters.filter(
+                          (filter) => filter.property !== changedFilterProperty
+                        )
+                      );
+                    }}
+                  />}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                { !loading &&
+                  <p>
+                    <strong>Results: </strong>
+                    {`${resultBuildingsUnsorted.length} buildings found`}
+                    { !loading && resultBuildingsUnsorted.length === 0 && '. Try expanding your search criteria!'}
+                  </p>
+                }
+              </Col>
+            </Row>
           </Col>
         </Row>
-        <Row className="justify-content-center">
-          <Col sm md={9} lg={8}>
-            <p>
-              { loading ? '' : `Results: ${resultBuildingsUnsorted.length} buildings found`}
-              { !loading && resultBuildingsUnsorted.length === 0 ? '. Try expanding your search criteria!' : ''}
-            </p>
-          </Col>
-        </Row>
-        <hr className="my-4"></hr>
       </Container>
 
-      <Container fluid className="pills-page">
+      <hr className="my-4"></hr>
+
+      <Container fluid>
         <Tab.Container id="sidebar" defaultActiveKey="map">
           <Row>
-            <Col lg={2}>
+            <Col sm={12} lg={2}>
               <Nav variant="pills" className="flex-column side-nav">
                 <Nav.Item>
                   <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
@@ -119,7 +127,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                 </Nav.Item>
               </Nav>
             </Col>
-            <Col lg={10}>
+            <Col sm={12} lg={10}>
               <Tab.Content>
                 <Tab.Pane eventKey="map">
                   <MapTab buildingsToMap={resultBuildingsUnsorted} savedBuildings={savedBuildings} />
@@ -132,7 +140,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
           </Row>
         </Tab.Container>
       </Container>
-    </>
+    </div>
   )
 }
 

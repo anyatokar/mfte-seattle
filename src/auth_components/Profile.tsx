@@ -34,7 +34,7 @@ export default function Profile() {
     currentUser && userData &&
     <Container fluid>
       <Row>
-        <Col lg={6} className="mt-3 mt-md-0">
+        <Col lg={6}>
           <Card>
             <Card.Body>
               <Card.Text>

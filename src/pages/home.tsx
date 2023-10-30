@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import IPage from '../interfaces/IPage';
 import logging from '../config/logging';
 import { useHistory } from "react-router-dom";
-import { Button, Container, Stack } from "react-bootstrap"
+import { Button, Container } from "react-bootstrap";
 
 const HomePage: React.FunctionComponent<IPage> = props => {
   useEffect(() => {
@@ -17,7 +17,7 @@ const HomePage: React.FunctionComponent<IPage> = props => {
   };
 
   return (
-    <Container className="diy-jumbotron">
+    <Container className="all-pages diy-jumbotron">
       <h1 className="display-5">MFTE Seattle</h1>
       <hr className="my-4"></hr>
       <p className="lead">Find modern rent-reduced apartments in Seattle through the Multifamily Tax Exemption (MFTE) program.</p>
@@ -47,22 +47,13 @@ const HomePage: React.FunctionComponent<IPage> = props => {
       </p>
       <p className="lead"> Contact buildings directly for current availability.</p>
       <hr className="my-4"></hr>
-      <Stack gap={2}>
-        <Button
-          className="btn-lg col-lg-4 col-xl-3"
-          variant="outline-info"
-          onClick={onClick}
-          value="./buildings">
-          View Buildings Map
-        </Button>
-        <Button
-          className="btn-lg col-lg-4 col-xl-3"
-          variant="outline-info"
-          onClick={onClick}
-          value="./about">
-          About MFTE Seattle
-        </Button>
-      </Stack>
+      <Button
+        className="btn-lg col-lg-4 col-xl-3"
+        variant="outline-info"
+        onClick={onClick}
+        value="./buildings">
+        View Buildings Map
+      </Button>
     </Container>
   )
 }

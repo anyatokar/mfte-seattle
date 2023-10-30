@@ -11,9 +11,9 @@ export default function SavedHomesList(props: SavedHomesListProps) {
 
   return (
     <Container fluid>
-      <Row className="show-grid">
+      <Row>
         <Col lg={12}>
-          <Row className="show-grid">
+          <Row>
             {props.savedBuildings?.length !== 0 && (
             <>
               {props.savedBuildings?.map((building: ISavedBuilding) => (

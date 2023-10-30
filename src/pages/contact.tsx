@@ -71,7 +71,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
   };
 
   return (
-    <Container className="diy-jumbotron">
+    <Container className="all-pages diy-jumbotron">
       <h1 className="display-5">Contact us</h1>
       <hr className="my-4"></hr>
       <p className="lead">
