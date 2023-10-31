@@ -7,6 +7,7 @@ import IBuilding from "../interfaces/IBuilding";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { AddressAndPhone, BuildingName } from './BuildingContactInfo';
+import { timestampPT } from "../utils/generalUtils";
 
 export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean
@@ -88,18 +89,13 @@ export function BuildingCard(props: BuildingsCardProps) {
     }
   };
 
-  const timestamp = new Date().toLocaleString("en-US", {
-    timeZone: "America/Los_Angeles",
-    timeZoneName: "shortGeneric" 
-  })
-
   const updateNote = (noteToAdd: string) => {
     const savedHome = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where('buildingID','==', buildingID)
     savedHome.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         return doc.ref.update({
           note: noteToAdd,
-          noteTimestamp: timestamp
+          noteTimestamp: timestampPT
         })
         .then(() => {
           console.log("Note successfully updated!");

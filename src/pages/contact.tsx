@@ -4,6 +4,7 @@ import logging from '../config/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Container, Form, Button } from "react-bootstrap"
 import firebase from "../db/firebase";
+import { timestampPT } from '../utils/generalUtils';
 
 const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
@@ -27,7 +28,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
       subject: formFields.subject,
       description: formFields.description,
       message: formFields.message,
-      timestamp: new Date().toUTCString()
+      timestamp: timestampPT
     })
     .then(() => {
       console.log('Message successfully submitted!');
