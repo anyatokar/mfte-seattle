@@ -7,10 +7,13 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FirebaseError } from '@firebase/util';
 
 export default function UpdateProfile() {
+  // TODO: add useRef types, also maybe use useRef to dynamically update 
+  // user name in navbar and profile, and email in profile
+  const displayNameRef = useRef() as any
   const emailRef = useRef() as any
   const passwordRef = useRef() as any
   const passwordConfirmRef = useRef() as any
-  const { currentUser, updatePassword, updateEmail } = useAuth() as any
+  const { currentUser, updateDisplayName, updateEmail, updatePassword } = useAuth() as any
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
@@ -25,9 +28,14 @@ export default function UpdateProfile() {
     setLoading(true)
     setMessage("")
 
-    if (emailRef.current.value !== currentUser.email) {
-      promises.push(updateEmail(emailRef.current.value))
+    if (displayNameRef.current.value !== currentUser.displayName) {
+      promises.push(updateDisplayName(currentUser.uid, displayNameRef.current.value))
     }
+
+    if (emailRef.current.value !== currentUser.email) {
+      promises.push(updateEmail(currentUser.uid, emailRef.current.value))
+    }
+
     if (passwordRef.current.value) {
       promises.push(updatePassword(passwordRef.current.value))
     }
@@ -77,6 +85,17 @@ export default function UpdateProfile() {
               {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
 
               <Form onSubmit={handleFormSubmit}>
+                { currentUser.displayName &&
+                  <Form.Group id="displayName" className="form-group">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                      required
+                      type="displayName"
+                      ref={displayNameRef}
+                      defaultValue={currentUser.displayName}
+                    />
+                  </Form.Group>
+                }
                 <Form.Group id="email" className="form-group">
                   <Form.Label>Email</Form.Label>
                   <Form.Control

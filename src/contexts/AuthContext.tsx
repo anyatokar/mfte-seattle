@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, createContext } from "react"
-import { auth } from "../db/firebase"
+import firebase, { auth } from "../db/firebase"
 import IProps from "../interfaces/IProps"
-import firebase from "../db/firebase"
+import { timestampPT } from "../utils/generalUtils"
 
 const AuthContext = createContext({})
 
@@ -18,9 +18,11 @@ export function AuthProvider({ children}: IProps) {
       password)
       .then(cred => {
         if (cred.user) {
-          return firebase.firestore().collection('users').doc(cred.user.uid).set({
+          cred.user.updateProfile({displayName: name})
+          firebase.firestore().collection('users').doc(cred.user.uid).update({
             email: cred.user.email,
-            name: name
+            name: name,
+            timestamp: timestampPT
           })
         }
       })
@@ -39,7 +41,27 @@ export function AuthProvider({ children}: IProps) {
     return auth.sendPasswordResetEmail(email)
   }
 
-  function updateEmail(email: string) {
+  function updateNameFirestore(uid: string, name: string) {
+    firebase.firestore().collection('users').doc(uid).update({
+      name: name,
+      timestamp: timestampPT
+    })
+  }
+
+  function updateEmailFirestore(uid: string, email: string) {
+    firebase.firestore().collection('users').doc(uid).update({
+      email: email,
+      timestamp: timestampPT
+    })
+  }
+
+  function updateDisplayName(uid: string, displayName: string) {
+    updateNameFirestore(uid, displayName)
+    return currentUser.updateProfile({displayName: displayName})
+  }
+
+  function updateEmail(uid: string, email: string) {
+    updateEmailFirestore(uid, email)
     return currentUser.updateEmail(email)
   }
 
@@ -62,6 +84,7 @@ export function AuthProvider({ children}: IProps) {
     signup,
     logout,
     resetPassword,
+    updateDisplayName,
     updateEmail,
     updatePassword
   }

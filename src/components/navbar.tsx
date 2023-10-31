@@ -1,6 +1,5 @@
 import { Container, Image, Navbar, Nav, Modal, Dropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import firebase from "../db/firebase";
 
 import { useState, useEffect, useContext, useCallback } from "react";
 import Login from "../auth_components/Login";
@@ -14,7 +13,6 @@ import mftelogo from '../assets/images/mftelogo23.svg';
 export const Header = () => {
   const [message, setMessage] = useState("")
   const { currentUser, logout } = useAuth() as any
-  const [userData, setUserData] = useState(null) as any
   const history = useHistory()
   const [modalState, setModalState] = useContext(ModalContext);
 
@@ -31,26 +29,6 @@ export const Header = () => {
     closeLogin()
   }, [currentUser, closeLogin])
 
-  useEffect(() => {
-    if (currentUser) {
-      const docRef = firebase.firestore().collection("users").doc(currentUser.uid)
-
-      docRef.get().then((doc) => {
-        if (doc.exists) {
-          const data = doc.data()
-          setUserData(data)
-          console.log("Document data:", data);
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      }).catch((error) => {
-          console.log("Error getting document:", error);
-      });
-    } else {(
-      setUserData(null)
-    )}
-  }, [currentUser])
 
   // Logout
   async function handleLogout() {
@@ -113,7 +91,7 @@ export const Header = () => {
           </Nav>
           { currentUser ? (
           <Nav>
-            <Navbar.Text>{userData ? `Hi, ${userData.name}!` : ''}</Navbar.Text>
+            <Navbar.Text>{currentUser.displayName && `Hi, ${currentUser.displayName}!`}</Navbar.Text>
             <LinkContainer to='/dashboard'>
               <Nav.Link active={false}>Profile</Nav.Link>
             </LinkContainer>
