@@ -85,7 +85,7 @@ export default function UpdateProfile() {
               {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
 
               <Form onSubmit={handleFormSubmit}>
-                { currentUser.displayName &&
+                {currentUser.displayName &&
                   <Form.Group id="displayName" className="form-group">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
