@@ -48,11 +48,13 @@ export function BuildingCard(props: BuildingsCardProps) {
 
   let wasOriginallySaved = false;
   let note: string | undefined;
+  let noteTimestamp: string | undefined;
 
   if (pageType === "allBuildings" ) {
     wasOriginallySaved = props.isSaved;
   } else if (pageType === "savedHomes") {
     note = props.note;
+    noteTimestamp = props.noteTimestamp;
   }
 
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
@@ -69,22 +71,35 @@ export function BuildingCard(props: BuildingsCardProps) {
 
   // Saved Homes Page - note form
   const [noteToAdd, setNoteToAdd] = useState(note)
+  // Only enable button if updated note is different from saved note.
+  const [isNoteDifferent, setIsNoteDifferent] =useState(false)
 
   const handleChange = (event: any) => {
+    console.log("note", note)
+    event.target.value !== note ? setIsNoteDifferent(true) : setIsNoteDifferent(false);
     setNoteToAdd(event.target.value);
   };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (noteToAdd !== undefined) { updateNote(noteToAdd) }
+    if (noteToAdd !== undefined && isNoteDifferent) {
+      updateNote(noteToAdd)
+      setIsNoteDifferent(false)
+    }
   };
+
+  const timestamp = new Date().toLocaleString("en-US", {
+    timeZone: "America/Los_Angeles",
+    timeZoneName: "shortGeneric" 
+  })
 
   const updateNote = (noteToAdd: string) => {
     const savedHome = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where('buildingID','==', buildingID)
     savedHome.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         return doc.ref.update({
-          note: noteToAdd
+          note: noteToAdd,
+          noteTimestamp: timestamp
         })
         .then(() => {
           console.log("Note successfully updated!");
@@ -170,6 +185,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                     />
                   </Form.Group>
                   <Button
+                    disabled={!isNoteDifferent}
                     variant="info"
                     type="submit"
                     title={`Save or update your note!`}
@@ -177,6 +193,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                     className="btn-sm notes-form-btn">
                       Save note
                   </Button>
+                  {noteTimestamp && <p>{`Last saved: ${noteTimestamp}`}</p>}
                 </Form>
               </>
               }
