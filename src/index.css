@@ -104,17 +104,17 @@ html, body {
 
 /* pills pages - building cards and info windows */
 .address-phone-block {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: .5em;
+  margin-bottom: .5em;
 }
 
 .first-phone-num {
-  margin-top: 1em;
+  margin-top: .5em;
   margin-bottom: 0em;
 }
 
 .table {
-  margin-top: 1em;
+  margin-top: .5em;
   margin-bottom: 0em;
 }
 /* pills pages - end of building cards and info windows */
