@@ -22,7 +22,7 @@ export function AuthProvider({ children}: IProps) {
           firebase.firestore().collection('users').doc(cred.user.uid).update({
             email: cred.user.email,
             name: name,
-            timestamp: timestampPT
+            signupTimestamp: timestampPT
           })
         }
       })
@@ -44,14 +44,14 @@ export function AuthProvider({ children}: IProps) {
   function updateNameFirestore(uid: string, name: string) {
     firebase.firestore().collection('users').doc(uid).update({
       name: name,
-      timestamp: timestampPT
+      updateNameTimestamp: timestampPT
     })
   }
 
   function updateEmailFirestore(uid: string, email: string) {
     firebase.firestore().collection('users').doc(uid).update({
       email: email,
-      timestamp: timestampPT
+      updateEmailTimestamp: timestampPT
     })
   }
 
