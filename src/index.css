@@ -28,6 +28,7 @@ html, body {
 
 .navbar .nav-link, .navbar-text {
   color: black !important;
+  border-radius: 10%
 }
 
 .navbar .nav-link:hover {

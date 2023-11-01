@@ -91,7 +91,7 @@ export const Header = () => {
           </Nav>
           { currentUser ? (
           <Nav>
-            <Navbar.Text>{currentUser.displayName && `Hi, ${currentUser.displayName}!`}</Navbar.Text>
+            <Navbar.Text className="mr-lg-4 font-italic">{currentUser.displayName && `Hi, ${currentUser.displayName}!`}</Navbar.Text>
             <LinkContainer to='/dashboard'>
               <Nav.Link active={false}>Profile</Nav.Link>
             </LinkContainer>
