@@ -1,5 +1,6 @@
 import firebase from "../db/firebase";
 import IBuilding from "../interfaces/IBuilding";
+import { timestampPT } from "./generalUtils";
 
 export function saveBuilding(currentUser: any, building: IBuilding) {
   const {
@@ -45,6 +46,7 @@ export function saveBuilding(currentUser: any, building: IBuilding) {
     "zip": zip,
     "lat": lat,
     "lng": lng,
+    "savedTimestamp": timestampPT
   })
   .then(() => {
     console.log(`${buildingName} saved to user list`);
