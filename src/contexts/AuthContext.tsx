@@ -22,7 +22,7 @@ export function AuthProvider({ children}: IProps) {
           firebase.firestore().collection('users').doc(cred.user.uid).update({
             email: cred.user.email,
             name: name,
-            signupTimestamp: timestampPT
+            signupTimestamp: timestampPT()
           })
         }
       })
@@ -41,27 +41,11 @@ export function AuthProvider({ children}: IProps) {
     return auth.sendPasswordResetEmail(email)
   }
 
-  function updateNameFirestore(uid: string, name: string) {
-    firebase.firestore().collection('users').doc(uid).update({
-      name: name,
-      updateNameTimestamp: timestampPT
-    })
-  }
-
-  function updateEmailFirestore(uid: string, email: string) {
-    firebase.firestore().collection('users').doc(uid).update({
-      email: email,
-      updateEmailTimestamp: timestampPT
-    })
-  }
-
-  function updateDisplayName(uid: string, displayName: string) {
-    updateNameFirestore(uid, displayName)
+  function updateDisplayName(displayName: string) {
     return currentUser.updateProfile({displayName: displayName})
   }
 
-  function updateEmail(uid: string, email: string) {
-    updateEmailFirestore(uid, email)
+  function updateEmail(email: string) {
     return currentUser.updateEmail(email)
   }
 
@@ -74,7 +58,6 @@ export function AuthProvider({ children}: IProps) {
       setCurrentUser(user)
       setLoading(false)
     })
-
     return unsubscribe
   }, [])
 

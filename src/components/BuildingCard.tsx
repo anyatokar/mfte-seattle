@@ -76,7 +76,6 @@ export function BuildingCard(props: BuildingsCardProps) {
   const [isNoteDifferent, setIsNoteDifferent] =useState(false)
 
   const handleChange = (event: any) => {
-    console.log("note", note)
     event.target.value !== note ? setIsNoteDifferent(true) : setIsNoteDifferent(false);
     setNoteToAdd(event.target.value);
   };
@@ -95,7 +94,7 @@ export function BuildingCard(props: BuildingsCardProps) {
       querySnapshot.forEach(function(doc) {
         return doc.ref.update({
           note: noteToAdd,
-          noteTimestamp: timestampPT
+          noteTimestamp: timestampPT()
         })
         .then(() => {
           console.log("Note successfully updated!");

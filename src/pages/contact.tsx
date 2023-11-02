@@ -28,7 +28,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
       subject: formFields.subject,
       description: formFields.description,
       message: formFields.message,
-      sentTimestamp: timestampPT
+      sentTimestamp: timestampPT()
     })
     .then(() => {
       console.log('Message successfully submitted!');
