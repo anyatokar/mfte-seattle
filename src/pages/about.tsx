@@ -21,29 +21,30 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
           <p className="lead">
             The purpose of this website is to help people find safe and comfortable rent-reduced housing. It aims to supplement existing government resources by mapping all buildings that participate in the MFTE (Multifamily Tax Exemption) program.
           </p>
+          <p className="fs-4">Why MFTE</p>
           <p className="lead">
             We chose to highlight the MFTE program because of the relatively quick application turnaround, higher availability, and modern apartments in sought-after locations.
           </p>
 
           <p className="fs-4">Data Source</p>
-          <p className="lead">Buildings shown on&nbsp;
-            <a id="Buildings_tab"
-              href="./Buildings"
-              title="View the map of MFTE properties">
-              the map
-            </a>&nbsp;are sourced from the spreadsheet of&nbsp;
+          <p className="lead">Buildings are sourced from the spreadsheet of&nbsp;
             <a id="properties-spreadsheet-may-2023"
               href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
               title="Market-Rate Rental Properties with Affordable Housing Units spreadsheet by the City of Seattle - October 2023 update - PDF"
               target="_blank"
               rel="noreferrer">
               Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (October 2023)
-            </a>.
+            </a>. Updated spreadsheets are published roughly twice a year.
           </p>
 
           <p className="fs-4">Use</p>
           <p className="lead">
-            Search and filter for apartments that fit your criteria (such as number of bedrooms, neighborhood, building name). To keep a short list of properties, create a (free) login to view a personalized list, map and to add notes.
+            Search and filter for apartments that fit your criteria (such as number of bedrooms, neighborhood, building name). Create a (free) login to keep a short list of properties, view a personalized map, and add notes. Explore&nbsp;
+            <a id="Buildings_tab"
+              href="./Buildings"
+              title="View the map of MFTE properties">
+              the map
+            </a>&nbsp;to get started.
           </p>
 
           <p className="fs-4">Disclaimer</p>
