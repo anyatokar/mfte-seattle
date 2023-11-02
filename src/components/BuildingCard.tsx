@@ -136,10 +136,10 @@ export function BuildingCard(props: BuildingsCardProps) {
               variant="outline-danger"
               title={`Delete ${buildingName} from saved buildings list`}
               type="button"
-              value="Unsave"
+              value="Remove"
               onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
               >
-              Unsave
+              Remove
             </Button>
           }
         </Card.Header>
@@ -181,12 +181,12 @@ export function BuildingCard(props: BuildingsCardProps) {
               </>
               }
             </Tab>
-            <Tab eventKey="link" title="# of Units">
+            <Tab eventKey="link" title="# of MFTE Units">
               <Table bordered hover size="sm">
                 <thead>
                   <tr>
                     <th>Apt Size</th>
-                    <th># of Units*</th>
+                    <th># of MFTE Units*</th>
                   </tr>
                 </thead>
                 <tbody>

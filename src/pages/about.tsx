@@ -28,10 +28,10 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
         </a>&nbsp;are sourced from the spreadsheet of&nbsp;
         <a id="properties-spreadsheet-may-2023"
           href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
-          title="Market-Rate Rental Properties with Affordable Housing Units spreadsheet by the City of Seattle - November 2023 update - PDF"
+          title="Market-Rate Rental Properties with Affordable Housing Units spreadsheet by the City of Seattle - October 2023 update - PDF"
           target="_blank"
           rel="noreferrer">
-          Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (November 2023)
+          Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (October 2023)
         </a>.
       </p>
       <p className="lead">
