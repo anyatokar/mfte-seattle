@@ -95,8 +95,8 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
             </li>
           </ul>
           <p>All fields are required</p>
-          <Form onSubmit={handleFormSubmit}>
 
+          <Form onSubmit={handleFormSubmit}>
             <Form.Group className="form-row">
               <Form.Group className="form-group col-md-6">
                 <Form.Label>Name</Form.Label>
