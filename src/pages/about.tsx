@@ -34,12 +34,12 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = pro
               target="_blank"
               rel="noreferrer">
               Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (October 2023)
-            </a>. Updated spreadsheets are published roughly twice a year.
+            </a>. Updated spreadsheets are published by the Seattle Office of Housing roughly twice a year.
           </p>
 
           <p className="fs-4">Use</p>
           <p className="lead">
-            Search and filter for apartments that fit your criteria (such as number of bedrooms, neighborhood, building name). Create a (free) login to keep a short list of properties, view a personalized map, and add notes. Explore&nbsp;
+            Search and filter for apartments that fit your criteria (such as number of bedrooms, neighborhood, and building name). Create a (free) login to keep a short list of properties, view a personalized map, and add notes. Explore&nbsp;
             <a id="Buildings_tab"
               href="./Buildings"
               title="View the map of MFTE properties">

@@ -48,7 +48,7 @@ html, body {
 /* entire pages below navbar, above footer*/
 .all-pages {
   margin-top: 2em;
-  margin-bottom:0em;
+  margin-bottom: 0em;
   flex: 1;
 }
 
@@ -130,9 +130,6 @@ html, body {
 /* end of footer */
 
 /* misc */
-.resources-list {
-  list-style-type: none;
-}
 
 .heavy-break-line {
   background-color: #06253e;
