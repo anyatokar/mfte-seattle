@@ -7,6 +7,7 @@ import IBuilding from "../interfaces/IBuilding";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { AddressAndPhone, BuildingName } from './BuildingContactInfo';
+import { timestampPT } from "../utils/generalUtils";
 
 export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean
@@ -48,11 +49,13 @@ export function BuildingCard(props: BuildingsCardProps) {
 
   let wasOriginallySaved = false;
   let note: string | undefined;
+  let noteTimestamp: string | undefined;
 
   if (pageType === "allBuildings" ) {
     wasOriginallySaved = props.isSaved;
   } else if (pageType === "savedHomes") {
     note = props.note;
+    noteTimestamp = props.noteTimestamp;
   }
 
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
@@ -69,14 +72,20 @@ export function BuildingCard(props: BuildingsCardProps) {
 
   // Saved Homes Page - note form
   const [noteToAdd, setNoteToAdd] = useState(note)
+  // Only enable button if updated note is different from saved note.
+  const [isNoteDifferent, setIsNoteDifferent] =useState(false)
 
   const handleChange = (event: any) => {
+    event.target.value !== note ? setIsNoteDifferent(true) : setIsNoteDifferent(false);
     setNoteToAdd(event.target.value);
   };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (noteToAdd !== undefined) { updateNote(noteToAdd) }
+    if (noteToAdd !== undefined && isNoteDifferent) {
+      updateNote(noteToAdd)
+      setIsNoteDifferent(false)
+    }
   };
 
   const updateNote = (noteToAdd: string) => {
@@ -84,7 +93,8 @@ export function BuildingCard(props: BuildingsCardProps) {
     savedHome.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         return doc.ref.update({
-          note: noteToAdd
+          note: noteToAdd,
+          noteTimestamp: timestampPT()
         })
         .then(() => {
           console.log("Note successfully updated!");
@@ -170,6 +180,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                     />
                   </Form.Group>
                   <Button
+                    disabled={!isNoteDifferent}
                     variant="info"
                     type="submit"
                     title={`Save or update your note!`}
@@ -177,6 +188,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                     className="btn-sm notes-form-btn">
                       Save note
                   </Button>
+                  {noteTimestamp && <p>{`Last saved: ${noteTimestamp}`}</p>}
                 </Form>
               </>
               }

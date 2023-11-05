@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, createContext } from "react"
-import { auth } from "../db/firebase"
+import firebase, { auth } from "../db/firebase"
 import IProps from "../interfaces/IProps"
-import firebase from "../db/firebase"
+import { timestampPT } from "../utils/generalUtils"
 
 const AuthContext = createContext({})
 
@@ -18,9 +18,11 @@ export function AuthProvider({ children}: IProps) {
       password)
       .then(cred => {
         if (cred.user) {
-          return firebase.firestore().collection('users').doc(cred.user.uid).set({
+          cred.user.updateProfile({displayName: name})
+          firebase.firestore().collection('users').doc(cred.user.uid).update({
             email: cred.user.email,
-            name: name
+            name: name,
+            signupTimestamp: timestampPT()
           })
         }
       })
@@ -39,6 +41,10 @@ export function AuthProvider({ children}: IProps) {
     return auth.sendPasswordResetEmail(email)
   }
 
+  function updateDisplayName(displayName: string) {
+    return currentUser.updateProfile({displayName: displayName})
+  }
+
   function updateEmail(email: string) {
     return currentUser.updateEmail(email)
   }
@@ -52,7 +58,6 @@ export function AuthProvider({ children}: IProps) {
       setCurrentUser(user)
       setLoading(false)
     })
-
     return unsubscribe
   }, [])
 
@@ -62,6 +67,7 @@ export function AuthProvider({ children}: IProps) {
     signup,
     logout,
     resetPassword,
+    updateDisplayName,
     updateEmail,
     updatePassword
   }

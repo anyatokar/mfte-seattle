@@ -5,51 +5,92 @@ import { useHistory } from "react-router-dom";
 import firebase from "../db/firebase";
 import { Container, Row, Col } from 'react-bootstrap';
 import { FirebaseError } from '@firebase/util';
+import { updateEmailFirestore, updateNameFirestore } from "../utils/firestoreUtils";
 
 export default function UpdateProfile() {
+  // TODO: add useRef types, also maybe use useRef to dynamically update 
+  // user name in navbar and profile, and email in profile
+  const displayNameRef = useRef() as any
   const emailRef = useRef() as any
   const passwordRef = useRef() as any
   const passwordConfirmRef = useRef() as any
-  const { currentUser, updatePassword, updateEmail } = useAuth() as any
+  const { currentUser, updateDisplayName, updateEmail, updatePassword } = useAuth() as any
   const [message, setMessage] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState(false)
   const history = useHistory()
+
+  function isNameUpdated() { return displayNameRef.current?.value !== currentUser.displayName }
+  function isEmailUpdated() { return emailRef.current?.value !== currentUser.email }
+  function isPasswordUpdated() { return !!(passwordRef.current?.value) }
+
+  const handleChange = () => {
+    (isNameUpdated() || isEmailUpdated() || isPasswordUpdated())
+    ? setIsAnyFieldUpdated(true)
+    : setIsAnyFieldUpdated(false)
+  };
+
+  function clearPasswordFields(): void {
+    passwordRef.current.value = null
+    passwordConfirmRef.current.value = null
+  }
 
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setMessage("Passwords do not match")
+      return setMessage("Oops! Passwords do not match")
     }
 
-    const promises = []
-    setLoading(true)
+    const authPromises = [];
+    const firestorePromises: any[] = [];
+    setIsLoading(true)
     setMessage("")
 
-    if (emailRef.current.value !== currentUser.email) {
-      promises.push(updateEmail(emailRef.current.value))
-    }
-    if (passwordRef.current.value) {
-      promises.push(updatePassword(passwordRef.current.value))
+    if (isNameUpdated()) {
+      authPromises.push(updateDisplayName(displayNameRef.current.value))
+      firestorePromises.push(updateNameFirestore(currentUser.uid, displayNameRef.current.value))
     }
 
-    Promise.all(promises)
+    if (isEmailUpdated()) {
+      authPromises.push(updateEmail(emailRef.current.value))
+      firestorePromises.push(updateEmailFirestore(currentUser.uid, emailRef.current.value))
+    }
+
+    if (isPasswordUpdated()) {
+      authPromises.push(updatePassword(passwordRef.current.value))
+      // passwords are not stored in Firestore, only in Auth
+    }
+
+    Promise.all(authPromises)
       .then(() => {
-        setMessage("Success: account updated. You'll receive an email confirmation")
+        // Auth is the source of truth for name/email/password
+        // Firestore stores name/email as well but it's still a
+        // Success for the user if Firestore update fails (unlikely)
+        setMessage("Success! Account updated")
+        console.log("Account updated in Auth")
+
+        Promise.all(firestorePromises)
+          .then(() => {
+            console.log("Account updated in Firestore")
+          }).catch(() => {
+            console.log("Error updating account in Firestore")
+          })
       })
       .catch((error) => {
-        console.log(error.code)
-        console.log(error.message)
+        console.log(error.code, error.message)
         setMessage(error.message)
       })
       .finally(() => {
-        setLoading(false)
+        setIsLoading(false)
+        setIsAnyFieldUpdated(false)
+        clearPasswordFields()
       })
   }
 
   function onDelete(event: any) {
     event.preventDefault()
     firebase.firestore().collection("users").doc(currentUser.uid).delete().then(() => {
-      console.log("User successfully deleted from Firestore.");
+      console.log("User successfully deleted from Firestore");
     }).catch((error: unknown) => {
       if (error instanceof FirebaseError) {
         console.error("Error removing user from Firestore: ", error);
@@ -59,7 +100,7 @@ export default function UpdateProfile() {
 
     currentUser.delete().then(() => {
       console.log("User successfully deleted from Auth.");
-      setMessage("Success: account deleted")
+      setMessage("Success! Account deleted")
       history.push("/")
     }).catch((error: any) => {
       console.error("Error removing user from Auth: ", error);
@@ -73,10 +114,22 @@ export default function UpdateProfile() {
         <Col lg={6} className="mt-3 mt-md-0">
           <Card>
             <Card.Body>
-              {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
-              {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
+              {message && message.includes("Success") && <Alert variant="success">{message}</Alert>}
+              {message && !(message.includes("Success")) && <Alert variant="danger">{message}</Alert>}
 
               <Form onSubmit={handleFormSubmit}>
+                {currentUser.displayName &&
+                  <Form.Group id="displayName" className="form-group">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                      required
+                      type="displayName"
+                      ref={displayNameRef}
+                      defaultValue={currentUser.displayName}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                }
                 <Form.Group id="email" className="form-group">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
@@ -84,6 +137,7 @@ export default function UpdateProfile() {
                     type="email"
                     ref={emailRef}
                     defaultValue={currentUser.email}
+                    onChange={handleChange}
                   />
                 </Form.Group>
                 <Form.Group id="password" className="form-group">
@@ -92,6 +146,7 @@ export default function UpdateProfile() {
                     type="password"
                     ref={passwordRef}
                     placeholder="Leave blank to keep the same"
+                    onChange={handleChange}
                   />
                 </Form.Group>
                 <Form.Group id="password-confirm" className="form-group">
@@ -100,11 +155,12 @@ export default function UpdateProfile() {
                     type="password"
                     ref={passwordConfirmRef}
                     placeholder="Leave blank to keep the same"
+                    onChange={handleChange}
                   />
                 </Form.Group>
                 <div className="text-center">
                   <Button
-                    disabled={loading}
+                    disabled={isLoading || !isAnyFieldUpdated}
                     className="btn btn-info"
                     type="submit">
                     Update
