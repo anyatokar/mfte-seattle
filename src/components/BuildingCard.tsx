@@ -181,7 +181,7 @@ export function BuildingCard(props: BuildingsCardProps) {
               </>
               }
             </Tab>
-            <Tab eventKey="link" title="# of MFTE Units">
+            <Tab eventKey="link" title="Details">
               <Table bordered hover size="sm">
                 <thead>
                   <tr>
