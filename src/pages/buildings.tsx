@@ -123,7 +123,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                   <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="saved-homes" className="tab">List</Nav.Link>
+                  <Nav.Link eventKey="saved" className="tab">List</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Col>
@@ -132,7 +132,7 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                 <Tab.Pane eventKey="map">
                   <MapTab buildingsToMap={resultBuildingsUnsorted} savedBuildings={savedBuildings} />
                 </Tab.Pane>
-                <Tab.Pane eventKey="saved-homes">
+                <Tab.Pane eventKey="saved">
                   <AllBuildingsList resultBuildingsUnsorted={resultBuildingsUnsorted} savedBuildings={savedBuildings} />
                 </Tab.Pane>
               </Tab.Content>

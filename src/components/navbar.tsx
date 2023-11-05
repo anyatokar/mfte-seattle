@@ -23,7 +23,7 @@ export const Header = () => {
   const showSignup = () => setModalState(ModalState.SIGNUP);
   const closeLogin = useCallback(() => setModalState(ModalState.HIDDEN), [setModalState]);
 
-  const afterLogin = () =>  history.push("./saved-homes");
+  const afterLogin = () =>  history.push("./saved");
 
   useEffect(() => {
     closeLogin()
@@ -95,7 +95,7 @@ export const Header = () => {
             <LinkContainer to='/dashboard'>
               <Nav.Link active={false}>Profile</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/saved-homes'>
+            <LinkContainer to='/saved'>
               <Nav.Link active={false}>Saved</Nav.Link>
             </LinkContainer>
             <Nav.Link className="logout" active={false} onClick={handleLogout}>Logout</Nav.Link>

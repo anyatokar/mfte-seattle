@@ -14,11 +14,11 @@ export interface AllBuildingsCardProps extends IBuilding {
   pageType: "allBuildings"
 }
 
-export interface SavedHomesCardProps extends ISavedBuilding {
-  pageType: "savedHomes"
+export interface SavedBuildingsCardProps extends ISavedBuilding {
+  pageType: "savedBuildings"
 }
 
-type BuildingsCardProps= AllBuildingsCardProps | SavedHomesCardProps;
+type BuildingsCardProps= AllBuildingsCardProps | SavedBuildingsCardProps;
 
 export function BuildingCard(props: BuildingsCardProps) {
   const { currentUser } = useAuth() as any
@@ -53,7 +53,7 @@ export function BuildingCard(props: BuildingsCardProps) {
 
   if (pageType === "allBuildings" ) {
     wasOriginallySaved = props.isSaved;
-  } else if (pageType === "savedHomes") {
+  } else if (pageType === "savedBuildings") {
     note = props.note;
     noteTimestamp = props.noteTimestamp;
   }
@@ -70,7 +70,7 @@ export function BuildingCard(props: BuildingsCardProps) {
     }
   };
 
-  // Saved Homes Page - note form
+  // Saved Buildings Page - note form
   const [noteToAdd, setNoteToAdd] = useState(note)
   // Only enable button if updated note is different from saved note.
   const [isNoteDifferent, setIsNoteDifferent] =useState(false)
@@ -140,11 +140,11 @@ export function BuildingCard(props: BuildingsCardProps) {
             </>
             ))
           }
-          { pageType === "savedHomes" &&
+          { pageType === "savedBuildings" &&
             <Button
               className="btn-sm center"
               variant="outline-danger"
-              title={`Delete ${buildingName} from saved buildings list`}
+              title={`Remove ${buildingName} from saved buildings list`}
               type="button"
               value="Remove"
               onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
@@ -166,7 +166,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                 phone={phone}
                 phone2={phone2}
               />
-              {pageType === "savedHomes" &&
+              {pageType === "savedBuildings" &&
               <>
                 <Form onSubmit={handleSubmit} className="notes-form">
                   <Form.Label>Notes</Form.Label>
@@ -197,8 +197,8 @@ export function BuildingCard(props: BuildingsCardProps) {
               <Table bordered hover size="sm">
                 <thead>
                   <tr>
-                    <th>Apt Size</th>
-                    <th># of MFTE Units*</th>
+                    <th>Unit Size</th>
+                    <th># of MFTE*</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -211,15 +211,15 @@ export function BuildingCard(props: BuildingsCardProps) {
                     <td>{studioUnits}</td>
                   </tr>
                   <tr>
-                    <td>One bedroom</td>
+                    <td>One bed</td>
                     <td>{oneBedroomUnits}</td>
                   </tr>
                   <tr>
-                    <td>Two bedroom</td>
+                    <td>Two bed</td>
                     <td>{twoBedroomUnits}</td>
                   </tr>
                   <tr>
-                    <td>Three+ bedroom</td>
+                    <td>Three+ bed</td>
                     <td>{threePlusBedroomUnits}</td>
                   </tr>
                   <tr>
@@ -228,7 +228,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                   </tr>
                 </tbody>
               </Table>
-              <p>*Column signifies # of MFTE units in the building. Contact buildings directly for current availability.</p>
+              <div>*Number of MFTE units in the building. Contact building for availability.</div>
             </Tab>
           </Tabs>
       </Card.Body>
