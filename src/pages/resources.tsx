@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import IPage from '../interfaces/IPage';
 import logging from '../config/logging';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Container} from "react-bootstrap";
+import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
 const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
 
@@ -12,67 +12,92 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   return (
     <Container className="all-pages diy-jumbotron">
-      <h1 className="display-5">Resources</h1>
-      <hr className="my-4"></hr>
-      <p className="lead">
-        From the Seattle Office of Housing:
-      </p>
-      <ul className="resources-list">
-        <li>
-        <a id="seattle-housing-website"
-            href="https://seattle.gov/housing"
-            title="Seattle Office of Housing government website"
-            target="_blank"
-            rel="noreferrer">
-            Seattle Office of Housing
-          </a>
-        </li>
-        <li>
-          <a id="mfte-city-website"
-            href="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
-            title="Information about the MFTE program and other income and rent restricted properties on the City of Seattle website"
-            target="_blank"
-            rel="noreferrer">
-            Main Resources Page
-          </a>
-        </li>
-        <li>
-          <a id="properties-spreadsheet-may-2023"
-            href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
-            title="Market-Rate Rental Properties with Affordable Housing Units spreadsheet by the City of Seattle - November 2023 update - PDF"
-            target="_blank"
-            rel="noreferrer">
-            MFTE Spreadsheet of Properties (November 2023)
-          </a>
-        </li>
-        <li>
-          <a id="income-and-rent-limits"
-            href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2023_Income_Rent_Limits_Rental.pdf"
-            title="Income and Rent Limits, effective May 15, 2023 - PDF"
-            target="_blank"
-            rel="noreferrer">
-            Income and Rent Limits (FY 2023)
-          </a>
-        </li>
-        <li>
-          <a id="renters-guide"
-            href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Renters_Guide_7-2023.pdf"
-            title="Renters' Guide for Market-Rate Apartment Buildings with Affordable Units - July 2023 - PDF"
-            target="_blank"
-            rel="noreferrer">
-            Detailed Renter's Guide (July 2023)
-          </a>
-        </li>
-        <li>
-          <a id="mfte-faqs"
-            href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
-            title="Two-page overview of the MFTE program. Note the map and income limits are outdated - 2018"
-            target="_blank"
-            rel="noreferrer">
-            MFTE FAQs (2018)
-          </a>
-        </li>
-      </ul>
+      <Row className="justify-content-center">
+        <Col lg={10} xl={8}>
+          <p className="display-5">Resources</p>
+          <hr className="my-4"></hr>
+
+          <ListGroup>
+            <ListGroup.Item>
+              <a id="seattle-housing-website"
+                href="https://seattle.gov/housing"
+                title="https://seattle.gov/housing"
+                target="_blank"
+                rel="noreferrer"
+                className="fw-bold">
+                Seattle Office of Housing
+              </a>
+              <div className="fw-light">Seattle Office of Housing homepage with contact information</div>
+              <div className="fw-light">website — City of Seattle</div>
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              <a id="mfte-city-website"
+                href="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
+                title="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
+                target="_blank"
+                rel="noreferrer"
+                className="fw-bold">
+                MFTE Main Resources Page
+              </a>
+              <div className="fw-light">Information about the MFTE program and other income and rent-restricted properties</div>
+              <div className="fw-light">website — City of Seattle</div>
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              <a id="properties-spreadsheet-may-2023"
+                href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
+                title="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="fw-bold">
+                MFTE Spreadsheet of Buildings
+              </a>
+              <div className="fw-light">Market-Rate Rental Properties with Affordable Housing Units spreadsheet</div>
+              <div className="fw-light">PDF — City of Seattle — October 2023</div>
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              <a id="income-and-rent-limits"
+                href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2023_Income_Rent_Limits_Rental.pdf"
+                title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2023_Income_Rent_Limits_Rental.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="fw-bold">
+                Income and Rent Limits (FY 2023)
+              </a>
+              <div></div>
+              <div className="fw-light">PDF — City of Seattle — May 15, 2023</div>
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              <a id="renters-guide"
+                href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Renters_Guide_7-2023.pdf"
+                title="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Renters_Guide_7-2023.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="fw-bold">
+                Detailed Renters' Guide
+              </a>
+              <div>Renters' Guide for Market-Rate Apartment Buildings with Affordable Units</div>
+              <div className="fw-light">PDF — City of Seattle — July 2023</div>
+
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <a id="mfte-faqs"
+                href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
+                title="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="fw-bold">
+                MFTE FAQs
+              </a>
+              <div className="fw-light">Two-page overview of the MFTE program. Note the map and income limits are outdated</div>
+              <div className="fw-light">PDF — City of Seattle — 2018</div>
+            </ListGroup.Item>
+          </ListGroup>
+        </Col>
+      </Row>
     </Container>
   )
 }
