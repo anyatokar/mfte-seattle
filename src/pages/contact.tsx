@@ -72,10 +72,11 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = p
 
   return (
     <Container className="all-pages diy-jumbotron">
-      <Row>
-        <Col lg={9}>
+      <Row className="justify-content-center">
+        <Col lg={10} xl={8}>
           <h1 className="display-5">Contact us</h1>
           <hr className="my-4"></hr>
+
           <p className="lead">
             We are always looking to improve this resource — your feedback is welcome and appreciated.
           </p>

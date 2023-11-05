@@ -12,8 +12,8 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   return (
     <Container className="all-pages diy-jumbotron">
-      <Row>
-        <Col lg={10}>
+      <Row className="justify-content-center">
+        <Col lg={10} xl={8}>
           <p className="display-5">Resources</p>
           <hr className="my-4"></hr>
 
