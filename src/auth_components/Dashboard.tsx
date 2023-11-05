@@ -14,13 +14,13 @@ export default function Dashboard() {
     <Container fluid className="all-pages">
       <Tab.Container id="sidebar" defaultActiveKey="profile">
         <Row>
-          <Col sm={12} lg={3}>
+          <Col sm={12} lg={2}>
             <Nav variant="pills" className="flex-column side-nav">
               <Nav.Item>
                 <Nav.Link eventKey="profile" className="tab">Profile</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="update" className="tab">Update Profile</Nav.Link>
+                <Nav.Link eventKey="update" className="tab">Edit Profile</Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>
