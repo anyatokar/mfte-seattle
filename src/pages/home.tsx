@@ -20,21 +20,23 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
     <Container className="all-pages diy-jumbotron">
       <Row className="justify-content-center">
         <Col lg={10} xl={8}>
-          <h1 className="display-5">MFTE Seattle</h1>
+          <div className="display-5">MFTE Seattle</div>
           <hr className="my-4"></hr>
 
           <p className="lead">Find modern rent-reduced apartments in Seattle through the Multifamily Tax Exemption (MFTE) program.</p>
           <p className="lead">
-            Use the MFTE map page to view participating buildings. Create an account to save buildings and keep notes. Contact buildings directly for current
-            availability.
+            View participating buildings on the&nbsp;
+            <a id="Buildings_tab" href="./Buildings" title="View a map of MFTE properties">
+              MFTE map
+            </a>
+            . Create an account to save buildings and keep notes. Contact buildings directly for current availability.
           </p>
           <p className="lead">
             This website is not affiliated with the Seattle Office of Housing. Please view official government resources for complete information about
             rent-reduced and affordable housing programs.
           </p>
-          <hr className="my-4"></hr>
 
-          <Button className="btn-lg col-lg-4 col-xl-3" variant="outline-info" onClick={onClick} value="./buildings">
+          <Button className="btn-lg col-lg-4 col-xl-3 mt-1" variant="outline-info" onClick={onClick} value="./buildings">
             MFTE Map
           </Button>
         </Col>

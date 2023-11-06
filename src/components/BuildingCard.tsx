@@ -113,25 +113,25 @@ export function BuildingCard(props: BuildingsCardProps) {
         <Card.Title>
           <BuildingName buildingName={buildingName} urlForBuilding={urlForBuilding} />
         </Card.Title>
-        <h6>{residentialTargetedArea}</h6>
-        {pageType === "allBuildings" &&
-          (currentUser ? (
-            wasOriginallySaved || isSaved ? (
-              <Button variant="btn btn-info btn-sm" onClick={toggleSave} role="button">
-                Saved
-              </Button>
+        <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
+        <div className="mt-2">
+          {pageType === "allBuildings" &&
+            (currentUser ? (
+              wasOriginallySaved || isSaved ? (
+                <Button variant="btn btn-info btn-sm" onClick={toggleSave} role="button">
+                  Saved
+                </Button>
+              ) : (
+                <Button variant="btn btn-outline-info btn-sm" onClick={toggleSave} role="button">
+                  Save
+                </Button>
+              )
             ) : (
-              <Button variant="btn btn-outline-info btn-sm" onClick={toggleSave} role="button">
-                Save
-              </Button>
-            )
-          ) : (
-            <>
               <Button onClick={handleShowLogin} variant="btn btn-outline-info btn-sm">
                 Save
               </Button>
-            </>
-          ))}
+            ))}
+        </div>
         {pageType === "savedBuildings" && (
           <Button
             className="btn-sm center"
@@ -186,31 +186,41 @@ export function BuildingCard(props: BuildingsCardProps) {
             <Table bordered hover size="sm">
               <thead>
                 <tr>
-                  <th>Unit Size</th>
-                  <th># of MFTE*</th>
+                  <th>Bedrooms</th>
+                  <th># of MFTE Units*</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Pod</td>
-                  <td>{sedu}</td>
-                </tr>
-                <tr>
-                  <td>Studio</td>
-                  <td>{studioUnits}</td>
-                </tr>
-                <tr>
-                  <td>One bed</td>
-                  <td>{oneBedroomUnits}</td>
-                </tr>
-                <tr>
-                  <td>Two bed</td>
-                  <td>{twoBedroomUnits}</td>
-                </tr>
-                <tr>
-                  <td>Three+ bed</td>
-                  <td>{threePlusBedroomUnits}</td>
-                </tr>
+                {sedu !== 0 && (
+                  <tr>
+                    <td>Pod</td>
+                    <td>{sedu}</td>
+                  </tr>
+                )}
+                {studioUnits !== 0 && (
+                  <tr>
+                    <td>Studio</td>
+                    <td>{studioUnits}</td>
+                  </tr>
+                )}
+                {oneBedroomUnits !== 0 && (
+                  <tr>
+                    <td>One</td>
+                    <td>{oneBedroomUnits}</td>
+                  </tr>
+                )}
+                {twoBedroomUnits !== 0 && (
+                  <tr>
+                    <td>Two</td>
+                    <td>{twoBedroomUnits}</td>
+                  </tr>
+                )}
+                {threePlusBedroomUnits !== 0 && (
+                  <tr>
+                    <td>Three+</td>
+                    <td>{threePlusBedroomUnits}</td>
+                  </tr>
+                )}
                 <tr>
                   <td>
                     <strong>Total</strong>
@@ -221,7 +231,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                 </tr>
               </tbody>
             </Table>
-            <div>*Number of MFTE units in the building. Contact building for availability.</div>
+            <div>*Contact building for current availability.</div>
           </Tab>
         </Tabs>
       </Card.Body>

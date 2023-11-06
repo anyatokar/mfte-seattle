@@ -15,5 +15,3 @@ export function genericFilter<T>(object: T, filters: Array<IFilter<T>>) {
     return object[filter.property];
   });
 }
-
-// look here for the or instead of and

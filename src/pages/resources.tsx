@@ -13,7 +13,7 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
     <Container className="all-pages diy-jumbotron">
       <Row className="justify-content-center">
         <Col lg={10} xl={8}>
-          <p className="display-5">Resources</p>
+          <div className="display-5">Resources</div>
           <hr className="my-4"></hr>
 
           <ListGroup>
