@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useDebounce from "../hooks/useDebounce";
-import { Form } from "react-bootstrap"
+import { Form } from "react-bootstrap";
 
 export interface ISearchProps {
   onChangeSearchQuery: (searchQuery: string) => void;
@@ -22,12 +22,7 @@ export default function SearchInput(props: ISearchProps) {
       <Form.Label htmlFor="search" className="mt-3">
         Search by neighborhood, address, building name, or zip code:
       </Form.Label>
-      <Form.Control
-        id="search"
-        type="search"
-        aria-label="Search"
-        onChange={(event) => setSearchQuery(event.target.value)}
-      />
+      <Form.Control id="search" type="search" aria-label="Search" onChange={(event) => setSearchQuery(event.target.value)} />
     </Form>
   );
 }

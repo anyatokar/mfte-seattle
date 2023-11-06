@@ -1,9 +1,11 @@
 # Deploying the app
 
 ## Environment
+
 The environment variables and keys are available from a maintainer via a LastPass share. Contact a maintainer for those credentials
 
 ## Setup
+
 Install the gcloud CLI. On macOS:
 
 ```

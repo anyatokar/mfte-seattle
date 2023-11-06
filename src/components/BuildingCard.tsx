@@ -1,27 +1,27 @@
 import { useState, useContext } from "react";
-import firebase from "../db/firebase"
+import firebase from "../db/firebase";
 import { useAuth } from "../contexts/AuthContext";
-import { Card, Form, Button, Table, Tabs, Tab } from 'react-bootstrap';
+import { Card, Form, Button, Table, Tabs, Tab } from "react-bootstrap";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IBuilding from "../interfaces/IBuilding";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
-import { AddressAndPhone, BuildingName } from './BuildingContactInfo';
+import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
 import { timestampPT } from "../utils/generalUtils";
 
 export interface AllBuildingsCardProps extends IBuilding {
-  isSaved: boolean
-  pageType: "allBuildings"
+  isSaved: boolean;
+  pageType: "allBuildings";
 }
 
 export interface SavedBuildingsCardProps extends ISavedBuilding {
-  pageType: "savedBuildings"
+  pageType: "savedBuildings";
 }
 
-type BuildingsCardProps= AllBuildingsCardProps | SavedBuildingsCardProps;
+type BuildingsCardProps = AllBuildingsCardProps | SavedBuildingsCardProps;
 
 export function BuildingCard(props: BuildingsCardProps) {
-  const { currentUser } = useAuth() as any
+  const { currentUser } = useAuth() as any;
   const {
     buildingID,
     buildingName,
@@ -31,27 +31,27 @@ export function BuildingCard(props: BuildingsCardProps) {
     totalRestrictedUnits,
     sedu,
     studioUnits,
-    oneBedroomUnits, 
+    oneBedroomUnits,
     twoBedroomUnits,
     threePlusBedroomUnits,
     urlForBuilding,
     streetNum,
-    street, 
+    street,
     city,
-    state, 
+    state,
     zip,
-    pageType
+    pageType,
   } = props;
 
   // All Buildings Page - save/saved button
-  const [/* modalState */, setModalState] = useContext(ModalContext);
+  const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
   let wasOriginallySaved = false;
   let note: string | undefined;
   let noteTimestamp: string | undefined;
 
-  if (pageType === "allBuildings" ) {
+  if (pageType === "allBuildings") {
     wasOriginallySaved = props.isSaved;
   } else if (pageType === "savedBuildings") {
     note = props.note;
@@ -68,12 +68,12 @@ export function BuildingCard(props: BuildingsCardProps) {
       setIsSaved(true);
       saveBuilding(currentUser, props);
     }
-  };
+  }
 
   // Saved Buildings Page - note form
-  const [noteToAdd, setNoteToAdd] = useState(note)
+  const [noteToAdd, setNoteToAdd] = useState(note);
   // Only enable button if updated note is different from saved note.
-  const [isNoteDifferent, setIsNoteDifferent] =useState(false)
+  const [isNoteDifferent, setIsNoteDifferent] = useState(false);
 
   const handleChange = (event: any) => {
     event.target.value !== note ? setIsNoteDifferent(true) : setIsNoteDifferent(false);
@@ -83,101 +83,89 @@ export function BuildingCard(props: BuildingsCardProps) {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     if (noteToAdd !== undefined && isNoteDifferent) {
-      updateNote(noteToAdd)
-      setIsNoteDifferent(false)
+      updateNote(noteToAdd);
+      setIsNoteDifferent(false);
     }
   };
 
   const updateNote = (noteToAdd: string) => {
-    const savedHome = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where('buildingID','==', buildingID)
-    savedHome.get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        return doc.ref.update({
-          note: noteToAdd,
-          noteTimestamp: timestampPT()
-        })
-        .then(() => {
-          console.log("Note successfully updated!");
-        })
-        .catch((error) => {
-          console.error("Error updating document: ", error);
-        });
+    const savedHome = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where("buildingID", "==", buildingID);
+    savedHome.get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        return doc.ref
+          .update({
+            note: noteToAdd,
+            noteTimestamp: timestampPT(),
+          })
+          .then(() => {
+            console.log("Note successfully updated!");
+          })
+          .catch((error) => {
+            console.error("Error updating document: ", error);
+          });
       });
     });
-  }
+  };
 
   return (
     <Card>
       <Card.Header>
         <Card.Title>
-          <BuildingName
-            buildingName={buildingName}
-            urlForBuilding={urlForBuilding}
-          />
+          <BuildingName buildingName={buildingName} urlForBuilding={urlForBuilding} />
         </Card.Title>
         <h6>{residentialTargetedArea}</h6>
-        { pageType === "allBuildings" &&
+        {pageType === "allBuildings" &&
           (currentUser ? (
-            (wasOriginallySaved || isSaved) ?
-              <Button 
-                variant="btn btn-info btn-sm"
-                onClick={toggleSave}
-                role="button">
+            wasOriginallySaved || isSaved ? (
+              <Button variant="btn btn-info btn-sm" onClick={toggleSave} role="button">
                 Saved
               </Button>
-              :
-              <Button 
-                variant="btn btn-outline-info btn-sm"
-                onClick={toggleSave}
-                role="button">
+            ) : (
+              <Button variant="btn btn-outline-info btn-sm" onClick={toggleSave} role="button">
                 Save
               </Button>
-            ) : (
+            )
+          ) : (
             <>
               <Button onClick={handleShowLogin} variant="btn btn-outline-info btn-sm">
                 Save
               </Button>
             </>
-            ))
-          }
-          { pageType === "savedBuildings" &&
-            <Button
-              className="btn-sm center"
-              variant="outline-danger"
-              title={`Remove ${buildingName} from saved buildings list`}
-              type="button"
-              value="Remove"
-              onClick={() => {deleteBuilding(currentUser, buildingID, buildingName)}}
-              >
-              Remove
-            </Button>
-          }
-        </Card.Header>
-        <Card.Body>
-          <Tabs defaultActiveKey={"first"}>
-            <Tab eventKey="first" title="Contact">
-              <AddressAndPhone
-                buildingName={buildingName}
-                streetNum={streetNum}
-                street={street}
-                city={city}
-                state={state}
-                zip={zip}
-                phone={phone}
-                phone2={phone2}
-              />
-              {pageType === "savedBuildings" &&
+          ))}
+        {pageType === "savedBuildings" && (
+          <Button
+            className="btn-sm center"
+            variant="outline-danger"
+            title={`Remove ${buildingName} from saved buildings list`}
+            type="button"
+            value="Remove"
+            onClick={() => {
+              deleteBuilding(currentUser, buildingID, buildingName);
+            }}
+          >
+            Remove
+          </Button>
+        )}
+      </Card.Header>
+      <Card.Body>
+        <Tabs defaultActiveKey={"first"}>
+          <Tab eventKey="first" title="Contact">
+            <AddressAndPhone
+              buildingName={buildingName}
+              streetNum={streetNum}
+              street={street}
+              city={city}
+              state={state}
+              zip={zip}
+              phone={phone}
+              phone2={phone2}
+            />
+            {pageType === "savedBuildings" && (
               <>
                 <Form onSubmit={handleSubmit} className="notes-form">
                   <Form.Label>Notes</Form.Label>
                   <Form.Group>
-                    <Form.Control
-                      as="textarea"
-                      name="note"
-                      rows={3}
-                      value={noteToAdd}
-                      onChange={handleChange}
-                    />
+                    <Form.Control as="textarea" name="note" rows={3} value={noteToAdd} onChange={handleChange} />
                   </Form.Group>
                   <Button
                     disabled={!isNoteDifferent}
@@ -185,52 +173,57 @@ export function BuildingCard(props: BuildingsCardProps) {
                     type="submit"
                     title={`Save or update your note!`}
                     value="Save note"
-                    className="btn-sm notes-form-btn">
-                      Save note
+                    className="btn-sm notes-form-btn"
+                  >
+                    Save note
                   </Button>
                   {noteTimestamp && <p>{`Last saved: ${noteTimestamp}`}</p>}
                 </Form>
               </>
-              }
-            </Tab>
-            <Tab eventKey="link" title="Details">
-              <Table bordered hover size="sm">
-                <thead>
-                  <tr>
-                    <th>Unit Size</th>
-                    <th># of MFTE*</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Pod</td>
-                    <td>{sedu}</td>
-                  </tr>
-                  <tr>
-                    <td>Studio</td>
-                    <td>{studioUnits}</td>
-                  </tr>
-                  <tr>
-                    <td>One bed</td>
-                    <td>{oneBedroomUnits}</td>
-                  </tr>
-                  <tr>
-                    <td>Two bed</td>
-                    <td>{twoBedroomUnits}</td>
-                  </tr>
-                  <tr>
-                    <td>Three+ bed</td>
-                    <td>{threePlusBedroomUnits}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Total</strong></td>
-                    <td><strong>{totalRestrictedUnits}</strong></td>
-                  </tr>
-                </tbody>
-              </Table>
-              <div>*Number of MFTE units in the building. Contact building for availability.</div>
-            </Tab>
-          </Tabs>
+            )}
+          </Tab>
+          <Tab eventKey="link" title="Details">
+            <Table bordered hover size="sm">
+              <thead>
+                <tr>
+                  <th>Unit Size</th>
+                  <th># of MFTE*</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Pod</td>
+                  <td>{sedu}</td>
+                </tr>
+                <tr>
+                  <td>Studio</td>
+                  <td>{studioUnits}</td>
+                </tr>
+                <tr>
+                  <td>One bed</td>
+                  <td>{oneBedroomUnits}</td>
+                </tr>
+                <tr>
+                  <td>Two bed</td>
+                  <td>{twoBedroomUnits}</td>
+                </tr>
+                <tr>
+                  <td>Three+ bed</td>
+                  <td>{threePlusBedroomUnits}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Total</strong>
+                  </td>
+                  <td>
+                    <strong>{totalRestrictedUnits}</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+            <div>*Number of MFTE units in the building. Contact building for availability.</div>
+          </Tab>
+        </Tabs>
       </Card.Body>
     </Card>
   );

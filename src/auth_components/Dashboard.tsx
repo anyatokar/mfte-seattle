@@ -6,7 +6,7 @@ import Profile from "./Profile";
 export default function Dashboard() {
   const { currentUser } = useAuth() as any;
 
-  if (!currentUser) { 
+  if (!currentUser) {
     return null;
   }
 
@@ -17,10 +17,14 @@ export default function Dashboard() {
           <Col sm={12} lg={2}>
             <Nav variant="pills" className="flex-column side-nav">
               <Nav.Item>
-                <Nav.Link eventKey="profile" className="tab">Profile</Nav.Link>
+                <Nav.Link eventKey="profile" className="tab">
+                  Profile
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="update" className="tab">Edit Profile</Nav.Link>
+                <Nav.Link eventKey="update" className="tab">
+                  Edit Profile
+                </Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>

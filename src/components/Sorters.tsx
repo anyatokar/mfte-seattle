@@ -1,19 +1,14 @@
 import { Fragment } from "react";
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Container, Form, Row } from "react-bootstrap";
 
 export interface ISortersProps<T> {
   object: T;
-  onChangeSorter: (
-    sortProperty: keyof T,
-    isDescending: boolean
-  ) => void;
+  onChangeSorter: (sortProperty: keyof T, isDescending: boolean) => void;
 }
 
-type DropdownButtonKeyType =
-  'buildingName' |
-  'residentialTargetedArea'
+type DropdownButtonKeyType = "buildingName" | "residentialTargetedArea";
 
-const dropdownMenuKeys: DropdownButtonKeyType[]= ["buildingName", "residentialTargetedArea"]
+const dropdownMenuKeys: DropdownButtonKeyType[] = ["buildingName", "residentialTargetedArea"];
 
 export default function Sorters<T>(props: ISortersProps<T>) {
   const { onChangeSorter } = props;
@@ -26,37 +21,23 @@ export default function Sorters<T>(props: ISortersProps<T>) {
             <Form.Label htmlFor="sorters">Sort buildings by name or neighborhood:</Form.Label>
             <Form.Select
               id="sorters"
-              onChange={(event) =>
-                onChangeSorter(
-                  event.target.value.split(",")[0] as any,
-                  event.target.value.split(",")[1] === "true"
-                )
-              }
+              onChange={(event) => onChangeSorter(event.target.value.split(",")[0] as any, event.target.value.split(",")[1] === "true")}
             >
               {dropdownMenuKeys.map((dropdownMenuKey) => {
-                if (dropdownMenuKey === 'buildingName' ||
-                  dropdownMenuKey === 'residentialTargetedArea'
-                ) {
+                if (dropdownMenuKey === "buildingName" || dropdownMenuKey === "residentialTargetedArea") {
                   const dropdownMenuUILabels = {
-                    buildingName: 'Building name',
-                    residentialTargetedArea: 'Neighborhood',
-                  }
-                  return(
+                    buildingName: "Building name",
+                    residentialTargetedArea: "Neighborhood",
+                  };
+                  return (
                     <Fragment key={dropdownMenuKey}>
-                      <option
-                        value={[dropdownMenuKey, "false"]}
-                      >
-                        {dropdownMenuUILabels[dropdownMenuKey]} (A to Z)
-                      </option>
-                      <option
-                        value={[dropdownMenuKey, "true"]}
-                      >
-                        {dropdownMenuUILabels[dropdownMenuKey]} (Z to A)
-                      </option>
+                      <option value={[dropdownMenuKey, "false"]}>{dropdownMenuUILabels[dropdownMenuKey]} (A to Z)</option>
+                      <option value={[dropdownMenuKey, "true"]}>{dropdownMenuUILabels[dropdownMenuKey]} (Z to A)</option>
                     </Fragment>
                   );
                 } else {
-                  return (<></>)}
+                  return <></>;
+                }
               })}
             </Form.Select>
           </Form>

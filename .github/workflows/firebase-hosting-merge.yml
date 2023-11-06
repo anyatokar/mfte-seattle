@@ -2,7 +2,7 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on merge
-'on':
+"on":
   push:
     branches:
       - main
@@ -15,11 +15,11 @@ jobs:
         id: nvmrc-version
       - uses: actions/setup-node@v3
         with:
-          node-version: '${{ steps.nvmrc-version.outputs.node_version }}'
+          node-version: "${{ steps.nvmrc-version.outputs.node_version }}"
       - run: yarn install && yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MFTE_SIMPLE_92C08 }}'
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_MFTE_SIMPLE_92C08 }}"
           channelId: live
           projectId: mfte-simple-92c08

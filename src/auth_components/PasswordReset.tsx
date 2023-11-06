@@ -1,35 +1,32 @@
-import { useRef, useState } from "react"
-import { Form, Button, Modal, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useRef, useState } from "react";
+import { Form, Button, Modal, Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
 
 type Props = {
-  onLoginClicked?: () => void,
-  onSignupClicked?: () => void
-}
+  onLoginClicked?: () => void;
+  onSignupClicked?: () => void;
+};
 
-export default function PasswordReset({
-  onLoginClicked,
-  onSignupClicked
-}: Props) {
-  const emailRef = useRef() as any
-  const { resetPassword } = useAuth() as any
-  const [error, setError] = useState("")
-  const [message, setMessage] = useState("")
-  const [loading, setLoading] = useState(false)
+export default function PasswordReset({ onLoginClicked, onSignupClicked }: Props) {
+  const emailRef = useRef() as any;
+  const { resetPassword } = useAuth() as any;
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  async function handleFormSubmit (event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     try {
-      setMessage("")
-      setError("")
-      setLoading(true)
-      await resetPassword(emailRef.current.value)
-      setMessage("Check your inbox for further instructions")
+      setMessage("");
+      setError("");
+      setLoading(true);
+      await resetPassword(emailRef.current.value);
+      setMessage("Check your inbox for further instructions");
     } catch {
-      setError("Failed to reset password")
+      setError("Failed to reset password");
     }
 
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
@@ -45,29 +42,25 @@ export default function PasswordReset({
         <Form onSubmit={handleFormSubmit}>
           <Form.Group id="email" className="form-group">
             <p>Enter your email to receive a reset link in your inbox.</p>
-            <Form.Control
-              required
-              type="email"
-              ref={emailRef}
-            />
+            <Form.Control required type="email" ref={emailRef} />
           </Form.Group>
-          <Button
-            disabled={loading}
-            className="w-100"
-            type="submit"
-          >
+          <Button disabled={loading} className="w-100" type="submit">
             Reset Password
           </Button>
         </Form>
       </Modal.Body>
-      
+
       <Modal.Footer>
         <div className="w-100 text-center">
-          <Button onClick={onSignupClicked} variant="link">Sign Up</Button>
+          <Button onClick={onSignupClicked} variant="link">
+            Sign Up
+          </Button>
           <br />
-          <Button onClick={onLoginClicked} variant="link">Log In</Button>
+          <Button onClick={onLoginClicked} variant="link">
+            Log In
+          </Button>
         </div>
       </Modal.Footer>
     </>
-  )
+  );
 }

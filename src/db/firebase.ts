@@ -1,6 +1,6 @@
-import firebase from 'firebase/app'
-import "firebase/database"
-import "firebase/auth"
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/auth";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCtmQ3YXaf4KxHfztDl2846q8Galz2HOuk",
@@ -10,11 +10,11 @@ export const firebaseConfig = {
   storageBucket: "mfte-simple-92c08.appspot.com",
   messagingSenderId: "594673713013",
   appId: "1:594673713013:web:e6e60f494477b92a18dd3c",
-  measurementId: "G-MSQZT5PQH1"
+  measurementId: "G-MSQZT5PQH1",
 };
 
 const app = firebase.initializeApp(firebaseConfig);
 // const databaseRef = firebase.database().ref();
 // export const buildingsRef = databaseRef.child("buildings")
-export const auth = app.auth()
+export const auth = app.auth();
 export default app;
