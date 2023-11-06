@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import IPage from '../interfaces/IPage';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import MapTab from "../components/MapTab";
-import SavedHomesList from '../components/SavedHomesList';
+import SavedBuildingsList from '../components/SavedBuildingsList';
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { Spinner } from "react-bootstrap";
 
@@ -58,7 +58,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="list">
-                <SavedHomesList savedBuildings={savedBuildings} />
+                <SavedBuildingsList savedBuildings={savedBuildings} />
               </Tab.Pane>
             </Tab.Content>
           </Col>

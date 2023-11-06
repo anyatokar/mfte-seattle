@@ -7,7 +7,7 @@ import routes from './config/routes';
 import { AuthProvider } from "./contexts/AuthContext"
 import Dashboard from "./auth_components/Dashboard"
 import PrivateRoute from "./auth_components/PrivateRoute"
-import savedHomes from './pages/saved-homes';
+import savedBuildings from './pages/saved';
 import { ModalContext, ModalState } from './contexts/ModalContext';
 
 const Application: React.FunctionComponent<{}> = props => {
@@ -25,7 +25,7 @@ const Application: React.FunctionComponent<{}> = props => {
             <Header />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path="/saved-homes" component={savedHomes} />
+              <PrivateRoute exact path="/saved" component={savedBuildings} />
               {
                 routes.map((route, index) => {
                   return (

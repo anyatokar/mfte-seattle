@@ -4,7 +4,7 @@ import BuildingsPage from '../pages/buildings';
 import AboutPage from '../pages/about';
 import ContactPage from '../pages/contact';
 import ResourcesPage from '../pages/resources';
-import SavedHomesPage from '../pages/saved-homes';
+import SavedBuildingsPage from '../pages/saved';
 import DashboardPage from '../auth_components/Dashboard'
 
 const routes: IRoute[] = [
@@ -39,9 +39,9 @@ const routes: IRoute[] = [
     exact: true
   },
   {
-    path: '/saved-homes',
-    name: 'Saved Homes Page',
-    component: SavedHomesPage,
+    path: '/saved',
+    name: 'Saved Buildings Page',
+    component: SavedBuildingsPage,
     exact: true
   },
   {
