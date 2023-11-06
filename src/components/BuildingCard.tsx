@@ -191,36 +191,36 @@ export function BuildingCard(props: BuildingsCardProps) {
                 </tr>
               </thead>
               <tbody>
-                {sedu !== 0 &&
+                {sedu !== 0 && (
                   <tr>
                     <td>Pod</td>
                     <td>{sedu}</td>
                   </tr>
-                }
-                {studioUnits !== 0 &&
+                )}
+                {studioUnits !== 0 && (
                   <tr>
                     <td>Studio</td>
                     <td>{studioUnits}</td>
                   </tr>
-                }
-                {oneBedroomUnits !== 0 &&
+                )}
+                {oneBedroomUnits !== 0 && (
                   <tr>
                     <td>1</td>
                     <td>{oneBedroomUnits}</td>
                   </tr>
-                }
-                {twoBedroomUnits !== 0 &&
+                )}
+                {twoBedroomUnits !== 0 && (
                   <tr>
                     <td>2</td>
                     <td>{twoBedroomUnits}</td>
                   </tr>
-                }
-                {threePlusBedroomUnits !== 0 &&
+                )}
+                {threePlusBedroomUnits !== 0 && (
                   <tr>
                     <td>3+</td>
                     <td>{threePlusBedroomUnits}</td>
                   </tr>
-                }
+                )}
                 <tr>
                   <td>
                     <strong>Total</strong>
