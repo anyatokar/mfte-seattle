@@ -28,7 +28,8 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
             View participating buildings on the&nbsp;
             <a id="Buildings_tab" href="./Buildings" title="View a map of MFTE properties">
               MFTE map
-            </a>. Create an account to save buildings and keep notes. Contact buildings directly for current availability.
+            </a>
+            . Create an account to save buildings and keep notes. Contact buildings directly for current availability.
           </p>
           <p className="lead">
             This website is not affiliated with the Seattle Office of Housing. Please view official government resources for complete information about
