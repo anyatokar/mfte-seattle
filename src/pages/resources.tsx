@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import IPage from '../interfaces/IPage';
-import logging from '../config/logging';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import React, { useEffect } from "react";
+import IPage from "../interfaces/IPage";
+import logging from "../config/logging";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
-const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
-
+const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (props) => {
   useEffect(() => {
     logging.info(`Loading ${props.name}`);
-  }, [props.name])
+  }, [props.name]);
 
   return (
     <Container className="all-pages diy-jumbotron">
@@ -19,12 +18,14 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
           <ListGroup>
             <ListGroup.Item>
-              <a id="seattle-housing-website"
+              <a
+                id="seattle-housing-website"
                 href="https://seattle.gov/housing"
                 title="https://seattle.gov/housing"
                 target="_blank"
                 rel="noreferrer"
-                className="fw-bold">
+                className="fw-bold"
+              >
                 Seattle Office of Housing
               </a>
               <div className="fw-light">Seattle Office of Housing homepage with contact information</div>
@@ -32,12 +33,14 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <a id="mfte-city-website"
+              <a
+                id="mfte-city-website"
                 href="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
                 title="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
                 target="_blank"
                 rel="noreferrer"
-                className="fw-bold">
+                className="fw-bold"
+              >
                 MFTE Main Resources Page
               </a>
               <div className="fw-light">Information about the MFTE program and other income and rent-restricted properties</div>
@@ -45,12 +48,14 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <a id="properties-spreadsheet-may-2023"
+              <a
+                id="properties-spreadsheet-may-2023"
                 href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
                 title="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="fw-bold">
+                className="fw-bold"
+              >
                 MFTE Spreadsheet of Buildings
               </a>
               <div className="fw-light">Market-Rate Rental Properties with Affordable Housing Units spreadsheet</div>
@@ -58,12 +63,14 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <a id="income-and-rent-limits"
+              <a
+                id="income-and-rent-limits"
                 href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2023_Income_Rent_Limits_Rental.pdf"
                 title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2023_Income_Rent_Limits_Rental.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="fw-bold">
+                className="fw-bold"
+              >
                 Income and Rent Limits (FY 2023)
               </a>
               <div></div>
@@ -71,25 +78,28 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <a id="renters-guide"
+              <a
+                id="renters-guide"
                 href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Renters_Guide_7-2023.pdf"
                 title="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Renters_Guide_7-2023.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="fw-bold">
+                className="fw-bold"
+              >
                 Detailed Renters' Guide
               </a>
               <div>Renters' Guide for Market-Rate Apartment Buildings with Affordable Units</div>
               <div className="fw-light">PDF — City of Seattle — July 2023</div>
-
             </ListGroup.Item>
             <ListGroup.Item>
-              <a id="mfte-faqs"
+              <a
+                id="mfte-faqs"
                 href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
                 title="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="fw-bold">
+                className="fw-bold"
+              >
                 MFTE FAQs
               </a>
               <div className="fw-light">Two-page overview of the MFTE program. Note the map and income limits are outdated</div>
@@ -99,7 +109,7 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
         </Col>
       </Row>
     </Container>
-  )
-}
+  );
+};
 
 export default withRouter(ResourcesPage);

@@ -1,5 +1,6 @@
 /* entire app */
-html, body {
+html,
+body {
   background: #eef6f6;
 }
 
@@ -26,9 +27,10 @@ html, body {
   margin-right: 1em;
 }
 
-.navbar .nav-link, .navbar-text {
+.navbar .nav-link,
+.navbar-text {
   color: black !important;
-  border-radius: 10%
+  border-radius: 10%;
 }
 
 .navbar .nav-link:hover {
@@ -66,7 +68,7 @@ html, body {
 .nav.nav-pills .nav-link {
   background-color: #eef6f6;
   color: #06253e;
-  border: 2px solid rgba(6, 37, 62, .1);
+  border: 2px solid rgba(6, 37, 62, 0.1);
 }
 
 .nav.nav-pills .nav-link:hover {
@@ -95,7 +97,7 @@ html, body {
 }
 
 .notes-form-btn {
-  margin-top: .5em;
+  margin-top: 0.5em;
 }
 
 .notes-form {
@@ -105,17 +107,17 @@ html, body {
 
 /* pills pages - building cards and info windows */
 .address-phone-block {
-  margin-top: .5em;
-  margin-bottom: .5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .first-phone-num {
-  margin-top: .5em;
+  margin-top: 0.5em;
   margin-bottom: 0em;
 }
 
 .table {
-  margin-top: .5em;
+  margin-top: 0.5em;
   margin-bottom: 0em;
 }
 /* pills pages - end of building cards and info windows */
@@ -134,6 +136,6 @@ html, body {
 
 .heavy-break-line {
   background-color: #06253e;
-  height: .5px;
+  height: 0.5px;
 }
 /* end of misc */

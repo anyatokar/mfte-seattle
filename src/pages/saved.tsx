@@ -1,15 +1,15 @@
 import React from "react";
 import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import IPage from '../interfaces/IPage';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import IPage from "../interfaces/IPage";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import MapTab from "../components/MapTab";
-import SavedBuildingsList from '../components/SavedBuildingsList';
+import SavedBuildingsList from "../components/SavedBuildingsList";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { Spinner } from "react-bootstrap";
 
-const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = props => {
-  const { currentUser } = useAuth() as any
+const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (props) => {
+  const { currentUser } = useAuth() as any;
   const [savedBuildings, loading] = useSavedBuildings();
 
   if (!currentUser) {
@@ -23,10 +23,14 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
           <Col sm={12} lg={2}>
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
-                <Nav.Link eventKey="map" className="tab">Map</Nav.Link>
+                <Nav.Link eventKey="map" className="tab">
+                  Map
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="list" className="tab">List</Nav.Link>
+                <Nav.Link eventKey="list" className="tab">
+                  List
+                </Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>
@@ -40,22 +44,20 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 </Col>
               </Row>
               {loading && <Spinner animation="border" variant="warning" />}
-              {!loading && savedBuildings.length === 0 &&
+              {!loading && savedBuildings.length === 0 && (
                 <>
                   <br />
-                  <p>Empty for now! To start your list, use the Save button in the&nbsp;
-                    <a id="Buildings_tab"
-                      href="./Buildings"
-                      title="View the map of MFTE properties">
+                  <p>
+                    Empty for now! To start your list, use the Save button in the&nbsp;
+                    <a id="Buildings_tab" href="./Buildings" title="View the map of MFTE properties">
                       MFTE Map
-                    </a>&nbsp;tab.
+                    </a>
+                    &nbsp;tab.
                   </p>
-                </>}
+                </>
+              )}
               <Tab.Pane eventKey="map">
-                <MapTab
-                  buildingsToMap={savedBuildings}
-                  savedBuildings={savedBuildings}
-                />
+                <MapTab buildingsToMap={savedBuildings} savedBuildings={savedBuildings} />
               </Tab.Pane>
               <Tab.Pane eventKey="list">
                 <SavedBuildingsList savedBuildings={savedBuildings} />
@@ -65,7 +67,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
         </Row>
       </Tab.Container>
     </Container>
-  )
-}
+  );
+};
 
 export default withRouter(SavedByUserPage);
