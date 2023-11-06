@@ -205,19 +205,19 @@ export function BuildingCard(props: BuildingsCardProps) {
                 )}
                 {oneBedroomUnits !== 0 && (
                   <tr>
-                    <td>1</td>
+                    <td>One</td>
                     <td>{oneBedroomUnits}</td>
                   </tr>
                 )}
                 {twoBedroomUnits !== 0 && (
                   <tr>
-                    <td>2</td>
+                    <td>Two</td>
                     <td>{twoBedroomUnits}</td>
                   </tr>
                 )}
                 {threePlusBedroomUnits !== 0 && (
                   <tr>
-                    <td>3+</td>
+                    <td>Three+</td>
                     <td>{threePlusBedroomUnits}</td>
                   </tr>
                 )}
