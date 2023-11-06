@@ -38,7 +38,6 @@ body {
 }
 
 .navbar .nav-link.active {
-  background: #eef6f6;
   font-weight: 700;
 }
 

@@ -13,14 +13,14 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (pr
     <Container className="all-pages diy-jumbotron">
       <Row className="justify-content-center">
         <Col lg={8}>
-          <div className="display-5 mb-4">About</div>
+          <div className="display-5">About</div>
           <hr className="my-4"></hr>
         </Col>
       </Row>
 
       <Row className="justify-content-center">
         <Col>
-          <Row className="align-items-center py-3">
+          <Row className="align-items-center pb-3">
             <Col lg={2} className="text-lg-end">
               <div className="fs-4">Purpose</div>
             </Col>
@@ -72,9 +72,9 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (pr
             <Col lg={8}>
               <div className="lead">
                 Search and filter for apartments that fit your criteria (such as number of bedrooms, neighborhood, and building name). Create a (free) login to
-                keep a short list of properties, view a personalized map, and add notes. Explore&nbsp;
-                <a id="Buildings_tab" href="./Buildings" title="View the map of MFTE properties">
-                  the map
+                keep a short list of properties, view a personalized map, and add notes. Explore the&nbsp;
+                <a id="Buildings_tab" href="./Buildings" title="View a map of MFTE properties">
+                  MFTE map
                 </a>
                 &nbsp;to get started.
               </div>
