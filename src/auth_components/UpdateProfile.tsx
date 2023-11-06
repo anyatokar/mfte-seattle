@@ -102,11 +102,9 @@ export default function UpdateProfile() {
       .then(() => {
         console.log("User successfully deleted from Firestore");
       })
-      .catch((error: unknown) => {
-        if (error instanceof FirebaseError) {
-          console.error("Error removing user from Firestore: ", error);
-          setMessage(error.message);
-        }
+      .catch((error: any) => {
+        console.error("Error removing user from Firestore: ", error);
+        setMessage(error.message);
       });
 
     currentUser
