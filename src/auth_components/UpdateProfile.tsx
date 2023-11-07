@@ -4,7 +4,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import firebase from "../db/firebase";
 import { Container, Row, Col } from "react-bootstrap";
-import { FirebaseError } from "@firebase/util";
 import { updateEmailFirestore, updateNameFirestore } from "../utils/firestoreUtils";
 
 export default function UpdateProfile() {
@@ -102,11 +101,9 @@ export default function UpdateProfile() {
       .then(() => {
         console.log("User successfully deleted from Firestore");
       })
-      .catch((error: unknown) => {
-        if (error instanceof FirebaseError) {
-          console.error("Error removing user from Firestore: ", error);
-          setMessage(error.message);
-        }
+      .catch((error: any) => {
+        console.error("Error removing user from Firestore: ", error);
+        setMessage(error.message);
       });
 
     currentUser

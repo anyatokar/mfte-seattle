@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { Form, Button, Alert, Modal } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import { FirebaseError } from "@firebase/util";
 
 type Props = {
   onResetClicked: () => void;
@@ -26,13 +25,11 @@ export default function Login({ onResetClicked, onSignupClicked, afterLogin }: P
       if (afterLogin) {
         afterLogin();
       }
-    } catch (error: unknown) {
-      if (error instanceof FirebaseError) {
-        console.log(error.code);
-        const userMessage = error.code === "auth/wrong-password" ? "Wrong password, please try again." : error.message;
-        console.log(error.message);
-        setMessage(userMessage);
-      }
+    } catch (error: any) {
+      console.log(error.code);
+      const userMessage = error.code === "auth/wrong-password" ? "Wrong password, please try again." : error.message;
+      console.log(error.message);
+      setMessage(userMessage);
     }
     setLoading(false);
   }
