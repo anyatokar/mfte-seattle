@@ -1,6 +1,7 @@
 import firebase from "../db/firebase";
 import IBuilding from "../interfaces/IBuilding";
 import { timestampPT } from "./generalUtils";
+import { formFieldsType } from "../pages/contact";
 
 export function saveBuilding(currentUser: any, building: IBuilding) {
   const {
@@ -89,4 +90,20 @@ export function updateEmailFirestore(uid: string, email: string) {
     email: email,
     updateEmailTimestamp: timestampPT(),
   });
+}
+
+export function sendMessageToDb(formFields: formFieldsType) {
+  return (firebase
+    .firestore()
+    .collection("contactus")
+    .doc()
+    .set({
+      authorName: formFields.authorName,
+      email: formFields.email,
+      subject: formFields.subject,
+      description: formFields.description,
+      message: formFields.message,
+      sentTimestamp: timestampPT(),
+    })
+  )
 }
