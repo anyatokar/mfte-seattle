@@ -4,7 +4,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import firebase from "../db/firebase";
 import { Container, Row, Col } from "react-bootstrap";
-import { FirebaseError } from "@firebase/util";
 import { updateEmailFirestore, updateNameFirestore } from "../utils/firestoreUtils";
 
 export default function UpdateProfile() {
