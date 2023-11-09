@@ -128,3 +128,11 @@ export function deleteUserFromFirestore(currentUserUID: string) {
   .doc(currentUserUID)
   .delete()
 }
+
+export function signupFirestore(uid: string, email: string, name: string) {
+  firebase.firestore().collection("users").doc(uid).set({
+    email: email,
+    name: name,
+    signupTimestamp: timestampPT(),
+  });
+}

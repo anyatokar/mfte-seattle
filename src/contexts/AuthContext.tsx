@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import firebase, { auth } from "../db/firebase";
 import IProps from "../interfaces/IProps";
-import { timestampPT } from "../utils/generalUtils";
+import { signupFirestore } from "../utils/firestoreUtils";
 
 const AuthContext = createContext({});
 
@@ -20,11 +20,7 @@ export function AuthProvider({ children }: IProps) {
       .then((cred) => {
         if (cred.user) {
           cred.user.updateProfile({ displayName: name });
-          firebase.firestore().collection("users").doc(cred.user.uid).update({
-            email: cred.user.email,
-            name: name,
-            signupTimestamp: timestampPT(),
-          });
+          signupFirestore(cred.user.uid, email, name)
         }
       });
     return { user };
