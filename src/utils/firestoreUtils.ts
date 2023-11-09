@@ -107,3 +107,16 @@ export function sendMessageToDb(formFields: formFieldsType) {
     })
   )
 }
+
+export function addNote(currentUserUID: string, buildingID: string, noteToAdd: string) {
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(currentUserUID)
+    .collection("savedHomes")
+    .doc(buildingID)
+    .update({
+      note: noteToAdd,
+      noteTimestamp: timestampPT(),
+    })
+  }
