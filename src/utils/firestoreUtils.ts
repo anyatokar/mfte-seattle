@@ -120,3 +120,11 @@ export function addNote(currentUserUID: string, buildingID: string, noteToAdd: s
       noteTimestamp: timestampPT(),
     })
   }
+
+export function deleteUserFromFirestore(currentUserUID: string) {
+  return firebase
+  .firestore()
+  .collection("users")
+  .doc(currentUserUID)
+  .delete()
+}

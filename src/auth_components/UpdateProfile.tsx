@@ -2,9 +2,8 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-import firebase from "../db/firebase";
 import { Container, Row, Col } from "react-bootstrap";
-import { updateEmailFirestore, updateNameFirestore } from "../utils/firestoreUtils";
+import { deleteUserFromFirestore, updateEmailFirestore, updateNameFirestore } from "../utils/firestoreUtils";
 
 export default function UpdateProfile() {
   // TODO: add useRef types, also maybe use useRef to dynamically update
@@ -91,30 +90,30 @@ export default function UpdateProfile() {
       });
   }
 
+
+
   function onDelete(event: any) {
     event.preventDefault();
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(currentUser.uid)
-      .delete()
+
+    deleteUserFromFirestore(currentUser.uid)
       .then(() => {
         console.log("User successfully deleted from Firestore");
+
+        currentUser
+        .delete()
+        .then(() => {
+          console.log("User successfully deleted from Auth.");
+          setMessage("Success! Account deleted");
+          history.push("/");
+        })
+        .catch((error: any) => {
+          console.error("Error removing user from Auth: ", error);
+          setMessage(error.message);
+        });
       })
       .catch((error: any) => {
         console.error("Error removing user from Firestore: ", error);
-        setMessage(error.message);
-      });
-
-    currentUser
-      .delete()
-      .then(() => {
-        console.log("User successfully deleted from Auth.");
-        setMessage("Success! Account deleted");
-        history.push("/");
-      })
-      .catch((error: any) => {
-        console.error("Error removing user from Auth: ", error);
+        console.error("Did not attempt to remove user from Auth");
         setMessage(error.message);
       });
   }
