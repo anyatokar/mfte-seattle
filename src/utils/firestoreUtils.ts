@@ -136,3 +136,15 @@ export function signupFirestore(uid: string, email: string, name: string) {
     signupTimestamp: timestampPT(),
   });
 }
+
+export function getBuildings() {
+  return firebase.firestore().collection("buildings");
+}
+
+export function getSavedBuildingsRef(currentUserUID: string) {
+  return firebase
+  .firestore()
+  .collection("users")
+  .doc(currentUserUID)
+  .collection("savedHomes")
+};
