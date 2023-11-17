@@ -21,9 +21,11 @@ export default function PasswordReset({ onLoginClicked, onSignupClicked }: Props
       setError("");
       setLoading(true);
       await resetPassword(emailRef.current.value);
-      setMessage("Check your inbox for further instructions");
-    } catch {
-      setError("Failed to reset password");
+      setMessage("Please check your inbox for the reset link.");
+    } catch (error: any) {
+      console.log(error.code);
+      console.log(error.message);
+      setError(error.message);
     }
 
     setLoading(false);
