@@ -14,9 +14,9 @@ import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import MapTab from "../components/MapTab";
 import AllBuildingsList from "../components/AllBuildingsList";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
-import { getBuildings } from "../utils/firestoreUtils";
+import { getAllBuildingsRef } from "../utils/firestoreUtils";
 
-const ref = getBuildings();
+const ref = getAllBuildingsRef();
 
 const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (props) => {
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);

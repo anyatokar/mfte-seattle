@@ -3,7 +3,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import { deleteUserFromFirestore, updateEmailFirestore, updateNameFirestore } from "../utils/firestoreUtils";
+import { deleteUserFirestore, updateEmailFirestore, updateNameFirestore } from "../utils/firestoreUtils";
 
 export default function UpdateProfile() {
   // TODO: add useRef types, also maybe use useRef to dynamically update
@@ -95,7 +95,7 @@ export default function UpdateProfile() {
   function onDelete(event: any) {
     event.preventDefault();
 
-    deleteUserFromFirestore(currentUser.uid)
+    deleteUserFirestore(currentUser.uid)
       .then(() => {
         console.log("User successfully deleted from Firestore");
 

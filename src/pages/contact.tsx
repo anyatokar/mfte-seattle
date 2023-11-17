@@ -3,7 +3,7 @@ import IPage from "../interfaces/IPage";
 import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Col, Container, Form, Button, Row } from "react-bootstrap";
-import { sendMessageToDb } from "../utils/firestoreUtils";
+import { sendMessageFirestore } from "../utils/firestoreUtils";
 
 export type formFieldsType = {
   authorName: string;
@@ -47,7 +47,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    return sendMessageToDb(formFields)
+    return sendMessageFirestore(formFields)
     .then(() => {
       console.log("Message successfully submitted!");
       clearFields();

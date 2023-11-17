@@ -92,7 +92,7 @@ export function updateEmailFirestore(uid: string, email: string) {
   });
 }
 
-export function sendMessageToDb(formFields: formFieldsType) {
+export function sendMessageFirestore(formFields: formFieldsType) {
   return (firebase
     .firestore()
     .collection("contactus")
@@ -108,11 +108,11 @@ export function sendMessageToDb(formFields: formFieldsType) {
   )
 }
 
-export function addNote(currentUserUID: string, buildingID: string, noteToAdd: string) {
+export function addNote(uid: string, buildingID: string, noteToAdd: string) {
   return firebase
     .firestore()
     .collection("users")
-    .doc(currentUserUID)
+    .doc(uid)
     .collection("savedHomes")
     .doc(buildingID)
     .update({
@@ -121,30 +121,30 @@ export function addNote(currentUserUID: string, buildingID: string, noteToAdd: s
     })
   }
 
-export function deleteUserFromFirestore(currentUserUID: string) {
+export function deleteUserFirestore(uid: string) {
   return firebase
   .firestore()
   .collection("users")
-  .doc(currentUserUID)
+  .doc(uid)
   .delete()
 }
 
 export function signupFirestore(uid: string, email: string, name: string) {
-  firebase.firestore().collection("users").doc(uid).set({
+  return firebase.firestore().collection("users").doc(uid).set({
     email: email,
     name: name,
     signupTimestamp: timestampPT(),
   });
 }
 
-export function getBuildings() {
+export function getAllBuildingsRef() {
   return firebase.firestore().collection("buildings");
 }
 
-export function getSavedBuildingsRef(currentUserUID: string) {
+export function getSavedBuildingsRef(uid: string) {
   return firebase
   .firestore()
   .collection("users")
-  .doc(currentUserUID)
+  .doc(uid)
   .collection("savedHomes")
 };
