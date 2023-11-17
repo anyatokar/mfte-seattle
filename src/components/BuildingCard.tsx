@@ -8,7 +8,6 @@ import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
 import { addNote } from "../utils/firestoreUtils";
 
-
 export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean;
   pageType: "allBuildings";
@@ -90,7 +89,7 @@ export function BuildingCard(props: BuildingsCardProps) {
   const updateNote = (noteToAdd: string) => {
     return addNote(currentUser.uid, buildingID, noteToAdd)
       .then(() => {
-        setIsNoteDifferent(false)
+        setIsNoteDifferent(false);
         console.log("Note successfully updated!");
       })
       .catch((error: any) => {

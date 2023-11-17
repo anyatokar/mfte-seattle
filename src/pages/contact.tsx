@@ -48,13 +48,13 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     return sendMessageFirestore(formFields)
-    .then(() => {
-      console.log("Message successfully submitted!");
-      clearFields();
-    })
-    .catch((error) => {
-      console.error("Error sending message: ", error);
-    });
+      .then(() => {
+        console.log("Message successfully submitted!");
+        clearFields();
+      })
+      .catch((error) => {
+        console.error("Error sending message: ", error);
+      });
   };
 
   return (

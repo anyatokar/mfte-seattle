@@ -20,7 +20,7 @@ export function AuthProvider({ children }: IProps) {
       .then((cred) => {
         if (cred.user) {
           cred.user.updateProfile({ displayName: name });
-          signupFirestore(cred.user.uid, email, name)
+          signupFirestore(cred.user.uid, email, name);
         }
       });
     return { user };

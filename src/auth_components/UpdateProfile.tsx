@@ -90,8 +90,6 @@ export default function UpdateProfile() {
       });
   }
 
-
-
   function onDelete(event: any) {
     event.preventDefault();
 
@@ -100,16 +98,16 @@ export default function UpdateProfile() {
         console.log("User successfully deleted from Firestore");
 
         currentUser
-        .delete()
-        .then(() => {
-          console.log("User successfully deleted from Auth.");
-          setMessage("Success! Account deleted");
-          history.push("/");
-        })
-        .catch((error: any) => {
-          console.error("Error removing user from Auth: ", error);
-          setMessage(error.message);
-        });
+          .delete()
+          .then(() => {
+            console.log("User successfully deleted from Auth.");
+            setMessage("Success! Account deleted");
+            history.push("/");
+          })
+          .catch((error: any) => {
+            console.error("Error removing user from Auth: ", error);
+            setMessage(error.message);
+          });
       })
       .catch((error: any) => {
         console.error("Error removing user from Firestore: ", error);
