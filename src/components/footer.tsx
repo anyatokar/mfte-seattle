@@ -1,12 +1,14 @@
 import houses from "../assets/images/houses.png";
 import { Col, Container, Image, Row } from "react-bootstrap";
 
+// alt is empty per accessibility guidelines for decorative images.
+
 export const Footer = () => {
   return (
     <Container fluid className="footer">
       <Row>
         <Col className="p-0">
-          <Image className="footer-img" src={houses} alt="Colorful houses in a neighborhood" />
+          <Image className="footer-img" src={houses} alt="" />
         </Col>
       </Row>
       <Row>
