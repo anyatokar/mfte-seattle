@@ -26,7 +26,7 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
           <p className="lead">Find modern rent-reduced apartments in Seattle through the Multifamily Tax Exemption (MFTE) program.</p>
           <p className="lead">
             View participating buildings on the&nbsp;
-            <a id="Buildings_tab" href="./Buildings" title="View a map of MFTE properties">
+            <a id="Buildings_tab" href="./Buildings">
               MFTE map
             </a>
             . Create an account to save buildings and keep notes. Contact buildings directly for current availability.
