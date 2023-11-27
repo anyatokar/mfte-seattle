@@ -101,23 +101,37 @@ export function BuildingCard(props: BuildingsCardProps) {
     <Card>
       <Card.Header>
         <Card.Title>
-          <BuildingName buildingName={buildingName} urlForBuilding={urlForBuilding} />
+          <BuildingName
+            buildingName={buildingName}
+            urlForBuilding={urlForBuilding}
+          />
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
         <div className="mt-2">
           {pageType === "allBuildings" &&
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <Button variant="btn btn-info btn-sm" onClick={toggleSave} role="button">
+                <Button
+                  variant="btn btn-info btn-sm"
+                  onClick={toggleSave}
+                  role="button"
+                >
                   Saved
                 </Button>
               ) : (
-                <Button variant="btn btn-outline-info btn-sm" onClick={toggleSave} role="button">
+                <Button
+                  variant="btn btn-outline-info btn-sm"
+                  onClick={toggleSave}
+                  role="button"
+                >
                   Save
                 </Button>
               )
             ) : (
-              <Button onClick={handleShowLogin} variant="btn btn-outline-info btn-sm">
+              <Button
+                onClick={handleShowLogin}
+                variant="btn btn-outline-info btn-sm"
+              >
                 Save
               </Button>
             ))}
@@ -155,7 +169,13 @@ export function BuildingCard(props: BuildingsCardProps) {
                 <Form onSubmit={handleSubmit} className="notes-form">
                   <Form.Label>Notes</Form.Label>
                   <Form.Group>
-                    <Form.Control as="textarea" name="note" rows={3} value={noteToAdd} onChange={handleChange} />
+                    <Form.Control
+                      as="textarea"
+                      name="note"
+                      rows={3}
+                      value={noteToAdd}
+                      onChange={handleChange}
+                    />
                   </Form.Group>
                   <Button
                     disabled={!isNoteDifferent}

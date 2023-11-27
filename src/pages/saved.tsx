@@ -8,7 +8,9 @@ import SavedBuildingsList from "../components/SavedBuildingsList";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { Spinner } from "react-bootstrap";
 
-const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (props) => {
+const SavedByUserPage: React.FunctionComponent<
+  IPage & RouteComponentProps<any>
+> = (props) => {
   const { currentUser } = useAuth() as any;
   const [savedBuildings, loading] = useSavedBuildings();
 
@@ -39,7 +41,9 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
               <Row>
                 {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for large screens and up */}
                 <Col className="mt-2 mt-lg-0">
-                  <p className="lead">Saved buildings — your short list of apartment buildings.</p>
+                  <p className="lead">
+                    Saved buildings — your short list of apartment buildings.
+                  </p>
                   <p>The list and notes are private to your profile.</p>
                 </Col>
               </Row>
@@ -48,7 +52,8 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 <>
                   <br />
                   <p>
-                    Empty for now! To start your list, use the Save button on the&nbsp;
+                    Empty for now! To start your list, use the Save button on
+                    the&nbsp;
                     <a id="Buildings_tab" href="./Buildings">
                       MFTE map
                     </a>
@@ -57,7 +62,10 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                 </>
               )}
               <Tab.Pane eventKey="map">
-                <MapTab buildingsToMap={savedBuildings} savedBuildings={savedBuildings} />
+                <MapTab
+                  buildingsToMap={savedBuildings}
+                  savedBuildings={savedBuildings}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey="list">
                 <SavedBuildingsList savedBuildings={savedBuildings} />

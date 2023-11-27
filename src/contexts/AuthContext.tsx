@@ -66,5 +66,9 @@ export function AuthProvider({ children }: IProps) {
     updatePassword,
   };
 
-  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 }

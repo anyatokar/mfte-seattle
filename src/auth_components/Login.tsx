@@ -8,7 +8,11 @@ type Props = {
   afterLogin?: () => void;
 };
 
-export default function Login({ onResetClicked, onSignupClicked, afterLogin }: Props) {
+export default function Login({
+  onResetClicked,
+  onSignupClicked,
+  afterLogin,
+}: Props) {
   const emailRef = useRef() as any;
   const passwordRef = useRef() as any;
   const { login } = useAuth() as any;
@@ -27,7 +31,10 @@ export default function Login({ onResetClicked, onSignupClicked, afterLogin }: P
       }
     } catch (error: any) {
       console.log(error.code);
-      const userMessage = error.code === "auth/wrong-password" ? "Wrong password, please try again." : error.message;
+      const userMessage =
+        error.code === "auth/wrong-password"
+          ? "Wrong password, please try again."
+          : error.message;
       console.log(error.message);
       setMessage(userMessage);
     }

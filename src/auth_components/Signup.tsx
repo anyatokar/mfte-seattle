@@ -30,7 +30,11 @@ export default function Signup({ onLoginClicked }: Props) {
     try {
       setMessage("");
       setLoading(true);
-      const user = await signup(emailRef.current.value, passwordRef.current.value, nameRef.current.value);
+      const user = await signup(
+        emailRef.current.value,
+        passwordRef.current.value,
+        nameRef.current.value
+      );
       if (user) {
         signupFirestore(user.uid, user.email, user.displayName);
       }
@@ -61,11 +65,21 @@ export default function Signup({ onLoginClicked }: Props) {
           </Form.Group>
           <Form.Group id="password" className="form-group">
             <Form.Label>Password</Form.Label>
-            <Form.Control required type="password" ref={passwordRef} placeholder="6 or more characters" />
+            <Form.Control
+              required
+              type="password"
+              ref={passwordRef}
+              placeholder="6 or more characters"
+            />
           </Form.Group>
           <Form.Group id="password-confirm" className="form-group">
             <Form.Label>Confirm password</Form.Label>
-            <Form.Control required type="password" ref={passwordConfirmRef} placeholder="6 or more characters" />
+            <Form.Control
+              required
+              type="password"
+              ref={passwordConfirmRef}
+              placeholder="6 or more characters"
+            />
           </Form.Group>
           <Button disabled={loading} className="w-100" type="submit">
             Sign Up

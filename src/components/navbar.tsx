@@ -1,4 +1,11 @@
-import { Container, Image, Navbar, Nav, Modal, Dropdown } from "react-bootstrap";
+import {
+  Container,
+  Image,
+  Navbar,
+  Nav,
+  Modal,
+  Dropdown,
+} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import { useState, useEffect, useContext, useCallback } from "react";
@@ -18,10 +25,14 @@ export const Header = () => {
 
   const showModal = modalState !== ModalState.HIDDEN;
   const showLogin = () => setModalState(ModalState.LOGIN);
-  const showLoginSavedBuildings = () => setModalState(ModalState.LOGIN_SAVED_BUILDINGS);
+  const showLoginSavedBuildings = () =>
+    setModalState(ModalState.LOGIN_SAVED_BUILDINGS);
   const showReset = () => setModalState(ModalState.RESET);
   const showSignup = () => setModalState(ModalState.SIGNUP);
-  const closeLogin = useCallback(() => setModalState(ModalState.HIDDEN), [setModalState]);
+  const closeLogin = useCallback(
+    () => setModalState(ModalState.HIDDEN),
+    [setModalState]
+  );
 
   const afterLogin = () => history.push("./saved");
 
@@ -49,9 +60,20 @@ export const Header = () => {
     if (modalState === ModalState.LOGIN) {
       return <Login onResetClicked={showReset} onSignupClicked={showSignup} />;
     } else if (modalState === ModalState.LOGIN_SAVED_BUILDINGS) {
-      return <Login onResetClicked={showReset} onSignupClicked={showSignup} afterLogin={afterLogin} />;
+      return (
+        <Login
+          onResetClicked={showReset}
+          onSignupClicked={showSignup}
+          afterLogin={afterLogin}
+        />
+      );
     } else if (modalState === ModalState.RESET) {
-      return <PasswordReset onLoginClicked={showLogin} onSignupClicked={showSignup} />;
+      return (
+        <PasswordReset
+          onLoginClicked={showLogin}
+          onSignupClicked={showSignup}
+        />
+      );
     } else if (modalState === ModalState.SIGNUP) {
       return <Signup onLoginClicked={showLogin} />;
     }
@@ -62,7 +84,12 @@ export const Header = () => {
       <Container fluid>
         <LinkContainer to="/">
           <Navbar.Brand>
-            <Image src={mftelogo} height="80" width="80" alt="MFTE Seattle website logo: a teal map pin with a house on it" />
+            <Image
+              src={mftelogo}
+              height="80"
+              width="80"
+              alt="MFTE Seattle website logo: a teal map pin with a house on it"
+            />
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle />
@@ -85,14 +112,20 @@ export const Header = () => {
           </Nav>
           {currentUser ? (
             <Nav>
-              <Navbar.Text className="mr-lg-4 font-italic">{currentUser.displayName && `Hi, ${currentUser.displayName}!`}</Navbar.Text>
+              <Navbar.Text className="mr-lg-4 font-italic">
+                {currentUser.displayName && `Hi, ${currentUser.displayName}!`}
+              </Navbar.Text>
               <LinkContainer to="/dashboard">
                 <Nav.Link active={false}>Profile</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/saved">
                 <Nav.Link active={false}>Saved</Nav.Link>
               </LinkContainer>
-              <Nav.Link className="logout" active={false} onClick={handleLogout}>
+              <Nav.Link
+                className="logout"
+                active={false}
+                onClick={handleLogout}
+              >
                 Logout
               </Nav.Link>
             </Nav>

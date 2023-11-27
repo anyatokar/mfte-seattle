@@ -4,7 +4,9 @@ import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
-const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (props) => {
+const ResourcesPage: React.FunctionComponent<
+  IPage & RouteComponentProps<any>
+> = (props) => {
   useEffect(() => {
     logging.info(`Loading ${props.name}`);
   }, [props.name]);
@@ -28,7 +30,9 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               >
                 Seattle Office of Housing
               </a>
-              <div className="fw-light">Seattle Office of Housing homepage with contact information</div>
+              <div className="fw-light">
+                Seattle Office of Housing homepage with contact information
+              </div>
               <div className="fw-light">website — City of Seattle</div>
             </ListGroup.Item>
 
@@ -43,7 +47,10 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               >
                 MFTE Main Resources Page
               </a>
-              <div className="fw-light">Information about the MFTE program and other income and rent-restricted properties</div>
+              <div className="fw-light">
+                Information about the MFTE program and other income and
+                rent-restricted properties
+              </div>
               <div className="fw-light">website — City of Seattle</div>
             </ListGroup.Item>
 
@@ -58,8 +65,13 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               >
                 MFTE Spreadsheet of Buildings
               </a>
-              <div className="fw-light">Market-Rate Rental Properties with Affordable Housing Units spreadsheet</div>
-              <div className="fw-light">PDF — City of Seattle — October 2023</div>
+              <div className="fw-light">
+                Market-Rate Rental Properties with Affordable Housing Units
+                spreadsheet
+              </div>
+              <div className="fw-light">
+                PDF — City of Seattle — October 2023
+              </div>
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -74,7 +86,9 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                 Income and Rent Limits (FY 2023)
               </a>
               <div></div>
-              <div className="fw-light">PDF — City of Seattle — May 15, 2023</div>
+              <div className="fw-light">
+                PDF — City of Seattle — May 15, 2023
+              </div>
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -88,7 +102,10 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               >
                 Detailed Renters' Guide
               </a>
-              <div>Renters' Guide for Market-Rate Apartment Buildings with Affordable Units</div>
+              <div>
+                Renters' Guide for Market-Rate Apartment Buildings with
+                Affordable Units
+              </div>
               <div className="fw-light">PDF — City of Seattle — July 2023</div>
             </ListGroup.Item>
             <ListGroup.Item>
@@ -102,7 +119,10 @@ const ResourcesPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
               >
                 MFTE FAQs
               </a>
-              <div className="fw-light">Two-page overview of the MFTE program. Note the map and income limits are outdated</div>
+              <div className="fw-light">
+                Two-page overview of the MFTE program. Note the map and income
+                limits are outdated
+              </div>
               <div className="fw-light">PDF — City of Seattle — 2018</div>
             </ListGroup.Item>
           </ListGroup>

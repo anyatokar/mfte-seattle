@@ -19,7 +19,13 @@ export function BuildingName(props: buildingNameProps) {
 
   return (
     <div>
-      <a id="buildingLink" href={urlForBuilding} title={`Open new tab: ${urlForBuilding}`} target="_blank" rel="noreferrer">
+      <a
+        id="buildingLink"
+        href={urlForBuilding}
+        title={`Open new tab: ${urlForBuilding}`}
+        target="_blank"
+        rel="noreferrer"
+      >
         {buildingName}
       </a>
     </div>
@@ -27,7 +33,8 @@ export function BuildingName(props: buildingNameProps) {
 }
 
 export function AddressAndPhone(props: addressAndPhoneProps) {
-  const { buildingName, streetNum, street, city, state, zip, phone, phone2 } = props;
+  const { buildingName, streetNum, street, city, state, zip, phone, phone2 } =
+    props;
 
   const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${streetNum}+${street}+${city}+${state}+${zip}`;
   const phone1Ref = `tel:${phone}`;
@@ -35,7 +42,13 @@ export function AddressAndPhone(props: addressAndPhoneProps) {
 
   return (
     <div className="address-phone-block">
-      <a id="addressLink" href={mapViewUrl} title={`Open new tab: ${buildingName} on Google Maps`} target="_blank" rel="noreferrer">
+      <a
+        id="addressLink"
+        href={mapViewUrl}
+        title={`Open new tab: ${buildingName} on Google Maps`}
+        target="_blank"
+        rel="noreferrer"
+      >
         {streetNum} {street}
         <br />
         {city}, {state} {zip}

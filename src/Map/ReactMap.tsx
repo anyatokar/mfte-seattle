@@ -22,7 +22,9 @@ const LIBRARIES: "places"[] = ["places"];
 
 export function ReactMap(props: IMap) {
   const { buildingsToMap = [] } = props;
-  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(null);
+  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
+    null
+  );
 
   useEffect(() => {
     if (selectedBuilding && !buildingsToMap.includes(selectedBuilding)) {
@@ -42,7 +44,12 @@ export function ReactMap(props: IMap) {
   }
 
   return (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} options={{ mapId: "c8d48b060a22a457" }}>
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={14}
+      options={{ mapId: "c8d48b060a22a457" }}
+    >
       <>
         {buildingsToMap.map((building) => (
           <BuildingMarker
