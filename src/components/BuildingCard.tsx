@@ -90,7 +90,7 @@ export function BuildingCard(props: BuildingsCardProps) {
     return addNote(currentUser.uid, buildingID, noteToAdd)
       .then(() => {
         setIsNoteDifferent(false);
-        console.log("Note successfully updated!");
+        console.log("Note updated successfully.");
       })
       .catch((error: any) => {
         console.error("Error updating document: ", error);
