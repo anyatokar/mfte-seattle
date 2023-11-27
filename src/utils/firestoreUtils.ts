@@ -55,7 +55,7 @@ export function saveBuilding(currentUser: any, building: IBuilding) {
       savedTimestamp: timestampPT(),
     })
     .then(() => {
-      console.log(`${buildingName} saved to user list`);
+      console.log(`${buildingName} saved to user list.`);
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
@@ -69,7 +69,7 @@ export function deleteBuilding(currentUser: any, buildingID: string, buildingNam
       doc.ref
         .delete()
         .then(() => {
-          console.log(`${buildingName} deleted from user list`);
+          console.log(`${buildingName} deleted from user list.`);
         })
         .catch((error) => {
           console.error("Error deleting document: ", error);

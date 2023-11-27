@@ -71,7 +71,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (pr
             </Col>
             <Col lg={8}>
               <div className="lead">
-                Search and filter for apartments that fit your criteria (such as number of bedrooms, neighborhood, and building name). Create a (free) login to
+                Search and filter for apartments that fit your criteria (such as number of bedrooms, neighborhood, and building name). Create a free login to
                 keep a short list of properties, view a personalized map, and add notes. Explore the&nbsp;
                 <a id="Buildings_tab" href="./Buildings" title="View a map of MFTE properties">
                   MFTE map
@@ -92,7 +92,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (pr
               </div>
               <div className="lead">
                 We do not provide insight on current availability in each building or details on renter qualifications. The best way to learn this information
-                is to get in touch with property management.
+                is to get in touch with property management directly.
               </div>
             </Col>
           </Row>
@@ -108,7 +108,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (pr
                   Ada Developers Academy
                 </a>
                 &nbsp;grad (and former MFTE apartment resident) in 2021 as her capstone. It is an&nbsp;
-                <a id="ada-website" href="https://github.com/anyatokar/mfte-seattle" title="MFTE Seattle GitHub" target="_blank" rel="noreferrer">
+                <a id="github-link" href="https://github.com/anyatokar/mfte-seattle" title="MFTE Seattle GitHub" target="_blank" rel="noreferrer">
                   open source project
                 </a>
                 .

@@ -20,11 +20,11 @@ export default function Signup({ onLoginClicked }: Props) {
     event.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setMessage("Passwords do not match");
+      return setMessage("Passwords do not match.");
     }
 
     if (passwordRef.current.value.length < 6) {
-      return setMessage("Password must be 6 characters or more");
+      return setMessage("Password must be 6 characters or more.");
     }
 
     try {

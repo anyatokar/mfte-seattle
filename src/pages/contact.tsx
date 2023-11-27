@@ -49,7 +49,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
     event.preventDefault();
     return sendMessageFirestore(formFields)
       .then(() => {
-        console.log("Message successfully submitted!");
+        console.log("Message sent successfully.");
         clearFields();
       })
       .catch((error) => {
@@ -84,7 +84,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
               process.
             </li>
           </ul>
-          <p>All fields are required</p>
+          <p>All fields are required.</p>
 
           <Form onSubmit={handleFormSubmit}>
             <Form.Group className="form-row">

@@ -68,15 +68,15 @@ export default function UpdateProfile() {
         // Auth is the source of truth for name/email/password
         // Firestore stores name/email as well but it's still a
         // Success for the user if Firestore update fails (unlikely)
-        setMessage("Success! Account updated");
-        console.log("Account updated in Auth");
+        setMessage("Success! Account updated.");
+        console.log("Account updated in Auth.");
 
         Promise.all(firestorePromises)
           .then(() => {
-            console.log("Account updated in Firestore");
+            console.log("Account updated in Firestore.");
           })
           .catch(() => {
-            console.log("Error updating account in Firestore");
+            console.log("Error updating account in Firestore.");
           });
       })
       .catch((error) => {
@@ -101,7 +101,7 @@ export default function UpdateProfile() {
           .delete()
           .then(() => {
             console.log("User successfully deleted from Auth.");
-            setMessage("Success! Account deleted");
+            setMessage("Success! Account deleted.");
             history.push("/");
           })
           .catch((error: any) => {
@@ -111,7 +111,7 @@ export default function UpdateProfile() {
       })
       .catch((error: any) => {
         console.error("Error removing user from Firestore: ", error);
-        console.error("Did not attempt to remove user from Auth");
+        console.error("Did not attempt to remove user from Auth.");
         setMessage(error.message);
       });
   }
