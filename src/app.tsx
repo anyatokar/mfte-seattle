@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "./components/navbar";
 import { Footer } from "./components/footer";
-import { BrowserRouter as Router, Route, Switch, RouteComponentProps } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  RouteComponentProps,
+} from "react-router-dom";
 import logging from "./config/logging";
 import routes from "./config/routes";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -32,7 +37,13 @@ const Application: React.FunctionComponent<{}> = (props) => {
                     key={index}
                     path={route.path}
                     exact={route.exact}
-                    render={(props: RouteComponentProps<any>) => <route.component name={route.name} {...props} {...route.props} />}
+                    render={(props: RouteComponentProps<any>) => (
+                      <route.component
+                        name={route.name}
+                        {...props}
+                        {...route.props}
+                      />
+                    )}
                   />
                 );
               })}

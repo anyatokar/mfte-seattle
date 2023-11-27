@@ -18,7 +18,9 @@ import { getAllBuildingsRef } from "../utils/firestoreUtils";
 
 const ref = getAllBuildingsRef();
 
-const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (props) => {
+const BuildingsPage: React.FunctionComponent<
+  IPage & RouteComponentProps<any>
+> = (props) => {
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
@@ -39,10 +41,24 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
   }, [getAllBuildings]);
 
   const [query, setQuery] = useState<string>("");
-  const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>([]);
+  const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
+    []
+  );
   const resultBuildingsUnsorted = useMemo(() => {
     return allBuildings
-      .filter((building) => genericSearch<IBuilding>(building, ["buildingName", "residentialTargetedArea", "streetNum", "street", "zip"], query))
+      .filter((building) =>
+        genericSearch<IBuilding>(
+          building,
+          [
+            "buildingName",
+            "residentialTargetedArea",
+            "streetNum",
+            "street",
+            "zip",
+          ],
+          query
+        )
+      )
       .filter((building) => genericFilter<IBuilding>(building, activeFilters));
   }, [allBuildings, query, activeFilters]);
 
@@ -50,12 +66,20 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
 
   return (
     <div className="all-pages">
-      {loading || loadingSavedBuildings ? <Spinner animation="border" variant="warning" /> : <></>}
+      {loading || loadingSavedBuildings ? (
+        <Spinner animation="border" variant="warning" />
+      ) : (
+        <></>
+      )}
       {/* search filter container */}
       <Container fluid>
         {/* search */}
         <Row>
-          <Col sm={12} md={{ span: 11, offset: 1 }} lg={{ span: 10, offset: 2 }}>
+          <Col
+            sm={12}
+            md={{ span: 11, offset: 1 }}
+            lg={{ span: 10, offset: 2 }}
+          >
             <Row>
               <Col sm md={9} lg={8}>
                 <SearchInput onChangeSearchQuery={(query) => setQuery(query)} />
@@ -71,10 +95,18 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                     onChangeFilter={(changedFilterProperty, checked) => {
                       checked
                         ? setActiveFilters([
-                            ...activeFilters.filter((filter) => filter.property !== changedFilterProperty),
+                            ...activeFilters.filter(
+                              (filter) =>
+                                filter.property !== changedFilterProperty
+                            ),
                             { property: changedFilterProperty },
                           ])
-                        : setActiveFilters(activeFilters.filter((filter) => filter.property !== changedFilterProperty));
+                        : setActiveFilters(
+                            activeFilters.filter(
+                              (filter) =>
+                                filter.property !== changedFilterProperty
+                            )
+                          );
                     }}
                   />
                 )}
@@ -86,7 +118,8 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
                   <p>
                     <strong>Results: </strong>
                     {`${resultBuildingsUnsorted.length} buildings found`}
-                    {resultBuildingsUnsorted.length === 0 && ". Try expanding your search criteria!"}
+                    {resultBuildingsUnsorted.length === 0 &&
+                      ". Try expanding your search criteria!"}
                   </p>
                 )}
               </Col>
@@ -117,10 +150,16 @@ const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> =
             <Col sm={12} lg={10}>
               <Tab.Content>
                 <Tab.Pane eventKey="map">
-                  <MapTab buildingsToMap={resultBuildingsUnsorted} savedBuildings={savedBuildings} />
+                  <MapTab
+                    buildingsToMap={resultBuildingsUnsorted}
+                    savedBuildings={savedBuildings}
+                  />
                 </Tab.Pane>
                 <Tab.Pane eventKey="saved">
-                  <AllBuildingsList resultBuildingsUnsorted={resultBuildingsUnsorted} savedBuildings={savedBuildings} />
+                  <AllBuildingsList
+                    resultBuildingsUnsorted={resultBuildingsUnsorted}
+                    savedBuildings={savedBuildings}
+                  />
                 </Tab.Pane>
               </Tab.Content>
             </Col>

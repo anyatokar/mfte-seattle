@@ -7,7 +7,10 @@ type Props = {
   onSignupClicked?: () => void;
 };
 
-export default function PasswordReset({ onLoginClicked, onSignupClicked }: Props) {
+export default function PasswordReset({
+  onLoginClicked,
+  onSignupClicked,
+}: Props) {
   const emailRef = useRef() as any;
   const { resetPassword } = useAuth() as any;
   const [error, setError] = useState("");

@@ -7,7 +7,10 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState, useContext } from "react";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
-import { AddressAndPhone, BuildingName } from "../components/BuildingContactInfo";
+import {
+  AddressAndPhone,
+  BuildingName,
+} from "../components/BuildingContactInfo";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -17,12 +20,37 @@ interface IBuildingMarkerProps {
 }
 
 export function BuildingMarker(props: IBuildingMarkerProps) {
-  const { building, isSelected, setSelectedBuilding, isSaved: wasOriginallySaved } = props;
-  const { buildingID, buildingName, urlForBuilding, residentialTargetedArea, streetNum, street, city, state, zip, phone, phone2, lat, lng } = building;
+  const {
+    building,
+    isSelected,
+    setSelectedBuilding,
+    isSaved: wasOriginallySaved,
+  } = props;
+  const {
+    buildingID,
+    buildingName,
+    urlForBuilding,
+    residentialTargetedArea,
+    streetNum,
+    street,
+    city,
+    state,
+    zip,
+    phone,
+    phone2,
+    lat,
+    lng,
+  } = building;
 
-  const onMarkerClick = useCallback(() => setSelectedBuilding(isSelected ? null : building), [isSelected, building, setSelectedBuilding]);
+  const onMarkerClick = useCallback(
+    () => setSelectedBuilding(isSelected ? null : building),
+    [isSelected, building, setSelectedBuilding]
+  );
 
-  const clearSelection = useCallback(() => setSelectedBuilding(null), [setSelectedBuilding]);
+  const clearSelection = useCallback(
+    () => setSelectedBuilding(null),
+    [setSelectedBuilding]
+  );
 
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
@@ -52,7 +80,10 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
         <InfoWindow onCloseClick={clearSelection}>
           <>
             <strong>
-              <BuildingName buildingName={buildingName} urlForBuilding={urlForBuilding} />
+              <BuildingName
+                buildingName={buildingName}
+                urlForBuilding={urlForBuilding}
+              />
             </strong>
             <strong>{residentialTargetedArea}</strong>
             <AddressAndPhone
@@ -67,17 +98,28 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
             />
             {currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <Button variant="btn btn-info btn-sm" onClick={toggleSave} role="button">
+                <Button
+                  variant="btn btn-info btn-sm"
+                  onClick={toggleSave}
+                  role="button"
+                >
                   Saved
                 </Button>
               ) : (
-                <Button variant="btn btn-outline-info btn-sm" onClick={toggleSave} role="button">
+                <Button
+                  variant="btn btn-outline-info btn-sm"
+                  onClick={toggleSave}
+                  role="button"
+                >
                   Save
                 </Button>
               )
             ) : (
               <>
-                <Button onClick={handleShowLogin} variant="btn btn-outline-info btn-sm">
+                <Button
+                  onClick={handleShowLogin}
+                  variant="btn btn-outline-info btn-sm"
+                >
                   Save
                 </Button>
               </>

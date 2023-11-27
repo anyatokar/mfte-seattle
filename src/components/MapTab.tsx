@@ -8,7 +8,10 @@ export default function MapTab(props: IMap) {
     <Container fluid>
       <Row>
         <Col className="p-0">
-          <ReactMap buildingsToMap={props.buildingsToMap} savedBuildings={props.savedBuildings} />
+          <ReactMap
+            buildingsToMap={props.buildingsToMap}
+            savedBuildings={props.savedBuildings}
+          />
         </Col>
       </Row>
     </Container>

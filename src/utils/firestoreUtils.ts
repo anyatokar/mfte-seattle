@@ -62,8 +62,17 @@ export function saveBuilding(currentUser: any, building: IBuilding) {
     });
 }
 
-export function deleteBuilding(currentUser: any, buildingID: string, buildingName: string) {
-  const savedHomesQuery = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where("buildingID", "==", buildingID);
+export function deleteBuilding(
+  currentUser: any,
+  buildingID: string,
+  buildingName: string
+) {
+  const savedHomesQuery = firebase
+    .firestore()
+    .collection("users")
+    .doc(currentUser.uid)
+    .collection("savedHomes")
+    .where("buildingID", "==", buildingID);
   savedHomesQuery.get().then(function (querySnapshot) {
     querySnapshot.forEach(function (doc) {
       doc.ref
@@ -104,10 +113,16 @@ export function sendMessageFirestore(formFields: formFieldsType) {
 }
 
 export function addNote(uid: string, buildingID: string, noteToAdd: string) {
-  return firebase.firestore().collection("users").doc(uid).collection("savedHomes").doc(buildingID).update({
-    note: noteToAdd,
-    noteTimestamp: timestampPT(),
-  });
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(uid)
+    .collection("savedHomes")
+    .doc(buildingID)
+    .update({
+      note: noteToAdd,
+      noteTimestamp: timestampPT(),
+    });
 }
 
 export function deleteUserFirestore(uid: string) {
@@ -127,5 +142,9 @@ export function getAllBuildingsRef() {
 }
 
 export function getSavedBuildingsRef(uid: string) {
-  return firebase.firestore().collection("users").doc(uid).collection("savedHomes");
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(uid)
+    .collection("savedHomes");
 }

@@ -8,7 +8,10 @@ export interface ISortersProps<T> {
 
 type DropdownButtonKeyType = "buildingName" | "residentialTargetedArea";
 
-const dropdownMenuKeys: DropdownButtonKeyType[] = ["buildingName", "residentialTargetedArea"];
+const dropdownMenuKeys: DropdownButtonKeyType[] = [
+  "buildingName",
+  "residentialTargetedArea",
+];
 
 export default function Sorters<T>(props: ISortersProps<T>) {
   const { onChangeSorter } = props;
@@ -18,21 +21,35 @@ export default function Sorters<T>(props: ISortersProps<T>) {
       <Row className="sort-bar">
         <Col className="mt-2 mt-lg-0 p-0">
           <Form>
-            <Form.Label htmlFor="sorters">Sort buildings by name or neighborhood:</Form.Label>
+            <Form.Label htmlFor="sorters">
+              Sort buildings by name or neighborhood:
+            </Form.Label>
             <Form.Select
               id="sorters"
-              onChange={(event) => onChangeSorter(event.target.value.split(",")[0] as any, event.target.value.split(",")[1] === "true")}
+              onChange={(event) =>
+                onChangeSorter(
+                  event.target.value.split(",")[0] as any,
+                  event.target.value.split(",")[1] === "true"
+                )
+              }
             >
               {dropdownMenuKeys.map((dropdownMenuKey) => {
-                if (dropdownMenuKey === "buildingName" || dropdownMenuKey === "residentialTargetedArea") {
+                if (
+                  dropdownMenuKey === "buildingName" ||
+                  dropdownMenuKey === "residentialTargetedArea"
+                ) {
                   const dropdownMenuUILabels = {
                     buildingName: "Building name",
                     residentialTargetedArea: "Neighborhood",
                   };
                   return (
                     <Fragment key={dropdownMenuKey}>
-                      <option value={[dropdownMenuKey, "false"]}>{dropdownMenuUILabels[dropdownMenuKey]} (A to Z)</option>
-                      <option value={[dropdownMenuKey, "true"]}>{dropdownMenuUILabels[dropdownMenuKey]} (Z to A)</option>
+                      <option value={[dropdownMenuKey, "false"]}>
+                        {dropdownMenuUILabels[dropdownMenuKey]} (A to Z)
+                      </option>
+                      <option value={[dropdownMenuKey, "true"]}>
+                        {dropdownMenuUILabels[dropdownMenuKey]} (Z to A)
+                      </option>
                     </Fragment>
                   );
                 } else {

@@ -3,7 +3,11 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import { deleteUserFirestore, updateEmailFirestore, updateNameFirestore } from "../utils/firestoreUtils";
+import {
+  deleteUserFirestore,
+  updateEmailFirestore,
+  updateNameFirestore,
+} from "../utils/firestoreUtils";
 
 export default function UpdateProfile() {
   // TODO: add useRef types, also maybe use useRef to dynamically update
@@ -12,7 +16,8 @@ export default function UpdateProfile() {
   const emailRef = useRef() as any;
   const passwordRef = useRef() as any;
   const passwordConfirmRef = useRef() as any;
-  const { currentUser, updateDisplayName, updateEmail, updatePassword } = useAuth() as any;
+  const { currentUser, updateDisplayName, updateEmail, updatePassword } =
+    useAuth() as any;
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState(false);
@@ -29,7 +34,9 @@ export default function UpdateProfile() {
   }
 
   const handleChange = () => {
-    isNameUpdated() || isEmailUpdated() || isPasswordUpdated() ? setIsAnyFieldUpdated(true) : setIsAnyFieldUpdated(false);
+    isNameUpdated() || isEmailUpdated() || isPasswordUpdated()
+      ? setIsAnyFieldUpdated(true)
+      : setIsAnyFieldUpdated(false);
   };
 
   function clearPasswordFields(): void {
@@ -50,12 +57,16 @@ export default function UpdateProfile() {
 
     if (isNameUpdated()) {
       authPromises.push(updateDisplayName(displayNameRef.current.value));
-      firestorePromises.push(updateNameFirestore(currentUser.uid, displayNameRef.current.value));
+      firestorePromises.push(
+        updateNameFirestore(currentUser.uid, displayNameRef.current.value)
+      );
     }
 
     if (isEmailUpdated()) {
       authPromises.push(updateEmail(emailRef.current.value));
-      firestorePromises.push(updateEmailFirestore(currentUser.uid, emailRef.current.value));
+      firestorePromises.push(
+        updateEmailFirestore(currentUser.uid, emailRef.current.value)
+      );
     }
 
     if (isPasswordUpdated()) {
@@ -122,30 +133,60 @@ export default function UpdateProfile() {
         <Col lg={6} className="mt-3 mt-md-0">
           <Card>
             <Card.Body>
-              {message && message.includes("Success") && <Alert variant="success">{message}</Alert>}
-              {message && !message.includes("Success") && <Alert variant="danger">{message}</Alert>}
+              {message && message.includes("Success") && (
+                <Alert variant="success">{message}</Alert>
+              )}
+              {message && !message.includes("Success") && (
+                <Alert variant="danger">{message}</Alert>
+              )}
 
               <Form onSubmit={handleFormSubmit}>
                 {currentUser.displayName && (
                   <Form.Group id="displayName" className="form-group">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control required type="displayName" ref={displayNameRef} defaultValue={currentUser.displayName} onChange={handleChange} />
+                    <Form.Control
+                      required
+                      type="displayName"
+                      ref={displayNameRef}
+                      defaultValue={currentUser.displayName}
+                      onChange={handleChange}
+                    />
                   </Form.Group>
                 )}
                 <Form.Group id="email" className="form-group">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control required type="email" ref={emailRef} defaultValue={currentUser.email} onChange={handleChange} />
+                  <Form.Control
+                    required
+                    type="email"
+                    ref={emailRef}
+                    defaultValue={currentUser.email}
+                    onChange={handleChange}
+                  />
                 </Form.Group>
                 <Form.Group id="password" className="form-group">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" ref={passwordRef} placeholder="Leave blank to keep the same" onChange={handleChange} />
+                  <Form.Control
+                    type="password"
+                    ref={passwordRef}
+                    placeholder="Leave blank to keep the same"
+                    onChange={handleChange}
+                  />
                 </Form.Group>
                 <Form.Group id="password-confirm" className="form-group">
                   <Form.Label>Confirm password</Form.Label>
-                  <Form.Control type="password" ref={passwordConfirmRef} placeholder="Leave blank to keep the same" onChange={handleChange} />
+                  <Form.Control
+                    type="password"
+                    ref={passwordConfirmRef}
+                    placeholder="Leave blank to keep the same"
+                    onChange={handleChange}
+                  />
                 </Form.Group>
                 <div className="text-center">
-                  <Button disabled={isLoading || !isAnyFieldUpdated} className="btn btn-info" type="submit">
+                  <Button
+                    disabled={isLoading || !isAnyFieldUpdated}
+                    className="btn btn-info"
+                    type="submit"
+                  >
                     Update
                   </Button>
                 </div>

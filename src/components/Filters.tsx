@@ -7,15 +7,31 @@ export interface IFiltersProps<T> {
   onChangeFilter: (filterProperty: keyof T, checked: boolean) => void;
 }
 
-type radioButtonKeyType = "sedu" | "studioUnits" | "oneBedroomUnits" | "twoBedroomUnits" | "threePlusBedroomUnits";
+type radioButtonKeyType =
+  | "sedu"
+  | "studioUnits"
+  | "oneBedroomUnits"
+  | "twoBedroomUnits"
+  | "threePlusBedroomUnits";
 
-type radioButtonUILabelType = "Pod" | "Studio" | "One bedroom" | "Two bedroom" | "Three or more";
+type radioButtonUILabelType =
+  | "Pod"
+  | "Studio"
+  | "One bedroom"
+  | "Two bedroom"
+  | "Three or more";
 
 type radioButtonMapType = {
   [key in radioButtonKeyType]: radioButtonUILabelType;
 };
 
-const radioButtonKeys: radioButtonKeyType[] = ["sedu", "studioUnits", "oneBedroomUnits", "twoBedroomUnits", "threePlusBedroomUnits"];
+const radioButtonKeys: radioButtonKeyType[] = [
+  "sedu",
+  "studioUnits",
+  "oneBedroomUnits",
+  "twoBedroomUnits",
+  "threePlusBedroomUnits",
+];
 
 const radioButtonUILabels: radioButtonMapType = {
   sedu: "Pod",
@@ -47,7 +63,9 @@ export function Filters<T>(props: IFiltersProps<T>) {
               id={id}
               value={radioButtonKey}
               checked={getChecked(radioButtonKey)}
-              onChange={(event) => onChangeFilter(radioButtonKey as any, event.target.checked)}
+              onChange={(event) =>
+                onChangeFilter(radioButtonKey as any, event.target.checked)
+              }
               className={"m-1 ml-3"}
             />
             <Form.Label htmlFor={id}>{styledKey}</Form.Label>
