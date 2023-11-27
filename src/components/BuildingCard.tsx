@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-import firebase from "../db/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { Card, Form, Button, Table, Tabs, Tab } from "react-bootstrap";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
@@ -7,7 +6,7 @@ import IBuilding from "../interfaces/IBuilding";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
-import { timestampPT } from "../utils/generalUtils";
+import { addNote } from "../utils/firestoreUtils";
 
 export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean;
@@ -76,7 +75,7 @@ export function BuildingCard(props: BuildingsCardProps) {
   const [isNoteDifferent, setIsNoteDifferent] = useState(false);
 
   const handleChange = (event: any) => {
-    event.target.value !== note ? setIsNoteDifferent(true) : setIsNoteDifferent(false);
+    setIsNoteDifferent(event.target.value !== note);
     setNoteToAdd(event.target.value);
   };
 
@@ -84,27 +83,18 @@ export function BuildingCard(props: BuildingsCardProps) {
     event.preventDefault();
     if (noteToAdd !== undefined && isNoteDifferent) {
       updateNote(noteToAdd);
-      setIsNoteDifferent(false);
     }
   };
 
   const updateNote = (noteToAdd: string) => {
-    const savedHome = firebase.firestore().collection("users").doc(currentUser.uid).collection("savedHomes").where("buildingID", "==", buildingID);
-    savedHome.get().then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        return doc.ref
-          .update({
-            note: noteToAdd,
-            noteTimestamp: timestampPT(),
-          })
-          .then(() => {
-            console.log("Note successfully updated!");
-          })
-          .catch((error) => {
-            console.error("Error updating document: ", error);
-          });
+    return addNote(currentUser.uid, buildingID, noteToAdd)
+      .then(() => {
+        setIsNoteDifferent(false);
+        console.log("Note successfully updated!");
+      })
+      .catch((error: any) => {
+        console.error("Error updating document: ", error);
       });
-    });
   };
 
   return (

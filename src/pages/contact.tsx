@@ -3,43 +3,20 @@ import IPage from "../interfaces/IPage";
 import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Col, Container, Form, Button, Row } from "react-bootstrap";
-import firebase from "../db/firebase";
-import { timestampPT } from "../utils/generalUtils";
+import { sendMessageFirestore } from "../utils/firestoreUtils";
+
+export type formFieldsType = {
+  authorName: string;
+  email: string;
+  description: string;
+  subject: string;
+  message: string;
+};
 
 const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (props) => {
   useEffect(() => {
     logging.info(`Loading ${props.name}`);
   }, [props.name]);
-
-  type formFieldsType = {
-    authorName: string;
-    email: string;
-    description: string;
-    subject: string;
-    message: string;
-  };
-
-  function sendMessageToDb(formFields: formFieldsType): void {
-    firebase
-      .firestore()
-      .collection("contactus")
-      .doc()
-      .set({
-        authorName: formFields.authorName,
-        email: formFields.email,
-        subject: formFields.subject,
-        description: formFields.description,
-        message: formFields.message,
-        sentTimestamp: timestampPT(),
-      })
-      .then(() => {
-        console.log("Message successfully submitted!");
-        clearFields();
-      })
-      .catch((error) => {
-        console.error("Error sending message: ", error);
-      });
-  }
 
   function clearFields(): void {
     setformFields({
@@ -68,9 +45,16 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
     setformFields(newformFields);
   };
 
-  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event): void => {
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    sendMessageToDb(formFields);
+    return sendMessageFirestore(formFields)
+      .then(() => {
+        console.log("Message successfully submitted!");
+        clearFields();
+      })
+      .catch((error) => {
+        console.error("Error sending message: ", error);
+      });
   };
 
   return (

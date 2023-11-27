@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import IPage from "../interfaces/IPage";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import firebase from "../db/firebase";
 import "firebase/firestore";
 import { Spinner } from "react-bootstrap";
 
@@ -15,8 +14,9 @@ import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import MapTab from "../components/MapTab";
 import AllBuildingsList from "../components/AllBuildingsList";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
+import { getAllBuildingsRef } from "../utils/firestoreUtils";
 
-const ref = firebase.firestore().collection("buildings");
+const ref = getAllBuildingsRef();
 
 const BuildingsPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (props) => {
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);

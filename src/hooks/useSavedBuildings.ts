@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect } from "react";
-import firebase from "../db/firebase";
 import "firebase/firestore";
+import { getSavedBuildingsRef } from "../utils/firestoreUtils";
 
 import { useAuth } from "../contexts/AuthContext";
 import IBuilding from "../interfaces/IBuilding";
@@ -16,11 +16,8 @@ export function useSavedBuildings(): [IBuilding[], boolean] {
 
     setLoading(true);
 
-    const ref = firebase
-      .firestore()
-      .collection("users")
-      .doc(currentUser?.uid)
-      .collection("savedHomes");
+    const ref = getSavedBuildingsRef(currentUser.uid);
+
     ref?.onSnapshot((querySnapshot) => {
       const items: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {

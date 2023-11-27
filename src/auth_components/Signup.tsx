@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
+import { signupFirestore } from "../utils/firestoreUtils";
 
 type Props = {
   onLoginClicked?: () => void;
@@ -29,7 +30,10 @@ export default function Signup({ onLoginClicked }: Props) {
     try {
       setMessage("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value, nameRef.current.value);
+      const user = await signup(emailRef.current.value, passwordRef.current.value, nameRef.current.value);
+      if (user) {
+        signupFirestore(user.uid, user.email, user.displayName);
+      }
     } catch (error: any) {
       console.log(error.code);
       console.log(error.message);

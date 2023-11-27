@@ -1,7 +1,6 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import firebase, { auth } from "../db/firebase";
 import IProps from "../interfaces/IProps";
-import { timestampPT } from "../utils/generalUtils";
 
 const AuthContext = createContext({});
 
@@ -14,20 +13,14 @@ export function AuthProvider({ children }: IProps) {
   const [loading, setLoading] = useState(true);
 
   async function signup(email: string, password: string, name: string) {
-    const user = firebase
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((cred) => {
         if (cred.user) {
           cred.user.updateProfile({ displayName: name });
-          firebase.firestore().collection("users").doc(cred.user.uid).update({
-            email: cred.user.email,
-            name: name,
-            signupTimestamp: timestampPT(),
-          });
         }
       });
-    return { user };
   }
 
   function login(email: string, password: string) {

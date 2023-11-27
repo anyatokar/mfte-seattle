@@ -1,6 +1,7 @@
 import firebase from "../db/firebase";
 import IBuilding from "../interfaces/IBuilding";
 import { timestampPT } from "./generalUtils";
+import { formFieldsType } from "../pages/contact";
 
 export function saveBuilding(currentUser: any, building: IBuilding) {
   const {
@@ -89,4 +90,42 @@ export function updateEmailFirestore(uid: string, email: string) {
     email: email,
     updateEmailTimestamp: timestampPT(),
   });
+}
+
+export function sendMessageFirestore(formFields: formFieldsType) {
+  return firebase.firestore().collection("contactus").doc().set({
+    authorName: formFields.authorName,
+    email: formFields.email,
+    subject: formFields.subject,
+    description: formFields.description,
+    message: formFields.message,
+    sentTimestamp: timestampPT(),
+  });
+}
+
+export function addNote(uid: string, buildingID: string, noteToAdd: string) {
+  return firebase.firestore().collection("users").doc(uid).collection("savedHomes").doc(buildingID).update({
+    note: noteToAdd,
+    noteTimestamp: timestampPT(),
+  });
+}
+
+export function deleteUserFirestore(uid: string) {
+  return firebase.firestore().collection("users").doc(uid).delete();
+}
+
+export function signupFirestore(uid: string, email: string, name: string) {
+  return firebase.firestore().collection("users").doc(uid).set({
+    email: email,
+    name: name,
+    signupTimestamp: timestampPT(),
+  });
+}
+
+export function getAllBuildingsRef() {
+  return firebase.firestore().collection("buildings");
+}
+
+export function getSavedBuildingsRef(uid: string) {
+  return firebase.firestore().collection("users").doc(uid).collection("savedHomes");
 }
