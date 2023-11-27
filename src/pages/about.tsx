@@ -53,9 +53,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (pr
                 Buildings are sourced from the spreadsheet of&nbsp;
                 <a
                   id="properties-spreadsheet-may-2023"
-                  href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
-                  title="Market-Rate Rental Properties with Affordable Housing Units spreadsheet by the City of Seattle - October 2023 update - PDF"
-                  target="_blank"
+                  href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf" target="_blank"
                   rel="noreferrer"
                 >
                   Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (October 2023)
@@ -73,7 +71,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (pr
               <div className="lead">
                 Search and filter for apartments that fit your criteria (such as number of bedrooms, neighborhood, and building name). Create a free login to
                 keep a short list of properties, view a personalized map, and add notes. Explore the&nbsp;
-                <a id="Buildings_tab" href="./Buildings" title="View a map of MFTE properties">
+                <a id="Buildings_tab" href="./Buildings">
                   MFTE map
                 </a>
                 &nbsp;to get started.
@@ -104,7 +102,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (pr
             <Col lg={8}>
               <div className="lead">
                 This website was created by an&nbsp;
-                <a id="ada-website" href="https://adadevelopersacademy.org/" title="Ada Developers Academy website" target="_blank" rel="noreferrer">
+                <a id="ada-website" href="https://adadevelopersacademy.org/" target="_blank" rel="noreferrer">
                   Ada Developers Academy
                 </a>
                 &nbsp;grad (and former MFTE apartment resident) in 2021 as her capstone. It is an&nbsp;

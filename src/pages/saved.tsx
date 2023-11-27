@@ -49,7 +49,7 @@ const SavedByUserPage: React.FunctionComponent<IPage & RouteComponentProps<any>>
                   <br />
                   <p>
                     Empty for now! To start your list, use the Save button on the&nbsp;
-                    <a id="Buildings_tab" href="./Buildings" title="View a map of MFTE properties">
+                    <a id="Buildings_tab" href="./Buildings">
                       MFTE map
                     </a>
                     .
