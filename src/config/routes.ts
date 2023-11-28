@@ -5,7 +5,7 @@ import AboutPage from "../pages/About";
 import ContactPage from "../pages/Contact";
 import ResourcesPage from "../pages/Resources";
 import SavedBuildingsPage from "../pages/SavedBuildings";
-import ManageProfilePage from "../auth_components/ManageProfile";
+import ManageProfilePage from "../pages/ManageProfile";
 
 const routes: IRoute[] = [
   {

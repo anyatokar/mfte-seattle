@@ -10,7 +10,7 @@ import {
 import logging from "./config/logging";
 import routes from "./config/routes";
 import { AuthProvider } from "./contexts/AuthContext";
-import ManageProfile from "./auth_components/ManageProfile";
+import ManageProfile from "./pages/ManageProfile";
 import PrivateRoute from "./auth_components/PrivateRoute";
 import SavedBuildings from "./pages/SavedBuildings";
 import { ModalContext, ModalState } from "./contexts/ModalContext";
