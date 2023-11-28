@@ -8,7 +8,7 @@ import SavedBuildingsList from "../components/SavedBuildingsList";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { Spinner } from "react-bootstrap";
 
-const SavedByUserPage: React.FunctionComponent<
+const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = (props) => {
   const { currentUser } = useAuth() as any;
@@ -78,4 +78,4 @@ const SavedByUserPage: React.FunctionComponent<
   );
 };
 
-export default withRouter(SavedByUserPage);
+export default withRouter(SavedBuildingsPage);
