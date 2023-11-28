@@ -1,10 +1,10 @@
 import IRoute from "../interfaces/IRoute";
 import HomePage from "../pages/Home";
-import BuildingsPage from "../pages/Buildings";
+import AllBuildingsPage from "../pages/AllBuildings";
 import AboutPage from "../pages/About";
 import ContactPage from "../pages/Contact";
 import ResourcesPage from "../pages/Resources";
-import SavedBuildingsPage from "../pages/Saved";
+import SavedBuildingsPage from "../pages/SavedBuildings";
 import DashboardPage from "../auth_components/Dashboard";
 
 const routes: IRoute[] = [
@@ -17,7 +17,7 @@ const routes: IRoute[] = [
   {
     path: "/buildings",
     name: "Buildings Page",
-    component: BuildingsPage,
+    component: AllBuildingsPage,
     exact: true,
   },
   {
