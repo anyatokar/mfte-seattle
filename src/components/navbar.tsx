@@ -55,7 +55,7 @@ export const Header = () => {
     }
   }
 
-  // modal
+  // Modal
   function chooseModalComponent() {
     if (modalState === ModalState.LOGIN) {
       return <Login onResetClicked={showReset} onSignupClicked={showSignup} />;
