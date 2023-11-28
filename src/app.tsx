@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "./components/navbar";
-import { Footer } from "./components/footer";
+import { Header } from "./components/Navbar";
+import { Footer } from "./components/Footer";
 import {
   BrowserRouter as Router,
   Route,
