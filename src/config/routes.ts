@@ -5,7 +5,7 @@ import AboutPage from "../pages/About";
 import ContactPage from "../pages/Contact";
 import ResourcesPage from "../pages/Resources";
 import SavedBuildingsPage from "../pages/SavedBuildings";
-import DashboardPage from "../auth_components/Dashboard";
+import ManageProfilePage from "../auth_components/ManageProfile";
 
 const routes: IRoute[] = [
   {
@@ -45,9 +45,9 @@ const routes: IRoute[] = [
     exact: true,
   },
   {
-    path: "/dashboard",
-    name: "Dashboard Page",
-    component: DashboardPage,
+    path: "/manage-profile",
+    name: "Manage Profile Page",
+    component: ManageProfilePage,
     exact: true,
   },
   {

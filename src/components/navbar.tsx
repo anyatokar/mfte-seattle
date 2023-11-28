@@ -115,7 +115,7 @@ export const Header = () => {
               <Navbar.Text className="mr-lg-4 font-italic">
                 {currentUser.displayName && `Hi, ${currentUser.displayName}!`}
               </Navbar.Text>
-              <LinkContainer to="/dashboard">
+              <LinkContainer to="/manage-profile">
                 <Nav.Link active={false}>Profile</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/saved-buildings">

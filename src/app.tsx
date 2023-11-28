@@ -10,9 +10,9 @@ import {
 import logging from "./config/logging";
 import routes from "./config/routes";
 import { AuthProvider } from "./contexts/AuthContext";
-import Dashboard from "./auth_components/Dashboard";
+import ManageProfile from "./auth_components/ManageProfile";
 import PrivateRoute from "./auth_components/PrivateRoute";
-import savedBuildings from "./pages/SavedBuildings";
+import SavedBuildings from "./pages/SavedBuildings";
 import { ModalContext, ModalState } from "./contexts/ModalContext";
 
 const Application: React.FunctionComponent<{}> = (props) => {
@@ -29,8 +29,8 @@ const Application: React.FunctionComponent<{}> = (props) => {
           <ModalContext.Provider value={modalStateHook}>
             <Header />
             <Switch>
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path="/saved-buildings" component={savedBuildings} />
+              <PrivateRoute exact path="/manage-profile" component={ManageProfile} />
+              <PrivateRoute exact path="/saved-buildings" component={SavedBuildings} />
               {routes.map((route, index) => {
                 return (
                   <Route

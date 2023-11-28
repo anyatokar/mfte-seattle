@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import UpdateProfile from "./UpdateProfile";
 import Profile from "./Profile";
 
-export default function Dashboard() {
+export default function ManageProfile() {
   const { currentUser } = useAuth() as any;
 
   if (!currentUser) {
