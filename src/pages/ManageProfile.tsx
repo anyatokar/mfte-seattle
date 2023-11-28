@@ -1,7 +1,7 @@
 import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import UpdateProfile from "../auth_components/UpdateProfile";
-import Profile from "../auth_components/Profile";
+import Profile from "../components/Profile";
 import IPage from "../interfaces/IPage";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
