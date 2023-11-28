@@ -20,7 +20,7 @@ const ref = getAllBuildingsRef();
 
 const AllBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = (props) => {
+> = () => {
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 

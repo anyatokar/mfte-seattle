@@ -9,7 +9,7 @@ import { useSavedBuildings } from "../hooks/useSavedBuildings";
 
 const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = (props) => {
+> = () => {
   const { currentUser } = useAuth() as any;
   const [savedBuildings, loading] = useSavedBuildings();
 
