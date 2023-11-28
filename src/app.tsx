@@ -29,8 +29,16 @@ const Application: React.FunctionComponent<{}> = (props) => {
           <ModalContext.Provider value={modalStateHook}>
             <Header />
             <Switch>
-              <PrivateRoute exact path="/manage-profile" component={ManageProfile} />
-              <PrivateRoute exact path="/saved-buildings" component={SavedBuildings} />
+              <PrivateRoute
+                exact
+                path="/manage-profile"
+                component={ManageProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/saved-buildings"
+                component={SavedBuildings}
+              />
               {routes.map((route, index) => {
                 return (
                   <Route

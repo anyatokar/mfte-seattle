@@ -13,9 +13,9 @@ export type formFieldsType = {
   message: string;
 };
 
-const ContactPage: React.FunctionComponent<
-  IPage & RouteComponentProps<any>
-> = (props) => {
+const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
+  props
+) => {
   useEffect(() => {
     logging.info(`Loading ${props.name}`);
   }, [props.name]);

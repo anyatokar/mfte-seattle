@@ -1,4 +1,4 @@
-import {  Container, Row, Card, Col } from "react-bootstrap";
+import { Container, Row, Card, Col } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Profile() {

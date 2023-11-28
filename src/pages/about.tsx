@@ -4,9 +4,9 @@ import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 
-const AboutPage: React.FunctionComponent<
-  IPage & RouteComponentProps<any>
-> = (props) => {
+const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
+  props
+) => {
   useEffect(() => {
     logging.info(`Loading ${props.name}`);
   }, [props.name]);
