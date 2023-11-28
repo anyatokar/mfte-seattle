@@ -1,10 +1,10 @@
 import IRoute from "../interfaces/IRoute";
-import HomePage from "../pages/home";
-import BuildingsPage from "../pages/buildings";
-import AboutPage from "../pages/about";
-import ContactPage from "../pages/contact";
-import ResourcesPage from "../pages/resources";
-import SavedBuildingsPage from "../pages/saved";
+import HomePage from "../pages/Home";
+import BuildingsPage from "../pages/Buildings";
+import AboutPage from "../pages/About";
+import ContactPage from "../pages/Contact";
+import ResourcesPage from "../pages/Resources";
+import SavedBuildingsPage from "../pages/Saved";
 import DashboardPage from "../auth_components/Dashboard";
 
 const routes: IRoute[] = [

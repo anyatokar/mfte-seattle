@@ -12,7 +12,7 @@ import routes from "./config/routes";
 import { AuthProvider } from "./contexts/AuthContext";
 import Dashboard from "./auth_components/Dashboard";
 import PrivateRoute from "./auth_components/PrivateRoute";
-import savedBuildings from "./pages/saved";
+import savedBuildings from "./pages/Saved";
 import { ModalContext, ModalState } from "./contexts/ModalContext";
 
 const Application: React.FunctionComponent<{}> = (props) => {

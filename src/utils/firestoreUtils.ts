@@ -1,7 +1,7 @@
 import firebase from "../db/firebase";
 import IBuilding from "../interfaces/IBuilding";
 import { timestampPT } from "./generalUtils";
-import { formFieldsType } from "../pages/contact";
+import { formFieldsType } from "../pages/Contact";
 
 export function saveBuilding(currentUser: any, building: IBuilding) {
   const {
