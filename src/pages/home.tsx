@@ -29,7 +29,7 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
           </p>
           <p className="lead">
             View participating buildings on the&nbsp;
-            <a id="Buildings_tab" href="./buildings">
+            <a id="Buildings_tab" href="./all-buildings">
               MFTE map
             </a>
             . Create an account to save buildings and keep notes. Contact
@@ -45,7 +45,7 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
             className="btn-lg col-lg-4 col-xl-3 mt-1"
             variant="outline-info"
             onClick={onClick}
-            value="./buildings"
+            value="./all-buildings"
           >
             MFTE Map
           </Button>

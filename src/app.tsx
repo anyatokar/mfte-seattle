@@ -30,7 +30,7 @@ const Application: React.FunctionComponent<{}> = (props) => {
             <Header />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path="/saved" component={savedBuildings} />
+              <PrivateRoute exact path="/saved-buildings" component={savedBuildings} />
               {routes.map((route, index) => {
                 return (
                   <Route

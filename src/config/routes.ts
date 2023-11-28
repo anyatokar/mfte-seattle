@@ -15,8 +15,8 @@ const routes: IRoute[] = [
     exact: true,
   },
   {
-    path: "/buildings",
-    name: "Buildings Page",
+    path: "/all-buildings",
+    name: "All Buildings Page",
     component: AllBuildingsPage,
     exact: true,
   },
@@ -39,7 +39,7 @@ const routes: IRoute[] = [
     exact: true,
   },
   {
-    path: "/saved",
+    path: "/saved-buildings",
     name: "Saved Buildings Page",
     component: SavedBuildingsPage,
     exact: true,

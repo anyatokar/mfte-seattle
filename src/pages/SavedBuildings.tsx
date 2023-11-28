@@ -54,7 +54,7 @@ const SavedByUserPage: React.FunctionComponent<
                   <p>
                     Empty for now! To start your list, use the Save button on
                     the&nbsp;
-                    <a id="Buildings_tab" href="./buildings">
+                    <a id="Buildings_tab" href="./all-buildings">
                       MFTE map
                     </a>
                     .
