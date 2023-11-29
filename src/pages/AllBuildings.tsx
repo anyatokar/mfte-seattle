@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
+import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import "firebase/firestore";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
@@ -27,7 +28,11 @@ const ref = getAllBuildingsRef();
 
 const AllBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = () => {
+> = (props) => {
+  useEffect(() => {
+    logging.info(`Loading ${props.name}`);
+  }, [props.name]);
+
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
