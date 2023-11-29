@@ -1,6 +1,5 @@
 import AboutPage from "../pages/About";
 import AllBuildingsPage from "../pages/AllBuildings";
-
 import IRoute from "../interfaces/IRoute";
 
 import ContactPage from "../pages/Contact";

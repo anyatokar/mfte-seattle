@@ -9,9 +9,7 @@ import {
   AddressAndPhone,
   BuildingName,
 } from "../components/BuildingContactInfo";
-
 import IBuilding from "../interfaces/IBuilding";
-
 import Button from "react-bootstrap/Button";
 
 interface IBuildingMarkerProps {
