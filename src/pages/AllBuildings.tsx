@@ -1,14 +1,15 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import "firebase/firestore";
+import { useSavedBuildings } from "../hooks/useSavedBuildings";
 
-import SearchInput from "../components/SearchInput";
-import { genericSearch } from "../utils/genericSearch";
-import { genericFilter } from "../utils/genericFilter";
+import AllBuildingsList from "../components/AllBuildingsList";
 import { Filters } from "../components/Filters";
 import MapTab from "../components/MapTab";
-import AllBuildingsList from "../components/AllBuildingsList";
-import { useSavedBuildings } from "../hooks/useSavedBuildings";
+import SearchInput from "../components/SearchInput";
+
+import { genericSearch } from "../utils/genericSearch";
+import { genericFilter } from "../utils/genericFilter";
 import { getAllBuildingsRef } from "../utils/firestoreUtils";
 
 import IBuilding from "../interfaces/IBuilding";

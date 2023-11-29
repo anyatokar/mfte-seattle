@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import logging from "./config/logging";
 import routes from "./config/routes";

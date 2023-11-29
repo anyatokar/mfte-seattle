@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 

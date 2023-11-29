@@ -1,4 +1,3 @@
-import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
