@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import firebase, { auth } from "../db/firebase";
+
 import IProps from "../interfaces/IProps";
 
 const AuthContext = createContext({});

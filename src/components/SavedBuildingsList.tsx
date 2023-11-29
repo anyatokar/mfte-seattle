@@ -1,5 +1,6 @@
 import "firebase/firestore";
 import { BuildingCard } from "./BuildingCard";
+
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 import Col from "react-bootstrap/Col";

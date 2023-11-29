@@ -1,11 +1,13 @@
-import IRoute from "../interfaces/IRoute";
-import HomePage from "../pages/Home";
-import AllBuildingsPage from "../pages/AllBuildings";
 import AboutPage from "../pages/About";
+import AllBuildingsPage from "../pages/AllBuildings";
+
+import IRoute from "../interfaces/IRoute";
+
 import ContactPage from "../pages/Contact";
+import HomePage from "../pages/Home";
+import ManageProfilePage from "../pages/ManageProfile";
 import ResourcesPage from "../pages/Resources";
 import SavedBuildingsPage from "../pages/SavedBuildings";
-import ManageProfilePage from "../pages/ManageProfile";
 
 const routes: IRoute[] = [
   {

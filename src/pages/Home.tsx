@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import IPage from "../interfaces/IPage";
 import logging from "../config/logging";
 import { useHistory } from "react-router-dom";
+
+import IPage from "../interfaces/IPage";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";

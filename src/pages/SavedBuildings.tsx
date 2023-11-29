@@ -1,10 +1,11 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
-import IPage from "../interfaces/IPage";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import MapTab from "../components/MapTab";
 import SavedBuildingsList from "../components/SavedBuildingsList";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
+
+import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";

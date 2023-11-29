@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import IPage from "../interfaces/IPage";
 import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+
+import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
