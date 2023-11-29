@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
-import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
-import { addNote } from "../utils/firestoreUtils";
+import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
+
+import { useAuth } from "../contexts/AuthContext";
+import { ModalContext, ModalState } from "../contexts/ModalContext";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";

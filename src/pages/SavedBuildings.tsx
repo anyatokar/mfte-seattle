@@ -1,9 +1,10 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { useSavedBuildings } from "../hooks/useSavedBuildings";
+
 import MapTab from "../components/MapTab";
 import SavedBuildingsList from "../components/SavedBuildingsList";
-import { useSavedBuildings } from "../hooks/useSavedBuildings";
 
 import IPage from "../interfaces/IPage";
 
