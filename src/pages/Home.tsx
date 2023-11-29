@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import IPage from "../interfaces/IPage";
 import logging from "../config/logging";
 import { useHistory } from "react-router-dom";
-import { Button, Col, Container, Row } from "react-bootstrap";
+
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 const HomePage: React.FunctionComponent<IPage> = (props) => {
   useEffect(() => {

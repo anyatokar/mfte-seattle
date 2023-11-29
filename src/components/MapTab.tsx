@@ -1,7 +1,10 @@
 import { ReactMap } from "../map/ReactMap";
 import "firebase/firestore";
-import { Col, Container, Row } from "react-bootstrap";
 import IMap from "../interfaces/IMap";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 export default function MapTab(props: IMap) {
   return (

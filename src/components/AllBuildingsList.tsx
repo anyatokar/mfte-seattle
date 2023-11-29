@@ -1,12 +1,15 @@
 import { useState } from "react";
 import "firebase/firestore";
 import { BuildingCard } from "./BuildingCard";
-import { Container, Row, Col } from "react-bootstrap";
 import IBuilding from "../interfaces/IBuilding";
 import Sorters from "../components/Sorters";
 import ISorter from "../interfaces/ISorter";
 import { genericSort } from "../utils/genericSort";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 type allBuildingsListProps = {
   resultBuildingsUnsorted: IBuilding[];

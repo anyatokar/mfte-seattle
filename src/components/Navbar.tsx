@@ -1,11 +1,3 @@
-import {
-  Container,
-  Image,
-  Navbar,
-  Nav,
-  Modal,
-  Dropdown,
-} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import { useState, useEffect, useContext, useCallback } from "react";
@@ -16,6 +8,13 @@ import PasswordReset from "../auth_components/PasswordReset";
 import Signup from "../auth_components/Signup";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import mftelogo from "../assets/images/mftelogo23.svg";
+
+import Container from "react-bootstrap/Container";
+import Dropdown from "react-bootstrap/Dropdown";
+import Image from "react-bootstrap/Image";
+import Modal from "react-bootstrap/Modal";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
 export const Header = () => {
   const [message, setMessage] = useState("");

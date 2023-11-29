@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import IPage from "../interfaces/IPage";
 import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
   props

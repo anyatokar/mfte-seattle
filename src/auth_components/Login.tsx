@@ -1,6 +1,10 @@
 import { useRef, useState } from "react";
-import { Form, Button, Alert, Modal } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
+
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 
 type Props = {
   onResetClicked: () => void;

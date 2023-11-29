@@ -1,5 +1,5 @@
 import IFilter from "../interfaces/IFilter";
-import { Form } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 
 export interface IFiltersProps<T> {
   object: T;

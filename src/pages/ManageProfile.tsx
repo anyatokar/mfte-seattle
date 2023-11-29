@@ -1,9 +1,14 @@
-import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import UpdateProfile from "../auth_components/UpdateProfile";
 import Profile from "../components/Profile";
 import IPage from "../interfaces/IPage";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Nav from "react-bootstrap/Nav";
+import Tab from "react-bootstrap/Tab";
 
 const ManageProfilePage: React.FunctionComponent<
   IPage & RouteComponentProps<any>

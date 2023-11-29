@@ -1,13 +1,4 @@
 import React, { useRef, useState } from "react";
-import {
-  Alert,
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-} from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import {
@@ -15,6 +6,14 @@ import {
   updateEmailFirestore,
   updateNameFirestore,
 } from "../utils/firestoreUtils";
+
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 
 export default function UpdateProfile() {
   // TODO: add useRef types, also maybe use useRef to dynamically update

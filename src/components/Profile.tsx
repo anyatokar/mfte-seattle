@@ -1,5 +1,9 @@
-import { Container, Row, Card, Col } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
+
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 export default function Profile() {
   const { currentUser } = useAuth() as any;
