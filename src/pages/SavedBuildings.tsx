@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import logging from "../config/logging";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
@@ -15,7 +17,11 @@ import Spinner from "react-bootstrap/Spinner";
 
 const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = () => {
+> = (props) => {
+  useEffect(() => {
+    logging.info(`Loading ${props.name}`);
+  }, [props.name]);
+
   const { currentUser } = useAuth() as any;
   const [savedBuildings, loading] = useSavedBuildings();
 

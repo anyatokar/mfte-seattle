@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import logging from "../config/logging";
 import { useAuth } from "../contexts/AuthContext";
 import UpdateProfile from "../auth_components/UpdateProfile";
 import Profile from "../components/Profile";
@@ -12,7 +14,11 @@ import Tab from "react-bootstrap/Tab";
 
 const ManageProfilePage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = () => {
+> = (props) => {
+  useEffect(() => {
+    logging.info(`Loading ${props.name}`);
+  }, [props.name]);
+
   const { currentUser } = useAuth() as any;
 
   if (!currentUser) {
