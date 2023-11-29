@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PrivateRoute from "./auth_components/PrivateRoute";
 
 import logging from "./config/logging";
 import routes from "./config/routes";
@@ -11,8 +12,6 @@ import {
   Switch,
   RouteComponentProps,
 } from "react-router-dom";
-
-import PrivateRoute from "./auth_components/PrivateRoute";
 
 import ManageProfile from "./pages/ManageProfile";
 import SavedBuildings from "./pages/SavedBuildings";

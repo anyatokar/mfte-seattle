@@ -2,7 +2,6 @@ import { useAuth } from "../contexts/AuthContext";
 import UpdateProfile from "../auth_components/UpdateProfile";
 import Profile from "../components/Profile";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-
 import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";

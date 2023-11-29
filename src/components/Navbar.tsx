@@ -2,6 +2,7 @@
 import { useState, useEffect, useContext, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
+import mftelogo from "../assets/images/mftelogo23.svg";
 
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { useAuth } from "../contexts/AuthContext";
@@ -9,8 +10,6 @@ import { useAuth } from "../contexts/AuthContext";
 import Login from "../auth_components/Login";
 import PasswordReset from "../auth_components/PasswordReset";
 import Signup from "../auth_components/Signup";
-
-import mftelogo from "../assets/images/mftelogo23.svg";
 
 import Container from "react-bootstrap/Container";
 import Dropdown from "react-bootstrap/Dropdown";

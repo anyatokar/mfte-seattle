@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { sendMessageFirestore } from "../utils/firestoreUtils";
-
 import IPage from "../interfaces/IPage";
 
 import Button from "react-bootstrap/Button";
