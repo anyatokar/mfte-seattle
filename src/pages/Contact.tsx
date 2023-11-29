@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import IPage from "../interfaces/IPage";
 import logging from "../config/logging";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Col, Container, Form, Button, Row } from "react-bootstrap";
 import { sendMessageFirestore } from "../utils/firestoreUtils";
+
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 
 export type formFieldsType = {
   authorName: string;

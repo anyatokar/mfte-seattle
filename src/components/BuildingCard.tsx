@@ -1,12 +1,18 @@
 import { useState, useContext } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Card, Form, Button, Table, Tabs, Tab } from "react-bootstrap";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IBuilding from "../interfaces/IBuilding";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
 import { addNote } from "../utils/firestoreUtils";
+
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Tab from "react-bootstrap/Tab";
+import Table from "react-bootstrap/Table";
+import Tabs from "react-bootstrap/Tabs";
 
 export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean;

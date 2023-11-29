@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
-import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { signupFirestore } from "../utils/firestoreUtils";
+
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 
 type Props = {
   onLoginClicked?: () => void;

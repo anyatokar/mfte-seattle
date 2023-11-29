@@ -1,7 +1,10 @@
 import "firebase/firestore";
 import { BuildingCard } from "./BuildingCard";
-import { Container, Row, Col } from "react-bootstrap";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 type SavedBuildingsListProps = {
   savedBuildings: Array<ISavedBuilding>;

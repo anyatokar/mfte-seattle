@@ -1,5 +1,9 @@
 import houses from "../assets/images/houses.png";
-import { Col, Container, Image, Row } from "react-bootstrap";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
 
 // alt is empty per accessibility guidelines for decorative images.
 

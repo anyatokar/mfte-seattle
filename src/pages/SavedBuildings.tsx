@@ -1,11 +1,17 @@
 import React from "react";
-import { Nav, Tab, Row, Col, Container, Spinner } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import IPage from "../interfaces/IPage";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import MapTab from "../components/MapTab";
 import SavedBuildingsList from "../components/SavedBuildingsList";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Nav from "react-bootstrap/Nav";
+import Tab from "react-bootstrap/Tab";
+import Spinner from "react-bootstrap/Spinner";
 
 const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>

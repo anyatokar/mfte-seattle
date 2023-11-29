@@ -1,5 +1,9 @@
 import { Fragment } from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 
 export interface ISortersProps<T> {
   object: T;

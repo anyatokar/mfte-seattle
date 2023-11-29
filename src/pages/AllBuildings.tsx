@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback, useMemo } from "react";
 import IPage from "../interfaces/IPage";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import "firebase/firestore";
-import { Spinner } from "react-bootstrap";
 
 import SearchInput from "../components/SearchInput";
 import IBuilding from "../interfaces/IBuilding";
@@ -10,11 +9,17 @@ import { genericSearch } from "../utils/genericSearch";
 import { genericFilter } from "../utils/genericFilter";
 import { Filters } from "../components/Filters";
 import IFilter from "../interfaces/IFilter";
-import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import MapTab from "../components/MapTab";
 import AllBuildingsList from "../components/AllBuildingsList";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { getAllBuildingsRef } from "../utils/firestoreUtils";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Nav from "react-bootstrap/Nav";
+import Tab from "react-bootstrap/Tab";
+import Spinner from "react-bootstrap/Spinner";
 
 const ref = getAllBuildingsRef();
 
