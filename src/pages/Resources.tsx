@@ -31,7 +31,7 @@ const ResourcesPage: React.FunctionComponent<
                 Seattle Office of Housing
               </a>
               <div className="fw-light">
-                Seattle Office of Housing homepage with contact information
+                Seattle Office of Housing homepage with contact information.
               </div>
               <div className="fw-light">website — City of Seattle</div>
             </ListGroup.Item>
@@ -49,7 +49,7 @@ const ResourcesPage: React.FunctionComponent<
               </a>
               <div className="fw-light">
                 Information about the MFTE program and other income and
-                rent-restricted properties
+                rent-restricted properties.
               </div>
               <div className="fw-light">website — City of Seattle</div>
             </ListGroup.Item>
@@ -67,7 +67,7 @@ const ResourcesPage: React.FunctionComponent<
               </a>
               <div className="fw-light">
                 Market-Rate Rental Properties with Affordable Housing Units
-                spreadsheet
+                spreadsheet.
               </div>
               <div className="fw-light">
                 PDF — City of Seattle — October 2023
@@ -102,9 +102,9 @@ const ResourcesPage: React.FunctionComponent<
               >
                 Detailed Renters' Guide
               </a>
-              <div>
+              <div className="fw-light">
                 Renters' Guide for Market-Rate Apartment Buildings with
-                Affordable Units
+                Affordable Units.
               </div>
               <div className="fw-light">PDF — City of Seattle — July 2023</div>
             </ListGroup.Item>
@@ -121,7 +121,7 @@ const ResourcesPage: React.FunctionComponent<
               </a>
               <div className="fw-light">
                 Two-page overview of the MFTE program. Note the map and income
-                limits are outdated
+                limits are outdated.
               </div>
               <div className="fw-light">PDF — City of Seattle — 2018</div>
             </ListGroup.Item>

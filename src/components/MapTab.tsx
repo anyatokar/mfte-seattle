@@ -1,4 +1,4 @@
-import { ReactMap } from "../Map/ReactMap";
+import { ReactMap } from "../map/ReactMap";
 import "firebase/firestore";
 import { Col, Container, Row } from "react-bootstrap";
 import IMap from "../interfaces/IMap";

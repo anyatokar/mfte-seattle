@@ -1,16 +1,15 @@
 import React from "react";
-import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
+import { Nav, Tab, Row, Col, Container, Spinner } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import IPage from "../interfaces/IPage";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import MapTab from "../components/MapTab";
 import SavedBuildingsList from "../components/SavedBuildingsList";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
-import { Spinner } from "react-bootstrap";
 
-const SavedByUserPage: React.FunctionComponent<
+const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = (props) => {
+> = () => {
   const { currentUser } = useAuth() as any;
   const [savedBuildings, loading] = useSavedBuildings();
 
@@ -54,7 +53,7 @@ const SavedByUserPage: React.FunctionComponent<
                   <p>
                     Empty for now! To start your list, use the Save button on
                     the&nbsp;
-                    <a id="Buildings_tab" href="./Buildings">
+                    <a id="Buildings_tab" href="./all-buildings">
                       MFTE map
                     </a>
                     .
@@ -78,4 +77,4 @@ const SavedByUserPage: React.FunctionComponent<
   );
 };
 
-export default withRouter(SavedByUserPage);
+export default withRouter(SavedBuildingsPage);

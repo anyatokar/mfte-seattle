@@ -1,11 +1,11 @@
 import IRoute from "../interfaces/IRoute";
-import HomePage from "../pages/home";
-import BuildingsPage from "../pages/buildings";
-import AboutPage from "../pages/about";
-import ContactPage from "../pages/contact";
-import ResourcesPage from "../pages/resources";
-import SavedBuildingsPage from "../pages/saved";
-import DashboardPage from "../auth_components/Dashboard";
+import HomePage from "../pages/Home";
+import AllBuildingsPage from "../pages/AllBuildings";
+import AboutPage from "../pages/About";
+import ContactPage from "../pages/Contact";
+import ResourcesPage from "../pages/Resources";
+import SavedBuildingsPage from "../pages/SavedBuildings";
+import ManageProfilePage from "../pages/ManageProfile";
 
 const routes: IRoute[] = [
   {
@@ -15,9 +15,9 @@ const routes: IRoute[] = [
     exact: true,
   },
   {
-    path: "/buildings",
-    name: "Buildings Page",
-    component: BuildingsPage,
+    path: "/all-buildings",
+    name: "All Buildings Page",
+    component: AllBuildingsPage,
     exact: true,
   },
   {
@@ -39,15 +39,15 @@ const routes: IRoute[] = [
     exact: true,
   },
   {
-    path: "/saved",
+    path: "/saved-buildings",
     name: "Saved Buildings Page",
     component: SavedBuildingsPage,
     exact: true,
   },
   {
-    path: "/dashboard",
-    name: "Dashboard Page",
-    component: DashboardPage,
+    path: "/manage-profile",
+    name: "Manage Profile Page",
+    component: ManageProfilePage,
     exact: true,
   },
   {

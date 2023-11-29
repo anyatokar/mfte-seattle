@@ -34,7 +34,7 @@ export const Header = () => {
     [setModalState]
   );
 
-  const afterLogin = () => history.push("./saved");
+  const afterLogin = () => history.push("./saved-buildings");
 
   useEffect(() => {
     closeLogin();
@@ -55,7 +55,7 @@ export const Header = () => {
     }
   }
 
-  // modal
+  // Modal
   function chooseModalComponent() {
     if (modalState === ModalState.LOGIN) {
       return <Login onResetClicked={showReset} onSignupClicked={showSignup} />;
@@ -95,7 +95,7 @@ export const Header = () => {
         <Navbar.Toggle />
         <Navbar.Collapse>
           <Nav className="mr-auto">
-            <LinkContainer to="/buildings">
+            <LinkContainer to="/all-buildings">
               <Nav.Link active={false}>MFTE Map</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/resources">
@@ -115,10 +115,10 @@ export const Header = () => {
               <Navbar.Text className="mr-lg-4 font-italic">
                 {currentUser.displayName && `Hi, ${currentUser.displayName}!`}
               </Navbar.Text>
-              <LinkContainer to="/dashboard">
+              <LinkContainer to="/manage-profile">
                 <Nav.Link active={false}>Profile</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/saved">
+              <LinkContainer to="/saved-buildings">
                 <Nav.Link active={false}>Saved</Nav.Link>
               </LinkContainer>
               <Nav.Link

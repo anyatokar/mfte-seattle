@@ -18,9 +18,9 @@ import { getAllBuildingsRef } from "../utils/firestoreUtils";
 
 const ref = getAllBuildingsRef();
 
-const BuildingsPage: React.FunctionComponent<
+const AllBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = (props) => {
+> = () => {
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
@@ -170,4 +170,4 @@ const BuildingsPage: React.FunctionComponent<
   );
 };
 
-export default withRouter(BuildingsPage);
+export default withRouter(AllBuildingsPage);

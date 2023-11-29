@@ -1,9 +1,13 @@
 import { Nav, Tab, Row, Col, Container } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import UpdateProfile from "./UpdateProfile";
-import Profile from "./Profile";
+import UpdateProfile from "../auth_components/UpdateProfile";
+import Profile from "../components/Profile";
+import IPage from "../interfaces/IPage";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
-export default function Dashboard() {
+const ManageProfilePage: React.FunctionComponent<
+  IPage & RouteComponentProps<any>
+> = () => {
   const { currentUser } = useAuth() as any;
 
   if (!currentUser) {
@@ -42,4 +46,6 @@ export default function Dashboard() {
       </Tab.Container>
     </Container>
   );
-}
+};
+
+export default withRouter(ManageProfilePage);
