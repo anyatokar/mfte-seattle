@@ -1,7 +1,6 @@
 import { useCallback, useState, useEffect } from "react";
 import "firebase/firestore";
 import { getSavedBuildingsRef } from "../utils/firestoreUtils";
-
 import { useAuth } from "../contexts/AuthContext";
 import IBuilding from "../interfaces/IBuilding";
 

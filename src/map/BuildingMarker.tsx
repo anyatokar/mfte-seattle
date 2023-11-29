@@ -1,7 +1,6 @@
 /// <reference types="googlemaps" />
 import { useCallback } from "react";
 import { InfoWindow, Marker } from "@react-google-maps/api";
-import IBuilding from "../interfaces/IBuilding";
 import { useAuth } from "../contexts/AuthContext";
 import { useState, useContext } from "react";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -10,7 +9,7 @@ import {
   AddressAndPhone,
   BuildingName,
 } from "../components/BuildingContactInfo";
-
+import IBuilding from "../interfaces/IBuilding";
 import Button from "react-bootstrap/Button";
 
 interface IBuildingMarkerProps {

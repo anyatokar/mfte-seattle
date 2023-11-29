@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import PrivateRoute from "./auth_components/PrivateRoute";
+
+import logging from "./config/logging";
+import routes from "./config/routes";
+
 import { Header } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import {
@@ -7,12 +12,11 @@ import {
   Switch,
   RouteComponentProps,
 } from "react-router-dom";
-import logging from "./config/logging";
-import routes from "./config/routes";
-import { AuthProvider } from "./contexts/AuthContext";
+
 import ManageProfile from "./pages/ManageProfile";
-import PrivateRoute from "./auth_components/PrivateRoute";
 import SavedBuildings from "./pages/SavedBuildings";
+
+import { AuthProvider } from "./contexts/AuthContext";
 import { ModalContext, ModalState } from "./contexts/ModalContext";
 
 const Application: React.FunctionComponent<{}> = (props) => {

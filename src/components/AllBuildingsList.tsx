@@ -1,11 +1,12 @@
 import { useState } from "react";
 import "firebase/firestore";
 import { BuildingCard } from "./BuildingCard";
-import IBuilding from "../interfaces/IBuilding";
 import Sorters from "../components/Sorters";
-import ISorter from "../interfaces/ISorter";
 import { genericSort } from "../utils/genericSort";
+
+import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
+import ISorter from "../interfaces/ISorter";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";

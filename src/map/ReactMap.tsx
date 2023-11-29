@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { BuildingMarker } from "./BuildingMarker";
-import IMap from "../interfaces/IMap";
-import IBuilding from "../interfaces/IBuilding";
 import { checkIsSaved } from "../components/AllBuildingsList";
 import { firebaseConfig } from "../db/firebase";
+
+import IBuilding from "../interfaces/IBuilding";
+import IMap from "../interfaces/IMap";
 
 const containerStyle = {
   width: "100%",
