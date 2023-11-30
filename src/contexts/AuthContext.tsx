@@ -20,13 +20,18 @@ export function AuthProvider({ children }: IProps) {
       .then((cred) => {
         if (cred.user) {
           cred.user.updateProfile({ displayName: name });
-          signupFirestore(cred.user.uid, cred.user.email, name)
+          signupFirestore(cred.user.uid, cred.user.email, name);
         }
       });
   }
 
   function login(email: string, password: string) {
-    return auth.signInWithEmailAndPassword(email, password);
+    return auth.signInWithEmailAndPassword(email, password).then((cred) => {
+      if (cred.user) {
+        // Backfill missing data for existing account.
+        signupFirestore(cred.user.uid, cred.user.email, cred.user.displayName);
+      }
+    });
   }
 
   function logout() {

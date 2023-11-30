@@ -93,7 +93,9 @@ export default function UpdateProfile() {
             console.log("Account updated in Firestore.");
           })
           .catch((error) => {
-            console.log(`Error updating account in Firestore: ${error.code}, ${error.message}`);
+            console.log(
+              `Error updating account in Firestore: ${error.code}, ${error.message}`
+            );
           });
       })
       .catch((error) => {
