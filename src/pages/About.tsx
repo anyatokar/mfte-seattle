@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import logging from "../config/logging";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
@@ -84,9 +84,9 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                 number of bedrooms, neighborhood, and building name). Create a
                 free login to keep a short list of properties, view a
                 personalized map, and add notes. Explore the&nbsp;
-                <a id="Buildings_tab" href="./all-buildings">
+                <Link id="all-buildings" to="./all-buildings">
                   MFTE map
-                </a>
+                </Link>
                 &nbsp;to get started.
               </div>
             </Col>

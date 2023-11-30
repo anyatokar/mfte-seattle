@@ -1,5 +1,5 @@
 import { useAuth } from "../contexts/AuthContext";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import IPage from "../interfaces/IPage";
 
@@ -59,9 +59,9 @@ const SavedBuildingsPage: React.FunctionComponent<
                   <p>
                     Empty for now! To start your list, use the Save button on
                     the&nbsp;
-                    <a id="Buildings_tab" href="./all-buildings">
+                    <Link id="all-buildings" to="./all-buildings">
                       MFTE map
-                    </a>
+                    </Link>
                     .
                   </p>
                 </>
