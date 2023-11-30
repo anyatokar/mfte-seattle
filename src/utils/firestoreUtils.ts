@@ -129,11 +129,14 @@ export function deleteUserFirestore(uid: string) {
   return firebase.firestore().collection("users").doc(uid).delete();
 }
 
-export function signupFirestore(uid: string, email: string, name: string) {
+export function signupFirestore(uid: string, email: string | null, name: string | null) {
   return firebase.firestore().collection("users").doc(uid).set({
+    uid: uid,
     email: email,
     name: name,
     signupTimestamp: timestampPT(),
+    // Since Nov 30, 2023. This is to facilitate development and search in Firestore.
+    newSignup: true,
   });
 }
 
