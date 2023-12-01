@@ -6,7 +6,7 @@
     "@firebase/util": "^1.9.3",
     "@react-google-maps/api": "^2.19.0",
     "bootstrap": "^4.6.0",
-    "firebase": "^8.2.4",
+    "firebase": "^10.7.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0",
     "react-bootstrap-icons": "^1.10.3",
