@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import firebase, { auth } from "../db/firebase";
 import IProps from "../interfaces/IProps";
-import { signupFirestore } from "../utils/firestoreUtils";
+import { getNameFirestore, signupFirestore } from "../utils/firestoreUtils";
 
 const AuthContext = createContext({});
 
@@ -28,7 +28,13 @@ export function AuthProvider({ children }: IProps) {
   function login(email: string, password: string) {
     return auth.signInWithEmailAndPassword(email, password).then((cred) => {
       if (cred.user) {
-        // Backfill missing data for existing account.
+        // Backfill user displayName from Firestore to Auth
+        // only if the displayName doesn't already exist in Auth.
+        const name = getNameFirestore(cred.user.uid);
+        if (name && !cred.user.displayName) {
+          cred.user.updateProfile({ displayName: name });
+        }
+        // Backfill missing data from Auth to Firestore.
         signupFirestore(cred.user.uid, cred.user.email, cred.user.displayName);
       }
     });

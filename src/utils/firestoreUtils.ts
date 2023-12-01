@@ -87,6 +87,27 @@ export function deleteBuilding(
   });
 }
 
+export function getNameFirestore(uid: string): string {
+  const docRef = firebase.firestore().collection("users").doc(uid);
+  let name = "";
+
+  docRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        name = doc.data()?.name;
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
+
+  return name;
+}
+
 export function updateNameFirestore(uid: string, name: string) {
   return firebase.firestore().collection("users").doc(uid).update({
     name: name,
