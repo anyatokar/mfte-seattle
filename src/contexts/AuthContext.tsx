@@ -1,6 +1,14 @@
 import { useContext, useState, useEffect, createContext } from "react";
-import firebase, { auth } from "../db/firebase";
 import IProps from "../interfaces/IProps";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 const AuthContext = createContext({});
 
@@ -13,26 +21,25 @@ export function AuthProvider({ children }: IProps) {
   const [loading, setLoading] = useState(true);
 
   async function signup(email: string, password: string, name: string) {
-    return firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((cred) => {
+    return createUserWithEmailAndPassword(getAuth(), email, password).then(
+      (cred) => {
         if (cred.user) {
-          cred.user.updateProfile({ displayName: name });
+          updateProfile(cred.user, { displayName: name });
         }
-      });
+      }
+    );
   }
 
   function login(email: string, password: string) {
-    return auth.signInWithEmailAndPassword(email, password);
+    return signInWithEmailAndPassword(getAuth(), email, password);
   }
 
   function logout() {
-    return auth.signOut();
+    return signOut(getAuth());
   }
 
   function resetPassword(email: string) {
-    return auth.sendPasswordResetEmail(email);
+    return sendPasswordResetEmail(getAuth(), email);
   }
 
   function updateDisplayName(displayName: string) {
@@ -48,7 +55,7 @@ export function AuthProvider({ children }: IProps) {
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
       setCurrentUser(user);
       setLoading(false);
     });
