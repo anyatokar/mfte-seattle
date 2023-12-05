@@ -22,8 +22,12 @@ export default function UpdateProfile() {
   const emailRef = useRef() as any;
   const passwordRef = useRef() as any;
   const passwordConfirmRef = useRef() as any;
-  const { currentUser, updateDisplayName, updateEmail, updatePassword } =
-    useAuth() as any;
+  const {
+    currentUser,
+    updateDisplayNameAuth,
+    updateEmailAuth,
+    updatePasswordAuth,
+  } = useAuth() as any;
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState(false);
@@ -62,21 +66,21 @@ export default function UpdateProfile() {
     setMessage("");
 
     if (isNameUpdated()) {
-      authPromises.push(updateDisplayName(displayNameRef.current.value));
+      authPromises.push(updateDisplayNameAuth(displayNameRef.current.value));
       firestorePromises.push(
         updateNameFirestore(currentUser.uid, displayNameRef.current.value)
       );
     }
 
     if (isEmailUpdated()) {
-      authPromises.push(updateEmail(emailRef.current.value));
+      authPromises.push(updateEmailAuth(emailRef.current.value));
       firestorePromises.push(
         updateEmailFirestore(currentUser.uid, emailRef.current.value)
       );
     }
 
     if (isPasswordUpdated()) {
-      authPromises.push(updatePassword(passwordRef.current.value));
+      authPromises.push(updatePasswordAuth(passwordRef.current.value));
       // passwords are not stored in Firestore, only in Auth
     }
 

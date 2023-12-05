@@ -3,6 +3,8 @@ import IProps from "../interfaces/IProps";
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  updateEmail,
+  updatePassword,
   updateProfile,
   signInWithEmailAndPassword,
   signOut,
@@ -20,7 +22,7 @@ export function AuthProvider({ children }: IProps) {
   const [currentUser, setCurrentUser] = useState() as any;
   const [loading, setLoading] = useState(true);
 
-  async function signup(email: string, password: string, name: string) {
+  async function signupAuth(email: string, password: string, name: string) {
     return createUserWithEmailAndPassword(getAuth(), email, password).then(
       (cred) => {
         if (cred.user) {
@@ -38,20 +40,29 @@ export function AuthProvider({ children }: IProps) {
     return signOut(getAuth());
   }
 
-  function resetPassword(email: string) {
+  function resetPasswordAuth(email: string) {
     return sendPasswordResetEmail(getAuth(), email);
   }
 
-  function updateDisplayName(displayName: string) {
-    return currentUser.updateProfile({ displayName: displayName });
+  function updateDisplayNameAuth(displayName: string) {
+    const user = getAuth().currentUser;
+    if (user) {
+      return updateProfile(user, { displayName: displayName });
+    }
   }
 
-  function updateEmail(email: string) {
-    return currentUser.updateEmail(email);
+  function updateEmailAuth(email: string) {
+    const user = getAuth().currentUser;
+    if (user) {
+      return updateEmail(currentUser, email);
+    }
   }
 
-  function updatePassword(password: string) {
-    return currentUser.updatePassword(password);
+  function updatePasswordAuth(password: string) {
+    const user = getAuth().currentUser;
+    if (user) {
+      return updatePassword(currentUser, password);
+    }
   }
 
   useEffect(() => {
@@ -65,12 +76,12 @@ export function AuthProvider({ children }: IProps) {
   const value = {
     currentUser,
     login,
-    signup,
+    signupAuth,
     logout,
-    resetPassword,
-    updateDisplayName,
-    updateEmail,
-    updatePassword,
+    resetPasswordAuth,
+    updateDisplayNameAuth,
+    updateEmailAuth,
+    updatePasswordAuth,
   };
 
   return (
