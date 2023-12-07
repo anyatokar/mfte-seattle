@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import logging from "../config/logging";
+import { Profiler, useState } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { sendMessageFirestore } from "../utils/firestoreUtils";
 import IPage from "../interfaces/IPage";
@@ -21,10 +20,6 @@ export type formFieldsType = {
 const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
   props
 ) => {
-  useEffect(() => {
-    logging.info(`Loading ${props.name}`);
-  }, [props.name]);
-
   function clearFields(): void {
     setformFields({
       authorName: "",
@@ -68,121 +63,128 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
   };
 
   return (
-    <Container className="all-pages diy-jumbotron">
-      <Row className="justify-content-center">
-        <Col lg={10} xl={8}>
-          <div className="display-5">Contact us</div>
-          <hr className="my-4"></hr>
+    <Profiler
+      id={props.name}
+      onRender={(id, phase, actualDuration) => {
+        console.log({ id, phase, actualDuration });
+      }}
+    >
+      <Container className="all-pages diy-jumbotron">
+        <Row className="justify-content-center">
+          <Col lg={10} xl={8}>
+            <div className="display-5">Contact us</div>
+            <hr className="my-4"></hr>
 
-          <p className="lead">
-            We are always looking to improve this resource — your feedback is
-            welcome and appreciated.
-          </p>
-          <ul>
-            <li>
-              Please contact the&nbsp;
-              <a
-                id="seattle-housing-website"
-                href="https://seattle.gov/housing"
-                title="Seattle Office of Housing government website"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Seattle Office of Housing
-              </a>
-              &nbsp;with general questions about the MFTE program.
-            </li>
-            <li>
-              Contact properties directly with building-specific questions
-              including apartment availability, details on tenant eligibility,
-              and the application process.
-            </li>
-          </ul>
-          <p>All fields are required.</p>
+            <p className="lead">
+              We are always looking to improve this resource — your feedback is
+              welcome and appreciated.
+            </p>
+            <ul>
+              <li>
+                Please contact the&nbsp;
+                <a
+                  id="seattle-housing-website"
+                  href="https://seattle.gov/housing"
+                  title="Seattle Office of Housing government website"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Seattle Office of Housing
+                </a>
+                &nbsp;with general questions about the MFTE program.
+              </li>
+              <li>
+                Contact properties directly with building-specific questions
+                including apartment availability, details on tenant eligibility,
+                and the application process.
+              </li>
+            </ul>
+            <p>All fields are required.</p>
 
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Group className="form-row">
-              <Form.Group className="form-group col-md-6">
-                <Form.Label>Name</Form.Label>
+            <Form onSubmit={handleFormSubmit}>
+              <Form.Group className="form-row">
+                <Form.Group className="form-group col-md-6">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    required
+                    name="authorName"
+                    id="authorName"
+                    onChange={onInputChange}
+                    value={formFields.authorName}
+                  />
+                </Form.Group>
+                <Form.Group className="form-group col-md-6">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    required
+                    type="email"
+                    name="email"
+                    id="email"
+                    onChange={onInputChange}
+                    value={formFields.email}
+                  />
+                </Form.Group>
+              </Form.Group>
+
+              <Form.Group className="form-group">
+                <Form.Label>Description</Form.Label>
                 <Form.Control
                   required
-                  name="authorName"
-                  id="authorName"
+                  as="select"
+                  name="description"
+                  id="description"
                   onChange={onInputChange}
-                  value={formFields.authorName}
-                />
+                  value={formFields.description}
+                >
+                  <option key="blankChoice" hidden></option>
+                  <option>Prospective renter</option>
+                  <option>Company representative</option>
+                  <option>Government representative</option>
+                  <option>None of the above</option>
+                </Form.Control>
               </Form.Group>
-              <Form.Group className="form-group col-md-6">
-                <Form.Label>Email</Form.Label>
+
+              <hr className="my-4 break-line heavy-break-line"></hr>
+
+              <Form.Group className="form-group">
+                <Form.Label>Subject</Form.Label>
                 <Form.Control
                   required
-                  type="email"
-                  name="email"
-                  id="email"
+                  as="select"
+                  name="subject"
+                  id="subject"
                   onChange={onInputChange}
-                  value={formFields.email}
+                  value={formFields.subject}
+                >
+                  <option key="blankChoice" hidden></option>
+                  <option>Feature suggestion</option>
+                  <option>Incorrect building data</option>
+                  <option>Website bug report</option>
+                  <option>Help with using this website</option>
+                  <option>Kind words</option>
+                  <option>Other</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group className="form-group col-mb-3">
+                <Form.Label>Message</Form.Label>
+                <Form.Control
+                  required
+                  as="textarea"
+                  name="message"
+                  id="message"
+                  rows={5}
+                  onChange={onInputChange}
+                  value={formFields.message}
                 />
               </Form.Group>
-            </Form.Group>
-
-            <Form.Group className="form-group">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                required
-                as="select"
-                name="description"
-                id="description"
-                onChange={onInputChange}
-                value={formFields.description}
-              >
-                <option key="blankChoice" hidden></option>
-                <option>Prospective renter</option>
-                <option>Company representative</option>
-                <option>Government representative</option>
-                <option>None of the above</option>
-              </Form.Control>
-            </Form.Group>
-
-            <hr className="my-4 break-line heavy-break-line"></hr>
-
-            <Form.Group className="form-group">
-              <Form.Label>Subject</Form.Label>
-              <Form.Control
-                required
-                as="select"
-                name="subject"
-                id="subject"
-                onChange={onInputChange}
-                value={formFields.subject}
-              >
-                <option key="blankChoice" hidden></option>
-                <option>Feature suggestion</option>
-                <option>Incorrect building data</option>
-                <option>Website bug report</option>
-                <option>Help with using this website</option>
-                <option>Kind words</option>
-                <option>Other</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group className="form-group col-mb-3">
-              <Form.Label>Message</Form.Label>
-              <Form.Control
-                required
-                as="textarea"
-                name="message"
-                id="message"
-                rows={5}
-                onChange={onInputChange}
-                value={formFields.message}
-              />
-            </Form.Group>
-            <Button type="submit" variant="info" className="btn-lg">
-              Send message
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+              <Button type="submit" variant="info" className="btn-lg">
+                Send message
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </Profiler>
   );
 };
 
