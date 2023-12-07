@@ -74,8 +74,22 @@ const AllBuildingsPage: React.FunctionComponent<
   return (
     <Profiler
       id={props.name}
-      onRender={(id, phase, actualDuration) => {
-        console.log({ id, phase, actualDuration });
+      onRender={(
+        id,
+        phase,
+        actualDuration,
+        baseDuration,
+        startTime,
+        commitTime
+      ) => {
+        console.log({
+          id,
+          phase,
+          actualDuration,
+          baseDuration,
+          startTime,
+          commitTime,
+        });
       }}
     >
       <div className="all-pages">
