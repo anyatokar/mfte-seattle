@@ -1,5 +1,5 @@
 import { Profiler } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import IPage from "../interfaces/IPage";
 
 import Button from "react-bootstrap/Button";
@@ -34,9 +34,9 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
             </p>
             <p className="lead">
               View participating buildings on the&nbsp;
-              <a id="Buildings_tab" href="./all-buildings">
+              <Link id="all-buildings" to="./all-buildings">
                 MFTE map
-              </a>
+              </Link>
               . Create an account to save buildings and keep notes. Contact
               buildings directly for current availability.
             </p>
