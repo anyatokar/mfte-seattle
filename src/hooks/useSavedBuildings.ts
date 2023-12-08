@@ -1,7 +1,8 @@
 import { useCallback, useState, useEffect } from "react";
-import "firebase/firestore";
+
 import { collection, doc, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
+
 import { useAuth } from "../contexts/AuthContext";
 import IBuilding from "../interfaces/IBuilding";
 

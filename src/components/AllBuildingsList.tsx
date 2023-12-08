@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "firebase/firestore";
 import { BuildingCard } from "./BuildingCard";
 import Sorters from "../components/Sorters";
 import { genericSort } from "../utils/genericSort";
