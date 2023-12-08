@@ -38,7 +38,7 @@ export async function saveBuilding(currentUser: any, building: IBuilding) {
   const userDocRef = doc(db, "users", currentUser.uid);
   const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
 
-  await updateDoc(buildingDocRef, {
+  await setDoc(buildingDocRef, {
     buildingID: buildingID,
     buildingName: buildingName,
     phone: phone,
