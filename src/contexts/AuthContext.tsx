@@ -25,19 +25,21 @@ export function AuthProvider({ children }: IProps) {
       });
   }
 
-  function login(email: string, password: string) {
-    return auth.signInWithEmailAndPassword(email, password).then((cred) => {
-      if (cred.user) {
-        // Backfill user displayName from Firestore to Auth
-        // only if the displayName doesn't already exist in Auth.
-        const name = getNameFirestore(cred.user.uid);
-        if (name && !cred.user.displayName) {
-          cred.user.updateProfile({ displayName: name });
-        }
-        // Backfill missing data from Auth to Firestore.
-        signupFirestore(cred.user.uid, cred.user.email, cred.user.displayName);
+  async function login(email: string, password: string): Promise<void> {
+    const cred = await auth.signInWithEmailAndPassword(email, password);
+
+    if (cred.user) {
+      const name = await getNameFirestore(cred.user.uid);
+
+      // Backfill user displayName from Firestore to Auth
+      // only if the displayName doesn't already exist in Auth.
+      if (name && !cred.user.displayName) {
+        cred.user.updateProfile({ displayName: name });
       }
-    });
+
+      // Backfill missing data from Auth to Firestore.
+      signupFirestore(cred.user.uid, cred.user.email, cred.user.displayName);
+    }
   }
 
   function logout() {
