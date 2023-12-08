@@ -6,6 +6,7 @@ import IBuilding from "../interfaces/IBuilding";
 const {
   collection,
   deleteDoc,
+  getDoc,
   getDocs,
   doc,
   setDoc,
@@ -83,6 +84,23 @@ export async function deleteBuilding(
     });
 }
 
+export async function getNameFirestore(uid: string): Promise<string | null> {
+  const userDocRef = doc(db, "users", uid);
+  const userDocSnap = await getDoc(userDocRef);
+
+  try {
+    if (userDocSnap.exists()) {
+      return doc.data()?.name;
+    } else {
+      console.log(`No user in "users" with uid ${uid}`);
+    }
+  } catch (error: any) {
+    console.error(`Error getting data for user ${uid}:`, error);
+  } finally {
+    return null;
+  }
+}
+
 export async function updateNameFirestore(uid: string, name: string) {
   const userDocRef = doc(db, "users", uid);
 
@@ -132,13 +150,16 @@ export async function deleteUserFirestore(uid: string) {
 
 export async function signupFirestore(
   uid: string,
-  email: string,
-  name: string
+  email: string | null,
+  name: string | null
 ) {
   await setDoc(doc(db, "users", uid), {
+    uid: uid,
     email: email,
     name: name,
-    signupTimestamp: timestampPT(),
+    signupOrBackfillTimestamp: timestampPT(),
+    // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
+    recentUser: true,
   });
 }
 

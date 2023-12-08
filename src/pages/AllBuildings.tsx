@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, Profiler } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
@@ -25,7 +25,7 @@ import Spinner from "react-bootstrap/Spinner";
 
 const AllBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = () => {
+> = (props) => {
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
@@ -71,110 +71,131 @@ const AllBuildingsPage: React.FunctionComponent<
   const [savedBuildings, loadingSavedBuildings] = useSavedBuildings();
 
   return (
-    <div className="all-pages">
-      {loading || loadingSavedBuildings ? (
-        <Spinner animation="border" variant="warning" />
-      ) : (
-        <></>
-      )}
-      {/* search filter container */}
-      <Container fluid>
-        {/* search */}
-        <Row>
-          <Col
-            sm={12}
-            md={{ span: 11, offset: 1 }}
-            lg={{ span: 10, offset: 2 }}
-          >
-            <Row>
-              <Col sm md={9} lg={8}>
-                <SearchInput
-                  onChangeSearchQuery={(query) => setSearchQuery(query)}
-                />
-              </Col>
-            </Row>
-            {/* filter */}
-            <Row>
-              <Col>
-                {allBuildings.length > 0 && (
-                  <Filters<IBuilding>
-                    object={allBuildings[0]}
-                    filters={activeFilters}
-                    onChangeFilter={(changedFilterProperty, checked) => {
-                      checked
-                        ? setActiveFilters([
-                            ...activeFilters.filter(
-                              (filter) =>
-                                filter.property !== changedFilterProperty
-                            ),
-                            { property: changedFilterProperty },
-                          ])
-                        : setActiveFilters(
-                            activeFilters.filter(
-                              (filter) =>
-                                filter.property !== changedFilterProperty
-                            )
-                          );
-                    }}
-                  />
-                )}
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                {!loading && (
-                  <p>
-                    <strong>Results: </strong>
-                    {`${resultBuildingsUnsorted.length} buildings found`}
-                    {resultBuildingsUnsorted.length === 0 &&
-                      ". Try expanding your search criteria!"}
-                  </p>
-                )}
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-
-      <hr className="my-4"></hr>
-
-      <Container fluid>
-        <Tab.Container id="sidebar" defaultActiveKey="map">
+    <Profiler
+      id={props.name}
+      onRender={(
+        id,
+        phase,
+        actualDuration,
+        baseDuration,
+        startTime,
+        commitTime
+      ) => {
+        console.log({
+          id,
+          phase,
+          actualDuration,
+          baseDuration,
+          startTime,
+          commitTime,
+        });
+      }}
+    >
+      <div className="all-pages">
+        {loading || loadingSavedBuildings ? (
+          <Spinner animation="border" variant="warning" />
+        ) : (
+          <></>
+        )}
+        {/* search filter container */}
+        <Container fluid>
+          {/* search */}
           <Row>
-            <Col sm={12} lg={2}>
-              <Nav variant="pills" className="flex-column side-nav">
-                <Nav.Item>
-                  <Nav.Link eventKey="map" className="tab">
-                    Map
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="saved" className="tab">
-                    List
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
-            <Col sm={12} lg={10}>
-              <Tab.Content>
-                <Tab.Pane eventKey="map">
-                  <MapTab
-                    buildingsToMap={resultBuildingsUnsorted}
-                    savedBuildings={savedBuildings}
+            <Col
+              sm={12}
+              md={{ span: 11, offset: 1 }}
+              lg={{ span: 10, offset: 2 }}
+            >
+              <Row>
+                <Col sm md={9} lg={8}>
+                  <SearchInput
+                    onChangeSearchQuery={(query) => setSearchQuery(query)}
                   />
-                </Tab.Pane>
-                <Tab.Pane eventKey="saved">
-                  <AllBuildingsList
-                    resultBuildingsUnsorted={resultBuildingsUnsorted}
-                    savedBuildings={savedBuildings}
-                  />
-                </Tab.Pane>
-              </Tab.Content>
+                </Col>
+              </Row>
+              {/* filter */}
+              <Row>
+                <Col>
+                  {allBuildings.length > 0 && (
+                    <Filters<IBuilding>
+                      object={allBuildings[0]}
+                      filters={activeFilters}
+                      onChangeFilter={(changedFilterProperty, checked) => {
+                        checked
+                          ? setActiveFilters([
+                              ...activeFilters.filter(
+                                (filter) =>
+                                  filter.property !== changedFilterProperty
+                              ),
+                              { property: changedFilterProperty },
+                            ])
+                          : setActiveFilters(
+                              activeFilters.filter(
+                                (filter) =>
+                                  filter.property !== changedFilterProperty
+                              )
+                            );
+                      }}
+                    />
+                  )}
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {!loading && (
+                    <p>
+                      <strong>Results: </strong>
+                      {`${resultBuildingsUnsorted.length} buildings found`}
+                      {resultBuildingsUnsorted.length === 0 &&
+                        ". Try expanding your search criteria!"}
+                    </p>
+                  )}
+                </Col>
+              </Row>
             </Col>
           </Row>
-        </Tab.Container>
-      </Container>
-    </div>
+        </Container>
+
+        <hr className="my-4"></hr>
+
+        <Container fluid>
+          <Tab.Container id="sidebar" defaultActiveKey="map">
+            <Row>
+              <Col sm={12} lg={2}>
+                <Nav variant="pills" className="flex-column side-nav">
+                  <Nav.Item>
+                    <Nav.Link eventKey="map" className="tab">
+                      Map
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="saved" className="tab">
+                      List
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </Col>
+              <Col sm={12} lg={10}>
+                <Tab.Content>
+                  <Tab.Pane eventKey="map">
+                    <MapTab
+                      buildingsToMap={resultBuildingsUnsorted}
+                      savedBuildings={savedBuildings}
+                    />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="saved">
+                    <AllBuildingsList
+                      resultBuildingsUnsorted={resultBuildingsUnsorted}
+                      savedBuildings={savedBuildings}
+                    />
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
+        </Container>
+      </div>
+    </Profiler>
   );
 };
 

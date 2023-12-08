@@ -30,8 +30,7 @@ export default function PasswordReset({
       await resetPassword(emailRef.current.value);
       setMessage("Please check your inbox for the reset link.");
     } catch (error: any) {
-      console.log(error.code);
-      console.log(error.message);
+      console.error(error.code, error.message);
       setError(error.message);
     }
 

@@ -51,7 +51,7 @@ export const Header = () => {
       history.push("/");
     } catch {
       setMessage("Failed to log out.");
-      console.log(message);
+      console.error(message);
     }
   }
 

@@ -11,6 +11,7 @@ import {
   sendPasswordResetEmail,
   onAuthStateChanged,
 } from "firebase/auth";
+import { getNameFirestore, signupFirestore } from "../utils/firestoreUtils";
 
 const AuthContext = createContext({});
 
@@ -27,13 +28,27 @@ export function AuthProvider({ children }: IProps) {
       (cred) => {
         if (cred.user) {
           updateProfile(cred.user, { displayName: name });
+          signupFirestore(cred.user.uid, cred.user.email, name);
         }
       }
     );
   }
 
-  function login(email: string, password: string) {
-    return signInWithEmailAndPassword(getAuth(), email, password);
+  async function login(email: string, password: string): Promise<void> {
+    const cred = await signInWithEmailAndPassword(getAuth(), email, password);
+
+    if (cred.user) {
+      const nameInFirestore = await getNameFirestore(cred.user.uid);
+
+      // Backfill user displayName from Firestore to Auth
+      // only if the displayName doesn't already exist in Auth.
+      if (nameInFirestore && !cred.user.displayName) {
+        updateProfile(cred.user, { displayName: nameInFirestore });
+      }
+
+      // Backfill missing data from Auth to Firestore.
+      signupFirestore(cred.user.uid, cred.user.email, cred.user.displayName);
+    }
   }
 
   function logout() {

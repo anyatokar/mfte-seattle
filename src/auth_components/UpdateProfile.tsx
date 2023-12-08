@@ -88,7 +88,7 @@ export default function UpdateProfile() {
       .then(() => {
         // Auth is the source of truth for name/email/password
         // Firestore stores name/email as well but it's still a
-        // Success for the user if Firestore update fails (unlikely)
+        // Success for the user if Firestore update fails
         setMessage("Success! Account updated.");
         console.log("Account updated in Auth.");
 
@@ -96,12 +96,14 @@ export default function UpdateProfile() {
           .then(() => {
             console.log("Account updated in Firestore.");
           })
-          .catch(() => {
-            console.log("Error updating account in Firestore.");
+          .catch((error) => {
+            console.error(
+              `Error updating account in Firestore: ${error.code}, ${error.message}`
+            );
           });
       })
       .catch((error) => {
-        console.log(error.code, error.message);
+        console.error(error.code, error.message);
         setMessage(error.message);
       })
       .finally(() => {
@@ -151,18 +153,16 @@ export default function UpdateProfile() {
               )}
 
               <Form onSubmit={handleFormSubmit}>
-                {currentUser.displayName && (
-                  <Form.Group id="displayName" className="form-group">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                      required
-                      type="displayName"
-                      ref={displayNameRef}
-                      defaultValue={currentUser.displayName}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                )}
+                <Form.Group id="displayName" className="form-group">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    required
+                    type="displayName"
+                    ref={displayNameRef}
+                    defaultValue={currentUser.displayName}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
                 <Form.Group id="email" className="form-group">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
