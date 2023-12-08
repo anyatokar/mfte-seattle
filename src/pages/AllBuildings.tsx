@@ -1,7 +1,9 @@
 import { useEffect, useState, useCallback, useMemo, Profiler } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
+
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 
 import AllBuildingsList from "../components/AllBuildingsList";
