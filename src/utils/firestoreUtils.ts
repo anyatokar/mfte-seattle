@@ -98,11 +98,11 @@ export function getNameFirestore(uid: string): string {
         name = doc.data()?.name;
       } else {
         // doc.data() will be undefined in this case
-        console.log("No such document!");
+        console.log(`No user in "users" with uid ${uid}`);
       }
     })
     .catch((error) => {
-      console.log("Error getting document:", error);
+      console.error("Error getting document:", error);
     });
 
   return name;

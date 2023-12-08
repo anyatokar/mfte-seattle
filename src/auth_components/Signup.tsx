@@ -39,7 +39,7 @@ export default function Signup({ onLoginClicked }: Props) {
         nameRef.current.value
       );
     } catch (error: any) {
-      console.log(`${error.code}: ${error.message}`);
+      console.error(error.code, error.message);
       setMessage(error.message);
     }
     setLoading(false);

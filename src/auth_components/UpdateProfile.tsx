@@ -93,13 +93,13 @@ export default function UpdateProfile() {
             console.log("Account updated in Firestore.");
           })
           .catch((error) => {
-            console.log(
+            console.error(
               `Error updating account in Firestore: ${error.code}, ${error.message}`
             );
           });
       })
       .catch((error) => {
-        console.log(error.code, error.message);
+        console.error(error.code, error.message);
         setMessage(error.message);
       })
       .finally(() => {
