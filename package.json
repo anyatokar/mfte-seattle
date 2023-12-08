@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@firebase/util": "^1.9.3",
     "@react-google-maps/api": "^2.19.0",
     "bootstrap": "^4.6.0",
     "firebase": "^10.7.0",
