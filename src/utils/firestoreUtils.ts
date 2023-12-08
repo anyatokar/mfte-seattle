@@ -87,6 +87,23 @@ export function deleteBuilding(
   });
 }
 
+export function getNameFirestore(uid: string): Promise<string> {
+  const docRef = firebase.firestore().collection("users").doc(uid);
+  return docRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        return doc.data()?.name;
+      } else {
+        console.log(`No user in "users" with uid ${uid}`);
+        return "";
+      }
+    })
+    .catch((error) => {
+      console.log(`Error getting data for user ${uid}:`, error);
+    });
+}
+
 export function updateNameFirestore(uid: string, name: string) {
   return firebase.firestore().collection("users").doc(uid).update({
     name: name,
@@ -129,11 +146,18 @@ export function deleteUserFirestore(uid: string) {
   return firebase.firestore().collection("users").doc(uid).delete();
 }
 
-export function signupFirestore(uid: string, email: string, name: string) {
+export function signupFirestore(
+  uid: string,
+  email: string | null,
+  name: string | null
+) {
   return firebase.firestore().collection("users").doc(uid).set({
+    uid: uid,
     email: email,
     name: name,
-    signupTimestamp: timestampPT(),
+    signupOrBackfillTimestamp: timestampPT(),
+    // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
+    recentUser: true,
   });
 }
 

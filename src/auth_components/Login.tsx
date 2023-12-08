@@ -34,12 +34,16 @@ export default function Login({
         afterLogin();
       }
     } catch (error: any) {
-      console.log(error.code);
-      const userMessage =
-        error.code === "auth/wrong-password"
-          ? "Wrong password, please try again."
-          : error.message;
-      console.log(error.message);
+      console.error(error.code, error.message);
+      let userMessage = "";
+
+      if (error.code === "auth/wrong-password") {
+        userMessage = "Wrong password, please try again.";
+      } else if (error.code === "auth/user-not-found") {
+        userMessage = "Please check your username.";
+      } else {
+        userMessage = error.message;
+      }
       setMessage(userMessage);
     }
     setLoading(false);
