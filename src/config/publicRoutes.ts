@@ -1,14 +1,12 @@
-import AboutPage from "../pages/About";
-import AllBuildingsPage from "../pages/AllBuildings";
 import IRoute from "../interfaces/IRoute";
 
+import AboutPage from "../pages/About";
+import AllBuildingsPage from "../pages/AllBuildings";
 import ContactPage from "../pages/Contact";
 import HomePage from "../pages/Home";
-import ManageProfilePage from "../pages/ManageProfile";
 import ResourcesPage from "../pages/Resources";
-import SavedBuildingsPage from "../pages/SavedBuildings";
 
-const routes: IRoute[] = [
+const publicRoutes: IRoute[] = [
   {
     path: "/",
     name: "Home Page",
@@ -40,18 +38,6 @@ const routes: IRoute[] = [
     exact: true,
   },
   {
-    path: "/saved-buildings",
-    name: "Saved Buildings Page",
-    component: SavedBuildingsPage,
-    exact: true,
-  },
-  {
-    path: "/manage-profile",
-    name: "Manage Profile Page",
-    component: ManageProfilePage,
-    exact: true,
-  },
-  {
     path: "*",
     name: "Home Page",
     component: HomePage,
@@ -59,4 +45,4 @@ const routes: IRoute[] = [
   },
 ];
 
-export default routes;
+export default publicRoutes;

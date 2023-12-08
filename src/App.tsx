@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { Profiler, useState } from "react";
 import PrivateRoute from "./auth_components/PrivateRoute";
 
-import logging from "./config/logging";
-import routes from "./config/routes";
+import privateRoutes from "./config/privateRoutes";
+import publicRoutes from "./config/publicRoutes";
 
 import { Header } from "./components/Navbar";
 import { Footer } from "./components/Footer";
@@ -13,58 +13,74 @@ import {
   RouteComponentProps,
 } from "react-router-dom";
 
-import ManageProfile from "./pages/ManageProfile";
-import SavedBuildings from "./pages/SavedBuildings";
-
 import { AuthProvider } from "./contexts/AuthContext";
 import { ModalContext, ModalState } from "./contexts/ModalContext";
 
 const Application: React.FunctionComponent<{}> = (props) => {
-  useEffect(() => {
-    logging.info("Loading application.");
-  }, []);
-
   const modalStateHook = useState(ModalState.HIDDEN);
 
   return (
-    <div className="main">
-      <Router>
-        <AuthProvider>
-          <ModalContext.Provider value={modalStateHook}>
-            <Header />
-            <Switch>
-              <PrivateRoute
-                exact
-                path="/manage-profile"
-                component={ManageProfile}
-              />
-              <PrivateRoute
-                exact
-                path="/saved-buildings"
-                component={SavedBuildings}
-              />
-              {routes.map((route, index) => {
-                return (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    render={(props: RouteComponentProps<any>) => (
-                      <route.component
-                        name={route.name}
-                        {...props}
-                        {...route.props}
-                      />
-                    )}
-                  />
-                );
-              })}
-            </Switch>
-          </ModalContext.Provider>
-        </AuthProvider>
-      </Router>
-      <Footer />
-    </div>
+    <Profiler
+      id={"Application"}
+      onRender={(
+        id,
+        phase,
+        actualDuration,
+        baseDuration,
+        startTime,
+        commitTime
+      ) => {
+        console.log({
+          id,
+          phase,
+          actualDuration,
+          baseDuration,
+          startTime,
+          commitTime,
+        });
+      }}
+    >
+      <div className="main">
+        <Router>
+          <AuthProvider>
+            <ModalContext.Provider value={modalStateHook}>
+              <Header />
+              <Switch>
+                {privateRoutes.map((route) => {
+                  return (
+                    <PrivateRoute
+                      key={route.name}
+                      path={route.path}
+                      exact={route.exact}
+                      component={route.component}
+                      name={route.name}
+                    />
+                  );
+                })}
+
+                {publicRoutes.map((route) => {
+                  return (
+                    <Route
+                      key={route.name}
+                      path={route.path}
+                      exact={route.exact}
+                      render={(props: RouteComponentProps<any>) => (
+                        <route.component
+                          name={route.name}
+                          {...props}
+                          {...route.props}
+                        />
+                      )}
+                    />
+                  );
+                })}
+              </Switch>
+            </ModalContext.Provider>
+          </AuthProvider>
+        </Router>
+        <Footer />
+      </div>
+    </Profiler>
   );
 };
 
