@@ -1,9 +1,5 @@
 import { db } from "../db/firebase";
-import { timestampPT } from "./generalUtils";
-import { formFieldsType } from "../pages/Contact";
-import IBuilding from "../interfaces/IBuilding";
-
-const {
+import {
   collection,
   deleteDoc,
   getDoc,
@@ -11,7 +7,10 @@ const {
   doc,
   setDoc,
   updateDoc,
-} = require("firebase/firestore");
+} from "firebase/firestore";
+import { timestampPT } from "./generalUtils";
+import { formFieldsType } from "../pages/Contact";
+import IBuilding from "../interfaces/IBuilding";
 
 export async function saveBuilding(currentUser: any, building: IBuilding) {
   const {
@@ -90,7 +89,7 @@ export async function getNameFirestore(uid: string): Promise<string | null> {
 
   try {
     if (userDocSnap.exists()) {
-      return doc.data()?.name;
+      return userDocSnap.data().name;
     } else {
       console.log(`No user in "users" with uid ${uid}`);
     }
