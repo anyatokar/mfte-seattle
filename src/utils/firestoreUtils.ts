@@ -126,6 +126,7 @@ export function sendMessageFirestore(formFields: formFieldsType) {
     description: formFields.description,
     message: formFields.message,
     sentTimestamp: timestampPT(),
+    didReply: false,
   });
 }
 
