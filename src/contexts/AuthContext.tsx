@@ -10,17 +10,34 @@ import {
   signOut,
   sendPasswordResetEmail,
   onAuthStateChanged,
+  User,
 } from "firebase/auth";
 import { getNameFirestore, signupFirestore } from "../utils/firestoreUtils";
 
-const AuthContext = createContext({});
+interface AuthContextProps {
+  currentUser: User | null;
+  login: (email: string, password: string) => Promise<void>;
+  signupAuth: (email: string, password: string, name: string) => Promise<void>;
+  logout: () => Promise<void>;
+  resetPasswordAuth: (email: string) => Promise<void>;
+  updateDisplayNameAuth: (displayName: string) => Promise<void> | undefined;
+  updateEmailAuth: (email: string) => Promise<void> | undefined;
+  updatePasswordAuth: (password: string) => Promise<void> | undefined;
+}
+
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    console.error("useAuth must be used within an AuthProvider")
+    throw new Error("Something went wrong.");
+  }
+  return context;
 }
 
 export function AuthProvider({ children }: IProps) {
-  const [currentUser, setCurrentUser] = useState() as any;
+  const [currentUser, setCurrentUser] = useState<User | null>(null);;
   const [loading, setLoading] = useState(true);
 
   async function signupAuth(email: string, password: string, name: string) {
@@ -60,35 +77,35 @@ export function AuthProvider({ children }: IProps) {
   }
 
   function updateDisplayNameAuth(displayName: string) {
-    const user = getAuth().currentUser;
-    if (user) {
-      return updateProfile(user, { displayName: displayName });
+    const currentUser = getAuth().currentUser;
+    if (currentUser) {
+      return updateProfile(currentUser, { displayName: displayName });
     }
   }
 
   function updateEmailAuth(email: string) {
-    const user = getAuth().currentUser;
-    if (user) {
+    const currentUser= getAuth().currentUser;
+    if (currentUser) {
       return updateEmail(currentUser, email);
     }
   }
 
   function updatePasswordAuth(password: string) {
-    const user = getAuth().currentUser;
-    if (user) {
+    const currentUser = getAuth().currentUser;
+    if (currentUser) {
       return updatePassword(currentUser, password);
     }
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
-      setCurrentUser(user);
+    const unsubscribe = onAuthStateChanged(getAuth(), (currentUser) => {
+      setCurrentUser(currentUser);
       setLoading(false);
     });
     return unsubscribe;
   }, []);
 
-  const value = {
+  const value: AuthContextProps = {
     currentUser,
     login,
     signupAuth,
