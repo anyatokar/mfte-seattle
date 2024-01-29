@@ -29,6 +29,7 @@ export default function UpdateProfile() {
     updatePasswordAuth,
   } = useAuth() as any;
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState(false);
   const history = useHistory();
@@ -64,6 +65,7 @@ export default function UpdateProfile() {
     const firestorePromises: any[] = [];
     setIsLoading(true);
     setMessage("");
+    setError("");
 
     if (isNameUpdated()) {
       authPromises.push(updateDisplayNameAuth(displayNameRef.current.value));
@@ -104,7 +106,7 @@ export default function UpdateProfile() {
       })
       .catch((error) => {
         console.error(error.code, error.message);
-        setMessage(error.message);
+        setError(error.message);
       })
       .finally(() => {
         setIsLoading(false);
@@ -129,13 +131,13 @@ export default function UpdateProfile() {
           })
           .catch((error: any) => {
             console.error("Error removing user from Auth: ", error);
-            setMessage(error.message);
+            setError(error.message);
           });
       })
       .catch((error: any) => {
         console.error("Error removing user from Firestore: ", error);
         console.error("Did not attempt to remove user from Auth.");
-        setMessage(error.message);
+        setError(error.message);
       });
   }
 
@@ -145,11 +147,11 @@ export default function UpdateProfile() {
         <Col lg={6} className="mt-3 mt-md-0">
           <Card>
             <Card.Body>
-              {message && message.includes("Success") && (
+              {message && (
                 <Alert variant="success">{message}</Alert>
               )}
-              {message && !message.includes("Success") && (
-                <Alert variant="danger">{message}</Alert>
+              {error && (
+                <Alert variant="danger">{error}</Alert>
               )}
 
               <Form onSubmit={handleFormSubmit}>

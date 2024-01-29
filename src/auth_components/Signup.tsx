@@ -16,22 +16,21 @@ export default function Signup({ onLoginClicked }: Props) {
   const nameRef = useRef() as any;
   const passwordConfirmRef = useRef() as any;
   const { signup } = useAuth() as any;
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setMessage("Passwords do not match.");
+      return setError("Passwords do not match.");
     }
 
     if (passwordRef.current.value.length < 6) {
-      return setMessage("Password must be 6 characters or more.");
+      return setError("Password must be 6 characters or more.");
     }
 
     try {
-      setMessage("");
       setLoading(true);
       await signup(
         emailRef.current.value,
@@ -40,7 +39,7 @@ export default function Signup({ onLoginClicked }: Props) {
       );
     } catch (error: any) {
       console.error(error.code, error.message);
-      setMessage(error.message);
+      setError(error.message);
     }
     setLoading(false);
   }
@@ -52,7 +51,7 @@ export default function Signup({ onLoginClicked }: Props) {
       </Modal.Header>
 
       <Modal.Body>
-        {message && <Alert variant="danger">{message}</Alert>}
+        {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleFormSubmit}>
           <Form.Group id="name" className="form-group">
             <Form.Label>Name</Form.Label>
