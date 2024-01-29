@@ -27,7 +27,7 @@ export default function UpdateProfile() {
     updateDisplayNameAuth,
     updateEmailAuth,
     updatePasswordAuth,
-  } = useAuth() as any;
+  } = useAuth();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -35,10 +35,10 @@ export default function UpdateProfile() {
   const history = useHistory();
 
   function isNameUpdated() {
-    return displayNameRef.current?.value !== currentUser.displayName;
+    return displayNameRef.current?.value !== currentUser?.displayName;
   }
   function isEmailUpdated() {
-    return emailRef.current?.value !== currentUser.email;
+    return emailRef.current?.value !== currentUser?.email;
   }
   function isPasswordUpdated() {
     return !!passwordRef.current?.value;
@@ -70,14 +70,14 @@ export default function UpdateProfile() {
     if (isNameUpdated()) {
       authPromises.push(updateDisplayNameAuth(displayNameRef.current.value));
       firestorePromises.push(
-        updateNameFirestore(currentUser.uid, displayNameRef.current.value)
+        updateNameFirestore(currentUser?.uid, displayNameRef.current.value)
       );
     }
 
     if (isEmailUpdated()) {
       authPromises.push(updateEmailAuth(emailRef.current.value));
       firestorePromises.push(
-        updateEmailFirestore(currentUser.uid, emailRef.current.value)
+        updateEmailFirestore(currentUser?.uid, emailRef.current.value)
       );
     }
 
@@ -118,12 +118,12 @@ export default function UpdateProfile() {
   function onDelete(event: any) {
     event.preventDefault();
 
-    deleteUserFirestore(currentUser.uid)
+    deleteUserFirestore(currentUser?.uid)
       .then(() => {
         console.log("User successfully deleted from Firestore");
 
         currentUser
-          .delete()
+          ?.delete()
           .then(() => {
             console.log("User successfully deleted from Auth.");
             setMessage("Success! Account deleted.");
@@ -147,12 +147,8 @@ export default function UpdateProfile() {
         <Col lg={6} className="mt-3 mt-md-0">
           <Card>
             <Card.Body>
-              {message && (
-                <Alert variant="success">{message}</Alert>
-              )}
-              {error && (
-                <Alert variant="danger">{error}</Alert>
-              )}
+              {message && <Alert variant="success">{message}</Alert>}
+              {error && <Alert variant="danger">{error}</Alert>}
 
               <Form onSubmit={handleFormSubmit}>
                 <Form.Group id="displayName" className="form-group">
@@ -161,7 +157,7 @@ export default function UpdateProfile() {
                     required
                     type="displayName"
                     ref={displayNameRef}
-                    defaultValue={currentUser.displayName}
+                    defaultValue={currentUser?.displayName || ""}
                     onChange={handleChange}
                   />
                 </Form.Group>
@@ -171,7 +167,7 @@ export default function UpdateProfile() {
                     required
                     type="email"
                     ref={emailRef}
-                    defaultValue={currentUser.email}
+                    defaultValue={currentUser?.email || ""}
                     onChange={handleChange}
                   />
                 </Form.Group>

@@ -19,7 +19,7 @@ export default function Login({
 }: Props) {
   const emailRef = useRef() as any;
   const passwordRef = useRef() as any;
-  const { login } = useAuth() as any;
+  const { login } = useAuth();
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,7 +40,7 @@ export default function Login({
       if (error.code === "auth/wrong-password") {
         userMessage = "Wrong password, please try again.";
       } else if (error.code === "auth/user-not-found") {
-        userMessage = "Please check your username.";
+        userMessage = "Please check your username. User with this email does not exist.";
       } else {
         userMessage = error.message;
       }

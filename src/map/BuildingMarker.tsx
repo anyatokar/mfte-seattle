@@ -55,16 +55,16 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  const { currentUser } = useAuth() as any;
+  const { currentUser } = useAuth();
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
 
   function toggleSave() {
     if (wasOriginallySaved || isSaved) {
       setIsSaved(false);
-      deleteBuilding(currentUser, buildingID, buildingName);
+      deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
-      saveBuilding(currentUser, building);
+      saveBuilding(currentUser?.uid, building);
     }
   }
 

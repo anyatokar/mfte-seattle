@@ -10,7 +10,7 @@ export function useSavedBuildings(): [IBuilding[], boolean] {
   const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
-  const { currentUser } = useAuth() as any;
+  const { currentUser } = useAuth();
 
   const getSavedBuildings = useCallback(() => {
     if (!currentUser) return;

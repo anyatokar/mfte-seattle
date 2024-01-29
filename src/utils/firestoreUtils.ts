@@ -12,7 +12,11 @@ import { timestampPT } from "./generalUtils";
 import { formFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
 
-export async function saveBuilding(currentUser: any, building: IBuilding) {
+export async function saveBuilding(uid: string | undefined, building: IBuilding) {
+  if (!uid) {
+    return;
+  }
+
   const {
     buildingID,
     buildingName,
@@ -35,7 +39,7 @@ export async function saveBuilding(currentUser: any, building: IBuilding) {
     lng,
   } = building;
 
-  const userDocRef = doc(db, "users", currentUser.uid);
+  const userDocRef = doc(db, "users", uid);
   const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
 
   await setDoc(buildingDocRef, {
@@ -69,11 +73,15 @@ export async function saveBuilding(currentUser: any, building: IBuilding) {
 }
 
 export async function deleteBuilding(
-  currentUser: any,
+  uid: string | undefined,
   buildingID: string,
   buildingName: string
 ) {
-  const userDocRef = doc(db, "users", currentUser.uid);
+  if (!uid) {
+    return;
+  }
+
+  const userDocRef = doc(db, "users", uid);
   await deleteDoc(doc(userDocRef, "savedHomes", buildingID))
     .then(() => {
       console.log(`${buildingName} deleted from user list.`);
@@ -100,7 +108,14 @@ export async function getNameFirestore(uid: string): Promise<string | null> {
   }
 }
 
-export async function updateNameFirestore(uid: string, name: string) {
+export async function updateNameFirestore(
+  uid: string | undefined,
+  name: string
+) {
+  if (!uid) {
+    return;
+  }
+
   const userDocRef = doc(db, "users", uid);
 
   await updateDoc(userDocRef, {
@@ -109,7 +124,14 @@ export async function updateNameFirestore(uid: string, name: string) {
   });
 }
 
-export async function updateEmailFirestore(uid: string, email: string) {
+export async function updateEmailFirestore(
+  uid: string | undefined,
+  email: string
+) {
+  if (!uid) {
+    return;
+  }
+
   const userDocRef = doc(db, "users", uid);
 
   await updateDoc(userDocRef, {
@@ -130,10 +152,15 @@ export async function sendMessageFirestore(formFields: formFieldsType) {
 }
 
 export async function addNote(
-  uid: string,
+  uid: string | undefined,
   buildingID: string,
   noteToAdd: string
 ) {
+
+  if (!uid) {
+    return;
+  }
+
   const userDocRef = doc(db, "users", uid);
   const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
 
@@ -143,7 +170,11 @@ export async function addNote(
   });
 }
 
-export async function deleteUserFirestore(uid: string) {
+export async function deleteUserFirestore(uid: string | undefined) {
+  if (!uid) {
+    return;
+  }
+
   await deleteDoc(doc(db, "users", uid));
 }
 

@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 export default function Profile() {
-  const { currentUser } = useAuth() as any;
+  const { currentUser } = useAuth();
 
   if (!currentUser) {
     return null;

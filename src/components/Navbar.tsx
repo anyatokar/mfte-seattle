@@ -19,7 +19,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 export const Header = () => {
   const [message, setMessage] = useState("");
-  const { currentUser, logout } = useAuth() as any;
+  const { currentUser, logout } = useAuth();
   const history = useHistory();
   const [modalState, setModalState] = useContext(ModalContext);
 

@@ -33,7 +33,7 @@ export default function PasswordReset({
       console.error(error.code, error.message);
 
       if (error.code === "auth/user-not-found") {
-        setError("User with this email does not exist.")
+        setError("User with this email does not exist.");
       } else {
         setError(error.message);
       }

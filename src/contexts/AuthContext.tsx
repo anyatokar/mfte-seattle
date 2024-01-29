@@ -30,14 +30,14 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    console.error("useAuth must be used within an AuthProvider")
+    console.error("useAuth must be used within an AuthProvider");
     throw new Error("Something went wrong.");
   }
   return context;
 }
 
 export function AuthProvider({ children }: IProps) {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);;
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   async function signupAuth(email: string, password: string, name: string) {
@@ -84,7 +84,7 @@ export function AuthProvider({ children }: IProps) {
   }
 
   function updateEmailAuth(email: string) {
-    const currentUser= getAuth().currentUser;
+    const currentUser = getAuth().currentUser;
     if (currentUser) {
       return updateEmail(currentUser, email);
     }

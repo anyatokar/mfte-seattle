@@ -15,7 +15,7 @@ export default function Signup({ onLoginClicked }: Props) {
   const passwordRef = useRef() as any;
   const nameRef = useRef() as any;
   const passwordConfirmRef = useRef() as any;
-  const { signup } = useAuth() as any;
+  const { signupAuth } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -32,7 +32,7 @@ export default function Signup({ onLoginClicked }: Props) {
 
     try {
       setLoading(true);
-      await signup(
+      await signupAuth(
         emailRef.current.value,
         passwordRef.current.value,
         nameRef.current.value
