@@ -32,7 +32,9 @@ const AllBuildingsPage: React.FunctionComponent<
   const [loading, setLoading] = useState(false);
 
   const q = query(collection(db, "buildings"));
+
   const getAllBuildings = useCallback(() => {
+    console.log("Getting all buildings.");
     setLoading(true);
     onSnapshot(q, (querySnapshot) => {
       const items: Array<IBuilding> = [];
@@ -42,6 +44,7 @@ const AllBuildingsPage: React.FunctionComponent<
       setAllBuildings(items);
       setLoading(false);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
