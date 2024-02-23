@@ -30,7 +30,7 @@ export default function PasswordReset({
       await resetPasswordAuth(emailRef.current.value);
       setMessage("Please check your inbox for the reset link.");
     } catch (error: any) {
-      console.error(error.code, error.message);
+      console.error("Firebase Authentication Error:", error);
 
       if (error.code === "auth/user-not-found") {
         setError("User with this email does not exist.");

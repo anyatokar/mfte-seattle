@@ -38,7 +38,7 @@ export default function Signup({ onLoginClicked }: Props) {
         nameRef.current.value
       );
     } catch (error: any) {
-      console.error(error.code, error.message);
+      console.error("Firebase Authentication Error:", error);
       setError(error.message);
     }
     setLoading(false);

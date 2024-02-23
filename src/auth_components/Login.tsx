@@ -34,7 +34,8 @@ export default function Login({
         afterLogin();
       }
     } catch (error: any) {
-      console.error(error.code, error.message);
+      console.error("Firebase Authentication Error:", error);
+
       if (error.code === "auth/wrong-password") {
         setError("Wrong password, please try again.");
       } else if (error.code === "auth/user-not-found") {

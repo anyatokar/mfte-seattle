@@ -105,7 +105,7 @@ export default function UpdateProfile() {
           });
       })
       .catch((error) => {
-        console.error(error.code, error.message);
+        console.error("Firebase Authentication Error:", error);
 
         if (error.code === "auth/email-already-in-use") {
           setError("There is already a user with this email.");
