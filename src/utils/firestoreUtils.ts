@@ -12,7 +12,10 @@ import { timestampPT } from "./generalUtils";
 import { formFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
 
-export async function saveBuilding(uid: string | undefined, building: IBuilding) {
+export async function saveBuilding(
+  uid: string | undefined,
+  building: IBuilding
+) {
   if (!uid) {
     return;
   }
@@ -156,7 +159,6 @@ export async function addNote(
   buildingID: string,
   noteToAdd: string
 ) {
-
   if (!uid) {
     return;
   }

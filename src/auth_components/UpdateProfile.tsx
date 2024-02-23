@@ -58,7 +58,7 @@ export default function UpdateProfile() {
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setMessage("Oops! Passwords do not match");
+      return setError("Oops! Passwords do not match");
     }
 
     const authPromises = [];
@@ -106,7 +106,16 @@ export default function UpdateProfile() {
       })
       .catch((error) => {
         console.error(error.code, error.message);
-        setError(error.message);
+
+        if (error.code === "auth/email-already-in-use") {
+          setError("There is already a user with this email.");
+        } else if (error.code === "auth/requires-recent-login") {
+          setError(
+            "A recent login is required to make this update. Please log out and login first."
+          );
+        } else {
+          setError(error.message);
+        }
       })
       .finally(() => {
         setIsLoading(false);
