@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@react-google-maps/api": "^2.19.0",
+    "@react-google-maps/api": "^2.19.3",
     "bootstrap": "^4.6.0",
     "firebase": "^10.7.0",
     "react": "^18.2.0",
@@ -46,7 +46,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^5.11.4",
     "@types/bootstrap": "^5.0.5",
-    "@types/googlemaps": "^3.43.2",
+    "@types/googlemaps": "^3.43.3",
     "@types/react": "^18.2.31",
     "@types/react-bootstrap": "^0.32.33",
     "@types/react-dom": "^18.2.14",
