@@ -22,18 +22,23 @@ export default function UpdateProfile() {
   const emailRef = useRef() as any;
   const passwordRef = useRef() as any;
   const passwordConfirmRef = useRef() as any;
-  const { currentUser, updateDisplayName, updateEmail, updatePassword } =
-    useAuth() as any;
+  const {
+    currentUser,
+    updateDisplayNameAuth,
+    updateEmailAuth,
+    updatePasswordAuth,
+  } = useAuth();
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState(false);
   const history = useHistory();
 
   function isNameUpdated() {
-    return displayNameRef.current?.value !== currentUser.displayName;
+    return displayNameRef.current?.value !== currentUser?.displayName;
   }
   function isEmailUpdated() {
-    return emailRef.current?.value !== currentUser.email;
+    return emailRef.current?.value !== currentUser?.email;
   }
   function isPasswordUpdated() {
     return !!passwordRef.current?.value;
@@ -53,30 +58,31 @@ export default function UpdateProfile() {
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setMessage("Oops! Passwords do not match");
+      return setError("Oops! Passwords do not match");
     }
 
     const authPromises = [];
     const firestorePromises: any[] = [];
     setIsLoading(true);
     setMessage("");
+    setError("");
 
     if (isNameUpdated()) {
-      authPromises.push(updateDisplayName(displayNameRef.current.value));
+      authPromises.push(updateDisplayNameAuth(displayNameRef.current.value));
       firestorePromises.push(
-        updateNameFirestore(currentUser.uid, displayNameRef.current.value)
+        updateNameFirestore(currentUser?.uid, displayNameRef.current.value)
       );
     }
 
     if (isEmailUpdated()) {
-      authPromises.push(updateEmail(emailRef.current.value));
+      authPromises.push(updateEmailAuth(emailRef.current.value));
       firestorePromises.push(
-        updateEmailFirestore(currentUser.uid, emailRef.current.value)
+        updateEmailFirestore(currentUser?.uid, emailRef.current.value)
       );
     }
 
     if (isPasswordUpdated()) {
-      authPromises.push(updatePassword(passwordRef.current.value));
+      authPromises.push(updatePasswordAuth(passwordRef.current.value));
       // passwords are not stored in Firestore, only in Auth
     }
 
@@ -99,8 +105,17 @@ export default function UpdateProfile() {
           });
       })
       .catch((error) => {
-        console.error(error.code, error.message);
-        setMessage(error.message);
+        console.error("Firebase Authentication Error:", error);
+
+        if (error.code === "auth/email-already-in-use") {
+          setError("There is already a user with this email.");
+        } else if (error.code === "auth/requires-recent-login") {
+          setError(
+            "A recent login is required to make this update. Please log out and login first."
+          );
+        } else {
+          setError(error.message);
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -112,12 +127,12 @@ export default function UpdateProfile() {
   function onDelete(event: any) {
     event.preventDefault();
 
-    deleteUserFirestore(currentUser.uid)
+    deleteUserFirestore(currentUser?.uid)
       .then(() => {
         console.log("User successfully deleted from Firestore");
 
         currentUser
-          .delete()
+          ?.delete()
           .then(() => {
             console.log("User successfully deleted from Auth.");
             setMessage("Success! Account deleted.");
@@ -125,13 +140,13 @@ export default function UpdateProfile() {
           })
           .catch((error: any) => {
             console.error("Error removing user from Auth: ", error);
-            setMessage(error.message);
+            setError(error.message);
           });
       })
       .catch((error: any) => {
         console.error("Error removing user from Firestore: ", error);
         console.error("Did not attempt to remove user from Auth.");
-        setMessage(error.message);
+        setError(error.message);
       });
   }
 
@@ -141,12 +156,8 @@ export default function UpdateProfile() {
         <Col lg={6} className="mt-3 mt-md-0">
           <Card>
             <Card.Body>
-              {message && message.includes("Success") && (
-                <Alert variant="success">{message}</Alert>
-              )}
-              {message && !message.includes("Success") && (
-                <Alert variant="danger">{message}</Alert>
-              )}
+              {message && <Alert variant="success">{message}</Alert>}
+              {error && <Alert variant="danger">{error}</Alert>}
 
               <Form onSubmit={handleFormSubmit}>
                 <Form.Group id="displayName" className="form-group">
@@ -155,7 +166,7 @@ export default function UpdateProfile() {
                     required
                     type="displayName"
                     ref={displayNameRef}
-                    defaultValue={currentUser.displayName}
+                    defaultValue={currentUser?.displayName || ""}
                     onChange={handleChange}
                   />
                 </Form.Group>
@@ -165,7 +176,7 @@ export default function UpdateProfile() {
                     required
                     type="email"
                     ref={emailRef}
-                    defaultValue={currentUser.email}
+                    defaultValue={currentUser?.email || ""}
                     onChange={handleChange}
                   />
                 </Form.Group>

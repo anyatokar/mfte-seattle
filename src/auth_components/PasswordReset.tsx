@@ -16,7 +16,7 @@ export default function PasswordReset({
   onSignupClicked,
 }: Props) {
   const emailRef = useRef() as any;
-  const { resetPassword } = useAuth() as any;
+  const { resetPasswordAuth } = useAuth();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,11 +27,16 @@ export default function PasswordReset({
       setMessage("");
       setError("");
       setLoading(true);
-      await resetPassword(emailRef.current.value);
+      await resetPasswordAuth(emailRef.current.value);
       setMessage("Please check your inbox for the reset link.");
     } catch (error: any) {
-      console.error(error.code, error.message);
-      setError(error.message);
+      console.error("Firebase Authentication Error:", error);
+
+      if (error.code === "auth/user-not-found") {
+        setError("User with this email does not exist.");
+      } else {
+        setError(error.message);
+      }
     }
 
     setLoading(false);

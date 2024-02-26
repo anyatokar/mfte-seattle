@@ -19,32 +19,32 @@ export default function Login({
 }: Props) {
   const emailRef = useRef() as any;
   const passwordRef = useRef() as any;
-  const { login } = useAuth() as any;
+  const { login } = useAuth();
 
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      setMessage("");
+      setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
       if (afterLogin) {
         afterLogin();
       }
     } catch (error: any) {
-      console.error(error.code, error.message);
-      let userMessage = "";
+      console.error("Firebase Authentication Error:", error);
 
       if (error.code === "auth/wrong-password") {
-        userMessage = "Wrong password, please try again.";
+        setError("Wrong password, please try again.");
       } else if (error.code === "auth/user-not-found") {
-        userMessage = "Please check your username.";
+        setError(
+          "Please check your username. User with this email does not exist."
+        );
       } else {
-        userMessage = error.message;
+        setError(error.message);
       }
-      setMessage(userMessage);
     }
     setLoading(false);
   }
@@ -56,7 +56,7 @@ export default function Login({
       </Modal.Header>
 
       <Modal.Body>
-        {message && <Alert variant="danger">{message}</Alert>}
+        {error && <Alert variant="danger">{error}</Alert>}
 
         <Form onSubmit={handleSubmit}>
           <Form.Group id="email" className="form-group">

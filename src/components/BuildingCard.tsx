@@ -27,7 +27,7 @@ export interface SavedBuildingsCardProps extends ISavedBuilding {
 type BuildingsCardProps = AllBuildingsCardProps | SavedBuildingsCardProps;
 
 export function BuildingCard(props: BuildingsCardProps) {
-  const { currentUser } = useAuth() as any;
+  const { currentUser } = useAuth();
   const {
     buildingID,
     buildingName,
@@ -69,10 +69,10 @@ export function BuildingCard(props: BuildingsCardProps) {
   function toggleSave() {
     if (wasOriginallySaved || isSaved) {
       setIsSaved(false);
-      deleteBuilding(currentUser, buildingID, buildingName);
+      deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
-      saveBuilding(currentUser, props);
+      saveBuilding(currentUser?.uid, props);
     }
   }
 
@@ -94,7 +94,7 @@ export function BuildingCard(props: BuildingsCardProps) {
   };
 
   const updateNote = (noteToAdd: string) => {
-    return addNote(currentUser.uid, buildingID, noteToAdd)
+    return addNote(currentUser?.uid, buildingID, noteToAdd)
       .then(() => {
         setIsNoteDifferent(false);
         console.log("Note updated successfully.");
@@ -151,7 +151,7 @@ export function BuildingCard(props: BuildingsCardProps) {
             type="button"
             value="Remove"
             onClick={() => {
-              deleteBuilding(currentUser, buildingID, buildingName);
+              deleteBuilding(currentUser?.uid, buildingID, buildingName);
             }}
           >
             Remove

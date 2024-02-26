@@ -14,7 +14,7 @@ import Tab from "react-bootstrap/Tab";
 const ManageProfilePage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = (props) => {
-  const { currentUser } = useAuth() as any;
+  const { currentUser } = useAuth();
 
   if (!currentUser) {
     return null;

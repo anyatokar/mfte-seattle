@@ -1,40 +1,66 @@
 import { useContext, useState, useEffect, createContext } from "react";
-import firebase, { auth } from "../db/firebase";
 import IProps from "../interfaces/IProps";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateEmail,
+  updatePassword,
+  updateProfile,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
 import { getNameFirestore, signupFirestore } from "../utils/firestoreUtils";
 
-const AuthContext = createContext({});
+interface AuthContextProps {
+  currentUser: User | null;
+  login: (email: string, password: string) => Promise<void>;
+  signupAuth: (email: string, password: string, name: string) => Promise<void>;
+  logout: () => Promise<void>;
+  resetPasswordAuth: (email: string) => Promise<void>;
+  updateDisplayNameAuth: (displayName: string) => Promise<void> | undefined;
+  updateEmailAuth: (email: string) => Promise<void> | undefined;
+  updatePasswordAuth: (password: string) => Promise<void> | undefined;
+}
+
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    console.error("useAuth must be used within an AuthProvider");
+    throw new Error("Something went wrong.");
+  }
+  return context;
 }
 
 export function AuthProvider({ children }: IProps) {
-  const [currentUser, setCurrentUser] = useState() as any;
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  async function signup(email: string, password: string, name: string) {
-    return firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((cred) => {
+  async function signupAuth(email: string, password: string, name: string) {
+    return createUserWithEmailAndPassword(getAuth(), email, password).then(
+      (cred) => {
         if (cred.user) {
-          cred.user.updateProfile({ displayName: name });
+          updateProfile(cred.user, { displayName: name });
           signupFirestore(cred.user.uid, cred.user.email, name);
         }
-      });
+      }
+    );
   }
 
   async function login(email: string, password: string): Promise<void> {
-    const cred = await auth.signInWithEmailAndPassword(email, password);
+    const cred = await signInWithEmailAndPassword(getAuth(), email, password);
 
     if (cred.user) {
-      const name = await getNameFirestore(cred.user.uid);
+      const nameInFirestore = await getNameFirestore(cred.user.uid);
 
       // Backfill user displayName from Firestore to Auth
       // only if the displayName doesn't already exist in Auth.
-      if (name && !cred.user.displayName) {
-        cred.user.updateProfile({ displayName: name });
+      if (nameInFirestore && !cred.user.displayName) {
+        updateProfile(cred.user, { displayName: nameInFirestore });
       }
 
       // Backfill missing data from Auth to Firestore.
@@ -43,42 +69,51 @@ export function AuthProvider({ children }: IProps) {
   }
 
   function logout() {
-    return auth.signOut();
+    return signOut(getAuth());
   }
 
-  function resetPassword(email: string) {
-    return auth.sendPasswordResetEmail(email);
+  function resetPasswordAuth(email: string) {
+    return sendPasswordResetEmail(getAuth(), email);
   }
 
-  function updateDisplayName(displayName: string) {
-    return currentUser.updateProfile({ displayName: displayName });
+  function updateDisplayNameAuth(displayName: string) {
+    const currentUser = getAuth().currentUser;
+    if (currentUser) {
+      return updateProfile(currentUser, { displayName: displayName });
+    }
   }
 
-  function updateEmail(email: string) {
-    return currentUser.updateEmail(email);
+  function updateEmailAuth(email: string) {
+    const currentUser = getAuth().currentUser;
+    if (currentUser) {
+      return updateEmail(currentUser, email);
+    }
   }
 
-  function updatePassword(password: string) {
-    return currentUser.updatePassword(password);
+  function updatePasswordAuth(password: string) {
+    const currentUser = getAuth().currentUser;
+    if (currentUser) {
+      return updatePassword(currentUser, password);
+    }
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+    const unsubscribe = onAuthStateChanged(getAuth(), (currentUser) => {
+      setCurrentUser(currentUser);
       setLoading(false);
     });
     return unsubscribe;
   }, []);
 
-  const value = {
+  const value: AuthContextProps = {
     currentUser,
     login,
-    signup,
+    signupAuth,
     logout,
-    resetPassword,
-    updateDisplayName,
-    updateEmail,
-    updatePassword,
+    resetPasswordAuth,
+    updateDisplayNameAuth,
+    updateEmailAuth,
+    updatePasswordAuth,
   };
 
   return (

@@ -1,6 +1,9 @@
 import { useEffect, useState, useCallback, useMemo, Profiler } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import "firebase/firestore";
+
+import { collection, query, onSnapshot } from "firebase/firestore";
+import { db } from "../db/firebase";
+
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 
 import AllBuildingsList from "../components/AllBuildingsList";
@@ -10,7 +13,6 @@ import SearchInput from "../components/SearchInput";
 
 import { genericSearch } from "../utils/genericSearch";
 import { genericFilter } from "../utils/genericFilter";
-import { getAllBuildingsRef } from "../utils/firestoreUtils";
 
 import IBuilding from "../interfaces/IBuilding";
 import IFilter from "../interfaces/IFilter";
@@ -23,31 +25,37 @@ import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import Spinner from "react-bootstrap/Spinner";
 
-const ref = getAllBuildingsRef();
-
 const AllBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = (props) => {
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
+  const q = query(collection(db, "buildings"));
+
   const getAllBuildings = useCallback(() => {
+    console.log("Getting all buildings.");
     setLoading(true);
-    ref.onSnapshot((querySnapshot) => {
-      const items: Array<IBuilding> = [];
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const buildings: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data() as IBuilding);
+        buildings.push(doc.data() as IBuilding);
       });
-      setAllBuildings(items);
+      setAllBuildings(buildings);
       setLoading(false);
     });
+
+    return () => {
+      unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     getAllBuildings();
   }, [getAllBuildings]);
 
-  const [query, setQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
     []
   );
@@ -63,11 +71,11 @@ const AllBuildingsPage: React.FunctionComponent<
             "street",
             "zip",
           ],
-          query
+          searchQuery
         )
       )
       .filter((building) => genericFilter<IBuilding>(building, activeFilters));
-  }, [allBuildings, query, activeFilters]);
+  }, [allBuildings, searchQuery, activeFilters]);
 
   const [savedBuildings, loadingSavedBuildings] = useSavedBuildings();
 
@@ -110,7 +118,7 @@ const AllBuildingsPage: React.FunctionComponent<
               <Row>
                 <Col sm md={9} lg={8}>
                   <SearchInput
-                    onChangeSearchQuery={(query) => setQuery(query)}
+                    onChangeSearchQuery={(query) => setSearchQuery(query)}
                   />
                 </Col>
               </Row>

@@ -1,9 +1,25 @@
-import firebase from "../db/firebase";
+import { db } from "../db/firebase";
+import {
+  collection,
+  deleteDoc,
+  getDoc,
+  getDocs,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { timestampPT } from "./generalUtils";
 import { formFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
 
-export function saveBuilding(currentUser: any, building: IBuilding) {
+export async function saveBuilding(
+  uid: string | undefined,
+  building: IBuilding
+) {
+  if (!uid) {
+    return;
+  }
+
   const {
     buildingID,
     buildingName,
@@ -26,100 +42,109 @@ export function saveBuilding(currentUser: any, building: IBuilding) {
     lng,
   } = building;
 
-  firebase
-    .firestore()
-    .collection("users")
-    .doc(currentUser.uid)
-    .collection("savedHomes")
-    .doc(buildingID)
-    .set({
-      buildingID: buildingID,
-      buildingName: buildingName,
-      phone: phone,
-      phone2: phone2,
-      residentialTargetedArea: residentialTargetedArea,
-      totalRestrictedUnits: totalRestrictedUnits,
-      sedu: sedu,
-      studioUnits: studioUnits,
-      oneBedroomUnits: oneBedroomUnits,
-      twoBedroomUnits: twoBedroomUnits,
-      threePlusBedroomUnits: threePlusBedroomUnits,
-      urlForBuilding: urlForBuilding,
-      streetNum: streetNum,
-      street: street,
-      city: city,
-      state: state,
-      zip: zip,
-      lat: lat,
-      lng: lng,
-      savedTimestamp: timestampPT(),
-    })
+  const userDocRef = doc(db, "users", uid);
+  const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
+
+  await setDoc(buildingDocRef, {
+    buildingID: buildingID,
+    buildingName: buildingName,
+    phone: phone,
+    phone2: phone2,
+    residentialTargetedArea: residentialTargetedArea,
+    totalRestrictedUnits: totalRestrictedUnits,
+    sedu: sedu,
+    studioUnits: studioUnits,
+    oneBedroomUnits: oneBedroomUnits,
+    twoBedroomUnits: twoBedroomUnits,
+    threePlusBedroomUnits: threePlusBedroomUnits,
+    urlForBuilding: urlForBuilding,
+    streetNum: streetNum,
+    street: street,
+    city: city,
+    state: state,
+    zip: zip,
+    lat: lat,
+    lng: lng,
+    savedTimestamp: timestampPT(),
+  })
     .then(() => {
       console.log(`${buildingName} saved to user list.`);
     })
-    .catch((error) => {
+    .catch((error: any) => {
       console.error("Error adding document: ", error);
     });
 }
 
-export function deleteBuilding(
-  currentUser: any,
+export async function deleteBuilding(
+  uid: string | undefined,
   buildingID: string,
   buildingName: string
 ) {
-  const savedHomesQuery = firebase
-    .firestore()
-    .collection("users")
-    .doc(currentUser.uid)
-    .collection("savedHomes")
-    .where("buildingID", "==", buildingID);
-  savedHomesQuery.get().then(function (querySnapshot) {
-    querySnapshot.forEach(function (doc) {
-      doc.ref
-        .delete()
-        .then(() => {
-          console.log(`${buildingName} deleted from user list.`);
-        })
-        .catch((error) => {
-          console.error("Error deleting document: ", error);
-        });
-    });
-  });
-}
+  if (!uid) {
+    return;
+  }
 
-export function getNameFirestore(uid: string): Promise<string> {
-  const docRef = firebase.firestore().collection("users").doc(uid);
-  return docRef
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        return doc.data()?.name;
-      } else {
-        console.log(`No user in "users" with uid ${uid}`);
-        return "";
-      }
+  const userDocRef = doc(db, "users", uid);
+  await deleteDoc(doc(userDocRef, "savedHomes", buildingID))
+    .then(() => {
+      console.log(`${buildingName} deleted from user list.`);
     })
-    .catch((error) => {
-      console.log(`Error getting data for user ${uid}:`, error);
+    .catch((error: any) => {
+      console.error("Error deleting document: ", error);
     });
 }
 
-export function updateNameFirestore(uid: string, name: string) {
-  return firebase.firestore().collection("users").doc(uid).update({
+export async function getNameFirestore(uid: string): Promise<string | null> {
+  const userDocRef = doc(db, "users", uid);
+  const userDocSnap = await getDoc(userDocRef);
+
+  try {
+    if (userDocSnap.exists()) {
+      return userDocSnap.data().name;
+    } else {
+      console.log(`No user in "users" with uid ${uid}`);
+    }
+  } catch (error: any) {
+    console.error(`Error getting data for user ${uid}:`, error);
+  } finally {
+    return null;
+  }
+}
+
+export async function updateNameFirestore(
+  uid: string | undefined,
+  name: string
+) {
+  if (!uid) {
+    return;
+  }
+
+  const userDocRef = doc(db, "users", uid);
+
+  await updateDoc(userDocRef, {
     name: name,
     updateNameTimestamp: timestampPT(),
   });
 }
 
-export function updateEmailFirestore(uid: string, email: string) {
-  return firebase.firestore().collection("users").doc(uid).update({
+export async function updateEmailFirestore(
+  uid: string | undefined,
+  email: string
+) {
+  if (!uid) {
+    return;
+  }
+
+  const userDocRef = doc(db, "users", uid);
+
+  await updateDoc(userDocRef, {
     email: email,
     updateEmailTimestamp: timestampPT(),
   });
 }
 
-export function sendMessageFirestore(formFields: formFieldsType) {
-  return firebase.firestore().collection("contactus").doc().set({
+export async function sendMessageFirestore(formFields: formFieldsType) {
+  await setDoc(doc(db, "contactus"), {
     authorName: formFields.authorName,
     email: formFields.email,
     subject: formFields.subject,
@@ -130,29 +155,38 @@ export function sendMessageFirestore(formFields: formFieldsType) {
   });
 }
 
-export function addNote(uid: string, buildingID: string, noteToAdd: string) {
-  return firebase
-    .firestore()
-    .collection("users")
-    .doc(uid)
-    .collection("savedHomes")
-    .doc(buildingID)
-    .update({
-      note: noteToAdd,
-      noteTimestamp: timestampPT(),
-    });
+export async function addNote(
+  uid: string | undefined,
+  buildingID: string,
+  noteToAdd: string
+) {
+  if (!uid) {
+    return;
+  }
+
+  const userDocRef = doc(db, "users", uid);
+  const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
+
+  await updateDoc(buildingDocRef, {
+    note: noteToAdd,
+    noteTimestamp: timestampPT(),
+  });
 }
 
-export function deleteUserFirestore(uid: string) {
-  return firebase.firestore().collection("users").doc(uid).delete();
+export async function deleteUserFirestore(uid: string | undefined) {
+  if (!uid) {
+    return;
+  }
+
+  await deleteDoc(doc(db, "users", uid));
 }
 
-export function signupFirestore(
+export async function signupFirestore(
   uid: string,
   email: string | null,
   name: string | null
 ) {
-  return firebase.firestore().collection("users").doc(uid).set({
+  await setDoc(doc(db, "users", uid), {
     uid: uid,
     email: email,
     name: name,
@@ -162,14 +196,11 @@ export function signupFirestore(
   });
 }
 
-export function getAllBuildingsRef() {
-  return firebase.firestore().collection("buildings");
+export async function getAllBuildingsRef() {
+  return await getDocs(collection(db, "buildings"));
 }
 
-export function getSavedBuildingsRef(uid: string) {
-  return firebase
-    .firestore()
-    .collection("users")
-    .doc(uid)
-    .collection("savedHomes");
+export async function getSavedBuildingsRef(uid: string) {
+  const userDocRef = doc(db, "users", uid);
+  return await getDocs(collection(userDocRef, "savedHomes"));
 }
