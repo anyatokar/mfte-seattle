@@ -20,7 +20,8 @@ export function useSavedBuildings(): [IBuilding[], boolean] {
     const userDocRef = doc(db, "users", currentUser.uid);
     const q = query(collection(userDocRef, "savedHomes"));
 
-    onSnapshot(q, (querySnapshot) => {
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("Getting saved buildings.");
       const items: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
         items.push(doc.data() as IBuilding);
@@ -28,6 +29,10 @@ export function useSavedBuildings(): [IBuilding[], boolean] {
       setSavedBuildings(items);
       setLoading(false);
     });
+
+    return () => {
+      unsubscribe();
+    };
   }, [currentUser]);
 
   useEffect(() => {

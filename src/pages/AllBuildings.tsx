@@ -36,14 +36,18 @@ const AllBuildingsPage: React.FunctionComponent<
   const getAllBuildings = useCallback(() => {
     console.log("Getting all buildings.");
     setLoading(true);
-    onSnapshot(q, (querySnapshot) => {
-      const items: Array<IBuilding> = [];
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const buildings: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data() as IBuilding);
+        buildings.push(doc.data() as IBuilding);
       });
-      setAllBuildings(items);
+      setAllBuildings(buildings);
       setLoading(false);
     });
+
+    return () => {
+      unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
