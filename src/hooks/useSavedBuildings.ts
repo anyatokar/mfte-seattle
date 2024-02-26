@@ -22,11 +22,11 @@ export function useSavedBuildings(): [IBuilding[], boolean] {
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("Getting saved buildings.");
-      const items: Array<IBuilding> = [];
+      const buildings: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data() as IBuilding);
+        buildings.push(doc.data() as IBuilding);
       });
-      setSavedBuildings(items);
+      setSavedBuildings(buildings);
       setLoading(false);
     });
 
