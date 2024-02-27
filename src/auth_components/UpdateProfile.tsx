@@ -140,7 +140,12 @@ export default function UpdateProfile() {
           })
           .catch((error: any) => {
             console.error("Error removing user from Auth: ", error);
-            setError(error.message);
+
+            if (error.code === "auth/requires-recent-login") {
+              setError(
+                "A recent login is required to delete account. Please log out and login first."
+              );
+            } else setError(error.message);
           });
       })
       .catch((error: any) => {
