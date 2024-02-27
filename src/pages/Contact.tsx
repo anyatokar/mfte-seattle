@@ -1,5 +1,5 @@
 import { Profiler, useState } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { sendMessageFirestore } from "../utils/firestoreUtils";
 import IPage from "../interfaces/IPage";
 
@@ -99,8 +99,12 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
             </p>
             <ul>
               <li>
-                Have questions or feedback about the MFTE program? Please
-                contact the&nbsp;
+                Have general questions or feedback about the MFTE program?
+                Please explore the&nbsp;
+                <Link id="all-buildings" to="./resources">
+                  Resources
+                </Link>
+                &nbsp;page or contact the&nbsp;
                 <a
                   id="seattle-housing-website"
                   href="https://seattle.gov/housing"
@@ -118,11 +122,6 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                 process? Please contact the property directly.
               </li>
             </ul>
-            <p>
-              We cannot help with the two above bullet points because we are a
-              volunteer-run website which uses public data to map MFTE
-              properties.
-            </p>
             <p>All fields are required.</p>
 
             <Form onSubmit={handleFormSubmit}>
