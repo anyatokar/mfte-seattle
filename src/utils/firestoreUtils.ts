@@ -7,6 +7,7 @@ import {
   doc,
   setDoc,
   updateDoc,
+  addDoc,
 } from "firebase/firestore";
 import { timestampPT } from "./generalUtils";
 import { formFieldsType } from "../pages/Contact";
@@ -144,7 +145,7 @@ export async function updateEmailFirestore(
 }
 
 export async function sendMessageFirestore(formFields: formFieldsType) {
-  await setDoc(doc(db, "contactus"), {
+  await addDoc(collection(db, "contactus"), {
     authorName: formFields.authorName,
     email: formFields.email,
     subject: formFields.subject,
