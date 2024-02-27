@@ -90,12 +90,16 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
             <hr className="my-4"></hr>
 
             <p className="lead">
-              We are always looking to improve this resource — your feedback is
+              We are always looking to improve this website — your feedback is
               welcome and appreciated.
+            </p>
+            <p>
+              This website is not affiliated with the Seattle Office of Housing
+              or any property owner.
             </p>
             <ul>
               <li>
-                Please contact the&nbsp;
+                Contact the&nbsp;
                 <a
                   id="seattle-housing-website"
                   href="https://seattle.gov/housing"
@@ -105,14 +109,19 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                 >
                   Seattle Office of Housing
                 </a>
-                &nbsp;with general questions about the MFTE program.
+                &nbsp;with questions or feedback about the MFTE program.
               </li>
               <li>
-                Contact properties directly with building-specific questions
+                Contact the property directly with building-specific questions
                 including apartment availability, details on tenant eligibility,
                 and the application process.
               </li>
             </ul>
+            <p>
+              We cannot help with the two above bullet points because we are a
+              volunteer-run website which uses public data to map MFTE
+              properties.
+            </p>
             <p>All fields are required.</p>
 
             <Form onSubmit={handleFormSubmit}>
@@ -172,7 +181,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                 >
                   <option key="blankChoice" hidden></option>
                   <option>Feature suggestion</option>
-                  <option>Incorrect building data</option>
+                  <option>Update building data</option>
                   <option>Website bug report</option>
                   <option>Help with using this website</option>
                   <option>Kind words</option>
