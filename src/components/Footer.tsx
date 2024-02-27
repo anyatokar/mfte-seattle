@@ -16,7 +16,7 @@ export const Footer = () => {
         </Col>
       </Row>
       <Row>
-        <Col className="p-0 text-center">Copyright © 2021-2023 Anya Tokar</Col>
+        <Col className="p-0 text-center">Copyright © 2021-2024 Anya Tokar</Col>
       </Row>
     </Container>
   );
