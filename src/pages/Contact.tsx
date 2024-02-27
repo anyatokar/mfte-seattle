@@ -99,7 +99,8 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
             </p>
             <ul>
               <li>
-                Contact the&nbsp;
+                Have questions or feedback about the MFTE program? Please
+                contact the&nbsp;
                 <a
                   id="seattle-housing-website"
                   href="https://seattle.gov/housing"
@@ -109,12 +110,12 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                 >
                   Seattle Office of Housing
                 </a>
-                &nbsp;with questions or feedback about the MFTE program.
+                .
               </li>
               <li>
-                Contact the property directly with building-specific questions
-                including apartment availability, details on tenant eligibility,
-                and the application process.
+                Have building-specific questions including apartment
+                availability, details on tenant eligibility, and the application
+                process? Please contact the property directly.
               </li>
             </ul>
             <p>
