@@ -75,7 +75,6 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
                     sm={6}
                     lg={4}
                     xl={3}
-                    xxl={1}
                     className="building-row"
                   >
                     <BuildingCard
