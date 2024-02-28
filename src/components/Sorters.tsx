@@ -1,59 +1,69 @@
+import { Fragment } from "react";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+
 export interface ISortersProps<T> {
   object: T;
-  onChangeSorter: (
-    sortProperty: keyof T,
-    isDescending: boolean
-  ) => void;
+  onChangeSorter: (sortProperty: keyof T, isDescending: boolean) => void;
 }
 
+type DropdownButtonKeyType = "buildingName" | "residentialTargetedArea";
+
+const dropdownMenuKeys: DropdownButtonKeyType[] = [
+  "buildingName",
+  "residentialTargetedArea",
+];
+
 export default function Sorters<T>(props: ISortersProps<T>) {
-  const { object, onChangeSorter } = props;
-  const objectKeys = ["buildingName", "residentialTargetedArea"]
+  const { onChangeSorter } = props;
+
   return (
-    <>
-      <label htmlFor="sorters" className="mt-3">Sort:</label>
-      <select
-        id="sorters"
-        className="custom-select form-control"
-        onChange={(event) =>
-          onChangeSorter(
-            event.target.value.split(",")[0] as any,
-            event.target.value.split(",")[1] === "true"
-          )
-        }
-        defaultValue={["title", "true"]}
-      >
-        {objectKeys.map((key) => {
-          if (!key) {
-            return<></>
-          } else if (key === 'buildingName' || 
-            key === 'residentialTargetedArea' 
-          ) {
-            const keyToStringObj = { 
-              'buildingName': 'Building Name', 
-              'residentialTargetedArea': 'Neighborhood',
-            }
-        
-            return(
-              <>
-                <option
-                  key={`${key}-false`}
-                  value={[key, "false"]}
-                >
-                  {keyToStringObj[key]} (A to Z)
-                </option>
-                <option
-                  key={`${key}-true`}
-                  value={[key, "true"]}
-                >
-                  {keyToStringObj[key]} (Z to A)
-                </option>
-              </>
-            );
-          } else {
-            return (<></>)}
-        })}
-      </select>
-    </>
+    <Container fluid>
+      <Row className="sort-bar">
+        <Col className="mt-2 mt-lg-0 p-0">
+          <Form>
+            <Form.Label htmlFor="sorters">
+              Sort buildings by name or neighborhood:
+            </Form.Label>
+            <Form.Select
+              id="sorters"
+              onChange={(event) =>
+                onChangeSorter(
+                  event.target.value.split(",")[0] as any,
+                  event.target.value.split(",")[1] === "true"
+                )
+              }
+            >
+              {dropdownMenuKeys.map((dropdownMenuKey) => {
+                if (
+                  dropdownMenuKey === "buildingName" ||
+                  dropdownMenuKey === "residentialTargetedArea"
+                ) {
+                  const dropdownMenuUILabels = {
+                    buildingName: "Building name",
+                    residentialTargetedArea: "Neighborhood",
+                  };
+                  return (
+                    <Fragment key={dropdownMenuKey}>
+                      <option value={[dropdownMenuKey, "false"]}>
+                        {dropdownMenuUILabels[dropdownMenuKey]} (A to Z)
+                      </option>
+                      <option value={[dropdownMenuKey, "true"]}>
+                        {dropdownMenuUILabels[dropdownMenuKey]} (Z to A)
+                      </option>
+                    </Fragment>
+                  );
+                } else {
+                  return <></>;
+                }
+              })}
+            </Form.Select>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }

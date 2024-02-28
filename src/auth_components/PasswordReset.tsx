@@ -1,36 +1,45 @@
-import { useRef, useState } from "react"
-import { Form, Button, Modal, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useRef, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 
 type Props = {
-  onLoginClicked?: () => void,
-  onSignupClicked?: () => void
-}
+  onLoginClicked?: () => void;
+  onSignupClicked?: () => void;
+};
 
 export default function PasswordReset({
   onLoginClicked,
-  onSignupClicked
+  onSignupClicked,
 }: Props) {
-  const emailRef = useRef() as any
-  const { resetPassword } = useAuth() as any
-  const [error, setError] = useState("")
-  const [message, setMessage] = useState("")
-  const [loading, setLoading] = useState(false)
+  const emailRef = useRef() as any;
+  const { resetPasswordAuth } = useAuth();
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: any) {
-    e.preventDefault()
-
+  async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     try {
-      setMessage("")
-      setError("")
-      setLoading(true)
-      await resetPassword(emailRef.current.value)
-      setMessage("Check your inbox for further instructions")
-    } catch {
-      setError("Failed to reset password")
+      setMessage("");
+      setError("");
+      setLoading(true);
+      await resetPasswordAuth(emailRef.current.value);
+      setMessage("Please check your inbox for the reset link.");
+    } catch (error: any) {
+      console.error("Firebase Authentication Error:", error);
+
+      if (error.code === "auth/user-not-found") {
+        setError("User with this email does not exist.");
+      } else {
+        setError(error.message);
+      }
     }
 
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
@@ -42,25 +51,29 @@ export default function PasswordReset({
       <Modal.Body>
         {error && <Alert variant="danger">{error}</Alert>}
         {message && <Alert variant="success">{message}</Alert>}
-        <Form onSubmit={handleSubmit}>
-          <Form.Group id="email" className="emailField">
-            <h6>Enter your email to recieve a reset link in your inbox.</h6>
-            <br></br>
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="email" ref={emailRef} required />
+
+        <Form onSubmit={handleFormSubmit}>
+          <Form.Group id="email" className="form-group">
+            <p>Enter your email to receive a reset link in your inbox.</p>
+            <Form.Control required type="email" ref={emailRef} />
           </Form.Group>
           <Button disabled={loading} className="w-100" type="submit">
             Reset Password
           </Button>
         </Form>
       </Modal.Body>
+
       <Modal.Footer>
         <div className="w-100 text-center">
-          <Button onClick={onLoginClicked} variant="link">Log In</Button>
-          <br></br>
-          <Button onClick={onSignupClicked} variant="link">Sign Up</Button>
+          <Button onClick={onSignupClicked} variant="link">
+            Sign Up
+          </Button>
+          <br />
+          <Button onClick={onLoginClicked} variant="link">
+            Log In
+          </Button>
         </div>
       </Modal.Footer>
     </>
-  )
+  );
 }

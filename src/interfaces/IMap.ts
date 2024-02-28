@@ -1,6 +1,7 @@
-import IBuilding from "./IBuilding"
+import IBuilding from "./IBuilding";
+import ISavedBuilding from "./ISavedBuilding";
 
 export default interface IMap {
-  filteredBuildings: Array<IBuilding>
+  buildingsToMap: Array<IBuilding> | Array<ISavedBuilding>;
+  savedBuildings: Array<ISavedBuilding>;
 }
-

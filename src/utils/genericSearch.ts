@@ -5,10 +5,9 @@ export function genericSearch<T>(
   properties: Array<keyof T>,
   query: string
 ): boolean {
-
   if (query === "") {
     return true;
-  } 
+  }
 
   return properties.some((property) => {
     const value = object[property];

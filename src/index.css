@@ -1,85 +1,140 @@
-html, body {
-  margin: 0;
-  max-width: 100%;
-  overflow-x: hidden;
+/* entire app */
+html,
+body {
+  background: #eef6f6;
 }
 
-img {
-  width: 100%;
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+/* end of entire app */
+
+/* navbar section */
+.navbar {
+  background: white;
+  border-bottom-right-radius: 15%;
+  border-bottom-left-radius: 15%;
+  text-align: center;
 }
 
-.jumbotron {
+.navbar-brand {
+  margin-left: 1em;
+}
+
+.navbar-toggler {
+  margin-right: 1em;
+}
+
+.navbar .nav-link,
+.navbar-text {
+  color: black !important;
+  border-radius: 10%;
+}
+
+.navbar .nav-link:hover {
+  background: #eef6f6;
+}
+
+.navbar .nav-link.active {
+  font-weight: 700;
+}
+
+.navbar .nav-link.logout:hover {
+  color: red !important;
   background: none;
 }
+/* end of navbar section */
 
-.navbar {
-  color: #0e365d;
-  background: #bceeeb;
+/* entire pages below navbar, above footer*/
+.all-pages {
+  margin-top: 2em;
+  margin-bottom: 0em;
+  flex: 1;
 }
 
-.standalone-btn {
-  margin: .5em;
+.diy-jumbotron {
+  max-width: 90%;
 }
+/* end of entire pages, above footer */
 
-.nav-buttons {
-  margin-right: auto;
-}
-
-.buildings-list {
-  height: 70vh;
-}
-
-.btn-group-btn {
-  margin: none;
-}
-
-.saved-homes-header {
-  margin-top: 4em
+/* pills pages - navigation */
+.nav.nav-pills {
+  margin-bottom: 1em;
 }
 
 .nav.nav-pills .nav-link {
-  background-color: white;
+  background-color: #eef6f6;
   color: #06253e;
+  border: 2px solid rgba(6, 37, 62, 0.1);
+}
+
+.nav.nav-pills .nav-link:hover {
+  font-weight: 700;
 }
 
 .nav.nav-pills .nav-link.active {
   background-color: #06253e;
-  color: white;
-}
-
-.saved-homes-profile-update-card {
-  margin-top: 2em;
-  margin-bottom: 2em;
+  color: #eef6f6;
+  font-weight: 700;
 }
 
 .building-row {
   padding-bottom: 2em;
 }
+/* end of pills pages - navigation */
 
+/* pills pages - sort misc fields */
 .sort-bar {
   padding-bottom: 2em;
 }
 
-.col-no-padding {
-  padding-right: 0px;
-  padding-left: 0px;
-}
-
-.emailField {
+.email-field {
   padding-top: 1em;
-  padding-bottom: 1.5em
+  padding-bottom: 1.5em;
 }
 
-.saved-homes-empty {
-  padding-top: 3em;
-  padding-bottom: 4em
+.notes-form-btn {
+  margin-top: 0.5em;
 }
 
-.btn-save-building-card {
-  padding: none;
-  margin: none;
+.notes-form {
+  margin-top: 1em;
+}
+/* end of pills pages - sort misc fields */
+
+/* pills pages - building cards and info windows */
+.address-phone-block {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
-.resources-list {
-  list-style-type: none;
+.first-phone-num {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
 }
+
+.table {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+/* pills pages - end of building cards and info windows */
+
+/* footer */
+.footer-img {
+  width: 100%;
+}
+
+.footer {
+  padding-top: 1em;
+}
+/* end of footer */
+
+/* misc */
+
+.heavy-break-line {
+  background-color: #06253e;
+  height: 0.5px;
+}
+/* end of misc */

@@ -1,32 +1,43 @@
-import { useCallback, useState, useEffect } from 'react';
-import firebase from '../db/firebase';
-import 'firebase/firestore';
+import { useCallback, useState, useEffect } from "react";
 
-import { useAuth } from '../contexts/AuthContext';
+import { collection, doc, query, onSnapshot } from "firebase/firestore";
+import { db } from "../db/firebase";
+
+import { useAuth } from "../contexts/AuthContext";
 import IBuilding from "../interfaces/IBuilding";
 
 export function useSavedBuildings(): [IBuilding[], boolean] {
   const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
-  const { currentUser } = useAuth() as any
+  const { currentUser } = useAuth();
 
   const getSavedBuildings = useCallback(() => {
     if (!currentUser) return;
 
     setLoading(true);
-    const ref = firebase.firestore().collection("users").doc(currentUser?.uid).collection("savedHomes");
-    ref?.onSnapshot((querySnapshot) => {
-      const items: Array<IBuilding> = [];
+
+    const userDocRef = doc(db, "users", currentUser.uid);
+    const q = query(collection(userDocRef, "savedHomes"));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("Getting saved buildings.");
+      const buildings: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data() as IBuilding);
+        buildings.push(doc.data() as IBuilding);
       });
-      setSavedBuildings(items);
+      setSavedBuildings(buildings);
       setLoading(false);
     });
+
+    return () => {
+      unsubscribe();
+    };
   }, [currentUser]);
 
-  useEffect(() => {getSavedBuildings()}, [getSavedBuildings]);
+  useEffect(() => {
+    getSavedBuildings();
+  }, [getSavedBuildings]);
 
   return [savedBuildings, loading];
 }

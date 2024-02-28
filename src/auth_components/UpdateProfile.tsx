@@ -1,117 +1,230 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
-import firebase from "../db/firebase"
-import { Container, Row, Col } from 'react-bootstrap';
+import { useRef, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
+import {
+  deleteUserFirestore,
+  updateEmailFirestore,
+  updateNameFirestore,
+} from "../utils/firestoreUtils";
+
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 
 export default function UpdateProfile() {
-  const emailRef = useRef() as any
-  const passwordRef = useRef() as any
-  const passwordConfirmRef = useRef() as any
-  const { currentUser, updatePassword, updateEmail } = useAuth() as any
-  const [message, setMessage] = useState("")
-  const [loading, setLoading] = useState(false)
-  const history = useHistory()
+  // TODO: add useRef types, also maybe use useRef to dynamically update
+  // user name in navbar and profile, and email in profile
+  const displayNameRef = useRef() as any;
+  const emailRef = useRef() as any;
+  const passwordRef = useRef() as any;
+  const passwordConfirmRef = useRef() as any;
+  const {
+    currentUser,
+    updateDisplayNameAuth,
+    updateEmailAuth,
+    updatePasswordAuth,
+  } = useAuth();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState(false);
+  const history = useHistory();
 
-  function handleSubmit(e: any) {
-    e.preventDefault()
+  function isNameUpdated() {
+    return displayNameRef.current?.value !== currentUser?.displayName;
+  }
+  function isEmailUpdated() {
+    return emailRef.current?.value !== currentUser?.email;
+  }
+  function isPasswordUpdated() {
+    return !!passwordRef.current?.value;
+  }
+
+  const handleChange = () => {
+    isNameUpdated() || isEmailUpdated() || isPasswordUpdated()
+      ? setIsAnyFieldUpdated(true)
+      : setIsAnyFieldUpdated(false);
+  };
+
+  function clearPasswordFields(): void {
+    passwordRef.current.value = null;
+    passwordConfirmRef.current.value = null;
+  }
+
+  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setMessage("Passwords do not match")
+      return setError("Oops! Passwords do not match");
     }
 
-    const promises = []
-    setLoading(true)
-    setMessage("")
+    const authPromises = [];
+    const firestorePromises: any[] = [];
+    setIsLoading(true);
+    setMessage("");
+    setError("");
 
-    if (emailRef.current.value !== currentUser.email) {
-      promises.push(updateEmail(emailRef.current.value))
-    }
-    if (passwordRef.current.value) {
-      promises.push(updatePassword(passwordRef.current.value))
+    if (isNameUpdated()) {
+      authPromises.push(updateDisplayNameAuth(displayNameRef.current.value));
+      firestorePromises.push(
+        updateNameFirestore(currentUser?.uid, displayNameRef.current.value)
+      );
     }
 
-    Promise.all(promises)
+    if (isEmailUpdated()) {
+      authPromises.push(updateEmailAuth(emailRef.current.value));
+      firestorePromises.push(
+        updateEmailFirestore(currentUser?.uid, emailRef.current.value)
+      );
+    }
+
+    if (isPasswordUpdated()) {
+      authPromises.push(updatePasswordAuth(passwordRef.current.value));
+      // passwords are not stored in Firestore, only in Auth
+    }
+
+    Promise.all(authPromises)
       .then(() => {
-        setMessage("Success: account updated. You'll receive an email confirmation")
+        // Auth is the source of truth for name/email/password
+        // Firestore stores name/email as well but it's still a
+        // Success for the user if Firestore update fails
+        setMessage("Success! Account updated.");
+        console.log("Account updated in Auth.");
+
+        Promise.all(firestorePromises)
+          .then(() => {
+            console.log("Account updated in Firestore.");
+          })
+          .catch((error) => {
+            console.error(
+              `Error updating account in Firestore: ${error.code}, ${error.message}`
+            );
+          });
       })
       .catch((error) => {
-        console.log(error.code)
-        console.log(error.message)
-        setMessage(error.message)
+        console.error("Firebase Authentication Error:", error);
+
+        if (error.code === "auth/email-already-in-use") {
+          setError("There is already a user with this email.");
+        } else if (error.code === "auth/requires-recent-login") {
+          setError(
+            "A recent login is required to make this update. Please log out and login first."
+          );
+        } else {
+          setError(error.message);
+        }
       })
       .finally(() => {
-        setLoading(false)
+        setIsLoading(false);
+        setIsAnyFieldUpdated(false);
+        clearPasswordFields();
+      });
+  }
+
+  function onDelete(event: any) {
+    event.preventDefault();
+
+    deleteUserFirestore(currentUser?.uid)
+      .then(() => {
+        console.log("User successfully deleted from Firestore");
+
+        currentUser
+          ?.delete()
+          .then(() => {
+            console.log("User successfully deleted from Auth.");
+            setMessage("Success! Account deleted.");
+            history.push("/");
+          })
+          .catch((error: any) => {
+            console.error("Error removing user from Auth: ", error);
+
+            if (error.code === "auth/requires-recent-login") {
+              setError(
+                "A recent login is required to delete account. Please log out and login first."
+              );
+            } else setError(error.message);
+          });
       })
+      .catch((error: any) => {
+        console.error("Error removing user from Firestore: ", error);
+        console.error("Did not attempt to remove user from Auth.");
+        setError(error.message);
+      });
   }
 
-  function onDelete(e: any) {
-    e.preventDefault()
-    firebase.firestore().collection("users").doc(currentUser.uid).delete().then(() => {
-      console.log("User successfully deleted from Firestore.");
-    }).catch((error) => {
-      console.error("Error removing user from Firestore: ", error);
-      setMessage(error.message);
-    });
-
-    currentUser.delete().then(() => {
-      console.log("User successfully deleted from Auth.");
-      setMessage("Success: account deleted")
-      history.push("/")
-    }).catch((error: any) => {
-      console.error("Error removing user from Auth: ", error);
-      setMessage(error.message);
-    });
-  }
   return (
-    <>
-      <Container>
-        <Row>
-          <Col md={5} lg={6}>
-            <Card className="saved-homes-profile-update-card">
-              <Card.Body>
-                {message && message.includes("Success: ") && <Alert variant="success">{message}</Alert>}
-                {message && !(message.includes("Success: ")) && <Alert variant="danger">{message}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group id="email">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type="email"
-                      ref={emailRef}
-                      required
-                      defaultValue={currentUser.email}
-                    />
-                  </Form.Group>
-                  <Form.Group id="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      ref={passwordRef}
-                      placeholder="Leave blank to keep the same"
-                    />
-                  </Form.Group>
-                  <Form.Group id="password-confirm">
-                    <Form.Label>Password Confirmation</Form.Label>
-                    <Form.Control
-                      type="password"
-                      ref={passwordConfirmRef}
-                      placeholder="Leave blank to keep the same"
-                    />
-                  </Form.Group>
-                  <div className="text-center">
-                  <Button disabled={loading} className="w-40 btn btn-info" type="submit">
+    <Container fluid>
+      <Row>
+        <Col lg={6} className="mt-3 mt-md-0">
+          <Card>
+            <Card.Body>
+              {message && <Alert variant="success">{message}</Alert>}
+              {error && <Alert variant="danger">{error}</Alert>}
+
+              <Form onSubmit={handleFormSubmit}>
+                <Form.Group id="displayName" className="form-group">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    required
+                    type="displayName"
+                    ref={displayNameRef}
+                    defaultValue={currentUser?.displayName || ""}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <Form.Group id="email" className="form-group">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    required
+                    type="email"
+                    ref={emailRef}
+                    defaultValue={currentUser?.email || ""}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <Form.Group id="password" className="form-group">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={passwordRef}
+                    placeholder="Leave blank to keep the same"
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <Form.Group id="password-confirm" className="form-group">
+                  <Form.Label>Confirm password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={passwordConfirmRef}
+                    placeholder="Leave blank to keep the same"
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <div className="text-center">
+                  <Button
+                    disabled={isLoading || !isAnyFieldUpdated}
+                    className="btn btn-info"
+                    type="submit"
+                  >
                     Update
                   </Button>
-                  </div>
-                </Form>
-                <div className="w-100 text-center mt-2">
-                  <Button onClick={onDelete} variant="link">Delete Account</Button>
                 </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
-  )
+              </Form>
+            </Card.Body>
+
+            <Card.Footer>
+              <div className="w-100 text-center">
+                <Button onClick={onDelete} variant="link">
+                  Delete Account
+                </Button>
+              </div>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
+  );
 }

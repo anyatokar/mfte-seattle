@@ -1,3 +1,3 @@
 export default interface IProps {
-  children: any
+  children: any;
 }

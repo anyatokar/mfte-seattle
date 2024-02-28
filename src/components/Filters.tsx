@@ -1,96 +1,75 @@
-import { ReactNode } from "react";
 import IFilter from "../interfaces/IFilter";
+import Form from "react-bootstrap/Form";
 
 export interface IFiltersProps<T> {
   object: T;
   filters: Array<IFilter<T>>;
-  onChangeFilter: (
-    filterProperty: keyof T,
-    checked: boolean,
-    isTruthyPicked: boolean
-  ) => void;
+  onChangeFilter: (filterProperty: keyof T, checked: boolean) => void;
 }
 
+type radioButtonKeyType =
+  | "sedu"
+  | "studioUnits"
+  | "oneBedroomUnits"
+  | "twoBedroomUnits"
+  | "threePlusBedroomUnits";
+
+type radioButtonUILabelType =
+  | "Pod"
+  | "Studio"
+  | "One bedroom"
+  | "Two bedroom"
+  | "Three or more";
+
+type radioButtonMapType = {
+  [key in radioButtonKeyType]: radioButtonUILabelType;
+};
+
+const radioButtonKeys: radioButtonKeyType[] = [
+  "sedu",
+  "studioUnits",
+  "oneBedroomUnits",
+  "twoBedroomUnits",
+  "threePlusBedroomUnits",
+];
+
+const radioButtonUILabels: radioButtonMapType = {
+  sedu: "Pod",
+  studioUnits: "Studio",
+  oneBedroomUnits: "One bedroom",
+  twoBedroomUnits: "Two bedroom",
+  threePlusBedroomUnits: "Three or more",
+};
+
 export function Filters<T>(props: IFiltersProps<T>) {
-  const { object, filters, onChangeFilter } = props;
+  const { filters, onChangeFilter } = props;
 
-  const labelTruthy = (
-    <>
-      {/* offered */}
-    </>
-  );
+  const getChecked = (radioButtonKey: radioButtonKeyType) => {
+    const x = filters.filter((x) => x.property === radioButtonKey);
+    return x.length === 1;
+  };
 
-  const labelFalsy = (
-    <>
-      is <b>falsy</b>
-    </>
-  );
-  const objectKeys = ["sedu", "studioUnits", "oneBedroomUnits", "twoBedroomUnits", "threePlusBedroomUnits"]
   return (
     <div className="p-1 my-2">
-      
-      {/* <label className="mt-3">Number of bedrooms:</label> */}
-      {/* Object is a class that is calling method keys on object (which is all the buildings) */}
-      {objectKeys.map((key) => {
-        if (key !== 'sedu' && 
-            key !== 'studioUnits' && 
-            key !== 'oneBedroomUnits' && 
-            key !== 'twoBedroomUnits' && 
-            key !== 'threePlusBedroomUnits') 
-            { return ('')}
-        
-        let styledKey = ''
-
-        if (key === 'sedu') { 
-          styledKey = 'Pod'
-        } else if (key === 'studioUnits') {
-          styledKey = 'Studio'
-        } else if (key === 'oneBedroomUnits') {
-          styledKey = 'One bedroom'
-        } else if (key === 'twoBedroomUnits') {
-          styledKey = 'Two bedroom' 
-        } else if (key === 'threePlusBedroomUnits') {
-          styledKey = 'Three or more' 
-        }
-
-        const getRadioButton = (isTruthyPicked: boolean): ReactNode => {
-          const id = isTruthyPicked
-            ? `radio-defined-${key}`
-            : `radio-not-defined-${key}`;
-          const label = isTruthyPicked
-            ? labelTruthy
-            : labelFalsy;
-
-          const getChecked = () => {
-            const x = filters.filter(x => x.property === key);
-            return x.length === 1 && x[0].isTruthyPicked === isTruthyPicked;
-          }
-
-          return (
-            <>
-              <input
-                type="checkbox"
-                id={id}
-                value={key}
-                checked={getChecked()}
-                onChange={(event) =>
-                  onChangeFilter(key as any, event.target.checked, isTruthyPicked)
-                }
-                className={"m-1 ml-3"}
-              />
-              <label htmlFor={id}>
-                {styledKey}  {label}
-              </label>
-            </>
-          );
-        };
+      <p>Filter by number of bedrooms:</p>
+      {radioButtonKeys.map((radioButtonKey: radioButtonKeyType) => {
+        let styledKey = radioButtonUILabels[radioButtonKey];
+        let id = radioButtonKey;
 
         return (
-          <section className="form-check-inline">
-            <div key={key} >
-              {getRadioButton(true)}
-            </div>
-          </section>
+          <Form key={id} className="form-check-inline">
+            <Form.Check
+              type="checkbox"
+              id={id}
+              value={radioButtonKey}
+              checked={getChecked(radioButtonKey)}
+              onChange={(event) =>
+                onChangeFilter(radioButtonKey as any, event.target.checked)
+              }
+              className={"m-1 ml-3"}
+            />
+            <Form.Label htmlFor={id}>{styledKey}</Form.Label>
+          </Form>
         );
       })}
     </div>

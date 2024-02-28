@@ -1,37 +1,57 @@
-import {useState} from 'react';
-import 'firebase/firestore';
-import { AllBuildingsCard } from "./AllBuildingsCard";
-import { Container, Row, Col } from 'react-bootstrap';
-import IBuilding from "../interfaces/IBuilding";
+import { useState } from "react";
+import { BuildingCard } from "./BuildingCard";
 import Sorters from "../components/Sorters";
-import ISorter from "../interfaces/ISorter";
 import { genericSort } from "../utils/genericSort";
 
-export type SavedHomesListProps = {
-  resultBuildingsUnsorted: IBuilding[],
-  savedBuildings?: IBuilding[]
+import IBuilding from "../interfaces/IBuilding";
+import ISavedBuilding from "../interfaces/ISavedBuilding";
+import ISorter from "../interfaces/ISorter";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+
+type allBuildingsListProps = {
+  resultBuildingsUnsorted: IBuilding[];
+  savedBuildings: ISavedBuilding[];
 };
 
-export default function SavedHomesList(props: SavedHomesListProps) {
+export const checkIsSaved = (
+  savedBuildings: ISavedBuilding[],
+  building: IBuilding
+) => {
+  return !!savedBuildings.find(
+    (savedBuilding: IBuilding) =>
+      savedBuilding.buildingID === building.buildingID
+  );
+};
+
+export default function AllBuildingsList(props: allBuildingsListProps) {
   const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
     property: "buildingName",
     isDescending: false,
   });
 
-  const resultBuildings = props.resultBuildingsUnsorted.sort((buildingA: any, buildingB: any) =>
-    genericSort<IBuilding>(buildingA, buildingB, activeSorter)
-  );
-
-  const checkIsSaved = (building: IBuilding) => {
-    return !!props.savedBuildings?.find((savedBuilding: IBuilding) => savedBuilding.buildingID === building.buildingID);
+  if (!props.resultBuildingsUnsorted) {
+    return null;
   }
 
+  const resultBuildings = props.resultBuildingsUnsorted.sort(
+    (buildingA: any, buildingB: any) =>
+      genericSort<IBuilding>(buildingA, buildingB, activeSorter)
+  );
+
   return (
-    <>
-      <Container>
-        <Row className="show-grid sort-bar">
-          <Col lg={4}>
-            {props.resultBuildingsUnsorted.length > 0 && <Sorters<IBuilding>
+    <Container fluid>
+      <Row>
+        <Col
+          sm={12}
+          md={{ span: 9, offset: 1 }}
+          lg={{ span: 8, offset: 0 }}
+          className="p-0"
+        >
+          {props.resultBuildingsUnsorted.length > 0 && (
+            <Sorters<IBuilding>
               object={props.resultBuildingsUnsorted[0]}
               onChangeSorter={(property, isDescending) => {
                 setActiveSorter({
@@ -39,26 +59,37 @@ export default function SavedHomesList(props: SavedHomesListProps) {
                   isDescending,
                 });
               }}
-            />}
-          </Col>
-        </Row>
-        <Row className="show-grid">
-          <Col lg={12}>
-            <Row className="show-grid">
-                {resultBuildings.length > 0 && (
-                  <>
-                    {resultBuildings.map((building:any) => (
-                      <Col md={4} lg={3} className="building-row">
-                        <AllBuildingsCard key={building.buildingID} {...building} isSaved={checkIsSaved(building)} />
-                      </Col>
-                    ))}
-                  </>
-                )}
-                {resultBuildings.length === 0 && <p>Try expanding your search criteria!</p>}
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-    </>
+            />
+          )}
+        </Col>
+      </Row>
+      <Row>
+        <Col lg={12}>
+          <Row>
+            {resultBuildings.length > 0 && (
+              <>
+                {resultBuildings.map((building: IBuilding) => (
+                  <Col
+                    key={building.buildingID}
+                    xs={12}
+                    sm={6}
+                    lg={4}
+                    xl={3}
+                    xxl={1}
+                    className="building-row"
+                  >
+                    <BuildingCard
+                      {...building}
+                      isSaved={checkIsSaved(props.savedBuildings, building)}
+                      pageType={"allBuildings"}
+                    />
+                  </Col>
+                ))}
+              </>
+            )}
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   );
 }
