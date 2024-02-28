@@ -206,7 +206,7 @@ export default function UpdateProfile() {
                 <div className="text-center">
                   <Button
                     disabled={isLoading || !isAnyFieldUpdated}
-                    className="btn btn-info"
+                    variant="info"
                     type="submit"
                   >
                     Update

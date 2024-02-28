@@ -118,26 +118,19 @@ export function BuildingCard(props: BuildingsCardProps) {
           {pageType === "allBuildings" &&
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <Button
-                  variant="btn btn-info btn-sm"
-                  onClick={toggleSave}
-                  role="button"
-                >
+                <Button variant="outline-info" size="sm" onClick={toggleSave}>
                   Saved
                 </Button>
               ) : (
-                <Button
-                  variant="btn btn-outline-info btn-sm"
-                  onClick={toggleSave}
-                  role="button"
-                >
+                <Button variant="outline-info" size="sm" onClick={toggleSave}>
                   Save
                 </Button>
               )
             ) : (
               <Button
                 onClick={handleShowLogin}
-                variant="btn btn-outline-info btn-sm"
+                variant="outline-info"
+                size="sm"
               >
                 Save
               </Button>
@@ -145,7 +138,8 @@ export function BuildingCard(props: BuildingsCardProps) {
         </div>
         {pageType === "savedBuildings" && (
           <Button
-            className="btn-sm center"
+            className="center"
+            size="sm"
             variant="outline-danger"
             title={`Remove ${buildingName} from saved buildings list`}
             type="button"
@@ -190,7 +184,8 @@ export function BuildingCard(props: BuildingsCardProps) {
                     type="submit"
                     title={`Save or update your note!`}
                     value="Save note"
-                    className="btn-sm notes-form-btn"
+                    size="sm"
+                    className="notes-form-btn"
                   >
                     Save note
                   </Button>

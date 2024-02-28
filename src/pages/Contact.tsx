@@ -200,7 +200,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                   value={formFields.message}
                 />
               </Form.Group>
-              <Button type="submit" variant="info" className="btn-lg">
+              <Button type="submit" variant="info" size="lg">
                 Send message
               </Button>
             </Form>

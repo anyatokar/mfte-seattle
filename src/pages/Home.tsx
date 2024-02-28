@@ -61,7 +61,8 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
             </p>
 
             <Button
-              className="btn-lg col-lg-4 col-xl-3 mt-1"
+              className="col-lg-4 col-xl-3 mt-1"
+              size="lg"
               variant="outline-info"
               onClick={onClick}
               value="./all-buildings"

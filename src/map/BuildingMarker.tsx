@@ -98,19 +98,11 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
             />
             {currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <Button
-                  variant="btn btn-info btn-sm"
-                  onClick={toggleSave}
-                  role="button"
-                >
+                <Button variant="info" size="sm" onClick={toggleSave}>
                   Saved
                 </Button>
               ) : (
-                <Button
-                  variant="btn btn-outline-info btn-sm"
-                  onClick={toggleSave}
-                  role="button"
-                >
+                <Button variant="outline-info" size="sm" onClick={toggleSave}>
                   Save
                 </Button>
               )
@@ -118,7 +110,8 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
               <>
                 <Button
                   onClick={handleShowLogin}
-                  variant="btn btn-outline-info btn-sm"
+                  variant="outline-info"
+                  size="sm"
                 >
                   Save
                 </Button>
