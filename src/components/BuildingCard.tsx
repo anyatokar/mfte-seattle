@@ -107,7 +107,7 @@ export function BuildingCard(props: BuildingsCardProps) {
   return (
     <Card>
       <Card.Header>
-        <Card.Title>
+        <Card.Title className="mt-2">
           <BuildingName
             buildingName={buildingName}
             urlForBuilding={urlForBuilding}
@@ -119,25 +119,26 @@ export function BuildingCard(props: BuildingsCardProps) {
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
                 <Button
-                  variant="btn btn-info btn-sm"
+                  className="diy-solid-info-button"
+                  size="sm"
                   onClick={toggleSave}
-                  role="button"
                 >
                   Saved
                 </Button>
               ) : (
                 <Button
-                  variant="btn btn-outline-info btn-sm"
+                  className="diy-outline-info-button"
+                  size="sm"
                   onClick={toggleSave}
-                  role="button"
                 >
                   Save
                 </Button>
               )
             ) : (
               <Button
+                className="diy-outline-info-button"
                 onClick={handleShowLogin}
-                variant="btn btn-outline-info btn-sm"
+                size="sm"
               >
                 Save
               </Button>
@@ -145,7 +146,8 @@ export function BuildingCard(props: BuildingsCardProps) {
         </div>
         {pageType === "savedBuildings" && (
           <Button
-            className="btn-sm center"
+            className="center"
+            size="sm"
             variant="outline-danger"
             title={`Remove ${buildingName} from saved buildings list`}
             type="button"
@@ -173,9 +175,9 @@ export function BuildingCard(props: BuildingsCardProps) {
             />
             {pageType === "savedBuildings" && (
               <>
-                <Form onSubmit={handleSubmit} className="notes-form">
+                <Form onSubmit={handleSubmit}>
                   <Form.Label>Notes</Form.Label>
-                  <Form.Group>
+                  <Form.Group className="mb-2">
                     <Form.Control
                       as="textarea"
                       name="note"
@@ -186,11 +188,11 @@ export function BuildingCard(props: BuildingsCardProps) {
                   </Form.Group>
                   <Button
                     disabled={!isNoteDifferent}
-                    variant="info"
                     type="submit"
                     title={`Save or update your note!`}
                     value="Save note"
-                    className="btn-sm notes-form-btn"
+                    size="sm"
+                    className="diy-solid-info-button"
                   >
                     Save note
                   </Button>

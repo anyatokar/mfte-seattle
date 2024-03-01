@@ -40,8 +40,7 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
             <div className="display-5">MFTE Seattle</div>
-            <hr className="my-4"></hr>
-
+            <hr className="my-4 break-line-light" />
             <p className="lead">
               Find modern rent-reduced apartments in Seattle through the
               Multifamily Tax Exemption (MFTE) program.
@@ -60,14 +59,20 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
               about rent-reduced and affordable housing programs.
             </p>
 
-            <Button
-              className="btn-lg col-lg-4 col-xl-3 mt-1"
-              variant="outline-info"
-              onClick={onClick}
-              value="./all-buildings"
-            >
-              MFTE Map
-            </Button>
+            <Row>
+              <Col lg={4} xl={3}>
+                <div className="d-grid">
+                  <Button
+                    className="diy-outline-info-button"
+                    size="lg"
+                    onClick={onClick}
+                    value="./all-buildings"
+                  >
+                    MFTE Map
+                  </Button>
+                </div>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>

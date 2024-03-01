@@ -25,7 +25,6 @@ export default function SavedBuildingsList(props: SavedBuildingsListProps) {
                     sm={6}
                     lg={4}
                     xl={3}
-                    xxl={1}
                     className="building-row"
                   >
                     <BuildingCard {...building} pageType="savedBuildings" />

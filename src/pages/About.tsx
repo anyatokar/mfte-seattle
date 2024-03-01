@@ -34,7 +34,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
         <Row className="justify-content-center">
           <Col lg={8}>
             <div className="display-5">About</div>
-            <hr className="my-4"></hr>
+            <hr className="my-4 break-line-light" />
           </Col>
         </Row>
 
