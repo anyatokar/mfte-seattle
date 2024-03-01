@@ -41,7 +41,10 @@ export default function Signup({ onLoginClicked }: Props) {
       );
     } catch (error: any) {
       console.error("Firebase Authentication Error:", error);
-      setError(error.message);
+
+      if (error.code === "auth/email-already-in-use") {
+        setError("There is already a user with this email.");
+      }
     }
     setLoading(false);
   }
