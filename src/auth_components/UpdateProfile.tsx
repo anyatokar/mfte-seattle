@@ -165,7 +165,7 @@ export default function UpdateProfile() {
               {error && <Alert variant="danger">{error}</Alert>}
 
               <Form onSubmit={handleFormSubmit}>
-                <Form.Group id="displayName" className="form-group">
+                <Form.Group id="displayName" className="mb-2" >
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     required
@@ -175,7 +175,7 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group id="email" className="form-group">
+                <Form.Group id="email" className="mb-2">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     required
@@ -185,7 +185,7 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group id="password" className="form-group">
+                <Form.Group id="password" className="mb-2">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -194,7 +194,7 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group id="password-confirm" className="form-group">
+                <Form.Group id="password-confirm" className="mb-3">
                   <Form.Label>Confirm password</Form.Label>
                   <Form.Control
                     type="password"
