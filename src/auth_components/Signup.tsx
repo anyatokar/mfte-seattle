@@ -5,6 +5,7 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { checkPassword } from "../utils/generalUtils";
 
 type Props = {
   onLoginClicked?: () => void;
@@ -22,12 +23,13 @@ export default function Signup({ onLoginClicked }: Props) {
   async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match.");
-    }
+    const errorMessage = checkPassword(
+      passwordRef.current.value,
+      passwordConfirmRef.current.value
+    );
 
-    if (passwordRef.current.value.length < 6) {
-      return setError("Password must be 6 characters or more.");
+    if (errorMessage) {
+      return setError(errorMessage);
     }
 
     try {

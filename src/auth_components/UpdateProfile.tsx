@@ -14,6 +14,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import { checkPassword } from "../utils/generalUtils";
 
 export default function UpdateProfile() {
   // TODO: add useRef types, also maybe use useRef to dynamically update
@@ -57,8 +58,14 @@ export default function UpdateProfile() {
 
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Oops! Passwords do not match");
+
+    const errorMessage = checkPassword(
+      passwordRef.current.value,
+      passwordConfirmRef.current.value
+    );
+
+    if (errorMessage) {
+      return setError(errorMessage);
     }
 
     const authPromises = [];
@@ -165,7 +172,7 @@ export default function UpdateProfile() {
               {error && <Alert variant="danger">{error}</Alert>}
 
               <Form onSubmit={handleFormSubmit}>
-                <Form.Group id="displayName" className="mb-2" >
+                <Form.Group id="displayName" className="mb-2">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     required
