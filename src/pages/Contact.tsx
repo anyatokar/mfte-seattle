@@ -87,7 +87,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
             <div className="display-5">Contact us</div>
-            <hr className="my-4"></hr>
+            <hr className="my-4 break-line-light" />
 
             <p className="lead">
               We are always looking to improve this website — your feedback is
@@ -125,8 +125,8 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
             <p>All fields are required.</p>
 
             <Form onSubmit={handleFormSubmit}>
-              <Form.Group className="form-row">
-                <Form.Group className="form-group col-md-6">
+              <Form.Group as={Row}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     required
@@ -136,7 +136,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                     value={formFields.authorName}
                   />
                 </Form.Group>
-                <Form.Group className="form-group col-md-6">
+                <Form.Group as={Col} md={6}>
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     required
@@ -167,7 +167,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                 </Form.Control>
               </Form.Group>
 
-              <hr className="my-4 break-line heavy-break-line"></hr>
+              <hr className="my-4" />
 
               <Form.Group className="form-group">
                 <Form.Label>Subject</Form.Label>
@@ -200,7 +200,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                   value={formFields.message}
                 />
               </Form.Group>
-              <Button type="submit" variant="info" size="lg">
+              <Button type="submit" className="diy-solid-info-button" size="lg">
                 Send message
               </Button>
             </Form>

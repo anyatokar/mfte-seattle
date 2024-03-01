@@ -94,7 +94,7 @@ export const Header = () => {
         </LinkContainer>
         <Navbar.Toggle />
         <Navbar.Collapse>
-          <Nav className="mr-auto">
+          <Nav className="me-auto">
             <LinkContainer to="/all-buildings">
               <Nav.Link active={false}>MFTE Map</Nav.Link>
             </LinkContainer>
@@ -112,7 +112,7 @@ export const Header = () => {
           </Nav>
           {currentUser ? (
             <Nav>
-              <Navbar.Text className="mr-lg-4 font-italic">
+              <Navbar.Text className="me-lg-4 diy-font-italic">
                 {currentUser.displayName && `Hi, ${currentUser.displayName}!`}
               </Navbar.Text>
               <LinkContainer to="/manage-profile">

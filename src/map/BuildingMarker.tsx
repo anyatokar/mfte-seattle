@@ -98,20 +98,28 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
             />
             {currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <Button variant="info" size="sm" onClick={toggleSave}>
+                <Button
+                  className="diy-solid-info-button"
+                  size="sm"
+                  onClick={toggleSave}
+                >
                   Saved
                 </Button>
               ) : (
-                <Button variant="outline-info" size="sm" onClick={toggleSave}>
+                <Button
+                  className="diy-outline-info-button"
+                  size="sm"
+                  onClick={toggleSave}
+                >
                   Save
                 </Button>
               )
             ) : (
               <>
                 <Button
-                  onClick={handleShowLogin}
-                  variant="outline-info"
+                  className="diy-outline-info-button"
                   size="sm"
+                  onClick={handleShowLogin}
                 >
                   Save
                 </Button>

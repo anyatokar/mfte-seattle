@@ -118,18 +118,26 @@ export function BuildingCard(props: BuildingsCardProps) {
           {pageType === "allBuildings" &&
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <Button variant="outline-info" size="sm" onClick={toggleSave}>
+                <Button
+                  className="diy-solid-info-button"
+                  size="sm"
+                  onClick={toggleSave}
+                >
                   Saved
                 </Button>
               ) : (
-                <Button variant="outline-info" size="sm" onClick={toggleSave}>
+                <Button
+                  className="diy-outline-info-button"
+                  size="sm"
+                  onClick={toggleSave}
+                >
                   Save
                 </Button>
               )
             ) : (
               <Button
+                className="diy-outline-info-button"
                 onClick={handleShowLogin}
-                variant="outline-info"
                 size="sm"
               >
                 Save
@@ -180,12 +188,11 @@ export function BuildingCard(props: BuildingsCardProps) {
                   </Form.Group>
                   <Button
                     disabled={!isNoteDifferent}
-                    variant="info"
                     type="submit"
                     title={`Save or update your note!`}
                     value="Save note"
                     size="sm"
-                    className="notes-form-btn"
+                    className="notes-form-btn diy-solid-info-button"
                   >
                     Save note
                   </Button>

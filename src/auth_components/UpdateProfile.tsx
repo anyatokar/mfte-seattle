@@ -206,7 +206,7 @@ export default function UpdateProfile() {
                 <div className="text-center">
                   <Button
                     disabled={isLoading || !isAnyFieldUpdated}
-                    variant="info"
+                    className="diy-solid-info-button"
                     type="submit"
                   >
                     Update
@@ -217,7 +217,11 @@ export default function UpdateProfile() {
 
             <Card.Footer>
               <div className="w-100 text-center">
-                <Button onClick={onDelete} variant="link">
+                <Button
+                  className="delete-account"
+                  onClick={onDelete}
+                  variant="link"
+                >
                   Delete Account
                 </Button>
               </div>
