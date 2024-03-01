@@ -132,9 +132,35 @@ body {
 /* end of footer */
 
 /* misc */
+.break-line-light {
+  color: lightblue;
+}
 
-.heavy-break-line {
-  background-color: #06253e;
-  height: 0.5px;
+.delete-account:hover {
+  color: red !important;
+}
+
+.diy-font-italic {
+  font-style: italic;
+}
+
+.diy-outline-info-button {
+  color: #17a2b8;
+  border-color: #17a2b8 !important;
+  background: none !important;
+}
+
+.diy-outline-info-button:hover,
+.diy-solid-info-button {
+  color: white;
+  background: #17a2b8 !important;
+  border-color: #51b7c8 !important;
+}
+.diy-outline-info-button:active,
+.diy-solid-info-button:hover,
+.diy-solid-info-button:active {
+  color: white;
+  background: #148596 !important;
+  border-color: #127a8b !important;
 }
 /* end of misc */
