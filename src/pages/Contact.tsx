@@ -125,7 +125,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
             <p>All fields are required.</p>
 
             <Form onSubmit={handleFormSubmit}>
-              <Form.Group as={Row}>
+              <Form.Group as={Row} className="mb-3">
                 <Form.Group as={Col} md={6}>
                   <Form.Label>Name</Form.Label>
                   <Form.Control
@@ -149,7 +149,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                 </Form.Group>
               </Form.Group>
 
-              <Form.Group className="form-group">
+              <Form.Group className="mb-3">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
                   required
@@ -169,7 +169,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
 
               <hr className="my-4" />
 
-              <Form.Group className="form-group">
+              <Form.Group className="mb-3">
                 <Form.Label>Subject</Form.Label>
                 <Form.Control
                   required
@@ -188,7 +188,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                   <option>Other</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group className="form-group col-mb-3">
+              <Form.Group as={Col} className="mb-3">
                 <Form.Label>Message</Form.Label>
                 <Form.Control
                   required

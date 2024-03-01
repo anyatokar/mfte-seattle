@@ -175,9 +175,9 @@ export function BuildingCard(props: BuildingsCardProps) {
             />
             {pageType === "savedBuildings" && (
               <>
-                <Form onSubmit={handleSubmit} className="notes-form">
+                <Form onSubmit={handleSubmit}>
                   <Form.Label>Notes</Form.Label>
-                  <Form.Group>
+                  <Form.Group className="mb-2">
                     <Form.Control
                       as="textarea"
                       name="note"
@@ -192,7 +192,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                     title={`Save or update your note!`}
                     value="Save note"
                     size="sm"
-                    className="notes-form-btn diy-solid-info-button"
+                    className="diy-solid-info-button"
                   >
                     Save note
                   </Button>
