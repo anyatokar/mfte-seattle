@@ -107,7 +107,7 @@ export function BuildingCard(props: BuildingsCardProps) {
   return (
     <Card>
       <Card.Header>
-        <Card.Title>
+        <Card.Title className="mt-2">
           <BuildingName
             buildingName={buildingName}
             urlForBuilding={urlForBuilding}
