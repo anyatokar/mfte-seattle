@@ -18,6 +18,6 @@ export function checkPassword(
     error += "Password must be at least 6 characters.";
   }
 
-  console.log(error);
+  console.error(error);
   return error;
 }
