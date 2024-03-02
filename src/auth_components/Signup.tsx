@@ -84,7 +84,11 @@ export default function Signup({ onLoginClicked }: Props) {
               placeholder="6 or more characters"
             />
           </Form.Group>
-          <Button disabled={loading} className="w-100" type="submit">
+          <Button
+            className="diy-solid-info-button w-100"
+            disabled={loading}
+            type="submit"
+          >
             Sign Up
           </Button>
         </Form>

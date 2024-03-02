@@ -57,7 +57,11 @@ export default function PasswordReset({
             <p>Enter your email to receive a reset link in your inbox.</p>
             <Form.Control required type="email" ref={emailRef} />
           </Form.Group>
-          <Button disabled={loading} className="w-100" type="submit">
+          <Button
+            className="diy-solid-info-button w-100"
+            disabled={loading}
+            type="submit"
+          >
             Reset Password
           </Button>
         </Form>
