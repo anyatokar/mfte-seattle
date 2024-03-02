@@ -4,3 +4,20 @@ export function timestampPT() {
     timeZoneName: "shortGeneric",
   });
 }
+
+export function checkPassword(
+  passwordValue: string,
+  passwordConfirmValue: string
+) {
+  let error = "";
+  if (passwordValue !== passwordConfirmValue) {
+    error = "Passwords do not match. ";
+  }
+
+  if (passwordValue.length < 6) {
+    error += "Password must be at least 6 characters.";
+  }
+
+  console.error(error);
+  return error;
+}
