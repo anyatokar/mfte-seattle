@@ -61,16 +61,14 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
 
             <Row>
               <Col lg={4} xl={3}>
-                <div className="d-grid">
-                  <Button
-                    className="diy-outline-info-button"
-                    size="lg"
-                    onClick={onClick}
-                    value="./all-buildings"
-                  >
-                    MFTE Map
-                  </Button>
-                </div>
+                <Button
+                  className="diy-outline-info-button w-100"
+                  size="lg"
+                  onClick={onClick}
+                  value="./all-buildings"
+                >
+                  MFTE Map
+                </Button>
               </Col>
             </Row>
           </Col>
