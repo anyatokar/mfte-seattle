@@ -5,6 +5,7 @@ import AllBuildingsPage from "../pages/AllBuildings";
 import ContactPage from "../pages/Contact";
 import HomePage from "../pages/Home";
 import ResourcesPage from "../pages/Resources";
+import PrivacyPolicyPage from "../pages/PrivacyPolicy";
 
 const publicRoutes: IRoute[] = [
   {
@@ -35,6 +36,12 @@ const publicRoutes: IRoute[] = [
     path: "/resources",
     name: "Resources Page",
     component: ResourcesPage,
+    exact: true,
+  },
+  {
+    path: "/privacy-policy",
+    name: "Privacy Policy Page",
+    component: PrivacyPolicyPage,
     exact: true,
   },
   {

@@ -150,4 +150,9 @@ body {
   background: #148596 !important;
   border-color: #127a8b !important;
 }
+
+.scrollable-card {
+  overflow-y: auto;
+  max-height: 400px;
+}
 /* end of misc */
