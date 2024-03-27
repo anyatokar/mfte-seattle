@@ -26,7 +26,7 @@ const publicRoutes: IRoute[] = [
     exact: true,
   },
   {
-    path: "/contact-us",
+    path: "/contact",
     name: "Contact Page",
     component: ContactPage,
     exact: true,
