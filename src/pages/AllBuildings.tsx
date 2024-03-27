@@ -153,7 +153,7 @@ const AllBuildingsPage: React.FunctionComponent<
                 <Col>
                   {!loading && (
                     <p>
-                      <strong>Results: </strong>
+                      {/* <strong>Results: </strong> */}
                       {`${resultBuildingsUnsorted.length} buildings found`}
                       {resultBuildingsUnsorted.length === 0 &&
                         ". Try expanding your search criteria!"}
