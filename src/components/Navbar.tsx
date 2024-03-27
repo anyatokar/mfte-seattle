@@ -105,7 +105,7 @@ export const Header = () => {
             <LinkContainer to="/about">
               <Nav.Link active={false}>About</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/contact-us">
+            <LinkContainer to="/contact">
               <Nav.Link active={false}>Contact</Nav.Link>
             </LinkContainer>
             <Dropdown.Divider />
