@@ -116,6 +116,16 @@ body {
 .footer {
   padding-top: 1em;
 }
+
+.footer-nav-link-custom {
+  color: black;
+  text-decoration: none;
+}
+
+.footer-nav-link-custom:hover,
+.footer-nav-link-custom:active {
+  text-decoration: underline;
+}
 /* end of footer */
 
 /* misc */
