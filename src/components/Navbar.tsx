@@ -94,7 +94,7 @@ export const Header = () => {
         </LinkContainer>
         <Navbar.Toggle />
         <Navbar.Collapse>
-          <Nav className="mr-auto">
+          <Nav className="me-auto">
             <LinkContainer to="/all-buildings">
               <Nav.Link active={false}>MFTE Map</Nav.Link>
             </LinkContainer>
@@ -105,14 +105,14 @@ export const Header = () => {
             <LinkContainer to="/about">
               <Nav.Link active={false}>About</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/contact-us">
+            <LinkContainer to="/contact">
               <Nav.Link active={false}>Contact</Nav.Link>
             </LinkContainer>
             <Dropdown.Divider />
           </Nav>
           {currentUser ? (
             <Nav>
-              <Navbar.Text className="mr-lg-4 font-italic">
+              <Navbar.Text className="me-lg-4 diy-font-italic">
                 {currentUser.displayName && `Hi, ${currentUser.displayName}!`}
               </Navbar.Text>
               <LinkContainer to="/manage-profile">

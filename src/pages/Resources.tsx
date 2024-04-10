@@ -35,7 +35,7 @@ const ResourcesPage: React.FunctionComponent<
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
             <div className="display-5">Resources</div>
-            <hr className="my-4"></hr>
+            <hr className="my-4 break-line-light" />
 
             <ListGroup>
               <ListGroup.Item>

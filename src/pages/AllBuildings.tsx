@@ -153,7 +153,6 @@ const AllBuildingsPage: React.FunctionComponent<
                 <Col>
                   {!loading && (
                     <p>
-                      <strong>Results: </strong>
                       {`${resultBuildingsUnsorted.length} buildings found`}
                       {resultBuildingsUnsorted.length === 0 &&
                         ". Try expanding your search criteria!"}
@@ -165,7 +164,7 @@ const AllBuildingsPage: React.FunctionComponent<
           </Row>
         </Container>
 
-        <hr className="my-4"></hr>
+        <hr className="my-4 break-line-light" />
 
         <Container fluid>
           <Tab.Container id="sidebar" defaultActiveKey="map">

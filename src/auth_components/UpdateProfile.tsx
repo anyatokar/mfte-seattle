@@ -14,6 +14,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import { checkPassword } from "../utils/generalUtils";
 
 export default function UpdateProfile() {
   // TODO: add useRef types, also maybe use useRef to dynamically update
@@ -57,8 +58,14 @@ export default function UpdateProfile() {
 
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Oops! Passwords do not match");
+
+    const errorMessage = checkPassword(
+      passwordRef.current.value,
+      passwordConfirmRef.current.value
+    );
+
+    if (errorMessage) {
+      return setError(errorMessage);
     }
 
     const authPromises = [];
@@ -165,7 +172,7 @@ export default function UpdateProfile() {
               {error && <Alert variant="danger">{error}</Alert>}
 
               <Form onSubmit={handleFormSubmit}>
-                <Form.Group id="displayName" className="form-group">
+                <Form.Group id="displayName" className="mb-2">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     required
@@ -175,7 +182,7 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group id="email" className="form-group">
+                <Form.Group id="email" className="mb-2">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     required
@@ -185,7 +192,7 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group id="password" className="form-group">
+                <Form.Group id="password" className="mb-2">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -194,7 +201,7 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group id="password-confirm" className="form-group">
+                <Form.Group id="password-confirm" className="mb-3">
                   <Form.Label>Confirm password</Form.Label>
                   <Form.Control
                     type="password"
@@ -206,7 +213,7 @@ export default function UpdateProfile() {
                 <div className="text-center">
                   <Button
                     disabled={isLoading || !isAnyFieldUpdated}
-                    className="btn btn-info"
+                    className="diy-solid-info-button"
                     type="submit"
                   >
                     Update
@@ -217,7 +224,11 @@ export default function UpdateProfile() {
 
             <Card.Footer>
               <div className="w-100 text-center">
-                <Button onClick={onDelete} variant="link">
+                <Button
+                  className="delete-account"
+                  onClick={onDelete}
+                  variant="link"
+                >
                   Delete Account
                 </Button>
               </div>

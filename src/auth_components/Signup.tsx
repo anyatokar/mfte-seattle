@@ -5,6 +5,7 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { checkPassword } from "../utils/generalUtils";
 
 type Props = {
   onLoginClicked?: () => void;
@@ -22,12 +23,13 @@ export default function Signup({ onLoginClicked }: Props) {
   async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match.");
-    }
+    const errorMessage = checkPassword(
+      passwordRef.current.value,
+      passwordConfirmRef.current.value
+    );
 
-    if (passwordRef.current.value.length < 6) {
-      return setError("Password must be 6 characters or more.");
+    if (errorMessage) {
+      return setError(errorMessage);
     }
 
     try {
@@ -39,7 +41,10 @@ export default function Signup({ onLoginClicked }: Props) {
       );
     } catch (error: any) {
       console.error("Firebase Authentication Error:", error);
-      setError(error.message);
+
+      if (error.code === "auth/email-already-in-use") {
+        setError("There is already a user with this email.");
+      }
     }
     setLoading(false);
   }
@@ -53,15 +58,15 @@ export default function Signup({ onLoginClicked }: Props) {
       <Modal.Body>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleFormSubmit}>
-          <Form.Group id="name" className="form-group">
+          <Form.Group id="name" className="mb-2">
             <Form.Label>Name</Form.Label>
             <Form.Control required type="name" ref={nameRef} />
           </Form.Group>
-          <Form.Group id="email" className="form-group">
+          <Form.Group id="email" className="mb-2">
             <Form.Label>Email</Form.Label>
             <Form.Control required type="email" ref={emailRef} />
           </Form.Group>
-          <Form.Group id="password" className="form-group">
+          <Form.Group id="password" className="mb-2">
             <Form.Label>Password</Form.Label>
             <Form.Control
               required
@@ -70,7 +75,7 @@ export default function Signup({ onLoginClicked }: Props) {
               placeholder="6 or more characters"
             />
           </Form.Group>
-          <Form.Group id="password-confirm" className="form-group">
+          <Form.Group id="password-confirm" className="mb-3">
             <Form.Label>Confirm password</Form.Label>
             <Form.Control
               required
@@ -79,7 +84,11 @@ export default function Signup({ onLoginClicked }: Props) {
               placeholder="6 or more characters"
             />
           </Form.Group>
-          <Button disabled={loading} className="w-100" type="submit">
+          <Button
+            className="diy-solid-info-button w-100"
+            disabled={loading}
+            type="submit"
+          >
             Sign Up
           </Button>
         </Form>

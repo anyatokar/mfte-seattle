@@ -60,15 +60,14 @@ export function Filters<T>(props: IFiltersProps<T>) {
           <Form key={id} className="form-check-inline">
             <Form.Check
               type="checkbox"
+              label={styledKey}
               id={id}
               value={radioButtonKey}
               checked={getChecked(radioButtonKey)}
               onChange={(event) =>
                 onChangeFilter(radioButtonKey as any, event.target.checked)
               }
-              className={"m-1 ml-3"}
             />
-            <Form.Label htmlFor={id}>{styledKey}</Form.Label>
           </Form>
         );
       })}
