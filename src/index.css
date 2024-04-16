@@ -116,6 +116,16 @@ body {
 .footer {
   padding-top: 1em;
 }
+
+.footer-nav-link-custom {
+  color: black;
+  text-decoration: none;
+}
+
+.footer-nav-link-custom:hover,
+.footer-nav-link-custom:active {
+  text-decoration: underline;
+}
 /* end of footer */
 
 /* misc */
@@ -149,5 +159,10 @@ body {
   color: white;
   background: #148596 !important;
   border-color: #127a8b !important;
+}
+
+.scrollable-card {
+  overflow-y: auto;
+  max-height: 400px;
 }
 /* end of misc */

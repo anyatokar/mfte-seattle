@@ -157,17 +157,6 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                 </div>
               </Col>
             </Row>
-
-            <Row className="align-items-center py-3">
-              <Col lg={2} className="text-lg-end">
-                <div className="fs-4">Privacy</div>
-              </Col>
-              <Col>
-                <div className="lead">
-                  We do not share your information with anyone.
-                </div>
-              </Col>
-            </Row>
           </Col>
         </Row>
       </Container>

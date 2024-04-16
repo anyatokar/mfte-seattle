@@ -5,6 +5,8 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 
+import SiteMap from "./SiteMap";
+
 // alt is empty per accessibility guidelines for decorative images.
 
 export const Footer = () => {
@@ -15,8 +17,10 @@ export const Footer = () => {
           <Image className="footer-img" src={houses} alt="" />
         </Col>
       </Row>
-      <Row>
-        <Col className="p-0 text-center">Copyright © 2021-2024 Anya Tokar</Col>
+      <Row className="justify-content-center pb-3">
+        <Col>
+          <SiteMap />
+        </Col>
       </Row>
     </Container>
   );

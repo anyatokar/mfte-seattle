@@ -77,8 +77,8 @@ const Application: React.FunctionComponent<{}> = (props) => {
               </Switch>
             </ModalContext.Provider>
           </AuthProvider>
+          <Footer />
         </Router>
-        <Footer />
       </div>
     </Profiler>
   );

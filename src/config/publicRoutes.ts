@@ -5,6 +5,8 @@ import AllBuildingsPage from "../pages/AllBuildings";
 import ContactPage from "../pages/Contact";
 import HomePage from "../pages/Home";
 import ResourcesPage from "../pages/Resources";
+import CookiesPolicyPage from "../pages/CookiesPolicy";
+import PrivacyPolicyPage from "../pages/PrivacyPolicy";
 
 const publicRoutes: IRoute[] = [
   {
@@ -35,6 +37,18 @@ const publicRoutes: IRoute[] = [
     path: "/resources",
     name: "Resources Page",
     component: ResourcesPage,
+    exact: true,
+  },
+  {
+    path: "/privacy",
+    name: "Privacy Policy Page",
+    component: PrivacyPolicyPage,
+    exact: true,
+  },
+  {
+    path: "/cookies",
+    name: "Cookies Policy Page",
+    component: CookiesPolicyPage,
     exact: true,
   },
   {
