@@ -16,7 +16,7 @@ const SiteMap = () => {
       </Nav.Item>
       <Nav.Item className="px-3 px-md-4 pt-3">
         <Link className="footer-nav-link-custom" to="/contact">
-          Contact Us
+          Contact
         </Link>
       </Nav.Item>
       <Nav.Item className="px-3 px-md-4 pt-3">
