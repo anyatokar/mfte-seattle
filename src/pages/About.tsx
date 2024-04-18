@@ -75,13 +75,13 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                 <div className="lead">
                   Buildings are sourced from the spreadsheet of&nbsp;
                   <a
-                    id="properties-spreadsheet-may-2023"
-                    href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
+                    id="properties-spreadsheet-april-2024"
+                    href="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"
                     target="_blank"
                     rel="noreferrer"
                   >
                     Market-Rate Rental Properties with Affordable Housing Units
-                    Regulated by the City of Seattle (October 2023)
+                    Regulated by the City of Seattle (April 2024)
                   </a>
                   . Updated spreadsheets are published by the Seattle Office of
                   Housing roughly twice a year.

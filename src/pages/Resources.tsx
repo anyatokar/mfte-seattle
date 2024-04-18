@@ -75,9 +75,9 @@ const ResourcesPage: React.FunctionComponent<
 
               <ListGroup.Item>
                 <a
-                  id="properties-spreadsheet-may-2023"
-                  href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
-                  title="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Affordable_Housing_List.pdf"
+                  id="properties-spreadsheet-april-2024"
+                  href="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"
+                  title="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"
                   target="_blank"
                   rel="noreferrer"
                   className="fw-bold"
@@ -89,7 +89,7 @@ const ResourcesPage: React.FunctionComponent<
                   spreadsheet.
                 </div>
                 <div className="fw-light">
-                  PDF — City of Seattle — October 2023
+                  PDF — City of Seattle — April 2024
                 </div>
               </ListGroup.Item>
 
