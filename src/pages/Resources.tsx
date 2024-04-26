@@ -96,17 +96,17 @@ const ResourcesPage: React.FunctionComponent<
               <ListGroup.Item>
                 <a
                   id="income-and-rent-limits"
-                  href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2023_Income_Rent_Limits_Rental.pdf"
-                  title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2023_Income_Rent_Limits_Rental.pdf"
+                  href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentalHousingLimits.pdf"
+                  title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentalHousingLimits.pdf"
                   target="_blank"
                   rel="noreferrer"
                   className="fw-bold"
                 >
-                  Income and Rent Limits (FY 2023)
+                  Income and Rent Limits (FY 2024)
                 </a>
                 <div></div>
                 <div className="fw-light">
-                  PDF — City of Seattle — May 15, 2023
+                  PDF — City of Seattle — April 22, 2024
                 </div>
               </ListGroup.Item>
 
