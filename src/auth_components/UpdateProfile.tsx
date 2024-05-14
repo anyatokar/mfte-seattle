@@ -59,13 +59,19 @@ export default function UpdateProfile() {
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const errorMessage = checkPassword(
-      passwordRef.current.value,
-      passwordConfirmRef.current.value
-    );
+    setError("");
+    setMessage("");
 
-    if (errorMessage) {
-      return setError(errorMessage);
+    if (isPasswordUpdated()) {
+      const errorMessage = checkPassword(
+        passwordRef.current.value,
+        passwordConfirmRef.current.value
+      );
+
+      if (errorMessage) {
+        setError(errorMessage);
+        return;
+      }
     }
 
     const authPromises = [];
