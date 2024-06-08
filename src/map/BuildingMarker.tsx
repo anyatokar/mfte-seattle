@@ -11,6 +11,7 @@ import {
 } from "../components/BuildingContactInfo";
 import IBuilding from "../interfaces/IBuilding";
 import Button from "react-bootstrap/Button";
+import { isAdvertisingOn } from "../config/config";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -40,6 +41,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
     phone2,
     lat,
     lng,
+    hasAd,
   } = building;
 
   const onMarkerClick = useCallback(
@@ -68,6 +70,30 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
     }
   }
 
+  const svgMarkerNoAd = {
+    path: "M0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+    fillColor: "blue",
+    strokeColor: "black",
+    strokeWeight: 1,
+    fillOpacity: 0.8,
+    rotation: 0,
+    scale: 1.25,
+    anchor: new google.maps.Point(0, 20),
+  };
+
+  const svgMarkerAd = {
+    path: "M0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+    fillColor: "red",
+    strokeColor: "black",
+    strokeWeight: 1,
+    fillOpacity: 1,
+    rotation: 0,
+    scale: 1.25,
+    anchor: new google.maps.Point(0, 20),
+  };
+
+  const icon = isAdvertisingOn && hasAd ? svgMarkerAd : svgMarkerNoAd;
+
   return (
     <Marker
       position={{
@@ -75,6 +101,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
         lng: lng,
       }}
       onClick={onMarkerClick}
+      icon={icon}
     >
       {isSelected && (
         <InfoWindow onCloseClick={clearSelection}>
