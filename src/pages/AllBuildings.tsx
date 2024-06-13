@@ -5,6 +5,7 @@ import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
 
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
+import { useAllListings } from "../hooks/useAllListings";
 
 import AllBuildingsList from "../components/AllBuildingsList";
 import { Filters } from "../components/Filters";
@@ -24,10 +25,12 @@ import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import Spinner from "react-bootstrap/Spinner";
+import { isAdvertisingOn } from "../config/config";
 
 const AllBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = (props) => {
+  // get all buildings
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
@@ -55,6 +58,7 @@ const AllBuildingsPage: React.FunctionComponent<
     getAllBuildings();
   }, [getAllBuildings]);
 
+  // search, filter
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
     []
@@ -79,6 +83,14 @@ const AllBuildingsPage: React.FunctionComponent<
 
   const [savedBuildings, loadingSavedBuildings] = useSavedBuildings();
 
+  // listings
+  let [allListings, loadingAllListings] = useAllListings();
+
+  if (!isAdvertisingOn) {
+    allListings = [];
+    loadingAllListings = false;
+  }
+
   return (
     <Profiler
       id={props.name}
@@ -101,7 +113,7 @@ const AllBuildingsPage: React.FunctionComponent<
       }}
     >
       <div className="all-pages">
-        {loading || loadingSavedBuildings ? (
+        {loading || loadingSavedBuildings || loadingAllListings ? (
           <Spinner animation="border" variant="warning" />
         ) : (
           <></>
@@ -189,12 +201,14 @@ const AllBuildingsPage: React.FunctionComponent<
                     <MapTab
                       buildingsToMap={resultBuildingsUnsorted}
                       savedBuildings={savedBuildings}
+                      allListings={allListings}
                     />
                   </Tab.Pane>
                   <Tab.Pane eventKey="saved">
                     <AllBuildingsList
                       resultBuildingsUnsorted={resultBuildingsUnsorted}
                       savedBuildings={savedBuildings}
+                      allListings={allListings}
                     />
                   </Tab.Pane>
                 </Tab.Content>

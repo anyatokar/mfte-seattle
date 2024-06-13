@@ -1,7 +1,10 @@
 import { Profiler } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
+import { useAllListings } from "../hooks/useAllListings";
+
 import IPage from "../interfaces/IPage";
 
 import MapTab from "../components/MapTab";
@@ -18,11 +21,14 @@ const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = (props) => {
   const { currentUser } = useAuth();
-  const [savedBuildings, loading] = useSavedBuildings();
+  const [savedBuildings, loadingSavedBuildings] = useSavedBuildings();
+  const [allListings, loadingAllListings] = useAllListings();
 
   if (!currentUser) {
     return null;
   }
+
+  let loading = loadingSavedBuildings || loadingAllListings;
 
   return (
     <Profiler
@@ -91,10 +97,14 @@ const SavedBuildingsPage: React.FunctionComponent<
                   <MapTab
                     buildingsToMap={savedBuildings}
                     savedBuildings={savedBuildings}
+                    allListings={allListings}
                   />
                 </Tab.Pane>
                 <Tab.Pane eventKey="list">
-                  <SavedBuildingsList savedBuildings={savedBuildings} />
+                  <SavedBuildingsList
+                    savedBuildings={savedBuildings}
+                    allListings={allListings}
+                  />
                 </Tab.Pane>
               </Tab.Content>
             </Col>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { BuildingMarker } from "./BuildingMarker";
-import { checkIsSaved } from "../components/AllBuildingsList";
+import { checkIsSaved, getListing } from "../components/AllBuildingsList";
 import { firebaseConfig } from "../db/firebase";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -59,6 +59,7 @@ export function ReactMap(props: IMap) {
             isSelected={building === selectedBuilding}
             setSelectedBuilding={setSelectedBuilding}
             isSaved={checkIsSaved(props.savedBuildings, building)}
+            listing={getListing(props.allListings, building.buildingID)}
           />
         ))}
       </>

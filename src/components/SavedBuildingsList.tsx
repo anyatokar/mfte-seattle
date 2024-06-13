@@ -1,6 +1,9 @@
 import "firebase/firestore";
 import { BuildingCard } from "./BuildingCard";
+import { getListing } from "./AllBuildingsList";
+
 import ISavedBuilding from "../interfaces/ISavedBuilding";
+import IListing from "../interfaces/IListing";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -8,6 +11,7 @@ import Row from "react-bootstrap/Row";
 
 type SavedBuildingsListProps = {
   savedBuildings: Array<ISavedBuilding>;
+  allListings: Array<IListing>;
 };
 
 export default function SavedBuildingsList(props: SavedBuildingsListProps) {
@@ -27,7 +31,14 @@ export default function SavedBuildingsList(props: SavedBuildingsListProps) {
                     xl={3}
                     className="building-row"
                   >
-                    <BuildingCard {...building} pageType="savedBuildings" />
+                    <BuildingCard
+                      {...building}
+                      pageType="savedBuildings"
+                      listing={getListing(
+                        props.allListings,
+                        building.buildingID
+                      )}
+                    />
                   </Col>
                 ))}
               </>

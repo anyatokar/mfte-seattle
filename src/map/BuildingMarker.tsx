@@ -12,12 +12,14 @@ import {
 import IBuilding from "../interfaces/IBuilding";
 import Button from "react-bootstrap/Button";
 import { isAdvertisingOn } from "../config/config";
+import IListing from "../interfaces/IListing";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
   isSelected: boolean;
   setSelectedBuilding: (building: IBuilding | null) => void;
   isSaved: boolean;
+  listing: IListing | undefined;
 }
 
 export function BuildingMarker(props: IBuildingMarkerProps) {
@@ -26,7 +28,9 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
     isSelected,
     setSelectedBuilding,
     isSaved: wasOriginallySaved,
+    listing,
   } = props;
+
   const {
     buildingID,
     buildingName,
@@ -41,7 +45,6 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
     phone2,
     lat,
     lng,
-    hasAd,
   } = building;
 
   const onMarkerClick = useCallback(
@@ -92,7 +95,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
     anchor: new google.maps.Point(0, 20),
   };
 
-  const icon = isAdvertisingOn && hasAd ? svgMarkerAd : svgMarkerNoAd;
+  const icon = isAdvertisingOn && listing ? svgMarkerAd : svgMarkerNoAd;
 
   return (
     <Marker

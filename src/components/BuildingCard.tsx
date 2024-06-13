@@ -1,3 +1,5 @@
+import { isAdvertisingOn } from "../config/config";
+
 import { useState, useContext } from "react";
 import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
@@ -5,12 +7,16 @@ import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
+import { ListingCard } from "./ListingCard";
+
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
+import IListing from "../interfaces/IListing";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Table from "react-bootstrap/Table";
 import Tabs from "react-bootstrap/Tabs";
@@ -18,10 +24,12 @@ import Tabs from "react-bootstrap/Tabs";
 export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean;
   pageType: "allBuildings";
+  listing: IListing | undefined;
 }
 
 export interface SavedBuildingsCardProps extends ISavedBuilding {
   pageType: "savedBuildings";
+  listing: IListing | undefined;
 }
 
 type BuildingsCardProps = AllBuildingsCardProps | SavedBuildingsCardProps;
@@ -47,6 +55,8 @@ export function BuildingCard(props: BuildingsCardProps) {
     state,
     zip,
     pageType,
+    /** An object containing listing metadata. */
+    listing,
   } = props;
 
   // All Buildings Page - save/saved button
@@ -144,6 +154,7 @@ export function BuildingCard(props: BuildingsCardProps) {
               </Button>
             ))}
         </div>
+
         {pageType === "savedBuildings" && (
           <Button
             className="center"
@@ -160,100 +171,156 @@ export function BuildingCard(props: BuildingsCardProps) {
           </Button>
         )}
       </Card.Header>
-      <Card.Body>
-        <Tabs defaultActiveKey={"first"}>
-          <Tab eventKey="first" title="Contact">
-            <AddressAndPhone
-              buildingName={buildingName}
-              streetNum={streetNum}
-              street={street}
-              city={city}
-              state={state}
-              zip={zip}
-              phone={phone}
-              phone2={phone2}
-            />
-            {pageType === "savedBuildings" && (
-              <>
-                <Form onSubmit={handleSubmit}>
-                  <Form.Label>Notes</Form.Label>
-                  <Form.Group className="mb-2">
-                    <Form.Control
-                      as="textarea"
-                      name="note"
-                      rows={3}
-                      value={noteToAdd}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                  <Button
-                    disabled={!isNoteDifferent}
-                    type="submit"
-                    title={`Save or update your note!`}
-                    value="Save note"
-                    size="sm"
-                    className="diy-solid-info-button"
-                  >
-                    Save note
-                  </Button>
-                  {noteTimestamp && <p>{`Last saved: ${noteTimestamp}`}</p>}
-                </Form>
-              </>
-            )}
-          </Tab>
-          <Tab eventKey="link" title="Details">
-            <Table bordered hover size="sm">
-              <thead>
-                <tr>
-                  <th>Bedrooms</th>
-                  <th># of MFTE Units*</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sedu !== 0 && (
+
+      <ListGroup variant="flush">
+        <ListGroup.Item
+          className={
+            isAdvertisingOn && listing && listing.hasAnyAvailability
+              ? "listing-card"
+              : ""
+          }
+        >
+          <ListingCard isAdvertisingOn={isAdvertisingOn} listing={listing} />
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <Tabs defaultActiveKey={"first"}>
+            <Tab eventKey="first" title="Contact">
+              <AddressAndPhone
+                buildingName={buildingName}
+                streetNum={streetNum}
+                street={street}
+                city={city}
+                state={state}
+                zip={zip}
+                phone={phone}
+                phone2={phone2}
+              />
+              {pageType === "savedBuildings" && (
+                <>
+                  <Form onSubmit={handleSubmit}>
+                    <Form.Label>Notes</Form.Label>
+                    <Form.Group className="mb-2">
+                      <Form.Control
+                        as="textarea"
+                        name="note"
+                        rows={3}
+                        value={noteToAdd}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                    <Button
+                      disabled={!isNoteDifferent}
+                      type="submit"
+                      title={`Save or update your note!`}
+                      value="Save note"
+                      size="sm"
+                      className="diy-solid-info-button"
+                    >
+                      Save note
+                    </Button>
+                    {noteTimestamp && <p>{`Last saved: ${noteTimestamp}`}</p>}
+                  </Form>
+                </>
+              )}
+            </Tab>
+            <Tab eventKey="link" title="Details">
+              <Table bordered hover size="sm">
+                <thead>
                   <tr>
-                    <td>Pod</td>
-                    <td>{sedu}</td>
+                    <th>Bedrooms</th>
+                    <th># of MFTE Units</th>
+                    {isAdvertisingOn && <th>Availability</th>}
+                    {isAdvertisingOn && <th>Rent</th>}
                   </tr>
-                )}
-                {studioUnits !== 0 && (
+                </thead>
+                <tbody>
+                  {sedu !== 0 && (
+                    <tr>
+                      <td>Pod</td>
+                      <td>{sedu}</td>
+                      {isAdvertisingOn ? (
+                        listing ? (
+                          <td>{listing.hasSeduListing ? "Yes" : "No"}</td>
+                        ) : (
+                          <td>--</td>
+                        )
+                      ) : null}
+                      {isAdvertisingOn ? (
+                        <td>{listing?.seduRent || "--"}</td>
+                      ) : null}
+                    </tr>
+                  )}
+                  {studioUnits !== 0 && (
+                    <tr>
+                      <td>Studio</td>
+                      <td>{studioUnits}</td>
+                      {isAdvertisingOn ? (
+                        <td>
+                          {listing
+                            ? listing.hasStudioListing
+                              ? "Yes"
+                              : "No"
+                            : "--"}
+                        </td>
+                      ) : null}
+                      {isAdvertisingOn ? (
+                        <td>{listing?.studioRent || "--"}</td>
+                      ) : null}
+                    </tr>
+                  )}
+                  {oneBedroomUnits !== 0 && (
+                    <tr>
+                      <td>One</td>
+                      <td>{oneBedroomUnits}</td>
+                      {isAdvertisingOn ? (
+                        <td>{listing?.hasOneBedListing ? "Yes" : "No"}</td>
+                      ) : null}
+                      {isAdvertisingOn ? (
+                        <td>{listing?.oneBedRent || "--"}</td>
+                      ) : null}
+                    </tr>
+                  )}
+                  {twoBedroomUnits !== 0 && (
+                    <tr>
+                      <td>Two</td>
+                      <td>{twoBedroomUnits}</td>
+                      {isAdvertisingOn ? (
+                        <td>{listing?.hasTwoBedListing ? "Yes" : "No"}</td>
+                      ) : null}
+                      {isAdvertisingOn ? (
+                        <td>{listing?.twoBedRent || "--"}</td>
+                      ) : null}
+                    </tr>
+                  )}
+                  {threePlusBedroomUnits !== 0 && (
+                    <tr>
+                      <td>Three+</td>
+                      <td>{threePlusBedroomUnits}</td>
+                      {isAdvertisingOn ? (
+                        <td>{listing?.hasThreePlusListing ? "Yes" : "No"}</td>
+                      ) : null}
+                      {isAdvertisingOn ? (
+                        <td>{listing?.threePlusBedRent || "--"}</td>
+                      ) : null}
+                    </tr>
+                  )}
                   <tr>
-                    <td>Studio</td>
-                    <td>{studioUnits}</td>
+                    <td>
+                      <strong>Total</strong>
+                    </td>
+                    <td>
+                      <strong>{totalRestrictedUnits}</strong>
+                    </td>
+                    {isAdvertisingOn && <td></td>}
+                    {isAdvertisingOn && <td></td>}
                   </tr>
-                )}
-                {oneBedroomUnits !== 0 && (
-                  <tr>
-                    <td>One</td>
-                    <td>{oneBedroomUnits}</td>
-                  </tr>
-                )}
-                {twoBedroomUnits !== 0 && (
-                  <tr>
-                    <td>Two</td>
-                    <td>{twoBedroomUnits}</td>
-                  </tr>
-                )}
-                {threePlusBedroomUnits !== 0 && (
-                  <tr>
-                    <td>Three+</td>
-                    <td>{threePlusBedroomUnits}</td>
-                  </tr>
-                )}
-                <tr>
-                  <td>
-                    <strong>Total</strong>
-                  </td>
-                  <td>
-                    <strong>{totalRestrictedUnits}</strong>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-            <div>*Contact building for current availability.</div>
-          </Tab>
-        </Tabs>
-      </Card.Body>
+                </tbody>
+              </Table>
+            </Tab>
+          </Tabs>
+        </ListGroup.Item>
+      </ListGroup>
     </Card>
   );
 }

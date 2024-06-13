@@ -165,4 +165,8 @@ body {
   overflow-y: auto;
   max-height: 400px;
 }
+
+.listing-card {
+  background: rgb(255, 255, 37);
+}
 /* end of misc */

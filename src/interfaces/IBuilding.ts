@@ -18,5 +18,4 @@ export default interface IBuilding {
   city: string;
   state: string;
   zip: string;
-  hasAd: boolean;
 }
