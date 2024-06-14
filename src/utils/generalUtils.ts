@@ -1,8 +1,15 @@
-export function timestampPT() {
-  return new Date().toLocaleString("en-US", {
-    timeZone: "America/Los_Angeles",
-    timeZoneName: "shortGeneric",
-  });
+import { Timestamp } from "firebase/firestore";
+
+// Used to save note timestamp as string in database, hence the check here.
+export function timestampToDateAndTime(timestamp: string | Timestamp): string {
+  if (timestamp instanceof Timestamp) {
+    return timestamp.toDate().toLocaleString();
+  }
+  return timestamp;
+}
+
+export function timestampToDate(timestamp: Timestamp) {
+  return timestamp.toDate().toLocaleDateString();
 }
 
 export function checkPassword(

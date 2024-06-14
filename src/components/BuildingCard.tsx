@@ -3,6 +3,7 @@ import { isAdvertisingOn } from "../config/config";
 import { useState, useContext } from "react";
 import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
+import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -12,7 +13,6 @@ import { ListingCard } from "./ListingCard";
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IListing from "../interfaces/IListing";
-
 import { pageTypeEnum } from "../types/enumTypes";
 
 import Button from "react-bootstrap/Button";
@@ -67,13 +67,15 @@ export function BuildingCard(props: BuildingsCardProps) {
 
   let wasOriginallySaved = false;
   let note: string | undefined;
-  let noteTimestamp: string | undefined;
+  let formattedTimestamp: string | null | undefined;
 
   if (pageType === pageTypeEnum.allBuildings) {
     wasOriginallySaved = props.isSaved;
   } else if (pageType === pageTypeEnum.savedBuildings) {
     note = props.note;
-    noteTimestamp = props.noteTimestamp;
+    formattedTimestamp = props.noteTimestamp
+      ? timestampToDateAndTime(props.noteTimestamp)
+      : null;
   }
 
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
@@ -127,7 +129,7 @@ export function BuildingCard(props: BuildingsCardProps) {
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
         <div className="mt-2">
-          {pageType === "allBuildings" &&
+          {pageType === pageTypeEnum.allBuildings &&
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
                 <Button
@@ -157,7 +159,7 @@ export function BuildingCard(props: BuildingsCardProps) {
             ))}
         </div>
 
-        {pageType === "savedBuildings" && (
+        {pageType === pageTypeEnum.savedBuildings && (
           <Button
             className="center"
             size="sm"
@@ -212,9 +214,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                       <tr>
                         <td>Pod</td>
                         <td>
-                          {listing?.dateSeduAvailable
-                            ?.toDate()
-                            .toLocaleDateString() || "--"}
+                          {timestampToDate(listing?.dateSeduAvailable) || "--"}
                         </td>
                         <td>{listing?.seduRent || "--"}</td>
                       </tr>
@@ -223,9 +223,8 @@ export function BuildingCard(props: BuildingsCardProps) {
                       <tr>
                         <td>Studio</td>
                         <td>
-                          {listing?.dateStudioAvailable
-                            ?.toDate()
-                            .toLocaleDateString() || "--"}
+                          {timestampToDate(listing?.dateStudioAvailable) ||
+                            "--"}
                         </td>
                         <td>{listing?.studioRent || "--"}</td>
                       </tr>
@@ -234,9 +233,8 @@ export function BuildingCard(props: BuildingsCardProps) {
                       <tr>
                         <td>One</td>
                         <td>
-                          {listing?.dateOneBedAvailable
-                            ?.toDate()
-                            .toLocaleDateString() || "--"}
+                          {timestampToDate(listing?.dateOneBedAvailable) ||
+                            "--"}
                         </td>
                         <td>{listing?.oneBedRent || "--"}</td>
                       </tr>
@@ -245,9 +243,8 @@ export function BuildingCard(props: BuildingsCardProps) {
                       <tr>
                         <td>Two</td>
                         <td>
-                          {listing?.dateTwoBedAvailable
-                            ?.toDate()
-                            .toLocaleDateString() || "--"}
+                          {timestampToDate(listing?.dateTwoBedAvailable) ||
+                            "--"}
                         </td>
                         <td>{listing?.twoBedRent || "--"}</td>
                       </tr>
@@ -256,9 +253,9 @@ export function BuildingCard(props: BuildingsCardProps) {
                       <tr>
                         <td>Three+</td>
                         <td>
-                          {listing?.dateThreePlusBedAvailable
-                            ?.toDate()
-                            .toLocaleDateString() || "--"}
+                          {timestampToDate(
+                            listing?.dateThreePlusBedAvailable
+                          ) || "--"}
                         </td>
                         <td>{listing?.threePlusBedRent || "--"}</td>
                       </tr>
@@ -278,33 +275,6 @@ export function BuildingCard(props: BuildingsCardProps) {
                 phone={phone}
                 phone2={phone2}
               />
-              {pageType === "savedBuildings" && (
-                <>
-                  <Form onSubmit={handleSubmit}>
-                    <Form.Label>Notes</Form.Label>
-                    <Form.Group className="mb-2">
-                      <Form.Control
-                        as="textarea"
-                        name="note"
-                        rows={3}
-                        value={noteToAdd}
-                        onChange={handleChange}
-                      />
-                    </Form.Group>
-                    <Button
-                      disabled={!isNoteDifferent}
-                      type="submit"
-                      title={`Save or update your note!`}
-                      value="Save note"
-                      size="sm"
-                      className="diy-solid-info-button"
-                    >
-                      Save note
-                    </Button>
-                    {noteTimestamp && <p>{`Last saved: ${noteTimestamp}`}</p>}
-                  </Form>
-                </>
-              )}
             </Tab>
 
             <Tab eventKey="details" title="Details">
@@ -359,6 +329,39 @@ export function BuildingCard(props: BuildingsCardProps) {
             </Tab>
           </Tabs>
         </ListGroup.Item>
+        {pageType === pageTypeEnum.savedBuildings && (
+          <ListGroup.Item>
+            <>
+              <Form onSubmit={handleSubmit}>
+                <Form.Label>Notes</Form.Label>
+                <Form.Group className="mb-2">
+                  <Form.Control
+                    as="textarea"
+                    name="note"
+                    rows={2}
+                    value={noteToAdd}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <Button
+                  disabled={!isNoteDifferent}
+                  type="submit"
+                  title={`Save or update your note!`}
+                  value="Save note"
+                  size="sm"
+                  className="diy-solid-info-button"
+                >
+                  Save note
+                </Button>
+                <div>
+                  {formattedTimestamp && (
+                    <p>{`Last saved: ${formattedTimestamp}`}</p>
+                  )}
+                </div>
+              </Form>
+            </>
+          </ListGroup.Item>
+        )}
       </ListGroup>
     </Card>
   );

@@ -9,7 +9,6 @@ import {
   updateDoc,
   addDoc,
 } from "firebase/firestore";
-import { timestampPT } from "./generalUtils";
 import { formFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
 
@@ -66,7 +65,7 @@ export async function saveBuilding(
     zip: zip,
     lat: lat,
     lng: lng,
-    savedTimestamp: timestampPT(),
+    savedTimestamp: new Date(),
   })
     .then(() => {
       console.log(`${buildingName} saved to user list.`);
@@ -124,7 +123,7 @@ export async function updateNameFirestore(
 
   await updateDoc(userDocRef, {
     name: name,
-    updateNameTimestamp: timestampPT(),
+    updateNameTimestamp: new Date(),
   });
 }
 
@@ -140,7 +139,7 @@ export async function updateEmailFirestore(
 
   await updateDoc(userDocRef, {
     email: email,
-    updateEmailTimestamp: timestampPT(),
+    updateEmailTimestamp: new Date(),
   });
 }
 
@@ -151,7 +150,7 @@ export async function sendMessageFirestore(formFields: formFieldsType) {
     subject: formFields.subject,
     description: formFields.description,
     message: formFields.message,
-    sentTimestamp: timestampPT(),
+    sentTimestamp: new Date(),
     didReply: false,
   });
 }
@@ -170,7 +169,7 @@ export async function addNote(
 
   await updateDoc(buildingDocRef, {
     note: noteToAdd,
-    noteTimestamp: timestampPT(),
+    noteTimestamp: new Date(),
   });
 }
 
@@ -191,7 +190,7 @@ export async function signupFirestore(
     uid: uid,
     email: email,
     name: name,
-    signupOrBackfillTimestamp: timestampPT(),
+    signupOrBackfillTimestamp: new Date(),
     // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
     recentUser: true,
   });
