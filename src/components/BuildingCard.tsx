@@ -118,6 +118,34 @@ export function BuildingCard(props: BuildingsCardProps) {
       });
   };
 
+  const availabilityData = [
+    {
+      type: "Pod",
+      dateAvail: listing?.seduAvail?.dateAvail,
+      rent: listing?.seduAvail?.rent,
+    },
+    {
+      type: "Studio",
+      dateAvail: listing?.studioAvail?.dateAvail,
+      rent: listing?.studioAvail?.rent,
+    },
+    {
+      type: "One",
+      dateAvail: listing?.oneBedAvail?.dateAvail,
+      rent: listing?.oneBedAvail?.rent,
+    },
+    {
+      type: "Two",
+      dateAvail: listing?.twoBedAvail?.dateAvail,
+      rent: listing?.twoBedAvail?.rent,
+    },
+    {
+      type: "Three+",
+      dateAvail: listing?.threePlusBedAvail?.dateAvail,
+      rent: listing?.threePlusBedAvail?.rent,
+    },
+  ];
+
   return (
     <Card>
       <Card.Header>
@@ -210,55 +238,15 @@ export function BuildingCard(props: BuildingsCardProps) {
                     </tr>
                   </thead>
                   <tbody>
-                    {listing?.dateSeduAvailable && (
-                      <tr>
-                        <td>Pod</td>
-                        <td>
-                          {timestampToDate(listing?.dateSeduAvailable) || "--"}
-                        </td>
-                        <td>{listing?.seduRent || "--"}</td>
-                      </tr>
-                    )}
-                    {listing?.dateStudioAvailable && (
-                      <tr>
-                        <td>Studio</td>
-                        <td>
-                          {timestampToDate(listing?.dateStudioAvailable) ||
-                            "--"}
-                        </td>
-                        <td>{listing?.studioRent || "--"}</td>
-                      </tr>
-                    )}
-                    {listing?.dateOneBedAvailable && (
-                      <tr>
-                        <td>One</td>
-                        <td>
-                          {timestampToDate(listing?.dateOneBedAvailable) ||
-                            "--"}
-                        </td>
-                        <td>{listing?.oneBedRent || "--"}</td>
-                      </tr>
-                    )}
-                    {listing?.dateTwoBedAvailable && (
-                      <tr>
-                        <td>Two</td>
-                        <td>
-                          {timestampToDate(listing?.dateTwoBedAvailable) ||
-                            "--"}
-                        </td>
-                        <td>{listing?.twoBedRent || "--"}</td>
-                      </tr>
-                    )}
-                    {listing?.dateThreePlusBedAvailable && (
-                      <tr>
-                        <td>Three+</td>
-                        <td>
-                          {timestampToDate(
-                            listing?.dateThreePlusBedAvailable
-                          ) || "--"}
-                        </td>
-                        <td>{listing?.threePlusBedRent || "--"}</td>
-                      </tr>
+                    {availabilityData.map(
+                      (apt) =>
+                        apt.dateAvail && (
+                          <tr key={apt.type}>
+                            <td>{apt.type}</td>
+                            <td>{timestampToDate(apt.dateAvail)}</td>
+                            <td>{apt.rent}</td>
+                          </tr>
+                        )
                     )}
                   </tbody>
                 </Table>

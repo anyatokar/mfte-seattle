@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore";
+import IListingAptDetails from "./IListingAptDetails";
 
 export default interface IListing {
   name: string;
@@ -10,14 +10,9 @@ export default interface IListing {
   hasAnyAvailability: boolean;
   listingId: string;
   buildingID: string;
-  seduRent: string;
-  studioRent: string;
-  oneBedRent: string;
-  twoBedRent: string;
-  threePlusBedRent: string;
-  dateSeduAvailable: Timestamp;
-  dateStudioAvailable: Timestamp;
-  dateOneBedAvailable: Timestamp;
-  dateTwoBedAvailable: Timestamp;
-  dateThreePlusBedAvailable: Timestamp;
+  seduAvail: IListingAptDetails;
+  studioAvail: IListingAptDetails;
+  oneBedAvail: IListingAptDetails;
+  twoBedAvail: IListingAptDetails;
+  threePlusBedAvail: IListingAptDetails;
 }
