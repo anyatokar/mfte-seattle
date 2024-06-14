@@ -13,6 +13,8 @@ import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IListing from "../interfaces/IListing";
 
+import { pageTypeEnum } from "../types/enumTypes";
+
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -23,12 +25,12 @@ import Tabs from "react-bootstrap/Tabs";
 
 export interface AllBuildingsCardProps extends IBuilding {
   isSaved: boolean;
-  pageType: "allBuildings";
+  pageType: pageTypeEnum.allBuildings;
   listing: IListing | undefined;
 }
 
 export interface SavedBuildingsCardProps extends ISavedBuilding {
-  pageType: "savedBuildings";
+  pageType: pageTypeEnum.savedBuildings;
   listing: IListing | undefined;
 }
 
@@ -67,9 +69,9 @@ export function BuildingCard(props: BuildingsCardProps) {
   let note: string | undefined;
   let noteTimestamp: string | undefined;
 
-  if (pageType === "allBuildings") {
+  if (pageType === pageTypeEnum.allBuildings) {
     wasOriginallySaved = props.isSaved;
-  } else if (pageType === "savedBuildings") {
+  } else if (pageType === pageTypeEnum.savedBuildings) {
     note = props.note;
     noteTimestamp = props.noteTimestamp;
   }

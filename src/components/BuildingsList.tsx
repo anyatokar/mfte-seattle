@@ -3,7 +3,7 @@ import { useState } from "react";
 import { isAdvertisingOn } from "../config/config";
 
 import { BuildingCard } from "./BuildingCard";
-import Sorters from "../components/Sorters";
+import Sorters from "./Sorters";
 import { genericSort } from "../utils/genericSort";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -14,13 +14,17 @@ import IListing from "../interfaces/IListing";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { pageTypeEnum } from "../types/enumTypes";
 
 type allBuildingsListProps = {
   resultBuildingsUnsorted: IBuilding[];
   savedBuildings: ISavedBuilding[];
   allListings: IListing[] | [];
+  pageType: pageTypeEnum;
 };
 
+// TODO: For saved list, they're all going to be in the saved so this can be more efficient.
+// Result of combining AllBuildingsList and SavedBuildingsList components.
 export const checkIsSaved = (
   savedBuildings: ISavedBuilding[],
   building: IBuilding
@@ -57,26 +61,28 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
 
   return (
     <Container fluid>
-      <Row>
-        <Col
-          sm={12}
-          md={{ span: 9, offset: 1 }}
-          lg={{ span: 8, offset: 0 }}
-          className="p-0"
-        >
-          {props.resultBuildingsUnsorted.length > 0 && (
-            <Sorters<IBuilding>
-              object={props.resultBuildingsUnsorted[0]}
-              onChangeSorter={(property, isDescending) => {
-                setActiveSorter({
-                  property,
-                  isDescending,
-                });
-              }}
-            />
-          )}
-        </Col>
-      </Row>
+      {props.pageType === pageTypeEnum.allBuildings && (
+        <Row>
+          <Col
+            sm={12}
+            md={{ span: 9, offset: 1 }}
+            lg={{ span: 8, offset: 0 }}
+            className="p-0"
+          >
+            {props.resultBuildingsUnsorted.length > 0 && (
+              <Sorters<IBuilding>
+                object={props.resultBuildingsUnsorted[0]}
+                onChangeSorter={(property, isDescending) => {
+                  setActiveSorter({
+                    property,
+                    isDescending,
+                  });
+                }}
+              />
+            )}
+          </Col>
+        </Row>
+      )}
       <Row>
         <Col lg={12}>
           <Row>
@@ -94,7 +100,7 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
                     <BuildingCard
                       {...building}
                       isSaved={checkIsSaved(props.savedBuildings, building)}
-                      pageType={"allBuildings"}
+                      pageType={props.pageType}
                       listing={getListing(
                         props.allListings,
                         building.buildingID

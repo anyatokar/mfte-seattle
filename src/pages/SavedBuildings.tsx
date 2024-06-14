@@ -6,9 +6,10 @@ import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useAllListings";
 
 import IPage from "../interfaces/IPage";
+import { pageTypeEnum } from "../types/enumTypes";
 
 import MapTab from "../components/MapTab";
-import SavedBuildingsList from "../components/SavedBuildingsList";
+import AllBuildingsList from "../components/BuildingsList";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -101,9 +102,11 @@ const SavedBuildingsPage: React.FunctionComponent<
                   />
                 </Tab.Pane>
                 <Tab.Pane eventKey="list">
-                  <SavedBuildingsList
+                  <AllBuildingsList
+                    resultBuildingsUnsorted={savedBuildings}
                     savedBuildings={savedBuildings}
                     allListings={allListings}
+                    pageType={pageTypeEnum.savedBuildings}
                   />
                 </Tab.Pane>
               </Tab.Content>

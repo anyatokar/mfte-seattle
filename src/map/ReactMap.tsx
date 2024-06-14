@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { BuildingMarker } from "./BuildingMarker";
-import { checkIsSaved, getListing } from "../components/AllBuildingsList";
+import { checkIsSaved, getListing } from "../components/BuildingsList";
 import { firebaseConfig } from "../db/firebase";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -19,6 +19,7 @@ const center = {
 
 // Statically define libraries to avoid the "LoadScript has been reloaded
 // unintentionally!" performance warning.
+// TODO: Is this library needed?
 const LIBRARIES: "places"[] = ["places"];
 
 export function ReactMap(props: IMap) {
