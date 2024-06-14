@@ -4,6 +4,6 @@ const config = {
   },
 };
 
-export const areListingsOn = true;
+export const areListingsOn = false;
 
 export default config;
