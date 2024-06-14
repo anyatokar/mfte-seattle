@@ -184,8 +184,79 @@ export function BuildingCard(props: BuildingsCardProps) {
         </ListGroup.Item>
 
         <ListGroup.Item>
-          <Tabs defaultActiveKey={"first"}>
-            <Tab eventKey="first" title="Contact">
+          <Tabs
+            defaultActiveKey={
+              isAdvertisingOn && listing?.hasAnyAvailability
+                ? "availability"
+                : "contact"
+            }
+          >
+            {isAdvertisingOn && (
+              <Tab
+                eventKey="availability"
+                title="Availability"
+                disabled={!listing || (listing && !listing.hasAnyAvailability)}
+              >
+                <Table bordered hover size="sm" responsive>
+                  <thead>
+                    <tr>
+                      <th>Bedrooms</th>
+                      <th>Units Available?</th>
+                      <th>Rent</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sedu !== 0 && (
+                      <tr>
+                        <td>Pod</td>
+                        {listing ? (
+                          <td>{listing.hasSeduListing ? "Yes" : "No"}</td>
+                        ) : (
+                          <td>--</td>
+                        )}
+                        <td>{listing?.seduRent || "--"}</td>
+                      </tr>
+                    )}
+                    {studioUnits !== 0 && (
+                      <tr>
+                        <td>Studio</td>
+
+                        <td>
+                          {listing
+                            ? listing.hasStudioListing
+                              ? "Yes"
+                              : "No"
+                            : "--"}
+                        </td>
+                        <td>{listing?.studioRent || "--"}</td>
+                      </tr>
+                    )}
+                    {oneBedroomUnits !== 0 && (
+                      <tr>
+                        <td>One</td>
+                        <td>{listing?.hasOneBedListing ? "Yes" : "No"}</td>
+                        <td>{listing?.oneBedRent || "--"}</td>
+                      </tr>
+                    )}
+                    {twoBedroomUnits !== 0 && (
+                      <tr>
+                        <td>Two</td>
+                        <td>{listing?.hasTwoBedListing ? "Yes" : "No"}</td>
+                        <td>{listing?.twoBedRent || "--"}</td>
+                      </tr>
+                    )}
+                    {threePlusBedroomUnits !== 0 && (
+                      <tr>
+                        <td>Three+</td>
+                        <td>{listing?.hasThreePlusListing ? "Yes" : "No"}</td>
+                        <td>{listing?.threePlusBedRent || "--"}</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </Table>
+              </Tab>
+            )}
+            <Tab eventKey="contact" title="Contact">
               <AddressAndPhone
                 buildingName={buildingName}
                 streetNum={streetNum}
@@ -224,14 +295,13 @@ export function BuildingCard(props: BuildingsCardProps) {
                 </>
               )}
             </Tab>
-            <Tab eventKey="link" title="Details">
+
+            <Tab eventKey="details" title="Details">
               <Table bordered hover size="sm">
                 <thead>
                   <tr>
                     <th>Bedrooms</th>
                     <th># of MFTE Units</th>
-                    {isAdvertisingOn && <th>Availability</th>}
-                    {isAdvertisingOn && <th>Rent</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -239,70 +309,30 @@ export function BuildingCard(props: BuildingsCardProps) {
                     <tr>
                       <td>Pod</td>
                       <td>{sedu}</td>
-                      {isAdvertisingOn ? (
-                        listing ? (
-                          <td>{listing.hasSeduListing ? "Yes" : "No"}</td>
-                        ) : (
-                          <td>--</td>
-                        )
-                      ) : null}
-                      {isAdvertisingOn ? (
-                        <td>{listing?.seduRent || "--"}</td>
-                      ) : null}
                     </tr>
                   )}
                   {studioUnits !== 0 && (
                     <tr>
                       <td>Studio</td>
                       <td>{studioUnits}</td>
-                      {isAdvertisingOn ? (
-                        <td>
-                          {listing
-                            ? listing.hasStudioListing
-                              ? "Yes"
-                              : "No"
-                            : "--"}
-                        </td>
-                      ) : null}
-                      {isAdvertisingOn ? (
-                        <td>{listing?.studioRent || "--"}</td>
-                      ) : null}
                     </tr>
                   )}
                   {oneBedroomUnits !== 0 && (
                     <tr>
                       <td>One</td>
                       <td>{oneBedroomUnits}</td>
-                      {isAdvertisingOn ? (
-                        <td>{listing?.hasOneBedListing ? "Yes" : "No"}</td>
-                      ) : null}
-                      {isAdvertisingOn ? (
-                        <td>{listing?.oneBedRent || "--"}</td>
-                      ) : null}
                     </tr>
                   )}
                   {twoBedroomUnits !== 0 && (
                     <tr>
                       <td>Two</td>
                       <td>{twoBedroomUnits}</td>
-                      {isAdvertisingOn ? (
-                        <td>{listing?.hasTwoBedListing ? "Yes" : "No"}</td>
-                      ) : null}
-                      {isAdvertisingOn ? (
-                        <td>{listing?.twoBedRent || "--"}</td>
-                      ) : null}
                     </tr>
                   )}
                   {threePlusBedroomUnits !== 0 && (
                     <tr>
                       <td>Three+</td>
                       <td>{threePlusBedroomUnits}</td>
-                      {isAdvertisingOn ? (
-                        <td>{listing?.hasThreePlusListing ? "Yes" : "No"}</td>
-                      ) : null}
-                      {isAdvertisingOn ? (
-                        <td>{listing?.threePlusBedRent || "--"}</td>
-                      ) : null}
                     </tr>
                   )}
                   <tr>
@@ -312,8 +342,6 @@ export function BuildingCard(props: BuildingsCardProps) {
                     <td>
                       <strong>{totalRestrictedUnits}</strong>
                     </td>
-                    {isAdvertisingOn && <td></td>}
-                    {isAdvertisingOn && <td></td>}
                   </tr>
                 </tbody>
               </Table>

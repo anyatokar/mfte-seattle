@@ -87,8 +87,8 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
                     key={building.buildingID}
                     xs={12}
                     sm={isAdvertisingOn ? 12 : 6}
-                    lg={isAdvertisingOn ? 12 : 4}
-                    xl={isAdvertisingOn ? 6 : 3}
+                    lg={isAdvertisingOn ? 6 : 4}
+                    xl={isAdvertisingOn ? 4 : 3}
                     className="building-row"
                   >
                     <BuildingCard
