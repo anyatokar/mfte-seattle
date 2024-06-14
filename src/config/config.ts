@@ -4,6 +4,6 @@ const config = {
   },
 };
 
-export const isAdvertisingOn = true;
+export const isAdvertisingOn = false;
 
 export default config;
