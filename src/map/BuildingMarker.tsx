@@ -1,8 +1,10 @@
 /// <reference types="googlemaps" />
-import { useCallback } from "react";
+import { useCallback, useState, useContext  } from "react";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 import { useAuth } from "../contexts/AuthContext";
-import { useState, useContext } from "react";
+
+import { areListingsOn } from "../config/config";
+
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 import {
@@ -10,7 +12,6 @@ import {
   BuildingName,
 } from "../components/BuildingContactInfo";
 
-import { isAdvertisingOn } from "../config/config";
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 
@@ -97,7 +98,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
     anchor: new google.maps.Point(0, 20),
   };
 
-  const icon = isAdvertisingOn && listing ? svgMarkerAd : svgMarkerNoAd;
+  const icon = areListingsOn && listing ? svgMarkerAd : svgMarkerNoAd;
 
   return (
     <Marker

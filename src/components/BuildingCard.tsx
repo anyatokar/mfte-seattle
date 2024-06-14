@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 
-import { isAdvertisingOn } from "../config/config";
+import { areListingsOn } from "../config/config";
 import { pageTypeEnum } from "../types/enumTypes";
 
 import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
@@ -208,23 +208,23 @@ export function BuildingCard(props: BuildingsCardProps) {
       <ListGroup variant="flush">
         <ListGroup.Item
           className={
-            isAdvertisingOn && listing && listing.hasAnyAvailability
+            areListingsOn && listing && listing.hasAnyAvailability
               ? "listing-card"
               : ""
           }
         >
-          <ListingCard isAdvertisingOn={isAdvertisingOn} listing={listing} />
+          <ListingCard areListingsOn={areListingsOn} listing={listing} />
         </ListGroup.Item>
 
         <ListGroup.Item>
           <Tabs
             defaultActiveKey={
-              isAdvertisingOn && listing?.hasAnyAvailability
+              areListingsOn && listing?.hasAnyAvailability
                 ? "availability"
                 : "contact"
             }
           >
-            {isAdvertisingOn && (
+            {areListingsOn && (
               <Tab
                 eventKey="availability"
                 title="Availability"

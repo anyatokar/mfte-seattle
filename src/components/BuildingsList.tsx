@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { isAdvertisingOn } from "../config/config";
+import { areListingsOn } from "../config/config";
 import { pageTypeEnum } from "../types/enumTypes";
 
 import { BuildingCard } from "./BuildingCard";
@@ -93,9 +93,9 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
                   <Col
                     key={building.buildingID}
                     xs={12}
-                    sm={isAdvertisingOn ? 12 : 6}
-                    lg={isAdvertisingOn ? 6 : 4}
-                    xl={isAdvertisingOn ? 4 : 3}
+                    sm={areListingsOn ? 12 : 6}
+                    lg={areListingsOn ? 6 : 4}
+                    xl={areListingsOn ? 4 : 3}
                     className="building-row"
                   >
                     <BuildingCard

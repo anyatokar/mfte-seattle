@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
 
-import { isAdvertisingOn } from "../config/config";
+import { areListingsOn } from "../config/config";
 
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useAllListings";
@@ -88,7 +88,7 @@ const AllBuildingsPage: React.FunctionComponent<
   // listings
   let [allListings, loadingAllListings] = useAllListings();
 
-  if (!isAdvertisingOn) {
+  if (!areListingsOn) {
     allListings = [];
     loadingAllListings = false;
   }
