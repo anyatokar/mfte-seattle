@@ -4,6 +4,8 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
 
+import { isAdvertisingOn } from "../config/config";
+
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useAllListings";
 
@@ -26,7 +28,6 @@ import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import Spinner from "react-bootstrap/Spinner";
-import { isAdvertisingOn } from "../config/config";
 
 const AllBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>

@@ -9,10 +9,12 @@ import {
   AddressAndPhone,
   BuildingName,
 } from "../components/BuildingContactInfo";
-import IBuilding from "../interfaces/IBuilding";
-import Button from "react-bootstrap/Button";
+
 import { isAdvertisingOn } from "../config/config";
+import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
+
+import Button from "react-bootstrap/Button";
 
 interface IBuildingMarkerProps {
   building: IBuilding;

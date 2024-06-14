@@ -1,19 +1,20 @@
-import { isAdvertisingOn } from "../config/config";
-
 import { useState, useContext } from "react";
+
+import { isAdvertisingOn } from "../config/config";
+import { pageTypeEnum } from "../types/enumTypes";
+
 import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
+import { ListingCard } from "./ListingCard";
+
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
 import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
-import { ListingCard } from "./ListingCard";
-
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IListing from "../interfaces/IListing";
-import { pageTypeEnum } from "../types/enumTypes";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";

@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 import { isAdvertisingOn } from "../config/config";
+import { pageTypeEnum } from "../types/enumTypes";
 
 import { BuildingCard } from "./BuildingCard";
 import Sorters from "./Sorters";
+
 import { genericSort } from "../utils/genericSort";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -14,7 +16,6 @@ import IListing from "../interfaces/IListing";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { pageTypeEnum } from "../types/enumTypes";
 
 type allBuildingsListProps = {
   resultBuildingsUnsorted: IBuilding[];
