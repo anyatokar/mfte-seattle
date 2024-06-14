@@ -3,14 +3,11 @@ import { useCallback, useState, useEffect } from "react";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
 
-import { useAuth } from "../contexts/AuthContext";
 import IListing from "../interfaces/IListing";
 
 export function useAllListings(): [IListing[], boolean] {
   const [allListings, setAllListings] = useState([] as Array<IListing>);
   const [loadingAllListings, setLoadingAllListings] = useState(false);
-
-  const { currentUser } = useAuth();
 
   const getAllListings = useCallback(() => {
     setLoadingAllListings(true);
@@ -30,7 +27,7 @@ export function useAllListings(): [IListing[], boolean] {
     return () => {
       unsubscribe();
     };
-  }, [currentUser]);
+  }, []);
 
   useEffect(() => {
     getAllListings();
