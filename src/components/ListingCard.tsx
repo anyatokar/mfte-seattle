@@ -21,7 +21,7 @@ export function ListingCard(props: ListingCardProps) {
     }
 
     if (isAdvertisingOn && listing && !listing.hasAnyAvailability) {
-      summaryString = "No apartments available at this time.";
+      summaryString = "No MFTE apartments available at this time.";
     }
 
     return summaryString;

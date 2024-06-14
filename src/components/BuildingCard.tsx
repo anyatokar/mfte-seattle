@@ -201,54 +201,63 @@ export function BuildingCard(props: BuildingsCardProps) {
                   <thead>
                     <tr>
                       <th>Bedrooms</th>
-                      <th>Units Available?</th>
+                      <th>Earliest Available Date</th>
                       <th>Rent</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {sedu !== 0 && (
+                    {listing?.dateSeduAvailable && (
                       <tr>
                         <td>Pod</td>
-                        {listing ? (
-                          <td>{listing.hasSeduListing ? "Yes" : "No"}</td>
-                        ) : (
-                          <td>--</td>
-                        )}
+                        <td>
+                          {listing?.dateSeduAvailable
+                            ?.toDate()
+                            .toLocaleDateString() || "--"}
+                        </td>
                         <td>{listing?.seduRent || "--"}</td>
                       </tr>
                     )}
-                    {studioUnits !== 0 && (
+                    {listing?.dateStudioAvailable && (
                       <tr>
                         <td>Studio</td>
-
                         <td>
-                          {listing
-                            ? listing.hasStudioListing
-                              ? "Yes"
-                              : "No"
-                            : "--"}
+                          {listing?.dateStudioAvailable
+                            ?.toDate()
+                            .toLocaleDateString() || "--"}
                         </td>
                         <td>{listing?.studioRent || "--"}</td>
                       </tr>
                     )}
-                    {oneBedroomUnits !== 0 && (
+                    {listing?.dateOneBedAvailable && (
                       <tr>
                         <td>One</td>
-                        <td>{listing?.hasOneBedListing ? "Yes" : "No"}</td>
+                        <td>
+                          {listing?.dateOneBedAvailable
+                            ?.toDate()
+                            .toLocaleDateString() || "--"}
+                        </td>
                         <td>{listing?.oneBedRent || "--"}</td>
                       </tr>
                     )}
-                    {twoBedroomUnits !== 0 && (
+                    {listing?.dateTwoBedAvailable && (
                       <tr>
                         <td>Two</td>
-                        <td>{listing?.hasTwoBedListing ? "Yes" : "No"}</td>
+                        <td>
+                          {listing?.dateTwoBedAvailable
+                            ?.toDate()
+                            .toLocaleDateString() || "--"}
+                        </td>
                         <td>{listing?.twoBedRent || "--"}</td>
                       </tr>
                     )}
-                    {threePlusBedroomUnits !== 0 && (
+                    {listing?.dateThreePlusBedAvailable && (
                       <tr>
                         <td>Three+</td>
-                        <td>{listing?.hasThreePlusListing ? "Yes" : "No"}</td>
+                        <td>
+                          {listing?.dateThreePlusBedAvailable
+                            ?.toDate()
+                            .toLocaleDateString() || "--"}
+                        </td>
                         <td>{listing?.threePlusBedRent || "--"}</td>
                       </tr>
                     )}
