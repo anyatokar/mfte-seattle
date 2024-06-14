@@ -13,8 +13,6 @@ export function useAllListings(): [IListing[], boolean] {
   const { currentUser } = useAuth();
 
   const getAllListings = useCallback(() => {
-    if (!currentUser) return;
-
     setLoadingAllListings(true);
 
     const q = query(collection(db, "listings"));
