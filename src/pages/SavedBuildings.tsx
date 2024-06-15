@@ -1,11 +1,15 @@
 import { Profiler } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
+import { useAllListings } from "../hooks/useAllListings";
+
 import IPage from "../interfaces/IPage";
+import { pageTypeEnum } from "../types/enumTypes";
 
 import MapTab from "../components/MapTab";
-import SavedBuildingsList from "../components/SavedBuildingsList";
+import AllBuildingsList from "../components/BuildingsList";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -18,11 +22,14 @@ const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = (props) => {
   const { currentUser } = useAuth();
-  const [savedBuildings, loading] = useSavedBuildings();
+  const [savedBuildings, loadingSavedBuildings] = useSavedBuildings();
+  const [allListings, loadingAllListings] = useAllListings();
 
   if (!currentUser) {
     return null;
   }
+
+  let loading = loadingSavedBuildings || loadingAllListings;
 
   return (
     <Profiler
@@ -91,10 +98,16 @@ const SavedBuildingsPage: React.FunctionComponent<
                   <MapTab
                     buildingsToMap={savedBuildings}
                     savedBuildings={savedBuildings}
+                    allListings={allListings}
                   />
                 </Tab.Pane>
                 <Tab.Pane eventKey="list">
-                  <SavedBuildingsList savedBuildings={savedBuildings} />
+                  <AllBuildingsList
+                    resultBuildingsUnsorted={savedBuildings}
+                    savedBuildings={savedBuildings}
+                    allListings={allListings}
+                    pageType={pageTypeEnum.savedBuildings}
+                  />
                 </Tab.Pane>
               </Tab.Content>
             </Col>

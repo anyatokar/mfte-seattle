@@ -14,6 +14,7 @@ export default function MapTab(props: IMap) {
           <ReactMap
             buildingsToMap={props.buildingsToMap}
             savedBuildings={props.savedBuildings}
+            allListings={props.allListings}
           />
         </Col>
       </Row>

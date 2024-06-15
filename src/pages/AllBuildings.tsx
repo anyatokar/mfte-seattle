@@ -4,9 +4,12 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
 
-import { useSavedBuildings } from "../hooks/useSavedBuildings";
+import { areListingsOn } from "../config/config";
 
-import AllBuildingsList from "../components/AllBuildingsList";
+import { useSavedBuildings } from "../hooks/useSavedBuildings";
+import { useAllListings } from "../hooks/useAllListings";
+
+import AllBuildingsList from "../components/BuildingsList";
 import { Filters } from "../components/Filters";
 import MapTab from "../components/MapTab";
 import SearchInput from "../components/SearchInput";
@@ -17,6 +20,7 @@ import { genericFilter } from "../utils/genericFilter";
 import IBuilding from "../interfaces/IBuilding";
 import IFilter from "../interfaces/IFilter";
 import IPage from "../interfaces/IPage";
+import { pageTypeEnum } from "../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -28,6 +32,7 @@ import Spinner from "react-bootstrap/Spinner";
 const AllBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = (props) => {
+  // get all buildings
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
 
@@ -55,6 +60,7 @@ const AllBuildingsPage: React.FunctionComponent<
     getAllBuildings();
   }, [getAllBuildings]);
 
+  // search, filter
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
     []
@@ -79,6 +85,14 @@ const AllBuildingsPage: React.FunctionComponent<
 
   const [savedBuildings, loadingSavedBuildings] = useSavedBuildings();
 
+  // listings
+  let [allListings, loadingAllListings] = useAllListings();
+
+  if (!areListingsOn) {
+    allListings = [];
+    loadingAllListings = false;
+  }
+
   return (
     <Profiler
       id={props.name}
@@ -101,7 +115,7 @@ const AllBuildingsPage: React.FunctionComponent<
       }}
     >
       <div className="all-pages">
-        {loading || loadingSavedBuildings ? (
+        {loading || loadingSavedBuildings || loadingAllListings ? (
           <Spinner animation="border" variant="warning" />
         ) : (
           <></>
@@ -189,12 +203,15 @@ const AllBuildingsPage: React.FunctionComponent<
                     <MapTab
                       buildingsToMap={resultBuildingsUnsorted}
                       savedBuildings={savedBuildings}
+                      allListings={allListings}
                     />
                   </Tab.Pane>
                   <Tab.Pane eventKey="saved">
                     <AllBuildingsList
                       resultBuildingsUnsorted={resultBuildingsUnsorted}
                       savedBuildings={savedBuildings}
+                      allListings={allListings}
+                      pageType={pageTypeEnum.allBuildings}
                     />
                   </Tab.Pane>
                 </Tab.Content>
