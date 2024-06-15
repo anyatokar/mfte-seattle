@@ -35,7 +35,9 @@ export interface SavedBuildingsCardProps extends ISavedBuilding {
   listing: IListing | undefined;
 }
 
-type BuildingsCardProps = AllBuildingsCardProps | SavedBuildingsCardProps;
+export type BuildingsCardProps =
+  | AllBuildingsCardProps
+  | SavedBuildingsCardProps;
 
 export function BuildingCard(props: BuildingsCardProps) {
   const { currentUser } = useAuth();

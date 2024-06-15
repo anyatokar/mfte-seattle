@@ -16,6 +16,7 @@ import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 
 import Button from "react-bootstrap/Button";
+import Details from "../auth_components/Details";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -62,6 +63,10 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
 
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
+  const handleShowDetails = () => {
+    <Details/>
+  }
+    ;
 
   const { currentUser } = useAuth();
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
@@ -133,23 +138,17 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
               phone2={phone2}
             />
             {currentUser ? (
-              wasOriginallySaved || isSaved ? (
-                <Button
-                  className="diy-solid-info-button"
-                  size="sm"
-                  onClick={toggleSave}
-                >
-                  Saved
-                </Button>
-              ) : (
-                <Button
-                  className="diy-outline-info-button"
-                  size="sm"
-                  onClick={toggleSave}
-                >
-                  Save
-                </Button>
-              )
+              <Button
+                className={
+                  wasOriginallySaved || isSaved
+                    ? "diy-solid-info-button"
+                    : "diy-outline-info-button"
+                }
+                size="sm"
+                onClick={toggleSave}
+              >
+                {wasOriginallySaved || isSaved ? "Saved" : "Save"}
+              </Button>
             ) : (
               <>
                 <Button
@@ -161,6 +160,13 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
                 </Button>
               </>
             )}
+            <Button
+              className="diy-outline-info-button"
+              size="sm"
+              onClick={handleShowDetails}
+            >
+              View Details
+            </Button>
           </>
         </InfoWindow>
       )}
