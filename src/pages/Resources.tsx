@@ -96,8 +96,8 @@ const ResourcesPage: React.FunctionComponent<
               <ListGroup.Item>
                 <a
                   id="income-and-rent-limits"
-                  href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentalHousingLimits.pdf"
-                  title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentalHousingLimits.pdf"
+                  href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
+                  title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
                   target="_blank"
                   rel="noreferrer"
                   className="fw-bold"
