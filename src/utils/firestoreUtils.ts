@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { formFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
+import { listingFormFieldsType } from "../components/AddPropertyModal";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -152,6 +153,30 @@ export async function sendMessageFirestore(formFields: formFieldsType) {
     message: formFields.message,
     sentTimestamp: new Date(),
     didReply: false,
+  });
+}
+
+export async function addListingFirestore(formFields: listingFormFieldsType) {
+  await addDoc(collection(db, "listings"), {
+    name: formFields.name,
+    address: formFields.address,
+    url: formFields.url,
+    startDate: formFields.startDate,
+    endDate: formFields.endDate,
+    lastUpdateDate: formFields.lastUpdateDate,
+    // hasAnyAvailability: formFields.hasAnyAvailability,
+    listingId: formFields.listingId,
+    buildingID: formFields.buildingID,
+    seduDateAvail: formFields.seduDateAvail,
+    seduRent: formFields.seduRent,
+    // studioDateAvail: formFields.studioDateAvail,
+    studioRent: formFields.studioRent,
+    // oneBedDateAvail: formFields.oneBedDateAvail,
+    oneBedRent: formFields.oneBedRent,
+    // twoBedDateAvail: formFields.twoBedDateAvail,
+    twoBedRent: formFields.twoBedRent,
+    // threePlusBedDateAvail: formFields.threePlusBedDateAvail,
+    threePlusBedRent: formFields.threePlusBedRent,
   });
 }
 

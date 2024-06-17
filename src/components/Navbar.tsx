@@ -121,6 +121,9 @@ export const Header = () => {
               <LinkContainer to="/saved-buildings">
                 <Nav.Link active={false}>Saved</Nav.Link>
               </LinkContainer>
+              <LinkContainer to="/manage-listings">
+                <Nav.Link active={false}>Manage Listings</Nav.Link>
+              </LinkContainer>
               <Nav.Link
                 className="logout"
                 active={false}

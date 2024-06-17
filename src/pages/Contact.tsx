@@ -21,7 +21,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
   props
 ) => {
   function clearFields(): void {
-    setformFields({
+    setFormFields({
       authorName: "",
       email: "",
       description: "",
@@ -30,7 +30,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
     });
   }
 
-  const [formFields, setformFields] = useState({
+  const [formFields, setFormFields] = useState({
     authorName: "",
     email: "",
     description: "",
@@ -42,12 +42,12 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ): void => {
-    const newformFields = {
+    const newFormFields = {
       ...formFields,
     };
-    newformFields[event.target.name as keyof formFieldsType] =
+    newFormFields[event.target.name as keyof formFieldsType] =
       event.target.value;
-    setformFields(newformFields);
+    setFormFields(newFormFields);
   };
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {

@@ -26,7 +26,8 @@ const ListingTable: React.FC = () => {
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [currentProperty, setCurrentProperty] = useState<Partial<IListing> | null>(null);
+  const [currentProperty, setCurrentProperty] =
+    useState<Partial<IListing> | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [listingToDelete, setPropertyToDelete] = useState<string | null>(null);
 
@@ -43,7 +44,9 @@ const ListingTable: React.FC = () => {
 
   const handleSave = (listing: IListing) => {
     if (isEditing) {
-      setListings(listings.map((p) => (p.listingId === listing.listingId ? listing : p)));
+      setListings(
+        listings.map((p) => (p.listingId === listing.listingId ? listing : p))
+      );
     } else {
       setListings([...listings, { ...listing, listingId: String(Date.now()) }]);
     }
@@ -68,8 +71,12 @@ const ListingTable: React.FC = () => {
     }
   };
 
-  const currentListings = listings.filter((listing) => new Date(listing.endDate) >= new Date());
-  const previousListings = listings.filter((listing) => new Date(listing.endDate) < new Date());
+  const currentListings = listings.filter(
+    (listing) => new Date(listing.endDate) >= new Date()
+  );
+  const previousListings = listings.filter(
+    (listing) => new Date(listing.endDate) < new Date()
+  );
 
   return (
     <div>
@@ -94,17 +101,27 @@ const ListingTable: React.FC = () => {
                   <td>{listing.name}</td>
                   <td>{listing.address}</td>
                   <td>
-                    <a href={listing.url} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={listing.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {listing.url}
                     </a>
                   </td>
                   <td>{listing.startDate}</td>
                   <td>{listing.lastUpdateDate}</td>
                   <td>
-                    <Button variant="warning" onClick={() => handleShowModal(listing)}>
+                    <Button
+                      variant="warning"
+                      onClick={() => handleShowModal(listing)}
+                    >
                       Edit
                     </Button>{" "}
-                    <Button variant="danger" onClick={() => handleShowDeleteModal(listing.listingId)}>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleShowDeleteModal(listing.listingId)}
+                    >
                       Delete
                     </Button>
                   </td>
@@ -131,17 +148,27 @@ const ListingTable: React.FC = () => {
                   <td>{listing.name}</td>
                   <td>{listing.address}</td>
                   <td>
-                    <a href={listing.url} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={listing.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {listing.url}
                     </a>
                   </td>
                   <td>{listing.startDate}</td>
                   <td>{listing.endDate}</td>
                   <td>
-                    <Button variant="warning" onClick={() => handleShowModal(listing)}>
+                    <Button
+                      variant="warning"
+                      onClick={() => handleShowModal(listing)}
+                    >
                       Edit
                     </Button>{" "}
-                    <Button variant="danger" onClick={() => handleShowDeleteModal(listing.listingId)}>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleShowDeleteModal(listing.listingId)}
+                    >
                       Delete
                     </Button>
                   </td>
@@ -183,4 +210,3 @@ const ListingTable: React.FC = () => {
 };
 
 export default ListingTable;
-
