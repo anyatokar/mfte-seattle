@@ -73,8 +73,7 @@ const AllBuildingsPage: React.FunctionComponent<
           [
             "buildingName",
             "residentialTargetedArea",
-            "streetNum",
-            "street",
+            "streetAddress",
             "zip",
           ],
           searchQuery
