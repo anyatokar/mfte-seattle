@@ -24,23 +24,23 @@ import Tab from "react-bootstrap/Tab";
 import Table from "react-bootstrap/Table";
 import Tabs from "react-bootstrap/Tabs";
 
-export interface AllBuildingsCardProps {
+export interface AllBuildingCardProps {
   building: IBuilding;
   isSaved: boolean;
   pageType: pageTypeEnum.allBuildings;
   listing: IListing | undefined;
 }
 
-export interface SavedBuildingsCardProps{
+export interface SavedBuildingCardProps{
   building: ISavedBuilding;
   isSaved: boolean;
   pageType: pageTypeEnum.savedBuildings;
   listing: IListing | undefined;
 }
 
-type BuildingsCardProps = AllBuildingsCardProps | SavedBuildingsCardProps;
+type BuildingCardProps = AllBuildingCardProps | SavedBuildingCardProps;
 
-const BuildingCard: React.FC<BuildingsCardProps> = (props) => {
+const BuildingCard: React.FC<BuildingCardProps> = (props) => {
 
   const {
     buildingID,
