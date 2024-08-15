@@ -3,7 +3,7 @@ import { useState } from "react";
 import { areListingsOn } from "../config/config";
 import { pageTypeEnum } from "../types/enumTypes";
 
-import { BuildingCard } from "./BuildingCard";
+import BuildingCard from "./BuildingCard";
 import Sorters from "./Sorters";
 
 import { genericSort } from "../utils/genericSort";
@@ -99,7 +99,7 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
                     className="building-row"
                   >
                     <BuildingCard
-                      {...building}
+                      building={building}
                       isSaved={checkIsSaved(props.savedBuildings, building)}
                       pageType={props.pageType}
                       listing={getListing(

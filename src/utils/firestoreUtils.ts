@@ -16,7 +16,7 @@ export async function saveBuilding(
   uid: string | undefined,
   building: IBuilding
 ) {
-  if (!uid) {
+  if (!uid || !building) {
     return;
   }
 

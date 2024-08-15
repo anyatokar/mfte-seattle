@@ -1,5 +1,6 @@
 import IListingAptDetails from "./IListingAptDetails";
 
+/** An object containing listing metadata. */
 export default interface IListing {
   name: string;
   address: string;

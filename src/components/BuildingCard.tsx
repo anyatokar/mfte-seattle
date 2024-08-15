@@ -24,21 +24,24 @@ import Tab from "react-bootstrap/Tab";
 import Table from "react-bootstrap/Table";
 import Tabs from "react-bootstrap/Tabs";
 
-export interface AllBuildingsCardProps extends IBuilding {
+export interface AllBuildingsCardProps {
+  building: IBuilding;
   isSaved: boolean;
   pageType: pageTypeEnum.allBuildings;
   listing: IListing | undefined;
 }
 
-export interface SavedBuildingsCardProps extends ISavedBuilding {
+export interface SavedBuildingsCardProps{
+  building: ISavedBuilding;
+  isSaved: boolean;
   pageType: pageTypeEnum.savedBuildings;
   listing: IListing | undefined;
 }
 
 type BuildingsCardProps = AllBuildingsCardProps | SavedBuildingsCardProps;
 
-export function BuildingCard(props: BuildingsCardProps) {
-  const { currentUser } = useAuth();
+const BuildingCard: React.FC<BuildingsCardProps> = (props) => {
+
   const {
     buildingID,
     buildingName,
@@ -57,10 +60,14 @@ export function BuildingCard(props: BuildingsCardProps) {
     city,
     state,
     zip,
-    pageType,
-    /** An object containing listing metadata. */
+  } = props.building;
+
+  const {
+    pageType, 
     listing,
-  } = props;
+  } = props
+
+  const { currentUser } = useAuth();
 
   // All Buildings Page - save/saved button
   const [, /* modalState */ setModalState] = useContext(ModalContext);
@@ -73,9 +80,9 @@ export function BuildingCard(props: BuildingsCardProps) {
   if (pageType === pageTypeEnum.allBuildings) {
     wasOriginallySaved = props.isSaved;
   } else if (pageType === pageTypeEnum.savedBuildings) {
-    note = props.note;
-    formattedTimestamp = props.noteTimestamp
-      ? timestampToDateAndTime(props.noteTimestamp)
+    note = props.building.note;
+    formattedTimestamp = props.building.noteTimestamp
+      ? timestampToDateAndTime(props.building.noteTimestamp)
       : null;
   }
 
@@ -87,7 +94,7 @@ export function BuildingCard(props: BuildingsCardProps) {
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
-      saveBuilding(currentUser?.uid, props);
+      saveBuilding(currentUser?.uid, props.building);
     }
   }
 
@@ -354,4 +361,6 @@ export function BuildingCard(props: BuildingsCardProps) {
       </ListGroup>
     </Card>
   );
-}
+};
+
+export default BuildingCard;
