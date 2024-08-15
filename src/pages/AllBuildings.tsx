@@ -70,12 +70,7 @@ const AllBuildingsPage: React.FunctionComponent<
       .filter((building) =>
         genericSearch<IBuilding>(
           building,
-          [
-            "buildingName",
-            "residentialTargetedArea",
-            "streetAddress",
-            "zip",
-          ],
+          ["buildingName", "residentialTargetedArea", "streetAddress", "zip"],
           searchQuery
         )
       )

@@ -60,6 +60,7 @@ export function BuildingCard(props: BuildingsCardProps) {
     pageType,
     /** An object containing listing metadata. */
     listing,
+    amiData,
   } = props;
 
   // All Buildings Page - save/saved button
@@ -146,6 +147,13 @@ export function BuildingCard(props: BuildingsCardProps) {
       rent: listing?.threePlusBedAvail?.rent,
     },
   ];
+
+  function formatAMIData() {
+    return Object.entries(amiData.studio)
+      .filter(([key, value]) => value !== null)
+      .map(([key]) => `${key}%`)
+      .join(", ");
+  }
 
   return (
     <Card>
@@ -272,6 +280,7 @@ export function BuildingCard(props: BuildingsCardProps) {
                   <tr>
                     <th>Bedrooms</th>
                     <th># of MFTE Units</th>
+                    <th>AMI</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -279,12 +288,24 @@ export function BuildingCard(props: BuildingsCardProps) {
                     <tr>
                       <td>Pod</td>
                       <td>{sedu}</td>
+                      <td>
+                        {Object.entries(amiData.micro)
+                          .filter(([key, value]) => value !== null)
+                          .map(([key]) => `${key}%`)
+                          .join(", ")}
+                      </td>
                     </tr>
                   )}
                   {studioUnits !== 0 && (
                     <tr>
                       <td>Studio</td>
                       <td>{studioUnits}</td>
+                      <td>
+                        {Object.entries(amiData.studio)
+                          .filter(([key, value]) => value !== null)
+                          .map(([key]) => `${key}%`)
+                          .join(", ")}
+                      </td>
                     </tr>
                   )}
                   {oneBedroomUnits !== 0 && (
