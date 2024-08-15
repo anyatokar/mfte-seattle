@@ -45,24 +45,29 @@ export const getListing = (
   );
 };
 
-export default function AllBuildingsList(props: allBuildingsListProps) {
+const AllBuildingsList: React.FC<allBuildingsListProps> = ({
+  resultBuildingsUnsorted,
+  savedBuildings,
+  pageType,
+  allListings,
+}) => {
   const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
     property: "buildingName",
     isDescending: false,
   });
 
-  if (!props.resultBuildingsUnsorted) {
+  if (!resultBuildingsUnsorted) {
     return null;
   }
 
-  const resultBuildings = props.resultBuildingsUnsorted.sort(
+  const resultBuildings = resultBuildingsUnsorted.sort(
     (buildingA: any, buildingB: any) =>
       genericSort<IBuilding>(buildingA, buildingB, activeSorter)
   );
 
   return (
     <Container fluid>
-      {props.pageType === pageTypeEnum.allBuildings && (
+      {pageType === pageTypeEnum.allBuildings && (
         <Row>
           <Col
             sm={12}
@@ -70,9 +75,9 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
             lg={{ span: 8, offset: 0 }}
             className="p-0"
           >
-            {props.resultBuildingsUnsorted.length > 0 && (
+            {resultBuildingsUnsorted.length > 0 && (
               <Sorters<IBuilding>
-                object={props.resultBuildingsUnsorted[0]}
+                object={resultBuildingsUnsorted[0]}
                 onChangeSorter={(property, isDescending) => {
                   setActiveSorter({
                     property,
@@ -100,12 +105,9 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
                   >
                     <BuildingCard
                       building={building}
-                      isSaved={checkIsSaved(props.savedBuildings, building)}
-                      pageType={props.pageType}
-                      listing={getListing(
-                        props.allListings,
-                        building.buildingID
-                      )}
+                      isSaved={checkIsSaved(savedBuildings, building)}
+                      pageType={pageType}
+                      listing={getListing(allListings, building.buildingID)}
                     />
                   </Col>
                 ))}
@@ -116,4 +118,6 @@ export default function AllBuildingsList(props: allBuildingsListProps) {
       </Row>
     </Container>
   );
-}
+};
+
+export default AllBuildingsList;

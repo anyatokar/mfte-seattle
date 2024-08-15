@@ -14,9 +14,10 @@ interface addressAndPhoneProps {
   phone2: string;
 }
 
-export function BuildingName(props: buildingNameProps) {
-  const { buildingName, urlForBuilding } = props;
-
+const BuildingName: React.FC<buildingNameProps> = ({
+  buildingName,
+  urlForBuilding,
+}) => {
   return (
     <div>
       <a
@@ -30,12 +31,18 @@ export function BuildingName(props: buildingNameProps) {
       </a>
     </div>
   );
-}
+};
 
-export function AddressAndPhone(props: addressAndPhoneProps) {
-  const { buildingName, streetNum, street, city, state, zip, phone, phone2 } =
-    props;
-
+const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
+  buildingName,
+  streetNum,
+  street,
+  city,
+  state,
+  zip,
+  phone,
+  phone2,
+}) => {
   const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${streetNum}+${street}+${city}+${state}+${zip}`;
   const phone1Ref = `tel:${phone}`;
   const phone2Ref = `tel:${phone2}`;
@@ -71,4 +78,6 @@ export function AddressAndPhone(props: addressAndPhoneProps) {
       </>
     </div>
   );
-}
+};
+
+export { BuildingName, AddressAndPhone };

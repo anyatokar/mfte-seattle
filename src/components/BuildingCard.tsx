@@ -31,7 +31,7 @@ export interface AllBuildingCardProps {
   listing: IListing | undefined;
 }
 
-export interface SavedBuildingCardProps{
+export interface SavedBuildingCardProps {
   building: ISavedBuilding;
   isSaved: boolean;
   pageType: pageTypeEnum.savedBuildings;
@@ -41,7 +41,6 @@ export interface SavedBuildingCardProps{
 type BuildingCardProps = AllBuildingCardProps | SavedBuildingCardProps;
 
 const BuildingCard: React.FC<BuildingCardProps> = (props) => {
-
   const {
     buildingID,
     buildingName,
@@ -62,10 +61,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     zip,
   } = props.building;
 
-  const {
-    pageType, 
-    listing,
-  } = props
+  const { pageType, listing } = props;
 
   const { currentUser } = useAuth();
 
