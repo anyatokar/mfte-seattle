@@ -36,7 +36,7 @@ export function useAuth() {
   return context;
 }
 
-export function AuthProvider({ children }: IProps) {
+const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -122,3 +122,5 @@ export function AuthProvider({ children }: IProps) {
     </AuthContext.Provider>
   );
 }
+
+export default AuthProvider;
