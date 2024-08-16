@@ -22,7 +22,11 @@ const center = {
 // TODO: Is this library needed?
 const LIBRARIES: "places"[] = ["places"];
 
-const ReactMap: React.FC<IMap> = ({buildingsToMap = [], savedBuildings, allListings}) => {
+const ReactMap: React.FC<IMap> = ({
+  buildingsToMap = [],
+  savedBuildings,
+  allListings,
+}) => {
   // const { buildingsToMap = [] } = props;
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
     null
@@ -66,6 +70,6 @@ const ReactMap: React.FC<IMap> = ({buildingsToMap = [], savedBuildings, allListi
       </>
     </GoogleMap>
   );
-}
+};
 
 export default ReactMap;

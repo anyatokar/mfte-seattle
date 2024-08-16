@@ -71,6 +71,6 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
       })}
     </div>
   );
-}
+};
 
 export default Filters;

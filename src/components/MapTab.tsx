@@ -6,7 +6,11 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-const MapTab: React.FC<IMap> = ({buildingsToMap, savedBuildings, allListings}) => {
+const MapTab: React.FC<IMap> = ({
+  buildingsToMap,
+  savedBuildings,
+  allListings,
+}) => {
   return (
     <Container fluid>
       <Row>
@@ -20,6 +24,6 @@ const MapTab: React.FC<IMap> = ({buildingsToMap, savedBuildings, allListings}) =
       </Row>
     </Container>
   );
-}
+};
 
 export default MapTab;

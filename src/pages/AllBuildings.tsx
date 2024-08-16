@@ -29,9 +29,9 @@ import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import Spinner from "react-bootstrap/Spinner";
 
-const AllBuildingsPage: React.FC<
-  IPage & RouteComponentProps<any>
-> = ({name}) => {
+const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
+  name,
+}) => {
   // get all buildings
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);

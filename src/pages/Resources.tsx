@@ -9,10 +9,10 @@ import Row from "react-bootstrap/Row";
 
 const ResourcesPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = (props) => {
+> = ({ name }) => {
   return (
     <Profiler
-      id={props.name}
+      id={name}
       onRender={(
         id,
         phase,
