@@ -41,9 +41,7 @@ const radioButtonUILabels: radioButtonMapType = {
   threePlusBedroomUnits: "Three or more",
 };
 
-export function Filters<T>(props: IFiltersProps<T>) {
-  const { filters, onChangeFilter } = props;
-
+const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
   const getChecked = (radioButtonKey: radioButtonKeyType) => {
     const x = filters.filter((x) => x.property === radioButtonKey);
     return x.length === 1;
@@ -74,3 +72,5 @@ export function Filters<T>(props: IFiltersProps<T>) {
     </div>
   );
 }
+
+export default Filters;

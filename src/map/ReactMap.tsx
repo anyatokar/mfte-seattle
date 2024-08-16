@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { BuildingMarker } from "./BuildingMarker";
 import { checkIsSaved, getListing } from "../components/BuildingsList";
@@ -22,8 +22,8 @@ const center = {
 // TODO: Is this library needed?
 const LIBRARIES: "places"[] = ["places"];
 
-export function ReactMap(props: IMap) {
-  const { buildingsToMap = [] } = props;
+const ReactMap: React.FC<IMap> = ({buildingsToMap = [], savedBuildings, allListings}) => {
+  // const { buildingsToMap = [] } = props;
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
     null
   );
@@ -59,11 +59,13 @@ export function ReactMap(props: IMap) {
             building={building}
             isSelected={building === selectedBuilding}
             setSelectedBuilding={setSelectedBuilding}
-            isSaved={checkIsSaved(props.savedBuildings, building)}
-            listing={getListing(props.allListings, building.buildingID)}
+            isSaved={checkIsSaved(savedBuildings, building)}
+            listing={getListing(allListings, building.buildingID)}
           />
         ))}
       </>
     </GoogleMap>
   );
 }
+
+export default ReactMap;
