@@ -57,7 +57,7 @@ const ResourcesPage: React.FunctionComponent<
 
               <ListGroup.Item>
                 <a
-                  id="mfte-city-website"
+                  id="mfte-city-website-renters"
                   href="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
                   title="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
                   target="_blank"

@@ -56,11 +56,39 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
 
             <Row className="align-items-center py-3">
               <Col lg={2} className="text-lg-end">
+                <div className="fs-4">Disclaimers</div>
+              </Col>
+              <Col lg={8}>
+                <div className="lead">
+                  MFTE is a government program. This website is not affiliated
+                  with the Seattle Office of Housing or any government office.
+                  For official information about MFTE please visit the&nbsp;
+                  <a
+                    id="seattle-housing-website"
+                    href="https://seattle.gov/housing"
+                    title="https://seattle.gov/housing"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Seattle Office of Housing website
+                  </a>
+                  .
+                </div>
+                <div className="lead mt-2">
+                  Contact building property management directly for current
+                  information about apartment vacancies or renter
+                  qualifications.
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="align-items-center py-3">
+              <Col lg={2} className="text-lg-end">
                 <div className="fs-4">Why MFTE</div>
               </Col>
               <Col lg={8}>
                 <div className="lead">
-                  We chose to highlight the MFTE program because of the
+                  This website highlights the MFTE program because of the
                   relatively quick application turnaround, higher availability,
                   and modern apartments in sought-after locations.
                 </div>
@@ -77,6 +105,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                   <a
                     id="properties-spreadsheet-april-2024"
                     href="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"
+                    title="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -109,26 +138,6 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
 
             <Row className="align-items-center py-3">
               <Col lg={2} className="text-lg-end">
-                <div className="fs-4">Disclaimer</div>
-              </Col>
-              <Col lg={8}>
-                <div className="lead">
-                  MFTE is not the only rent-reduced program, and it's not
-                  available to everyone. Please view official government
-                  resources for complete information on rent-reduced and
-                  affordable housing programs in Seattle.
-                </div>
-                <div className="lead">
-                  We do not provide insight on current availability in each
-                  building or details on renter qualifications. The best way to
-                  learn this information is to get in touch with property
-                  management directly.
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="align-items-center py-3">
-              <Col lg={2} className="text-lg-end">
                 <div className="fs-4">Ownership</div>
               </Col>
               <Col lg={8}>
@@ -137,13 +146,14 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                   <a
                     id="ada-website"
                     href="https://adadevelopersacademy.org/"
+                    title="https://adadevelopersacademy.org/"
                     target="_blank"
                     rel="noreferrer"
                   >
                     Ada Developers Academy
                   </a>
                   &nbsp;grad (and former MFTE apartment resident) in 2021 as her
-                  capstone. It is an&nbsp;
+                  capstone project. It is an&nbsp;
                   <a
                     id="github-link"
                     href="https://github.com/anyatokar/mfte-seattle"
@@ -151,7 +161,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
                     target="_blank"
                     rel="noreferrer"
                   >
-                    open source project
+                    open-source project
                   </a>
                   .
                 </div>
