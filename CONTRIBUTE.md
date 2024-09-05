@@ -1,11 +1,25 @@
-# Contributing to the app
+# Contributing
 
-## prettier
+To contribute to the project, please follow these steps:
 
-### `yarn prettier ./src -w`
+1. **Coordinate with Maintainers**: Reach out to the maintainers to obtain secret keys and coordinate your work.
+2. **Access the Trello Board**: Track tasks and updates on our [Trello board](https://trello.com/b/2B1wmi72/mfte-capstone).
+3. **Clone the Repository**: Clone the app from GitHub to get started with development.
 
-Runs prettier on the src folder.
+## Code Formatting
 
-### `yarn prettier . -w`
+To format the code in the `src` folder:
 
-Runs prettier on the entire codebase.
+```bash
+`yarn prettier ./src -w`
+```
+
+To format the entire codebase:
+
+```bash
+`yarn prettier . -w`
+```
+
+## Deploying the App
+
+For deployment instructions, please refer to the [deployment documentation](./DEPLOYMENT.md).

@@ -1,53 +1,61 @@
-# Deploying the app
+# Deployment
+
+**Note**: The app auto-deploys when a pull request is merged.
 
 ## Environment
 
-The environment variables and keys are available from a maintainer via a LastPass share. Contact a maintainer for those credentials
+Environment variables and keys are shared via LastPass. Please contact a maintainer to obtain these credentials.
 
 ## Setup
 
-Install the gcloud CLI. On macOS:
+1. **Install the Google Cloud CLI**:
+   On macOS:
 
-```
-brew install google-cloud-sdk
-```
+   ```bash
+   brew install google-cloud-sdk
+   ```
 
-Set the project in gcloud
-
-```
-gcloud config set project mfte-simple-92c08
-```
+2. **Set the Google Cloud project**:
+   ```bash
+   gcloud config set project mfte-simple-92c08
+   ```
 
 ## Deploying
 
 You can deploy if your Google account has been added to the MFTE Seattle Firebase project.
 
-Install Firebase CLI if you haven't already: https://firebase.google.com/docs/hosting/quickstart#install-cli
+1. **Install Firebase CLI**:
+   If you haven't installed it, follow the instructions here: [Firebase CLI Quickstart](https://firebase.google.com/docs/hosting/quickstart#install-cli).
 
-Note: Firebase hosting is already initialized so don't do Step 2 in the above doc.
+   **Note**: Firebase Hosting is already initialized, so you can skip Step 2 in the documentation.
 
-Using the terminal, login to your Google account:
+2. **Login to Firebase**:
 
-```
-firebase login
-```
+   ```bash
+   firebase login
+   ```
 
-If that doesn't work, try:
+   If you encounter issues, try:
 
-```
-firebase login --reauth
-```
+   ```bash
+   firebase login --reauth
+   ```
 
-Build the app:
+3. **Build the App**:
 
-```
-yarn build
-```
+   ```bash
+   yarn build
+   ```
 
-Test the build locally. TODO: Add emulator instructions.
+4. **Test the Build Locally**:
 
-Deploy the build:
+   ```bash
+   yarn start
+   ```
 
-```
-firebase deploy --only hosting
-```
+   TODO: Add instructions for testing with an emulator.
+
+5. **Deploy the App**:
+   ```bash
+   firebase deploy --only hosting
+   ```
