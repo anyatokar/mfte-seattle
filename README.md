@@ -24,7 +24,7 @@ This app highlights the MFTE program because of the relatively quick application
 
 Buildings are sourced from the spreadsheet of [Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (April 2024)](https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf). Updated spreadsheets are published by the Seattle Office of Housing roughly twice a year.
 
-### Use
+### Usage
 
 Users can search and filter for apartments that fit their criteria (such as number of bedrooms, neighborhood, and building name). They can create a free login to keep a short list of properties, view a personalized map, and add notes.
 
