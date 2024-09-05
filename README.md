@@ -2,39 +2,30 @@
 
 This is the source for https://mfte-seattle.com
 
-# Maintaining the App
+## About
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started). To learn React, check out the [React documentation](https://reactjs.org/).
+### Overview
 
-The app is deployed on GCloud with a Firebase Firestore backend. Maintainers have access to the Firebase deployment.
+This application helps users locate rent-reduced apartments that are part of Seattle's Multi-family Tax Exemption (MFTE) program. It supplements existing government resources to make this rent-reduced housing program easier to navigate for the people it is intended to reach. The platform currently supports over 100 active daily users.
 
-## Running the App
+### Usage
 
-In the project directory, you can run:
+Users can search and filter MFTE apartments by criteria such as location and number of bedrooms. In the list tab, they can view detailed information about each property. Registered users can save a shortlist of properties, view a personalized map, and add notes for easy reference. This resource is completely free.
 
-### `yarn start`
+### Data source
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Building data is sourced from the spreadsheet of MFTE buildings published by the Seattle Office of Housing roughly twice a year. Currently, there are over 300 properties that participate in the program.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Please visit https://mfte-seattle.com/about for more information.
 
-### `yarn test`
+## Technologies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Frontend – This application is built with TypeScript and React for a modular, efficient UI. Bootstrap is used for consistent styling and a responsive layout across devices, ensuring smooth functionality on both desktop and mobile.
 
-### `yarn build`
+Backend – The backend relies fully on Google Cloud Firebase, using Firebase Hosting for serving the app, Firebase Authentication for secure user login, and Firestore as the database to manage and sync data in real-time. It also uses Google Analytics to better understand usage and impact.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+For additional information regarding regarding database design and system architecture, see the [design documentation](./DESIGN.md).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Contributing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Deploying the App
-
-See the [deployment documentation](./DEPLOYMENT.md).
+This is an open-source project and contribution are welcome. For guidelines on how to contribute, please refer to the [contributing documentation](./CONTRIBUTE.md).
