@@ -120,7 +120,7 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
 
             <Row className="align-items-center py-3">
               <Col lg={2} className="text-lg-end">
-                <div className="fs-4">Use</div>
+                <div className="fs-4">Usage</div>
               </Col>
               <Col lg={8}>
                 <div className="lead">
