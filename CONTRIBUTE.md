@@ -11,13 +11,19 @@ To contribute to the project, please follow these steps:
 To format the code in the `src` folder:
 
 ```bash
-`yarn prettier ./src -w`
+yarn prettier ./src -w
 ```
 
 To format the entire codebase:
 
 ```bash
-`yarn prettier . -w`
+yarn prettier . -w
+```
+
+## Updating Dependencies
+To update all dependencies:
+```bash
+yarn upgrade
 ```
 
 ## Deploying the App
