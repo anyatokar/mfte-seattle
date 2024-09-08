@@ -21,10 +21,14 @@ yarn prettier . -w
 ```
 
 ## Updating Dependencies
-To update all dependencies:
+
+To update dependencies to the latest version within the specified range in `package.json`, run:
+
 ```bash
 yarn upgrade
 ```
+
+This will not upgrade to new major versions (e.g., 4.x.x to 5.x.x). For major upgrades, manually update the version constraints in `package.json`.
 
 ## Deploying the App
 
