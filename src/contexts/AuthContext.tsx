@@ -121,6 +121,6 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
       {!loading && children}
     </AuthContext.Provider>
   );
-}
+};
 
 export default AuthProvider;
