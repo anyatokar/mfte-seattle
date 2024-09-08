@@ -20,7 +20,7 @@ import Spinner from "react-bootstrap/Spinner";
 
 const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = (props) => {
+> = ({ name }) => {
   const { currentUser } = useAuth();
   const [savedBuildings, loadingSavedBuildings] = useSavedBuildings();
   const [allListings, loadingAllListings] = useAllListings();
@@ -33,7 +33,7 @@ const SavedBuildingsPage: React.FunctionComponent<
 
   return (
     <Profiler
-      id={props.name}
+      id={name}
       onRender={(
         id,
         phase,

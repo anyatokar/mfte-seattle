@@ -10,7 +10,7 @@ import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useAllListings";
 
 import AllBuildingsList from "../components/BuildingsList";
-import { Filters } from "../components/Filters";
+import Filters from "../components/Filters";
 import MapTab from "../components/MapTab";
 import SearchInput from "../components/SearchInput";
 
@@ -29,9 +29,9 @@ import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import Spinner from "react-bootstrap/Spinner";
 
-const AllBuildingsPage: React.FunctionComponent<
-  IPage & RouteComponentProps<any>
-> = (props) => {
+const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
+  name,
+}) => {
   // get all buildings
   const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
   const [loading, setLoading] = useState(false);
@@ -89,7 +89,7 @@ const AllBuildingsPage: React.FunctionComponent<
 
   return (
     <Profiler
-      id={props.name}
+      id={name}
       onRender={(
         id,
         phase,

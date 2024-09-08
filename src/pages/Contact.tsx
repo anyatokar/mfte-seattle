@@ -17,9 +17,9 @@ export type formFieldsType = {
   message: string;
 };
 
-const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
-  props
-) => {
+const ContactPage: React.FunctionComponent<
+  IPage & RouteComponentProps<any>
+> = ({ name }) => {
   function clearFields(): void {
     setformFields({
       authorName: "",
@@ -64,7 +64,7 @@ const ContactPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
 
   return (
     <Profiler
-      id={props.name}
+      id={name}
       onRender={(
         id,
         phase,

@@ -13,7 +13,7 @@ import Tab from "react-bootstrap/Tab";
 
 const ManageProfilePage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
-> = (props) => {
+> = ({ name }) => {
   const { currentUser } = useAuth();
 
   if (!currentUser) {
@@ -22,7 +22,7 @@ const ManageProfilePage: React.FunctionComponent<
 
   return (
     <Profiler
-      id={props.name}
+      id={name}
       onRender={(
         id,
         phase,

@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-const HomePage: React.FunctionComponent<IPage> = (props) => {
+const HomePage: React.FunctionComponent<IPage> = ({ name }) => {
   const history = useHistory();
 
   function onClick(event: any) {
@@ -17,7 +17,7 @@ const HomePage: React.FunctionComponent<IPage> = (props) => {
 
   return (
     <Profiler
-      id={props.name}
+      id={name}
       onRender={(
         id,
         phase,

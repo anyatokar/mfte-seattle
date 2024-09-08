@@ -6,12 +6,12 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = (
-  props
-) => {
+const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = ({
+  name,
+}) => {
   return (
     <Profiler
-      id={props.name}
+      id={name}
       onRender={(
         id,
         phase,

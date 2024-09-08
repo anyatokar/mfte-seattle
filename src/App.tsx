@@ -13,10 +13,10 @@ import {
   RouteComponentProps,
 } from "react-router-dom";
 
-import { AuthProvider } from "./contexts/AuthContext";
+import AuthProvider from "./contexts/AuthContext";
 import { ModalContext, ModalState } from "./contexts/ModalContext";
 
-const Application: React.FunctionComponent<{}> = (props) => {
+const Application: React.FC<{}> = () => {
   const modalStateHook = useState(ModalState.HIDDEN);
 
   return (
