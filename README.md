@@ -40,8 +40,26 @@ This application is built with TypeScript and React for a modular, efficient UI.
 
 The backend relies fully on Google Cloud Firebase, using Firebase Hosting for serving the app, Firebase Authentication for secure user login, and Firestore as the database to manage and sync data in real-time. It also uses Google Analytics to better understand usage and impact.
 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started). To learn React, check out the [React documentation](https://reactjs.org/).
+
+Create React App uses Jest as its test runner for unit testing.
+
 For additional information regarding regarding database design and system architecture, see the [design documentation](./DESIGN.md).
 
 ## Contributing
 
 This is an open-source project and contribution are welcome. For guidelines on how to contribute, please refer to the [contributing documentation](./CONTRIBUTE.md).
+
+## Running the App Locally
+
+In the project directory, run:
+
+```bash
+yarn start
+```
+
+Runs the app in the development mode.\
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
