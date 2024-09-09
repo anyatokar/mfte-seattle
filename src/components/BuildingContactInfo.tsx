@@ -43,7 +43,7 @@ const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
   phone,
   phone2,
 }) => {
-  const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${streetNum}+${street}+${city}+${state}+${zip}`;
+  const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${streetNum} ${street}, ${city}, ${state} ${zip}`)}`;
   const phone1Ref = `tel:${phone}`;
   const phone2Ref = `tel:${phone2}`;
 
