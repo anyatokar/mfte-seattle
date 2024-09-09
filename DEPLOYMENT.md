@@ -47,13 +47,24 @@ You can deploy if your Google account has been added to the MFTE Seattle Firebas
    yarn build
    ```
 
+   Builds the app for production to the `build` folder.\
+   It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+
 4. **Test the Build Locally**:
 
    ```bash
    yarn start
    ```
 
-   TODO: Add instructions for testing with an emulator.
+   Runs the app in the development mode.\
+   Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+TODO: Add instructions for testing with an emulator.
 
 5. **Deploy the App**:
    ```bash
