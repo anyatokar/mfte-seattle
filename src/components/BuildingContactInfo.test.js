@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-// import '@testing-library/jest-dom/extend-expect'; // For extended matchers
 import { BuildingName, AddressAndPhone } from "./BuildingContactInfo";
 
 describe("BuildingName Component", () => {
