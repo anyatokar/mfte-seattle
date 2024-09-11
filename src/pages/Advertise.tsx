@@ -96,9 +96,12 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
               , please get in touch using the inquiry form below.
             </p>
             <p>
-              <strong>Metrics: </strong>This website averages nearly 100 active
-              daily users and consistently ranks as a top search result for MFTE
-              properties in Seattle across major search engines.
+              <strong>Metrics: </strong>The website averages 3,000 active
+              monthly users and consistently ranks as a top search result for
+              MFTE properties in Seattle across major search engines. With 57%
+              of visits coming from mobile devices, it offers an optimized
+              experience across phones, tablets, and desktops, making it easier
+              for a wider range of users to find MFTE units.
             </p>
             <p>
               <strong>Disclaimer: </strong>This website maps buildings
@@ -164,6 +167,7 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
               <Form.Group className="mb-3">
                 <Form.Label>Message*</Form.Label>
                 <Form.Control
+                  required
                   as="textarea"
                   name="message"
                   id="message"
