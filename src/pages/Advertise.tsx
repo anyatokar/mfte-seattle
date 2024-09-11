@@ -96,11 +96,11 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
               , please get in touch using the inquiry form below.
             </p>
             <p>
-              <strong>Metrics: </strong>The website averages 3,000 active
+              <strong>Metrics: </strong>This website averages 3,000 active
               monthly users and consistently ranks as a top search result for
               MFTE properties in Seattle across major search engines.
               Recognizing that more than half of our visits come from mobile
-              devices, the site provides an optimized experience across phones,
+              devices, this site provides an optimized experience across phones,
               tablets, and desktops, making it easier for a wider range of users
               to find MFTE units.
             </p>
