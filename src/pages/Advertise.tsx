@@ -122,7 +122,6 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
                     value={formFields.authorName}
                   />
                 </Form.Group>
-
                 <Form.Group as={Col} md={6}>
                   <Form.Label>Email*</Form.Label>
                   <Form.Control
@@ -161,6 +160,7 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
                 </Form.Group>
               </Form.Group>
 
+              {/* Inquiry */}
               <Form.Group className="mb-3">
                 <Form.Label>Inquiry*</Form.Label>
                 <Form.Control

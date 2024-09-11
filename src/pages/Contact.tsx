@@ -137,7 +137,6 @@ const ContactPage: React.FunctionComponent<
                     value={formFields.authorName}
                   />
                 </Form.Group>
-
                 <Form.Group as={Col} md={6}>
                   <Form.Label>Email</Form.Label>
                   <Form.Control
@@ -151,6 +150,7 @@ const ContactPage: React.FunctionComponent<
                 </Form.Group>
               </Form.Group>
 
+              {/* Description */}
               <Form.Group className="mb-3">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
@@ -171,6 +171,7 @@ const ContactPage: React.FunctionComponent<
 
               <hr className="my-4" />
 
+              {/* Subject */}
               <Form.Group className="mb-3">
                 <Form.Label>Subject</Form.Label>
                 <Form.Control
@@ -191,6 +192,7 @@ const ContactPage: React.FunctionComponent<
                 </Form.Control>
               </Form.Group>
 
+              {/* Message */}
               <Form.Group className="mb-3">
                 <Form.Label>Message</Form.Label>
                 <Form.Control
