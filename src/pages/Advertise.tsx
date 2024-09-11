@@ -14,7 +14,7 @@ export type adInquiryFormFieldsType = {
   email: string;
   companyName: string;
   propertyNames: string;
-  inquiry: string;
+  message: string;
 };
 
 const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
@@ -24,7 +24,7 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
       email: "",
       companyName: "",
       propertyNames: "",
-      inquiry: "",
+      message: "",
     });
   }
 
@@ -33,7 +33,7 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
     email: "",
     companyName: "",
     propertyNames: "",
-    inquiry: "",
+    message: "",
   });
 
   // event handlers
@@ -160,21 +160,21 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
                 </Form.Group>
               </Form.Group>
 
-              {/* Inquiry */}
+              {/* Message */}
               <Form.Group className="mb-3">
-                <Form.Label>Inquiry*</Form.Label>
+                <Form.Label>Message*</Form.Label>
                 <Form.Control
                   as="textarea"
-                  name="inquiry"
-                  id="inquiry"
+                  name="message"
+                  id="message"
                   rows={5}
                   onChange={onInputChange}
-                  value={formFields.inquiry}
+                  value={formFields.message}
                 />
               </Form.Group>
 
               <Button type="submit" className="diy-solid-info-button" size="lg">
-                Submit inquiry
+                Send message
               </Button>
             </Form>
           </Col>

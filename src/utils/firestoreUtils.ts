@@ -165,7 +165,8 @@ export async function sendAdInquiryFirestore(
     authorName: formFields.authorName,
     email: formFields.email,
     companyName: formFields.companyName,
-    inquiry: formFields.inquiry,
+    propertyNames: formFields.propertyNames,
+    message: formFields.message,
     sentTimestamp: new Date(),
     didReply: false,
   });
