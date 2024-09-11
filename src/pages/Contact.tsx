@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-export type formFieldsType = {
+export type contactUsFormFieldsType = {
   authorName: string;
   email: string;
   description: string;
@@ -21,7 +21,7 @@ const ContactPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = ({ name }) => {
   function clearFields(): void {
-    setformFields({
+    setFormFields({
       authorName: "",
       email: "",
       description: "",
@@ -30,7 +30,7 @@ const ContactPage: React.FunctionComponent<
     });
   }
 
-  const [formFields, setformFields] = useState({
+  const [formFields, setFormFields] = useState({
     authorName: "",
     email: "",
     description: "",
@@ -42,12 +42,12 @@ const ContactPage: React.FunctionComponent<
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ): void => {
-    const newformFields = {
+    const newFormFields = {
       ...formFields,
     };
-    newformFields[event.target.name as keyof formFieldsType] =
+    newFormFields[event.target.name as keyof contactUsFormFieldsType] =
       event.target.value;
-    setformFields(newformFields);
+    setFormFields(newFormFields);
   };
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -101,7 +101,7 @@ const ContactPage: React.FunctionComponent<
               <li>
                 Have general questions or feedback about the MFTE program?
                 Please explore the&nbsp;
-                <Link id="all-buildings" to="./resources">
+                <Link id="resources" to="./resources">
                   Resources
                 </Link>
                 &nbsp;page or contact the&nbsp;
@@ -125,8 +125,9 @@ const ContactPage: React.FunctionComponent<
             <p>All fields are required.</p>
 
             <Form onSubmit={handleFormSubmit}>
+              {/* Name and Email row */}
               <Form.Group as={Row} className="mb-3">
-                <Form.Group as={Col} md={6}>
+                <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     required
@@ -136,6 +137,7 @@ const ContactPage: React.FunctionComponent<
                     value={formFields.authorName}
                   />
                 </Form.Group>
+
                 <Form.Group as={Col} md={6}>
                   <Form.Label>Email</Form.Label>
                   <Form.Control
@@ -188,7 +190,8 @@ const ContactPage: React.FunctionComponent<
                   <option>Other</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group as={Col} className="mb-3">
+
+              <Form.Group className="mb-3">
                 <Form.Label>Message</Form.Label>
                 <Form.Control
                   required
@@ -200,6 +203,7 @@ const ContactPage: React.FunctionComponent<
                   value={formFields.message}
                 />
               </Form.Group>
+
               <Button type="submit" className="diy-solid-info-button" size="lg">
                 Send message
               </Button>

@@ -9,7 +9,8 @@ import {
   updateDoc,
   addDoc,
 } from "firebase/firestore";
-import { formFieldsType } from "../pages/Contact";
+import { adInquiryFormFieldsType } from "../pages/Advertise";
+import { contactUsFormFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
 
 export async function saveBuilding(
@@ -143,13 +144,28 @@ export async function updateEmailFirestore(
   });
 }
 
-export async function sendMessageFirestore(formFields: formFieldsType) {
+export async function sendMessageFirestore(
+  formFields: contactUsFormFieldsType
+) {
   await addDoc(collection(db, "contactus"), {
     authorName: formFields.authorName,
     email: formFields.email,
     subject: formFields.subject,
     description: formFields.description,
     message: formFields.message,
+    sentTimestamp: new Date(),
+    didReply: false,
+  });
+}
+
+export async function sendAdInquiryFirestore(
+  formFields: adInquiryFormFieldsType
+) {
+  await addDoc(collection(db, "ad_inquiries"), {
+    authorName: formFields.authorName,
+    email: formFields.email,
+    companyName: formFields.companyName,
+    inquiry: formFields.inquiry,
     sentTimestamp: new Date(),
     didReply: false,
   });
