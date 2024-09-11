@@ -46,11 +46,7 @@ Create React App uses Jest as its test runner for unit testing.
 
 For additional information regarding regarding database design and system architecture, see the [design documentation](./DESIGN.md).
 
-## Contributing
-
-This is an open-source project and contribution are welcome. For guidelines on how to contribute, please refer to the [contributing documentation](./CONTRIBUTE.md).
-
-## Running the App Locally
+## Run App Locally
 
 In the project directory, run:
 
@@ -63,3 +59,7 @@ Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+## Contribute
+
+This is an open-source project and contribution are welcome. For guidelines on how to contribute, please refer to the [contributing documentation](./CONTRIBUTE.md).
