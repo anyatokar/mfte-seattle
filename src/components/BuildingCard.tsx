@@ -277,59 +277,50 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                 phone2={phone2}
               />
             </Tab>
-
-            <Tab eventKey="details" title="Details">
-              <Table bordered hover size="sm">
-                <thead>
-                  <tr>
-                    <th>Bedrooms</th>
-                    {amiData ? <th>% of AMI</th> : null}
-                  </tr>
-                </thead>
-                <tbody>
-                  {amiData?.micro && (
+            {amiData && (
+              <Tab eventKey="details" title="Details">
+                <Table bordered hover size="sm">
+                  <thead>
                     <tr>
-                      <td>Micro</td>
-                      {amiData && (
-                        <td>{renderPercentageList(amiData?.micro)}</td>
-                      )}
+                      <th>Bedrooms</th>
+                      <th>% of AMI</th>
                     </tr>
-                  )}
-                  {amiData?.studio && (
-                    <tr>
-                      <td>Studio</td>
-                      {amiData && (
-                        <td>{renderPercentageList(amiData?.studio)}</td>
-                      )}
-                    </tr>
-                  )}
-                  {amiData?.oneBed && (
-                    <tr>
-                      <td>One</td>
-                      {amiData && (
-                        <td>{renderPercentageList(amiData?.oneBed)}</td>
-                      )}
-                    </tr>
-                  )}
-                  {amiData?.twoBed && (
-                    <tr>
-                      <td>Two</td>
-                      {amiData && (
-                        <td>{renderPercentageList(amiData?.twoBed)}</td>
-                      )}
-                    </tr>
-                  )}
-                  {amiData?.threePlusBed && (
-                    <tr>
-                      <td>Three+</td>
-                      {amiData && (
-                        <td>{renderPercentageList(amiData?.threePlusBed)}</td>
-                      )}
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
-            </Tab>
+                  </thead>
+                  <tbody>
+                    {amiData.micro && (
+                      <tr>
+                        <td>Micro</td>
+                        <td>{renderPercentageList(amiData.micro)}</td>
+                      </tr>
+                    )}
+                    {amiData.studio && (
+                      <tr>
+                        <td>Studio</td>
+                        <td>{renderPercentageList(amiData.studio)}</td>
+                      </tr>
+                    )}
+                    {amiData.oneBed && (
+                      <tr>
+                        <td>One</td>
+                        <td>{renderPercentageList(amiData.oneBed)}</td>
+                      </tr>
+                    )}
+                    {amiData.twoBed && (
+                      <tr>
+                        <td>Two</td>
+                        <td>{renderPercentageList(amiData.twoBed)}</td>
+                      </tr>
+                    )}
+                    {amiData.threePlusBed && (
+                      <tr>
+                        <td>Three+</td>
+                        <td>{renderPercentageList(amiData.threePlusBed)}</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </Table>
+              </Tab>
+            )}
           </Tabs>
         </ListGroup.Item>
         {pageType === pageTypeEnum.savedBuildings && (
