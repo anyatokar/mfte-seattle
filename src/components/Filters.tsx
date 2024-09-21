@@ -15,7 +15,7 @@ type radioButtonKeyType =
   | "threePlusBedroomUnits";
 
 type radioButtonUILabelType =
-  | "Pod"
+  | "Micro"
   | "Studio"
   | "One bedroom"
   | "Two bedroom"
@@ -34,7 +34,7 @@ const radioButtonKeys: radioButtonKeyType[] = [
 ];
 
 const radioButtonUILabels: radioButtonMapType = {
-  sedu: "Pod",
+  sedu: "Micro",
   studioUnits: "Studio",
   oneBedroomUnits: "One bedroom",
   twoBedroomUnits: "Two bedroom",

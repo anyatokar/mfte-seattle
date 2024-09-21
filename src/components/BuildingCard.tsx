@@ -4,7 +4,7 @@ import { areListingsOn } from "../config/config";
 import { pageTypeEnum } from "../types/enumTypes";
 
 import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
-import { ListingCard } from "./ListingCard";
+import ListingCard from "./ListingCard";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
 import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
@@ -59,7 +59,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     city,
     state,
     zip,
-    amiData1,
+    amiData,
   } = props.building;
 
   const { pageType, listing } = props;
@@ -125,7 +125,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
 
   const availabilityData = [
     {
-      type: "Pod",
+      type: "Micro",
       quantity: listing?.seduAvail?.quantity,
     },
     {
@@ -283,65 +283,50 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                 <thead>
                   <tr>
                     <th>Bedrooms</th>
-                    <th>Total MFTE Units</th>
-                    {amiData1 ? <th>AMI %</th> : null}
+                    {amiData ? <th>% of AMI</th> : null}
                   </tr>
                 </thead>
                 <tbody>
-                  {sedu !== 0 && (
+                  {amiData?.micro && (
                     <tr>
-                      <td>Pod</td>
-                      <td>{sedu}</td>
-                      {amiData1 ? (
-                        <td>{renderPercentageList(amiData1?.micro)}</td>
-                      ) : null}
+                      <td>Micro</td>
+                      {amiData && (
+                        <td>{renderPercentageList(amiData?.micro)}</td>
+                      )}
                     </tr>
                   )}
-                  {studioUnits !== 0 && (
+                  {amiData?.studio && (
                     <tr>
                       <td>Studio</td>
-                      <td>{studioUnits}</td>
-                      {amiData1 ? (
-                        <td>{renderPercentageList(amiData1?.studio)}</td>
-                      ) : null}
+                      {amiData && (
+                        <td>{renderPercentageList(amiData?.studio)}</td>
+                      )}
                     </tr>
                   )}
-                  {oneBedroomUnits !== 0 && (
+                  {amiData?.oneBed && (
                     <tr>
                       <td>One</td>
-                      <td>{oneBedroomUnits}</td>
-                      {amiData1 ? (
-                        <td>{renderPercentageList(amiData1?.oneBed)}</td>
-                      ) : null}
+                      {amiData && (
+                        <td>{renderPercentageList(amiData?.oneBed)}</td>
+                      )}
                     </tr>
                   )}
-                  {twoBedroomUnits !== 0 && (
+                  {amiData?.twoBed && (
                     <tr>
                       <td>Two</td>
-                      <td>{twoBedroomUnits}</td>
-                      {amiData1 ? (
-                        <td>{renderPercentageList(amiData1?.twoBed)}</td>
-                      ) : null}
+                      {amiData && (
+                        <td>{renderPercentageList(amiData?.twoBed)}</td>
+                      )}
                     </tr>
                   )}
-                  {threePlusBedroomUnits !== 0 && (
+                  {amiData?.threePlusBed && (
                     <tr>
                       <td>Three+</td>
-                      <td>{threePlusBedroomUnits}</td>
-                      {amiData1 ? (
-                        <td>{renderPercentageList(amiData1?.threePlusBed)}</td>
-                      ) : null}
+                      {amiData && (
+                        <td>{renderPercentageList(amiData?.threePlusBed)}</td>
+                      )}
                     </tr>
                   )}
-                  <tr>
-                    <td>
-                      <strong>Total</strong>
-                    </td>
-                    <td>
-                      <strong>{totalRestrictedUnits}</strong>
-                    </td>
-                    {amiData1 ? <td></td> : null}
-                  </tr>
                 </tbody>
               </Table>
             </Tab>

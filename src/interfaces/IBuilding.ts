@@ -1,8 +1,22 @@
+import { Timestamp } from "firebase/firestore";
+
+export type AMIPercentage = 30 | 40 | 50 | 60 | 65 | 70 | 75 | 80 | 85 | 90;
+
+export type amiDataType = {
+  micro: AMIPercentage[];
+  studio: AMIPercentage[];
+  oneBed: AMIPercentage[];
+  twoBed: AMIPercentage[];
+  threePlusBed: AMIPercentage[];
+};
+
 export default interface IBuilding {
   buildingID: string;
+  dateCode: string;
+  IDWithDateCode: string;
   buildingName: string;
-  phone: string;
-  phone2: string;
+  phone: string | null;
+  phone2: string | null;
   residentialTargetedArea: string;
   totalRestrictedUnits: 0 | string;
   sedu: 0 | string;
@@ -18,5 +32,7 @@ export default interface IBuilding {
   city: string;
   state: string;
   zip: string;
+  updatedTimestamp: Timestamp;
   streetAddress: string;
+  amiData: amiDataType;
 }

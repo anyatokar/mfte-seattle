@@ -4,24 +4,29 @@ import IListing from "../interfaces/IListing";
 interface ListingCardProps {
   areListingsOn: boolean;
   listing: IListing | undefined;
+  isMarker: boolean;
 }
 
-export function ListingCard(props: ListingCardProps) {
-  const { areListingsOn, listing } = props;
+export default function ListingCard(props: ListingCardProps) {
+  const { areListingsOn, listing, isMarker } = props;
 
   const generateSummaryString = (): string => {
     let summaryString = "";
 
-    if (!areListingsOn || (areListingsOn && !listing)) {
+    if (!areListingsOn || !listing) {
       summaryString = "Contact building for current availability.";
-    }
+    } else if (listing) {
+      if (listing.hasAnyAvailability && isMarker) {
+        summaryString = "Apartments available!";
+      }
 
-    if (areListingsOn && listing && listing.hasAnyAvailability) {
-      summaryString = "MFTE apartments are available!";
-    }
+      if (listing.hasAnyAvailability && !isMarker) {
+        summaryString = "MFTE apartments are available!";
+      }
 
-    if (areListingsOn && listing && !listing.hasAnyAvailability) {
-      summaryString = "No MFTE apartments available at this time.";
+      if (!listing.hasAnyAvailability) {
+        summaryString = "No MFTE apartments available at this time.";
+      }
     }
 
     return summaryString;
@@ -30,11 +35,20 @@ export function ListingCard(props: ListingCardProps) {
   return (
     <>
       <div>{generateSummaryString()}</div>
-      {areListingsOn && listing ? (
-        <Button className="diy-solid-info-button mt-2" size="sm">
-          View Leasing Page
+      {listing?.url && (
+        <Button
+          className="diy-solid-info-button mt-2"
+          size="sm"
+          id="leasing-page-url"
+          href={listing.url}
+          title={`Open new tab: ${listing.url}`}
+          target="_blank"
+          rel="noreferrer"
+          variant="primary"
+        >
+          Leasing Page
         </Button>
-      ) : null}
+      )}
     </>
   );
 }

@@ -98,7 +98,7 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
                   <Col
                     key={building.buildingID}
                     xs={12}
-                    sm={areListingsOn ? 12 : 6}
+                    sm={6}
                     lg={areListingsOn ? 6 : 4}
                     xl={areListingsOn ? 4 : 3}
                     className="building-row"

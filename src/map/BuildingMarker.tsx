@@ -11,6 +11,7 @@ import {
   AddressAndPhone,
   BuildingName,
 } from "../components/BuildingContactInfo";
+import ListingCard from "../components/ListingCard";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
@@ -115,6 +116,17 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
       {isSelected && (
         <InfoWindow onCloseClick={clearSelection}>
           <>
+            <div className="pb-2">
+              {areListingsOn && listing?.url && (
+                <>
+                  <ListingCard
+                    areListingsOn={areListingsOn}
+                    listing={listing}
+                    isMarker={true}
+                  />
+                </>
+              )}
+            </div>
             <strong>
               <BuildingName
                 buildingName={buildingName}
