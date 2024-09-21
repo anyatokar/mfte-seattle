@@ -3,7 +3,7 @@ import { useState, useContext, Fragment } from "react";
 import { areListingsOn } from "../config/config";
 import { pageTypeEnum } from "../types/enumTypes";
 
-import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
+import { AddressAndPhone } from "./BuildingContactInfo";
 import ListingCard from "./ListingCard";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
@@ -157,76 +157,104 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     ));
   }
 
+  const websiteButton = (
+    <Button
+      className="diy-outline-info-button me-2"
+      size="sm"
+      id="leasing-page-url"
+      href={urlForBuilding}
+      title={`Open new tab: ${urlForBuilding}`}
+      target="_blank"
+      rel="noreferrer"
+      variant="primary"
+    >
+      Website
+    </Button>
+  );
+
   return (
     <Card>
       <Card.Header>
         <Card.Title className="mt-2">
-          <BuildingName
+          <div>{buildingName}</div>
+          {/* <BuildingName
             buildingName={buildingName}
             urlForBuilding={urlForBuilding}
-          />
+          /> */}
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
+
         <div className="mt-2">
           {pageType === pageTypeEnum.allBuildings &&
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <Button
-                  className="diy-solid-info-button"
-                  size="sm"
-                  onClick={toggleSave}
-                >
-                  Saved
-                </Button>
+                <>
+                  {websiteButton}
+                  <Button
+                    className="diy-solid-info-button"
+                    size="sm"
+                    onClick={toggleSave}
+                  >
+                    Saved
+                  </Button>
+                </>
               ) : (
+                <>
+                  {websiteButton}
+                  <Button
+                    className="diy-outline-info-button"
+                    size="sm"
+                    onClick={toggleSave}
+                  >
+                    Save
+                  </Button>
+                </>
+              )
+            ) : (
+              <>
+                {websiteButton}
                 <Button
                   className="diy-outline-info-button"
+                  onClick={handleShowLogin}
                   size="sm"
-                  onClick={toggleSave}
                 >
                   Save
                 </Button>
-              )
-            ) : (
-              <Button
-                className="diy-outline-info-button"
-                onClick={handleShowLogin}
-                size="sm"
-              >
-                Save
-              </Button>
+              </>
             ))}
         </div>
 
         {pageType === pageTypeEnum.savedBuildings && (
-          <Button
-            className="center"
-            size="sm"
-            variant="outline-danger"
-            title={`Remove ${buildingName} from saved buildings list`}
-            type="button"
-            value="Remove"
-            onClick={() => {
-              deleteBuilding(currentUser?.uid, buildingID, buildingName);
-            }}
-          >
-            Remove
-          </Button>
+          <>
+            {websiteButton}
+            <Button
+              className="center"
+              size="sm"
+              variant="outline-danger"
+              title={`Remove ${buildingName} from saved buildings list`}
+              type="button"
+              value="Remove"
+              onClick={() => {
+                deleteBuilding(currentUser?.uid, buildingID, buildingName);
+              }}
+            >
+              Remove
+            </Button>
+          </>
         )}
       </Card.Header>
 
       <ListGroup variant="flush">
         <ListGroup.Item
           className={
-            areListingsOn && listing && listing.hasAnyAvailability
-              ? "listing-card"
-              : ""
+            areListingsOn && listing?.hasAnyAvailability ? "listing-card" : ""
           }
         >
           <ListingCard
             areListingsOn={areListingsOn}
             listing={listing}
             isMarker={false}
+            urlForBuilding={urlForBuilding}
           />
         </ListGroup.Item>
 

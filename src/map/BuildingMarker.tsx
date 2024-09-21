@@ -7,10 +7,7 @@ import { areListingsOn } from "../config/config";
 
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
-import {
-  AddressAndPhone,
-  BuildingName,
-} from "../components/BuildingContactInfo";
+import { AddressAndPhone } from "../components/BuildingContactInfo";
 import ListingCard from "../components/ListingCard";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -116,63 +113,63 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
       {isSelected && (
         <InfoWindow onCloseClick={clearSelection}>
           <>
-            <div className="pb-2">
+            <div>
               {areListingsOn && listing?.url && (
                 <>
                   <ListingCard
                     areListingsOn={areListingsOn}
                     listing={listing}
                     isMarker={true}
+                    urlForBuilding={urlForBuilding}
                   />
                 </>
               )}
             </div>
-            <strong>
-              <BuildingName
+            <div className={areListingsOn && listing?.url ? "pt-2" : ""}>
+              <div>
+                <strong>{buildingName}</strong>
+              </div>
+              <div>{residentialTargetedArea}</div>
+              <AddressAndPhone
                 buildingName={buildingName}
-                urlForBuilding={urlForBuilding}
+                streetNum={streetNum}
+                street={street}
+                city={city}
+                state={state}
+                zip={zip}
+                phone={phone}
+                phone2={phone2}
               />
-            </strong>
-            <strong>{residentialTargetedArea}</strong>
-            <AddressAndPhone
-              buildingName={buildingName}
-              streetNum={streetNum}
-              street={street}
-              city={city}
-              state={state}
-              zip={zip}
-              phone={phone}
-              phone2={phone2}
-            />
-            {currentUser ? (
-              wasOriginallySaved || isSaved ? (
-                <Button
-                  className="diy-solid-info-button"
-                  size="sm"
-                  onClick={toggleSave}
-                >
-                  Saved
-                </Button>
+              {currentUser ? (
+                wasOriginallySaved || isSaved ? (
+                  <Button
+                    className="diy-solid-info-button"
+                    size="sm"
+                    onClick={toggleSave}
+                  >
+                    Saved
+                  </Button>
+                ) : (
+                  <Button
+                    className="diy-outline-info-button"
+                    size="sm"
+                    onClick={toggleSave}
+                  >
+                    Save
+                  </Button>
+                )
               ) : (
-                <Button
-                  className="diy-outline-info-button"
-                  size="sm"
-                  onClick={toggleSave}
-                >
-                  Save
-                </Button>
-              )
-            ) : (
-              <>
-                <Button
-                  className="diy-outline-info-button"
-                  size="sm"
-                  onClick={handleShowLogin}
-                >
-                  Save
-                </Button>
-              </>
-            )}
+                <>
+                  <Button
+                    className="diy-outline-info-button"
+                    size="sm"
+                    onClick={handleShowLogin}
+                  >
+                    Save
+                  </Button>
+                </>
+              )}
+            </div>
           </>
         </InfoWindow>
       )}
