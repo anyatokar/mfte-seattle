@@ -10,8 +10,8 @@ interface addressAndPhoneProps {
   city: string;
   state: string;
   zip: string;
-  phone: string;
-  phone2: string;
+  phone: string | null;
+  phone2: string | null;
 }
 
 const BuildingName: React.FC<buildingNameProps> = ({

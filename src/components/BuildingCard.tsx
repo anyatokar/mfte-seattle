@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, Fragment } from "react";
 
 import { areListingsOn } from "../config/config";
 import { pageTypeEnum } from "../types/enumTypes";
@@ -12,7 +12,7 @@ import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
-import IBuilding from "../interfaces/IBuilding";
+import IBuilding, { AMIPercentage } from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IListing from "../interfaces/IListing";
 
@@ -59,6 +59,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     city,
     state,
     zip,
+    amiData1,
   } = props.building;
 
   const { pageType, listing } = props;
@@ -125,30 +126,36 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   const availabilityData = [
     {
       type: "Pod",
-      dateAvail: listing?.seduAvail?.dateAvail,
-      rent: listing?.seduAvail?.rent,
+      quantity: listing?.seduAvail?.quantity,
     },
     {
       type: "Studio",
-      dateAvail: listing?.studioAvail?.dateAvail,
-      rent: listing?.studioAvail?.rent,
+      quantity: listing?.studioAvail?.quantity,
     },
     {
       type: "One",
-      dateAvail: listing?.oneBedAvail?.dateAvail,
-      rent: listing?.oneBedAvail?.rent,
+      quantity: listing?.oneBedAvail?.quantity,
     },
     {
       type: "Two",
-      dateAvail: listing?.twoBedAvail?.dateAvail,
-      rent: listing?.twoBedAvail?.rent,
+      quantity: listing?.twoBedAvail?.quantity,
     },
     {
       type: "Three+",
-      dateAvail: listing?.threePlusBedAvail?.dateAvail,
-      rent: listing?.threePlusBedAvail?.rent,
+      quantity: listing?.threePlusBedAvail?.quantity,
     },
   ];
+
+  function renderPercentageList(percentages: AMIPercentage[]): React.ReactNode {
+    if (!percentages) return null;
+
+    return percentages.map((item, index) => (
+      <Fragment key={index}>
+        {item}
+        {index < percentages.length - 1 ? ", " : ""}
+      </Fragment>
+    ));
+  }
 
   return (
     <Card>
@@ -216,7 +223,11 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
               : ""
           }
         >
-          <ListingCard areListingsOn={areListingsOn} listing={listing} />
+          <ListingCard
+            areListingsOn={areListingsOn}
+            listing={listing}
+            isMarker={false}
+          />
         </ListGroup.Item>
 
         <ListGroup.Item>
@@ -237,18 +248,16 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                   <thead>
                     <tr>
                       <th>Bedrooms</th>
-                      <th>Earliest Available Date</th>
-                      <th>Rent</th>
+                      <th>Available Units</th>
                     </tr>
                   </thead>
                   <tbody>
                     {availabilityData.map(
                       (apt) =>
-                        apt.dateAvail && (
+                        apt.quantity && (
                           <tr key={apt.type}>
                             <td>{apt.type}</td>
-                            <td>{timestampToDate(apt.dateAvail)}</td>
-                            <td>{apt.rent}</td>
+                            <td>{apt.quantity}</td>
                           </tr>
                         )
                     )}
@@ -274,7 +283,8 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                 <thead>
                   <tr>
                     <th>Bedrooms</th>
-                    <th># of MFTE Units</th>
+                    <th>Total MFTE Units</th>
+                    {amiData1 ? <th>AMI %</th> : null}
                   </tr>
                 </thead>
                 <tbody>
@@ -282,30 +292,45 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     <tr>
                       <td>Pod</td>
                       <td>{sedu}</td>
+                      {amiData1 ? (
+                        <td>{renderPercentageList(amiData1?.micro)}</td>
+                      ) : null}
                     </tr>
                   )}
                   {studioUnits !== 0 && (
                     <tr>
                       <td>Studio</td>
                       <td>{studioUnits}</td>
+                      {amiData1 ? (
+                        <td>{renderPercentageList(amiData1?.studio)}</td>
+                      ) : null}
                     </tr>
                   )}
                   {oneBedroomUnits !== 0 && (
                     <tr>
                       <td>One</td>
                       <td>{oneBedroomUnits}</td>
+                      {amiData1 ? (
+                        <td>{renderPercentageList(amiData1?.oneBed)}</td>
+                      ) : null}
                     </tr>
                   )}
                   {twoBedroomUnits !== 0 && (
                     <tr>
                       <td>Two</td>
                       <td>{twoBedroomUnits}</td>
+                      {amiData1 ? (
+                        <td>{renderPercentageList(amiData1?.twoBed)}</td>
+                      ) : null}
                     </tr>
                   )}
                   {threePlusBedroomUnits !== 0 && (
                     <tr>
                       <td>Three+</td>
                       <td>{threePlusBedroomUnits}</td>
+                      {amiData1 ? (
+                        <td>{renderPercentageList(amiData1?.threePlusBed)}</td>
+                      ) : null}
                     </tr>
                   )}
                   <tr>
@@ -315,6 +340,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     <td>
                       <strong>{totalRestrictedUnits}</strong>
                     </td>
+                    {amiData1 ? <td></td> : null}
                   </tr>
                 </tbody>
               </Table>
