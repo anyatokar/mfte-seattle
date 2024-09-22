@@ -56,7 +56,7 @@ const ReactMap: React.FC<IMap> = ({
       const legendDiv = document.createElement("div");
 
       // Push the custom legend div to the map controls at the bottom-right corner
-      map?.controls[window.google.maps.ControlPosition.RIGHT_TOP].push(
+      map?.controls[window.google.maps.ControlPosition.LEFT_BOTTOM].push(
         legendDiv
       );
 
