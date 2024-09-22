@@ -17,17 +17,11 @@ const center = {
   lng: -122.315,
 };
 
-// Statically define libraries to avoid the "LoadScript has been reloaded
-// unintentionally!" performance warning.
-// TODO: Is this library needed?
-const LIBRARIES: "places"[] = ["places"];
-
 const ReactMap: React.FC<IMap> = ({
   buildingsToMap = [],
   savedBuildings,
   allListings,
 }) => {
-  // const { buildingsToMap = [] } = props;
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
     null
   );
@@ -42,7 +36,6 @@ const ReactMap: React.FC<IMap> = ({
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: firebaseConfig.apiKey,
-    libraries: LIBRARIES,
   });
 
   if (!isLoaded) {
