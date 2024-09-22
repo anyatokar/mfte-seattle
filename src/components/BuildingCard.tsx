@@ -16,6 +16,7 @@ import IBuilding, { AMIPercentage } from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IListing from "../interfaces/IListing";
 
+import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -176,14 +177,21 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     <Card>
       <Card.Header>
         <Card.Title className="mt-2">
-          <div>{buildingName}</div>
-          {/* <BuildingName
-            buildingName={buildingName}
-            urlForBuilding={urlForBuilding}
-          /> */}
+          <div>
+            {buildingName}
+            {areListingsOn && listing?.hasAnyAvailability && (
+              <Badge
+                pill
+                bg="warning"
+                text="dark"
+                className="units-avail-badge"
+              >
+                Units available!
+              </Badge>
+            )}
+          </div>
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
-
         <div className="mt-2">
           {pageType === pageTypeEnum.allBuildings &&
             (currentUser ? (
@@ -244,34 +252,25 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
         )}
       </Card.Header>
 
-      <ListGroup variant="flush">
-        <ListGroup.Item
-          className={
-            areListingsOn && listing?.hasAnyAvailability ? "listing-card" : ""
-          }
-        >
-          <ListingCard
-            areListingsOn={areListingsOn}
-            listing={listing}
-            isMarker={false}
-            urlForBuilding={urlForBuilding}
-          />
-        </ListGroup.Item>
+      <ListGroup variant="flush" className="mb-2">
+        {!areListingsOn ||
+          ((!listing || !listing.hasAnyAvailability) && (
+            <ListGroup.Item>
+              Contact building for current availability.
+            </ListGroup.Item>
+          ))}
 
         <ListGroup.Item>
           <Tabs
+            className="tabs"
             defaultActiveKey={
               areListingsOn && listing?.hasAnyAvailability
                 ? "availability"
                 : "contact"
             }
           >
-            {areListingsOn && (
-              <Tab
-                eventKey="availability"
-                title="Availability"
-                disabled={!listing || (listing && !listing.hasAnyAvailability)}
-              >
+            {areListingsOn && listing?.hasAnyAvailability && (
+              <Tab eventKey="availability" title="Availability">
                 <Table bordered hover size="sm" responsive>
                   <thead>
                     <tr>
@@ -291,19 +290,23 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     )}
                   </tbody>
                 </Table>
+                <ListingCard listing={listing} isMarker={false} />
               </Tab>
             )}
+
             <Tab eventKey="contact" title="Contact">
-              <AddressAndPhone
-                buildingName={buildingName}
-                streetNum={streetNum}
-                street={street}
-                city={city}
-                state={state}
-                zip={zip}
-                phone={phone}
-                phone2={phone2}
-              />
+              <div className="mt-2">
+                <AddressAndPhone
+                  buildingName={buildingName}
+                  streetNum={streetNum}
+                  street={street}
+                  city={city}
+                  state={state}
+                  zip={zip}
+                  phone={phone}
+                  phone2={phone2}
+                />
+              </div>
             </Tab>
             {amiData && (
               <Tab eventKey="details" title="Details">

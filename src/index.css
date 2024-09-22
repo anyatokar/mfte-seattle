@@ -47,6 +47,23 @@ body {
 }
 /* end of navbar section */
 
+/* building card tabs */
+
+.tabs .nav-link,
+.navbar-text {
+  color: black !important;
+}
+
+.tabs .nav-link:hover {
+  background: #eef6f6;
+}
+
+.tabs .nav-link.active {
+  font-weight: 600;
+}
+
+/* end of building card tabs */
+
 /* entire pages below navbar, above footer*/
 .all-pages {
   margin-top: 2em;
@@ -92,11 +109,6 @@ body {
 /* end of pills pages - sort misc fields */
 
 /* pills pages - building cards and info windows */
-.address-phone-block {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
 .first-phone-num {
   margin-top: 0.5em;
   margin-bottom: 0em;
@@ -174,13 +186,15 @@ body {
   max-height: 400px;
 }
 
-.listing-card {
-  /* background: rgb(255, 255, 37); */
-}
-
 .badge-top {
   position: relative;
   top: -0.5em;
   left: -0.25em;
+}
+
+.units-avail-badge {
+  position: relative;
+  left: 0.1em;
+  bottom: 0.6em;
 }
 /* end of misc */

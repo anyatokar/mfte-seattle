@@ -13,6 +13,7 @@ import ListingCard from "../components/ListingCard";
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 
+import Badge from "react-bootstrap//Badge";
 import Button from "react-bootstrap/Button";
 
 interface IBuildingMarkerProps {
@@ -116,12 +117,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
             <div>
               {areListingsOn && listing?.url && (
                 <>
-                  <ListingCard
-                    areListingsOn={areListingsOn}
-                    listing={listing}
-                    isMarker={true}
-                    urlForBuilding={urlForBuilding}
-                  />
+                  <ListingCard listing={listing} isMarker={true} />
                 </>
               )}
             </div>
@@ -130,16 +126,18 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
                 <strong>{buildingName}</strong>
               </div>
               <div>{residentialTargetedArea}</div>
-              <AddressAndPhone
-                buildingName={buildingName}
-                streetNum={streetNum}
-                street={street}
-                city={city}
-                state={state}
-                zip={zip}
-                phone={phone}
-                phone2={phone2}
-              />
+              <div className="my-2">
+                <AddressAndPhone
+                  buildingName={buildingName}
+                  streetNum={streetNum}
+                  street={street}
+                  city={city}
+                  state={state}
+                  zip={zip}
+                  phone={phone}
+                  phone2={phone2}
+                />
+              </div>
               {currentUser ? (
                 wasOriginallySaved || isSaved ? (
                   <Button

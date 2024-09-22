@@ -24,7 +24,7 @@ const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
   const phone2Ref = `tel:${phone2}`;
 
   return (
-    <div className="address-phone-block">
+    <div>
       {streetNum} {street}
       <br />
       {city}, {state} {zip}
