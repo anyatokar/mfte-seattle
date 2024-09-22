@@ -1,12 +1,12 @@
 import { Button } from "react-bootstrap";
 import IListing from "../interfaces/IListing";
 
-interface ListingCardProps {
+interface ListingButtonProps {
   listing: IListing | undefined;
   isMarker: boolean;
 }
 
-export default function ListingCard(props: ListingCardProps) {
+export default function ListingButton(props: ListingButtonProps) {
   const { listing, isMarker } = props;
 
   return (

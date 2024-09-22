@@ -8,7 +8,7 @@ import { areListingsOn } from "../config/config";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 import { AddressAndPhone } from "../components/BuildingContactInfo";
-import ListingCard from "../components/ListingCard";
+import ListingButton from "../components/ListingButton";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
@@ -117,7 +117,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
             <div>
               {areListingsOn && listing?.url && (
                 <>
-                  <ListingCard listing={listing} isMarker={true} />
+                  <ListingButton listing={listing} isMarker={true} />
                 </>
               )}
             </div>

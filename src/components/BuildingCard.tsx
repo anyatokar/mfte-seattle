@@ -4,7 +4,7 @@ import { areListingsOn } from "../config/config";
 import { pageTypeEnum } from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
-import ListingCard from "./ListingCard";
+import ListingButton from "./ListingButton";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
 import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
@@ -290,7 +290,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     )}
                   </tbody>
                 </Table>
-                <ListingCard listing={listing} isMarker={false} />
+                <ListingButton listing={listing} isMarker={false} />
               </Tab>
             )}
 
