@@ -186,15 +186,8 @@ body {
   max-height: 400px;
 }
 
-.badge-top {
-  position: relative;
-  top: -0.5em;
-  left: -0.25em;
-}
-
 .units-avail-badge {
   position: relative;
-  left: 0.1em;
-  bottom: 0.6em;
+  left: .5em;
 }
 /* end of misc */

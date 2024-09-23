@@ -1,4 +1,5 @@
 import { firebaseConfig } from "../db/firebase";
+import { areListingsOn } from "../config/config";
 
 import { createRoot } from "react-dom/client";
 import React, { useEffect, useState, useRef } from "react";
@@ -33,7 +34,11 @@ const ReactMap: React.FC<IMap> = ({
   const mapRef = useRef<GoogleMap>(null);
 
   useEffect(() => {
-    if (selectedBuilding && !buildingsToMap.includes(selectedBuilding)) {
+    if (
+      areListingsOn &&
+      selectedBuilding &&
+      !buildingsToMap.includes(selectedBuilding)
+    ) {
       setSelectedBuilding(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- No need for selectedBuilding in the deps list

@@ -20,7 +20,7 @@ export default function ListingButton(props: ListingButtonProps) {
           title={`Open new tab: ${listing.url}`}
           target="_blank"
           rel="noreferrer"
-          variant="outline-success"
+          variant="success"
         >
           View Leasing Page
         </Button>

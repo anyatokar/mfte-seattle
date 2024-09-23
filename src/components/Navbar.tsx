@@ -110,12 +110,7 @@ export const Header = () => {
               <Nav.Link active={false}>Contact</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/advertise">
-              <Nav.Link active={false}>
-                Advertise{" "}
-                <Badge pill bg="warning" text="dark" className="badge-top">
-                  New!
-                </Badge>
-              </Nav.Link>
+              <Nav.Link active={false}>For Property Managers</Nav.Link>
             </LinkContainer>
             <Dropdown.Divider />
           </Nav>
