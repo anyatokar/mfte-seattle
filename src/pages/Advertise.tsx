@@ -1,6 +1,9 @@
 import { Profiler, useState } from "react";
 import { Link } from "react-router-dom";
 import { sendAdInquiryFirestore } from "../utils/firestoreUtils";
+import { useAllBuildings } from "../hooks/useAllBuildings";
+
+import IBuilding from "../interfaces/IBuilding";
 import IPage from "../interfaces/IPage";
 
 import Button from "react-bootstrap/Button";
@@ -24,6 +27,8 @@ export type listingFormFieldsType = {
 };
 
 const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
+  const { allBuildings, loading } = useAllBuildings();
+
   function clearFields(): void {
     setFormFields({
       authorName: "",
@@ -63,8 +68,16 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
     }));
   };
 
+  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>();
+
   const onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
+    // This assumes building names are unique.
+    const selectedBuilding = allBuildings.find(
+      (building) => value === building.buildingName
+    );
+
+    setSelectedBuilding(selectedBuilding || null);
     setFormFields((prev) => ({
       ...prev,
       [name]: value,
@@ -88,7 +101,7 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
     studio: "Studios",
     oneBed: "One Beds",
     twoBed: "Two Beds",
-    threePlusBed: "Three Beds+",
+    threePlusBed: "Three+ Beds",
   };
 
   const unitSizes: Array<keyof typeof unitSizeLabels> = [
@@ -98,7 +111,6 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
     "twoBed",
     "threePlusBed",
   ];
-  const buildingNames = ["Building A", "Building B", "Building C"];
 
   return (
     <Profiler
@@ -165,11 +177,18 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
                     value={formFields.buildingName}
                   >
                     <option value="">Select a building</option>
-                    {buildingNames.map((buildingName, index) => (
-                      <option key={index} value={buildingName}>
-                        {buildingName}
-                      </option>
-                    ))}
+                    {allBuildings
+                      .sort((a, b) =>
+                        a.buildingName.localeCompare(b.buildingName)
+                      )
+                      .map((selectedBuilding) => (
+                        <option
+                          key={selectedBuilding.buildingID}
+                          value={selectedBuilding.buildingName}
+                        >
+                          {selectedBuilding.buildingName}
+                        </option>
+                      ))}
                   </Form.Select>
                 </Form.Group>
 
@@ -185,6 +204,22 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
                     value={formFields.companyName}
                   />
                 </Form.Group>
+              </Form.Group>
+
+              {/* Address */}
+              <Form.Group as={Col}>
+                {selectedBuilding && (
+                  <p>
+                    {selectedBuilding.streetNum} {selectedBuilding.street}
+                    <br />
+                    {selectedBuilding.city}, {selectedBuilding.state}{" "}
+                    {selectedBuilding.zip}
+                    <br />
+                    {selectedBuilding.phone}
+                    {selectedBuilding.phone2 ? <br /> : null}
+                    {selectedBuilding.phone2}
+                  </p>
+                )}
               </Form.Group>
 
               {/* Name and Email row */}
@@ -229,7 +264,7 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
 
               <p>
                 {formFields.buildingName
-                  ? `Availability in ${formFields.buildingName}:`
+                  ? `Availability at ${selectedBuilding?.buildingName}:`
                   : "Availability:"}
               </p>
 
