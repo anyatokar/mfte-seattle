@@ -12,7 +12,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
+const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
   const { allBuildings, loading } = useAllBuildings();
 
   function clearFields(): void {
@@ -296,4 +296,4 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
   );
 };
 
-export default AdvertisePage;
+export default AddListingPage;

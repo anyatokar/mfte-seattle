@@ -1,7 +1,7 @@
 import IRoute from "../interfaces/IRoute";
 
 import AboutPage from "../pages/About";
-import AdvertisePage from "../pages/Advertise";
+import AddListingPage from "../pages/AddListing";
 import AllBuildingsPage from "../pages/AllBuildings";
 import ContactPage from "../pages/Contact";
 import HomePage from "../pages/Home";
@@ -35,9 +35,9 @@ const publicRoutes: IRoute[] = [
     exact: true,
   },
   {
-    path: "/advertise",
-    name: "Advertise Page",
-    component: AdvertisePage,
+    path: "/add-listing",
+    name: "Add Listing Page",
+    component: AddListingPage,
     exact: true,
   },
   {
