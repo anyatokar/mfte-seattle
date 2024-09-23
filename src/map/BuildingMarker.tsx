@@ -98,7 +98,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   };
 
   const icon =
-    areListingsOn && listing?.hasAnyAvailability
+    areListingsOn && listing?.isApproved
       ? svgMarkerListing
       : svgMarkerNoListing;
 

@@ -179,7 +179,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
         <Card.Title className="mt-2">
           <div>
             {buildingName}
-            {areListingsOn && listing?.hasAnyAvailability && (
+            {areListingsOn && listing?.isApproved && (
               <Badge
                 pill
                 bg="warning"
@@ -254,7 +254,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
 
       <ListGroup variant="flush" className="mb-2">
         {!areListingsOn ||
-          ((!listing || !listing.hasAnyAvailability) && (
+          ((!listing || !listing.isApproved) && (
             <ListGroup.Item>
               Contact building for current availability.
             </ListGroup.Item>
@@ -264,12 +264,12 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
           <Tabs
             className="tabs"
             defaultActiveKey={
-              areListingsOn && listing?.hasAnyAvailability
+              areListingsOn && listing?.isApproved
                 ? "availability"
                 : "contact"
             }
           >
-            {areListingsOn && listing?.hasAnyAvailability && (
+            {areListingsOn && listing?.isApproved && (
               <Tab eventKey="availability" title="Availability">
                 <Table bordered hover size="sm" responsive>
                   <thead>

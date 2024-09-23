@@ -8,7 +8,7 @@ export default interface IListing {
   startDate: string;
   endDate: string;
   lastUpdateDate: string;
-  hasAnyAvailability: boolean;
+  isApproved: boolean;
   listingId: string;
   buildingID: string;
   seduAvail: IListingAptDetails;
