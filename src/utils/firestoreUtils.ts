@@ -9,9 +9,9 @@ import {
   updateDoc,
   addDoc,
 } from "firebase/firestore";
-import { listingFormFieldsType } from "../pages/Advertise";
 import { contactUsFormFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
+import IListing from "../interfaces/IListing";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -158,23 +158,25 @@ export async function sendMessageFirestore(
   });
 }
 
-export async function sendAdInquiryFirestore(
-  formFields: listingFormFieldsType
+export async function sendListingFirestore(
+  formFields: Partial<IListing>,
+  buildingID: string | undefined
 ) {
-  await addDoc(collection(db, "ad_inquiries"), {
-    authorName: formFields.authorName,
+  await addDoc(collection(db, "listings"), {
+    contactName: formFields.contactName,
     email: formFields.email,
     companyName: formFields.companyName,
     buildingName: formFields.buildingName,
     url: formFields.url,
-    micro: formFields.micro,
-    studio: formFields.studio,
-    oneBed: formFields.oneBed,
-    twoBed: formFields.twoBed,
-    threePlusBed: formFields.threePlusBed,
+    microNumAvail: formFields.microNumAvail,
+    studioNumAvail: formFields.studioNumAvail,
+    oneBedNumAvail: formFields.oneBedNumAvail,
+    twoBedNumAvail: formFields.twoBedNumAvail,
+    threePlusBedNumAvail: formFields.threePlusBedNumAvail,
     message: formFields.message,
+    buildingID: buildingID,
     sentTimestamp: new Date(),
-    didReply: false,
+    isApproved: false,
   });
 }
 

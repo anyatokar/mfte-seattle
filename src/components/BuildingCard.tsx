@@ -7,7 +7,7 @@ import { AddressAndPhone } from "./BuildingContactInfo";
 import ListingButton from "./ListingButton";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
-import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
+import { timestampToDateAndTime } from "../utils/generalUtils";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -48,12 +48,6 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     phone,
     phone2,
     residentialTargetedArea,
-    totalRestrictedUnits,
-    sedu,
-    studioUnits,
-    oneBedroomUnits,
-    twoBedroomUnits,
-    threePlusBedroomUnits,
     urlForBuilding,
     streetNum,
     street,
@@ -127,23 +121,23 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   const availabilityData = [
     {
       type: "Micro",
-      quantity: listing?.seduAvail?.quantity,
+      quantity: listing?.microNumAvail,
     },
     {
       type: "Studio",
-      quantity: listing?.studioAvail?.quantity,
+      quantity: listing?.studioNumAvail,
     },
     {
       type: "One",
-      quantity: listing?.oneBedAvail?.quantity,
+      quantity: listing?.oneBedNumAvail,
     },
     {
       type: "Two",
-      quantity: listing?.twoBedAvail?.quantity,
+      quantity: listing?.twoBedNumAvail,
     },
     {
       type: "Three+",
-      quantity: listing?.threePlusBedAvail?.quantity,
+      quantity: listing?.threePlusBedNumAvail,
     },
   ];
 
@@ -264,9 +258,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
           <Tabs
             className="tabs"
             defaultActiveKey={
-              areListingsOn && listing?.isApproved
-                ? "availability"
-                : "contact"
+              areListingsOn && listing?.isApproved ? "availability" : "contact"
             }
           >
             {areListingsOn && listing?.isApproved && (
@@ -279,14 +271,15 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {availabilityData.map(
-                      (apt) =>
-                        apt.quantity && (
-                          <tr key={apt.type}>
-                            <td>{apt.type}</td>
-                            <td>{apt.quantity}</td>
-                          </tr>
-                        )
+                    {availabilityData.map((apt) =>
+                      apt.quantity ? (
+                        <tr key={apt.type}>
+                          <td>{apt.type}</td>
+                          <td>{apt.quantity}</td>
+                        </tr>
+                      ) : (
+                        ""
+                      )
                     )}
                   </tbody>
                 </Table>

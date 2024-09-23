@@ -11,7 +11,7 @@ export default function ListingButton(props: ListingButtonProps) {
 
   return (
     <>
-      {listing?.url && (
+      {listing?.isApproved && listing?.url && (
         <Button
           className={isMarker ? "" : "mt-3"}
           size={isMarker ? "sm" : undefined}

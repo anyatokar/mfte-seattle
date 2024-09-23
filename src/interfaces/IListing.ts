@@ -1,19 +1,18 @@
-import IListingAptDetails from "./IListingAptDetails";
+import { Timestamp } from "firebase/firestore";
 
-/** An object containing listing metadata. */
 export default interface IListing {
-  name: string;
-  address: string;
-  url: string;
-  startDate: string;
-  endDate: string;
-  lastUpdateDate: string;
   isApproved: boolean;
-  listingId: string;
+  buildingName: string;
+  contactName: string;
+  email: string;
+  companyName: string;
+  url: string;
+  message: string;
+  microNumAvail: number;
+  studioNumAvail: number;
+  oneBedNumAvail: number;
+  twoBedNumAvail: number;
+  threePlusBedNumAvail: number;
   buildingID: string;
-  seduAvail: IListingAptDetails;
-  studioAvail: IListingAptDetails;
-  oneBedAvail: IListingAptDetails;
-  twoBedAvail: IListingAptDetails;
-  threePlusBedAvail: IListingAptDetails;
+  sentTimestamp: Timestamp;
 }

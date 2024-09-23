@@ -1,6 +1,6 @@
 import { Profiler, useState } from "react";
 import { Link } from "react-router-dom";
-import { sendAdInquiryFirestore } from "../utils/firestoreUtils";
+import { sendListingFirestore } from "../utils/firestoreUtils";
 import { useAllBuildings } from "../hooks/useAllBuildings";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -12,50 +12,36 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-export type listingFormFieldsType = {
-  authorName: string;
-  email: string;
-  companyName: string;
-  buildingName: string;
-  url: string;
-  micro: number;
-  studio: number;
-  oneBed: number;
-  twoBed: number;
-  threePlusBed: number;
-  message: string;
-};
-
 const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
   const { allBuildings, loading } = useAllBuildings();
 
   function clearFields(): void {
     setFormFields({
-      authorName: "",
+      contactName: "",
       email: "",
       companyName: "",
       buildingName: "",
       url: "",
-      micro: 0,
-      studio: 0,
-      oneBed: 0,
-      twoBed: 0,
-      threePlusBed: 0,
+      microNumAvail: 0,
+      studioNumAvail: 0,
+      oneBedNumAvail: 0,
+      twoBedNumAvail: 0,
+      threePlusBedNumAvail: 0,
       message: "",
     });
   }
 
   const [formFields, setFormFields] = useState({
-    authorName: "",
+    contactName: "",
     email: "",
     companyName: "",
     buildingName: "",
     url: "",
-    micro: 0,
-    studio: 0,
-    oneBed: 0,
-    twoBed: 0,
-    threePlusBed: 0,
+    microNumAvail: 0,
+    studioNumAvail: 0,
+    oneBedNumAvail: 0,
+    twoBedNumAvail: 0,
+    threePlusBedNumAvail: 0,
     message: "",
   });
 
@@ -86,30 +72,30 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    return sendAdInquiryFirestore(formFields)
+    return sendListingFirestore(formFields, selectedBuilding?.buildingID)
       .then(() => {
-        console.log("Inquiry sent successfully.");
+        console.log("Availability data submitted successfully.");
         clearFields();
       })
       .catch((error) => {
-        console.error("Error sending inquiry: ", error);
+        console.error("Error sending availability data: ", error);
       });
   };
 
   const unitSizeLabels = {
-    micro: "Micro/Pods",
-    studio: "Studios",
-    oneBed: "One Beds",
-    twoBed: "Two Beds",
-    threePlusBed: "Three+ Beds",
+    microNumAvail: "Micro/Pods",
+    studioNumAvail: "Studios",
+    oneBedNumAvail: "One Beds",
+    twoBedNumAvail: "Two Beds",
+    threePlusBedNumAvail: "Three+ Beds",
   };
 
-  const unitSizes: Array<keyof typeof unitSizeLabels> = [
-    "micro",
-    "studio",
-    "oneBed",
-    "twoBed",
-    "threePlusBed",
+  const numAvailFields: Array<keyof typeof unitSizeLabels> = [
+    "microNumAvail",
+    "studioNumAvail",
+    "oneBedNumAvail",
+    "twoBedNumAvail",
+    "threePlusBedNumAvail",
   ];
 
   return (
@@ -228,10 +214,10 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
                   <Form.Label>Your Name*</Form.Label>
                   <Form.Control
                     required
-                    name="authorName"
-                    id="authorName"
+                    name="contactName"
+                    id="contactName"
                     onChange={onInputChange}
-                    value={formFields.authorName}
+                    value={formFields.contactName}
                   />
                 </Form.Group>
                 <Form.Group as={Col} md={6}>
@@ -269,16 +255,16 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
               </p>
 
               <Form.Group as={Row} className="mb-3">
-                {unitSizes.map((unitSize) => (
-                  <Form.Group as={Col} md={2} key={unitSize}>
-                    <Form.Label>{unitSizeLabels[unitSize]}</Form.Label>
+                {numAvailFields.map((numAvailField) => (
+                  <Form.Group as={Col} md={2} key={numAvailField}>
+                    <Form.Label>{unitSizeLabels[numAvailField]}</Form.Label>
                     <Form.Control
                       type="number"
                       min="0"
-                      name={unitSize}
-                      id={unitSize}
+                      name={numAvailField}
+                      id={numAvailField}
                       onChange={onInputChange}
-                      value={formFields[unitSize]}
+                      value={formFields[numAvailField]}
                     />
                   </Form.Group>
                 ))}
