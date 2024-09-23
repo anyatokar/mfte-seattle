@@ -9,7 +9,7 @@ import {
   updateDoc,
   addDoc,
 } from "firebase/firestore";
-import { adInquiryFormFieldsType } from "../pages/Advertise";
+import { listingFormFieldsType } from "../pages/Advertise";
 import { contactUsFormFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
 
@@ -159,13 +159,13 @@ export async function sendMessageFirestore(
 }
 
 export async function sendAdInquiryFirestore(
-  formFields: adInquiryFormFieldsType
+  formFields: listingFormFieldsType
 ) {
   await addDoc(collection(db, "ad_inquiries"), {
     authorName: formFields.authorName,
     email: formFields.email,
     companyName: formFields.companyName,
-    propertyNames: formFields.propertyNames,
+    buildingName: formFields.buildingName,
     message: formFields.message,
     sentTimestamp: new Date(),
     didReply: false,

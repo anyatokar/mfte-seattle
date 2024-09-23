@@ -163,7 +163,7 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
                     <p>
                       {resultBuildingsUnsorted.length > 0
                         ? `${resultBuildingsUnsorted.length} buildings found`
-                        : "No buildings found with this search criteria."}
+                        : "No buildings found"}
                     </p>
                   )}
                 </Col>

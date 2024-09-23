@@ -9,11 +9,17 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-export type adInquiryFormFieldsType = {
+export type listingFormFieldsType = {
   authorName: string;
   email: string;
   companyName: string;
-  propertyNames: string;
+  buildingName: string;
+  url: string;
+  micro: number;
+  studio: number;
+  oneBed: number;
+  twoBed: number;
+  threePlusBed: number;
   message: string;
 };
 
@@ -23,7 +29,13 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
       authorName: "",
       email: "",
       companyName: "",
-      propertyNames: "",
+      buildingName: "",
+      url: "",
+      micro: 0,
+      studio: 0,
+      oneBed: 0,
+      twoBed: 0,
+      threePlusBed: 0,
       message: "",
     });
   }
@@ -32,20 +44,31 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
     authorName: "",
     email: "",
     companyName: "",
-    propertyNames: "",
+    buildingName: "",
+    url: "",
+    micro: 0,
+    studio: 0,
+    oneBed: 0,
+    twoBed: 0,
+    threePlusBed: 0,
     message: "",
   });
 
   // event handlers
-  const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ): void => {
-    const newFormFields = {
-      ...formFields,
-    };
-    newFormFields[event.target.name as keyof adInquiryFormFieldsType] =
-      event.target.value;
-    setFormFields(newFormFields);
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormFields((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = event.target;
+    setFormFields((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -59,6 +82,23 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
         console.error("Error sending inquiry: ", error);
       });
   };
+
+  const unitSizeLabels = {
+    micro: "Micro/Pods",
+    studio: "Studios",
+    oneBed: "One Beds",
+    twoBed: "Two Beds",
+    threePlusBed: "Three Beds+",
+  };
+
+  const unitSizes: Array<keyof typeof unitSizeLabels> = [
+    "micro",
+    "studio",
+    "oneBed",
+    "twoBed",
+    "threePlusBed",
+  ];
+  const buildingNames = ["Building A", "Building B", "Building C"];
 
   return (
     <Profiler
@@ -114,6 +154,39 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
 
             <p>Fields marked with * are required.</p>
             <Form onSubmit={handleFormSubmit}>
+              <Form.Group as={Row} className="mb-3">
+                <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
+                  <Form.Label>Building Name*</Form.Label>
+                  <Form.Select
+                    required
+                    name="buildingName"
+                    id="buildingName"
+                    onChange={onSelectChange}
+                    value={formFields.buildingName}
+                  >
+                    <option value="">Select a building</option>
+                    {buildingNames.map((buildingName, index) => (
+                      <option key={index} value={buildingName}>
+                        {buildingName}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+
+                {/* Company row */}
+                <Form.Group as={Col} md={6}>
+                  <Form.Label>Company Name*</Form.Label>
+                  <Form.Control
+                    required
+                    type="companyName"
+                    name="companyName"
+                    id="companyName"
+                    onChange={onInputChange}
+                    value={formFields.companyName}
+                  />
+                </Form.Group>
+              </Form.Group>
+
               {/* Name and Email row */}
               <Form.Group as={Row} className="mb-3">
                 <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
@@ -139,36 +212,49 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
                 </Form.Group>
               </Form.Group>
 
-              {/* Company and Buildings row */}
+              {/* URL */}
               <Form.Group as={Row} className="mb-3">
                 <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
-                  <Form.Label>Company Name*</Form.Label>
+                  <Form.Label>Listing URL*</Form.Label>
                   <Form.Control
                     required
-                    type="companyName"
-                    name="companyName"
-                    id="companyName"
+                    type="url"
+                    name="url"
+                    id="url"
                     onChange={onInputChange}
-                    value={formFields.companyName}
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md={6}>
-                  <Form.Label>Property Name(s)</Form.Label>
-                  <Form.Control
-                    type="propertyNames"
-                    name="propertyNames"
-                    id="propertyNames"
-                    onChange={onInputChange}
-                    value={formFields.propertyNames}
+                    value={formFields.url}
                   />
                 </Form.Group>
               </Form.Group>
 
+              <p>
+                {formFields.buildingName
+                  ? `Availability in ${formFields.buildingName}:`
+                  : "Availability:"}
+              </p>
+
+              <Form.Group as={Row} className="mb-3">
+                {unitSizes.map((unitSize) => (
+                  <Form.Group as={Col} md={2} key={unitSize}>
+                    <Form.Label>{unitSizeLabels[unitSize]}</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="0"
+                      name={unitSize}
+                      id={unitSize}
+                      onChange={onInputChange}
+                      value={formFields[unitSize]}
+                    />
+                  </Form.Group>
+                ))}
+              </Form.Group>
+
               {/* Message */}
               <Form.Group className="mb-3">
-                <Form.Label>Message*</Form.Label>
+                <Form.Label>
+                  Any additional notes (questions and feedback welcome)
+                </Form.Label>
                 <Form.Control
-                  required
                   as="textarea"
                   name="message"
                   id="message"
@@ -179,7 +265,7 @@ const AdvertisePage: React.FunctionComponent<IPage> = ({ name }) => {
               </Form.Group>
 
               <Button type="submit" className="diy-solid-info-button" size="lg">
-                Send message
+                Submit
               </Button>
             </Form>
           </Col>
