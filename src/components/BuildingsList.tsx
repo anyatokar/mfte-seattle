@@ -4,7 +4,6 @@ import { areListingsOn } from "../config/config";
 import { pageTypeEnum } from "../types/enumTypes";
 
 import BuildingCard from "./BuildingCard";
-import Sorters from "./Sorters";
 
 import { genericSort } from "../utils/genericSort";
 
@@ -61,8 +60,22 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
   }
 
   const resultBuildings = resultBuildingsUnsorted.sort(
-    (buildingA: any, buildingB: any) =>
-      genericSort<IBuilding>(buildingA, buildingB, activeSorter)
+    (buildingA: IBuilding, buildingB: IBuilding) => {
+      // Check if each building has a listing in allListings
+      const hasListingA = allListings.some(
+        (listing) => listing.buildingID === buildingA.buildingID
+      );
+      const hasListingB = allListings.some(
+        (listing) => listing.buildingID === buildingB.buildingID
+      );
+
+      // Sort buildings with listings first
+      if (hasListingA && !hasListingB) return -1;
+      if (!hasListingA && hasListingB) return 1;
+
+      // If both or neither have listings, use the active sorter (e.g., by buildingName)
+      return genericSort<IBuilding>(buildingA, buildingB, activeSorter);
+    }
   );
 
   return (
@@ -74,19 +87,7 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
             md={{ span: 9, offset: 1 }}
             lg={{ span: 8, offset: 0 }}
             className="p-0"
-          >
-            {resultBuildingsUnsorted.length > 0 && (
-              <Sorters<IBuilding>
-                object={resultBuildingsUnsorted[0]}
-                onChangeSorter={(property, isDescending) => {
-                  setActiveSorter({
-                    property,
-                    isDescending,
-                  });
-                }}
-              />
-            )}
-          </Col>
+          ></Col>
         </Row>
       )}
       <Row>
