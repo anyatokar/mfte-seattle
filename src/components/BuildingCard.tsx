@@ -1,10 +1,11 @@
-import { useState, useContext, Fragment } from "react";
+import { useState, useContext } from "react";
 
 import { areListingsOn } from "../config/config";
-import { pageTypeEnum } from "../types/enumTypes";
+import { pageTypeEnum, tableType } from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
 import ListingButton from "./ListingButton";
+import BuildingDataTable from "./BuildingDataTable";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
 import { timestampToDateAndTime } from "../utils/generalUtils";
@@ -118,40 +119,6 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
       });
   };
 
-  const availabilityData = [
-    {
-      type: "Micro",
-      quantity: listing?.microNumAvail,
-    },
-    {
-      type: "Studio",
-      quantity: listing?.studioNumAvail,
-    },
-    {
-      type: "One",
-      quantity: listing?.oneBedNumAvail,
-    },
-    {
-      type: "Two",
-      quantity: listing?.twoBedNumAvail,
-    },
-    {
-      type: "Three+",
-      quantity: listing?.threePlusBedNumAvail,
-    },
-  ];
-
-  function renderPercentageList(percentages: AMIPercentage[]): React.ReactNode {
-    if (!percentages) return null;
-
-    return percentages.map((item, index) => (
-      <Fragment key={index}>
-        {item}
-        {index < percentages.length - 1 ? ", " : ""}
-      </Fragment>
-    ));
-  }
-
   const websiteButton = (
     <Button
       className="diy-outline-info-button me-2"
@@ -261,28 +228,12 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
               areListingsOn && listing?.isApproved ? "availability" : "contact"
             }
           >
-            {areListingsOn && listing?.isApproved && (
+            {areListingsOn && listing?.isApproved && listing?.availData && (
               <Tab eventKey="availability" title="Availability">
-                <Table bordered hover size="sm" responsive>
-                  <thead>
-                    <tr>
-                      <th>Bedrooms</th>
-                      <th>Available Units</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {availabilityData.map((apt) =>
-                      apt.quantity ? (
-                        <tr key={apt.type}>
-                          <td>{apt.type}</td>
-                          <td>{apt.quantity}</td>
-                        </tr>
-                      ) : (
-                        ""
-                      )
-                    )}
-                  </tbody>
-                </Table>
+                <BuildingDataTable
+                  type={tableType.availData}
+                  data={listing.availData}
+                />
                 <ListingButton listing={listing} isMarker={false} />
               </Tab>
             )}
@@ -303,46 +254,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
             </Tab>
             {amiData && (
               <Tab eventKey="details" title="Details">
-                <Table bordered hover size="sm">
-                  <thead>
-                    <tr>
-                      <th>Bedrooms</th>
-                      <th>% of AMI</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {amiData.micro && (
-                      <tr>
-                        <td>Micro</td>
-                        <td>{renderPercentageList(amiData.micro)}</td>
-                      </tr>
-                    )}
-                    {amiData.studio && (
-                      <tr>
-                        <td>Studio</td>
-                        <td>{renderPercentageList(amiData.studio)}</td>
-                      </tr>
-                    )}
-                    {amiData.oneBed && (
-                      <tr>
-                        <td>One</td>
-                        <td>{renderPercentageList(amiData.oneBed)}</td>
-                      </tr>
-                    )}
-                    {amiData.twoBed && (
-                      <tr>
-                        <td>Two</td>
-                        <td>{renderPercentageList(amiData.twoBed)}</td>
-                      </tr>
-                    )}
-                    {amiData.threePlusBed && (
-                      <tr>
-                        <td>Three+</td>
-                        <td>{renderPercentageList(amiData.threePlusBed)}</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
+                <BuildingDataTable type={tableType.amiData} data={amiData} />
               </Tab>
             )}
           </Tabs>

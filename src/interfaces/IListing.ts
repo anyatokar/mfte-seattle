@@ -1,5 +1,13 @@
 import { Timestamp } from "firebase/firestore";
 
+export type availDataType = {
+  micro: number;
+  studio: number;
+  oneBed: number;
+  twoBed: number;
+  threePlusBed: number;
+};
+
 export default interface IListing {
   isApproved: boolean;
   buildingName: string;
@@ -8,11 +16,7 @@ export default interface IListing {
   companyName: string;
   url: string;
   message: string;
-  microNumAvail: number;
-  studioNumAvail: number;
-  oneBedNumAvail: number;
-  twoBedNumAvail: number;
-  threePlusBedNumAvail: number;
+  availData: availDataType;
   buildingID: string;
   sentTimestamp: Timestamp;
 }

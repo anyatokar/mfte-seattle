@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { contactUsFormFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
-import IListing from "../interfaces/IListing";
+import IListing, { availDataType } from "../interfaces/IListing";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -159,7 +159,7 @@ export async function sendMessageFirestore(
 }
 
 export async function sendListingFirestore(
-  formFields: Partial<IListing>,
+  formFields: Partial<IListing> & availDataType,
   buildingID: string | undefined
 ) {
   await addDoc(collection(db, "listings"), {
@@ -168,11 +168,13 @@ export async function sendListingFirestore(
     companyName: formFields.companyName,
     buildingName: formFields.buildingName,
     url: formFields.url,
-    microNumAvail: formFields.microNumAvail,
-    studioNumAvail: formFields.studioNumAvail,
-    oneBedNumAvail: formFields.oneBedNumAvail,
-    twoBedNumAvail: formFields.twoBedNumAvail,
-    threePlusBedNumAvail: formFields.threePlusBedNumAvail,
+    availData: {
+      micro: Number(formFields.micro),
+      studio: Number(formFields.studio),
+      oneBed: Number(formFields.oneBed),
+      twoBed: Number(formFields.twoBed),
+      threePlusBed: Number(formFields.threePlusBed),
+    },
     message: formFields.message,
     buildingID: buildingID,
     sentTimestamp: new Date(),

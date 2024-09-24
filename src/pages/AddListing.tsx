@@ -22,11 +22,11 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
       companyName: "",
       buildingName: "",
       url: "",
-      microNumAvail: 0,
-      studioNumAvail: 0,
-      oneBedNumAvail: 0,
-      twoBedNumAvail: 0,
-      threePlusBedNumAvail: 0,
+      micro: 0,
+      studio: 0,
+      oneBed: 0,
+      twoBed: 0,
+      threePlusBed: 0,
       message: "",
     });
   }
@@ -37,11 +37,11 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
     companyName: "",
     buildingName: "",
     url: "",
-    microNumAvail: 0,
-    studioNumAvail: 0,
-    oneBedNumAvail: 0,
-    twoBedNumAvail: 0,
-    threePlusBedNumAvail: 0,
+    micro: 0,
+    studio: 0,
+    oneBed: 0,
+    twoBed: 0,
+    threePlusBed: 0,
     message: "",
   });
 
@@ -83,19 +83,19 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
   };
 
   const unitSizeLabels = {
-    microNumAvail: "Micro/Pods",
-    studioNumAvail: "Studios",
-    oneBedNumAvail: "One Beds",
-    twoBedNumAvail: "Two Beds",
-    threePlusBedNumAvail: "Three+ Beds",
+    micro: "Micro/Pods",
+    studio: "Studios",
+    oneBed: "One Beds",
+    twoBed: "Two Beds",
+    threePlusBed: "Three+ Beds",
   };
 
   const numAvailFields: Array<keyof typeof unitSizeLabels> = [
-    "microNumAvail",
-    "studioNumAvail",
-    "oneBedNumAvail",
-    "twoBedNumAvail",
-    "threePlusBedNumAvail",
+    "micro",
+    "studio",
+    "oneBed",
+    "twoBed",
+    "threePlusBed",
   ];
 
   return (
