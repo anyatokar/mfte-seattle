@@ -10,7 +10,6 @@ import Login from "../auth_components/Login";
 import PasswordReset from "../auth_components/PasswordReset";
 import Signup from "../auth_components/Signup";
 
-import Badge from "react-bootstrap/esm/Badge";
 import Container from "react-bootstrap/Container";
 import Dropdown from "react-bootstrap/Dropdown";
 import Image from "react-bootstrap/Image";

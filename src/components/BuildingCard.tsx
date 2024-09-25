@@ -6,6 +6,7 @@ import { pageTypeEnum, tableType } from "../types/enumTypes";
 import { AddressAndPhone } from "./BuildingContactInfo";
 import ListingButton from "./ListingButton";
 import BuildingDataTable from "./BuildingDataTable";
+import WebsiteButton from "./WebsiteButton";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
 import { timestampToDateAndTime } from "../utils/generalUtils";
@@ -13,7 +14,7 @@ import { timestampToDateAndTime } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
-import IBuilding, { AMIPercentage } from "../interfaces/IBuilding";
+import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IListing from "../interfaces/IListing";
 
@@ -23,7 +24,6 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
-import Table from "react-bootstrap/Table";
 import Tabs from "react-bootstrap/Tabs";
 
 export interface AllBuildingCardProps {
@@ -119,21 +119,6 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
       });
   };
 
-  const websiteButton = (
-    <Button
-      className="diy-outline-info-button me-2"
-      size="sm"
-      id="leasing-page-url"
-      href={urlForBuilding}
-      title={`Open new tab: ${urlForBuilding}`}
-      target="_blank"
-      rel="noreferrer"
-      variant="primary"
-    >
-      Website
-    </Button>
-  );
-
   return (
     <Card>
       <Card.Header>
@@ -158,7 +143,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
                 <>
-                  {websiteButton}
+                  <WebsiteButton urlForBuilding={urlForBuilding} />
                   <Button
                     className="diy-solid-info-button"
                     size="sm"
@@ -169,7 +154,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                 </>
               ) : (
                 <>
-                  {websiteButton}
+                  <WebsiteButton urlForBuilding={urlForBuilding} />
                   <Button
                     className="diy-outline-info-button"
                     size="sm"
@@ -181,7 +166,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
               )
             ) : (
               <>
-                {websiteButton}
+                <WebsiteButton urlForBuilding={urlForBuilding} />
                 <Button
                   className="diy-outline-info-button"
                   onClick={handleShowLogin}
@@ -195,7 +180,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
 
         {pageType === pageTypeEnum.savedBuildings && (
           <>
-            {websiteButton}
+            <WebsiteButton urlForBuilding={urlForBuilding} />
             <Button
               className="center"
               size="sm"

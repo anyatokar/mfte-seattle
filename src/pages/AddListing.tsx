@@ -30,7 +30,7 @@ export type availDataFormType = {
 };
 
 const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
-  const { allBuildings, loading } = useAllBuildings();
+  const { allBuildings } = useAllBuildings();
 
   const emptyForm: Partial<IListing> & availDataFormType = {
     contactName: "",

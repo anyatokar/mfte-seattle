@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { areListingsOn } from "../config/config";
 import { pageTypeEnum } from "../types/enumTypes";
 
@@ -50,11 +48,6 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
   pageType,
   allListings,
 }) => {
-  const [activeSorter, setActiveSorter] = useState<ISorter<IBuilding>>({
-    property: "buildingName",
-    isDescending: false,
-  });
-
   if (!resultBuildingsUnsorted) {
     return null;
   }
@@ -72,6 +65,11 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
       // Sort buildings with listings first
       if (hasListingA && !hasListingB) return -1;
       if (!hasListingA && hasListingB) return 1;
+
+      const activeSorter: ISorter<IBuilding> = {
+        property: "buildingName",
+        isDescending: false,
+      };
 
       // If both or neither have listings, use the active sorter (e.g., by buildingName)
       return genericSort<IBuilding>(buildingA, buildingB, activeSorter);

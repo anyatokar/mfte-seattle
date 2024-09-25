@@ -1,19 +1,20 @@
 /// <reference types="googlemaps" />
 import { useCallback, useState, useContext } from "react";
 import { InfoWindow, Marker } from "@react-google-maps/api";
-import { useAuth } from "../contexts/AuthContext";
-
 import { areListingsOn } from "../config/config";
 
+import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
+
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
+
 import { AddressAndPhone } from "../components/BuildingContactInfo";
 import ListingButton from "../components/ListingButton";
+import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 
-import Badge from "react-bootstrap//Badge";
 import Button from "react-bootstrap/Button";
 
 interface IBuildingMarkerProps {
@@ -140,24 +141,32 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
               </div>
               {currentUser ? (
                 wasOriginallySaved || isSaved ? (
-                  <Button
-                    className="diy-solid-info-button"
-                    size="sm"
-                    onClick={toggleSave}
-                  >
-                    Saved
-                  </Button>
+                  <>
+                    <WebsiteButton urlForBuilding={urlForBuilding} />
+
+                    <Button
+                      className="diy-solid-info-button"
+                      size="sm"
+                      onClick={toggleSave}
+                    >
+                      Saved
+                    </Button>
+                  </>
                 ) : (
-                  <Button
-                    className="diy-outline-info-button"
-                    size="sm"
-                    onClick={toggleSave}
-                  >
-                    Save
-                  </Button>
+                  <>
+                    <WebsiteButton urlForBuilding={urlForBuilding} />
+                    <Button
+                      className="diy-outline-info-button"
+                      size="sm"
+                      onClick={toggleSave}
+                    >
+                      Save
+                    </Button>
+                  </>
                 )
               ) : (
                 <>
+                  <WebsiteButton urlForBuilding={urlForBuilding} />
                   <Button
                     className="diy-outline-info-button"
                     size="sm"

@@ -69,6 +69,7 @@ const ReactMap: React.FC<IMap> = ({
       root.render(<Legend />);
       setIsLegendVisible(true);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [buildingsToMap]);
 
   if (!isLoaded) {
