@@ -9,9 +9,12 @@ import {
   updateDoc,
   addDoc,
 } from "firebase/firestore";
+
+import { availDataFormType } from "../pages/AddListing";
 import { contactUsFormFieldsType } from "../pages/Contact";
+
 import IBuilding from "../interfaces/IBuilding";
-import IListing, { availDataType } from "../interfaces/IListing";
+import IListing from "../interfaces/IListing";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -159,7 +162,7 @@ export async function sendMessageFirestore(
 }
 
 export async function sendListingFirestore(
-  formFields: Partial<IListing> & availDataType,
+  formFields: Partial<IListing> & availDataFormType,
   buildingID: string | undefined
 ) {
   await addDoc(collection(db, "listings"), {
@@ -168,13 +171,33 @@ export async function sendListingFirestore(
     companyName: formFields.companyName,
     buildingName: formFields.buildingName,
     url: formFields.url,
-    availData: {
-      micro: Number(formFields.micro),
-      studio: Number(formFields.studio),
-      oneBed: Number(formFields.oneBed),
-      twoBed: Number(formFields.twoBed),
-      threePlusBed: Number(formFields.threePlusBed),
-    },
+    availData: [
+      {
+        unitSize: "micro",
+        numAvail: formFields.microNumAvail,
+        dateAvail: formFields.microDateAvail,
+      },
+      {
+        unitSize: "studio",
+        numAvail: formFields.studioNumAvail,
+        dateAvail: formFields.studioDateAvail,
+      },
+      {
+        unitSize: "oneBed",
+        numAvail: formFields.oneBedNumAvail,
+        dateAvail: formFields.oneBedDateAvail,
+      },
+      {
+        unitSize: "twoBed",
+        numAvail: formFields.twoBedNumAvail,
+        dateAvail: formFields.twoBedDateAvail,
+      },
+      {
+        unitSize: "threePlusBed",
+        numAvail: formFields.threePlusBedNumAvail,
+        dateAvail: formFields.threePlusBedDateAvail,
+      },
+    ],
     message: formFields.message,
     buildingID: buildingID,
     sentTimestamp: new Date(),

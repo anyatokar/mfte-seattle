@@ -1,57 +1,80 @@
 import { Profiler, useState } from "react";
-import { Link } from "react-router-dom";
+
+import { Timestamp } from "firebase/firestore";
 import { sendListingFirestore } from "../utils/firestoreUtils";
 import { useAllBuildings } from "../hooks/useAllBuildings";
+import ListingAccordion from "../components/ListingAccordion";
 
 import IBuilding from "../interfaces/IBuilding";
 import IPage from "../interfaces/IPage";
+import IListing from "../interfaces/IListing";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import Table from "react-bootstrap/Table";
+
+export type availDataFormType = {
+  microNumAvail: number;
+  microDateAvail: Timestamp | null;
+  studioNumAvail: number;
+  studioDateAvail: Timestamp | null;
+  oneBedNumAvail: number;
+  oneBedDateAvail: Timestamp | null;
+  twoBedNumAvail: number;
+  twoBedDateAvail: Timestamp | null;
+  threePlusBedNumAvail: number;
+  threePlusBedDateAvail: Timestamp | null;
+};
 
 const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
   const { allBuildings, loading } = useAllBuildings();
 
-  function clearFields(): void {
-    setFormFields({
-      contactName: "",
-      email: "",
-      companyName: "",
-      buildingName: "",
-      url: "",
-      micro: 0,
-      studio: 0,
-      oneBed: 0,
-      twoBed: 0,
-      threePlusBed: 0,
-      message: "",
-    });
-  }
-
-  const [formFields, setFormFields] = useState({
+  const emptyForm: Partial<IListing> & availDataFormType = {
     contactName: "",
     email: "",
     companyName: "",
     buildingName: "",
     url: "",
-    micro: 0,
-    studio: 0,
-    oneBed: 0,
-    twoBed: 0,
-    threePlusBed: 0,
     message: "",
-  });
+    microNumAvail: 0,
+    microDateAvail: null,
+    studioNumAvail: 0,
+    studioDateAvail: null,
+    oneBedNumAvail: 0,
+    oneBedDateAvail: null,
+    twoBedNumAvail: 0,
+    twoBedDateAvail: null,
+    threePlusBedNumAvail: 0,
+    threePlusBedDateAvail: null,
+  };
+
+  function clearFields(): void {
+    setFormFields(emptyForm);
+  }
+
+  const [formFields, setFormFields] = useState(emptyForm);
 
   // event handlers
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormFields((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    if (name.endsWith("DateAvail")) {
+      // If it's a date field, convert to Firestore Timestamp
+      const timestamp = value ? Timestamp.fromDate(new Date(value)) : null;
+      setFormFields((prev) => ({
+        ...prev,
+        [name]: timestamp,
+      }));
+    } else {
+      // For other fields, just update the value
+      setFormFields((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>();
@@ -90,7 +113,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
     threePlusBed: "Three+ Beds",
   };
 
-  const numAvailFields: Array<keyof typeof unitSizeLabels> = [
+  const unitSizeFields: Array<keyof typeof unitSizeLabels> = [
     "micro",
     "studio",
     "oneBed",
@@ -125,30 +148,9 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
             <div className="display-5">For Property Owners & Managers</div>
             <hr className="my-4 break-line-light" />
 
-            <p className="lead">
-              If you are company representative interested in featuring
-              currently available MFTE apartments on this website's&nbsp;
-              <Link id="all-buildings" to="./all-buildings">
-                MFTE map
-              </Link>
-              , please get in touch using the inquiry form below.
-            </p>
-            <p>
-              <strong>Metrics: </strong>This website averages 3,000 active
-              monthly users and consistently ranks as a top search result for
-              MFTE properties in Seattle across major search engines.
-              Recognizing that more than half of our visits come from mobile
-              devices, this site provides an optimized experience across phones,
-              tablets, and desktops, making it easier for a wider range of users
-              to find MFTE units.
-            </p>
-            <p>
-              <strong>Disclaimer: </strong>This website maps buildings
-              participating in the MFTE program using publicly available data.
-              It is not affiliated with any government agency or property owner.
-            </p>
+            <ListingAccordion />
 
-            <hr className="my-4" />
+            <hr className="my-4 break-line-light" />
 
             <p>Fields marked with * are required.</p>
             <Form onSubmit={handleFormSubmit}>
@@ -221,7 +223,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                   />
                 </Form.Group>
                 <Form.Group as={Col} md={6}>
-                  <Form.Label>Email*</Form.Label>
+                  <Form.Label>Work email*</Form.Label>
                   <Form.Control
                     required
                     type="email"
@@ -235,8 +237,8 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
 
               {/* URL */}
               <Form.Group as={Row} className="mb-3">
-                <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
-                  <Form.Label>Listing URL*</Form.Label>
+                <Form.Group as={Col} className="mb-3 mb-md-0">
+                  <Form.Label>Listing URL* (include http://)</Form.Label>
                   <Form.Control
                     required
                     type="url"
@@ -247,27 +249,56 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                   />
                 </Form.Group>
               </Form.Group>
-
-              <p>
-                {formFields.buildingName
-                  ? `Availability at ${selectedBuilding?.buildingName}:`
-                  : "Availability:"}
-              </p>
-
               <Form.Group as={Row} className="mb-3">
-                {numAvailFields.map((numAvailField) => (
-                  <Form.Group as={Col} md={2} key={numAvailField}>
-                    <Form.Label>{unitSizeLabels[numAvailField]}</Form.Label>
-                    <Form.Control
-                      type="number"
-                      min="0"
-                      name={numAvailField}
-                      id={numAvailField}
-                      onChange={onInputChange}
-                      value={formFields[numAvailField]}
-                    />
-                  </Form.Group>
-                ))}
+                <Form.Group as={Col} className="mb-3 mb-md-0">
+                  <Table bordered hover responsive>
+                    <thead>
+                      <tr>
+                        <th>Unit Type</th>
+                        <th>Number of Units Available</th>
+                        <th>Earliest Available Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {unitSizeFields.map((unitSize) => (
+                        <tr key={unitSize}>
+                          {/* Unit Size */}
+                          <td>{unitSizeLabels[unitSize]}</td>
+
+                          {/* Number of Units Available */}
+                          <td>
+                            <Form.Control
+                              type="number"
+                              min="0"
+                              name={`${unitSize}NumAvail`}
+                              id={`${unitSize}NumAvail`}
+                              onChange={onInputChange}
+                              value={Number(formFields[`${unitSize}NumAvail`])}
+                            />
+                          </td>
+
+                          {/* Earliest Available Date */}
+                          <td>
+                            <Form.Control
+                              type="date"
+                              name={`${unitSize}DateAvail`}
+                              id={`${unitSize}DateAvail`}
+                              onChange={onInputChange}
+                              value={
+                                formFields[`${unitSize}DateAvail`]
+                                  ? formFields[`${unitSize}DateAvail`]
+                                      ?.toDate()
+                                      .toISOString()
+                                      .split("T")[0]
+                                  : ""
+                              }
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Form.Group>
               </Form.Group>
 
               {/* Message */}

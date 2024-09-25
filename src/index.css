@@ -148,6 +148,22 @@ body {
 }
 /* end of footer */
 
+/* Listing accordion */
+.accordion-button:not(.collapsed) {
+  background-color: #f0ecec;
+  color: inherit;
+  font-weight: 700;
+}
+
+.accordion-button:hover {
+  background-color: #f0ecec;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+/* End of listing accordion */
+
 /* misc */
 .break-line-light {
   color: lightblue;

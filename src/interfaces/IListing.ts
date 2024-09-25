@@ -1,11 +1,11 @@
 import { Timestamp } from "firebase/firestore";
 
+type unitSizeType = "micro" | "studio" | "oneBed" | "twoBed" | "threePlusBed";
+
 export type availDataType = {
-  micro: number;
-  studio: number;
-  oneBed: number;
-  twoBed: number;
-  threePlusBed: number;
+  unitSize: unitSizeType;
+  numAvail: number;
+  dateAvail: Timestamp | null;
 };
 
 export default interface IListing {
@@ -16,7 +16,8 @@ export default interface IListing {
   companyName: string;
   url: string;
   message: string;
-  availData: availDataType;
+  /** This is an array to keep the order from smallest to largest on render. */
+  availData: availDataType[];
   buildingID: string;
   sentTimestamp: Timestamp;
 }
