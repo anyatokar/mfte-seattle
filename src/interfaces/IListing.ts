@@ -14,6 +14,7 @@ export default interface IListing {
   contactName: string;
   email: string;
   companyName: string;
+  jobTitle: string;
   url: string;
   message: string;
   /** This is an array to keep the order from smallest to largest on render. */

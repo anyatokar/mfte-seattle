@@ -36,6 +36,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
     contactName: "",
     email: "",
     companyName: "",
+    jobTitle: "",
     buildingName: "",
     url: "",
     message: "",
@@ -214,9 +215,9 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                     )}
                   </Form.Group>
 
-                  {/* Name and Email row */}
+                  {/* Name, Job Title and Email row */}
                   <Form.Group as={Row} className="mb-3">
-                    <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
+                    <Form.Group as={Col} md={4} className="mb-3 mb-md-0">
                       <Form.Label>Your Name*</Form.Label>
                       <Form.Control
                         required
@@ -226,8 +227,20 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                         value={formFields.contactName}
                       />
                     </Form.Group>
-                    <Form.Group as={Col} md={6}>
-                      <Form.Label>Work email*</Form.Label>
+
+                    <Form.Group as={Col} md={4} className="mb-3 mb-md-0">
+                      <Form.Label>Job Title*</Form.Label>
+                      <Form.Control
+                        required
+                        name="jobTitle"
+                        id="jobTitle"
+                        onChange={onInputChange}
+                        value={formFields.jobTitle}
+                      />
+                    </Form.Group>
+
+                    <Form.Group as={Col} md={4}>
+                      <Form.Label>Email*</Form.Label>
                       <Form.Control
                         required
                         type="email"
