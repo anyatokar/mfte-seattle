@@ -169,6 +169,7 @@ export async function sendListingFirestore(
     contactName: formFields.contactName,
     email: formFields.email,
     companyName: formFields.companyName,
+    jobTitle: formFields.jobTitle,
     buildingName: formFields.buildingName,
     url: formFields.url,
     availData: [
