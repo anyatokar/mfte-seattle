@@ -53,9 +53,11 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
 
   function clearFields(): void {
     setFormFields(emptyForm);
+    setSelectedBuilding(null);
   }
 
   const [formFields, setFormFields] = useState(emptyForm);
+  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>();
   const [isFormVisible, setIsFormVisible] = useState(true);
 
   // event handlers
@@ -77,8 +79,6 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
       }));
     }
   };
-
-  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>();
 
   const onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
