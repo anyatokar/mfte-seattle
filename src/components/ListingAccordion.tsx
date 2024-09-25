@@ -69,7 +69,7 @@ const ListingAccordion: React.FC = () => {
               </li>
             </ol>
             <p>
-              To make updates or remove a listing, please reply to the
+              To make updates or remove the listing, please reply to the
               confirmation email you receive.
             </p>
           </Accordion.Body>

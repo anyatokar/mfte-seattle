@@ -56,6 +56,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
   }
 
   const [formFields, setFormFields] = useState(emptyForm);
+  const [isFormVisible, setIsFormVisible] = useState(true);
 
   // event handlers
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,6 +100,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
       .then(() => {
         console.log("Availability data submitted successfully.");
         clearFields();
+        setIsFormVisible(false);
       })
       .catch((error) => {
         console.error("Error sending availability data: ", error);
@@ -152,174 +154,194 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
 
             <hr className="my-4 break-line-light" />
 
-            <p>Fields marked with * are required.</p>
-            <Form onSubmit={handleFormSubmit}>
-              <Form.Group as={Row} className="mb-3">
-                <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
-                  <Form.Label>Building Name*</Form.Label>
-                  <Form.Select
-                    required
-                    name="buildingName"
-                    id="buildingName"
-                    onChange={onSelectChange}
-                    value={formFields.buildingName}
+            {isFormVisible ? (
+              <>
+                <p>Fields marked with * are required.</p>
+                <Form onSubmit={handleFormSubmit}>
+                  <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
+                      <Form.Label>Building Name*</Form.Label>
+                      <Form.Select
+                        required
+                        name="buildingName"
+                        id="buildingName"
+                        onChange={onSelectChange}
+                        value={formFields.buildingName}
+                      >
+                        <option value="">Select a building</option>
+                        {allBuildings
+                          .sort((a, b) =>
+                            a.buildingName.localeCompare(b.buildingName)
+                          )
+                          .map((selectedBuilding) => (
+                            <option
+                              key={selectedBuilding.buildingID}
+                              value={selectedBuilding.buildingName}
+                            >
+                              {selectedBuilding.buildingName}
+                            </option>
+                          ))}
+                      </Form.Select>
+                    </Form.Group>
+
+                    {/* Company row */}
+                    <Form.Group as={Col} md={6}>
+                      <Form.Label>Company Name*</Form.Label>
+                      <Form.Control
+                        required
+                        type="companyName"
+                        name="companyName"
+                        id="companyName"
+                        onChange={onInputChange}
+                        value={formFields.companyName}
+                      />
+                    </Form.Group>
+                  </Form.Group>
+
+                  {/* Address */}
+                  <Form.Group as={Col}>
+                    {selectedBuilding && (
+                      <p>
+                        {selectedBuilding.streetNum} {selectedBuilding.street}
+                        <br />
+                        {selectedBuilding.city}, {selectedBuilding.state}{" "}
+                        {selectedBuilding.zip}
+                        <br />
+                        {selectedBuilding.phone}
+                        {selectedBuilding.phone2 ? <br /> : null}
+                        {selectedBuilding.phone2}
+                      </p>
+                    )}
+                  </Form.Group>
+
+                  {/* Name and Email row */}
+                  <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
+                      <Form.Label>Your Name*</Form.Label>
+                      <Form.Control
+                        required
+                        name="contactName"
+                        id="contactName"
+                        onChange={onInputChange}
+                        value={formFields.contactName}
+                      />
+                    </Form.Group>
+                    <Form.Group as={Col} md={6}>
+                      <Form.Label>Work email*</Form.Label>
+                      <Form.Control
+                        required
+                        type="email"
+                        name="email"
+                        id="email"
+                        onChange={onInputChange}
+                        value={formFields.email}
+                      />
+                    </Form.Group>
+                  </Form.Group>
+
+                  {/* URL */}
+                  <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Col} className="mb-3 mb-md-0">
+                      <Form.Label>Listing URL* (include http://)</Form.Label>
+                      <Form.Control
+                        required
+                        type="url"
+                        name="url"
+                        id="url"
+                        onChange={onInputChange}
+                        value={formFields.url}
+                      />
+                    </Form.Group>
+                  </Form.Group>
+                  <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Col} className="mb-3 mb-md-0">
+                      <Table bordered hover responsive>
+                        <thead>
+                          <tr>
+                            <th>Unit Type</th>
+                            <th>Number of Units Available</th>
+                            <th>Earliest Available Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {unitSizeFields.map((unitSize) => (
+                            <tr key={unitSize}>
+                              {/* Unit Size */}
+                              <td>{unitSizeLabels[unitSize]}</td>
+
+                              {/* Number of Units Available */}
+                              <td>
+                                <Form.Control
+                                  type="number"
+                                  min="0"
+                                  name={`${unitSize}NumAvail`}
+                                  id={`${unitSize}NumAvail`}
+                                  onChange={onInputChange}
+                                  value={Number(
+                                    formFields[`${unitSize}NumAvail`]
+                                  )}
+                                />
+                              </td>
+
+                              {/* Earliest Available Date */}
+                              <td>
+                                <Form.Control
+                                  type="date"
+                                  name={`${unitSize}DateAvail`}
+                                  id={`${unitSize}DateAvail`}
+                                  onChange={onInputChange}
+                                  value={
+                                    formFields[`${unitSize}DateAvail`]
+                                      ? formFields[`${unitSize}DateAvail`]
+                                          ?.toDate()
+                                          .toISOString()
+                                          .split("T")[0]
+                                      : ""
+                                  }
+                                />
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    </Form.Group>
+                  </Form.Group>
+
+                  {/* Message */}
+                  <Form.Group className="mb-3">
+                    <Form.Label>
+                      Any additional notes (questions and feedback welcome)
+                    </Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="message"
+                      id="message"
+                      rows={5}
+                      onChange={onInputChange}
+                      value={formFields.message}
+                    />
+                  </Form.Group>
+
+                  <Button
+                    type="submit"
+                    className="diy-solid-info-button"
+                    size="lg"
                   >
-                    <option value="">Select a building</option>
-                    {allBuildings
-                      .sort((a, b) =>
-                        a.buildingName.localeCompare(b.buildingName)
-                      )
-                      .map((selectedBuilding) => (
-                        <option
-                          key={selectedBuilding.buildingID}
-                          value={selectedBuilding.buildingName}
-                        >
-                          {selectedBuilding.buildingName}
-                        </option>
-                      ))}
-                  </Form.Select>
-                </Form.Group>
-
-                {/* Company row */}
-                <Form.Group as={Col} md={6}>
-                  <Form.Label>Company Name*</Form.Label>
-                  <Form.Control
-                    required
-                    type="companyName"
-                    name="companyName"
-                    id="companyName"
-                    onChange={onInputChange}
-                    value={formFields.companyName}
-                  />
-                </Form.Group>
-              </Form.Group>
-
-              {/* Address */}
-              <Form.Group as={Col}>
-                {selectedBuilding && (
-                  <p>
-                    {selectedBuilding.streetNum} {selectedBuilding.street}
-                    <br />
-                    {selectedBuilding.city}, {selectedBuilding.state}{" "}
-                    {selectedBuilding.zip}
-                    <br />
-                    {selectedBuilding.phone}
-                    {selectedBuilding.phone2 ? <br /> : null}
-                    {selectedBuilding.phone2}
-                  </p>
-                )}
-              </Form.Group>
-
-              {/* Name and Email row */}
-              <Form.Group as={Row} className="mb-3">
-                <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
-                  <Form.Label>Your Name*</Form.Label>
-                  <Form.Control
-                    required
-                    name="contactName"
-                    id="contactName"
-                    onChange={onInputChange}
-                    value={formFields.contactName}
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md={6}>
-                  <Form.Label>Work email*</Form.Label>
-                  <Form.Control
-                    required
-                    type="email"
-                    name="email"
-                    id="email"
-                    onChange={onInputChange}
-                    value={formFields.email}
-                  />
-                </Form.Group>
-              </Form.Group>
-
-              {/* URL */}
-              <Form.Group as={Row} className="mb-3">
-                <Form.Group as={Col} className="mb-3 mb-md-0">
-                  <Form.Label>Listing URL* (include http://)</Form.Label>
-                  <Form.Control
-                    required
-                    type="url"
-                    name="url"
-                    id="url"
-                    onChange={onInputChange}
-                    value={formFields.url}
-                  />
-                </Form.Group>
-              </Form.Group>
-              <Form.Group as={Row} className="mb-3">
-                <Form.Group as={Col} className="mb-3 mb-md-0">
-                  <Table bordered hover responsive>
-                    <thead>
-                      <tr>
-                        <th>Unit Type</th>
-                        <th>Number of Units Available</th>
-                        <th>Earliest Available Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {unitSizeFields.map((unitSize) => (
-                        <tr key={unitSize}>
-                          {/* Unit Size */}
-                          <td>{unitSizeLabels[unitSize]}</td>
-
-                          {/* Number of Units Available */}
-                          <td>
-                            <Form.Control
-                              type="number"
-                              min="0"
-                              name={`${unitSize}NumAvail`}
-                              id={`${unitSize}NumAvail`}
-                              onChange={onInputChange}
-                              value={Number(formFields[`${unitSize}NumAvail`])}
-                            />
-                          </td>
-
-                          {/* Earliest Available Date */}
-                          <td>
-                            <Form.Control
-                              type="date"
-                              name={`${unitSize}DateAvail`}
-                              id={`${unitSize}DateAvail`}
-                              onChange={onInputChange}
-                              value={
-                                formFields[`${unitSize}DateAvail`]
-                                  ? formFields[`${unitSize}DateAvail`]
-                                      ?.toDate()
-                                      .toISOString()
-                                      .split("T")[0]
-                                  : ""
-                              }
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Form.Group>
-              </Form.Group>
-
-              {/* Message */}
-              <Form.Group className="mb-3">
-                <Form.Label>
-                  Any additional notes (questions and feedback welcome)
-                </Form.Label>
-                <Form.Control
-                  as="textarea"
-                  name="message"
-                  id="message"
-                  rows={5}
-                  onChange={onInputChange}
-                  value={formFields.message}
-                />
-              </Form.Group>
-
-              <Button type="submit" className="diy-solid-info-button" size="lg">
-                Submit
-              </Button>
-            </Form>
+                    Submit
+                  </Button>
+                </Form>
+              </>
+            ) : (
+              <>
+                <p>Thank you for your submission!</p>
+                <Button
+                  className="diy-solid-info-button"
+                  onClick={() => setIsFormVisible(true)}
+                >
+                  Add Another Building
+                </Button>
+              </>
+            )}
           </Col>
         </Row>
       </Container>

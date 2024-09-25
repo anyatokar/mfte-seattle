@@ -38,6 +38,8 @@ const ContactPage: React.FunctionComponent<
     message: "",
   });
 
+  const [isFormVisible, setIsFormVisible] = useState(true);
+
   // event handlers
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
@@ -56,6 +58,7 @@ const ContactPage: React.FunctionComponent<
       .then(() => {
         console.log("Message sent successfully.");
         clearFields();
+        setIsFormVisible(false);
       })
       .catch((error) => {
         console.error("Error sending message: ", error);
@@ -122,6 +125,8 @@ const ContactPage: React.FunctionComponent<
                 process? Please contact the property directly.
               </li>
             </ul>
+            <hr className="my-4 break-line-light" />
+            {isFormVisible ? <>
             <p>All fields are required.</p>
 
             <Form onSubmit={handleFormSubmit}>
@@ -210,6 +215,9 @@ const ContactPage: React.FunctionComponent<
                 Send message
               </Button>
             </Form>
+            </>
+            : <p>Message sent successfully.</p>}
+            
           </Col>
         </Row>
       </Container>
