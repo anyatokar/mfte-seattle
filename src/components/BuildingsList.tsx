@@ -80,16 +80,6 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
 
   return (
     <Container fluid>
-      {pageType === pageTypeEnum.allBuildings && (
-        <Row>
-          <Col
-            sm={12}
-            md={{ span: 9, offset: 1 }}
-            lg={{ span: 8, offset: 0 }}
-            className="p-0"
-          ></Col>
-        </Row>
-      )}
       <Row>
         <Col lg={12}>
           <Row>
