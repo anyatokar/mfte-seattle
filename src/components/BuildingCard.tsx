@@ -214,12 +214,11 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
       </Card.Header>
 
       <ListGroup variant="flush" className="mb-2">
-        {!areListingsOn ||
-          ((!listing || !listing.isApproved) && (
-            <ListGroup.Item>
-              Contact building for current availability.
-            </ListGroup.Item>
-          ))}
+        {(!areListingsOn || !listing || !listing.isApproved) && (
+          <ListGroup.Item>
+            Contact building for current availability.
+          </ListGroup.Item>
+        )}
 
         <ListGroup.Item>
           <Tabs
