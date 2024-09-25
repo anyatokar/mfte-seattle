@@ -1,8 +1,3 @@
-interface buildingNameProps {
-  urlForBuilding: string;
-  buildingName: string;
-}
-
 interface addressAndPhoneProps {
   buildingName: string;
   streetNum: string;
@@ -10,28 +5,9 @@ interface addressAndPhoneProps {
   city: string;
   state: string;
   zip: string;
-  phone: string;
-  phone2: string;
+  phone: string | null;
+  phone2: string | null;
 }
-
-const BuildingName: React.FC<buildingNameProps> = ({
-  buildingName,
-  urlForBuilding,
-}) => {
-  return (
-    <div>
-      <a
-        id="buildingLink"
-        href={urlForBuilding}
-        title={`Open new tab: ${urlForBuilding}`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {buildingName}
-      </a>
-    </div>
-  );
-};
 
 const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
   buildingName,
@@ -48,29 +24,38 @@ const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
   const phone2Ref = `tel:${phone2}`;
 
   return (
-    <div className="address-phone-block">
+    <div>
+      {streetNum} {street}
+      <br />
+      {city}, {state} {zip}
       <a
         id="addressLink"
         href={mapViewUrl}
-        title={`Open new tab: ${buildingName} on Google Maps`}
         target="_blank"
         rel="noreferrer"
+        className="address-phone-link"
       >
-        {streetNum} {street}
-        <br />
-        {city}, {state} {zip}
+        <div> View on Google Maps</div>
       </a>
       <>
         {phone && (
           <div className="first-phone-num">
-            <a href={phone1Ref} title={`Call ${buildingName}`}>
+            <a
+              className="address-phone-link"
+              href={phone1Ref}
+              title={`Call ${buildingName}`}
+            >
               {phone}
             </a>
           </div>
         )}
         {phone2 && (
           <>
-            <a href={phone2Ref} title={`Call ${buildingName}`}>
+            <a
+              className="address-phone-link"
+              href={phone2Ref}
+              title={`Call ${buildingName}`}
+            >
               {phone2}
             </a>
           </>
@@ -80,4 +65,4 @@ const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
   );
 };
 
-export { BuildingName, AddressAndPhone };
+export { AddressAndPhone };

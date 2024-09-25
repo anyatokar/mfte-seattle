@@ -10,7 +10,6 @@ import Login from "../auth_components/Login";
 import PasswordReset from "../auth_components/PasswordReset";
 import Signup from "../auth_components/Signup";
 
-import Badge from "react-bootstrap/esm/Badge";
 import Container from "react-bootstrap/Container";
 import Dropdown from "react-bootstrap/Dropdown";
 import Image from "react-bootstrap/Image";
@@ -109,13 +108,8 @@ export const Header = () => {
             <LinkContainer to="/contact">
               <Nav.Link active={false}>Contact</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/advertise">
-              <Nav.Link active={false}>
-                Advertise{" "}
-                <Badge pill bg="warning" text="dark" className="badge-top">
-                  New!
-                </Badge>
-              </Nav.Link>
+            <LinkContainer to="/add-listing">
+              <Nav.Link active={false}>For Property Managers</Nav.Link>
             </LinkContainer>
             <Dropdown.Divider />
           </Nav>

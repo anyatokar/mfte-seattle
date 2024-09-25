@@ -7,25 +7,25 @@ export interface IFiltersProps<T> {
   onChangeFilter: (filterProperty: keyof T, checked: boolean) => void;
 }
 
-type radioButtonKeyType =
+type checkboxKeyType =
   | "sedu"
   | "studioUnits"
   | "oneBedroomUnits"
   | "twoBedroomUnits"
   | "threePlusBedroomUnits";
 
-type radioButtonUILabelType =
-  | "Pod"
+type checkboxUILabelType =
+  | "Micro"
   | "Studio"
   | "One bedroom"
   | "Two bedroom"
   | "Three or more";
 
-type radioButtonMapType = {
-  [key in radioButtonKeyType]: radioButtonUILabelType;
+type checkboxMapType = {
+  [key in checkboxKeyType]: checkboxUILabelType;
 };
 
-const radioButtonKeys: radioButtonKeyType[] = [
+const checkboxKeys: checkboxKeyType[] = [
   "sedu",
   "studioUnits",
   "oneBedroomUnits",
@@ -33,8 +33,8 @@ const radioButtonKeys: radioButtonKeyType[] = [
   "threePlusBedroomUnits",
 ];
 
-const radioButtonUILabels: radioButtonMapType = {
-  sedu: "Pod",
+const checkboxUILabels: checkboxMapType = {
+  sedu: "Micro",
   studioUnits: "Studio",
   oneBedroomUnits: "One bedroom",
   twoBedroomUnits: "Two bedroom",
@@ -42,17 +42,17 @@ const radioButtonUILabels: radioButtonMapType = {
 };
 
 const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
-  const getChecked = (radioButtonKey: radioButtonKeyType) => {
-    const x = filters.filter((x) => x.property === radioButtonKey);
+  const getChecked = (checkboxKey: checkboxKeyType) => {
+    const x = filters.filter((x) => x.property === checkboxKey);
     return x.length === 1;
   };
 
   return (
     <div className="p-1 my-2">
       <p>Filter by number of bedrooms:</p>
-      {radioButtonKeys.map((radioButtonKey: radioButtonKeyType) => {
-        let styledKey = radioButtonUILabels[radioButtonKey];
-        let id = radioButtonKey;
+      {checkboxKeys.map((checkboxKey: checkboxKeyType) => {
+        let styledKey = checkboxUILabels[checkboxKey];
+        let id = checkboxKey;
 
         return (
           <Form key={id} className="form-check-inline">
@@ -60,10 +60,10 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
               type="checkbox"
               label={styledKey}
               id={id}
-              value={radioButtonKey}
-              checked={getChecked(radioButtonKey)}
+              value={checkboxKey}
+              checked={getChecked(checkboxKey)}
               onChange={(event) =>
-                onChangeFilter(radioButtonKey as any, event.target.checked)
+                onChangeFilter(checkboxKey as any, event.target.checked)
               }
             />
           </Form>

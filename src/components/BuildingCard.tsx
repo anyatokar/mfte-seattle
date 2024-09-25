@@ -1,13 +1,15 @@
 import { useState, useContext } from "react";
 
 import { areListingsOn } from "../config/config";
-import { pageTypeEnum } from "../types/enumTypes";
+import { pageTypeEnum, tableType } from "../types/enumTypes";
 
-import { AddressAndPhone, BuildingName } from "./BuildingContactInfo";
-import { ListingCard } from "./ListingCard";
+import { AddressAndPhone } from "./BuildingContactInfo";
+import ListingButton from "./ListingButton";
+import BuildingDataTable from "./BuildingDataTable";
+import WebsiteButton from "./WebsiteButton";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
-import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
+import { timestampToDateAndTime } from "../utils/generalUtils";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -16,12 +18,12 @@ import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import IListing from "../interfaces/IListing";
 
+import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
-import Table from "react-bootstrap/Table";
 import Tabs from "react-bootstrap/Tabs";
 
 export interface AllBuildingCardProps {
@@ -47,18 +49,13 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     phone,
     phone2,
     residentialTargetedArea,
-    totalRestrictedUnits,
-    sedu,
-    studioUnits,
-    oneBedroomUnits,
-    twoBedroomUnits,
-    threePlusBedroomUnits,
     urlForBuilding,
     streetNum,
     street,
     city,
     state,
     zip,
+    amiData,
   } = props.building;
 
   const { pageType, listing } = props;
@@ -122,203 +119,128 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
       });
   };
 
-  const availabilityData = [
-    {
-      type: "Pod",
-      dateAvail: listing?.seduAvail?.dateAvail,
-      rent: listing?.seduAvail?.rent,
-    },
-    {
-      type: "Studio",
-      dateAvail: listing?.studioAvail?.dateAvail,
-      rent: listing?.studioAvail?.rent,
-    },
-    {
-      type: "One",
-      dateAvail: listing?.oneBedAvail?.dateAvail,
-      rent: listing?.oneBedAvail?.rent,
-    },
-    {
-      type: "Two",
-      dateAvail: listing?.twoBedAvail?.dateAvail,
-      rent: listing?.twoBedAvail?.rent,
-    },
-    {
-      type: "Three+",
-      dateAvail: listing?.threePlusBedAvail?.dateAvail,
-      rent: listing?.threePlusBedAvail?.rent,
-    },
-  ];
-
   return (
     <Card>
       <Card.Header>
         <Card.Title className="mt-2">
-          <BuildingName
-            buildingName={buildingName}
-            urlForBuilding={urlForBuilding}
-          />
+          <div>
+            {buildingName}
+            {areListingsOn && listing?.isApproved && (
+              <Badge
+                pill
+                bg="warning"
+                text="dark"
+                className="units-avail-badge"
+              >
+                Units available!
+              </Badge>
+            )}
+          </div>
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
         <div className="mt-2">
           {pageType === pageTypeEnum.allBuildings &&
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <Button
-                  className="diy-solid-info-button"
-                  size="sm"
-                  onClick={toggleSave}
-                >
-                  Saved
-                </Button>
+                <>
+                  <WebsiteButton urlForBuilding={urlForBuilding} />
+                  <Button
+                    className="diy-solid-info-button"
+                    size="sm"
+                    onClick={toggleSave}
+                  >
+                    Saved
+                  </Button>
+                </>
               ) : (
+                <>
+                  <WebsiteButton urlForBuilding={urlForBuilding} />
+                  <Button
+                    className="diy-outline-info-button"
+                    size="sm"
+                    onClick={toggleSave}
+                  >
+                    Save
+                  </Button>
+                </>
+              )
+            ) : (
+              <>
+                <WebsiteButton urlForBuilding={urlForBuilding} />
                 <Button
                   className="diy-outline-info-button"
+                  onClick={handleShowLogin}
                   size="sm"
-                  onClick={toggleSave}
                 >
                   Save
                 </Button>
-              )
-            ) : (
-              <Button
-                className="diy-outline-info-button"
-                onClick={handleShowLogin}
-                size="sm"
-              >
-                Save
-              </Button>
+              </>
             ))}
         </div>
 
         {pageType === pageTypeEnum.savedBuildings && (
-          <Button
-            className="center"
-            size="sm"
-            variant="outline-danger"
-            title={`Remove ${buildingName} from saved buildings list`}
-            type="button"
-            value="Remove"
-            onClick={() => {
-              deleteBuilding(currentUser?.uid, buildingID, buildingName);
-            }}
-          >
-            Remove
-          </Button>
+          <>
+            <WebsiteButton urlForBuilding={urlForBuilding} />
+            <Button
+              className="center"
+              size="sm"
+              variant="outline-danger"
+              title={`Remove ${buildingName} from saved buildings list`}
+              type="button"
+              value="Remove"
+              onClick={() => {
+                deleteBuilding(currentUser?.uid, buildingID, buildingName);
+              }}
+            >
+              Remove
+            </Button>
+          </>
         )}
       </Card.Header>
 
-      <ListGroup variant="flush">
-        <ListGroup.Item
-          className={
-            areListingsOn && listing && listing.hasAnyAvailability
-              ? "listing-card"
-              : ""
-          }
-        >
-          <ListingCard areListingsOn={areListingsOn} listing={listing} />
-        </ListGroup.Item>
+      <ListGroup variant="flush" className="mb-2">
+        {(!areListingsOn || !listing || !listing.isApproved) && (
+          <ListGroup.Item>
+            Contact building for current availability.
+          </ListGroup.Item>
+        )}
 
         <ListGroup.Item>
           <Tabs
+            className="tabs"
             defaultActiveKey={
-              areListingsOn && listing?.hasAnyAvailability
-                ? "availability"
-                : "contact"
+              areListingsOn && listing?.isApproved ? "availability" : "contact"
             }
           >
-            {areListingsOn && (
-              <Tab
-                eventKey="availability"
-                title="Availability"
-                disabled={!listing || (listing && !listing.hasAnyAvailability)}
-              >
-                <Table bordered hover size="sm" responsive>
-                  <thead>
-                    <tr>
-                      <th>Bedrooms</th>
-                      <th>Earliest Available Date</th>
-                      <th>Rent</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {availabilityData.map(
-                      (apt) =>
-                        apt.dateAvail && (
-                          <tr key={apt.type}>
-                            <td>{apt.type}</td>
-                            <td>{timestampToDate(apt.dateAvail)}</td>
-                            <td>{apt.rent}</td>
-                          </tr>
-                        )
-                    )}
-                  </tbody>
-                </Table>
+            {areListingsOn && listing?.isApproved && listing?.availData && (
+              <Tab eventKey="availability" title="Availability">
+                <BuildingDataTable
+                  type={tableType.availData}
+                  data={listing.availData}
+                />
+                <ListingButton listing={listing} isMarker={false} />
               </Tab>
             )}
-            <Tab eventKey="contact" title="Contact">
-              <AddressAndPhone
-                buildingName={buildingName}
-                streetNum={streetNum}
-                street={street}
-                city={city}
-                state={state}
-                zip={zip}
-                phone={phone}
-                phone2={phone2}
-              />
-            </Tab>
 
-            <Tab eventKey="details" title="Details">
-              <Table bordered hover size="sm">
-                <thead>
-                  <tr>
-                    <th>Bedrooms</th>
-                    <th># of MFTE Units</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sedu !== 0 && (
-                    <tr>
-                      <td>Pod</td>
-                      <td>{sedu}</td>
-                    </tr>
-                  )}
-                  {studioUnits !== 0 && (
-                    <tr>
-                      <td>Studio</td>
-                      <td>{studioUnits}</td>
-                    </tr>
-                  )}
-                  {oneBedroomUnits !== 0 && (
-                    <tr>
-                      <td>One</td>
-                      <td>{oneBedroomUnits}</td>
-                    </tr>
-                  )}
-                  {twoBedroomUnits !== 0 && (
-                    <tr>
-                      <td>Two</td>
-                      <td>{twoBedroomUnits}</td>
-                    </tr>
-                  )}
-                  {threePlusBedroomUnits !== 0 && (
-                    <tr>
-                      <td>Three+</td>
-                      <td>{threePlusBedroomUnits}</td>
-                    </tr>
-                  )}
-                  <tr>
-                    <td>
-                      <strong>Total</strong>
-                    </td>
-                    <td>
-                      <strong>{totalRestrictedUnits}</strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
+            <Tab eventKey="contact" title="Contact">
+              <div className="mt-2">
+                <AddressAndPhone
+                  buildingName={buildingName}
+                  streetNum={streetNum}
+                  street={street}
+                  city={city}
+                  state={state}
+                  zip={zip}
+                  phone={phone}
+                  phone2={phone2}
+                />
+              </div>
             </Tab>
+            {amiData && (
+              <Tab eventKey="details" title="Details">
+                <BuildingDataTable type={tableType.amiData} data={amiData} />
+              </Tab>
+            )}
           </Tabs>
         </ListGroup.Item>
         {pageType === pageTypeEnum.savedBuildings && (

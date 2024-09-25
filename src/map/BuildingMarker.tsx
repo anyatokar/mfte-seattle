@@ -1,16 +1,16 @@
 /// <reference types="googlemaps" />
 import { useCallback, useState, useContext } from "react";
 import { InfoWindow, Marker } from "@react-google-maps/api";
-import { useAuth } from "../contexts/AuthContext";
-
 import { areListingsOn } from "../config/config";
 
+import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
+
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
-import {
-  AddressAndPhone,
-  BuildingName,
-} from "../components/BuildingContactInfo";
+
+import { AddressAndPhone } from "../components/BuildingContactInfo";
+import ListingButton from "../components/ListingButton";
+import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
@@ -99,7 +99,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   };
 
   const icon =
-    areListingsOn && listing?.hasAnyAvailability
+    areListingsOn && listing?.isApproved
       ? svgMarkerListing
       : svgMarkerNoListing;
 
@@ -115,52 +115,68 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
       {isSelected && (
         <InfoWindow onCloseClick={clearSelection}>
           <>
-            <strong>
-              <BuildingName
-                buildingName={buildingName}
-                urlForBuilding={urlForBuilding}
-              />
-            </strong>
-            <strong>{residentialTargetedArea}</strong>
-            <AddressAndPhone
-              buildingName={buildingName}
-              streetNum={streetNum}
-              street={street}
-              city={city}
-              state={state}
-              zip={zip}
-              phone={phone}
-              phone2={phone2}
-            />
-            {currentUser ? (
-              wasOriginallySaved || isSaved ? (
-                <Button
-                  className="diy-solid-info-button"
-                  size="sm"
-                  onClick={toggleSave}
-                >
-                  Saved
-                </Button>
+            <div>
+              {areListingsOn && listing?.url && (
+                <>
+                  <ListingButton listing={listing} isMarker={true} />
+                </>
+              )}
+            </div>
+            <div className={areListingsOn && listing?.url ? "pt-2" : ""}>
+              <div>
+                <strong>{buildingName}</strong>
+              </div>
+              <div>{residentialTargetedArea}</div>
+              <div className="my-2">
+                <AddressAndPhone
+                  buildingName={buildingName}
+                  streetNum={streetNum}
+                  street={street}
+                  city={city}
+                  state={state}
+                  zip={zip}
+                  phone={phone}
+                  phone2={phone2}
+                />
+              </div>
+              {currentUser ? (
+                wasOriginallySaved || isSaved ? (
+                  <>
+                    <WebsiteButton urlForBuilding={urlForBuilding} />
+
+                    <Button
+                      className="diy-solid-info-button"
+                      size="sm"
+                      onClick={toggleSave}
+                    >
+                      Saved
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <WebsiteButton urlForBuilding={urlForBuilding} />
+                    <Button
+                      className="diy-outline-info-button"
+                      size="sm"
+                      onClick={toggleSave}
+                    >
+                      Save
+                    </Button>
+                  </>
+                )
               ) : (
-                <Button
-                  className="diy-outline-info-button"
-                  size="sm"
-                  onClick={toggleSave}
-                >
-                  Save
-                </Button>
-              )
-            ) : (
-              <>
-                <Button
-                  className="diy-outline-info-button"
-                  size="sm"
-                  onClick={handleShowLogin}
-                >
-                  Save
-                </Button>
-              </>
-            )}
+                <>
+                  <WebsiteButton urlForBuilding={urlForBuilding} />
+                  <Button
+                    className="diy-outline-info-button"
+                    size="sm"
+                    onClick={handleShowLogin}
+                  >
+                    Save
+                  </Button>
+                </>
+              )}
+            </div>
           </>
         </InfoWindow>
       )}

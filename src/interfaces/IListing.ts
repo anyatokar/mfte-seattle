@@ -1,19 +1,23 @@
-import IListingAptDetails from "./IListingAptDetails";
+import { Timestamp } from "firebase/firestore";
 
-/** An object containing listing metadata. */
+type unitSizeType = "micro" | "studio" | "oneBed" | "twoBed" | "threePlusBed";
+
+export type availDataType = {
+  unitSize: unitSizeType;
+  numAvail: number;
+  dateAvail: Timestamp | null;
+};
+
 export default interface IListing {
-  name: string;
-  address: string;
+  isApproved: boolean;
+  buildingName: string;
+  contactName: string;
+  email: string;
+  companyName: string;
   url: string;
-  startDate: string;
-  endDate: string;
-  lastUpdateDate: string;
-  hasAnyAvailability: boolean;
-  listingId: string;
+  message: string;
+  /** This is an array to keep the order from smallest to largest on render. */
+  availData: availDataType[];
   buildingID: string;
-  seduAvail: IListingAptDetails;
-  studioAvail: IListingAptDetails;
-  oneBedAvail: IListingAptDetails;
-  twoBedAvail: IListingAptDetails;
-  threePlusBedAvail: IListingAptDetails;
+  sentTimestamp: Timestamp;
 }

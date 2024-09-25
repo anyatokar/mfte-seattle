@@ -9,9 +9,12 @@ import {
   updateDoc,
   addDoc,
 } from "firebase/firestore";
-import { adInquiryFormFieldsType } from "../pages/Advertise";
+
+import { availDataFormType } from "../pages/AddListing";
 import { contactUsFormFieldsType } from "../pages/Contact";
+
 import IBuilding from "../interfaces/IBuilding";
+import IListing from "../interfaces/IListing";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -158,17 +161,47 @@ export async function sendMessageFirestore(
   });
 }
 
-export async function sendAdInquiryFirestore(
-  formFields: adInquiryFormFieldsType
+export async function sendListingFirestore(
+  formFields: Partial<IListing> & availDataFormType,
+  buildingID: string | undefined
 ) {
-  await addDoc(collection(db, "ad_inquiries"), {
-    authorName: formFields.authorName,
+  await addDoc(collection(db, "listings"), {
+    contactName: formFields.contactName,
     email: formFields.email,
     companyName: formFields.companyName,
-    propertyNames: formFields.propertyNames,
+    buildingName: formFields.buildingName,
+    url: formFields.url,
+    availData: [
+      {
+        unitSize: "micro",
+        numAvail: formFields.microNumAvail,
+        dateAvail: formFields.microDateAvail,
+      },
+      {
+        unitSize: "studio",
+        numAvail: formFields.studioNumAvail,
+        dateAvail: formFields.studioDateAvail,
+      },
+      {
+        unitSize: "oneBed",
+        numAvail: formFields.oneBedNumAvail,
+        dateAvail: formFields.oneBedDateAvail,
+      },
+      {
+        unitSize: "twoBed",
+        numAvail: formFields.twoBedNumAvail,
+        dateAvail: formFields.twoBedDateAvail,
+      },
+      {
+        unitSize: "threePlusBed",
+        numAvail: formFields.threePlusBedNumAvail,
+        dateAvail: formFields.threePlusBedDateAvail,
+      },
+    ],
     message: formFields.message,
+    buildingID: buildingID,
     sentTimestamp: new Date(),
-    didReply: false,
+    isApproved: false,
   });
 }
 

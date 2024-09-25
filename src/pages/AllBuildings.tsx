@@ -1,11 +1,9 @@
-import { useEffect, useState, useCallback, useMemo, Profiler } from "react";
+import { useState, useMemo, Profiler } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-
-import { collection, query, onSnapshot } from "firebase/firestore";
-import { db } from "../db/firebase";
 
 import { areListingsOn } from "../config/config";
 
+import { useAllBuildings } from "../hooks/useAllBuildings";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useAllListings";
 
@@ -32,33 +30,7 @@ import Spinner from "react-bootstrap/Spinner";
 const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   name,
 }) => {
-  // get all buildings
-  const [allBuildings, setAllBuildings] = useState([] as Array<IBuilding>);
-  const [loading, setLoading] = useState(false);
-
-  const q = query(collection(db, "buildings"));
-
-  const getAllBuildings = useCallback(() => {
-    console.log("Getting all buildings.");
-    setLoading(true);
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const buildings: Array<IBuilding> = [];
-      querySnapshot.forEach((doc) => {
-        buildings.push(doc.data() as IBuilding);
-      });
-      setAllBuildings(buildings);
-      setLoading(false);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    getAllBuildings();
-  }, [getAllBuildings]);
+  const { allBuildings, loading } = useAllBuildings();
 
   // search, filter
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -161,9 +133,9 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
                 <Col>
                   {!loading && (
                     <p>
-                      {`${resultBuildingsUnsorted.length} buildings found`}
-                      {resultBuildingsUnsorted.length === 0 &&
-                        ". Try expanding your search criteria!"}
+                      {resultBuildingsUnsorted.length > 0
+                        ? `${resultBuildingsUnsorted.length} buildings found`
+                        : "No buildings found"}
                     </p>
                   )}
                 </Col>
