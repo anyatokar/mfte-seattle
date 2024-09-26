@@ -1,13 +1,11 @@
 import { Timestamp } from "firebase/firestore";
+import { unitSizeType } from "./IListing";
 
-export type AMIPercentage = 30 | 40 | 50 | 60 | 65 | 70 | 75 | 80 | 85 | 90;
+export type amiPercentageType = 30 | 40 | 50 | 60 | 65 | 70 | 75 | 80 | 85 | 90;
 
 export type amiDataType = {
-  micro: AMIPercentage[];
-  studio: AMIPercentage[];
-  oneBed: AMIPercentage[];
-  twoBed: AMIPercentage[];
-  threePlusBed: AMIPercentage[];
+  unitSize: unitSizeType;
+  amiPercentages: amiPercentageType[];
 };
 
 export default interface IBuilding {
@@ -34,5 +32,6 @@ export default interface IBuilding {
   zip: string;
   updatedTimestamp: Timestamp;
   streetAddress: string;
-  amiData: amiDataType;
+  /** This is an array to keep the order from smallest to largest on render. */
+  amiData: amiDataType[];
 }

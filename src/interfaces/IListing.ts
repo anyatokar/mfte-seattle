@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-type unitSizeType = "micro" | "studio" | "oneBed" | "twoBed" | "threePlusBed";
+export type unitSizeType = "micro" | "studio" | "oneBed" | "twoBed" | "threePlusBed";
 
 export type availDataType = {
   unitSize: unitSizeType;

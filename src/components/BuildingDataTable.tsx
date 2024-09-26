@@ -1,14 +1,14 @@
 import { Fragment } from "react";
 import { tableType } from "../types/enumTypes";
 
-import { AMIPercentage, amiDataType } from "../interfaces/IBuilding";
+import { amiPercentageType, amiDataType } from "../interfaces/IBuilding";
 import { availDataType } from "../interfaces/IListing";
 
 import Table from "react-bootstrap/Table";
 
 interface AmiDataProps {
   type: "amiData";
-  data: amiDataType;
+  data: amiDataType[];
 }
 
 interface AvailDataProps {
@@ -32,7 +32,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
 
   const dataHeader = type === tableType.amiData ? "% of AMI" : "# Available";
 
-  function renderPercentageList(percentages: AMIPercentage[]): React.ReactNode {
+  function renderPercentageList(percentages: amiPercentageType[]): React.ReactNode {
     if (!percentages) return null;
 
     return percentages.map((item, index) => (
@@ -54,15 +54,16 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
       </thead>
       <tbody>
         {type === tableType.amiData &&
-          Object.entries(data).map(([key, value]) => {
-            if (!value) return null;
+          data.map((amiData: amiDataType) => {
+            if (!amiData) return null;
+
+            const { unitSize, amiPercentages } = amiData;
+
             return (
-              <tr key={key}>
-                <td>{unitLabels[key]}</td>
+              <tr key={unitSize}>
+                <td>{unitLabels[unitSize]}</td>
                 <td>
-                  {type === tableType.amiData
-                    ? renderPercentageList(value)
-                    : value}
+                  {renderPercentageList(amiPercentages)}
                 </td>
               </tr>
             );
