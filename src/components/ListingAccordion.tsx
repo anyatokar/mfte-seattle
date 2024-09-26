@@ -29,12 +29,12 @@ const ListingAccordion: React.FC = () => {
           <Accordion.Body>
             <p>
               On the map, buildings with available units are marked with red
-              pins and link to the building's official leasing page. Dark blue
+              pins and link to the building's official listing page. Dark blue
               pins represent buildings without listings.
             </p>
             <p>
               In list view, buildings with available units are shown at the top.
-              Each listing includes a link to the building’s leasing page, as
+              Each listing includes a link to the building’s listing page, as
               well as details on the number of available units and the earliest
               availability date.
             </p>

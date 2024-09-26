@@ -15,14 +15,14 @@ export default function ListingButton(props: ListingButtonProps) {
         <Button
           className={isMarker ? "" : "mt-3"}
           size={isMarker ? "sm" : undefined}
-          id="leasing-page-url"
+          id="listing-page-url"
           href={listing.url}
           title={`Open new tab: ${listing.url}`}
           target="_blank"
           rel="noreferrer"
           variant="success"
         >
-          View Leasing Page
+          View Listing Page
         </Button>
       )}
     </>
