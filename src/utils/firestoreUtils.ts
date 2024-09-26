@@ -175,27 +175,27 @@ export async function sendListingFirestore(
     availData: [
       {
         unitSize: "micro",
-        numAvail: formFields.microNumAvail,
+        numAvail: parseInt(formFields.microNumAvail),
         dateAvail: formFields.microDateAvail,
       },
       {
         unitSize: "studio",
-        numAvail: formFields.studioNumAvail,
+        numAvail: parseInt(formFields.studioNumAvail),
         dateAvail: formFields.studioDateAvail,
       },
       {
         unitSize: "oneBed",
-        numAvail: formFields.oneBedNumAvail,
+        numAvail: parseInt(formFields.oneBedNumAvail),
         dateAvail: formFields.oneBedDateAvail,
       },
       {
         unitSize: "twoBed",
-        numAvail: formFields.twoBedNumAvail,
+        numAvail: parseInt(formFields.twoBedNumAvail),
         dateAvail: formFields.twoBedDateAvail,
       },
       {
         unitSize: "threePlusBed",
-        numAvail: formFields.threePlusBedNumAvail,
+        numAvail: parseInt(formFields.threePlusBedNumAvail),
         dateAvail: formFields.threePlusBedDateAvail,
       },
     ],
