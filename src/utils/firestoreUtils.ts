@@ -246,12 +246,3 @@ export async function signupFirestore(
     recentUser: true,
   });
 }
-
-export async function getAllBuildingsRef() {
-  return await getDocs(collection(db, "buildings"));
-}
-
-export async function getSavedBuildingsRef(uid: string) {
-  const userDocRef = doc(db, "users", uid);
-  return await getDocs(collection(userDocRef, "savedHomes"));
-}
