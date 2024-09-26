@@ -17,15 +17,15 @@ import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 
 export type availDataFormType = {
-  microNumAvail: number;
+  microNumAvail: string;
   microDateAvail: Timestamp | null;
-  studioNumAvail: number;
+  studioNumAvail: string;
   studioDateAvail: Timestamp | null;
-  oneBedNumAvail: number;
+  oneBedNumAvail: string;
   oneBedDateAvail: Timestamp | null;
-  twoBedNumAvail: number;
+  twoBedNumAvail: string;
   twoBedDateAvail: Timestamp | null;
-  threePlusBedNumAvail: number;
+  threePlusBedNumAvail: string;
   threePlusBedDateAvail: Timestamp | null;
 };
 
@@ -40,15 +40,15 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
     buildingName: "",
     url: "",
     message: "",
-    microNumAvail: 0,
+    microNumAvail: "0",
     microDateAvail: null,
-    studioNumAvail: 0,
+    studioNumAvail: "0",
     studioDateAvail: null,
-    oneBedNumAvail: 0,
+    oneBedNumAvail: "0",
     oneBedDateAvail: null,
-    twoBedNumAvail: 0,
+    twoBedNumAvail: "0",
     twoBedDateAvail: null,
-    threePlusBedNumAvail: 0,
+    threePlusBedNumAvail: "0",
     threePlusBedDateAvail: null,
   };
 
@@ -290,9 +290,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                                   name={`${unitSize}NumAvail`}
                                   id={`${unitSize}NumAvail`}
                                   onChange={onInputChange}
-                                  value={Number(
-                                    formFields[`${unitSize}NumAvail`]
-                                  )}
+                                  value={formFields[`${unitSize}NumAvail`]}
                                 />
                               </td>
 

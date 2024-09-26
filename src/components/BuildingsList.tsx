@@ -52,27 +52,29 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
     return null;
   }
 
+  const activeSorter: ISorter<IBuilding> = {
+    property: "buildingName",
+    isDescending: false,
+  };
+
   const resultBuildings = resultBuildingsUnsorted.sort(
     (buildingA: IBuilding, buildingB: IBuilding) => {
-      // Check if each building has a listing in allListings
+      // Check if each building has an approved listing in allListings
       const hasListingA = allListings.some(
-        (listing) => listing.buildingID === buildingA.buildingID
+        (listing) =>
+          listing.buildingID === buildingA.buildingID && listing.isApproved
       );
       const hasListingB = allListings.some(
-        (listing) => listing.buildingID === buildingB.buildingID
+        (listing) =>
+          listing.buildingID === buildingB.buildingID && listing.isApproved
       );
 
-      // Sort buildings with listings first
+      // Sort buildings with approved listings first
       if (hasListingA && !hasListingB) return -1;
       if (!hasListingA && hasListingB) return 1;
 
-      const activeSorter: ISorter<IBuilding> = {
-        property: "buildingName",
-        isDescending: false,
-      };
-
-      // If both or neither have listings, use the active sorter (e.g., by buildingName)
-      return genericSort<IBuilding>(buildingA, buildingB, activeSorter);
+      // Use the genericSort function for sorting by the activeSorter
+      return genericSort(buildingA, buildingB, activeSorter);
     }
   );
 
