@@ -55,7 +55,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     city,
     state,
     zip,
-    amiData,
+    // amiData,
   } = props.building;
 
   const { pageType, listing } = props;
