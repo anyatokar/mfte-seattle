@@ -236,11 +236,11 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                 />
               </div>
             </Tab>
-            {amiData && (
+            {/* {amiData && (
               <Tab eventKey="details" title="Details">
                 <BuildingDataTable type={tableType.amiData} data={amiData} />
               </Tab>
-            )}
+            )} */}
           </Tabs>
         </ListGroup.Item>
         {pageType === pageTypeEnum.savedBuildings && (

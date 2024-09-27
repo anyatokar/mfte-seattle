@@ -32,7 +32,9 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
 
   const dataHeader = type === tableType.amiData ? "% of AMI" : "# Available";
 
-  function renderPercentageList(percentages: amiPercentageType[]): React.ReactNode {
+  function renderPercentageList(
+    percentages: amiPercentageType[]
+  ): React.ReactNode {
     if (!percentages) return null;
 
     return percentages.map((item, index) => (
@@ -62,9 +64,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
             return (
               <tr key={unitSize}>
                 <td>{unitLabels[unitSize]}</td>
-                <td>
-                  {renderPercentageList(amiPercentages)}
-                </td>
+                <td>{renderPercentageList(amiPercentages)}</td>
               </tr>
             );
           })}
