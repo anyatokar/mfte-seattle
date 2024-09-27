@@ -14,7 +14,7 @@ import IMap from "../interfaces/IMap";
 
 const containerStyle = {
   width: "100%",
-  height: "80vh",
+  height: "95vh",
 };
 
 const center = {
@@ -80,7 +80,7 @@ const ReactMap: React.FC<IMap> = ({
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={14}
+      zoom={12.5}
       ref={mapRef}
       options={{ mapId: "c8d48b060a22a457" }}
     >

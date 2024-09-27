@@ -3,7 +3,6 @@ import {
   collection,
   deleteDoc,
   getDoc,
-  getDocs,
   doc,
   setDoc,
   updateDoc,
@@ -245,13 +244,4 @@ export async function signupFirestore(
     // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
     recentUser: true,
   });
-}
-
-export async function getAllBuildingsRef() {
-  return await getDocs(collection(db, "buildings"));
-}
-
-export async function getSavedBuildingsRef(uid: string) {
-  const userDocRef = doc(db, "users", uid);
-  return await getDocs(collection(userDocRef, "savedHomes"));
 }
