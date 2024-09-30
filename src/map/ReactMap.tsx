@@ -14,7 +14,7 @@ import IMap from "../interfaces/IMap";
 
 const containerStyle = {
   width: "100%",
-  height: "95vh",
+  height: "90vh",
 };
 
 const center = {
