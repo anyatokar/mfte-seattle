@@ -45,8 +45,8 @@ const SearchAndFilter: React.FC<searchAndFilterPropsType> = ({
                 <Filters<IBuilding>
                   object={allBuildings[0]}
                   filters={activeFilters}
-                  onChangeFilter={(changedFilterProperty, checked) => {
-                    checked
+                  onChangeFilter={(changedFilterProperty, isChecked) => {
+                    isChecked
                       ? setActiveFilters([
                           ...activeFilters.filter(
                             (filter) =>

@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 export interface IFiltersProps<T> {
   object: T;
   filters: Array<IFilter<T>>;
-  onChangeFilter: (filterProperty: keyof T, checked: boolean) => void;
+  onChangeFilter: (filterProperty: keyof T, isChecked: boolean) => void;
 }
 
 type checkboxKeyType =
