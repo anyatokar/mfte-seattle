@@ -8,14 +8,14 @@ import IBuilding from "../interfaces/IBuilding";
 
 export function useSavedBuildings(): [IBuilding[], boolean] {
   const [savedBuildings, setSavedBuildings] = useState([] as Array<IBuilding>);
-  const [loadingSavedBuildings, setLoadingSavedBuildings] = useState(false);
+  const [isLoadingSavedBuildings, setIsLoadingSavedBuildings] = useState(false);
 
   const { currentUser } = useAuth();
 
   const getSavedBuildings = useCallback(() => {
     if (!currentUser) return;
 
-    setLoadingSavedBuildings(true);
+    setIsLoadingSavedBuildings(true);
 
     const userDocRef = doc(db, "users", currentUser.uid);
     const q = query(collection(userDocRef, "savedHomes"));
@@ -27,7 +27,7 @@ export function useSavedBuildings(): [IBuilding[], boolean] {
         buildings.push(doc.data() as IBuilding);
       });
       setSavedBuildings(buildings);
-      setLoadingSavedBuildings(false);
+      setIsLoadingSavedBuildings(false);
     });
 
     return () => {
@@ -39,5 +39,5 @@ export function useSavedBuildings(): [IBuilding[], boolean] {
     getSavedBuildings();
   }, [getSavedBuildings]);
 
-  return [savedBuildings, loadingSavedBuildings];
+  return [savedBuildings, isLoadingSavedBuildings];
 }

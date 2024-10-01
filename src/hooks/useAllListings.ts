@@ -7,10 +7,10 @@ import IListing from "../interfaces/IListing";
 
 export function useAllListings(): [IListing[], boolean] {
   const [allListings, setAllListings] = useState([] as Array<IListing>);
-  const [loadingAllListings, setLoadingAllListings] = useState(false);
+  const [isLoadingAllListings, setIsLoadingAllListings] = useState(false);
 
   const getAllListings = useCallback(() => {
-    setLoadingAllListings(true);
+    setIsLoadingAllListings(true);
 
     const q = query(collection(db, "listings"));
 
@@ -21,7 +21,7 @@ export function useAllListings(): [IListing[], boolean] {
         listings.push(doc.data() as IListing);
       });
       setAllListings(listings);
-      setLoadingAllListings(false);
+      setIsLoadingAllListings(false);
     });
 
     return () => {
@@ -33,5 +33,5 @@ export function useAllListings(): [IListing[], boolean] {
     getAllListings();
   }, [getAllListings]);
 
-  return [allListings, loadingAllListings];
+  return [allListings, isLoadingAllListings];
 }
