@@ -8,9 +8,8 @@ import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useAllListings";
 
 import AllBuildingsList from "../components/BuildingsList";
-import Filters from "../components/Filters";
 import MapTab from "../components/MapTab";
-import SearchInput from "../components/SearchInput";
+import SearchAndFilter from "../components/SearchAndFilter";
 
 import { genericSearch } from "../utils/genericSearch";
 import { genericFilter } from "../utils/genericFilter";
@@ -37,6 +36,7 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
     []
   );
+
   const resultBuildingsUnsorted = useMemo(() => {
     return allBuildings
       .filter((building) =>
@@ -81,70 +81,19 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
       }}
     >
       <div className="all-pages">
-        {loading || loadingSavedBuildings || loadingAllListings ? (
+        {(loading || loadingSavedBuildings || loadingAllListings) && (
           <Spinner animation="border" variant="warning" />
-        ) : (
-          <></>
         )}
-        {/* search filter container */}
-        <Container fluid>
-          {/* search */}
-          <Row>
-            <Col
-              sm={12}
-              md={{ span: 11, offset: 1 }}
-              lg={{ span: 10, offset: 2 }}
-            >
-              <Row>
-                <Col sm md={9} lg={8}>
-                  <SearchInput
-                    onChangeSearchQuery={(query) => setSearchQuery(query)}
-                  />
-                </Col>
-              </Row>
-              {/* filter */}
-              <Row>
-                <Col>
-                  {allBuildings.length > 0 && (
-                    <Filters<IBuilding>
-                      object={allBuildings[0]}
-                      filters={activeFilters}
-                      onChangeFilter={(changedFilterProperty, checked) => {
-                        checked
-                          ? setActiveFilters([
-                              ...activeFilters.filter(
-                                (filter) =>
-                                  filter.property !== changedFilterProperty
-                              ),
-                              { property: changedFilterProperty },
-                            ])
-                          : setActiveFilters(
-                              activeFilters.filter(
-                                (filter) =>
-                                  filter.property !== changedFilterProperty
-                              )
-                            );
-                      }}
-                    />
-                  )}
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  {!loading && (
-                    <p>
-                      {resultBuildingsUnsorted.length > 0
-                        ? `${resultBuildingsUnsorted.length} buildings found`
-                        : "No buildings found"}
-                    </p>
-                  )}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
+        <SearchAndFilter 
+          allBuildings={allBuildings}
+          setSearchQuery={setSearchQuery}
+          setActiveFilters={setActiveFilters}
+          activeFilters={activeFilters}
+          loading={loading}
+          resultBuildingsUnsorted={resultBuildingsUnsorted}
+        />
 
-        <hr className="my-4 break-line-light" />
+        <hr className="my-3 break-line-light" />
 
         <Container fluid>
           <Tab.Container id="sidebar" defaultActiveKey="map">
