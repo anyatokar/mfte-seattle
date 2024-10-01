@@ -23,13 +23,13 @@ const SavedBuildingsPage: React.FunctionComponent<
 > = ({ name }) => {
   const { currentUser } = useAuth();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
-  const [allListings, loadingAllListings] = useAllListings();
+  const [allListings, isLoadingAllListings] = useAllListings();
 
   if (!currentUser) {
     return null;
   }
 
-  let loading = isLoadingSavedBuildings || loadingAllListings;
+  let loading = isLoadingSavedBuildings || isLoadingAllListings;
 
   return (
     <Profiler

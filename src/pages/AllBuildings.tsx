@@ -31,7 +31,7 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
 }) => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildings();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
-  let [allListings, loadingAllListings] = useAllListings();
+  let [allListings, isLoadingAllListings] = useAllListings();
 
   // search, filter
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -54,7 +54,7 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   // listings
   if (!areListingsOn) {
     allListings = [];
-    loadingAllListings = false;
+    isLoadingAllListings = false;
   }
 
   return (
@@ -87,7 +87,7 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
           loading={
             isLoadingAllBuildings ||
             isLoadingSavedBuildings ||
-            loadingAllListings
+            isLoadingAllListings
           }
           resultBuildingsUnsorted={resultBuildingsUnsorted}
         />
