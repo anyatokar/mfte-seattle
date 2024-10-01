@@ -14,12 +14,7 @@ type checkboxKeyType =
   | "twoBedroomUnits"
   | "threePlusBedroomUnits";
 
-type checkboxUILabelType =
-  | "Micro"
-  | "Studio"
-  | "One bedroom"
-  | "Two bedroom"
-  | "Three or more";
+type checkboxUILabelType = "Micro" | "Studio" | "One" | "Two" | "Three+";
 
 type checkboxMapType = {
   [key in checkboxKeyType]: checkboxUILabelType;
@@ -36,9 +31,9 @@ const checkboxKeys: checkboxKeyType[] = [
 const checkboxUILabels: checkboxMapType = {
   sedu: "Micro",
   studioUnits: "Studio",
-  oneBedroomUnits: "One bedroom",
-  twoBedroomUnits: "Two bedroom",
-  threePlusBedroomUnits: "Three or more",
+  oneBedroomUnits: "One",
+  twoBedroomUnits: "Two",
+  threePlusBedroomUnits: "Three+",
 };
 
 const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
@@ -48,8 +43,8 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
   };
 
   return (
-    <div className="p-1 my-2">
-      <p>Filter by number of bedrooms:</p>
+    <div className="p-0 my-2">
+      <p className="m-1">Filter by number of bedrooms:</p>
       {checkboxKeys.map((checkboxKey: checkboxKeyType) => {
         let styledKey = checkboxUILabels[checkboxKey];
         let id = checkboxKey;

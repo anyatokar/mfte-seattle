@@ -20,8 +20,8 @@ export default function SearchInput(props: ISearchProps) {
 
   return (
     <Form onSubmit={(event) => event.preventDefault()}>
-      <Form.Label htmlFor="search" className="mt-3">
-        Search by neighborhood, street address, building name, or zip code:
+      <Form.Label htmlFor="search" className="mt-0">
+        Search by neighborhood, address, or building name:
       </Form.Label>
       <Form.Control
         id="search"
