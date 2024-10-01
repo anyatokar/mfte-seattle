@@ -24,7 +24,6 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
-import Spinner from "react-bootstrap/Spinner";
 
 const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   name,
