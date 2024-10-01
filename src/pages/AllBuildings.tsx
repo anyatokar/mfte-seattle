@@ -29,7 +29,9 @@ import Spinner from "react-bootstrap/Spinner";
 const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   name,
 }) => {
-  const { allBuildings, loading } = useAllBuildings();
+  const [allBuildings, isLoadingAllBuildings] = useAllBuildings();
+  const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
+  let [allListings, loadingAllListings] = useAllListings();
 
   // search, filter
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -49,11 +51,7 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
       .filter((building) => genericFilter<IBuilding>(building, activeFilters));
   }, [allBuildings, searchQuery, activeFilters]);
 
-  const [savedBuildings, loadingSavedBuildings] = useSavedBuildings();
-
   // listings
-  let [allListings, loadingAllListings] = useAllListings();
-
   if (!areListingsOn) {
     allListings = [];
     loadingAllListings = false;
@@ -81,19 +79,20 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
       }}
     >
       <div className="all-pages">
-        {(loading || loadingSavedBuildings || loadingAllListings) && (
-          <Spinner animation="border" variant="warning" />
-        )}
-        <SearchAndFilter 
+        <SearchAndFilter
           allBuildings={allBuildings}
           setSearchQuery={setSearchQuery}
           setActiveFilters={setActiveFilters}
           activeFilters={activeFilters}
-          loading={loading}
+          loading={
+            isLoadingAllBuildings ||
+            isLoadingSavedBuildings ||
+            loadingAllListings
+          }
           resultBuildingsUnsorted={resultBuildingsUnsorted}
         />
 
-        <hr className="my-3 break-line-light" />
+        <hr className="mt-2 mb-3 break-line-light" />
 
         <Container fluid>
           <Tab.Container id="sidebar" defaultActiveKey="map">

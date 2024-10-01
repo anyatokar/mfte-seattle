@@ -43,8 +43,8 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
   };
 
   return (
-    <div className="p-0 my-2">
-      <p className="m-1">Filter by number of bedrooms:</p>
+    <div>
+      <p className="mb-1">Filter by number of bedrooms:</p>
       {checkboxKeys.map((checkboxKey: checkboxKeyType) => {
         let styledKey = checkboxUILabels[checkboxKey];
         let id = checkboxKey;

@@ -22,14 +22,14 @@ const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = ({ name }) => {
   const { currentUser } = useAuth();
-  const [savedBuildings, loadingSavedBuildings] = useSavedBuildings();
+  const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
   const [allListings, loadingAllListings] = useAllListings();
 
   if (!currentUser) {
     return null;
   }
 
-  let loading = loadingSavedBuildings || loadingAllListings;
+  let loading = isLoadingSavedBuildings || loadingAllListings;
 
   return (
     <Profiler
