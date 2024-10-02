@@ -98,6 +98,17 @@ export async function deleteBuilding(
     });
 }
 
+export async function deleteListing(buildingName: string, listingID: string) {
+  const listingDocRef = doc(db, "listing", listingID);
+  await deleteDoc(listingDocRef)
+    .then(() => {
+      console.log(`Listing for ${buildingName} deleted from user list.`);
+    })
+    .catch((error: any) => {
+      console.error(`Error deleting listing for" ${buildingName}:`, error);
+    });
+}
+
 export async function getUserFirestore(uid: string): Promise<string | null> {
   const userDocRef = doc(db, "users", uid);
   const userDocSnap = await getDoc(userDocRef);
@@ -240,6 +251,19 @@ export async function sendListingFirestore(
   });
 
   await updateDoc(listingDocRef, { listingID: listingDocRef.id });
+}
+
+export async function updateListing(
+  listingID: string,
+  buildingName: string,
+  fieldsToUpdate: Partial<IListing>
+) {
+  const listingDocRef = doc(db, "listings", listingID);
+
+  await updateDoc(listingDocRef, {
+    ...fieldsToUpdate,
+    lastUpdated: new Date(),
+  });
 }
 
 export async function addNote(

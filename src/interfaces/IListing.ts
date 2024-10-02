@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import { listingStatusEnum } from "../types/enumTypes";
 
 export type unitSizeType =
   | "micro"
@@ -15,6 +16,7 @@ export type availDataType = {
 
 export default interface IListing {
   listingID: string;
+  listingStatus: listingStatusEnum;
   isApproved: boolean;
   buildingName: string;
   contactName: string;

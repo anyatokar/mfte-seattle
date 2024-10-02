@@ -7,12 +7,12 @@ import { availDataType } from "../interfaces/IListing";
 import Table from "react-bootstrap/Table";
 
 interface AmiDataProps {
-  type: "amiData";
+  type: tableType.amiData;
   data: amiDataType[];
 }
 
 interface AvailDataProps {
-  type: "availData";
+  type: tableType.availData;
   data: availDataType[];
 }
 

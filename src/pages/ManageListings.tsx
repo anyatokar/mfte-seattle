@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
+import { listingStatusEnum } from "../types/enumTypes";
 
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useAllListings";
@@ -56,6 +57,26 @@ const ManageListingsPage: React.FunctionComponent<
 
   let isLoading = isLoadingAllListings || isLoadingRepsListings;
 
+  function getCount(label: listingStatusEnum): number {
+    return repsListings.filter((listing) => listing.listingStatus === label)
+      .length;
+  }
+
+  const summaryTableRows = [
+    { label: "Active", listingStatus: listingStatusEnum.ACTIVE },
+    {
+      label: "Pending Review",
+      listingStatus: listingStatusEnum.PENDING_REVIEW,
+    },
+    {
+      label: "Needs Attention",
+      listingStatus: listingStatusEnum.NEEDS_ATTENTION,
+    },
+    { label: "Archived", listingStatus: listingStatusEnum.ARCHIVED },
+    { label: "Expiring Soon", listingStatus: listingStatusEnum.EXPIRING_SOON },
+    { label: "Expired", listingStatus: listingStatusEnum.EXPIRED },
+  ];
+
   return (
     <Profiler
       id={name}
@@ -84,29 +105,53 @@ const ManageListingsPage: React.FunctionComponent<
           <Col lg={10} xl={8}>
             <div className="display-5">Manage Listings</div>
             <hr className="my-4 break-line-light" />
+
+            <p className="lead">Summary</p>
+
             <Row>
-              {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for large screens and up */}
-              <Col className="mt-2 mt-lg-0"></Col>
+              <Col xs={12} sm={6} lg={4} className="pb-4">
+                <Table responsive bordered hover size="sm">
+                  <thead>
+                    <tr>
+                      <th>Status</th>
+                      <th>Count</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {summaryTableRows.map((tableRow) => (
+                      <tr key={tableRow.listingStatus}>
+                        <td>{tableRow.label}</td>
+                        <td>{getCount(tableRow.listingStatus)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Col>
             </Row>
-            {isLoading && (
-              <Spinner animation="border" variant="secondary" size="sm" />
-            )}
-            {!isLoading && repsListings.length === 0 && (
-              <>
-                <p>Empty for now!</p>
-              </>
-            )}
-            {!isLoading &&
-              repsListings.length > 0 &&
-              repsListings.map((listing) => (
-                <ListingCard
-                  key={listing.listingID}
-                  availData={listing.availData}
-                  buildingName={listing.buildingName}
-                  isApproved={listing.isApproved}
-                  url={listing.url}
-                />
-              ))}
+
+            {!isLoading && repsListings.length === 0 && <p>Empty for now!</p>}
+            <Row>
+              <Col>
+                <p className="lead">Listings</p>
+                {isLoading && (
+                  <Spinner animation="border" variant="secondary" />
+                )}
+                {!isLoading &&
+                  repsListings.length > 0 &&
+                  repsListings.map((listing) => (
+                    <Col className="pb-2">
+                      <ListingCard
+                        key={listing.listingID}
+                        availData={listing.availData}
+                        buildingName={listing.buildingName}
+                        isApproved={listing.isApproved}
+                        url={listing.url}
+                        listingID={listing.listingID}
+                      />
+                    </Col>
+                  ))}
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>
