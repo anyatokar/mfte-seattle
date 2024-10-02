@@ -115,6 +115,24 @@ export async function getUserFirestore(uid: string): Promise<string | null> {
   }
 }
 
+export async function getRepsListingIDs(uid: string): Promise<string[] | null> {
+  const companyRepDocRef = doc(db, "companyReps", uid);
+  const companyRepDocSnap = await getDoc(companyRepDocRef);
+
+  try {
+    if (companyRepDocSnap.exists()) {
+      console.log(companyRepDocSnap.data().listingIDs);
+      return companyRepDocSnap.data().listingIDs;
+    } else {
+      console.log(`No company ref in "companyRefs" with uid ${uid}`);
+      return null;
+    }
+  } catch (error: any) {
+    console.error(`Error getting data for company ref ${uid}:`, error);
+    return null;
+  }
+}
+
 export async function getNameFirestore(uid: string): Promise<string | null> {
   const userDocRef = doc(db, "users", uid);
   const userDocSnap = await getDoc(userDocRef);
@@ -124,10 +142,10 @@ export async function getNameFirestore(uid: string): Promise<string | null> {
       return userDocSnap.data().name;
     } else {
       console.log(`No user in "users" with uid ${uid}`);
+      return null;
     }
   } catch (error: any) {
     console.error(`Error getting data for user ${uid}:`, error);
-  } finally {
     return null;
   }
 }
@@ -182,7 +200,7 @@ export async function sendListingFirestore(
   formFields: Partial<IListing> & availDataFormType,
   buildingID: string | undefined
 ) {
-  await addDoc(collection(db, "listings"), {
+  const listingDocRef = await addDoc(collection(db, "listings"), {
     contactName: formFields.contactName,
     email: formFields.email,
     companyName: formFields.companyName,
@@ -221,6 +239,8 @@ export async function sendListingFirestore(
     sentTimestamp: new Date(),
     isApproved: false,
   });
+
+  await updateDoc(listingDocRef, { listingID: listingDocRef.id });
 }
 
 export async function addNote(
