@@ -14,6 +14,7 @@ import { contactUsFormFieldsType } from "../pages/Contact";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
+import { ISignupAuthData } from "../contexts/AuthContext";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -95,6 +96,23 @@ export async function deleteBuilding(
     .catch((error: any) => {
       console.error("Error deleting document: ", error);
     });
+}
+
+export async function getUserFirestore(uid: string): Promise<string | null> {
+  const userDocRef = doc(db, "users", uid);
+  const userDocSnap = await getDoc(userDocRef);
+
+  try {
+    if (userDocSnap.exists()) {
+      return userDocSnap.data().name;
+    } else {
+      console.log(`No user in "users" with uid ${uid}`);
+    }
+  } catch (error: any) {
+    console.error(`Error getting data for user ${uid}:`, error);
+  } finally {
+    return null;
+  }
 }
 
 export async function getNameFirestore(uid: string): Promise<string | null> {
@@ -231,17 +249,31 @@ export async function deleteUserFirestore(uid: string | undefined) {
   await deleteDoc(doc(db, "users", uid));
 }
 
-export async function signupFirestore(
-  uid: string,
-  email: string | null,
-  name: string | null
-) {
-  await setDoc(doc(db, "users", uid), {
-    uid: uid,
-    email: email,
-    name: name,
-    signupOrBackfillTimestamp: new Date(),
-    // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
-    recentUser: true,
-  });
+export async function signupFirestore(signupAuthData: ISignupAuthData) {
+  const { email, name, isCompany, companyName, jobTitle, uid } = signupAuthData;
+
+  if (!uid) return;
+
+  const userDocRef = doc(db, "users", uid);
+  const companyRepDocRef = doc(db, "companyReps", uid);
+
+  if (isCompany) {
+    await setDoc(companyRepDocRef, {
+      uid: uid,
+      email: email,
+      name: name,
+      signupTimestamp: new Date(),
+      companyName: companyName,
+      jobTitle: jobTitle,
+    });
+  } else {
+    await setDoc(userDocRef, {
+      uid: uid,
+      email: email,
+      name: name,
+      signupOrBackfillTimestamp: new Date(),
+      // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
+      recentUser: true,
+    });
+  }
 }

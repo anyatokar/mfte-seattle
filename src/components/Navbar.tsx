@@ -8,6 +8,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 import Login from "../auth_components/Login";
 import PasswordReset from "../auth_components/PasswordReset";
+import RepSignup from "../auth_components/RepSignup";
 import Signup from "../auth_components/Signup";
 
 import Container from "react-bootstrap/Container";
@@ -29,6 +30,7 @@ export const Header = () => {
     setModalState(ModalState.LOGIN_SAVED_BUILDINGS);
   const showReset = () => setModalState(ModalState.RESET);
   const showSignup = () => setModalState(ModalState.SIGNUP);
+  const showRepSignup = () => setModalState(ModalState.REP_SIGNUP);
   const closeLogin = useCallback(
     () => setModalState(ModalState.HIDDEN),
     [setModalState]
@@ -58,12 +60,19 @@ export const Header = () => {
   // Modal
   function chooseModalComponent() {
     if (modalState === ModalState.LOGIN) {
-      return <Login onResetClicked={showReset} onSignupClicked={showSignup} />;
+      return (
+        <Login
+          onResetClicked={showReset}
+          onSignupClicked={showSignup}
+          onRepSignupClicked={showRepSignup}
+        />
+      );
     } else if (modalState === ModalState.LOGIN_SAVED_BUILDINGS) {
       return (
         <Login
           onResetClicked={showReset}
           onSignupClicked={showSignup}
+          onRepSignupClicked={showRepSignup}
           afterLogin={afterLogin}
         />
       );
@@ -72,10 +81,13 @@ export const Header = () => {
         <PasswordReset
           onLoginClicked={showLogin}
           onSignupClicked={showSignup}
+          onRepSignupClicked={showRepSignup}
         />
       );
     } else if (modalState === ModalState.SIGNUP) {
       return <Signup onLoginClicked={showLogin} />;
+    } else if (modalState === ModalState.REP_SIGNUP) {
+      return <RepSignup onLoginClicked={showLogin} />;
     }
   }
 

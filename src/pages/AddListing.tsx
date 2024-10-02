@@ -186,7 +186,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                     </Form.Group>
 
                     {/* Company row */}
-                    <Form.Group as={Col} md={6}>
+                    {/* <Form.Group as={Col} md={6}>
                       <Form.Label>Company Name*</Form.Label>
                       <Form.Control
                         required
@@ -196,7 +196,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                         onChange={onInputChange}
                         value={formFields.companyName}
                       />
-                    </Form.Group>
+                    </Form.Group> */}
                   </Form.Group>
 
                   {/* Address */}
@@ -216,7 +216,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                   </Form.Group>
 
                   {/* Name, Job Title and Email row */}
-                  <Form.Group as={Row} className="mb-3">
+                  {/* <Form.Group as={Row} className="mb-3">
                     <Form.Group as={Col} md={4} className="mb-3 mb-md-0">
                       <Form.Label>Your Name*</Form.Label>
                       <Form.Control
@@ -226,9 +226,9 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                         onChange={onInputChange}
                         value={formFields.contactName}
                       />
-                    </Form.Group>
+                    </Form.Group> */}
 
-                    <Form.Group as={Col} md={4} className="mb-3 mb-md-0">
+                  {/* <Form.Group as={Col} md={4} className="mb-3 mb-md-0">
                       <Form.Label>Job Title*</Form.Label>
                       <Form.Control
                         required
@@ -237,9 +237,9 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                         onChange={onInputChange}
                         value={formFields.jobTitle}
                       />
-                    </Form.Group>
+                    </Form.Group> */}
 
-                    <Form.Group as={Col} md={4}>
+                  {/* <Form.Group as={Col} md={4}>
                       <Form.Label>Email*</Form.Label>
                       <Form.Control
                         required
@@ -249,8 +249,8 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                         onChange={onInputChange}
                         value={formFields.email}
                       />
-                    </Form.Group>
-                  </Form.Group>
+                    </Form.Group> */}
+                  {/* </Form.Group> */}
 
                   {/* URL */}
                   <Form.Group as={Row} className="mb-3">

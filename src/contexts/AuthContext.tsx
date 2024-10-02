@@ -14,10 +14,20 @@ import {
 } from "firebase/auth";
 import { getNameFirestore, signupFirestore } from "../utils/firestoreUtils";
 
+export interface ISignupAuthData {
+  email: string;
+  name: string;
+  password: string;
+  isCompany: boolean;
+  companyName?: string;
+  jobTitle?: string;
+  uid?: string;
+}
+
 interface AuthContextProps {
   currentUser: User | null;
   login: (email: string, password: string) => Promise<void>;
-  signupAuth: (email: string, password: string, name: string) => Promise<void>;
+  signupAuth: (signupAuthData: ISignupAuthData) => Promise<void>;
   logout: () => Promise<void>;
   resetPasswordAuth: (email: string) => Promise<void>;
   updateDisplayNameAuth: (displayName: string) => Promise<void> | undefined;
@@ -40,12 +50,17 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  async function signupAuth(email: string, password: string, name: string) {
+  async function signupAuth(signupAuthData: ISignupAuthData) {
+    const { email, password, name, isCompany, companyName, jobTitle } =
+      signupAuthData;
+
     return createUserWithEmailAndPassword(getAuth(), email, password).then(
       (cred) => {
         if (cred.user) {
           updateProfile(cred.user, { displayName: name });
-          signupFirestore(cred.user.uid, cred.user.email, name);
+
+          signupAuthData.uid = cred.user.uid;
+          signupFirestore(signupAuthData);
         }
       }
     );
@@ -64,7 +79,12 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
       }
 
       // Backfill missing data from Auth to Firestore.
-      signupFirestore(cred.user.uid, cred.user.email, cred.user.displayName);
+      // signupFirestore(
+      //   cred.user.uid,
+      //   cred.user.email,
+      //   cred.user.displayName,
+      //   false
+      // );
     }
   }
 
@@ -108,7 +128,7 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
   const value: AuthContextProps = {
     currentUser,
     login,
-    signupAuth,
+    signupAuth: signupAuth,
     logout,
     resetPasswordAuth,
     updateDisplayNameAuth,
