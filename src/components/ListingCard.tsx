@@ -20,6 +20,7 @@ const BuildingCard: React.FC<ListingWithRequired> = ({
       <Card.Header>
         <Card.Title className="mt-2">{buildingName}</Card.Title>
       </Card.Header>
+      <Card.Body></Card.Body>
     </Card>
   );
 };

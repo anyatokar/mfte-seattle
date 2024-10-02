@@ -23,12 +23,15 @@ const ManageListingsPage: React.FunctionComponent<
 > = ({ name }) => {
   const { currentUser } = useAuth();
   const [allListings, isLoadingAllListings] = useAllListings();
+
   const [repsListings, setRepsListings] = useState<IListing[]>([]);
   const [isLoadingRepsListings, setIsLoadingRepsListings] = useState(true);
 
   useEffect(() => {
     const fetchRepsListings = async () => {
       if (!currentUser) return;
+
+      console.log("Filtering listings.");
 
       setIsLoadingRepsListings(true);
       // For now, rep's entry has an array of listing IDs.
@@ -45,7 +48,7 @@ const ManageListingsPage: React.FunctionComponent<
     };
 
     fetchRepsListings();
-  }, []);
+  }, [allListings]);
 
   if (!currentUser) {
     return null;
@@ -97,6 +100,7 @@ const ManageListingsPage: React.FunctionComponent<
               repsListings.length > 0 &&
               repsListings.map((listing) => (
                 <ListingCard
+                  key={listing.listingID}
                   availData={listing.availData}
                   buildingName={listing.buildingName}
                   isApproved={listing.isApproved}

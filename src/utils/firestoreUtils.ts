@@ -121,7 +121,6 @@ export async function getRepsListingIDs(uid: string): Promise<string[] | null> {
 
   try {
     if (companyRepDocSnap.exists()) {
-      console.log(companyRepDocSnap.data().listingIDs);
       return companyRepDocSnap.data().listingIDs;
     } else {
       console.log(`No company ref in "companyRefs" with uid ${uid}`);
