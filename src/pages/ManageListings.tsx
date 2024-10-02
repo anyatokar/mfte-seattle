@@ -1,11 +1,11 @@
 import { Profiler, useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { isProfilerOn } from "../config/config";
+import IPage from "../interfaces/IPage";
 
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useAllListings";
-
-import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -64,14 +64,16 @@ const ManageListingsPage: React.FunctionComponent<
         startTime,
         commitTime
       ) => {
-        console.log({
-          id,
-          phase,
-          actualDuration,
-          baseDuration,
-          startTime,
-          commitTime,
-        });
+        if (isProfilerOn) {
+          console.log({
+            id,
+            phase,
+            actualDuration,
+            baseDuration,
+            startTime,
+            commitTime,
+          });
+        }
       }}
     >
       <Container className="all-pages diy-jumbotron">

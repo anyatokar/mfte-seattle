@@ -1,6 +1,7 @@
 import { Profiler, useState } from "react";
 import PrivateRoute from "./auth_components/PrivateRoute";
 
+import { isProfilerOn } from "./config/config";
 import privateRoutes from "./config/privateRoutes";
 import publicRoutes from "./config/publicRoutes";
 
@@ -30,14 +31,16 @@ const Application: React.FC<{}> = () => {
         startTime,
         commitTime
       ) => {
-        console.log({
-          id,
-          phase,
-          actualDuration,
-          baseDuration,
-          startTime,
-          commitTime,
-        });
+        if (isProfilerOn) {
+          console.log({
+            id,
+            phase,
+            actualDuration,
+            baseDuration,
+            startTime,
+            commitTime,
+          });
+        }
       }}
     >
       <div className="main">

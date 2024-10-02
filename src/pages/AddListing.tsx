@@ -1,5 +1,5 @@
 import { Profiler, useState } from "react";
-
+import { isProfilerOn } from "../config/config";
 import { Timestamp } from "firebase/firestore";
 import { sendListingFirestore } from "../utils/firestoreUtils";
 import { useAllBuildings } from "../hooks/useAllBuildings";
@@ -135,14 +135,16 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
         startTime,
         commitTime
       ) => {
-        console.log({
-          id,
-          phase,
-          actualDuration,
-          baseDuration,
-          startTime,
-          commitTime,
-        });
+        if (isProfilerOn) {
+          console.log({
+            id,
+            phase,
+            actualDuration,
+            baseDuration,
+            startTime,
+            commitTime,
+          });
+        }
       }}
     >
       <Container className="all-pages diy-jumbotron">

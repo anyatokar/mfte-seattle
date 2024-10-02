@@ -2,6 +2,7 @@ import { useState, useMemo, Profiler } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { areListingsOn } from "../config/config";
+import { isProfilerOn } from "../config/config";
 
 import { useAllBuildings } from "../hooks/useAllBuildings";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
@@ -67,14 +68,16 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
         startTime,
         commitTime
       ) => {
-        console.log({
-          id,
-          phase,
-          actualDuration,
-          baseDuration,
-          startTime,
-          commitTime,
-        });
+        if (isProfilerOn) {
+          console.log({
+            id,
+            phase,
+            actualDuration,
+            baseDuration,
+            startTime,
+            commitTime,
+          });
+        }
       }}
     >
       <div className="all-pages">
