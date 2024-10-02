@@ -1,5 +1,6 @@
 import { Button } from "react-bootstrap";
 import IListing from "../interfaces/IListing";
+import { listingStatusEnum } from "../types/enumTypes";
 
 interface ListingButtonProps {
   listing: IListing | undefined;
@@ -11,7 +12,7 @@ export default function ListingButton(props: ListingButtonProps) {
 
   return (
     <>
-      {listing?.isApproved && listing?.url && (
+      {listing?.listingStatus === listingStatusEnum.ACTIVE && listing?.url && (
         <Button
           className={isMarker ? "" : "mt-3"}
           size={isMarker ? "sm" : undefined}

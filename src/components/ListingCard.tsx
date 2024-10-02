@@ -14,13 +14,13 @@ type PartialWithRequired<T, K extends keyof T> = Partial<T> &
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
-  "availData" | "buildingName" | "isApproved" | "url" | "listingID"
+  "availData" | "buildingName" | "listingStatus" | "url" | "listingID"
 >;
 
 const ListingCard: React.FC<ListingWithRequired> = ({
   availData,
   buildingName,
-  isApproved,
+  listingStatus,
   url,
   listingID,
 }) => {
@@ -29,7 +29,7 @@ const ListingCard: React.FC<ListingWithRequired> = ({
       <Card.Header>
         <Card.Title className="mt-2">
           {buildingName}{" "}
-          {isApproved ? (
+          {listingStatus === listingStatusEnum.ACTIVE ? (
             <Badge pill bg="success">
               Active
             </Badge>

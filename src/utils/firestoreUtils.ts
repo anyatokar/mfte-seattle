@@ -15,6 +15,7 @@ import { contactUsFormFieldsType } from "../pages/Contact";
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 import { ISignupAuthData } from "../contexts/AuthContext";
+import { listingStatusEnum } from "../types/enumTypes";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -247,7 +248,7 @@ export async function sendListingFirestore(
     message: formFields.message,
     buildingID: buildingID,
     sentTimestamp: new Date(),
-    isApproved: false,
+    listingStatus: listingStatusEnum.PENDING_REVIEW,
   });
 
   await updateDoc(listingDocRef, { listingID: listingDocRef.id });

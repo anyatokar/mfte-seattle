@@ -16,6 +16,7 @@ import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 
 import Button from "react-bootstrap/Button";
+import { listingStatusEnum } from "../types/enumTypes";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -99,7 +100,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   };
 
   const icon =
-    areListingsOn && listing?.isApproved
+    areListingsOn && listing?.listingStatus === listingStatusEnum.ACTIVE
       ? svgMarkerListing
       : svgMarkerNoListing;
 

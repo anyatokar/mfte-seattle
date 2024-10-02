@@ -1,5 +1,5 @@
 import { areListingsOn } from "../config/config";
-import { pageTypeEnum } from "../types/enumTypes";
+import { listingStatusEnum, pageTypeEnum } from "../types/enumTypes";
 
 import BuildingCard from "./BuildingCard";
 
@@ -62,11 +62,13 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
       // Check if each building has an approved listing in allListings
       const hasListingA = allListings.some(
         (listing) =>
-          listing.buildingID === buildingA.buildingID && listing.isApproved
+          listing.buildingID === buildingA.buildingID &&
+          listing.listingStatus === listingStatusEnum.ACTIVE
       );
       const hasListingB = allListings.some(
         (listing) =>
-          listing.buildingID === buildingB.buildingID && listing.isApproved
+          listing.buildingID === buildingB.buildingID &&
+          listing.listingStatus === listingStatusEnum.ACTIVE
       );
 
       // Sort buildings with approved listings first

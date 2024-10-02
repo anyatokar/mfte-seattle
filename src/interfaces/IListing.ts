@@ -17,7 +17,6 @@ export type availDataType = {
 export default interface IListing {
   listingID: string;
   listingStatus: listingStatusEnum;
-  isApproved: boolean;
   buildingName: string;
   contactName: string;
   email: string;

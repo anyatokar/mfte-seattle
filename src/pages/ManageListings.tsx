@@ -144,7 +144,7 @@ const ManageListingsPage: React.FunctionComponent<
                         key={listing.listingID}
                         availData={listing.availData}
                         buildingName={listing.buildingName}
-                        isApproved={listing.isApproved}
+                        listingStatus={listing.listingStatus}
                         url={listing.url}
                         listingID={listing.listingID}
                       />

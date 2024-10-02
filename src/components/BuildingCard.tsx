@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 
 import { areListingsOn } from "../config/config";
-import { pageTypeEnum, tableType } from "../types/enumTypes";
+import { listingStatusEnum, pageTypeEnum, tableType } from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
 import ListingButton from "./ListingButton";
@@ -125,16 +125,17 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
         <Card.Title className="mt-2">
           <div>
             {buildingName}
-            {areListingsOn && listing?.isApproved && (
-              <Badge
-                pill
-                bg="warning"
-                text="dark"
-                className="units-avail-badge"
-              >
-                Units available!
-              </Badge>
-            )}
+            {areListingsOn &&
+              listing?.listingStatus === listingStatusEnum.ACTIVE && (
+                <Badge
+                  pill
+                  bg="warning"
+                  text="dark"
+                  className="units-avail-badge"
+                >
+                  Units available!
+                </Badge>
+              )}
           </div>
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
@@ -199,7 +200,9 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
       </Card.Header>
 
       <ListGroup variant="flush" className="mb-2">
-        {(!areListingsOn || !listing || !listing.isApproved) && (
+        {(!areListingsOn ||
+          !listing ||
+          listing.listingStatus !== listingStatusEnum.ACTIVE) && (
           <ListGroup.Item>
             Contact building for current availability.
           </ListGroup.Item>
@@ -209,18 +212,23 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
           <Tabs
             className="tabs"
             defaultActiveKey={
-              areListingsOn && listing?.isApproved ? "availability" : "contact"
+              areListingsOn &&
+              listing?.listingStatus === listingStatusEnum.ACTIVE
+                ? "availability"
+                : "contact"
             }
           >
-            {areListingsOn && listing?.isApproved && listing?.availData && (
-              <Tab eventKey="availability" title="Availability">
-                <BuildingDataTable
-                  type={tableType.availData}
-                  data={listing.availData}
-                />
-                <ListingButton listing={listing} isMarker={false} />
-              </Tab>
-            )}
+            {areListingsOn &&
+              listing?.listingStatus === listingStatusEnum.ACTIVE &&
+              listing?.availData && (
+                <Tab eventKey="availability" title="Availability">
+                  <BuildingDataTable
+                    type={tableType.availData}
+                    data={listing.availData}
+                  />
+                  <ListingButton listing={listing} isMarker={false} />
+                </Tab>
+              )}
 
             <Tab eventKey="contact" title="Contact">
               <div className="mt-2">
