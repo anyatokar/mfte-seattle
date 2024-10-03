@@ -8,11 +8,13 @@ import {
   setDoc,
   updateDoc,
   addDoc,
-  Timestamp
+  Timestamp,
 } from "firebase/firestore";
 
 import { availDataFormType } from "../pages/AddListing";
 import { contactUsFormFieldsType } from "../pages/Contact";
+
+import { PartialWithRequired } from "../types/partialWithRequiredType";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
@@ -27,53 +29,12 @@ export async function saveBuilding(
     return;
   }
 
-  const {
-    buildingID,
-    buildingName,
-    phone,
-    phone2,
-    residentialTargetedArea,
-    totalRestrictedUnits,
-    sedu,
-    studioUnits,
-    oneBedroomUnits,
-    twoBedroomUnits,
-    threePlusBedroomUnits,
-    urlForBuilding,
-    streetNum,
-    street,
-    city,
-    state,
-    zip,
-    lat,
-    lng,
-  } = building;
+  const { buildingID, buildingName } = building;
 
   const userDocRef = doc(db, "users", uid);
   const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
 
-  await setDoc(buildingDocRef, {
-    buildingID: buildingID,
-    buildingName: buildingName,
-    phone: phone,
-    phone2: phone2,
-    residentialTargetedArea: residentialTargetedArea,
-    totalRestrictedUnits: totalRestrictedUnits,
-    sedu: sedu,
-    studioUnits: studioUnits,
-    oneBedroomUnits: oneBedroomUnits,
-    twoBedroomUnits: twoBedroomUnits,
-    threePlusBedroomUnits: threePlusBedroomUnits,
-    urlForBuilding: urlForBuilding,
-    streetNum: streetNum,
-    street: street,
-    city: city,
-    state: state,
-    zip: zip,
-    lat: lat,
-    lng: lng,
-    savedTimestamp: new Date(),
-  })
+  await setDoc(buildingDocRef, { ...building, savedTimestamp: new Date() })
     .then(() => {
       console.log(`${buildingName} saved to user list.`);
     })
@@ -101,7 +62,77 @@ export async function deleteBuilding(
     });
 }
 
-export async function deleteListing(buildingName: string, listingID: string) {
+export async function addListingFirestore(
+  formFields: Partial<IListing> & availDataFormType,
+  buildingID: string | undefined
+) {
+  const listing: IListing = {
+    contactName: formFields.contactName || "",
+    email: formFields.email || "",
+    companyName: formFields.companyName || "",
+    jobTitle: formFields.jobTitle || "",
+    buildingName: formFields.buildingName || "",
+    url: formFields.url || "",
+    availData: [
+      {
+        unitSize: "micro",
+        numAvail: parseInt(formFields.microNumAvail),
+        dateAvail: formFields.microDateAvail,
+      },
+      {
+        unitSize: "studio",
+        numAvail: parseInt(formFields.studioNumAvail),
+        dateAvail: formFields.studioDateAvail,
+      },
+      {
+        unitSize: "oneBed",
+        numAvail: parseInt(formFields.oneBedNumAvail),
+        dateAvail: formFields.oneBedDateAvail,
+      },
+      {
+        unitSize: "twoBed",
+        numAvail: parseInt(formFields.twoBedNumAvail),
+        dateAvail: formFields.twoBedDateAvail,
+      },
+      {
+        unitSize: "threePlusBed",
+        numAvail: parseInt(formFields.threePlusBedNumAvail),
+        dateAvail: formFields.threePlusBedDateAvail,
+      },
+    ],
+    message: formFields.message || "",
+    buildingID: buildingID || "",
+    listingStatus: listingStatusEnum.IN_REVIEW,
+    dateCreated: Timestamp.fromDate(new Date()),
+    dateUpdated: Timestamp.fromDate(new Date()),
+    expiryDate: Timestamp.fromDate(
+      new Date(Date.now() + listingDaysToExpiration * 24 * 60 * 60 * 1000)
+    ),
+    listingID: "",
+  };
+
+  const listingDocRef = await addDoc(collection(db, "listings"), listing);
+  await updateDoc(listingDocRef, { listingID: listingDocRef.id });
+}
+
+export async function updateListingFirestore(
+  updatedListingData: PartialWithRequired<
+    IListing,
+    "listingID" | "buildingName"
+  >
+) {
+  const listingDocRef = doc(db, "listings", updatedListingData.listingID);
+
+  await updateDoc(listingDocRef, {
+    ...updatedListingData,
+    lastUpdated: new Date(),
+  });
+}
+
+export async function deleteListingFirestore(
+  buildingName: string,
+  listingID: string
+) {
   const listingDocRef = doc(db, "listing", listingID);
   await deleteDoc(listingDocRef)
     .then(() => {
@@ -112,24 +143,9 @@ export async function deleteListing(buildingName: string, listingID: string) {
     });
 }
 
-export async function getUserFirestore(uid: string): Promise<string | null> {
-  const userDocRef = doc(db, "users", uid);
-  const userDocSnap = await getDoc(userDocRef);
-
-  try {
-    if (userDocSnap.exists()) {
-      return userDocSnap.data().name;
-    } else {
-      console.log(`No user in "users" with uid ${uid}`);
-    }
-  } catch (error: any) {
-    console.error(`Error getting data for user ${uid}:`, error);
-  } finally {
-    return null;
-  }
-}
-
-export async function getRepsListingIDs(uid: string): Promise<string[] | null> {
+export async function getRepsListingIDsFirestore(
+  uid: string
+): Promise<string[] | null> {
   const companyRepDocRef = doc(db, "companyReps", uid);
   const companyRepDocSnap = await getDoc(companyRepDocRef);
 
@@ -142,6 +158,23 @@ export async function getRepsListingIDs(uid: string): Promise<string[] | null> {
     }
   } catch (error: any) {
     console.error(`Error getting data for company ref ${uid}:`, error);
+    return null;
+  }
+}
+
+export async function getUserFirestore(uid: string): Promise<string | null> {
+  const userDocRef = doc(db, "users", uid);
+  const userDocSnap = await getDoc(userDocRef);
+
+  try {
+    if (userDocSnap.exists()) {
+      return userDocSnap.data().name;
+    } else {
+      console.log(`No user in "users" with uid ${uid}`);
+      return null;
+    }
+  } catch (error: any) {
+    console.error(`Error getting data for user ${uid}:`, error);
     return null;
   }
 }
@@ -206,72 +239,6 @@ export async function sendMessageFirestore(
     message: formFields.message,
     sentTimestamp: new Date(),
     didReply: false,
-  });
-}
-
-export async function sendListingFirestore(
-  formFields: Partial<IListing> & availDataFormType,
-  buildingID: string | undefined
-) {
-  const listing: IListing = {
-    contactName: formFields.contactName || "",
-    email: formFields.email || "",
-    companyName: formFields.companyName || "",
-    jobTitle: formFields.jobTitle || "",
-    buildingName: formFields.buildingName || "",
-    url: formFields.url || "",
-    availData: [
-      {
-        unitSize: "micro",
-        numAvail: parseInt(formFields.microNumAvail),
-        dateAvail: formFields.microDateAvail,
-      },
-      {
-        unitSize: "studio",
-        numAvail: parseInt(formFields.studioNumAvail),
-        dateAvail: formFields.studioDateAvail,
-      },
-      {
-        unitSize: "oneBed",
-        numAvail: parseInt(formFields.oneBedNumAvail),
-        dateAvail: formFields.oneBedDateAvail,
-      },
-      {
-        unitSize: "twoBed",
-        numAvail: parseInt(formFields.twoBedNumAvail),
-        dateAvail: formFields.twoBedDateAvail,
-      },
-      {
-        unitSize: "threePlusBed",
-        numAvail: parseInt(formFields.threePlusBedNumAvail),
-        dateAvail: formFields.threePlusBedDateAvail,
-      },
-    ],
-    message: formFields.message || "",
-    buildingID: buildingID || "",
-    listingStatus: listingStatusEnum.IN_REVIEW,
-    dateCreated: Timestamp.fromDate(new Date()),
-    dateUpdated: Timestamp.fromDate(new Date()),
-    expirationDate: Timestamp.fromDate(
-      new Date(Date.now() + listingDaysToExpiration * 24 * 60 * 60 * 1000)
-    ),
-    listingID: "",
-  };
-
-  const listingDocRef = await addDoc(collection(db, "listings"), listing);
-  await updateDoc(listingDocRef, { listingID: listingDocRef.id });
-}
-
-export async function updateListing(
-  listingID: string,
-  buildingName: string,
-  fieldsToUpdate: Partial<IListing>
-) {
-  const listingDocRef = doc(db, "listings", listingID);
-
-  await updateDoc(listingDocRef, {
-    ...fieldsToUpdate,
-    lastUpdated: new Date(),
   });
 }
 

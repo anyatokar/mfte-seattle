@@ -5,13 +5,20 @@ import IListing from "../interfaces/IListing";
 
 import Badge from "react-bootstrap/esm/Badge";
 import Card from "react-bootstrap/esm/Card";
+import { Timestamp } from "firebase/firestore";
+import { timestampToDate } from "../utils/generalUtils";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
-  "availData" | "buildingName" | "listingStatus" | "url" | "listingID"
+  | "availData"
+  | "buildingName"
+  | "listingStatus"
+  | "url"
+  | "listingID"
+  | "expiryDate"
 >;
 
 const ListingCard: React.FC<ListingWithRequired> = ({
@@ -20,6 +27,7 @@ const ListingCard: React.FC<ListingWithRequired> = ({
   listingStatus,
   url,
   listingID,
+  expiryDate,
 }) => {
   const statusBadgeMap: {
     [key in listingStatusEnum]: { label: string; bg: string };
@@ -79,6 +87,15 @@ const ListingCard: React.FC<ListingWithRequired> = ({
           >
             {url}
           </a>
+        </Card.Text>
+        <Card.Text>
+          {expiryDate && (
+            <>
+              {" "}
+              <strong>Listing expires: </strong>
+              {timestampToDate(expiryDate)}
+            </>
+          )}
         </Card.Text>
       </Card.Body>
     </Card>

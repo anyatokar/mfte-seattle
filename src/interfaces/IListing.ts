@@ -29,5 +29,5 @@ export default interface IListing {
   buildingID: string;
   dateCreated: Timestamp;
   dateUpdated: Timestamp;
-  expirationDate: Timestamp;
+  expiryDate: Timestamp;
 }

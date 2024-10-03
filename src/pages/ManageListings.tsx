@@ -2,17 +2,18 @@ import { Profiler, useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
-import IPage from "../interfaces/IPage";
 import { listingStatusEnum } from "../types/enumTypes";
 import { useAllListings } from "../hooks/useAllListings";
+import { getRepsListingIDsFirestore } from "../utils/firestoreUtils";
+import ListingCard from "../components/ListingCard";
+
+import IListing from "../interfaces/IListing";
+import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
-import { getRepsListingIDs } from "../utils/firestoreUtils";
-import IListing from "../interfaces/IListing";
-import ListingCard from "../components/ListingCard";
 import Spinner from "react-bootstrap/esm/Spinner";
 
 const ManageListingsPage: React.FunctionComponent<
@@ -20,7 +21,6 @@ const ManageListingsPage: React.FunctionComponent<
 > = ({ name }) => {
   const { currentUser } = useAuth();
   const [allListings, isLoadingAllListings] = useAllListings();
-
   const [repsListings, setRepsListings] = useState<IListing[]>([]);
   const [isLoadingRepsListings, setIsLoadingRepsListings] = useState(true);
 
@@ -32,7 +32,7 @@ const ManageListingsPage: React.FunctionComponent<
 
       setIsLoadingRepsListings(true);
       // For now, rep's entry has an array of listing IDs.
-      const listingIDs = await getRepsListingIDs(currentUser.uid);
+      const listingIDs = await getRepsListingIDsFirestore(currentUser.uid);
 
       if (listingIDs) {
         const foundListings = allListings.filter((listing) =>
@@ -126,14 +126,14 @@ const ManageListingsPage: React.FunctionComponent<
               </Col>
             </Row>
 
+            <h4>Listings</h4>
             <Row>
               <Col>
-                <h4>Listings</h4>
-                {!isLoading && repsListings.length === 0 && (
-                  <p>Empty for now!</p>
-                )}
                 {isLoading && (
                   <Spinner animation="border" variant="secondary" />
+                )}
+                {!isLoading && repsListings.length === 0 && (
+                  <p>Empty for now!</p>
                 )}
                 {!isLoading &&
                   repsListings.length > 0 &&
@@ -145,6 +145,7 @@ const ManageListingsPage: React.FunctionComponent<
                         listingStatus={listing.listingStatus}
                         url={listing.url}
                         listingID={listing.listingID}
+                        expiryDate={listing.expiryDate}
                       />
                     </Col>
                   ))}

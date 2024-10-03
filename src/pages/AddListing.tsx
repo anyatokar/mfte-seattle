@@ -1,7 +1,7 @@
 import { Profiler, useState } from "react";
 import { isProfilerOn } from "../config/config";
 import { Timestamp } from "firebase/firestore";
-import { sendListingFirestore } from "../utils/firestoreUtils";
+import { addListingFirestore } from "../utils/firestoreUtils";
 import { useAllBuildings } from "../hooks/useAllBuildings";
 import ListingAccordion from "../components/ListingAccordion";
 
@@ -97,7 +97,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    return sendListingFirestore(formFields, selectedBuilding?.buildingID)
+    return addListingFirestore(formFields, selectedBuilding?.buildingID)
       .then(() => {
         console.log("Availability data submitted successfully.");
         clearFields();
