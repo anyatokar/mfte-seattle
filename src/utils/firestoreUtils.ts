@@ -248,7 +248,7 @@ export async function sendListingFirestore(
     message: formFields.message,
     buildingID: buildingID,
     sentTimestamp: new Date(),
-    listingStatus: listingStatusEnum.PENDING_REVIEW,
+    listingStatus: listingStatusEnum.IN_REVIEW,
   });
 
   await updateDoc(listingDocRef, { listingID: listingDocRef.id });

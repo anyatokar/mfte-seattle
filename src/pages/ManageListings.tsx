@@ -65,8 +65,8 @@ const ManageListingsPage: React.FunctionComponent<
   const summaryTableRows = [
     { label: "Active", listingStatus: listingStatusEnum.ACTIVE },
     {
-      label: "Pending Review",
-      listingStatus: listingStatusEnum.PENDING_REVIEW,
+      label: "In Review",
+      listingStatus: listingStatusEnum.IN_REVIEW,
     },
     {
       label: "Needs Attention",
@@ -106,11 +106,11 @@ const ManageListingsPage: React.FunctionComponent<
             <div className="display-5">Manage Listings</div>
             <hr className="my-4 break-line-light" />
 
-            <p className="lead">Summary</p>
+            <h4>Summary</h4>
 
             <Row>
               <Col xs={12} sm={6} lg={4} className="pb-4">
-                <Table responsive bordered hover size="sm">
+                <Table responsive bordered hover size="sm" className="mt-0">
                   <thead>
                     <tr>
                       <th>Status</th>
@@ -129,19 +129,20 @@ const ManageListingsPage: React.FunctionComponent<
               </Col>
             </Row>
 
-            {!isLoading && repsListings.length === 0 && <p>Empty for now!</p>}
             <Row>
               <Col>
-                <p className="lead">Listings</p>
+                <h4>Listings</h4>
+                {!isLoading && repsListings.length === 0 && (
+                  <p>Empty for now!</p>
+                )}
                 {isLoading && (
                   <Spinner animation="border" variant="secondary" />
                 )}
                 {!isLoading &&
                   repsListings.length > 0 &&
                   repsListings.map((listing) => (
-                    <Col className="pb-2">
+                    <Col className="pb-2" key={listing.listingID}>
                       <ListingCard
-                        key={listing.listingID}
                         availData={listing.availData}
                         buildingName={listing.buildingName}
                         listingStatus={listing.listingStatus}

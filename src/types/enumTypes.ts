@@ -13,6 +13,6 @@ export enum listingStatusEnum {
   EXPIRED = "expired",
   ACTIVE = "active",
   EXPIRING_SOON = "expiringSoon",
-  PENDING_REVIEW = "pendingReview",
+  IN_REVIEW = "inReview",
   NEEDS_ATTENTION = "needsAttention",
 }

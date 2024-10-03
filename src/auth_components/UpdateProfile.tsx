@@ -231,7 +231,7 @@ export default function UpdateProfile() {
             <Card.Footer>
               <div className="w-100 text-center">
                 <Button
-                  className="delete-account"
+                  className="delete-link"
                   onClick={onDelete}
                   variant="link"
                 >

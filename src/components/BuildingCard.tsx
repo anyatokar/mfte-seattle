@@ -221,7 +221,11 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
             {areListingsOn &&
               listing?.listingStatus === listingStatusEnum.ACTIVE &&
               listing?.availData && (
-                <Tab eventKey="availability" title="Availability">
+                <Tab
+                  eventKey="availability"
+                  title="Availability"
+                  className="mt-2"
+                >
                   <BuildingDataTable
                     type={tableType.availData}
                     data={listing.availData}
@@ -245,7 +249,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
               </div>
             </Tab>
             {amiData && (
-              <Tab eventKey="details" title="Details">
+              <Tab eventKey="details" title="Details" className="mt-2">
                 <BuildingDataTable type={tableType.amiData} data={amiData} />
               </Tab>
             )}
