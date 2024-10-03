@@ -1,4 +1,5 @@
 import { db } from "../db/firebase";
+import { listingDaysToExpiration } from "../config/config";
 import {
   collection,
   deleteDoc,
@@ -7,6 +8,7 @@ import {
   setDoc,
   updateDoc,
   addDoc,
+  Timestamp
 } from "firebase/firestore";
 
 import { availDataFormType } from "../pages/AddListing";
@@ -211,13 +213,13 @@ export async function sendListingFirestore(
   formFields: Partial<IListing> & availDataFormType,
   buildingID: string | undefined
 ) {
-  const listingDocRef = await addDoc(collection(db, "listings"), {
-    contactName: formFields.contactName,
-    email: formFields.email,
-    companyName: formFields.companyName,
-    jobTitle: formFields.jobTitle,
-    buildingName: formFields.buildingName,
-    url: formFields.url,
+  const listing: IListing = {
+    contactName: formFields.contactName || "",
+    email: formFields.email || "",
+    companyName: formFields.companyName || "",
+    jobTitle: formFields.jobTitle || "",
+    buildingName: formFields.buildingName || "",
+    url: formFields.url || "",
     availData: [
       {
         unitSize: "micro",
@@ -245,12 +247,18 @@ export async function sendListingFirestore(
         dateAvail: formFields.threePlusBedDateAvail,
       },
     ],
-    message: formFields.message,
-    buildingID: buildingID,
-    sentTimestamp: new Date(),
+    message: formFields.message || "",
+    buildingID: buildingID || "",
     listingStatus: listingStatusEnum.IN_REVIEW,
-  });
+    dateCreated: Timestamp.fromDate(new Date()),
+    dateUpdated: Timestamp.fromDate(new Date()),
+    expirationDate: Timestamp.fromDate(
+      new Date(Date.now() + listingDaysToExpiration * 24 * 60 * 60 * 1000)
+    ),
+    listingID: "",
+  };
 
+  const listingDocRef = await addDoc(collection(db, "listings"), listing);
   await updateDoc(listingDocRef, { listingID: listingDocRef.id });
 }
 

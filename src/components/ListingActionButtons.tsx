@@ -1,15 +1,7 @@
-import Card from "react-bootstrap/esm/Card";
 import IListing from "../interfaces/IListing";
-import Badge from "react-bootstrap/esm/Badge";
-import BuildingDataTable from "./BuildingDataTable";
-import { listingStatusEnum, tableType } from "../types/enumTypes";
+import { listingStatusEnum } from "../types/enumTypes";
 import { deleteListing, updateListing } from "../utils/firestoreUtils";
 
-import Col from "react-bootstrap/esm/Col";
-import Button from "react-bootstrap/esm/Button";
-import Row from "react-bootstrap/esm/Row";
-import Container from "react-bootstrap/esm/Container";
-import Stack from "react-bootstrap/esm/Stack";
 import Dropdown from "react-bootstrap/esm/Dropdown";
 import DropdownButton from "react-bootstrap/esm/DropdownButton";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -37,14 +29,16 @@ const ListingActionsButtons: React.FC<ListingWithRequired> = ({
       variant="outline-primary"
     >
       <Dropdown.Item eventKey="edit">Edit</Dropdown.Item>
+
       <Dropdown.Item
-        eventKey="renew"
-        // onClick={() => {
-        //   updateListing(listingID, buildingName, fieldsToUpdate);
-        // }}
+      // eventKey="renew"
+      // onClick={() => {
+      //   updateListing(listingID, buildingName, {expireDate: new Date()});
+      // }}
       >
         Renew
       </Dropdown.Item>
+
       <Dropdown.Item
         eventKey="archive"
         onClick={() => {
@@ -55,6 +49,7 @@ const ListingActionsButtons: React.FC<ListingWithRequired> = ({
       >
         Archive
       </Dropdown.Item>
+
       <Dropdown.Divider />
       <Dropdown.Item
         className="delete-link"

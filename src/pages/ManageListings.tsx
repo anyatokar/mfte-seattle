@@ -1,18 +1,14 @@
 import { Profiler, useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
 import { listingStatusEnum } from "../types/enumTypes";
-
-import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useAllListings";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import { getRepsListingIDs } from "../utils/firestoreUtils";
 import IListing from "../interfaces/IListing";
@@ -49,6 +45,7 @@ const ManageListingsPage: React.FunctionComponent<
     };
 
     fetchRepsListings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allListings]);
 
   if (!currentUser) {

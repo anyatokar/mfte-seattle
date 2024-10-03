@@ -27,5 +27,7 @@ export default interface IListing {
   /** This is an array to keep the order from smallest to largest on render. */
   availData: availDataType[];
   buildingID: string;
-  sentTimestamp: Timestamp;
+  dateCreated: Timestamp;
+  dateUpdated: Timestamp;
+  expirationDate: Timestamp;
 }
