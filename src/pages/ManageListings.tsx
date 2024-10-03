@@ -5,6 +5,8 @@ import { isProfilerOn } from "../config/config";
 import { listingStatusEnum } from "../types/enumTypes";
 import { useAllListings } from "../hooks/useAllListings";
 import { getRepsListingIDsFirestore } from "../utils/firestoreUtils";
+
+import AddListingForm from "../components/AddListingForm";
 import ListingCard from "../components/ListingCard";
 
 import IListing from "../interfaces/IListing";
@@ -15,6 +17,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/esm/Spinner";
+import Tab from "react-bootstrap/esm/Tab";
+import Nav from "react-bootstrap/esm/Nav";
 
 const ManageListingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
@@ -97,63 +101,91 @@ const ManageListingsPage: React.FunctionComponent<
         }
       }}
     >
-      <Container className="all-pages diy-jumbotron">
-        <Row className="justify-content-center">
-          <Col lg={10} xl={8}>
-            <div className="display-5">Manage Listings</div>
-            <hr className="my-4 break-line-light" />
-
-            <h4>Summary</h4>
-
+      <div className="all-pages">
+        <hr className="mt-2 mb-3 break-line-light" />
+        <Container fluid className="all-pages">
+          <Tab.Container id="sidebar" defaultActiveKey="summary">
             <Row>
-              <Col xs={12} sm={6} lg={4} className="pb-4">
-                <Table responsive bordered hover size="sm" className="mt-0">
-                  <thead>
-                    <tr>
-                      <th>Status</th>
-                      <th>Count</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {summaryTableRows.map((tableRow) => (
-                      <tr key={tableRow.listingStatus}>
-                        <td>{tableRow.label}</td>
-                        <td>{getCount(tableRow.listingStatus)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+              <Col sm={12} lg={2}>
+                <Nav variant="pills" className="flex-column">
+                  <Nav.Item>
+                    <Nav.Link eventKey="summary" className="tab">
+                      Summary
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="viewListings" className="tab">
+                      Current Listings
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="addListing" className="tab">
+                      + Add Listing
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </Col>
+              <Col sm={12} lg={8}>
+                <Tab.Content>
+                  <Tab.Pane eventKey="summary">
+                    <Row>
+                      <Col xs={12} sm={6} lg={4} className="pb-4">
+                        <Table responsive bordered hover className="mt-0">
+                          <thead>
+                            <tr>
+                              <th>Status</th>
+                              <th>Count</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {summaryTableRows.map((tableRow) => (
+                              <tr key={tableRow.listingStatus}>
+                                <td>{tableRow.label}</td>
+                                <td>{getCount(tableRow.listingStatus)}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </Table>
+                      </Col>
+                    </Row>
+                  </Tab.Pane>
+
+                  <Tab.Pane eventKey="viewListings">
+                    <Row>
+                      <Col>
+                        {isLoading && (
+                          <Spinner animation="border" variant="secondary" />
+                        )}
+                        {!isLoading && repsListings.length === 0 && (
+                          <p>Empty for now!</p>
+                        )}
+                        {!isLoading &&
+                          repsListings.length > 0 &&
+                          repsListings.map((listing) => (
+                            <Col className="pb-2" key={listing.listingID}>
+                              <ListingCard
+                                availData={listing.availData}
+                                buildingName={listing.buildingName}
+                                listingStatus={listing.listingStatus}
+                                url={listing.url}
+                                listingID={listing.listingID}
+                                expiryDate={listing.expiryDate}
+                              />
+                            </Col>
+                          ))}
+                      </Col>
+                    </Row>
+                  </Tab.Pane>
+
+                  <Tab.Pane eventKey="addListing">
+                    <AddListingForm />
+                  </Tab.Pane>
+                </Tab.Content>
               </Col>
             </Row>
-
-            <h4>Listings</h4>
-            <Row>
-              <Col>
-                {isLoading && (
-                  <Spinner animation="border" variant="secondary" />
-                )}
-                {!isLoading && repsListings.length === 0 && (
-                  <p>Empty for now!</p>
-                )}
-                {!isLoading &&
-                  repsListings.length > 0 &&
-                  repsListings.map((listing) => (
-                    <Col className="pb-2" key={listing.listingID}>
-                      <ListingCard
-                        availData={listing.availData}
-                        buildingName={listing.buildingName}
-                        listingStatus={listing.listingStatus}
-                        url={listing.url}
-                        listingID={listing.listingID}
-                        expiryDate={listing.expiryDate}
-                      />
-                    </Col>
-                  ))}
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
+          </Tab.Container>
+        </Container>
+      </div>
     </Profiler>
   );
 };
