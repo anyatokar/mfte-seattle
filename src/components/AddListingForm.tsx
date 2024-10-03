@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { addListingFirestore } from "../utils/firestoreUtils";
 import { useAllBuildings } from "../hooks/useAllBuildings";
+import { listingMaxDays } from "../config/config";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
@@ -47,6 +48,7 @@ const AddListingForm: React.FunctionComponent = () => {
     twoBedDateAvail: null,
     threePlusBedNumAvail: "0",
     threePlusBedDateAvail: null,
+    expiryDate: null,
   };
 
   function clearFields(): void {
@@ -62,7 +64,7 @@ const AddListingForm: React.FunctionComponent = () => {
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
-    if (name.endsWith("DateAvail")) {
+    if (name.endsWith("DateAvail") || name === "expiryDate") {
       // If it's a date field, convert to Firestore Timestamp
       const timestamp = value ? Timestamp.fromDate(new Date(value)) : null;
       setFormFields((prev) => ({
@@ -122,7 +124,7 @@ const AddListingForm: React.FunctionComponent = () => {
   ];
 
   return (
-    <Container>
+    <Container fluid>
       <Row className="justify-content-center">
         <Col>
           {isFormVisible ? (
@@ -238,7 +240,37 @@ const AddListingForm: React.FunctionComponent = () => {
                     </Table>
                   </Form.Group>
                 </Form.Group>
-
+                {/* Expiry */}
+                <Form.Group as={Row} className="mb-3">
+                  <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
+                    <td>
+                      <Form.Label>
+                        Listing Expiration Date (max 60 days)
+                      </Form.Label>
+                      <Form.Control
+                        type="date"
+                        name={"expiryDate"}
+                        id={"expiryDate"}
+                        onChange={onInputChange}
+                        value={
+                          formFields.expiryDate
+                            ? formFields.expiryDate
+                                ?.toDate()
+                                .toISOString()
+                                .split("T")[0]
+                            : ""
+                        }
+                        max={
+                          new Date(
+                            Date.now() + listingMaxDays * 24 * 60 * 60 * 1000
+                          )
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      />
+                    </td>
+                  </Form.Group>
+                </Form.Group>
                 {/* Message */}
                 <Form.Group className="mb-3">
                   <Form.Label>

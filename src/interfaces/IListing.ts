@@ -29,5 +29,6 @@ export default interface IListing {
   buildingID: string;
   dateCreated: Timestamp;
   dateUpdated: Timestamp;
-  expiryDate: Timestamp;
+  /** Null for clearing of form */
+  expiryDate: Timestamp | null;
 }

@@ -1,5 +1,5 @@
 import { db } from "../db/firebase";
-import { listingDaysToExpiration } from "../config/config";
+import { listingMaxDays } from "../config/config";
 import {
   collection,
   deleteDoc,
@@ -106,7 +106,7 @@ export async function addListingFirestore(
     dateCreated: Timestamp.fromDate(new Date()),
     dateUpdated: Timestamp.fromDate(new Date()),
     expiryDate: Timestamp.fromDate(
-      new Date(Date.now() + listingDaysToExpiration * 24 * 60 * 60 * 1000)
+      new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
     ),
     listingID: "",
   };
@@ -125,7 +125,7 @@ export async function updateListingFirestore(
 
   await updateDoc(listingDocRef, {
     ...updatedListingData,
-    lastUpdated: new Date(),
+    dateUpdated: new Date(),
   });
 }
 

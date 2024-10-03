@@ -6,7 +6,7 @@ import { isProfilerOn } from "../config/config";
 
 import { useAllBuildings } from "../hooks/useAllBuildings";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
-import { useAllListings } from "../hooks/useAllListings";
+import { useAllListings } from "../hooks/useListings";
 
 import AllBuildingsList from "../components/BuildingsList";
 import MapTab from "../components/MapTab";

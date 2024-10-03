@@ -6,7 +6,7 @@ import IPage from "../interfaces/IPage";
 import { pageTypeEnum } from "../types/enumTypes";
 
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
-import { useAllListings } from "../hooks/useAllListings";
+import { useAllListings } from "../hooks/useListings";
 
 import MapTab from "../components/MapTab";
 import AllBuildingsList from "../components/BuildingsList";

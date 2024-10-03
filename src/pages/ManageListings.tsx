@@ -3,13 +3,12 @@ import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import { listingStatusEnum } from "../types/enumTypes";
-import { useAllListings } from "../hooks/useAllListings";
+import { useAllListings } from "../hooks/useListings";
 import { getRepsListingIDsFirestore } from "../utils/firestoreUtils";
 
 import AddListingForm from "../components/AddListingForm";
 import ListingCard from "../components/ListingCard";
 
-import IListing from "../interfaces/IListing";
 import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
@@ -24,39 +23,25 @@ const ManageListingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = ({ name }) => {
   const { currentUser } = useAuth();
-  const [allListings, isLoadingAllListings] = useAllListings();
-  const [repsListings, setRepsListings] = useState<IListing[]>([]);
-  const [isLoadingRepsListings, setIsLoadingRepsListings] = useState(true);
+  const [listingIDs, setListingIDs] = useState<string[] | null>(null);
+  const [repsListings, isLoadingRepsListings] = useAllListings(listingIDs);
 
+  // Fetch listingIDs when the component mounts
   useEffect(() => {
-    const fetchRepsListings = async () => {
+    const fetchListingIDs = async () => {
       if (!currentUser) return;
-
-      console.log("Filtering listings.");
-
-      setIsLoadingRepsListings(true);
-      // For now, rep's entry has an array of listing IDs.
       const listingIDs = await getRepsListingIDsFirestore(currentUser.uid);
-
-      if (listingIDs) {
-        const foundListings = allListings.filter((listing) =>
-          listingIDs.includes(listing.listingID)
-        );
-        setRepsListings(foundListings);
-      }
-
-      setIsLoadingRepsListings(false);
+      setListingIDs(listingIDs);
     };
 
-    fetchRepsListings();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allListings]);
+    fetchListingIDs();
+  }, []);
 
   if (!currentUser) {
     return null;
   }
 
-  let isLoading = isLoadingAllListings || isLoadingRepsListings;
+  let isLoading = isLoadingRepsListings;
 
   function getCount(label: listingStatusEnum): number {
     return repsListings.filter((listing) => listing.listingStatus === label)
@@ -128,53 +113,58 @@ const ManageListingsPage: React.FunctionComponent<
               <Col sm={12} lg={8}>
                 <Tab.Content>
                   <Tab.Pane eventKey="summary">
-                    <Row>
-                      <Col xs={12} sm={6} lg={4} className="pb-4">
-                        <Table responsive bordered hover className="mt-0">
-                          <thead>
-                            <tr>
-                              <th>Status</th>
-                              <th>Count</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {summaryTableRows.map((tableRow) => (
-                              <tr key={tableRow.listingStatus}>
-                                <td>{tableRow.label}</td>
-                                <td>{getCount(tableRow.listingStatus)}</td>
+                    <Container fluid>
+                      <Row>
+                        <Col xs={12} sm={6} lg={4} className="pb-4">
+                          <Table responsive bordered hover className="mt-0">
+                            <thead>
+                              <tr>
+                                <th>Status</th>
+                                <th>Count</th>
                               </tr>
-                            ))}
-                          </tbody>
-                        </Table>
-                      </Col>
-                    </Row>
+                            </thead>
+                            <tbody>
+                              {summaryTableRows.map((tableRow) => (
+                                <tr key={tableRow.listingStatus}>
+                                  <td>{tableRow.label}</td>
+                                  <td>{getCount(tableRow.listingStatus)}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </Table>
+                        </Col>
+                      </Row>
+                    </Container>
                   </Tab.Pane>
 
                   <Tab.Pane eventKey="viewListings">
-                    <Row>
-                      <Col>
-                        {isLoading && (
-                          <Spinner animation="border" variant="secondary" />
-                        )}
-                        {!isLoading && repsListings.length === 0 && (
-                          <p>Empty for now!</p>
-                        )}
-                        {!isLoading &&
-                          repsListings.length > 0 &&
-                          repsListings.map((listing) => (
-                            <Col className="pb-2" key={listing.listingID}>
-                              <ListingCard
-                                availData={listing.availData}
-                                buildingName={listing.buildingName}
-                                listingStatus={listing.listingStatus}
-                                url={listing.url}
-                                listingID={listing.listingID}
-                                expiryDate={listing.expiryDate}
-                              />
-                            </Col>
-                          ))}
-                      </Col>
-                    </Row>
+                    <Container fluid>
+                      <Row>
+                        <Col>
+                          {isLoading && (
+                            <Spinner animation="border" variant="secondary" />
+                          )}
+                          {!isLoading && repsListings.length === 0 && (
+                            <p>Empty for now!</p>
+                          )}
+                          {!isLoading &&
+                            repsListings.length > 0 &&
+                            repsListings.map((listing) => (
+                              <Col className="pb-2" key={listing.listingID}>
+                                <ListingCard
+                                  availData={listing.availData}
+                                  buildingName={listing.buildingName}
+                                  listingStatus={listing.listingStatus}
+                                  url={listing.url}
+                                  listingID={listing.listingID}
+                                  expiryDate={listing.expiryDate}
+                                  dateUpdated={listing.dateUpdated}
+                                />
+                              </Col>
+                            ))}
+                        </Col>
+                      </Row>
+                    </Container>
                   </Tab.Pane>
 
                   <Tab.Pane eventKey="addListing">

@@ -2,6 +2,9 @@ import {
   deleteListingFirestore,
   updateListingFirestore,
 } from "../utils/firestoreUtils";
+import { Timestamp } from "firebase/firestore";
+import { listingMaxDays } from "../config/config";
+
 import IListing from "../interfaces/IListing";
 
 import { listingStatusEnum } from "../types/enumTypes";
@@ -10,8 +13,6 @@ import { PartialWithRequired } from "../types/partialWithRequiredType";
 import Dropdown from "react-bootstrap/esm/Dropdown";
 import DropdownButton from "react-bootstrap/esm/DropdownButton";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { Timestamp } from "firebase/firestore";
-import { listingDaysToExpiration } from "../config/config";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -25,7 +26,41 @@ const ListingActionsButtons: React.FC<ListingWithRequired> = ({
   url,
   listingID,
 }) => {
-  function onEditClick() {}
+  const onEditClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+
+    console.log("Edit clicked");
+  };
+
+  const onRenewClick = (event: any) => {
+    event.preventDefault();
+
+    const newExpiryDate = Timestamp.fromDate(
+      new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
+    );
+
+    updateListingFirestore({
+      listingID,
+      buildingName,
+      expiryDate: newExpiryDate,
+    });
+  };
+
+  const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+
+    updateListingFirestore({
+      listingID,
+      buildingName,
+      listingStatus: listingStatusEnum.ARCHIVED,
+    });
+  };
+
+  const onDeleteClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+
+    deleteListingFirestore(listingID, buildingName);
+  };
 
   return (
     <DropdownButton
@@ -38,33 +73,11 @@ const ListingActionsButtons: React.FC<ListingWithRequired> = ({
         Edit
       </Dropdown.Item>
 
-      <Dropdown.Item
-        eventKey="renew"
-        onClick={() => {
-          updateListingFirestore({
-            listingID,
-            buildingName,
-            expiryDate: Timestamp.fromDate(
-              new Date(
-                Date.now() + listingDaysToExpiration * 24 * 60 * 60 * 1000
-              )
-            ),
-          });
-        }}
-      >
+      <Dropdown.Item eventKey="renew" onClick={onRenewClick}>
         Renew
       </Dropdown.Item>
 
-      <Dropdown.Item
-        eventKey="archive"
-        onClick={() => {
-          updateListingFirestore({
-            listingID,
-            buildingName,
-            listingStatus: listingStatusEnum.ARCHIVED,
-          });
-        }}
-      >
+      <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
         Archive
       </Dropdown.Item>
 
@@ -72,9 +85,7 @@ const ListingActionsButtons: React.FC<ListingWithRequired> = ({
       <Dropdown.Item
         className="delete-link"
         eventKey="delete"
-        onClick={() => {
-          deleteListingFirestore(listingID, buildingName);
-        }}
+        onClick={onDeleteClick}
       >
         Delete
       </Dropdown.Item>
