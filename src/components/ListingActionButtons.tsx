@@ -10,39 +10,55 @@ import IListing from "../interfaces/IListing";
 import { listingStatusEnum } from "../types/enumTypes";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 
+import Button from "react-bootstrap/esm/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/esm/Dropdown";
 import DropdownButton from "react-bootstrap/esm/DropdownButton";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Stack from "react-bootstrap/esm/Stack";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
   "availData" | "buildingName" | "listingStatus" | "url" | "listingID"
 >;
 
-const ListingActionsButtons: React.FC<ListingWithRequired> = ({
-  availData,
-  buildingName,
-  listingStatus,
-  url,
-  listingID,
+type ListingActionsButtonsPropsType = {
+  listing: ListingWithRequired;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
+  listing,
+  isEditing,
+  setIsEditing,
 }) => {
-  const onEditClick = (event: React.MouseEvent<HTMLElement>) => {
+  const { availData, buildingName, listingStatus, url, listingID } = listing;
+
+  const onSaveChangesClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
-    console.log("Edit clicked");
-  };
-
-  const onRenewClick = (event: any) => {
-    event.preventDefault();
-
-    const newExpiryDate = Timestamp.fromDate(
+    const maxExpiryDate = Timestamp.fromDate(
       new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
     );
 
     updateListingFirestore({
       listingID,
       buildingName,
-      expiryDate: newExpiryDate,
+      // expiryDate: expiryDate || maxExpiryDate,
+    });
+  };
+
+  const onRenewClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+
+    const maxExpiryDate = Timestamp.fromDate(
+      new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
+    );
+
+    updateListingFirestore({
+      listingID,
+      buildingName,
+      expiryDate: maxExpiryDate,
     });
   };
 
@@ -63,33 +79,47 @@ const ListingActionsButtons: React.FC<ListingWithRequired> = ({
   };
 
   return (
-    <DropdownButton
-      id="actions-dropdown-button"
-      title="Actions"
-      as={ButtonGroup}
-      variant="outline-primary"
-    >
-      <Dropdown.Item eventKey="edit" onClick={onEditClick}>
-        Edit
-      </Dropdown.Item>
+    <>
+      {!isEditing && (
+        <DropdownButton
+          id="actions-dropdown-button"
+          title="Actions"
+          as={ButtonGroup}
+          variant="outline-primary"
+        >
+          <Dropdown.Item eventKey="edit" onClick={() => setIsEditing(true)}>
+            Edit
+          </Dropdown.Item>
 
-      <Dropdown.Item eventKey="renew" onClick={onRenewClick}>
-        Renew
-      </Dropdown.Item>
+          <Dropdown.Item eventKey="renew" onClick={onRenewClick}>
+            Renew
+          </Dropdown.Item>
 
-      <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
-        Archive
-      </Dropdown.Item>
+          <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
+            Archive
+          </Dropdown.Item>
 
-      <Dropdown.Divider />
-      <Dropdown.Item
-        className="delete-link"
-        eventKey="delete"
-        onClick={onDeleteClick}
-      >
-        Delete
-      </Dropdown.Item>
-    </DropdownButton>
+          <Dropdown.Divider />
+          <Dropdown.Item
+            className="delete-link"
+            eventKey="delete"
+            onClick={onDeleteClick}
+          >
+            Delete
+          </Dropdown.Item>
+        </DropdownButton>
+      )}
+      {isEditing && (
+        <Stack direction="horizontal" gap={2}>
+          <Button variant="outline-danger" onClick={() => setIsEditing(false)}>
+            Cancel
+          </Button>
+          <Button variant="success" onClick={onSaveChangesClick}>
+            Save Changes
+          </Button>
+        </Stack>
+      )}
+    </>
   );
 };
 

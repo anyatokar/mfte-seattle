@@ -87,7 +87,6 @@ const ManageListingsPage: React.FunctionComponent<
       }}
     >
       <div className="all-pages">
-        <hr className="mt-2 mb-3 break-line-light" />
         <Container fluid className="all-pages">
           <Tab.Container id="sidebar" defaultActiveKey="summary">
             <Row>

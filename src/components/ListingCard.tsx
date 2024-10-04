@@ -5,8 +5,8 @@ import IListing from "../interfaces/IListing";
 
 import Badge from "react-bootstrap/esm/Badge";
 import Card from "react-bootstrap/esm/Card";
-import { Timestamp } from "firebase/firestore";
 import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
+import { useState } from "react";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -51,6 +51,8 @@ const ListingCard: React.FC<ListingWithRequired> = ({
     },
   };
 
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
     <Card>
       <Card.Header>
@@ -68,41 +70,53 @@ const ListingCard: React.FC<ListingWithRequired> = ({
             )}
           </div>
           <ListingActionsButtons
-            listingID={listingID}
-            listingStatus={listingStatus}
-            buildingName={buildingName}
-            url={url}
-            availData={availData}
+            listing={{
+              listingID,
+              listingStatus,
+              buildingName,
+              url,
+              availData,
+            }}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
           />
         </Card.Title>
       </Card.Header>
       <Card.Body>
-        <BuildingDataTable type={tableType.availData} data={availData} />
-        <Card.Text className="mt-3">
-          <strong>Listing URL:</strong>{" "}
-          <a
-            id="addressLink"
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            className="address-phone-link"
-          >
-            {url}
-          </a>
-        </Card.Text>
-        <Card.Text>
-          {expiryDate && (
-            <>
-              {" "}
-              <strong>Listing expires: </strong>
-              {timestampToDate(expiryDate)}
-            </>
-          )}
-        </Card.Text>
+        {!isEditing && (
+          <>
+            <BuildingDataTable
+              type={tableType.availData}
+              data={availData}
+              isEditing={isEditing}
+            />
+            <Card.Text className="mt-3">
+              <strong>URL:</strong>{" "}
+              <a
+                id="addressLink"
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="address-phone-link"
+              >
+                {url}
+              </a>
+            </Card.Text>
+            <Card.Text>
+              {expiryDate && (
+                <>
+                  {" "}
+                  <strong>Expires on: </strong>
+                  {timestampToDate(expiryDate)}
+                </>
+              )}
+            </Card.Text>
+          </>
+        )}
         <Card.Text>
           {dateUpdated && (
             <>
-              <strong>Listing updated: </strong>
+              <strong>Last updated: </strong>
               {timestampToDateAndTime(dateUpdated)}
             </>
           )}
