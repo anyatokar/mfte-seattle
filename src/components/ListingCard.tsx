@@ -7,6 +7,7 @@ import Badge from "react-bootstrap/esm/Badge";
 import Card from "react-bootstrap/esm/Card";
 import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
 import { useState } from "react";
+import EditListingForm from "./EditListingForm";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -112,6 +113,13 @@ const ListingCard: React.FC<ListingWithRequired> = ({
               )}
             </Card.Text>
           </>
+        )}
+        {isEditing && (
+          <EditListingForm
+            url={url}
+            availData={availData}
+            expiryDate={expiryDate}
+          />
         )}
         <Card.Text>
           {dateUpdated && (

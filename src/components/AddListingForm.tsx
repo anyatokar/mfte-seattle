@@ -189,6 +189,8 @@ const AddListingForm: React.FunctionComponent = () => {
                     />
                   </Form.Group>
                 </Form.Group>
+
+                {/* Table */}
                 <Form.Group as={Row} className="mb-3">
                   <Form.Group as={Col} className="mb-3 mb-md-0">
                     <Table bordered hover responsive>
@@ -240,37 +242,37 @@ const AddListingForm: React.FunctionComponent = () => {
                     </Table>
                   </Form.Group>
                 </Form.Group>
+
                 {/* Expiry */}
                 <Form.Group as={Row} className="mb-3">
                   <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
-                    <td>
-                      <Form.Label>
-                        Listing Expiration Date (max 60 days)
-                      </Form.Label>
-                      <Form.Control
-                        type="date"
-                        name={"expiryDate"}
-                        id={"expiryDate"}
-                        onChange={onInputChange}
-                        value={
-                          formFields.expiryDate
-                            ? formFields.expiryDate
-                                ?.toDate()
-                                .toISOString()
-                                .split("T")[0]
-                            : ""
-                        }
-                        max={
-                          new Date(
-                            Date.now() + listingMaxDays * 24 * 60 * 60 * 1000
-                          )
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                      />
-                    </td>
+                    <Form.Label>
+                      Listing Expiration Date (max 60 days)
+                    </Form.Label>
+                    <Form.Control
+                      type="date"
+                      name={"expiryDate"}
+                      id={"expiryDate"}
+                      onChange={onInputChange}
+                      value={
+                        formFields.expiryDate
+                          ? formFields.expiryDate
+                              ?.toDate()
+                              .toISOString()
+                              .split("T")[0]
+                          : ""
+                      }
+                      max={
+                        new Date(
+                          Date.now() + listingMaxDays * 24 * 60 * 60 * 1000
+                        )
+                          .toISOString()
+                          .split("T")[0]
+                      }
+                    />
                   </Form.Group>
                 </Form.Group>
+
                 {/* Message */}
                 <Form.Group className="mb-3">
                   <Form.Label>
