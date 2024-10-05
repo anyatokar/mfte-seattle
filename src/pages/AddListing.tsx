@@ -32,24 +32,10 @@ export type availDataFormType = {
 const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
   const [allBuildings] = useAllBuildings();
 
-  const emptyForm: Partial<IListing> & availDataFormType = {
-    contactName: "",
-    email: "",
-    companyName: "",
-    jobTitle: "",
+  const emptyForm: Partial<IListing> = {
     buildingName: "",
     url: "",
     message: "",
-    microNumAvail: "0",
-    microDateAvail: null,
-    studioNumAvail: "0",
-    studioDateAvail: null,
-    oneBedNumAvail: "0",
-    oneBedDateAvail: null,
-    twoBedNumAvail: "0",
-    twoBedDateAvail: null,
-    threePlusBedNumAvail: "0",
-    threePlusBedDateAvail: null,
   };
 
   function clearFields(): void {
@@ -97,7 +83,8 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    return addListingFirestore(formFields, selectedBuilding?.buildingID)
+
+    return addListingFirestore(formFields, selectedBuilding?.buildingID || "")
       .then(() => {
         console.log("Availability data submitted successfully.");
         clearFields();
@@ -292,7 +279,7 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                                   name={`${unitSize}NumAvail`}
                                   id={`${unitSize}NumAvail`}
                                   onChange={onInputChange}
-                                  value={formFields[`${unitSize}NumAvail`]}
+                                  // value={formFields[`${unitSize}NumAvail`]}
                                 />
                               </td>
 
@@ -303,14 +290,14 @@ const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
                                   name={`${unitSize}DateAvail`}
                                   id={`${unitSize}DateAvail`}
                                   onChange={onInputChange}
-                                  value={
-                                    formFields[`${unitSize}DateAvail`]
-                                      ? formFields[`${unitSize}DateAvail`]
-                                          ?.toDate()
-                                          .toISOString()
-                                          .split("T")[0]
-                                      : ""
-                                  }
+                                  // value={
+                                  //   formFields[`${unitSize}DateAvail`]
+                                  //     ? formFields[`${unitSize}DateAvail`]
+                                  //         ?.toDate()
+                                  //         .toISOString()
+                                  //         .split("T")[0]
+                                  //     : ""
+                                  // }
                                 />
                               </td>
                             </tr>

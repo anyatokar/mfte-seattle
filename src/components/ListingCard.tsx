@@ -58,7 +58,7 @@ const ListingCard: React.FC<ListingWithRequired> = ({
     <Card>
       <Card.Header>
         <Card.Title className="d-flex justify-content-between align-items-center mt-2">
-          <div className="d-flex align-items-center">
+          <div>
             <span>{buildingName}</span>
             {statusBadgeMap[listingStatus] && (
               <Badge
@@ -107,7 +107,7 @@ const ListingCard: React.FC<ListingWithRequired> = ({
               {expiryDate && (
                 <>
                   {" "}
-                  <strong>Expires on: </strong>
+                  <strong>Expires: </strong>
                   {timestampToDate(expiryDate)}
                 </>
               )}
@@ -119,17 +119,15 @@ const ListingCard: React.FC<ListingWithRequired> = ({
             url={url}
             availData={availData}
             expiryDate={expiryDate}
+            listingID={listingID}
           />
         )}
-        <Card.Text>
-          {dateUpdated && (
-            <>
-              <strong>Last updated: </strong>
-              {timestampToDateAndTime(dateUpdated)}
-            </>
-          )}
-        </Card.Text>
       </Card.Body>
+      {dateUpdated && (
+        <Card.Footer>
+          Listing updated: {timestampToDateAndTime(dateUpdated)}
+        </Card.Footer>
+      )}
     </Card>
   );
 };

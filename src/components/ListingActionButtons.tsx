@@ -34,20 +34,6 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
 }) => {
   const { availData, buildingName, listingStatus, url, listingID } = listing;
 
-  const onSaveChangesClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-
-    const maxExpiryDate = Timestamp.fromDate(
-      new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
-    );
-
-    updateListingFirestore({
-      listingID,
-      buildingName,
-      // expiryDate: expiryDate || maxExpiryDate,
-    });
-  };
-
   const onRenewClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
@@ -55,21 +41,16 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
       new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
     );
 
-    updateListingFirestore({
-      listingID,
-      buildingName,
-      expiryDate: maxExpiryDate,
-    });
+    updateListingFirestore({ expiryDate: maxExpiryDate }, listingID);
   };
 
   const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
-    updateListingFirestore({
-      listingID,
-      buildingName,
-      listingStatus: listingStatusEnum.ARCHIVED,
-    });
+    updateListingFirestore(
+      { listingStatus: listingStatusEnum.ARCHIVED },
+      listingID
+    );
   };
 
   const onDeleteClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -110,14 +91,9 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
         </DropdownButton>
       )}
       {isEditing && (
-        <Stack direction="horizontal" gap={2}>
-          <Button variant="outline-danger" onClick={() => setIsEditing(false)}>
-            Cancel
-          </Button>
-          <Button variant="success" onClick={onSaveChangesClick}>
-            Save Changes
-          </Button>
-        </Stack>
+        <Button variant="outline-danger" onClick={() => setIsEditing(false)}>
+          Cancel Edit
+        </Button>
       )}
     </>
   );

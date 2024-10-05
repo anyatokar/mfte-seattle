@@ -11,10 +11,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
-import { availDataFormType } from "../pages/AddListing";
 import { contactUsFormFieldsType } from "../pages/Contact";
-
-import { PartialWithRequired } from "../types/partialWithRequiredType";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
@@ -63,69 +60,43 @@ export async function deleteBuilding(
 }
 
 export async function addListingFirestore(
-  formFields: Partial<IListing> & availDataFormType,
-  buildingID: string | undefined
+  formFields: Partial<IListing>,
+  buildingID: string
 ) {
   const listing: IListing = {
-    contactName: formFields.contactName || "",
-    email: formFields.email || "",
-    companyName: formFields.companyName || "",
-    jobTitle: formFields.jobTitle || "",
     buildingName: formFields.buildingName || "",
     url: formFields.url || "",
-    availData: [
-      {
-        unitSize: "micro",
-        numAvail: parseInt(formFields.microNumAvail),
-        dateAvail: formFields.microDateAvail,
-      },
-      {
-        unitSize: "studio",
-        numAvail: parseInt(formFields.studioNumAvail),
-        dateAvail: formFields.studioDateAvail,
-      },
-      {
-        unitSize: "oneBed",
-        numAvail: parseInt(formFields.oneBedNumAvail),
-        dateAvail: formFields.oneBedDateAvail,
-      },
-      {
-        unitSize: "twoBed",
-        numAvail: parseInt(formFields.twoBedNumAvail),
-        dateAvail: formFields.twoBedDateAvail,
-      },
-      {
-        unitSize: "threePlusBed",
-        numAvail: parseInt(formFields.threePlusBedNumAvail),
-        dateAvail: formFields.threePlusBedDateAvail,
-      },
-    ],
+    availData: formFields.availData || [],
     message: formFields.message || "",
-    buildingID: buildingID || "",
     listingStatus: listingStatusEnum.IN_REVIEW,
+    buildingID: buildingID || "",
     dateCreated: Timestamp.fromDate(new Date()),
     dateUpdated: Timestamp.fromDate(new Date()),
-    expiryDate: Timestamp.fromDate(
-      new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
-    ),
+    expiryDate:
+      formFields.expiryDate ||
+      Timestamp.fromDate(
+        new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
+      ),
     listingID: "",
   };
 
-  const listingDocRef = await addDoc(collection(db, "listings"), listing);
-  await updateDoc(listingDocRef, { listingID: listingDocRef.id });
+  // Create a new document reference with an auto-generated ID
+  const listingDocRef = doc(collection(db, "listings"));
+  // Set the document and include the listingID field
+  await setDoc(listingDocRef, {
+    ...listing,
+    listingID: listingDocRef.id, // Use the generated ID
+  });
 }
 
 export async function updateListingFirestore(
-  updatedListingData: PartialWithRequired<
-    IListing,
-    "listingID" | "buildingName"
-  >
+  fieldsToUpdate: Partial<IListing>,
+  listingID: string
 ) {
-  const listingDocRef = doc(db, "listings", updatedListingData.listingID);
-
+  const listingDocRef = doc(db, "listings", listingID);
   await updateDoc(listingDocRef, {
-    ...updatedListingData,
-    dateUpdated: new Date(),
+    ...fieldsToUpdate,
+    dateUpdated: Timestamp.fromDate(new Date()),
   });
 }
 

@@ -1,34 +1,35 @@
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import { listingMaxDays } from "../config/config";
+import { PartialWithRequired } from "../types/partialWithRequiredType";
+import { updateListingFirestore } from "../utils/firestoreUtils";
+
 import IListing from "../interfaces/IListing";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
-import { PartialWithRequired } from "../types/partialWithRequiredType";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
-  "availData" | "url" | "expiryDate"
+  "availData" | "url" | "expiryDate" | "listingID"
 >;
 
 const EditListingForm: React.FC<ListingWithRequired> = ({
   availData,
   url,
   expiryDate,
+  listingID,
 }) => {
-  const originalFormFields = {
+  const originalFormFields: Partial<ListingWithRequired> = {
     availData: availData.map((availDataForUnitSize) => ({
       unitSize: availDataForUnitSize.unitSize,
-      numAvail: availDataForUnitSize.numAvail.toString(),
-      dateAvail:
-        availDataForUnitSize?.dateAvail?.toDate().toISOString().split("T")[0] ||
-        "",
+      numAvail: availDataForUnitSize.numAvail,
+      dateAvail: availDataForUnitSize?.dateAvail,
     })),
-    url: url || "",
-    expiryDate: expiryDate?.toDate().toISOString().split("T")[0] || "",
+    url: url,
+    expiryDate: expiryDate,
   };
 
   console.log(availData);
@@ -45,7 +46,7 @@ const EditListingForm: React.FC<ListingWithRequired> = ({
       }));
     } else if (indexInAvailData !== undefined) {
       setFormFields((prev) => {
-        const newAvailData = [...prev.availData];
+        const newAvailData = [...(prev.availData || [])];
         newAvailData[indexInAvailData] = {
           ...newAvailData[indexInAvailData],
           [name]: value,
@@ -62,7 +63,8 @@ const EditListingForm: React.FC<ListingWithRequired> = ({
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    // Handle form submission logic here
+
+    updateListingFirestore(formFields, listingID);
     console.log("Form submitted:", formFields);
   };
 
@@ -88,7 +90,7 @@ const EditListingForm: React.FC<ListingWithRequired> = ({
               </tr>
             </thead>
             <tbody>
-              {formFields.availData.map(
+              {formFields.availData?.map(
                 (availDataForUnitSize, indexInAvailData) => (
                   <tr key={availDataForUnitSize.unitSize}>
                     <td>{unitSizeLabels[availDataForUnitSize.unitSize]}</td>
@@ -107,7 +109,12 @@ const EditListingForm: React.FC<ListingWithRequired> = ({
                       <Form.Control
                         type="date"
                         name="dateAvail"
-                        value={availDataForUnitSize.dateAvail}
+                        value={
+                          availDataForUnitSize.dateAvail
+                            ?.toDate()
+                            .toISOString()
+                            .split("T")[0] || ""
+                        }
                         onChange={(event) =>
                           handleInputChange(event, indexInAvailData)
                         }
@@ -135,14 +142,16 @@ const EditListingForm: React.FC<ListingWithRequired> = ({
         </Form.Group>
       </Form.Group>
 
-      {/* Expiry Date */}
-      <Form.Group as={Row} className="mb-3">
+      {/* Expiry Date and Submit Button */}
+      <Form.Group as={Row} className="mb-1">
         <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
           <Form.Label>Listing Expiration Date (max 60 days)</Form.Label>
           <Form.Control
             type="date"
             name="expiryDate"
-            value={formFields.expiryDate}
+            value={
+              formFields.expiryDate?.toDate().toISOString().split("T")[0] || ""
+            }
             max={
               new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
                 .toISOString()
@@ -150,12 +159,17 @@ const EditListingForm: React.FC<ListingWithRequired> = ({
             }
             onChange={handleInputChange}
           />
+
+        </Form.Group>
+        <Form.Group
+          as={Col}
+          className="d-flex justify-content-start justify-content-md-end align-items-end"
+        >
+          <Button variant="success" type="submit">
+            Save Changes
+          </Button>
         </Form.Group>
       </Form.Group>
-
-      <Button type="submit" className="diy-solid-info-button">
-        Submit
-      </Button>
     </Form>
   );
 };

@@ -269,6 +269,11 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     value={noteToAdd}
                     onChange={handleChange}
                   />
+                  {formattedTimestamp && (
+                    <Form.Text>
+                      Updated: {timestampToDateAndTime(formattedTimestamp)}
+                    </Form.Text>
+                  )}
                 </Form.Group>
                 <Button
                   disabled={!isNoteDifferent}
@@ -280,11 +285,6 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                 >
                   Save note
                 </Button>
-                <div>
-                  {formattedTimestamp && (
-                    <p>{`Last saved: ${formattedTimestamp}`}</p>
-                  )}
-                </div>
               </Form>
             </>
           </ListGroup.Item>

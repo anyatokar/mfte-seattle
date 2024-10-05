@@ -31,10 +31,6 @@ const AddListingForm: React.FunctionComponent = () => {
   const [allBuildings] = useAllBuildings();
 
   const emptyForm: Partial<IListing> & availDataFormType = {
-    contactName: "",
-    email: "",
-    companyName: "",
-    jobTitle: "",
     buildingName: "",
     url: "",
     message: "",
@@ -96,13 +92,13 @@ const AddListingForm: React.FunctionComponent = () => {
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    return addListingFirestore(formFields, selectedBuilding?.buildingID)
+    return addListingFirestore(formFields, selectedBuilding?.buildingID || "")
       .then(() => {
         console.log("Availability data submitted successfully.");
         clearFields();
         setIsFormVisible(false);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error("Error sending availability data: ", error);
       });
   };
