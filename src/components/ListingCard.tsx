@@ -21,17 +21,30 @@ type ListingWithRequired = PartialWithRequired<
   | "listingID"
   | "expiryDate"
   | "dateUpdated"
+  | "buildingID"
 >;
 
-const ListingCard: React.FC<ListingWithRequired> = ({
-  availData,
-  buildingName,
-  listingStatus,
-  url,
-  listingID,
-  expiryDate,
-  dateUpdated,
+type ListingCardProps = {
+  listing: ListingWithRequired;
+  isEditing: boolean;
+  setIsEditing: any;
+};
+
+const ListingCard: React.FC<ListingCardProps> = ({
+  listing,
+  isEditing,
+  setIsEditing,
 }) => {
+  const {
+    availData,
+    buildingName,
+    listingStatus,
+    url,
+    listingID,
+    expiryDate,
+    dateUpdated,
+    buildingID,
+  } = listing;
   const statusBadgeMap: {
     [key in listingStatusEnum]: { label: string; bg: string };
   } = {
@@ -52,7 +65,13 @@ const ListingCard: React.FC<ListingWithRequired> = ({
     },
   };
 
-  const [isEditing, setIsEditing] = useState(false);
+  // const listingForForm = {
+  //   availData: availData,
+  //   url: url,
+  //   expiryDate: expiryDate,
+  //   listingID: "",
+  //   buildingID: "",
+  // };
 
   return (
     <Card>
@@ -116,10 +135,9 @@ const ListingCard: React.FC<ListingWithRequired> = ({
         )}
         {isEditing && (
           <EditListingForm
-            url={url}
-            availData={availData}
-            expiryDate={expiryDate}
-            listingID={listingID}
+            listing={{ url, availData, expiryDate, listingID, buildingID }}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
           />
         )}
       </Card.Body>

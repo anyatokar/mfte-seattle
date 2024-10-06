@@ -9,6 +9,7 @@ import {
   updateDoc,
   addDoc,
   Timestamp,
+  arrayUnion,
 } from "firebase/firestore";
 
 import { contactUsFormFieldsType } from "../pages/Contact";
@@ -61,7 +62,8 @@ export async function deleteBuilding(
 
 export async function addListingFirestore(
   formFields: Partial<IListing>,
-  buildingID: string
+  buildingID: string,
+  uid: string
 ) {
   const listing: IListing = {
     buildingName: formFields.buildingName || "",
@@ -85,7 +87,13 @@ export async function addListingFirestore(
   // Set the document and include the listingID field
   await setDoc(listingDocRef, {
     ...listing,
-    listingID: listingDocRef.id, // Use the generated ID
+    listingID: listingDocRef.id,
+  });
+
+  // Add the new listingID to the rep's listingIDs array
+  const companyRepRef = doc(db, "companyReps", uid);
+  await updateDoc(companyRepRef, {
+    listingIDs: arrayUnion(listingDocRef.id),
   });
 }
 
@@ -101,17 +109,24 @@ export async function updateListingFirestore(
 }
 
 export async function deleteListingFirestore(
-  buildingName: string,
-  listingID: string
+  listingID: string,
+  buildingName: string
 ) {
-  const listingDocRef = doc(db, "listing", listingID);
+  const listingDocRef = doc(db, "listings", listingID);
   await deleteDoc(listingDocRef)
     .then(() => {
-      console.log(`Listing for ${buildingName} deleted from user list.`);
+      console.log(
+        `Listing for ${buildingName} deleted. ListingID was ${listingID}`
+      );
     })
     .catch((error: any) => {
-      console.error(`Error deleting listing for" ${buildingName}:`, error);
+      console.error(
+        `Error deleting listing for" ${buildingName}, listingID ${listingID}:`,
+        error
+      );
     });
+
+  // TODO: need to remove from listingIDs array as well.
 }
 
 export async function getRepsListingIDsFirestore(

@@ -1,4 +1,4 @@
-import { Profiler, useEffect, useState } from "react";
+import { Profiler, useEffect, useMemo, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
@@ -6,7 +6,7 @@ import { listingStatusEnum } from "../types/enumTypes";
 import { useAllListings } from "../hooks/useListings";
 import { getRepsListingIDsFirestore } from "../utils/firestoreUtils";
 
-import AddListingForm from "../components/AddListingForm";
+import AddListingForm from "../components/AddListingWrapper";
 import ListingCard from "../components/ListingCard";
 
 import IPage from "../interfaces/IPage";
@@ -18,6 +18,8 @@ import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/esm/Spinner";
 import Tab from "react-bootstrap/esm/Tab";
 import Nav from "react-bootstrap/esm/Nav";
+import { useAllBuildings } from "../hooks/useAllBuildings";
+import AddListingWrapper from "../components/AddListingWrapper";
 
 const ManageListingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
@@ -25,8 +27,21 @@ const ManageListingsPage: React.FunctionComponent<
   const { currentUser } = useAuth();
   const [listingIDs, setListingIDs] = useState<string[] | null>(null);
   const [repsListings, isLoadingRepsListings] = useAllListings(listingIDs);
+  const defaultActiveKey: string = "summary";
+  const [activeTab, setActiveTab] = useState<string>(defaultActiveKey);
 
-  // Fetch listingIDs when the component mounts
+  const isAddListingTabActive = activeTab === "addListing";
+  let [buildingsAlreadyFetched, setBuildingsAlreadyFetched] = useState(false);
+  const [isEditing, setIsEditing] = useState(isAddListingTabActive);
+
+  const [allBuildings, isLoadingAllBuildings] = useAllBuildings(
+    isAddListingTabActive && !buildingsAlreadyFetched
+  );
+
+  useEffect(() => {
+    if (allBuildings.length > 0) setBuildingsAlreadyFetched(true);
+  }, [allBuildings]);
+
   useEffect(() => {
     const fetchListingIDs = async () => {
       if (!currentUser) return;
@@ -88,7 +103,14 @@ const ManageListingsPage: React.FunctionComponent<
     >
       <div className="all-pages">
         <Container fluid className="all-pages">
-          <Tab.Container id="sidebar" defaultActiveKey="summary">
+          <Tab.Container
+            id="sidebar"
+            activeKey={activeTab}
+            onSelect={(key) => {
+              setActiveTab(key as string);
+              setIsEditing(key === "addListing");
+            }}
+          >
             <Row>
               <Col sm={12} lg={2}>
                 <Nav variant="pills" className="flex-column">
@@ -126,7 +148,11 @@ const ManageListingsPage: React.FunctionComponent<
                               {summaryTableRows.map((tableRow) => (
                                 <tr key={tableRow.listingStatus}>
                                   <td>{tableRow.label}</td>
-                                  <td>{getCount(tableRow.listingStatus)}</td>
+                                  <td>
+                                    {isLoading
+                                      ? "--"
+                                      : getCount(tableRow.listingStatus)}
+                                  </td>
                                 </tr>
                               ))}
                             </tbody>
@@ -148,26 +174,32 @@ const ManageListingsPage: React.FunctionComponent<
                           )}
                           {!isLoading &&
                             repsListings.length > 0 &&
-                            repsListings.map((listing) => (
-                              <Col className="pb-2" key={listing.listingID}>
-                                <ListingCard
-                                  availData={listing.availData}
-                                  buildingName={listing.buildingName}
-                                  listingStatus={listing.listingStatus}
-                                  url={listing.url}
-                                  listingID={listing.listingID}
-                                  expiryDate={listing.expiryDate}
-                                  dateUpdated={listing.dateUpdated}
-                                />
-                              </Col>
-                            ))}
+                            repsListings
+                              .sort(
+                                (a, b) =>
+                                  new Date(b.dateUpdated?.toDate()).getTime() -
+                                  new Date(a.dateUpdated?.toDate()).getTime()
+                              )
+                              .map((listing) => (
+                                <Col className="pb-2" key={listing.listingID}>
+                                  <ListingCard
+                                    listing={listing}
+                                    isEditing={isEditing}
+                                    setIsEditing={setIsEditing}
+                                  />
+                                </Col>
+                              ))}
                         </Col>
                       </Row>
                     </Container>
                   </Tab.Pane>
 
                   <Tab.Pane eventKey="addListing">
-                    <AddListingForm />
+                    <AddListingWrapper
+                      allBuildings={allBuildings}
+                      isEditing={isEditing}
+                      setIsEditing={setIsEditing}
+                    />
                   </Tab.Pane>
                 </Tab.Content>
               </Col>
