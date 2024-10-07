@@ -10,13 +10,14 @@ import IBuilding from "../interfaces/IBuilding";
 type AddListingWrapperProps = {
   allBuildings: IBuilding[];
   isEditing: boolean;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditingListingID: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const AddListingForm: React.FunctionComponent<AddListingWrapperProps> = ({
   allBuildings,
   isEditing,
-  setIsEditing,
+  setEditingListingID,
+  // setIsEditing,
 }) => {
   const emptyListing = {
     availData: [], // make sure it's a valid array for availDataType
@@ -26,11 +27,14 @@ const AddListingForm: React.FunctionComponent<AddListingWrapperProps> = ({
     buildingID: "",
   };
 
+  const [wasNewListingSubmitted, setWasNewListingSubmitted] =
+    useState<boolean>(false);
+
   return (
     <Container fluid>
       <Row className="justify-content-center">
         <Col>
-          {isEditing ? (
+          {isEditing && !wasNewListingSubmitted ? (
             <>
               <p>Please submit one form per building.</p>
               <p>Fields marked with * are required.</p>
@@ -38,8 +42,8 @@ const AddListingForm: React.FunctionComponent<AddListingWrapperProps> = ({
               <EditListingForm
                 allBuildings={allBuildings}
                 listing={emptyListing}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
+                setEditingListingID={setEditingListingID}
+                setWasNewListingSubmitted={setWasNewListingSubmitted}
               />
             </>
           ) : (
@@ -50,7 +54,7 @@ const AddListingForm: React.FunctionComponent<AddListingWrapperProps> = ({
               </p>
               <Button
                 className="diy-solid-info-button"
-                onClick={() => setIsEditing(true)}
+                onClick={() => setWasNewListingSubmitted(false)}
               >
                 Add Another Building
               </Button>

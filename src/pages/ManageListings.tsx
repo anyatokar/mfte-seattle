@@ -1,4 +1,4 @@
-import { Profiler, useEffect, useMemo, useState } from "react";
+import { Profiler, useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
@@ -6,9 +6,8 @@ import { listingStatusEnum } from "../types/enumTypes";
 import { useAllListings } from "../hooks/useListings";
 import { getRepsListingIDsFirestore } from "../utils/firestoreUtils";
 
-import AddListingForm from "../components/AddListingWrapper";
+import AddListingWrapper from "../components/AddListingWrapper";
 import ListingCard from "../components/ListingCard";
-
 import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
@@ -19,7 +18,6 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import Tab from "react-bootstrap/esm/Tab";
 import Nav from "react-bootstrap/esm/Nav";
 import { useAllBuildings } from "../hooks/useAllBuildings";
-import AddListingWrapper from "../components/AddListingWrapper";
 
 const ManageListingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
@@ -32,7 +30,9 @@ const ManageListingsPage: React.FunctionComponent<
 
   const isAddListingTabActive = activeTab === "addListing";
   let [buildingsAlreadyFetched, setBuildingsAlreadyFetched] = useState(false);
-  const [isEditing, setIsEditing] = useState(isAddListingTabActive);
+
+  // Use a state to track which listingID is currently being edited
+  const [editingListingID, setEditingListingID] = useState<string | null>(null);
 
   const [allBuildings, isLoadingAllBuildings] = useAllBuildings(
     isAddListingTabActive && !buildingsAlreadyFetched
@@ -108,7 +108,7 @@ const ManageListingsPage: React.FunctionComponent<
             activeKey={activeTab}
             onSelect={(key) => {
               setActiveTab(key as string);
-              setIsEditing(key === "addListing");
+              setEditingListingID(null); // Reset editing state when changing tabs
             }}
           >
             <Row>
@@ -184,8 +184,10 @@ const ManageListingsPage: React.FunctionComponent<
                                 <Col className="pb-2" key={listing.listingID}>
                                   <ListingCard
                                     listing={listing}
-                                    isEditing={isEditing}
-                                    setIsEditing={setIsEditing}
+                                    isEditing={
+                                      editingListingID === listing.listingID
+                                    }
+                                    setEditingListingID={setEditingListingID}
                                   />
                                 </Col>
                               ))}
@@ -197,8 +199,8 @@ const ManageListingsPage: React.FunctionComponent<
                   <Tab.Pane eventKey="addListing">
                     <AddListingWrapper
                       allBuildings={allBuildings}
-                      isEditing={isEditing}
-                      setIsEditing={setIsEditing}
+                      isEditing={isAddListingTabActive}
+                      setEditingListingID={setEditingListingID}
                     />
                   </Tab.Pane>
                 </Tab.Content>

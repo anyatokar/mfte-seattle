@@ -14,9 +14,8 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 import IBuilding from "../interfaces/IBuilding";
-import { useAllBuildings } from "../hooks/useAllBuildings";
+
 import { useAuth } from "../contexts/AuthContext";
-import { useAllListings } from "../hooks/useListings";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -25,16 +24,16 @@ type ListingWithRequired = PartialWithRequired<
 
 type EditListingFormProps = {
   listing: ListingWithRequired;
-  isEditing: boolean;
-  setIsEditing: any;
+  setEditingListingID: React.Dispatch<React.SetStateAction<string | null>>;
   allBuildings?: IBuilding[];
+  setWasNewListingSubmitted?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
   listing,
   allBuildings = [],
-  isEditing,
-  setIsEditing,
+  setEditingListingID,
+  setWasNewListingSubmitted,
 }) => {
   const { availData, url, expiryDate, listingID, buildingID } = listing;
 
@@ -139,7 +138,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       await updateListingFirestore(formFields, listingID);
     }
 
-    setIsEditing(false);
+    setEditingListingID(null);
+    // Only passed for new listing form.
+    if (setWasNewListingSubmitted) setWasNewListingSubmitted(true);
   };
 
   return (

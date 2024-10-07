@@ -24,13 +24,13 @@ type ListingWithRequired = PartialWithRequired<
 type ListingActionsButtonsPropsType = {
   listing: ListingWithRequired;
   isEditing: boolean;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditingListingID: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   listing,
   isEditing,
-  setIsEditing,
+  setEditingListingID,
 }) => {
   const { availData, buildingName, listingStatus, url, listingID } = listing;
 
@@ -68,7 +68,10 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
           as={ButtonGroup}
           variant="outline-primary"
         >
-          <Dropdown.Item eventKey="edit" onClick={() => setIsEditing(true)}>
+          <Dropdown.Item
+            eventKey="edit"
+            onClick={() => setEditingListingID(listingID)}
+          >
             Edit
           </Dropdown.Item>
 
@@ -91,7 +94,10 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
         </DropdownButton>
       )}
       {isEditing && (
-        <Button variant="outline-danger" onClick={() => setIsEditing(false)}>
+        <Button
+          variant="outline-danger"
+          onClick={() => setEditingListingID(null)}
+        >
           Cancel Edit
         </Button>
       )}

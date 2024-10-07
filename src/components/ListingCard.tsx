@@ -6,7 +6,6 @@ import IListing from "../interfaces/IListing";
 import Badge from "react-bootstrap/esm/Badge";
 import Card from "react-bootstrap/esm/Card";
 import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
-import { useState } from "react";
 import EditListingForm from "./EditListingForm";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
@@ -27,13 +26,13 @@ type ListingWithRequired = PartialWithRequired<
 type ListingCardProps = {
   listing: ListingWithRequired;
   isEditing: boolean;
-  setIsEditing: any;
+  setEditingListingID: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({
   listing,
   isEditing,
-  setIsEditing,
+  setEditingListingID,
 }) => {
   const {
     availData,
@@ -45,15 +44,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
     dateUpdated,
     buildingID,
   } = listing;
+
   const statusBadgeMap: {
     [key in listingStatusEnum]: { label: string; bg: string };
   } = {
     [listingStatusEnum.ACTIVE]: { label: "Active", bg: "success" },
     [listingStatusEnum.IN_REVIEW]: { label: "In Review", bg: "info" },
-    [listingStatusEnum.ARCHIVED]: {
-      label: "Archived",
-      bg: "secondary",
-    },
+    [listingStatusEnum.ARCHIVED]: { label: "Archived", bg: "secondary" },
     [listingStatusEnum.EXPIRED]: { label: "Expired", bg: "danger" },
     [listingStatusEnum.EXPIRING_SOON]: {
       label: "Expiring Soon",
@@ -64,14 +61,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
       bg: "danger",
     },
   };
-
-  // const listingForForm = {
-  //   availData: availData,
-  //   url: url,
-  //   expiryDate: expiryDate,
-  //   listingID: "",
-  //   buildingID: "",
-  // };
 
   return (
     <Card>
@@ -90,20 +79,15 @@ const ListingCard: React.FC<ListingCardProps> = ({
             )}
           </div>
           <ListingActionsButtons
-            listing={{
-              listingID,
-              listingStatus,
-              buildingName,
-              url,
-              availData,
-            }}
+            listing={{ listingID, listingStatus, buildingName, url, availData }}
             isEditing={isEditing}
-            setIsEditing={setIsEditing}
+            setEditingListingID={setEditingListingID}
           />
         </Card.Title>
       </Card.Header>
+
       <Card.Body>
-        {!isEditing && (
+        {!isEditing ? (
           <>
             <BuildingDataTable
               type={tableType.availData}
@@ -122,25 +106,20 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 {url}
               </a>
             </Card.Text>
-            <Card.Text>
-              {expiryDate && (
-                <>
-                  {" "}
-                  <strong>Expires: </strong>
-                  {timestampToDate(expiryDate)}
-                </>
-              )}
-            </Card.Text>
+            {expiryDate && (
+              <Card.Text>
+                <strong>Expires:</strong> {timestampToDate(expiryDate)}
+              </Card.Text>
+            )}
           </>
-        )}
-        {isEditing && (
+        ) : (
           <EditListingForm
             listing={{ url, availData, expiryDate, listingID, buildingID }}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
+            setEditingListingID={setEditingListingID}
           />
         )}
       </Card.Body>
+
       {dateUpdated && (
         <Card.Footer>
           Listing updated: {timestampToDateAndTime(dateUpdated)}
