@@ -42,10 +42,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   const onRenewClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
-    updateListingFirestore(
-      { expiryDate: getMaxExpiryDate()},
-      listingID
-    );
+    updateListingFirestore({ expiryDate: getMaxExpiryDate() }, listingID);
   };
 
   const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -53,6 +50,15 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
 
     updateListingFirestore(
       { listingStatus: listingStatusEnum.ARCHIVED },
+      listingID
+    );
+  };
+
+  const onUnarchiveClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+
+    updateListingFirestore(
+      { listingStatus: listingStatusEnum.IN_REVIEW },
       listingID
     );
   };
@@ -83,11 +89,18 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
             Renew
           </Dropdown.Item>
 
-          <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
-            Archive
-          </Dropdown.Item>
-
           <Dropdown.Divider />
+          {listing.listingStatus === listingStatusEnum.ARCHIVED && (
+            <Dropdown.Item eventKey="unarchive" onClick={onUnarchiveClick}>
+              Move To Current
+            </Dropdown.Item>
+          )}
+          {listing.listingStatus !== listingStatusEnum.ARCHIVED && (
+            <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
+              Archive
+            </Dropdown.Item>
+          )}
+
           <Dropdown.Item
             className="delete-link"
             eventKey="delete"
