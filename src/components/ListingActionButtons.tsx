@@ -15,6 +15,7 @@ import Button from "react-bootstrap/esm/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/esm/Dropdown";
 import DropdownButton from "react-bootstrap/esm/DropdownButton";
+import { getMaxExpiryDate } from "../utils/generalUtils";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -40,6 +41,11 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
 
   const onRenewClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
+
+    updateListingFirestore(
+      { expiryDate: getMaxExpiryDate()},
+      listingID
+    );
   };
 
   const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {
