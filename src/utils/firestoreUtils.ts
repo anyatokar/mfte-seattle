@@ -19,6 +19,7 @@ import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 import { ISignupAuthData } from "../contexts/AuthContext";
 import { listingStatusEnum } from "../types/enumTypes";
+import { getMaxExpiryDate } from "./generalUtils";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -75,11 +76,7 @@ export async function addListingFirestore(
     buildingID: buildingID || "",
     dateCreated: Timestamp.fromDate(new Date()),
     dateUpdated: Timestamp.fromDate(new Date()),
-    expiryDate:
-      formFields.expiryDate ||
-      Timestamp.fromDate(
-        new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
-      ),
+    expiryDate: formFields.expiryDate || getMaxExpiryDate(),
     listingID: "",
   };
 
@@ -106,13 +103,14 @@ export async function updateListingFirestore(
   await updateDoc(listingDocRef, {
     ...fieldsToUpdate,
     dateUpdated: Timestamp.fromDate(new Date()),
+    expiryDate: fieldsToUpdate.expiryDate || getMaxExpiryDate(),
   });
 }
 
 export async function deleteListingFirestore(
   listingID: string,
-  buildingName: string, 
-  uid
+  buildingName: string,
+  uid: string
 ) {
   const listingDocRef = doc(db, "listingsTEST", listingID);
   await deleteDoc(listingDocRef)
@@ -120,10 +118,7 @@ export async function deleteListingFirestore(
       console.log(
         `Listing for ${buildingName} deleted from Listings. ListingID was ${listingID}`
       );
-
-
-     
-      deleteListingFromListingIDs(uid, listingID)
+      deleteListingFromListingIDs(uid, listingID);
     })
     .catch((error: any) => {
       console.error(
@@ -136,19 +131,17 @@ export async function deleteListingFirestore(
 async function deleteListingFromListingIDs(uid: string, listingID: string) {
   const companyRepDocRef = doc(db, "companyReps", uid);
   await updateDoc(companyRepDocRef, {
-    listingIDs: arrayRemove(listingID)
+    listingIDs: arrayRemove(listingID),
   })
-  .then(() => {
-    console.log(
-      `ListingID ${listingID} removed from user data`
-    );
-  })
-  .catch((error: any) => {
-    console.error(
-      `Error deleting listing with ID ${listingID} from user data:`,
-      error
-    );
-  });
+    .then(() => {
+      console.log(`ListingID ${listingID} removed from user data`);
+    })
+    .catch((error: any) => {
+      console.error(
+        `Error deleting listing with ID ${listingID} from user data:`,
+        error
+      );
+    });
 }
 
 export async function getRepsListingIDsFirestore(

@@ -5,7 +5,7 @@ import IListing from "../interfaces/IListing";
 
 import Badge from "react-bootstrap/esm/Badge";
 import Card from "react-bootstrap/esm/Card";
-import { timestampToDate, timestampToDateAndTime } from "../utils/generalUtils";
+import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
 import EditListingForm from "./EditListingForm";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
@@ -108,7 +108,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             </Card.Text>
             {expiryDate && (
               <Card.Text>
-                <strong>Expires:</strong> {timestampToDate(expiryDate)}
+                <strong>Expires:</strong> {formatDate(expiryDate)}
               </Card.Text>
             )}
           </>

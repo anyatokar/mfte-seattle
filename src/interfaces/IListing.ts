@@ -11,7 +11,8 @@ export type unitSizeType =
 export type availDataType = {
   unitSize: unitSizeType;
   numAvail: number;
-  dateAvail: Timestamp | null;
+  /** This is a string because it is always a date in Pacific Time, no matter where the user is located. Think of it as move in date */
+  dateAvail: string;
 };
 
 export default interface IListing {
@@ -25,6 +26,6 @@ export default interface IListing {
   buildingID: string;
   dateCreated: Timestamp;
   dateUpdated: Timestamp;
-  /** Null for clearing of form */
-  expiryDate: Timestamp | null;
+  /** This is a string because it is always a date in Pacific Time, no matter where the user is located. Think of it as move in date */
+  expiryDate: string;
 }

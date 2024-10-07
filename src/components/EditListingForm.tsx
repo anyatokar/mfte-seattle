@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Timestamp } from "firebase/firestore";
-import { listingMaxDays } from "../config/config";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import {
   addListingFirestore,
@@ -16,6 +14,7 @@ import Table from "react-bootstrap/Table";
 import IBuilding from "../interfaces/IBuilding";
 
 import { useAuth } from "../contexts/AuthContext";
+import { getMaxExpiryDate } from "../utils/generalUtils";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -92,7 +91,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   // If this is a new listing, creates blanks for availData
   if (availData.length === 0) {
     for (let unitSize of unitSizeFields) {
-      const blankRow = { unitSize: unitSize, numAvail: 0, dateAvail: null };
+      const blankRow = { unitSize: unitSize, numAvail: 0, dateAvail: "" };
       availData.push(blankRow);
     }
   }
@@ -100,21 +99,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   const handleInputChange = (event: any, indexInAvailData?: number) => {
     const { name, value } = event.target;
 
-    let processedValue: string | Timestamp | null;
-
-    if (name === "dateAvail" || name === "expiryDate") {
-      processedValue = value ? Timestamp.fromDate(new Date(value)) : null;
-    } else {
-      processedValue = value;
-    }
-
     // updating the availData object
     if (indexInAvailData !== undefined) {
       setFormFields((prev) => {
         const newAvailData = [...(prev.availData || [])];
         newAvailData[indexInAvailData] = {
           ...newAvailData[indexInAvailData],
-          [name]: processedValue,
+          [name]: value,
         };
         return { ...prev, availData: newAvailData };
       });
@@ -122,7 +113,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       // updating the rest, expiryDate, URL, etc.
       setFormFields((prev) => ({
         ...prev,
-        [name]: processedValue,
+        [name]: value,
       }));
     }
   };
@@ -223,14 +214,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       <Form.Control
                         type="date"
                         name="dateAvail"
-                        value={
-                          availDataForUnitSize.dateAvail instanceof Timestamp
-                            ? availDataForUnitSize.dateAvail
-                                .toDate()
-                                .toISOString()
-                                .split("T")[0]
-                            : ""
-                        }
+                        value={availDataForUnitSize.dateAvail || ""}
                         onChange={(event) =>
                           handleInputChange(event, indexInAvailData)
                         }
@@ -265,21 +249,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           <Form.Control
             type="date"
             name="expiryDate"
-            value={
-              formFields.expiryDate?.toDate().toISOString().split("T")[0] || ""
-            }
-            max={
-              new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
-                .toISOString()
-                .split("T")[0]
-            }
+            value={formFields.expiryDate || ""}
+            max={getMaxExpiryDate()}
             onChange={handleInputChange}
           />
         </Form.Group>
       </Form.Group>
 
       {/* Message (only for new listing) */}
-
       {!listingID && (
         <Form.Group as={Row} className="mb-3">
           <Form.Group as={Col} className="mb-0 mb-md-0">

@@ -4,6 +4,7 @@ import {
 } from "../utils/firestoreUtils";
 import { Timestamp } from "firebase/firestore";
 import { listingMaxDays } from "../config/config";
+import { useAuth } from "../contexts/AuthContext";
 
 import IListing from "../interfaces/IListing";
 
@@ -14,11 +15,10 @@ import Button from "react-bootstrap/esm/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/esm/Dropdown";
 import DropdownButton from "react-bootstrap/esm/DropdownButton";
-import Stack from "react-bootstrap/esm/Stack";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
-  "availData" | "buildingName" | "listingStatus" | "url" | "listingID"
+  "buildingName" | "listingID"
 >;
 
 type ListingActionsButtonsPropsType = {
@@ -32,16 +32,14 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   isEditing,
   setEditingListingID,
 }) => {
-  const { availData, buildingName, listingStatus, url, listingID } = listing;
+  const { currentUser } = useAuth();
+
+  if (!currentUser) return;
+
+  const { buildingName, listingID } = listing;
 
   const onRenewClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-
-    const maxExpiryDate = Timestamp.fromDate(
-      new Date(Date.now() + listingMaxDays * 24 * 60 * 60 * 1000)
-    );
-
-    updateListingFirestore({ expiryDate: maxExpiryDate }, listingID);
   };
 
   const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,7 +54,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   const onDeleteClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
-    deleteListingFirestore(listingID, buildingName);
+    deleteListingFirestore(listingID, buildingName, currentUser.uid);
   };
 
   return (

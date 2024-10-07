@@ -3,6 +3,7 @@ import { tableType } from "../types/enumTypes";
 import { amiPercentageType, amiDataType } from "../interfaces/IBuilding";
 import { availDataType } from "../interfaces/IListing";
 import Table from "react-bootstrap/Table";
+import { formatDate } from "../utils/generalUtils";
 
 interface AmiDataProps {
   type: tableType.amiData;
@@ -78,9 +79,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                 <tr key={unitSize}>
                   <td>{unitLabels[unitSize]}</td>
                   <td>{numAvail}</td>
-                  <td>
-                    {dateAvail ? dateAvail.toDate().toLocaleDateString() : "--"}
-                  </td>
+                  <td>{dateAvail ? formatDate(dateAvail) : "--"}</td>
                 </tr>
               ) : null;
             })}

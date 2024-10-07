@@ -17,12 +17,11 @@ const AddListingForm: React.FunctionComponent<AddListingWrapperProps> = ({
   allBuildings,
   isEditing,
   setEditingListingID,
-  // setIsEditing,
 }) => {
   const emptyListing = {
-    availData: [], // make sure it's a valid array for availDataType
+    availData: [],
     url: "",
-    expiryDate: null,
+    expiryDate: "",
     listingID: "",
     buildingID: "",
   };
