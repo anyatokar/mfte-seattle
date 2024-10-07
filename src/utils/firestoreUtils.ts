@@ -10,6 +10,7 @@ import {
   addDoc,
   Timestamp,
   arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 
 import { contactUsFormFieldsType } from "../pages/Contact";
@@ -110,23 +111,44 @@ export async function updateListingFirestore(
 
 export async function deleteListingFirestore(
   listingID: string,
-  buildingName: string
+  buildingName: string, 
+  uid
 ) {
   const listingDocRef = doc(db, "listingsTEST", listingID);
   await deleteDoc(listingDocRef)
     .then(() => {
       console.log(
-        `Listing for ${buildingName} deleted. ListingID was ${listingID}`
+        `Listing for ${buildingName} deleted from Listings. ListingID was ${listingID}`
       );
+
+
+     
+      deleteListingFromListingIDs(uid, listingID)
     })
     .catch((error: any) => {
       console.error(
-        `Error deleting listing for" ${buildingName}, listingID ${listingID}:`,
+        `Error deleting listing for ${buildingName}, listingID ${listingID}:`,
         error
       );
     });
+}
 
-  // TODO: need to remove from listingIDs array as well.
+async function deleteListingFromListingIDs(uid: string, listingID: string) {
+  const companyRepDocRef = doc(db, "companyReps", uid);
+  await updateDoc(companyRepDocRef, {
+    listingIDs: arrayRemove(listingID)
+  })
+  .then(() => {
+    console.log(
+      `ListingID ${listingID} removed from user data`
+    );
+  })
+  .catch((error: any) => {
+    console.error(
+      `Error deleting listing with ID ${listingID} from user data:`,
+      error
+    );
+  });
 }
 
 export async function getRepsListingIDsFirestore(
