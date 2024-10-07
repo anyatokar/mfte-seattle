@@ -14,7 +14,7 @@ export function useAllListings(
   const getAllListings = useCallback(() => {
     setIsLoadingAllListings(true);
 
-    const q = query(collection(db, "listings"));
+    const q = query(collection(db, "listingsTEST"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("Getting listings.");

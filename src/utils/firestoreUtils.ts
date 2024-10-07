@@ -83,7 +83,7 @@ export async function addListingFirestore(
   };
 
   // Create a new document reference with an auto-generated ID
-  const listingDocRef = doc(collection(db, "listings"));
+  const listingDocRef = doc(collection(db, "listingsTEST"));
   // Set the document and include the listingID field
   await setDoc(listingDocRef, {
     ...listing,
@@ -101,7 +101,7 @@ export async function updateListingFirestore(
   fieldsToUpdate: Partial<IListing>,
   listingID: string
 ) {
-  const listingDocRef = doc(db, "listings", listingID);
+  const listingDocRef = doc(db, "listingsTEST", listingID);
   await updateDoc(listingDocRef, {
     ...fieldsToUpdate,
     dateUpdated: Timestamp.fromDate(new Date()),
@@ -112,7 +112,7 @@ export async function deleteListingFirestore(
   listingID: string,
   buildingName: string
 ) {
-  const listingDocRef = doc(db, "listings", listingID);
+  const listingDocRef = doc(db, "listingsTEST", listingID);
   await deleteDoc(listingDocRef)
     .then(() => {
       console.log(
