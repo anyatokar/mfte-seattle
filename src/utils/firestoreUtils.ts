@@ -10,6 +10,7 @@ import {
   Timestamp,
   arrayUnion,
   arrayRemove,
+  DocumentData,
 } from "firebase/firestore";
 
 import { contactUsFormFieldsType } from "../pages/Contact";
@@ -158,6 +159,25 @@ export async function getRepsListingIDsFirestore(
     }
   } catch (error: any) {
     console.error(`Error getting data for company ref ${uid}:`, error);
+    return null;
+  }
+}
+
+export async function getManagerProfileFirestore(
+  uid: string
+): Promise<DocumentData | null> {
+  const userDocRef = doc(db, "companyReps", uid);
+  const userDocSnap = await getDoc(userDocRef);
+
+  try {
+    if (userDocSnap.exists()) {
+      return userDocSnap.data();
+    } else {
+      console.log(`No user in "companyReps" with uid ${uid}`);
+      return null;
+    }
+  } catch (error: any) {
+    console.error(`Error getting data for user ${uid}:`, error);
     return null;
   }
 }
