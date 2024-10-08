@@ -36,7 +36,8 @@ export const Header = () => {
     [setModalState]
   );
 
-  const afterLogin = () => history.push("./saved-buildings");
+  const afterLoginSaved = () => history.push("./saved-buildings");
+  const afterLoginManager = () => history.push("./manage-listings");
 
   useEffect(() => {
     closeLogin();
@@ -73,7 +74,7 @@ export const Header = () => {
           onResetClicked={showReset}
           onSignupClicked={showSignup}
           onRepSignupClicked={showRepSignup}
-          afterLogin={afterLogin}
+          afterLogin={afterLoginSaved}
         />
       );
     } else if (modalState === ModalState.RESET) {
@@ -88,6 +89,15 @@ export const Header = () => {
       return <Signup onLoginClicked={showLogin} />;
     } else if (modalState === ModalState.REP_SIGNUP) {
       return <RepSignup onLoginClicked={showLogin} />;
+    } else if (modalState === ModalState.LOGIN_MANAGE_LISTINGS) {
+      return (
+        <Login
+          onResetClicked={showReset}
+          onSignupClicked={showSignup}
+          onRepSignupClicked={showRepSignup}
+          afterLogin={afterLoginManager}
+        />
+      );
     }
   }
 
@@ -151,9 +161,6 @@ export const Header = () => {
             <Nav>
               <Nav.Link active={false} onClick={showLoginSavedBuildings}>
                 Saved
-              </Nav.Link>
-              <Nav.Link active={false} onClick={showLoginSavedBuildings}>
-                Manage Listings
               </Nav.Link>
               <Nav.Link active={false} onClick={showLogin}>
                 Log In / Sign Up

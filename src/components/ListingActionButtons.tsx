@@ -78,6 +78,12 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
           as={ButtonGroup}
           variant="outline-primary"
         >
+          {listing.listingStatus === listingStatusEnum.ARCHIVED && (
+            <Dropdown.Item eventKey="unarchive" onClick={onUnarchiveClick}>
+              Move To Current
+            </Dropdown.Item>
+          )}
+
           <Dropdown.Item
             eventKey="edit"
             onClick={() => setEditingListingID(listingID)}
@@ -90,11 +96,6 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
           </Dropdown.Item>
 
           <Dropdown.Divider />
-          {listing.listingStatus === listingStatusEnum.ARCHIVED && (
-            <Dropdown.Item eventKey="unarchive" onClick={onUnarchiveClick}>
-              Move To Current
-            </Dropdown.Item>
-          )}
           {listing.listingStatus !== listingStatusEnum.ARCHIVED && (
             <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
               Archive

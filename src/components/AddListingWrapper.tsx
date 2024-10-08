@@ -38,6 +38,8 @@ const AddListingForm: React.FunctionComponent<AddListingWrapperProps> = ({
               <p>Please submit one form per building.</p>
               <p>Fields marked with * are required.</p>
 
+              {/* <Row><Col><ListingAccordion /></Col></Row> */}
+
               <EditListingForm
                 allBuildings={allBuildings}
                 listing={emptyListing}

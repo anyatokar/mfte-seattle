@@ -1,31 +1,34 @@
+import { useContext } from "react";
 import Accordion from "react-bootstrap/esm/Accordion";
 import { Link } from "react-router-dom";
+import { ModalContext, ModalState } from "../contexts/ModalContext";
+import Button from "react-bootstrap/esm/Button";
+import { useAuth } from "../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 
 const ListingAccordion: React.FC = () => {
+  const [, /* modalState */ setModalState] = useContext(ModalContext);
+  const handleShowSignUp = () => setModalState(ModalState.REP_SIGNUP);
+  const handleShowLogin = () => setModalState(ModalState.LOGIN_MANAGE_LISTINGS);
+
+  const { currentUser } = useAuth();
+  const history = useHistory();
+
+  const onManageListingsClick = () => {
+    if (currentUser) {
+      history.push("/manage-listings");
+    } else {
+      handleShowLogin();
+    }
+  };
+
   return (
     <>
-      <p className="lead">
-        Looking to reach more prospective tenants for MFTE units?
-      </p>
-      <p>
-        List your currently available or soon-to-be-available MFTE apartments on
-        this website by filling out the brief form below. This is an opportunity
-        to increase your building's visibility to people searching for
-        rent-reduced housing.
-      </p>
-
-      <p>Please submit one form per building.</p>
-      <p>
-        For general questions use the&nbsp;
-        <Link id="all-buildings" to="./contact">
-          Contact
-        </Link>
-        &nbsp;page.
-      </p>
-
       <Accordion>
         <Accordion.Item eventKey="0">
-          <Accordion.Header>How Your Listing Will Be Featured</Accordion.Header>
+          <Accordion.Header>
+            How Your Listings Will Be Featured
+          </Accordion.Header>
           <Accordion.Body>
             <p>
               On the map, buildings with available units are marked with red
@@ -42,35 +45,47 @@ const ListingAccordion: React.FC = () => {
         </Accordion.Item>
 
         <Accordion.Item eventKey="1">
-          <Accordion.Header>How to Add Your Listing</Accordion.Header>
+          <Accordion.Header>Adding Your Listings</Accordion.Header>
           <Accordion.Body>
             <ol>
-              <li>
-                Fill out the form below. You will need the following
-                information:
+              <li className="mb-3">
+                <Button
+                  variant="link"
+                  id="manager-signup-modal"
+                  onClick={handleShowSignUp}
+                  className="p-0 m-0  align-baseline"
+                >
+                  Create a manager account
+                </Button>{" "}
+                using your company email. This account will allow you to add
+                buildings and manage their availabilities. If you already have
+                an account with this email, delete it first to make sure you are
+                registering as a manager.
               </li>
-              <ul>
-                <li>
-                  A listing url that will get the user as close as possible to
-                  viewing the available MFTE units for the building.
-                </li>
-                <li>
-                  How many of each unit size is currently or soon will be
-                  available.
-                </li>
-                <li>
-                  For each available unit size, the earliest availability date.
-                </li>
-              </ul>
-              <li>We will review the submitted information.</li>
+              <li className="mb-3">
+                Navigate to the{" "}
+                <Button
+                  variant="link"
+                  id="manage-listings"
+                  onClick={onManageListingsClick}
+                  className="p-0 m-0 align-baseline"
+                >
+                  Manage Listings
+                </Button>{" "}
+                tab. Fill out an Add Listing form for each building with
+                available or soon-to-be-available units.
+              </li>
               <li>
-                Upon approval, you will receive a confirmation email, at which
-                time your property will be featured as described above.
+                We will review the submitted information. Upon approval, you
+                will receive a confirmation email, at which time your property
+                will be featured as described above. You will not need
+                subsequent approvals to make updates to the listing unless you
+                archive or delete it.
               </li>
             </ol>
             <p>
-              To make updates or remove the listing, please reply to the
-              confirmation email you receive.
+              Listings automatically expire after 60 days. They can be easily
+              renewed using the manager account.
             </p>
           </Accordion.Body>
         </Accordion.Item>
