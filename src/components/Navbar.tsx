@@ -49,12 +49,14 @@ export const Header = () => {
     closeLogin();
     try {
       await logout();
-      setMessage("Logged out successfully.");
+      let message = "Logged out successfully.";
+      setMessage(message);
       console.log(message);
       history.push("/");
-    } catch {
-      setMessage("Failed to log out.");
-      console.error(message);
+    } catch (error: any) {
+      let message = "Failed to log out.";
+      setMessage(message);
+      console.error(`${message}. Error: ${error.message}`);
     }
   }
 
