@@ -211,6 +211,7 @@ export async function updateNameFirestore(
     return;
   }
 
+  // TODO: Will need to add companyReps
   const userDocRef = doc(db, "users", uid);
 
   await updateDoc(userDocRef, {
@@ -227,6 +228,7 @@ export async function updateEmailFirestore(
     return;
   }
 
+  // TODO: Will need to add companyReps
   const userDocRef = doc(db, "users", uid);
 
   await updateDoc(userDocRef, {
@@ -272,7 +274,9 @@ export async function deleteUserFirestore(uid: string | undefined) {
     return;
   }
 
+  // TODO: Maybe pass the account type to save a db call
   await deleteDoc(doc(db, "users", uid));
+  await deleteDoc(doc(db, "companyReps", uid));
 }
 
 export async function signupFirestore(signupAuthData: SignupAuthDataType) {
