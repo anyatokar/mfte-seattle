@@ -58,12 +58,12 @@ const ListingAccordion: React.FC = () => {
                   Create a manager account
                 </Button>{" "}
                 using your company email. This account will allow you to add
-                buildings and manage their availabilities. If you already have
-                an account with this email, delete it first to make sure you are
-                registering as a manager.
+                buildings and manage their availability. Only one account can be
+                associated with each email, so you may need to delete any
+                existing account and re-register to ensure proper permissions.
               </li>
               <li className="mb-3">
-                Navigate to the{" "}
+                Login and navigate to the{" "}
                 <Button
                   variant="link"
                   id="manage-listings"
@@ -72,20 +72,20 @@ const ListingAccordion: React.FC = () => {
                 >
                   Manage Listings
                 </Button>{" "}
-                tab. Fill out an Add Listing form for each building with
-                available or soon-to-be-available units.
+                tab. From there, you can submit an Add Listing form for each
+                building with current or upcoming availability.
               </li>
               <li>
-                We will review the submitted information. Upon approval, you
-                will receive a confirmation email, at which time your property
-                will be featured as described above. You will not need
-                subsequent approvals to make updates to the listing unless you
-                archive or delete it.
+                We will review and approve the submission, at which point the
+                property will be featured as described above. If we have any
+                questions, we will contact you via email. You can update your
+                listing without needing further approvals unless it is archived
+                or deleted.
               </li>
             </ol>
             <p>
-              Listings automatically expire after 60 days. They can be easily
-              renewed using the manager account.
+              Listings automatically expire after 60 days but can easily be
+              renewed through your manager account.
             </p>
           </Accordion.Body>
         </Accordion.Item>
