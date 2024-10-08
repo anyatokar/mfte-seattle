@@ -2,11 +2,12 @@ import BuildingDataTable from "./BuildingDataTable";
 import { listingStatusEnum, tableType } from "../types/enumTypes";
 import ListingActionsButtons from "./ListingActionButtons";
 import IListing from "../interfaces/IListing";
+import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
+import EditListingForm from "./EditListingForm";
+import { expiringSoonDays } from "../config/config";
 
 import Badge from "react-bootstrap/esm/Badge";
 import Card from "react-bootstrap/esm/Card";
-import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
-import EditListingForm from "./EditListingForm";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -62,24 +63,46 @@ const ListingCard: React.FC<ListingCardProps> = ({
     },
   };
 
+  function getBadge() {
+    let badge = listing.listingStatus;
+
+    const expiryDate = new Date(listing.expiryDate);
+    const currentDate = new Date();
+
+    if (badge !== listingStatusEnum.ARCHIVED) {
+      if (expiryDate < currentDate) {
+        badge = listingStatusEnum.EXPIRED;
+      } else if (
+        expiryDate.getTime() - expiringSoonDays * 24 * 60 * 60 * 1000 <
+        currentDate.getTime()
+      ) {
+        badge = listingStatusEnum.EXPIRING_SOON;
+      }
+    }
+
+    return statusBadgeMap[badge];
+  }
+
   return (
     <Card>
       <Card.Header>
         <Card.Title className="d-flex justify-content-between align-items-center mt-2">
           <div>
             <span>{buildingName}</span>
-            {statusBadgeMap[listingStatus] && (
-              <Badge
-                pill
-                bg={statusBadgeMap[listingStatus].bg}
-                className="ms-2"
-              >
-                {statusBadgeMap[listingStatus].label}
-              </Badge>
-            )}
+
+            <Badge pill bg={getBadge().bg} className="ms-2">
+              {getBadge().label}
+            </Badge>
           </div>
           <ListingActionsButtons
-            listing={{ listingID, listingStatus, buildingName, url, availData }}
+            listing={{
+              listingID,
+              listingStatus,
+              buildingName,
+              url,
+              availData,
+              expiryDate,
+            }}
             isEditing={isEditing}
             setEditingListingID={setEditingListingID}
           />

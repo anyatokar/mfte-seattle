@@ -19,7 +19,7 @@ import { getMaxExpiryDate } from "../utils/generalUtils";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
-  "buildingName" | "listingID"
+  "buildingName" | "listingID" | "expiryDate"
 >;
 
 type ListingActionsButtonsPropsType = {
@@ -49,7 +49,10 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     event.preventDefault();
 
     updateListingFirestore(
-      { listingStatus: listingStatusEnum.ARCHIVED },
+      {
+        listingStatus: listingStatusEnum.ARCHIVED,
+        expiryDate: listing.expiryDate,
+      },
       listingID
     );
   };
@@ -58,7 +61,10 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     event.preventDefault();
 
     updateListingFirestore(
-      { listingStatus: listingStatusEnum.IN_REVIEW },
+      {
+        listingStatus: listingStatusEnum.IN_REVIEW,
+        expiryDate: listing.expiryDate,
+      },
       listingID
     );
   };

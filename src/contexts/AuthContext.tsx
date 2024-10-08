@@ -147,7 +147,6 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
       setCurrentUser(currentUser);
       if (currentUser) {
         const accountType = await getAccountTypeFirestore(currentUser.uid);
-        console.log(accountType);
         setaccountType(accountType);
       } else {
         setaccountType(accountTypeEnum.LURKER); // Reset state if no user is signed in
