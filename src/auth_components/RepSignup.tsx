@@ -59,7 +59,7 @@ export default function Signup({ onLoginClicked }: Props) {
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title>Company Rep Sign Up</Modal.Title>
+        <Modal.Title>Manager Sign Up</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

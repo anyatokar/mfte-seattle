@@ -76,7 +76,7 @@ export default function PasswordReset({
           </Button>
           <br />
           <Button onClick={onRepSignupClicked} variant="link">
-            Rep Sign Up
+            Manager Sign Up
           </Button>
           <br />
           <Button onClick={onLoginClicked} variant="link">

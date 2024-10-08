@@ -90,7 +90,7 @@ export default function Login({
           </Button>
           <br />
           <Button onClick={onRepSignupClicked} variant="link">
-            Rep Sign Up
+            Manager Sign Up
           </Button>
         </div>
       </Modal.Footer>
