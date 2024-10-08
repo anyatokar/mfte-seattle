@@ -1,10 +1,11 @@
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useEffect, useContext, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import mftelogo from "../assets/images/mftelogo23.svg";
 
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { useAuth } from "../contexts/AuthContext";
+import { accountTypeEnum } from "../types/enumTypes";
 
 import Login from "../auth_components/Login";
 import PasswordReset from "../auth_components/PasswordReset";
@@ -19,8 +20,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
 export const Header = () => {
-  const [message, setMessage] = useState("");
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, accountType } = useAuth();
   const history = useHistory();
   const [modalState, setModalState] = useContext(ModalContext);
 
@@ -45,17 +45,14 @@ export const Header = () => {
 
   // Logout
   async function handleLogout() {
-    setMessage("");
     closeLogin();
     try {
       await logout();
       let message = "Logged out successfully.";
-      setMessage(message);
       console.log(message);
       history.push("/");
     } catch (error: any) {
       let message = "Failed to log out.";
-      setMessage(message);
       console.error(`${message}. Error: ${error.message}`);
     }
   }
@@ -145,12 +142,16 @@ export const Header = () => {
               <LinkContainer to="/manage-profile">
                 <Nav.Link active={false}>Profile</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/saved-buildings">
-                <Nav.Link active={false}>Saved</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/manage-listings">
-                <Nav.Link active={false}>Manage Listings</Nav.Link>
-              </LinkContainer>
+              {accountType === accountTypeEnum.RENTER && (
+                <LinkContainer to="/saved-buildings">
+                  <Nav.Link active={false}>Saved</Nav.Link>
+                </LinkContainer>
+              )}
+              {accountType === accountTypeEnum.MANAGER && (
+                <LinkContainer to="/manage-listings">
+                  <Nav.Link active={false}>Manage Listings</Nav.Link>
+                </LinkContainer>
+              )}
               <Nav.Link
                 className="logout"
                 active={false}

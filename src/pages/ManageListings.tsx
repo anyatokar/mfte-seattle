@@ -2,7 +2,7 @@ import { Profiler, useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
-import { listingStatusEnum } from "../types/enumTypes";
+import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import { useAllListings } from "../hooks/useListings";
 import { getRepsListingIDsFirestore } from "../utils/firestoreUtils";
 
@@ -22,7 +22,7 @@ import { useAllBuildings } from "../hooks/useAllBuildings";
 const ManageListingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = ({ name }) => {
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
   const [listingIDs, setListingIDs] = useState<string[] | null>(null);
   const [repsListings, isLoadingRepsListings] = useAllListings(listingIDs);
   const defaultActiveKey: string = "summary";
@@ -52,7 +52,7 @@ const ManageListingsPage: React.FunctionComponent<
     fetchListingIDs();
   }, []);
 
-  if (!currentUser) {
+  if (!currentUser || accountType !== accountTypeEnum.MANAGER) {
     return null;
   }
 

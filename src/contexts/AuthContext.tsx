@@ -12,10 +12,16 @@ import {
   onAuthStateChanged,
   User,
 } from "firebase/auth";
-import { getNameFirestore, signupFirestore } from "../utils/firestoreUtils";
+import {
+  getAccountTypeFirestore,
+  getNameFirestore,
+  signupFirestore,
+} from "../utils/firestoreUtils";
+import { accountTypeEnum } from "../types/enumTypes";
 
 interface AuthContextProps {
   currentUser: User | null;
+  accountType: accountTypeEnum | null;
   login: (email: string, password: string) => Promise<void>;
   signupAuth: (signupAuthData: SignupAuthDataType) => Promise<void>;
   logout: () => Promise<void>;
@@ -57,47 +63,52 @@ export type SignupAuthDataType = ICompanySignupAuthData | IUserSignupAuthData;
 
 const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [accountType, setaccountType] = useState<accountTypeEnum | null>(
+    accountTypeEnum.LURKER
+  );
   const [loading, setLoading] = useState(true);
 
   async function signupAuth(signupAuthData: SignupAuthDataType) {
     const { email, password, name } = signupAuthData;
 
-    return createUserWithEmailAndPassword(getAuth(), email, password).then(
-      (cred) => {
-        if (cred.user) {
-          updateProfile(cred.user, { displayName: name });
-
-          signupFirestore({ ...signupAuthData, uid: cred.user.uid });
-        }
-      }
+    const cred = await createUserWithEmailAndPassword(
+      getAuth(),
+      email,
+      password
     );
+    if (cred.user) {
+      await updateProfile(cred.user, { displayName: name });
+
+      await signupFirestore({ ...signupAuthData, uid: cred.user.uid });
+    }
   }
 
   async function login(email: string, password: string): Promise<void> {
     const cred = await signInWithEmailAndPassword(getAuth(), email, password);
 
     if (cred.user) {
-      const nameInFirestore = await getNameFirestore(cred.user.uid);
-
       // Backfill user displayName from Firestore to Auth
       // only if the displayName doesn't already exist in Auth.
-      if (nameInFirestore && !cred.user.displayName) {
-        updateProfile(cred.user, { displayName: nameInFirestore });
-        //TODO: temp logging, remove.
-        console.log("backfill 1");
-      }
+      if (!cred.user.displayName) {
+        const nameInFirestore = await getNameFirestore(cred.user.uid);
+        if (nameInFirestore) {
+          updateProfile(cred.user, { displayName: nameInFirestore });
+          //TODO: temp logging, remove.
+          console.log("backfill 1");
+        }
 
-      // Backfill missing data from Auth to Firestore.
-      if (cred.user.email && cred.user.displayName && nameInFirestore) {
-        signupFirestore({
-          uid: cred.user.uid,
-          email: cred.user.email,
-          name: cred.user.displayName,
-          isCompany: false,
-          password: "", // This won't be used
-        });
-        //TODO: temp logging, remove.
-        console.log("backfill 2");
+        // Backfill missing data from Auth to Firestore.
+        if (cred.user.email && cred.user.displayName && nameInFirestore) {
+          signupFirestore({
+            uid: cred.user.uid,
+            email: cred.user.email,
+            name: cred.user.displayName,
+            isCompany: false,
+            password: "", // This won't be used
+          });
+          //TODO: temp logging, remove.
+          console.log("backfill 2");
+        }
       }
     }
   }
@@ -132,15 +143,24 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuth(), (currentUser) => {
+    const unsubscribe = onAuthStateChanged(getAuth(), async (currentUser) => {
       setCurrentUser(currentUser);
+      if (currentUser) {
+        const accountType = await getAccountTypeFirestore(currentUser.uid);
+        console.log(accountType);
+        setaccountType(accountType);
+      } else {
+        setaccountType(accountTypeEnum.LURKER); // Reset state if no user is signed in
+      }
       setLoading(false);
     });
-    return unsubscribe;
+
+    return () => unsubscribe();
   }, []);
 
   const value: AuthContextProps = {
     currentUser,
+    accountType,
     login,
     signupAuth: signupAuth,
     logout,

@@ -16,3 +16,9 @@ export enum listingStatusEnum {
   IN_REVIEW = "inReview",
   NEEDS_ATTENTION = "needsAttention",
 }
+
+export enum accountTypeEnum {
+  RENTER = "renter",
+  MANAGER = "manager",
+  LURKER = "lurker",
+}

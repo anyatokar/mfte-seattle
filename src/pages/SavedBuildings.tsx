@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
-import { pageTypeEnum } from "../types/enumTypes";
+import { accountTypeEnum, pageTypeEnum } from "../types/enumTypes";
 
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useListings";
@@ -21,11 +21,11 @@ import Spinner from "react-bootstrap/Spinner";
 const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = ({ name }) => {
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
   const [allListings, isLoadingAllListings] = useAllListings();
 
-  if (!currentUser) {
+  if (!currentUser || accountType !== accountTypeEnum.RENTER) {
     return null;
   }
 

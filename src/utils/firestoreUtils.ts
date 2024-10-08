@@ -1,5 +1,4 @@
 import { db } from "../db/firebase";
-import { listingMaxDays } from "../config/config";
 import {
   collection,
   deleteDoc,
@@ -14,12 +13,12 @@ import {
 } from "firebase/firestore";
 
 import { contactUsFormFieldsType } from "../pages/Contact";
+import { SignupAuthDataType } from "../contexts/AuthContext";
+import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
+import { getMaxExpiryDate } from "./generalUtils";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
-import { SignupAuthDataType } from "../contexts/AuthContext";
-import { listingStatusEnum } from "../types/enumTypes";
-import { getMaxExpiryDate } from "./generalUtils";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -176,6 +175,30 @@ export async function getNameFirestore(uid: string): Promise<string | null> {
     }
   } catch (error: any) {
     console.error(`Error getting data for user ${uid}:`, error);
+    return null;
+  }
+}
+
+export async function getAccountTypeFirestore(
+  uid: string
+): Promise<accountTypeEnum | null> {
+  const userDocRef = doc(db, "users", uid);
+  const companyRepDocRef = doc(db, "companyReps", uid);
+
+  try {
+    const userDocSnap = await getDoc(userDocRef);
+    const companyUserDocSnap = await getDoc(companyRepDocRef);
+
+    if (userDocSnap.exists()) {
+      return accountTypeEnum.RENTER;
+    } else if (companyUserDocSnap.exists()) {
+      return accountTypeEnum.MANAGER;
+    } else {
+      console.log("User doesn't exist in either collection");
+      return null;
+    }
+  } catch (error: any) {
+    console.error(`Error getting user account data for user ${uid}:`, error);
     return null;
   }
 }
