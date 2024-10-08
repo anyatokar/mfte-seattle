@@ -129,6 +129,11 @@ const ManageListingsPage: React.FunctionComponent<
                       + Add Listing
                     </Nav.Link>
                   </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="archived" className="tab">
+                      Archived Listings
+                    </Nav.Link>
+                  </Nav.Item>
                 </Nav>
               </Col>
               <Col sm={12} lg={8}>
@@ -169,12 +174,21 @@ const ManageListingsPage: React.FunctionComponent<
                           {isLoading && (
                             <Spinner animation="border" variant="secondary" />
                           )}
-                          {!isLoading && repsListings.length === 0 && (
-                            <p>Empty for now!</p>
-                          )}
+                          {/* TODO: Pull out into a new component to reuse with archived */}
+                          {!isLoading &&
+                            repsListings.filter(
+                              (listing) =>
+                                listing.listingStatus !==
+                                listingStatusEnum.ARCHIVED
+                            ).length === 0 && <p>Empty for now!</p>}
                           {!isLoading &&
                             repsListings.length > 0 &&
                             repsListings
+                              .filter(
+                                (listing) =>
+                                  listing.listingStatus !==
+                                  listingStatusEnum.ARCHIVED
+                              )
                               .sort(
                                 (a, b) =>
                                   new Date(b.dateUpdated?.toDate()).getTime() -
@@ -202,6 +216,48 @@ const ManageListingsPage: React.FunctionComponent<
                       isEditing={isAddListingTabActive}
                       setEditingListingID={setEditingListingID}
                     />
+                  </Tab.Pane>
+
+                  <Tab.Pane eventKey="archived">
+                    <Container fluid>
+                      <Row>
+                        <Col>
+                          {isLoading && (
+                            <Spinner animation="border" variant="secondary" />
+                          )}
+                          {!isLoading &&
+                            repsListings.filter(
+                              (listing) =>
+                                listing.listingStatus ===
+                                listingStatusEnum.ARCHIVED
+                            ).length === 0 && <p>No archived listings</p>}
+                          {!isLoading &&
+                            repsListings.length > 0 &&
+                            repsListings
+                              .filter(
+                                (listing) =>
+                                  listing.listingStatus ===
+                                  listingStatusEnum.ARCHIVED
+                              )
+                              .sort(
+                                (a, b) =>
+                                  new Date(b.dateUpdated?.toDate()).getTime() -
+                                  new Date(a.dateUpdated?.toDate()).getTime()
+                              )
+                              .map((listing) => (
+                                <Col className="pb-2" key={listing.listingID}>
+                                  <ListingCard
+                                    listing={listing}
+                                    isEditing={
+                                      editingListingID === listing.listingID
+                                    }
+                                    setEditingListingID={setEditingListingID}
+                                  />
+                                </Col>
+                              ))}
+                        </Col>
+                      </Row>
+                    </Container>
                   </Tab.Pane>
                 </Tab.Content>
               </Col>
