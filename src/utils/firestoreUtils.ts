@@ -17,7 +17,7 @@ import { contactUsFormFieldsType } from "../pages/Contact";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
-import { ISignupAuthData } from "../contexts/AuthContext";
+import { SignupAuthDataType } from "../contexts/AuthContext";
 import { listingStatusEnum } from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 
@@ -163,23 +163,6 @@ export async function getRepsListingIDsFirestore(
   }
 }
 
-export async function getUserFirestore(uid: string): Promise<string | null> {
-  const userDocRef = doc(db, "users", uid);
-  const userDocSnap = await getDoc(userDocRef);
-
-  try {
-    if (userDocSnap.exists()) {
-      return userDocSnap.data().name;
-    } else {
-      console.log(`No user in "users" with uid ${uid}`);
-      return null;
-    }
-  } catch (error: any) {
-    console.error(`Error getting data for user ${uid}:`, error);
-    return null;
-  }
-}
-
 export async function getNameFirestore(uid: string): Promise<string | null> {
   const userDocRef = doc(db, "users", uid);
   const userDocSnap = await getDoc(userDocRef);
@@ -269,15 +252,14 @@ export async function deleteUserFirestore(uid: string | undefined) {
   await deleteDoc(doc(db, "users", uid));
 }
 
-export async function signupFirestore(signupAuthData: ISignupAuthData) {
-  const { email, name, isCompany, companyName, jobTitle, uid } = signupAuthData;
+export async function signupFirestore(signupAuthData: SignupAuthDataType) {
+  const { uid, isCompany } = signupAuthData;
 
   if (!uid) return;
 
-  const userDocRef = doc(db, "users", uid);
-  const companyRepDocRef = doc(db, "companyReps", uid);
-
   if (isCompany) {
+    const { email, name, uid, companyName, jobTitle } = signupAuthData;
+    const companyRepDocRef = doc(db, "companyReps", uid);
     await setDoc(companyRepDocRef, {
       uid: uid,
       email: email,
@@ -287,6 +269,8 @@ export async function signupFirestore(signupAuthData: ISignupAuthData) {
       jobTitle: jobTitle,
     });
   } else {
+    const { email, name, uid } = signupAuthData;
+    const userDocRef = doc(db, "users", uid);
     await setDoc(userDocRef, {
       uid: uid,
       email: email,

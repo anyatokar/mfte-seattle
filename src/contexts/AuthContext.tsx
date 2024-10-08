@@ -14,20 +14,10 @@ import {
 } from "firebase/auth";
 import { getNameFirestore, signupFirestore } from "../utils/firestoreUtils";
 
-export interface ISignupAuthData {
-  email: string;
-  name: string;
-  password: string;
-  isCompany: boolean;
-  companyName?: string;
-  jobTitle?: string;
-  uid?: string;
-}
-
 interface AuthContextProps {
   currentUser: User | null;
   login: (email: string, password: string) => Promise<void>;
-  signupAuth: (signupAuthData: ISignupAuthData) => Promise<void>;
+  signupAuth: (signupAuthData: SignupAuthDataType) => Promise<void>;
   logout: () => Promise<void>;
   resetPasswordAuth: (email: string) => Promise<void>;
   updateDisplayNameAuth: (displayName: string) => Promise<void> | undefined;
@@ -46,21 +36,38 @@ export function useAuth() {
   return context;
 }
 
+interface IBaseSignupAuthData {
+  email: string;
+  name: string;
+  uid: string;
+  password: string;
+}
+
+interface ICompanySignupAuthData extends IBaseSignupAuthData {
+  isCompany: true; // 'isCompany' must be true for company accounts
+  companyName: string;
+  jobTitle: string;
+}
+
+interface IUserSignupAuthData extends IBaseSignupAuthData {
+  isCompany: false; // 'isCompany' must be false for regular users
+}
+
+export type SignupAuthDataType = ICompanySignupAuthData | IUserSignupAuthData;
+
 const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  async function signupAuth(signupAuthData: ISignupAuthData) {
-    const { email, password, name, isCompany, companyName, jobTitle } =
-      signupAuthData;
+  async function signupAuth(signupAuthData: SignupAuthDataType) {
+    const { email, password, name } = signupAuthData;
 
     return createUserWithEmailAndPassword(getAuth(), email, password).then(
       (cred) => {
         if (cred.user) {
           updateProfile(cred.user, { displayName: name });
 
-          signupAuthData.uid = cred.user.uid;
-          signupFirestore(signupAuthData);
+          signupFirestore({ ...signupAuthData, uid: cred.user.uid });
         }
       }
     );
@@ -76,15 +83,22 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
       // only if the displayName doesn't already exist in Auth.
       if (nameInFirestore && !cred.user.displayName) {
         updateProfile(cred.user, { displayName: nameInFirestore });
+        //TODO: temp logging, remove.
+        console.log("backfill 1");
       }
 
       // Backfill missing data from Auth to Firestore.
-      // signupFirestore(
-      //   cred.user.uid,
-      //   cred.user.email,
-      //   cred.user.displayName,
-      //   false
-      // );
+      if (cred.user.email && cred.user.displayName && nameInFirestore) {
+        signupFirestore({
+          uid: cred.user.uid,
+          email: cred.user.email,
+          name: cred.user.displayName,
+          isCompany: false,
+          password: "", // This won't be used
+        });
+        //TODO: temp logging, remove.
+        console.log("backfill 2");
+      }
     }
   }
 

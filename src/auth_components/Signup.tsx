@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { ISignupAuthData, useAuth } from "../contexts/AuthContext";
+import { SignupAuthDataType, useAuth } from "../contexts/AuthContext";
 
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -32,11 +32,12 @@ export default function Signup({ onLoginClicked }: Props) {
       return setError(errorMessage);
     }
 
-    const signupAuthData: ISignupAuthData = {
+    const signupAuthData: SignupAuthDataType = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       name: nameRef.current.value,
       isCompany: false,
+      uid: "", // Will be filled when uid is created by Auth.
     };
 
     try {
