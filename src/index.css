@@ -81,18 +81,19 @@ body {
 }
 
 .nav.nav-pills .nav-link {
-  background-color: #eef6f6;
+  /* background-color: #eef6f6; */
   color: #06253e;
-  border: 2px solid rgba(6, 37, 62, 0.1);
+  /* border: 1px solid rgba(6, 37, 62, 0.1); */
 }
 
 .nav.nav-pills .nav-link:hover {
-  font-weight: 700;
+  /* font-weight: 700; */
+  background-color: rgba(6, 37, 62, 0.1);
 }
 
 .nav.nav-pills .nav-link.active {
-  background-color: #06253e;
-  color: #eef6f6;
+  background-color: rgba(6, 37, 62, 1);
+  color: white;
   font-weight: 700;
 }
 

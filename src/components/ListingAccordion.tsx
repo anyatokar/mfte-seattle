@@ -70,7 +70,7 @@ const ListingAccordion: React.FC = () => {
                   onClick={onManageListingsClick}
                   className="p-0 m-0 align-baseline"
                 >
-                  Manage Listings
+                  Listings
                 </Button>{" "}
                 tab. From there, you can submit an Add Listing form for each
                 building with current or upcoming availability.

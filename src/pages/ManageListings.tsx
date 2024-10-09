@@ -101,170 +101,177 @@ const ManageListingsPage: React.FunctionComponent<
         }
       }}
     >
-      <div className="all-pages">
-        <Container fluid className="all-pages">
-          <Tab.Container
-            id="sidebar"
-            activeKey={activeTab}
-            onSelect={(key) => {
-              setActiveTab(key as string);
-              setEditingListingID(null); // Reset editing state when changing tabs
-            }}
-          >
-            <Row>
-              <Col sm={12} lg={2}>
-                <Nav variant="pills" className="flex-column">
-                  <Nav.Item>
-                    <Nav.Link eventKey="summary" className="tab">
-                      Summary
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="viewListings" className="tab">
-                      Current Listings
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="addListing" className="tab">
-                      + Add Listing
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="archived" className="tab">
-                      Archived Listings
-                    </Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </Col>
-              <Col sm={12} lg={8}>
-                <Tab.Content>
-                  <Tab.Pane eventKey="summary">
-                    <Container fluid>
-                      <Row>
-                        <Col xs={12} sm={6} lg={4} className="pb-4">
-                          <Table responsive bordered hover className="mt-0">
-                            <thead>
-                              <tr>
-                                <th>Status</th>
-                                <th>Count</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {summaryTableRows.map((tableRow) => (
-                                <tr key={tableRow.listingStatus}>
-                                  <td>{tableRow.label}</td>
-                                  <td>
-                                    {isLoading
-                                      ? "--"
-                                      : getCount(tableRow.listingStatus)}
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </Table>
-                        </Col>
-                      </Row>
-                    </Container>
-                  </Tab.Pane>
+      <Container fluid className="all-pages">
+        <Row className="justify-content-center">
+          <Col lg={8}>
+            <div className="display-5">Manage Listings</div>
+            <hr className="my-4 break-line-light" />
+          </Col>
+        </Row>
+      </Container>
 
-                  <Tab.Pane eventKey="viewListings">
-                    <Container fluid>
-                      <Row>
-                        <Col>
-                          {isLoading && (
-                            <Spinner animation="border" variant="secondary" />
-                          )}
-                          {/* TODO: Pull out into a new component to reuse with archived */}
-                          {!isLoading &&
-                            repsListings.filter(
+      <Container fluid>
+        <Tab.Container
+          id="sidebar"
+          activeKey={activeTab}
+          onSelect={(key) => {
+            setActiveTab(key as string);
+            setEditingListingID(null); // Reset editing state when changing tabs
+          }}
+        >
+          <Row>
+            <Col sm={12} lg={2}>
+              <Nav variant="pills" className="flex-column">
+                <Nav.Item>
+                  <Nav.Link eventKey="summary" className="tab">
+                    Summary
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="viewListings" className="tab">
+                    Current
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="addListing" className="tab">
+                    Add
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="archived" className="tab">
+                    Archived
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Col>
+            <Col sm={12} lg={8}>
+              <Tab.Content>
+                <Tab.Pane eventKey="summary">
+                  <Container fluid>
+                    <Row>
+                      <Col xs={12} sm={6} lg={4} className="pb-4">
+                        <Table responsive bordered hover className="mt-0">
+                          <thead>
+                            <tr>
+                              <th>Status</th>
+                              <th>Count</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {summaryTableRows.map((tableRow) => (
+                              <tr key={tableRow.listingStatus}>
+                                <td>{tableRow.label}</td>
+                                <td>
+                                  {isLoading
+                                    ? "--"
+                                    : getCount(tableRow.listingStatus)}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </Table>
+                      </Col>
+                    </Row>
+                  </Container>
+                </Tab.Pane>
+
+                <Tab.Pane eventKey="viewListings">
+                  <Container fluid>
+                    <Row>
+                      <Col>
+                        {isLoading && (
+                          <Spinner animation="border" variant="secondary" />
+                        )}
+                        {/* TODO: Pull out into a new component to reuse with archived */}
+                        {!isLoading &&
+                          repsListings.filter(
+                            (listing) =>
+                              listing.listingStatus !==
+                              listingStatusEnum.ARCHIVED
+                          ).length === 0 && <p>Empty for now!</p>}
+                        {!isLoading &&
+                          repsListings.length > 0 &&
+                          repsListings
+                            .filter(
                               (listing) =>
                                 listing.listingStatus !==
                                 listingStatusEnum.ARCHIVED
-                            ).length === 0 && <p>Empty for now!</p>}
-                          {!isLoading &&
-                            repsListings.length > 0 &&
-                            repsListings
-                              .filter(
-                                (listing) =>
-                                  listing.listingStatus !==
-                                  listingStatusEnum.ARCHIVED
-                              )
-                              .sort(
-                                (a, b) =>
-                                  new Date(b.dateUpdated?.toDate()).getTime() -
-                                  new Date(a.dateUpdated?.toDate()).getTime()
-                              )
-                              .map((listing) => (
-                                <Col className="pb-2" key={listing.listingID}>
-                                  <ListingCard
-                                    listing={listing}
-                                    isEditing={
-                                      editingListingID === listing.listingID
-                                    }
-                                    setEditingListingID={setEditingListingID}
-                                  />
-                                </Col>
-                              ))}
-                        </Col>
-                      </Row>
-                    </Container>
-                  </Tab.Pane>
+                            )
+                            .sort(
+                              (a, b) =>
+                                new Date(b.dateUpdated?.toDate()).getTime() -
+                                new Date(a.dateUpdated?.toDate()).getTime()
+                            )
+                            .map((listing) => (
+                              <Col className="pb-2" key={listing.listingID}>
+                                <ListingCard
+                                  listing={listing}
+                                  isEditing={
+                                    editingListingID === listing.listingID
+                                  }
+                                  setEditingListingID={setEditingListingID}
+                                />
+                              </Col>
+                            ))}
+                      </Col>
+                    </Row>
+                  </Container>
+                </Tab.Pane>
 
-                  <Tab.Pane eventKey="addListing">
-                    <AddListingWrapper
-                      allBuildings={allBuildings}
-                      isEditing={isAddListingTabActive}
-                      setEditingListingID={setEditingListingID}
-                    />
-                  </Tab.Pane>
+                <Tab.Pane eventKey="addListing">
+                  <AddListingWrapper
+                    allBuildings={allBuildings}
+                    isEditing={isAddListingTabActive}
+                    setEditingListingID={setEditingListingID}
+                  />
+                </Tab.Pane>
 
-                  <Tab.Pane eventKey="archived">
-                    <Container fluid>
-                      <Row>
-                        <Col>
-                          {isLoading && (
-                            <Spinner animation="border" variant="secondary" />
-                          )}
-                          {!isLoading &&
-                            repsListings.filter(
+                <Tab.Pane eventKey="archived">
+                  <Container fluid>
+                    <Row>
+                      <Col>
+                        {isLoading && (
+                          <Spinner animation="border" variant="secondary" />
+                        )}
+                        {!isLoading &&
+                          repsListings.filter(
+                            (listing) =>
+                              listing.listingStatus ===
+                              listingStatusEnum.ARCHIVED
+                          ).length === 0 && <p>No archived listings</p>}
+                        {!isLoading &&
+                          repsListings.length > 0 &&
+                          repsListings
+                            .filter(
                               (listing) =>
                                 listing.listingStatus ===
                                 listingStatusEnum.ARCHIVED
-                            ).length === 0 && <p>No archived listings</p>}
-                          {!isLoading &&
-                            repsListings.length > 0 &&
-                            repsListings
-                              .filter(
-                                (listing) =>
-                                  listing.listingStatus ===
-                                  listingStatusEnum.ARCHIVED
-                              )
-                              .sort(
-                                (a, b) =>
-                                  new Date(b.dateUpdated?.toDate()).getTime() -
-                                  new Date(a.dateUpdated?.toDate()).getTime()
-                              )
-                              .map((listing) => (
-                                <Col className="pb-2" key={listing.listingID}>
-                                  <ListingCard
-                                    listing={listing}
-                                    isEditing={
-                                      editingListingID === listing.listingID
-                                    }
-                                    setEditingListingID={setEditingListingID}
-                                  />
-                                </Col>
-                              ))}
-                        </Col>
-                      </Row>
-                    </Container>
-                  </Tab.Pane>
-                </Tab.Content>
-              </Col>
-            </Row>
-          </Tab.Container>
-        </Container>
-      </div>
+                            )
+                            .sort(
+                              (a, b) =>
+                                new Date(b.dateUpdated?.toDate()).getTime() -
+                                new Date(a.dateUpdated?.toDate()).getTime()
+                            )
+                            .map((listing) => (
+                              <Col className="pb-2" key={listing.listingID}>
+                                <ListingCard
+                                  listing={listing}
+                                  isEditing={
+                                    editingListingID === listing.listingID
+                                  }
+                                  setEditingListingID={setEditingListingID}
+                                />
+                              </Col>
+                            ))}
+                      </Col>
+                    </Row>
+                  </Container>
+                </Tab.Pane>
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
+      </Container>
     </Profiler>
   );
 };

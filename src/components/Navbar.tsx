@@ -149,7 +149,7 @@ export const Header = () => {
               )}
               {accountType === accountTypeEnum.MANAGER && (
                 <LinkContainer to="/manage-listings">
-                  <Nav.Link active={false}>Manage Listings</Nav.Link>
+                  <Nav.Link active={false}>Listings</Nav.Link>
                 </LinkContainer>
               )}
               <Nav.Link
