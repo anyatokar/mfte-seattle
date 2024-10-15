@@ -125,7 +125,6 @@ export async function deleteListingFirestore(
       console.log(
         `Listing for ${buildingName} deleted from Listings. ListingID was ${listingID}`
       );
-      deleteListingFromListingIDs(uid, listingID);
     })
     .catch((error: any) => {
       console.error(
@@ -133,41 +132,6 @@ export async function deleteListingFirestore(
         error
       );
     });
-}
-
-async function deleteListingFromListingIDs(uid: string, listingID: string) {
-  const companyRepDocRef = doc(db, "companyReps", uid);
-  await updateDoc(companyRepDocRef, {
-    listingIDs: arrayRemove(listingID),
-  })
-    .then(() => {
-      console.log(`ListingID ${listingID} removed from user data`);
-    })
-    .catch((error: any) => {
-      console.error(
-        `Error deleting listing with ID ${listingID} from user data:`,
-        error
-      );
-    });
-}
-
-export async function getRepsListingIDsFirestore(
-  uid: string
-): Promise<string[] | null> {
-  const companyRepDocRef = doc(db, "companyReps", uid);
-  const companyRepDocSnap = await getDoc(companyRepDocRef);
-
-  try {
-    if (companyRepDocSnap.exists()) {
-      return companyRepDocSnap.data().listingIDs;
-    } else {
-      console.log(`No company ref in "companyRefs" with uid ${uid}`);
-      return null;
-    }
-  } catch (error: any) {
-    console.error(`Error getting data for company ref ${uid}:`, error);
-    return null;
-  }
 }
 
 export async function getManagerProfileFirestore(
