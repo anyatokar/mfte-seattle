@@ -157,9 +157,7 @@ const ManageListingsPage: React.FunctionComponent<
             <hr className="my-4 break-line-light" />
           </Col>
         </Row>
-      </Container>
 
-      <Container fluid>
         <Tab.Container
           id="sidebar"
           activeKey={activeTab}
