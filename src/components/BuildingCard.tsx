@@ -1,7 +1,12 @@
 import { useState, useContext } from "react";
 
 import { areListingsOn } from "../config/config";
-import { listingStatusEnum, pageTypeEnum, tableType } from "../types/enumTypes";
+import {
+  accountTypeEnum,
+  listingStatusEnum,
+  pageTypeEnum,
+  tableType,
+} from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
 import ListingButton from "./ListingButton";
@@ -60,7 +65,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
 
   const { pageType, listing } = props;
 
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
 
   // All Buildings Page - save/saved button
   const [, /* modalState */ setModalState] = useContext(ModalContext);
@@ -141,6 +146,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
         <div className="mt-2">
           {pageType === pageTypeEnum.allBuildings &&
+            accountType !== accountTypeEnum.MANAGER &&
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
                 <>
@@ -177,6 +183,9 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                 </Button>
               </>
             ))}
+          {accountType === accountTypeEnum.MANAGER && (
+            <WebsiteButton urlForBuilding={urlForBuilding} />
+          )}
         </div>
 
         {pageType === pageTypeEnum.savedBuildings && (
