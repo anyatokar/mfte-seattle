@@ -10,11 +10,14 @@ export enum tableType {
 
 export enum listingStatusEnum {
   ARCHIVED = "archived",
-  EXPIRED = "expired",
   ACTIVE = "active",
-  EXPIRING_SOON = "expiringSoon",
   IN_REVIEW = "inReview",
   NEEDS_ATTENTION = "needsAttention",
+}
+
+export enum expiryBadgeEnum {
+  EXPIRED = "expired",
+  EXPIRING_SOON = "expiringSoon",
 }
 
 export enum accountTypeEnum {

@@ -1,5 +1,9 @@
 import BuildingDataTable from "./BuildingDataTable";
-import { listingStatusEnum, tableType } from "../types/enumTypes";
+import {
+  expiryBadgeEnum,
+  listingStatusEnum,
+  tableType,
+} from "../types/enumTypes";
 import ListingActionsButtons from "./ListingActionButtons";
 import IListing from "../interfaces/IListing";
 import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
@@ -82,51 +86,67 @@ const ListingCard: React.FC<ListingCardProps> = ({
     buildingID,
   } = listing;
 
+  type badgeObjectType = { label: string; bg: string };
+
   const statusBadgeMap: {
-    [key in listingStatusEnum]: { label: string; bg: string };
+    [key in listingStatusEnum]: badgeObjectType;
   } = {
     [listingStatusEnum.ACTIVE]: { label: "Active", bg: "success" },
     [listingStatusEnum.IN_REVIEW]: { label: "In Review", bg: "info" },
     [listingStatusEnum.ARCHIVED]: { label: "Archived", bg: "secondary" },
-    [listingStatusEnum.EXPIRED]: { label: "Expired", bg: "danger" },
-    [listingStatusEnum.EXPIRING_SOON]: {
-      label: "Expiring Soon",
-      bg: "warning",
-    },
     [listingStatusEnum.NEEDS_ATTENTION]: {
       label: "Needs Attention",
       bg: "danger",
     },
   };
 
-  const [badge, setBadge] = useState<{ label: string; bg: string } | null>(
-    null
-  );
+  const expiryBadgeMap: {
+    [key in expiryBadgeEnum]: badgeObjectType;
+  } = {
+    [expiryBadgeEnum.EXPIRED]: { label: "Expired", bg: "danger" },
+    [expiryBadgeEnum.EXPIRING_SOON]: {
+      label: "Expiring Soon",
+      bg: "warning",
+    },
+  };
+
+  const [statusBadge, setStatusBadge] = useState<{
+    label: string;
+    bg: string;
+  } | null>(null);
+  const [expiryBadge, setExpiryBadge] = useState<{
+    label: string;
+    bg: string;
+  } | null>(null);
 
   useEffect(() => {
-    function getBadge() {
+    function getStatusBadge() {
       if (!listing) return null;
-      let currentStatus = listingStatus;
+      return listingStatus ? statusBadgeMap[listingStatus] : null;
+    }
+
+    function getExpiryBadge() {
+      if (!listing) return null;
+      let currentStatus = null;
 
       const expiryDateAsDate = new Date(expiryDate);
       const currentDate = new Date();
 
-      if (currentStatus !== listingStatusEnum.ARCHIVED) {
-        if (expiryDateAsDate < currentDate) {
-          currentStatus = listingStatusEnum.EXPIRED;
-        } else if (
-          expiryDateAsDate.getTime() - expiringSoonDays * 24 * 60 * 60 * 1000 <
-          currentDate.getTime()
-        ) {
-          currentStatus = listingStatusEnum.EXPIRING_SOON;
-        }
+      if (expiryDateAsDate < currentDate) {
+        currentStatus = expiryBadgeEnum.EXPIRED;
+      } else if (
+        expiryDateAsDate.getTime() - expiringSoonDays * 24 * 60 * 60 * 1000 <
+        currentDate.getTime()
+      ) {
+        currentStatus = expiryBadgeEnum.EXPIRING_SOON;
       }
 
-      return currentStatus ? statusBadgeMap[currentStatus] : null;
+      return currentStatus ? expiryBadgeMap[currentStatus] : null;
     }
 
-    setBadge(getBadge());
-  }, [expiryDate]);
+    setStatusBadge(getStatusBadge());
+    setExpiryBadge(getExpiryBadge());
+  }, [listing]);
 
   const onSelectBuildingChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -148,9 +168,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
             {isExistingListing && (
               <div className="d-flex align-items-center">
                 <span>{buildingName}</span>
-                {badge && (
-                  <Badge pill bg={badge.bg} className="ms-2">
-                    {badge.label}
+                {statusBadge && (
+                  <Badge pill bg={statusBadge.bg} className="ms-2">
+                    {statusBadge.label}
                   </Badge>
                 )}
               </div>
@@ -200,7 +220,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
           <Card.Body as={Col}>
             <EditListingForm
               listing={{ url, availData, expiryDate, listingID, buildingID }}
-              // allBuildings={allBuildings}
               selectedBuilding={selectedBuilding || null}
               isExistingListing={isExistingListing}
               toggleFormCallback={toggleFormCallback}
@@ -229,9 +248,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 </a>
               </Card.Text>
 
-              <Card.Text>
-                <strong>Expires:</strong> {formatDate(expiryDate)}
-              </Card.Text>
+              {isExistingListing && (
+                <Card.Text className="d-flex align-items-center">
+                  <strong className="me-1">Expires:</strong>
+                  {formatDate(expiryDate)}
+                  {expiryBadge && (
+                    <Badge pill bg={expiryBadge.bg} className="ms-2">
+                      {expiryBadge.label}
+                    </Badge>
+                  )}
+                </Card.Text>
+              )}
             </Card.Body>
           </Row>
         )

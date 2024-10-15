@@ -1,8 +1,12 @@
 import { Profiler, useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { isProfilerOn } from "../config/config";
-import { confirmModalTypeEnum, listingStatusEnum } from "../types/enumTypes";
+import { expiringSoonDays, isProfilerOn } from "../config/config";
+import {
+  confirmModalTypeEnum,
+  expiryBadgeEnum,
+  listingStatusEnum,
+} from "../types/enumTypes";
 import { useAllListings } from "../hooks/useListings";
 
 import ListingCard from "../components/ListingCard";
@@ -43,15 +47,11 @@ const ManageListingsPage: React.FunctionComponent<
 
   const handleConfirm = () => {
     if (newListingID !== editListingID) {
-      console.log("newListingID !== editListingID");
-      console.log(newListingID);
-      console.log(editListingID);
+      console.log(newListingID !== "" || "newListingID !== editListingID");
       setEditListingID(newListingID);
       setIsFormVisible(true);
     } else {
       console.log("newListingID === editListingID");
-      console.log(newListingID);
-      console.log(editListingID);
       setIsFormVisible(false);
       setEditListingID("");
       setSelectedBuilding(null);
@@ -62,7 +62,7 @@ const ManageListingsPage: React.FunctionComponent<
   // newlistingID !== "" means its an edit of an existing listing, if the form is visible
   function toggleFormCallback(listingID: string, clickedSave: boolean) {
     if (clickedSave) {
-      console.log("clicked save");
+      console.log("Clicked save");
       setIsFormVisible(false);
       console.log(listingID);
       setNewListingID("");
@@ -103,9 +103,24 @@ const ManageListingsPage: React.FunctionComponent<
   //   return null;
   // }
 
-  function getCount(label: listingStatusEnum): number {
-    return repsListings.filter((listing) => listing.listingStatus === label)
-      .length;
+  function getCount(label: listingStatusEnum | expiryBadgeEnum): number {
+    const currentDate = new Date();
+
+    return repsListings.filter((listing) => {
+      const expiryDateAsDate = new Date(listing.expiryDate);
+
+      if (label === expiryBadgeEnum.EXPIRED) {
+        return expiryDateAsDate < currentDate;
+      }
+
+      if (label === expiryBadgeEnum.EXPIRING_SOON) {
+        return (
+          expiryDateAsDate.getTime() - expiringSoonDays * 24 * 60 * 60 * 1000 <
+            currentDate.getTime() && expiryDateAsDate >= currentDate
+        );
+      }
+      return listing.listingStatus === label;
+    }).length;
   }
 
   const summaryTableRows = [
@@ -119,8 +134,8 @@ const ManageListingsPage: React.FunctionComponent<
       listingStatus: listingStatusEnum.NEEDS_ATTENTION,
     },
     { label: "Archived", listingStatus: listingStatusEnum.ARCHIVED },
-    { label: "Expiring Soon", listingStatus: listingStatusEnum.EXPIRING_SOON },
-    { label: "Expired", listingStatus: listingStatusEnum.EXPIRED },
+    { label: "Expiring Soon", listingStatus: expiryBadgeEnum.EXPIRING_SOON },
+    { label: "Expired", listingStatus: expiryBadgeEnum.EXPIRED },
   ];
 
   return (
