@@ -1,8 +1,9 @@
-import { Profiler, useEffect, useState } from "react";
+import { Profiler, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { expiringSoonDays, isProfilerOn } from "../config/config";
 import {
+  accountTypeEnum,
   confirmModalTypeEnum,
   expiryBadgeEnum,
   listingStatusEnum,
@@ -27,8 +28,11 @@ const ManageListingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = ({ name }) => {
   const { currentUser, accountType } = useAuth();
-  const [listingIDs, setListingIDs] = useState<string[] | null>(null);
-  const [repsListings, isLoadingRepsListings] = useAllListings(listingIDs);
+
+  // TODO: Is use all listings being called too much?
+  const [repsListings, isLoadingRepsListings] = useAllListings(
+    currentUser?.uid
+  );
   const defaultActiveKey: string = "viewListings";
   const [activeTab, setActiveTab] = useState<string>(defaultActiveKey);
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
@@ -64,7 +68,6 @@ const ManageListingsPage: React.FunctionComponent<
     if (clickedSave) {
       console.log("Clicked save");
       setIsFormVisible(false);
-      console.log(listingID);
       setNewListingID("");
       setEditListingID("");
       setSelectedBuilding(null);
@@ -76,32 +79,18 @@ const ManageListingsPage: React.FunctionComponent<
       // From open to closed
     } else if (isFormVisible) {
       console.log("From open to closed");
-
-      // setNewListingID("");
       handleShow();
     } else {
       // From closed to open
       console.log("From closed to open");
-
       setIsFormVisible(true);
-
       setEditListingID(listingID);
     }
   }
 
-  useEffect(() => {
-    const fetchListingIDs = async () => {
-      // if (!currentUser) return;
-      // const listingIDs = await getRepsListingIDsFirestore(currentUser.uid);
-      setListingIDs(listingIDs);
-    };
-
-    fetchListingIDs();
-  }, []);
-
-  // if (!currentUser || accountType !== accountTypeEnum.MANAGER) {
-  //   return null;
-  // }
+  if (!currentUser || accountType !== accountTypeEnum.MANAGER) {
+    return null;
+  }
 
   function getCount(label: listingStatusEnum | expiryBadgeEnum): number {
     const currentDate = new Date();

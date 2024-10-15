@@ -28,4 +28,5 @@ export default interface IListing {
   dateUpdated: Timestamp;
   /** This is a string because it is always a date in Pacific Time, no matter where the user is located. Think of it as move in date */
   expiryDate: string;
+  managerID: string;
 }

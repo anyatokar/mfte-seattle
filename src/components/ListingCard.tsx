@@ -72,8 +72,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
   );
 
   useEffect(() => {
-    if (allBuildings.length > 0) setBuildingsAlreadyFetched(true);
-  }, [allBuildings]);
+    if (!isLoadingAllBuildings && allBuildings.length > 0)
+      setBuildingsAlreadyFetched(true);
+  }, [isLoadingAllBuildings, allBuildings]);
 
   const {
     availData,
@@ -146,6 +147,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
     setStatusBadge(getStatusBadge());
     setExpiryBadge(getExpiryBadge());
+    // eslint-disable-next-line
   }, [listing]);
 
   const onSelectBuildingChange = (

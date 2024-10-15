@@ -8,7 +8,6 @@ import {
   updateDoc,
   addDoc,
   Timestamp,
-  arrayUnion,
   arrayRemove,
   DocumentData,
 } from "firebase/firestore";
@@ -79,6 +78,7 @@ export async function addListingFirestore(
     dateUpdated: Timestamp.fromDate(new Date()),
     expiryDate: formFields.expiryDate || getMaxExpiryDate(),
     listingID: "",
+    managerID: uid,
   };
   try {
     // Create a new document reference with an auto-generated ID
@@ -90,11 +90,6 @@ export async function addListingFirestore(
       listingID: listingDocRef.id,
     });
 
-    // Add the new listingID to the rep's listingIDs array
-    const companyRepRef = doc(db, "companyReps", uid);
-    await updateDoc(companyRepRef, {
-      listingIDs: arrayUnion(listingDocRef.id),
-    });
     return true;
   } catch (error) {
     console.error("Error adding listing or updating company rep:", error);

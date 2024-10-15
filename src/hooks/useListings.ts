@@ -5,9 +5,7 @@ import { db } from "../db/firebase";
 
 import IListing from "../interfaces/IListing";
 
-export function useAllListings(
-  listingIDs?: string[] | null
-): [IListing[], boolean] {
+export function useAllListings(managerID?: string): [IListing[], boolean] {
   const [allListings, setAllListings] = useState([] as Array<IListing>);
   const [isLoadingAllListings, setIsLoadingAllListings] = useState(false);
 
@@ -23,10 +21,10 @@ export function useAllListings(
         listings.push(doc.data() as IListing);
       });
 
-      // Filter by listingIDs if provided
-      if (listingIDs && listingIDs.length > 0) {
-        const filteredListings = listings.filter((listing) =>
-          listingIDs.includes(listing.listingID)
+      // Filter by managerID if provided
+      if (managerID) {
+        const filteredListings = listings.filter(
+          (listing) => listing.managerID === managerID
         );
         setAllListings(filteredListings);
       } else {
@@ -39,7 +37,7 @@ export function useAllListings(
     return () => {
       unsubscribe();
     };
-  }, [listingIDs]);
+  }, [managerID]);
 
   useEffect(() => {
     getAllListings();
