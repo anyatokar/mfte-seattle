@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import Accordion from "react-bootstrap/esm/Accordion";
-import { Link } from "react-router-dom";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import Button from "react-bootstrap/esm/Button";
 import { useAuth } from "../contexts/AuthContext";
@@ -47,8 +46,10 @@ const ListingAccordion: React.FC = () => {
         <Accordion.Item eventKey="1">
           <Accordion.Header>Adding Your Listings</Accordion.Header>
           <Accordion.Body>
+            <p>If you already have a manager account, skip to step 2.</p>
             <ol>
               <li className="mb-3">
+                Logout of your personal account (if applicable).{" "}
                 <Button
                   variant="link"
                   id="manager-signup-modal"
@@ -63,7 +64,7 @@ const ListingAccordion: React.FC = () => {
                 existing account and re-register to ensure proper permissions.
               </li>
               <li className="mb-3">
-                Login and navigate to the{" "}
+                Navigate to the{" "}
                 <Button
                   variant="link"
                   id="manage-listings"
@@ -72,7 +73,8 @@ const ListingAccordion: React.FC = () => {
                 >
                   Listings
                 </Button>{" "}
-                tab. From there, you can submit an Add Listing form for each
+                tab. You will be prompted to login if you haven't done so
+                already. From there, you can submit an Add Listing form for each
                 building with current or upcoming availability.
               </li>
               <li>

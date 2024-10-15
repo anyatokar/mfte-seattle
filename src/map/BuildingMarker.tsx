@@ -16,7 +16,7 @@ import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 
 import Button from "react-bootstrap/Button";
-import { listingStatusEnum } from "../types/enumTypes";
+import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -64,7 +64,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
 
   function toggleSave() {
@@ -140,42 +140,46 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
                   phone2={phone2}
                 />
               </div>
-              {currentUser ? (
-                wasOriginallySaved || isSaved ? (
-                  <>
-                    <WebsiteButton urlForBuilding={urlForBuilding} />
+              {accountType !== accountTypeEnum.MANAGER &&
+                (currentUser ? (
+                  wasOriginallySaved || isSaved ? (
+                    <>
+                      <WebsiteButton urlForBuilding={urlForBuilding} />
 
-                    <Button
-                      className="diy-solid-info-button"
-                      size="sm"
-                      onClick={toggleSave}
-                    >
-                      Saved
-                    </Button>
-                  </>
+                      <Button
+                        className="diy-solid-info-button"
+                        size="sm"
+                        onClick={toggleSave}
+                      >
+                        Saved
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <WebsiteButton urlForBuilding={urlForBuilding} />
+                      <Button
+                        className="diy-outline-info-button"
+                        size="sm"
+                        onClick={toggleSave}
+                      >
+                        Save
+                      </Button>
+                    </>
+                  )
                 ) : (
                   <>
                     <WebsiteButton urlForBuilding={urlForBuilding} />
                     <Button
                       className="diy-outline-info-button"
                       size="sm"
-                      onClick={toggleSave}
+                      onClick={handleShowLogin}
                     >
                       Save
                     </Button>
                   </>
-                )
-              ) : (
-                <>
-                  <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <Button
-                    className="diy-outline-info-button"
-                    size="sm"
-                    onClick={handleShowLogin}
-                  >
-                    Save
-                  </Button>
-                </>
+                ))}
+              {accountType === accountTypeEnum.MANAGER && (
+                <WebsiteButton urlForBuilding={urlForBuilding} />
               )}
             </div>
           </>

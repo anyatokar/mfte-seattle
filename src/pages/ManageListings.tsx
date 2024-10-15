@@ -247,7 +247,7 @@ const ManageListingsPage: React.FunctionComponent<
                             (listing) =>
                               listing.listingStatus !==
                               listingStatusEnum.ARCHIVED
-                          ).length === 0 && <p>Empty for now!</p>}
+                          ).length === 0 && <p>No current listings.</p>}
                         {!isLoadingRepsListings &&
                           repsListings.length > 0 &&
                           repsListings
