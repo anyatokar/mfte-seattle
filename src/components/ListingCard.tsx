@@ -163,7 +163,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   };
 
   return (
-    <Card as={Container}>
+    <Card as={Container} fluid>
       <Card.Header data-testid="listing-card-header" as={Row} className="p-3">
         <Col className="d-flex align-items-center p-0" xs={8} md={6}>
           <Card.Title className="mb-0 w-100">

@@ -218,59 +218,53 @@ const ManageListingsPage: React.FunctionComponent<
 
                 <Tab.Pane eventKey="viewListings">
                   <Container fluid>
-                    <Row>
+                    {/* TODO: Pull out into a new component to reuse with archived */}
+                    <Row className="pb-2">
                       <Col>
-                        {/* TODO: Pull out into a new component to reuse with archived */}
-                        <Row className="pb-3">
-                          <Col>
-                            <ListingCard
-                              listing={null}
-                              toggleFormCallback={toggleFormCallback}
-                              isFormVisible={isFormVisible}
-                              isExistingListing={false}
-                              editListingID={editListingID}
-                              setSelectedBuilding={setSelectedBuilding}
-                              selectedBuilding={selectedBuilding}
-                            />
-                          </Col>
-                        </Row>
-
-                        {isLoadingRepsListings && (
-                          <Spinner animation="border" variant="secondary" />
-                        )}
-
-                        {!isLoadingRepsListings &&
-                          repsListings.filter(
-                            (listing) =>
-                              listing.listingStatus !==
-                              listingStatusEnum.ARCHIVED
-                          ).length === 0 && <p>No current listings.</p>}
-                        {!isLoadingRepsListings &&
-                          repsListings.length > 0 &&
-                          repsListings
-                            .filter(
-                              (listing) =>
-                                listing.listingStatus !==
-                                listingStatusEnum.ARCHIVED
-                            )
-                            .sort(
-                              (a, b) =>
-                                new Date(b.dateUpdated?.toDate()).getTime() -
-                                new Date(a.dateUpdated?.toDate()).getTime()
-                            )
-                            .map((listing) => (
-                              <Col className="pb-2" key={listing.listingID}>
-                                <ListingCard
-                                  listing={listing}
-                                  toggleFormCallback={toggleFormCallback}
-                                  isFormVisible={isFormVisible}
-                                  isExistingListing={true}
-                                  editListingID={editListingID}
-                                />
-                              </Col>
-                            ))}
+                        <ListingCard
+                          listing={null}
+                          toggleFormCallback={toggleFormCallback}
+                          isFormVisible={isFormVisible}
+                          isExistingListing={false}
+                          editListingID={editListingID}
+                          setSelectedBuilding={setSelectedBuilding}
+                          selectedBuilding={selectedBuilding}
+                        />
                       </Col>
                     </Row>
+
+                    {isLoadingRepsListings && (
+                      <Spinner animation="border" variant="secondary" />
+                    )}
+
+                    {!isLoadingRepsListings &&
+                      repsListings.filter(
+                        (listing) =>
+                          listing.listingStatus !== listingStatusEnum.ARCHIVED
+                      ).length === 0 && <p>No current listings.</p>}
+                    {!isLoadingRepsListings &&
+                      repsListings.length > 0 &&
+                      repsListings
+                        .filter(
+                          (listing) =>
+                            listing.listingStatus !== listingStatusEnum.ARCHIVED
+                        )
+                        .sort(
+                          (a, b) =>
+                            new Date(b.dateUpdated?.toDate()).getTime() -
+                            new Date(a.dateUpdated?.toDate()).getTime()
+                        )
+                        .map((listing) => (
+                          <Col className="pb-2" key={listing.listingID}>
+                            <ListingCard
+                              listing={listing}
+                              toggleFormCallback={toggleFormCallback}
+                              isFormVisible={isFormVisible}
+                              isExistingListing={true}
+                              editListingID={editListingID}
+                            />
+                          </Col>
+                        ))}
                   </Container>
                 </Tab.Pane>
 
