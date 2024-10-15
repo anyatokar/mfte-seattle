@@ -1,24 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { BuildingName, AddressAndPhone } from "./BuildingContactInfo";
-
-describe("BuildingName Component", () => {
-  test("renders building name with correct link and title", () => {
-    const mockProps = {
-      buildingName: "Test Building",
-      urlForBuilding: "https://example.com",
-    };
-
-    render(<BuildingName {...mockProps} />);
-
-    const buildingLink = screen.getByText(/Test Building/i);
-    expect(buildingLink).toBeInTheDocument();
-    expect(buildingLink).toHaveAttribute("href", mockProps.urlForBuilding);
-    expect(buildingLink).toHaveAttribute(
-      "title",
-      `Open new tab: ${mockProps.urlForBuilding}`
-    );
-  });
-});
+import { AddressAndPhone } from "./BuildingContactInfo";
 
 describe("AddressAndPhone Component", () => {
   test("renders address and phone numbers correctly with links", () => {
@@ -35,15 +16,13 @@ describe("AddressAndPhone Component", () => {
 
     render(<AddressAndPhone {...mockProps} />);
 
-    const addressLink = screen.getByText(/123 Test St/i);
+    const addressLink = screen.getByRole("link", {
+      name: /View on Google Maps/i,
+    });
     expect(addressLink).toBeInTheDocument();
     expect(addressLink).toHaveAttribute(
       "href",
       `https://www.google.com/maps/search/?api=1&query=123%20Test%20St%2C%20Test%20City%2C%20TS%2012345`
-    );
-    expect(addressLink).toHaveAttribute(
-      "title",
-      `Open new tab: Test Building on Google Maps`
     );
 
     const phone1Link = screen.getByText(/555-1234/i);

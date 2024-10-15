@@ -2,13 +2,11 @@ import {
   deleteListingFirestore,
   updateListingFirestore,
 } from "../utils/firestoreUtils";
-import { Timestamp } from "firebase/firestore";
-import { listingMaxDays } from "../config/config";
 import { useAuth } from "../contexts/AuthContext";
 
 import IListing from "../interfaces/IListing";
 
-import { listingStatusEnum } from "../types/enumTypes";
+import { confirmModalTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 
 import Button from "react-bootstrap/esm/Button";
@@ -16,6 +14,10 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/esm/Dropdown";
 import DropdownButton from "react-bootstrap/esm/DropdownButton";
 import { getMaxExpiryDate } from "../utils/generalUtils";
+import { useState } from "react";
+import AreYouSureModal from "./AreYouSureModal";
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -23,61 +25,106 @@ type ListingWithRequired = PartialWithRequired<
 >;
 
 type ListingActionsButtonsPropsType = {
+  isFormVisible: boolean;
+  isExistingListing: boolean;
+  toggleFormCallback: (editListingID: string, clickedSave: boolean) => void;
   listing: ListingWithRequired;
-  isEditing: boolean;
-  setEditingListingID: React.Dispatch<React.SetStateAction<string | null>>;
+  editListingID: string;
 };
 
 const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   listing,
-  isEditing,
-  setEditingListingID,
+  editListingID,
+  isFormVisible,
+  isExistingListing,
+  toggleFormCallback,
 }) => {
+  const [showModal, setShowModal] = useState(false);
   const { currentUser } = useAuth();
 
   if (!currentUser) return;
 
-  const { buildingName, listingID } = listing;
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const handleConfirm = () => {
+    deleteListingFirestore(
+      listing.listingID,
+      listing.buildingName,
+      currentUser.uid
+    );
+
+    handleClose();
+  };
+
+  const onCancelClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    toggleFormCallback(listing.listingID, false);
+  };
 
   const onRenewClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-
-    updateListingFirestore({ expiryDate: getMaxExpiryDate() }, listingID);
+    updateListingFirestore(
+      { expiryDate: getMaxExpiryDate() },
+      listing.listingID
+    );
   };
 
   const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-
     updateListingFirestore(
       {
         listingStatus: listingStatusEnum.ARCHIVED,
         expiryDate: listing.expiryDate,
       },
-      listingID
+      listing.listingID
     );
   };
 
   const onUnarchiveClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-
     updateListingFirestore(
       {
         listingStatus: listingStatusEnum.IN_REVIEW,
         expiryDate: listing.expiryDate,
       },
-      listingID
+      listing.listingID
     );
   };
 
   const onDeleteClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
-    deleteListingFirestore(listingID, buildingName, currentUser.uid);
+    handleShow();
+  };
+
+  const onAddClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    toggleFormCallback("", false);
+  };
+
+  const onEditClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    toggleFormCallback(listing.listingID, false);
   };
 
   return (
     <>
-      {!isEditing && (
+      {/* Show Add Listing only on New Listing Card and if either
+      no form is visible (meaning nay form) 
+      OR a form is visible and it's listing id is blank */}
+      {!isExistingListing &&
+        (!isFormVisible || (isFormVisible && editListingID !== "")) && (
+          <Row>
+            <Col>
+              <Button variant="success" onClick={onAddClick}>
+                Add Listing
+              </Button>
+            </Col>
+          </Row>
+        )}
+      {/* It's an existing listing & this listing is not getting edited */}
+      {listing.listingID !== "" && listing.listingID !== editListingID && (
         <DropdownButton
           id="actions-dropdown-button"
           title="Actions"
@@ -90,10 +137,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
             </Dropdown.Item>
           )}
 
-          <Dropdown.Item
-            eventKey="edit"
-            onClick={() => setEditingListingID(listingID)}
-          >
+          <Dropdown.Item eventKey="edit" onClick={onEditClick}>
             Edit
           </Dropdown.Item>
 
@@ -117,14 +161,18 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
           </Dropdown.Item>
         </DropdownButton>
       )}
-      {isEditing && (
-        <Button
-          variant="outline-danger"
-          onClick={() => setEditingListingID(null)}
-        >
-          Cancel Edit
+      {isFormVisible && editListingID === listing.listingID && (
+        <Button variant="outline-danger" onClick={onCancelClick}>
+          Cancel
         </Button>
       )}
+
+      <AreYouSureModal
+        showModal={showModal}
+        handleClose={handleClose}
+        handleConfirm={handleConfirm}
+        confirmType={confirmModalTypeEnum.DELETE}
+      />
     </>
   );
 };

@@ -2,11 +2,9 @@ import { Profiler, useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
-import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
+import { confirmModalTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import { useAllListings } from "../hooks/useListings";
-import { getRepsListingIDsFirestore } from "../utils/firestoreUtils";
 
-import AddListingWrapper from "../components/AddListingWrapper";
 import ListingCard from "../components/ListingCard";
 import IPage from "../interfaces/IPage";
 
@@ -17,7 +15,9 @@ import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/esm/Spinner";
 import Tab from "react-bootstrap/esm/Tab";
 import Nav from "react-bootstrap/esm/Nav";
-import { useAllBuildings } from "../hooks/useAllBuildings";
+
+import AreYouSureModal from "../components/AreYouSureModal";
+import IBuilding from "../interfaces/IBuilding";
 
 const ManageListingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
@@ -25,38 +25,83 @@ const ManageListingsPage: React.FunctionComponent<
   const { currentUser, accountType } = useAuth();
   const [listingIDs, setListingIDs] = useState<string[] | null>(null);
   const [repsListings, isLoadingRepsListings] = useAllListings(listingIDs);
-  const defaultActiveKey: string = "summary";
+  const defaultActiveKey: string = "viewListings";
   const [activeTab, setActiveTab] = useState<string>(defaultActiveKey);
-
-  const isAddListingTabActive = activeTab === "addListing";
-  let [buildingsAlreadyFetched, setBuildingsAlreadyFetched] = useState(false);
-
-  // Use a state to track which listingID is currently being edited
-  const [editingListingID, setEditingListingID] = useState<string | null>(null);
-
-  const [allBuildings, isLoadingAllBuildings] = useAllBuildings(
-    isAddListingTabActive && !buildingsAlreadyFetched
+  const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
+    null
   );
 
-  useEffect(() => {
-    if (allBuildings.length > 0) setBuildingsAlreadyFetched(true);
-  }, [allBuildings]);
+  // Use a state to track which listingID is currently being edited
+  const [editListingID, setEditListingID] = useState<string>("");
+
+  const [showModal, setShowModal] = useState(false);
+  const [newListingID, setNewListingID] = useState<string>("");
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const handleConfirm = () => {
+    if (newListingID !== editListingID) {
+      console.log("newListingID !== editListingID");
+      console.log(newListingID);
+      console.log(editListingID);
+      setEditListingID(newListingID);
+      setIsFormVisible(true);
+    } else {
+      console.log("newListingID === editListingID");
+      console.log(newListingID);
+      console.log(editListingID);
+      setIsFormVisible(false);
+      setEditListingID("");
+      setSelectedBuilding(null);
+    }
+
+    handleClose();
+  };
+  // newlistingID !== "" means its an edit of an existing listing, if the form is visible
+  function toggleFormCallback(listingID: string, clickedSave: boolean) {
+    if (clickedSave) {
+      console.log("clicked save");
+      setIsFormVisible(false);
+      console.log(listingID);
+      setNewListingID("");
+      setEditListingID("");
+      setSelectedBuilding(null);
+      // A switch from Edit to another Edit
+    } else if (isFormVisible && listingID !== editListingID) {
+      console.log("A switch from Edit to another Edit");
+      setNewListingID(listingID);
+      handleShow();
+      // From open to closed
+    } else if (isFormVisible) {
+      console.log("From open to closed");
+
+      // setNewListingID("");
+      handleShow();
+    } else {
+      // From closed to open
+      console.log("From closed to open");
+
+      setIsFormVisible(true);
+
+      setEditListingID(listingID);
+    }
+  }
 
   useEffect(() => {
     const fetchListingIDs = async () => {
-      if (!currentUser) return;
-      const listingIDs = await getRepsListingIDsFirestore(currentUser.uid);
+      // if (!currentUser) return;
+      // const listingIDs = await getRepsListingIDsFirestore(currentUser.uid);
       setListingIDs(listingIDs);
     };
 
     fetchListingIDs();
   }, []);
 
-  if (!currentUser || accountType !== accountTypeEnum.MANAGER) {
-    return null;
-  }
-
-  let isLoading = isLoadingRepsListings;
+  // if (!currentUser || accountType !== accountTypeEnum.MANAGER) {
+  //   return null;
+  // }
 
   function getCount(label: listingStatusEnum): number {
     return repsListings.filter((listing) => listing.listingStatus === label)
@@ -116,7 +161,7 @@ const ManageListingsPage: React.FunctionComponent<
           activeKey={activeTab}
           onSelect={(key) => {
             setActiveTab(key as string);
-            setEditingListingID(null); // Reset editing state when changing tabs
+            setEditListingID(""); // Reset editing state when changing tabs
           }}
         >
           <Row>
@@ -130,11 +175,6 @@ const ManageListingsPage: React.FunctionComponent<
                 <Nav.Item>
                   <Nav.Link eventKey="viewListings" className="tab">
                     Current
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="addListing" className="tab">
-                    Add
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
@@ -162,7 +202,7 @@ const ManageListingsPage: React.FunctionComponent<
                               <tr key={tableRow.listingStatus}>
                                 <td>{tableRow.label}</td>
                                 <td>
-                                  {isLoading
+                                  {isLoadingRepsListings
                                     ? "--"
                                     : getCount(tableRow.listingStatus)}
                                 </td>
@@ -179,17 +219,32 @@ const ManageListingsPage: React.FunctionComponent<
                   <Container fluid>
                     <Row>
                       <Col>
-                        {isLoading && (
+                        {/* TODO: Pull out into a new component to reuse with archived */}
+                        <Row className="pb-3">
+                          <Col>
+                            <ListingCard
+                              listing={null}
+                              toggleFormCallback={toggleFormCallback}
+                              isFormVisible={isFormVisible}
+                              isExistingListing={false}
+                              editListingID={editListingID}
+                              setSelectedBuilding={setSelectedBuilding}
+                              selectedBuilding={selectedBuilding}
+                            />
+                          </Col>
+                        </Row>
+
+                        {isLoadingRepsListings && (
                           <Spinner animation="border" variant="secondary" />
                         )}
-                        {/* TODO: Pull out into a new component to reuse with archived */}
-                        {!isLoading &&
+
+                        {!isLoadingRepsListings &&
                           repsListings.filter(
                             (listing) =>
                               listing.listingStatus !==
                               listingStatusEnum.ARCHIVED
                           ).length === 0 && <p>Empty for now!</p>}
-                        {!isLoading &&
+                        {!isLoadingRepsListings &&
                           repsListings.length > 0 &&
                           repsListings
                             .filter(
@@ -206,10 +261,10 @@ const ManageListingsPage: React.FunctionComponent<
                               <Col className="pb-2" key={listing.listingID}>
                                 <ListingCard
                                   listing={listing}
-                                  isEditing={
-                                    editingListingID === listing.listingID
-                                  }
-                                  setEditingListingID={setEditingListingID}
+                                  toggleFormCallback={toggleFormCallback}
+                                  isFormVisible={isFormVisible}
+                                  isExistingListing={true}
+                                  editListingID={editListingID}
                                 />
                               </Col>
                             ))}
@@ -219,10 +274,13 @@ const ManageListingsPage: React.FunctionComponent<
                 </Tab.Pane>
 
                 <Tab.Pane eventKey="addListing">
-                  <AddListingWrapper
-                    allBuildings={allBuildings}
-                    isEditing={isAddListingTabActive}
-                    setEditingListingID={setEditingListingID}
+                  <ListingCard
+                    isFormVisible={isFormVisible}
+                    listing={null}
+                    toggleFormCallback={toggleFormCallback}
+                    isExistingListing={false}
+                    editListingID={editListingID}
+                    selectedBuilding={selectedBuilding}
                   />
                 </Tab.Pane>
 
@@ -230,16 +288,16 @@ const ManageListingsPage: React.FunctionComponent<
                   <Container fluid>
                     <Row>
                       <Col>
-                        {isLoading && (
+                        {isLoadingRepsListings && (
                           <Spinner animation="border" variant="secondary" />
                         )}
-                        {!isLoading &&
+                        {!isLoadingRepsListings &&
                           repsListings.filter(
                             (listing) =>
                               listing.listingStatus ===
                               listingStatusEnum.ARCHIVED
-                          ).length === 0 && <p>No archived listings</p>}
-                        {!isLoading &&
+                          ).length === 0 && <p>Archived list is empty.</p>}
+                        {!isLoadingRepsListings &&
                           repsListings.length > 0 &&
                           repsListings
                             .filter(
@@ -256,10 +314,13 @@ const ManageListingsPage: React.FunctionComponent<
                               <Col className="pb-2" key={listing.listingID}>
                                 <ListingCard
                                   listing={listing}
-                                  isEditing={
-                                    editingListingID === listing.listingID
-                                  }
-                                  setEditingListingID={setEditingListingID}
+                                  // showListingForm={
+                                  //   editListingID === listing.listingID
+                                  // }
+                                  isFormVisible={isFormVisible}
+                                  editListingID={editListingID}
+                                  toggleFormCallback={toggleFormCallback}
+                                  isExistingListing={true}
                                 />
                               </Col>
                             ))}
@@ -272,6 +333,12 @@ const ManageListingsPage: React.FunctionComponent<
           </Row>
         </Tab.Container>
       </Container>
+      <AreYouSureModal
+        showModal={showModal}
+        handleClose={handleClose}
+        handleConfirm={handleConfirm}
+        confirmType={confirmModalTypeEnum.CANCEL}
+      />
     </Profiler>
   );
 };

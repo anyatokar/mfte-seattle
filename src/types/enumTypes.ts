@@ -22,3 +22,8 @@ export enum accountTypeEnum {
   MANAGER = "manager",
   LURKER = "lurker",
 }
+
+export enum confirmModalTypeEnum {
+  DELETE = "delete",
+  CANCEL = "cancel",
+}

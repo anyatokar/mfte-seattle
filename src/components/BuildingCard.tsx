@@ -229,7 +229,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                   <BuildingDataTable
                     type={tableType.availData}
                     data={listing.availData}
-                    isEditing={false}
+                    showListingForm={false}
                   />
                   <ListingButton listing={listing} isMarker={false} />
                 </Tab>

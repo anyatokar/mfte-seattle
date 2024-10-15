@@ -63,12 +63,13 @@ export async function deleteBuilding(
 }
 
 export async function addListingFirestore(
+  buildingName: string,
   formFields: Partial<IListing>,
   buildingID: string,
   uid: string
 ) {
   const listing: IListing = {
-    buildingName: formFields.buildingName || "",
+    buildingName: buildingName || "",
     url: formFields.url || "",
     availData: formFields.availData || [],
     message: formFields.message || "",
@@ -79,32 +80,43 @@ export async function addListingFirestore(
     expiryDate: formFields.expiryDate || getMaxExpiryDate(),
     listingID: "",
   };
+  try {
+    // Create a new document reference with an auto-generated ID
+    const listingDocRef = doc(collection(db, "listingsTEST"));
 
-  // Create a new document reference with an auto-generated ID
-  const listingDocRef = doc(collection(db, "listingsTEST"));
-  // Set the document and include the listingID field
-  await setDoc(listingDocRef, {
-    ...listing,
-    listingID: listingDocRef.id,
-  });
+    // Set the document and include the listingID field
+    await setDoc(listingDocRef, {
+      ...listing,
+      listingID: listingDocRef.id,
+    });
 
-  // Add the new listingID to the rep's listingIDs array
-  const companyRepRef = doc(db, "companyReps", uid);
-  await updateDoc(companyRepRef, {
-    listingIDs: arrayUnion(listingDocRef.id),
-  });
+    // Add the new listingID to the rep's listingIDs array
+    const companyRepRef = doc(db, "companyReps", uid);
+    await updateDoc(companyRepRef, {
+      listingIDs: arrayUnion(listingDocRef.id),
+    });
+    return true;
+  } catch (error) {
+    console.error("Error adding listing or updating company rep:", error);
+    return false;
+  }
 }
-
 export async function updateListingFirestore(
   fieldsToUpdate: Partial<IListing>,
   listingID: string
 ) {
-  const listingDocRef = doc(db, "listingsTEST", listingID);
-  await updateDoc(listingDocRef, {
-    ...fieldsToUpdate,
-    dateUpdated: Timestamp.fromDate(new Date()),
-    expiryDate: fieldsToUpdate.expiryDate || getMaxExpiryDate(),
-  });
+  try {
+    const listingDocRef = doc(db, "listingsTEST", listingID);
+    await updateDoc(listingDocRef, {
+      ...fieldsToUpdate,
+      dateUpdated: Timestamp.fromDate(new Date()),
+      expiryDate: fieldsToUpdate.expiryDate || getMaxExpiryDate(),
+    });
+    return true;
+  } catch (error) {
+    console.error("Error updating listing:", error);
+    return false;
+  }
 }
 
 export async function deleteListingFirestore(

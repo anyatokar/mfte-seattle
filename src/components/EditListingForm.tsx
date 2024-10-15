@@ -23,54 +23,22 @@ type ListingWithRequired = PartialWithRequired<
 
 type EditListingFormProps = {
   listing: ListingWithRequired;
-  setEditingListingID: React.Dispatch<React.SetStateAction<string | null>>;
-  allBuildings?: IBuilding[];
-  setWasNewListingSubmitted?: React.Dispatch<React.SetStateAction<boolean>>;
+  // allBuildings: IBuilding[]
+  selectedBuilding: IBuilding | null;
+  isExistingListing: boolean;
+  toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
   listing,
-  allBuildings = [],
-  setEditingListingID,
-  setWasNewListingSubmitted,
+  // allBuildings,
+  isExistingListing,
+  toggleFormCallback,
+  selectedBuilding,
 }) => {
   const { availData, url, expiryDate, listingID, buildingID } = listing;
 
-  const isNewListing = !listingID;
-
-  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>();
-
-  const originalFormFields: Partial<ListingWithRequired> = {
-    availData: availData.map((availDataForUnitSize) => ({
-      unitSize: availDataForUnitSize.unitSize,
-      numAvail: availDataForUnitSize.numAvail,
-      dateAvail: availDataForUnitSize?.dateAvail,
-    })),
-    url: url,
-    expiryDate: expiryDate,
-  };
-
-  const [formFields, setFormFields] = useState(originalFormFields);
-
-  const { currentUser } = useAuth();
-
-  if (!currentUser) return null;
-
-  const onSelectBuildingChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const { name, value } = event.target;
-    // This assumes building names are unique.
-    const selectedBuilding = allBuildings.find(
-      (building) => value === building.buildingName
-    );
-
-    setSelectedBuilding(selectedBuilding || null);
-    setFormFields((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  // const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>();
 
   const unitSizeLabels = {
     micro: "Micro/Pods",
@@ -87,6 +55,31 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     "twoBed",
     "threePlusBed",
   ];
+
+  const originalFormFields: Partial<ListingWithRequired> = {
+    // buildingName: selectedBuilding?.buildingName || "",
+    // buildingID: selectedBuilding?.buildingID || "",
+    availData:
+      availData.length > 0
+        ? availData.map((availDataForUnitSize) => ({
+            unitSize: availDataForUnitSize.unitSize,
+            numAvail: availDataForUnitSize.numAvail,
+            dateAvail: availDataForUnitSize?.dateAvail || "",
+          }))
+        : unitSizeFields.map((unitSize) => ({
+            unitSize: unitSize,
+            numAvail: 0,
+            dateAvail: "",
+          })),
+    url: url,
+    expiryDate: expiryDate,
+  };
+
+  const [formFields, setFormFields] = useState(originalFormFields);
+
+  const { currentUser } = useAuth();
+
+  if (!currentUser) return null;
 
   // If this is a new listing, creates blanks for availData
   if (availData.length === 0) {
@@ -123,46 +116,48 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   ) => {
     event.preventDefault();
 
-    if (isNewListing) {
-      await addListingFirestore(formFields, buildingID, currentUser.uid);
-    } else {
-      await updateListingFirestore(formFields, listingID);
+    if (!formFields) return;
+
+    const isValid = formFields.availData?.some(
+      (row) => row.numAvail > 0 && row.dateAvail
+    );
+
+    if (!isValid) {
+      alert(
+        "Please add at least one quantity and date to the availability table"
+      );
+      return;
     }
 
-    setEditingListingID(null);
-    // Only passed for new listing form.
-    if (setWasNewListingSubmitted) setWasNewListingSubmitted(true);
+    if (!isExistingListing) {
+      const isSuccessful = await addListingFirestore(
+        selectedBuilding?.buildingName || "",
+        formFields,
+
+        buildingID,
+        currentUser.uid
+      );
+      if (isSuccessful) {
+        console.log(
+          `Successfully added listing for ${formFields.buildingName}, with listingID: ${listingID}`
+        );
+        toggleFormCallback("", true);
+      }
+    } else {
+      const isSuccessful = await updateListingFirestore(formFields, listingID);
+      if (isSuccessful) {
+        console.log(
+          `Successfully updated listing for ${formFields.buildingName}, listingID: ${listingID}`
+        );
+        toggleFormCallback(listingID, true);
+      }
+    }
   };
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      {isNewListing && (
+      {!isExistingListing && (
         <>
-          <Form.Group as={Row} className={selectedBuilding ? "mb-2" : "mb-3"}>
-            <Form.Group as={Col} md={6} className="mb-0 mb-md-0">
-              <Form.Label>Building Name*</Form.Label>
-              <Form.Select
-                required
-                name="buildingName"
-                id="buildingName"
-                onChange={onSelectBuildingChange}
-                value={formFields.buildingName}
-              >
-                <option value="">Select a building</option>
-                {allBuildings
-                  .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
-                  .map((selectedBuilding) => (
-                    <option
-                      key={selectedBuilding.buildingID}
-                      value={selectedBuilding.buildingName}
-                    >
-                      {selectedBuilding.buildingName}
-                    </option>
-                  ))}
-              </Form.Select>
-            </Form.Group>
-          </Form.Group>
-
           {/* Address */}
           {selectedBuilding && (
             <Form.Group as={Row} className="mb-0">
@@ -186,6 +181,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       {/* Table */}
       <Form.Group as={Row} className="mb-3">
         <Form.Group as={Col} className="mb-0 mb-md-0">
+          <Form.Label>Availability* (at least one row required)</Form.Label>
           <Table bordered hover responsive size="sm" className="mt-0">
             <thead>
               <tr>
@@ -244,8 +240,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       {/* Expiry Date */}
       <Form.Group as={Row} className="mb-3">
+        <Form.Label>Listing Expiration Date (up to 60 days)</Form.Label>
         <Form.Group as={Col} md={6} className="mb-0 mb-md-0">
-          <Form.Label>Listing Expiration Date (max 60 days)</Form.Label>
           <Form.Control
             type="date"
             name="expiryDate"
@@ -260,27 +256,23 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       {!listingID && (
         <Form.Group as={Row} className="mb-3">
           <Form.Group as={Col} className="mb-0 mb-md-0">
-            <Form.Label>
-              Any additional notes (questions and feedback welcome)
-            </Form.Label>
+            <Form.Label>Comments (max 200 characters)</Form.Label>
             <Form.Control
               as="textarea"
               name="message"
               id="message"
-              rows={5}
+              rows={2}
               onChange={handleInputChange}
               value={formFields.message}
+              maxLength={200}
             />
           </Form.Group>
         </Form.Group>
       )}
 
-      <Form.Group
-        as={Col}
-        className="d-flex justify-content-start justify-content-md-end align-items-end"
-      >
-        <Button variant="success" type="submit">
-          Save Changes
+      <Form.Group as={Col} className="text-end">
+        <Button variant="success" type="submit" size="lg">
+          Save
         </Button>
       </Form.Group>
     </Form>

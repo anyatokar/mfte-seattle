@@ -13,7 +13,7 @@ interface AmiDataProps {
 interface AvailDataProps {
   type: tableType.availData;
   data: availDataType[];
-  isEditing: boolean;
+  showListingForm: boolean;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
@@ -46,7 +46,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
   return (
     <>
-      {type === tableType.availData && props.isEditing && <p>Editing</p>}
+      {/* {type === tableType.availData && props.showListingForm && <p>Editing</p>} */}
       <Table bordered hover size="sm" className="mt-0" responsive>
         <thead>
           <tr>
