@@ -50,8 +50,8 @@ const ManageListingsPage: React.FunctionComponent<
   const handleShow = () => setShowModal(true);
 
   const handleConfirm = () => {
-    if (newListingID !== editListingID) {
-      console.log(newListingID !== "" || "newListingID !== editListingID");
+    if (newListingID !== "" && newListingID !== editListingID) {
+      console.log(`newListingID !== "" && "newListingID !== editListingID"`);
       setEditListingID(newListingID);
       setIsFormVisible(true);
     } else {
@@ -165,7 +165,6 @@ const ManageListingsPage: React.FunctionComponent<
           activeKey={activeTab}
           onSelect={(key) => {
             setActiveTab(key as string);
-            setEditListingID(""); // Reset editing state when changing tabs
           }}
         >
           <Row>
@@ -318,9 +317,6 @@ const ManageListingsPage: React.FunctionComponent<
                               <Col className="pb-2" key={listing.listingID}>
                                 <ListingCard
                                   listing={listing}
-                                  // showListingForm={
-                                  //   editListingID === listing.listingID
-                                  // }
                                   isFormVisible={isFormVisible}
                                   editListingID={editListingID}
                                   toggleFormCallback={toggleFormCallback}
