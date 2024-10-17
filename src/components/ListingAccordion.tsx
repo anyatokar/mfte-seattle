@@ -37,8 +37,8 @@ const ListingAccordion: React.FC = () => {
             <p>
               In list view, buildings with available units are shown at the top.
               Each listing includes a link to the building’s listing page, as
-              well as details on the number of available units and the earliest
-              availability date.
+              well as details on the number of available units, the earliest
+              availability date, maximum rent, and a short description.
             </p>
           </Accordion.Body>
         </Accordion.Item>
