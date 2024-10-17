@@ -5,7 +5,10 @@ import { db } from "../db/firebase";
 
 import IListing from "../interfaces/IListing";
 
-export function useAllListings(managerID?: string): [IListing[], boolean] {
+export function useAllListings(
+  omitExpired: boolean,
+  managerID?: string
+): [IListing[], boolean] {
   const [allListings, setAllListings] = useState([] as Array<IListing>);
   const [isLoadingAllListings, setIsLoadingAllListings] = useState(false);
 
@@ -21,12 +24,22 @@ export function useAllListings(managerID?: string): [IListing[], boolean] {
         listings.push(doc.data() as IListing);
       });
 
+      // Filter out expired listings for map pages
+      if (omitExpired) {
+        const nonExpiredListings = listings.filter(
+          (listing) => new Date(listing.expiryDate) < new Date()
+        );
+        setAllListings(nonExpiredListings);
+      } else {
+        setAllListings(listings);
+      }
+
       // Filter by managerID if provided
       if (managerID) {
-        const filteredListings = listings.filter(
+        const managersListings = listings.filter(
           (listing) => listing.managerID === managerID
         );
-        setAllListings(filteredListings);
+        setAllListings(managersListings);
       } else {
         setAllListings(listings);
       }

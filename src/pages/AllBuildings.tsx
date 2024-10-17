@@ -31,7 +31,7 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
 }) => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildings();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
-  let [allListings, isLoadingAllListings] = useAllListings();
+  let [allListings, isLoadingAllListings] = useAllListings(true);
 
   // search, filter
   const [searchQuery, setSearchQuery] = useState<string>("");

@@ -23,7 +23,7 @@ const SavedBuildingsPage: React.FunctionComponent<
 > = ({ name }) => {
   const { currentUser, accountType } = useAuth();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
-  const [allListings, isLoadingAllListings] = useAllListings();
+  const [allListings, isLoadingAllListings] = useAllListings(true);
 
   if (!currentUser || accountType !== accountTypeEnum.RENTER) {
     return null;

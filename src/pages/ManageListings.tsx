@@ -31,6 +31,7 @@ const ManageListingsPage: React.FunctionComponent<
 
   // TODO: Is use all listings being called too much?
   const [repsListings, isLoadingRepsListings] = useAllListings(
+    false,
     currentUser?.uid
   );
   const defaultActiveKey: string = "viewListings";

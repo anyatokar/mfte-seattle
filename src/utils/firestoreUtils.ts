@@ -69,7 +69,7 @@ export async function addListingFirestore(
   formFields: Partial<IListing>,
   buildingID: string,
   uid: string
-) {
+): Promise<string> {
   const listing: IListing = {
     buildingName: buildingName || "",
     url: formFields.url || "",
@@ -93,10 +93,10 @@ export async function addListingFirestore(
       listingID: listingDocRef.id,
     });
 
-    return true;
+    return listingDocRef.id;
   } catch (error) {
     console.error("Error adding listing or updating company rep:", error);
-    return false;
+    return "";
   }
 }
 export async function updateListingFirestore(

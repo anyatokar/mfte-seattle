@@ -130,16 +130,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     }
 
     if (!isExistingListing) {
-      const isSuccessful = await addListingFirestore(
+      const listingID = await addListingFirestore(
         selectedBuilding?.buildingName || "",
         formFields,
 
-        buildingID,
+        selectedBuilding?.buildingID || "",
         currentUser.uid
       );
-      if (isSuccessful) {
+      if (listingID) {
         console.log(
-          `Successfully added listing for ${formFields.buildingName}, with listingID: ${listingID}`
+          `Successfully added listing for ${selectedBuilding?.buildingName}, with listingID: ${listingID}`
         );
         toggleFormCallback("", true);
       }
@@ -147,7 +147,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       const isSuccessful = await updateListingFirestore(formFields, listingID);
       if (isSuccessful) {
         console.log(
-          `Successfully updated listing for ${formFields.buildingName}, listingID: ${listingID}`
+          `Successfully updated listing for ${selectedBuilding?.buildingName}, listingID: ${listingID}`
         );
         toggleFormCallback(listingID, true);
       }
