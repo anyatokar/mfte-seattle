@@ -171,7 +171,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
         showModal={showModal}
         handleClose={handleClose}
         handleConfirm={handleConfirm}
-        confirmType={confirmModalTypeEnum.DELETE}
+        confirmType={confirmModalTypeEnum.LISTING_DELETE}
       />
     </>
   );

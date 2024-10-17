@@ -15,7 +15,8 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { checkPassword } from "../utils/generalUtils";
-import { accountTypeEnum } from "../types/enumTypes";
+import { accountTypeEnum, confirmModalTypeEnum } from "../types/enumTypes";
+import AreYouSureModal from "../components/AreYouSureModal";
 
 type UpdateProfileProps = {
   jobTitle?: string;
@@ -193,9 +194,12 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({
       });
   }
 
-  function onDelete(event: any) {
-    event.preventDefault();
+  const [showModal, setShowModal] = useState(false);
 
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const handleConfirm = () => {
     deleteUserFirestore(currentUser?.uid, accountType)
       .then(() => {
         console.log("User successfully deleted from Firestore");
@@ -222,6 +226,14 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({
         console.error("Did not attempt to remove user from Auth.");
         setError(error.message);
       });
+
+    handleClose();
+  };
+
+  function onDelete(event: React.MouseEvent<HTMLElement>) {
+    event.preventDefault();
+
+    handleShow();
   }
 
   return (
@@ -285,6 +297,13 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({
                         onChange={handleChange}
                       />
                     </Form.Group>
+
+                    {accountType === accountTypeEnum.MANAGER && (
+                      <Card.Text>
+                        <strong>Account Type: </strong>
+                        Manager
+                      </Card.Text>
+                    )}
                   </>
                 )}
 
@@ -338,6 +357,12 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({
           </Card>
         </Col>
       </Row>
+      <AreYouSureModal
+        showModal={showModal}
+        handleClose={handleClose}
+        handleConfirm={handleConfirm}
+        confirmType={confirmModalTypeEnum.ACCOUNT_DELETE}
+      />
     </Container>
   );
 };

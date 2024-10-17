@@ -87,13 +87,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
     buildingID,
   } = listing;
 
-  type badgeObjectType = { label: string; bg: string };
+  type badgeObjectType = { label: string; bg: string; text?: string };
 
   const statusBadgeMap: {
     [key in listingStatusEnum]: badgeObjectType;
   } = {
     [listingStatusEnum.ACTIVE]: { label: "Active", bg: "success" },
-    [listingStatusEnum.IN_REVIEW]: { label: "In Review", bg: "info" },
+    [listingStatusEnum.IN_REVIEW]: {
+      label: "In Review",
+      bg: "info",
+      text: "dark",
+    },
     [listingStatusEnum.ARCHIVED]: { label: "Archived", bg: "secondary" },
     [listingStatusEnum.NEEDS_ATTENTION]: {
       label: "Needs Attention",
@@ -108,17 +112,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
     [expiryBadgeEnum.EXPIRING_SOON]: {
       label: "Expiring Soon",
       bg: "warning",
+      text: "dark",
     },
   };
 
-  const [statusBadge, setStatusBadge] = useState<{
-    label: string;
-    bg: string;
-  } | null>(null);
-  const [expiryBadge, setExpiryBadge] = useState<{
-    label: string;
-    bg: string;
-  } | null>(null);
+  const [statusBadge, setStatusBadge] = useState<badgeObjectType | null>(null);
+
+  const [expiryBadge, setExpiryBadge] = useState<badgeObjectType | null>(null);
 
   useEffect(() => {
     function getStatusBadge() {
@@ -171,7 +171,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
               <div className="d-flex align-items-center">
                 <span>{buildingName}</span>
                 {statusBadge && (
-                  <Badge pill bg={statusBadge.bg} className="ms-2">
+                  <Badge
+                    pill
+                    bg={statusBadge.bg}
+                    text={statusBadge.text}
+                    className="ms-2"
+                  >
                     {statusBadge.label}
                   </Badge>
                 )}
@@ -255,7 +260,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   <strong className="me-1">Expires:</strong>
                   {formatDate(expiryDate)}
                   {expiryBadge && (
-                    <Badge pill bg={expiryBadge.bg} className="ms-2">
+                    <Badge
+                      pill
+                      bg={expiryBadge.bg}
+                      text={expiryBadge.text}
+                      className="ms-2"
+                    >
                       {expiryBadge.label}
                     </Badge>
                   )}

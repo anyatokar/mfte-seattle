@@ -329,7 +329,7 @@ const ManageListingsPage: React.FunctionComponent<
         showModal={showModal}
         handleClose={handleClose}
         handleConfirm={handleConfirm}
-        confirmType={confirmModalTypeEnum.CANCEL}
+        confirmType={confirmModalTypeEnum.LISTING_CANCEL_EDIT}
       />
     </Profiler>
   );

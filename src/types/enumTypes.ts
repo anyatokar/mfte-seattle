@@ -26,6 +26,7 @@ export enum accountTypeEnum {
 }
 
 export enum confirmModalTypeEnum {
-  DELETE = "delete",
-  CANCEL = "cancel",
+  LISTING_DELETE = "listingDelete",
+  LISTING_CANCEL_EDIT = "listingCancelEdit",
+  ACCOUNT_DELETE = "accountDelete",
 }

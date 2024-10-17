@@ -44,6 +44,12 @@ const Profile: React.FC<ProfileProps> = ({ jobTitle, companyName }) => {
                   {companyName}
                 </Card.Text>
               )}
+              {accountType === accountTypeEnum.MANAGER && (
+                <Card.Text>
+                  <strong>Account Type: </strong>
+                  Manager
+                </Card.Text>
+              )}
             </Card.Body>
           </Card>
         </Col>

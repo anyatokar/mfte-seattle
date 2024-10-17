@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/esm/Modal";
 import { confirmModalTypeEnum } from "../types/enumTypes";
+import { useEffect, useState } from "react";
 
 type AreYouSureModalProps = {
   showModal: boolean;
@@ -14,28 +15,38 @@ const AreYouSureModal: React.FunctionComponent<AreYouSureModalProps> = ({
   handleConfirm,
   confirmType,
 }) => {
-  function getHeader() {
-    if (confirmType === confirmModalTypeEnum.CANCEL) {
-      return "Confirm Cancel";
-    } else if (confirmType === confirmModalTypeEnum.DELETE) {
-      return "Confirm Delete";
-    }
-  }
+  type ModalText = {
+    header: string;
+    body: string;
+  };
 
-  function getText() {
-    if (confirmType === confirmModalTypeEnum.CANCEL) {
-      return "Are you sure you want to cancel any unsaved changes?";
-    } else if (confirmType === confirmModalTypeEnum.DELETE) {
-      return "Are you sure you want to delete this listing? This can't be undone. You may choose to archive it instead.";
-    }
-  }
+  const modalTextLookup: { [key in confirmModalTypeEnum]: ModalText } = {
+    [confirmModalTypeEnum.LISTING_CANCEL_EDIT]: {
+      header: "Confirm Cancel",
+      body: "Are you sure you want to cancel any unsaved changes?",
+    },
+    [confirmModalTypeEnum.LISTING_DELETE]: {
+      header: "Confirm Delete",
+      body: "Are you sure you want to delete this listing? This can't be undone. You may choose to archive it instead.",
+    },
+    [confirmModalTypeEnum.ACCOUNT_DELETE]: {
+      header: "Confirm Delete Account",
+      body: "Are you sure you want to delete your account? This can't be undone.",
+    },
+  };
+
+  const [modalText, setModalText] = useState<ModalText | null>(null);
+
+  useEffect(() => {
+    setModalText(modalTextLookup[confirmType]);
+  }, []);
 
   return (
     <Modal show={showModal} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{getHeader()}</Modal.Title>
+        <Modal.Title>{modalText?.header}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{getText()}</Modal.Body>
+      <Modal.Body>{modalText?.body}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Go Back
