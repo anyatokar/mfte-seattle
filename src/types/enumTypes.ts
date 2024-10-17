@@ -23,7 +23,6 @@ export enum expiryBadgeEnum {
 export enum accountTypeEnum {
   RENTER = "renter",
   MANAGER = "manager",
-  LURKER = "lurker",
 }
 
 export enum confirmModalTypeEnum {
