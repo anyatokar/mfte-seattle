@@ -12,12 +12,16 @@ import {
 } from "firebase/firestore";
 
 import { contactUsFormFieldsType } from "../pages/Contact";
-import { SignupAuthDataType } from "../contexts/AuthContext";
 import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
+import {
+  IManagerSignupAuthData,
+  IUserSignupAuthData,
+  SignupAuthDataType,
+} from "../interfaces/IUser";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -136,31 +140,14 @@ export async function deleteListingFirestore(
 export async function getManagerProfileFirestore(
   uid: string
 ): Promise<DocumentData | null> {
-  const userDocRef = doc(db, "companyReps", uid);
+  const userDocRef = doc(db, "managers", uid);
   const userDocSnap = await getDoc(userDocRef);
 
   try {
     if (userDocSnap.exists()) {
       return userDocSnap.data();
     } else {
-      console.log(`No user in "companyReps" with uid ${uid}`);
-      return null;
-    }
-  } catch (error: any) {
-    console.error(`Error getting data for user ${uid}:`, error);
-    return null;
-  }
-}
-
-export async function getNameFirestore(uid: string): Promise<string | null> {
-  const userDocRef = doc(db, "users", uid);
-  const userDocSnap = await getDoc(userDocRef);
-
-  try {
-    if (userDocSnap.exists()) {
-      return userDocSnap.data().name;
-    } else {
-      console.log(`No user in "users" with uid ${uid}`);
+      console.log(`No user in "managers" with uid ${uid}`);
       return null;
     }
   } catch (error: any) {
@@ -173,11 +160,11 @@ export async function getAccountTypeFirestore(
   uid: string
 ): Promise<accountTypeEnum | null> {
   const userDocRef = doc(db, "users", uid);
-  const companyRepDocRef = doc(db, "companyReps", uid);
+  const managerDocRef = doc(db, "managers", uid);
 
   try {
     const userDocSnap = await getDoc(userDocRef);
-    const companyUserDocSnap = await getDoc(companyRepDocRef);
+    const companyUserDocSnap = await getDoc(managerDocRef);
 
     if (userDocSnap.exists()) {
       return accountTypeEnum.RENTER;
@@ -193,38 +180,34 @@ export async function getAccountTypeFirestore(
   }
 }
 
-export async function updateNameFirestore(
-  uid: string | undefined,
-  name: string
-) {
+export type UpdateData = {
+  uid: string | undefined;
+  accountType: accountTypeEnum | null;
+  key: keyof IManagerSignupAuthData | keyof IUserSignupAuthData;
+  value: string;
+};
+
+export async function updateProfileFirestore(updateData: UpdateData) {
+  const { uid, accountType, key, value } = updateData;
+
   if (!uid) {
     return;
   }
 
-  // TODO: Will need to add companyReps
   const userDocRef = doc(db, "users", uid);
+  const managerDocRef = doc(db, "managers", uid);
 
-  await updateDoc(userDocRef, {
-    name: name,
-    updateNameTimestamp: new Date(),
-  });
-}
-
-export async function updateEmailFirestore(
-  uid: string | undefined,
-  email: string
-) {
-  if (!uid) {
-    return;
+  if (accountType === accountTypeEnum.RENTER) {
+    await updateDoc(userDocRef, {
+      [key]: value,
+      updateNameTimestamp: new Date(),
+    });
+  } else if (accountType === accountTypeEnum.MANAGER) {
+    await updateDoc(managerDocRef, {
+      [key]: value,
+      updateNameTimestamp: new Date(),
+    });
   }
-
-  // TODO: Will need to add companyReps
-  const userDocRef = doc(db, "users", uid);
-
-  await updateDoc(userDocRef, {
-    email: email,
-    updateEmailTimestamp: new Date(),
-  });
 }
 
 export async function sendMessageFirestore(
@@ -259,42 +242,49 @@ export async function addNote(
   });
 }
 
-export async function deleteUserFirestore(uid: string | undefined) {
+export async function deleteUserFirestore(
+  uid: string | undefined,
+  accountType: accountTypeEnum | null
+) {
   if (!uid) {
     return;
   }
 
-  // TODO: Maybe pass the account type to save a db call
-  await deleteDoc(doc(db, "users", uid));
-  await deleteDoc(doc(db, "companyReps", uid));
+  if (accountType === accountTypeEnum.MANAGER) {
+    await deleteDoc(doc(db, "managers", uid));
+  } else if (accountType === accountTypeEnum.RENTER) {
+    await deleteDoc(doc(db, "users", uid));
+  }
 }
 
 export async function signupFirestore(signupAuthData: SignupAuthDataType) {
-  const { uid, isCompany } = signupAuthData;
+  const { uid, accountType } = signupAuthData;
 
   if (!uid) return;
 
-  if (isCompany) {
+  if (accountType === accountTypeEnum.MANAGER) {
     const { email, name, uid, companyName, jobTitle } = signupAuthData;
-    const companyRepDocRef = doc(db, "companyReps", uid);
-    await setDoc(companyRepDocRef, {
+    const managerDocRef = doc(db, "managers", uid);
+    await setDoc(managerDocRef, {
+      accountType: accountType,
       uid: uid,
       email: email,
       name: name,
       signupTimestamp: new Date(),
       companyName: companyName,
       jobTitle: jobTitle,
-    });
-  } else {
+    } as Omit<IManagerSignupAuthData, "password">);
+  } else if (accountType === accountTypeEnum.RENTER) {
     const { email, name, uid } = signupAuthData;
     const userDocRef = doc(db, "users", uid);
     await setDoc(userDocRef, {
+      accountType: accountType,
       uid: uid,
       email: email,
       name: name,
       signupOrBackfillTimestamp: new Date(),
       // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
       recentUser: true,
-    });
+    } as Omit<IUserSignupAuthData, "password">);
   }
 }

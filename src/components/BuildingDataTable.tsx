@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { tableType } from "../types/enumTypes";
 import { amiPercentageType, amiDataType } from "../interfaces/IBuilding";
-import { availDataType } from "../interfaces/IListing";
+import { AvailData } from "../interfaces/IListing";
 import Table from "react-bootstrap/Table";
 import { formatDate } from "../utils/generalUtils";
 
@@ -12,7 +12,7 @@ interface AmiDataProps {
 
 interface AvailDataProps {
   type: tableType.availData;
-  data: availDataType[];
+  data: AvailData[];
   showListingForm: boolean;
 }
 
@@ -70,7 +70,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               );
             })}
           {type === tableType.availData &&
-            (data as availDataType[]).map((availData) => {
+            (data as AvailData[]).map((availData) => {
               if (!availData) return null;
 
               const { unitSize, numAvail, dateAvail } = availData;

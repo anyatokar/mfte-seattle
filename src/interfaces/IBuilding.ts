@@ -1,10 +1,10 @@
 import { Timestamp } from "firebase/firestore";
-import { unitSizeType } from "./IListing";
+import { UnitSize } from "./IListing";
 
 export type amiPercentageType = 30 | 40 | 50 | 60 | 65 | 70 | 75 | 80 | 85 | 90;
 
 export type amiDataType = {
-  unitSize: unitSizeType;
+  unitSize: UnitSize;
   amiPercentages: amiPercentageType[];
 };
 

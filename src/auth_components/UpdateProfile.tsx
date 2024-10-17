@@ -3,8 +3,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import {
   deleteUserFirestore,
-  updateEmailFirestore,
-  updateNameFirestore,
+  UpdateData,
+  updateProfileFirestore,
 } from "../utils/firestoreUtils";
 
 import Alert from "react-bootstrap/Alert";
@@ -15,24 +15,34 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { checkPassword } from "../utils/generalUtils";
+import { accountTypeEnum } from "../types/enumTypes";
 
-export default function UpdateProfile() {
-  // TODO: add useRef types, also maybe use useRef to dynamically update
-  // user name in navbar and profile, and email in profile
+type UpdateProfileProps = {
+  jobTitle?: string;
+  companyName?: string;
+};
+
+const UpdateProfile: React.FC<UpdateProfileProps> = ({
+  jobTitle,
+  companyName,
+}) => {
   const displayNameRef = useRef() as any;
   const emailRef = useRef() as any;
   const passwordRef = useRef() as any;
   const passwordConfirmRef = useRef() as any;
+  const jobTitleRef = useRef() as any;
+  const companyNameRef = useRef() as any;
   const {
     currentUser,
+    accountType,
     updateDisplayNameAuth,
     updateEmailAuth,
     updatePasswordAuth,
   } = useAuth();
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState(false);
+  const [message, setMessage] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState<boolean>(false);
   const history = useHistory();
 
   function isNameUpdated() {
@@ -45,8 +55,20 @@ export default function UpdateProfile() {
     return !!passwordRef.current?.value;
   }
 
+  function isCompanyNameUpdated() {
+    return companyNameRef.current?.value !== companyName;
+  }
+
+  function isJobTitleUpdated() {
+    return jobTitleRef.current?.value !== jobTitle;
+  }
+
   const handleChange = () => {
-    isNameUpdated() || isEmailUpdated() || isPasswordUpdated()
+    isNameUpdated() ||
+    isEmailUpdated() ||
+    isPasswordUpdated() ||
+    isJobTitleUpdated() ||
+    isCompanyNameUpdated()
       ? setIsAnyFieldUpdated(true)
       : setIsAnyFieldUpdated(false);
   };
@@ -82,21 +104,55 @@ export default function UpdateProfile() {
 
     if (isNameUpdated()) {
       authPromises.push(updateDisplayNameAuth(displayNameRef.current.value));
-      firestorePromises.push(
-        updateNameFirestore(currentUser?.uid, displayNameRef.current.value)
-      );
+
+      const updateData: UpdateData = {
+        uid: currentUser?.uid,
+        accountType: accountType,
+        key: "name",
+        value: displayNameRef.current.value,
+      };
+
+      firestorePromises.push(updateProfileFirestore(updateData));
     }
 
     if (isEmailUpdated()) {
       authPromises.push(updateEmailAuth(emailRef.current.value));
-      firestorePromises.push(
-        updateEmailFirestore(currentUser?.uid, emailRef.current.value)
-      );
+
+      const updateData: UpdateData = {
+        uid: currentUser?.uid,
+        accountType: accountType,
+        key: "email",
+        value: emailRef.current.value,
+      };
+
+      firestorePromises.push(updateProfileFirestore(updateData));
     }
 
     if (isPasswordUpdated()) {
       authPromises.push(updatePasswordAuth(passwordRef.current.value));
       // passwords are not stored in Firestore, only in Auth
+    }
+
+    if (isJobTitleUpdated()) {
+      const updateData: UpdateData = {
+        uid: currentUser?.uid,
+        accountType: accountTypeEnum.MANAGER,
+        key: "jobTitle",
+        value: jobTitleRef.current.value,
+      };
+
+      firestorePromises.push(updateProfileFirestore(updateData));
+    }
+
+    if (isCompanyNameUpdated()) {
+      const updateData: UpdateData = {
+        uid: currentUser?.uid,
+        accountType: accountTypeEnum.MANAGER,
+        key: "companyName",
+        value: companyNameRef.current.value,
+      };
+
+      firestorePromises.push(updateProfileFirestore(updateData));
     }
 
     Promise.all(authPromises)
@@ -140,7 +196,7 @@ export default function UpdateProfile() {
   function onDelete(event: any) {
     event.preventDefault();
 
-    deleteUserFirestore(currentUser?.uid)
+    deleteUserFirestore(currentUser?.uid, accountType)
       .then(() => {
         console.log("User successfully deleted from Firestore");
 
@@ -178,8 +234,10 @@ export default function UpdateProfile() {
               {error && <Alert variant="danger">{error}</Alert>}
 
               <Form onSubmit={handleFormSubmit}>
-                <Form.Group id="displayName" className="mb-2">
-                  <Form.Label>Name</Form.Label>
+                <Form.Group id="displayName" className="mb-3">
+                  <Form.Label>
+                    <strong>Name</strong>
+                  </Form.Label>
                   <Form.Control
                     required
                     type="displayName"
@@ -188,8 +246,11 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group id="email" className="mb-2">
-                  <Form.Label>Email</Form.Label>
+
+                <Form.Group id="email" className="mb-3">
+                  <Form.Label>
+                    <strong>Email</strong>
+                  </Form.Label>
                   <Form.Control
                     required
                     type="email"
@@ -198,24 +259,59 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group id="password" className="mb-2">
-                  <Form.Label>Password</Form.Label>
+
+                {accountType === accountTypeEnum.MANAGER && (
+                  <>
+                    <Form.Group id="job-title" className="mb-3">
+                      <Form.Label>
+                        <strong>Job Title</strong>
+                      </Form.Label>
+                      <Form.Control
+                        type="job-title"
+                        ref={jobTitleRef}
+                        defaultValue={jobTitle || ""}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+
+                    <Form.Group id="company-name" className="mb-3">
+                      <Form.Label>
+                        <strong>Company</strong>
+                      </Form.Label>
+                      <Form.Control
+                        type="company-name"
+                        ref={companyNameRef}
+                        defaultValue={companyName || ""}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </>
+                )}
+
+                <hr className="my-4 break-line-light" />
+
+                <Form.Group id="password" className="mb-3">
+                  <Form.Label>
+                    <strong>Password </strong>(Leave blank to keep the same)
+                  </Form.Label>
                   <Form.Control
                     type="password"
                     ref={passwordRef}
-                    placeholder="Leave blank to keep the same"
                     onChange={handleChange}
                   />
                 </Form.Group>
+
                 <Form.Group id="password-confirm" className="mb-3">
-                  <Form.Label>Confirm password</Form.Label>
+                  <Form.Label>
+                    <strong>Confirm Password</strong>
+                  </Form.Label>
                   <Form.Control
                     type="password"
                     ref={passwordConfirmRef}
-                    placeholder="Leave blank to keep the same"
                     onChange={handleChange}
                   />
                 </Form.Group>
+
                 <div className="text-center">
                   <Button
                     disabled={isLoading || !isAnyFieldUpdated}
@@ -244,4 +340,6 @@ export default function UpdateProfile() {
       </Row>
     </Container>
   );
-}
+};
+
+export default UpdateProfile;

@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
-import { SignupAuthDataType, useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { checkPassword } from "../utils/generalUtils";
+import { accountTypeEnum } from "../types/enumTypes";
+import { SignupAuthDataType } from "../interfaces/IUser";
 
 type Props = {
   onLoginClicked?: () => void;
@@ -36,7 +38,7 @@ export default function Signup({ onLoginClicked }: Props) {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       name: nameRef.current.value,
-      isCompany: false,
+      accountType: accountTypeEnum.RENTER,
       uid: "", // Will be filled when uid is created by Auth.
     };
 
@@ -75,7 +77,7 @@ export default function Signup({ onLoginClicked }: Props) {
             <Form.Control required type="password" ref={passwordRef} />
           </Form.Group>
           <Form.Group id="password-confirm" className="mb-3">
-            <Form.Label>Confirm password</Form.Label>
+            <Form.Label>Confirm Password</Form.Label>
             <Form.Control required type="password" ref={passwordConfirmRef} />
           </Form.Group>
           <Button

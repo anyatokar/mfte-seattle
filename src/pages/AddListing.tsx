@@ -1,16 +1,15 @@
-import { Profiler, useState } from "react";
+import { Profiler } from "react";
 import { isProfilerOn } from "../config/config";
 import { Timestamp } from "firebase/firestore";
 import ListingAccordion from "../components/ListingAccordion";
 
 import IPage from "../interfaces/IPage";
-import IListing from "../interfaces/IListing";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-export type availDataFormType = {
+export type AvailDataForm = {
   microNumAvail: string;
   microDateAvail: Timestamp | null;
   studioNumAvail: string;

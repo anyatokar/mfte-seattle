@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { ComponentType } from "react";
 import { accountTypeEnum } from "../types/enumTypes";
 
-type privateRoutesType = {
+type PrivateRoutes = {
   path: string;
   exact: boolean;
   component: ComponentType<any>;
@@ -14,7 +14,7 @@ export default function PrivateRoute({
   component: Component,
   name,
   ...rest
-}: privateRoutesType) {
+}: PrivateRoutes) {
   const { currentUser, accountType } = useAuth();
 
   const isAuthorized =
