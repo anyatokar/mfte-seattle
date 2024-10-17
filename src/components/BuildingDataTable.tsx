@@ -46,13 +46,13 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
   return (
     <>
-      {/* {type === tableType.availData && props.showListingForm && <p>Editing</p>} */}
       <Table bordered hover size="sm" className="mt-0" responsive>
         <thead>
           <tr>
             <th>Bedrooms</th>
             <th>{dataHeader}</th>
             {type === tableType.availData && <th>Earliest Date</th>}
+            {type === tableType.availData && <th>Max Rent</th>}
           </tr>
         </thead>
         <tbody>
@@ -73,13 +73,14 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             (data as AvailData[]).map((availData) => {
               if (!availData) return null;
 
-              const { unitSize, numAvail, dateAvail } = availData;
+              const { unitSize, numAvail, dateAvail, maxRent } = availData;
 
               return numAvail > 0 ? (
                 <tr key={unitSize}>
                   <td>{unitLabels[unitSize]}</td>
                   <td>{numAvail}</td>
                   <td>{dateAvail ? formatDate(dateAvail) : "--"}</td>
+                  <td>{maxRent ? `$${maxRent}` : "--"}</td>
                 </tr>
               ) : null;
             })}

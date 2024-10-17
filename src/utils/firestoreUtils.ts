@@ -74,7 +74,7 @@ export async function addListingFirestore(
     buildingName: buildingName || "",
     url: formFields.url || "",
     availData: formFields.availData || [],
-    message: formFields.message || "",
+    description: formFields.description || "",
     listingStatus: listingStatusEnum.IN_REVIEW,
     buildingID: buildingID || "",
     dateCreated: Timestamp.fromDate(new Date()),

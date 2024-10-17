@@ -13,6 +13,7 @@ export type AvailData = {
   numAvail: number;
   /** This is a string because it is always a date in Pacific Time, no matter where the user is located. Think of it as move in date */
   dateAvail: string;
+  maxRent: number;
 };
 
 export default interface IListing {
@@ -20,7 +21,7 @@ export default interface IListing {
   listingStatus: listingStatusEnum;
   buildingName: string;
   url: string;
-  message: string;
+  description: string;
   /** This is an array to keep the order from smallest to largest on render. */
   availData: AvailData[];
   buildingID: string;

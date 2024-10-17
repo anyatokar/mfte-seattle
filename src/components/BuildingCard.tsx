@@ -126,7 +126,13 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   };
 
   return (
-    <Card>
+    <Card
+      border={
+        areListingsOn && listing?.listingStatus === listingStatusEnum.ACTIVE
+          ? "success"
+          : ""
+      }
+    >
       <Card.Header>
         <Card.Title className="mt-2">
           <div>
@@ -249,6 +255,11 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     data={listing.availData}
                     showListingForm={false}
                   />
+                  {listing.description && (
+                    <Card.Text className="mt-2">
+                      <strong>Description:</strong> {listing.description}
+                    </Card.Text>
+                  )}
                 </Tab>
               )}
 

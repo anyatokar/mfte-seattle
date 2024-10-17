@@ -28,6 +28,7 @@ type ListingWithRequired = PartialWithRequired<
   | "listingID"
   | "expiryDate"
   | "buildingID"
+  | "description"
 >;
 
 type ListingCardProps = {
@@ -59,6 +60,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
       buildingID: "",
       buildingName: "",
       listingStatus: undefined,
+      description: "",
     };
   }
 
@@ -85,6 +87,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     expiryDate,
     dateUpdated,
     buildingID,
+    description,
   } = listing;
 
   type badgeObjectType = { label: string; bg: string; text?: string };
@@ -226,7 +229,14 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <Row>
           <Card.Body as={Col}>
             <EditListingForm
-              listing={{ url, availData, expiryDate, listingID, buildingID }}
+              listing={{
+                url,
+                availData,
+                expiryDate,
+                listingID,
+                buildingID,
+                description,
+              }}
               selectedBuilding={selectedBuilding || null}
               isExistingListing={isExistingListing}
               toggleFormCallback={toggleFormCallback}
@@ -255,22 +265,23 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 </a>
               </Card.Text>
 
-              {isExistingListing && (
-                <Card.Text className="d-flex align-items-center">
-                  <strong className="me-1">Expires:</strong>
-                  {formatDate(expiryDate)}
-                  {expiryBadge && (
-                    <Badge
-                      pill
-                      bg={expiryBadge.bg}
-                      text={expiryBadge.text}
-                      className="ms-2"
-                    >
-                      {expiryBadge.label}
-                    </Badge>
-                  )}
-                </Card.Text>
-              )}
+              <Card.Text className="d-flex align-items-center">
+                <strong className="me-1">Expires:</strong>
+                {formatDate(expiryDate)}
+                {expiryBadge && (
+                  <Badge
+                    pill
+                    bg={expiryBadge.bg}
+                    text={expiryBadge.text}
+                    className="ms-2"
+                  >
+                    {expiryBadge.label}
+                  </Badge>
+                )}
+              </Card.Text>
+              <Card.Text className="mt-3">
+                <strong>Description:</strong> {description}
+              </Card.Text>
             </Card.Body>
           </Row>
         )

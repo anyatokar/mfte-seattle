@@ -5,25 +5,31 @@ import {
   updateListingFirestore,
 } from "../utils/firestoreUtils";
 
-import IListing from "../interfaces/IListing";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/esm/InputGroup";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
+
 import IBuilding from "../interfaces/IBuilding";
+import IListing from "../interfaces/IListing";
 
 import { useAuth } from "../contexts/AuthContext";
 import { getMaxExpiryDate } from "../utils/generalUtils";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
-  "availData" | "url" | "expiryDate" | "listingID" | "buildingID"
+  | "availData"
+  | "url"
+  | "expiryDate"
+  | "listingID"
+  | "buildingID"
+  | "description"
 >;
 
 type EditListingFormProps = {
   listing: ListingWithRequired;
-  // allBuildings: IBuilding[]
   selectedBuilding: IBuilding | null;
   isExistingListing: boolean;
   toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
@@ -31,14 +37,11 @@ type EditListingFormProps = {
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
   listing,
-  // allBuildings,
   isExistingListing,
   toggleFormCallback,
   selectedBuilding,
 }) => {
-  const { availData, url, expiryDate, listingID, buildingID } = listing;
-
-  // const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>();
+  const { availData, url, expiryDate, listingID, description } = listing;
 
   const unitSizeLabels = {
     micro: "Micro/Pods",
@@ -57,22 +60,23 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   ];
 
   const originalFormFields: Partial<ListingWithRequired> = {
-    // buildingName: selectedBuilding?.buildingName || "",
-    // buildingID: selectedBuilding?.buildingID || "",
     availData:
       availData.length > 0
         ? availData.map((availDataForUnitSize) => ({
             unitSize: availDataForUnitSize.unitSize,
             numAvail: availDataForUnitSize.numAvail,
-            dateAvail: availDataForUnitSize?.dateAvail || "",
+            dateAvail: availDataForUnitSize.dateAvail || "",
+            maxRent: availDataForUnitSize.maxRent || 0,
           }))
         : unitSizeFields.map((unitSize) => ({
             unitSize: unitSize,
             numAvail: 0,
             dateAvail: "",
+            maxRent: 0,
           })),
     url: url,
     expiryDate: expiryDate,
+    description: description,
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
@@ -84,7 +88,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   // If this is a new listing, creates blanks for availData
   if (availData.length === 0) {
     for (let unitSize of unitSizeFields) {
-      const blankRow = { unitSize: unitSize, numAvail: 0, dateAvail: "" };
+      const blankRow = {
+        unitSize: unitSize,
+        numAvail: 0,
+        dateAvail: "",
+        maxRent: 0,
+      };
       availData.push(blankRow);
     }
   }
@@ -188,6 +197,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 <th>Unit Type</th>
                 <th>Number of Units Available</th>
                 <th>Earliest Available Date</th>
+                <th>Max Rent</th>
               </tr>
             </thead>
             <tbody>
@@ -215,6 +225,20 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           handleInputChange(event, indexInAvailData)
                         }
                       />
+                    </td>
+                    <td>
+                      <InputGroup>
+                        <InputGroup.Text>$</InputGroup.Text>
+                        <Form.Control
+                          type="number"
+                          min="0"
+                          name="maxRent"
+                          value={availDataForUnitSize.maxRent || ""}
+                          onChange={(event) =>
+                            handleInputChange(event, indexInAvailData)
+                          }
+                        />
+                      </InputGroup>
                     </td>
                   </tr>
                 )
@@ -252,23 +276,20 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Form.Group>
       </Form.Group>
 
-      {/* Message (only for new listing) */}
-      {!listingID && (
-        <Form.Group as={Row} className="mb-3">
-          <Form.Group as={Col} className="mb-0 mb-md-0">
-            <Form.Label>Comments (max 200 characters)</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="message"
-              id="message"
-              rows={2}
-              onChange={handleInputChange}
-              value={formFields.message}
-              maxLength={200}
-            />
-          </Form.Group>
+      <Form.Group as={Row} className="mb-3">
+        <Form.Group as={Col} className="mb-0 mb-md-0">
+          <Form.Label>Description (max 200 characters)</Form.Label>
+          <Form.Control
+            as="textarea"
+            name="description"
+            id="description"
+            rows={3}
+            onChange={handleInputChange}
+            value={formFields.description}
+            maxLength={200}
+          />
         </Form.Group>
-      )}
+      </Form.Group>
 
       <Form.Group as={Col} className="text-end">
         <Button variant="success" type="submit" size="lg">
