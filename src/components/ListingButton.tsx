@@ -14,8 +14,7 @@ export default function ListingButton(props: ListingButtonProps) {
     <>
       {listing?.listingStatus === listingStatusEnum.ACTIVE && listing?.url && (
         <Button
-          className={isMarker ? "" : "mt-3"}
-          size={isMarker ? "sm" : undefined}
+          size="sm"
           id="listing-page-url"
           href={listing.url}
           title={`Open new tab: ${listing.url}`}
@@ -23,7 +22,7 @@ export default function ListingButton(props: ListingButtonProps) {
           rel="noreferrer"
           variant="success"
         >
-          View Listing Page
+          {isMarker ? "View Listing Page" : "Listings"}
         </Button>
       )}
     </>

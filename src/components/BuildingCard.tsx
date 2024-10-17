@@ -30,6 +30,7 @@ import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import Stack from "react-bootstrap/esm/Stack";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
@@ -149,7 +150,9 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
             accountType !== accountTypeEnum.MANAGER &&
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <>
+                <Stack direction={"horizontal"} gap={2}>
+                  {" "}
+                  <ListingButton listing={listing} isMarker={false} />
                   <WebsiteButton urlForBuilding={urlForBuilding} />
                   <Button
                     className="diy-solid-info-button"
@@ -158,9 +161,10 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                   >
                     Saved
                   </Button>
-                </>
+                </Stack>
               ) : (
-                <>
+                <Stack direction={"horizontal"} gap={2}>
+                  <ListingButton listing={listing} isMarker={false} />
                   <WebsiteButton urlForBuilding={urlForBuilding} />
                   <Button
                     className="diy-outline-info-button"
@@ -169,10 +173,11 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                   >
                     Save
                   </Button>
-                </>
+                </Stack>
               )
             ) : (
-              <>
+              <Stack direction={"horizontal"} gap={2}>
+                <ListingButton listing={listing} isMarker={false} />
                 <WebsiteButton urlForBuilding={urlForBuilding} />
                 <Button
                   className="diy-outline-info-button"
@@ -181,15 +186,19 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                 >
                   Save
                 </Button>
-              </>
+              </Stack>
             ))}
           {accountType === accountTypeEnum.MANAGER && (
-            <WebsiteButton urlForBuilding={urlForBuilding} />
+            <Stack direction={"horizontal"} gap={2}>
+              <ListingButton listing={listing} isMarker={false} />
+              <WebsiteButton urlForBuilding={urlForBuilding} />
+            </Stack>
           )}
         </div>
 
         {pageType === pageTypeEnum.savedBuildings && (
-          <>
+          <Stack direction={"horizontal"} gap={2}>
+            <ListingButton listing={listing} isMarker={false} />
             <WebsiteButton urlForBuilding={urlForBuilding} />
             <Button
               className="center"
@@ -204,7 +213,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
             >
               Remove
             </Button>
-          </>
+          </Stack>
         )}
       </Card.Header>
 
@@ -240,7 +249,6 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     data={listing.availData}
                     showListingForm={false}
                   />
-                  <ListingButton listing={listing} isMarker={false} />
                 </Tab>
               )}
 
