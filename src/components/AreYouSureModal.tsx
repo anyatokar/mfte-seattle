@@ -59,7 +59,11 @@ const AreYouSureModal: React.FunctionComponent<AreYouSureModalProps> = ({
         <Button variant="secondary" onClick={handleClose}>
           {modalText?.goBackLabel || "Go Back"}
         </Button>
-        <Button variant="danger" onClick={handleConfirm}>
+        <Button
+          variant="danger"
+          onClick={handleConfirm}
+          data-testid="modal-confirm"
+        >
           {modalText?.confirmLabel || "Confirm"}
         </Button>
       </Modal.Footer>

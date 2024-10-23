@@ -4,7 +4,7 @@ import {
   listingStatusEnum,
   tableType,
 } from "../types/enumTypes";
-import ListingActionsButtons from "./ListingActionButtons";
+import ListingActionsButtons from "./ListingActionsButtons";
 import IListing from "../interfaces/IListing";
 import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
 import EditListingForm from "./EditListingForm";

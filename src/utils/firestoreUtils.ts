@@ -120,8 +120,7 @@ export async function updateListingFirestore(
 
 export async function deleteListingFirestore(
   listingID: string,
-  buildingName: string,
-  uid: string
+  buildingName: string
 ) {
   const listingDocRef = doc(db, "listingsTEST", listingID);
   await deleteDoc(listingDocRef)

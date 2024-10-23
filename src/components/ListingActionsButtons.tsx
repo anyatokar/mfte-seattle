@@ -48,11 +48,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   const handleShow = () => setShowModal(true);
 
   const handleConfirm = () => {
-    deleteListingFirestore(
-      listing.listingID,
-      listing.buildingName,
-      currentUser.uid
-    );
+    deleteListingFirestore(listing.listingID, listing.buildingName);
 
     handleClose();
   };
@@ -111,7 +107,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   return (
     <>
       {/* Show Add Listing only on New Listing Card and if either
-      no form is visible (meaning nay form) 
+      no form is visible (meaning any form) 
       OR a form is visible and it's listing id is blank */}
       {!isExistingListing &&
         (!isFormVisible || (isFormVisible && editListingID !== "")) && (
@@ -153,6 +149,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
           )}
 
           <Dropdown.Item
+            data-testid="dropdown-delete"
             className="delete-link"
             eventKey="delete"
             onClick={onDeleteClick}
