@@ -30,7 +30,7 @@ import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import Stack from "react-bootstrap/esm/Stack";
+import Stack from "react-bootstrap/Stack";
 
 export interface AllBuildingCardProps {
   building: IBuilding;

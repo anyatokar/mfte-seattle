@@ -10,8 +10,8 @@ import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
 import EditListingForm from "./EditListingForm";
 import { expiringSoonDays } from "../config/config";
 
-import Badge from "react-bootstrap/esm/Badge";
-import Card from "react-bootstrap/esm/Card";
+import Badge from "react-bootstrap/Badge";
+import Card from "react-bootstrap/Card";
 import { useEffect, useState } from "react";
 import { useAllBuildings } from "../hooks/useAllBuildings";
 import { Col, Container, Form, Row } from "react-bootstrap";
@@ -227,7 +227,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
       {/* Form is visible, so don't show the listing data. */}
       {isFormVisible && editListingID === listingID ? (
         <Row>
-          <Card.Body as={Col}>
+          <Card.Body data-testid="body-form-visible" as={Col}>
             <EditListingForm
               listing={{
                 url,
@@ -246,7 +246,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
       ) : (
         isExistingListing && (
           <Row>
-            <Card.Body as={Col}>
+            <Card.Body
+              data-testid="body-form-not-visible-existing-listing"
+              as={Col}
+            >
               <BuildingDataTable
                 type={tableType.availData}
                 data={availData}

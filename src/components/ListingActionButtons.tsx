@@ -9,15 +9,15 @@ import IListing from "../interfaces/IListing";
 import { confirmModalTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 
-import Button from "react-bootstrap/esm/Button";
+import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Dropdown from "react-bootstrap/esm/Dropdown";
-import DropdownButton from "react-bootstrap/esm/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import { getMaxExpiryDate } from "../utils/generalUtils";
 import { useState } from "react";
 import AreYouSureModal from "./AreYouSureModal";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,

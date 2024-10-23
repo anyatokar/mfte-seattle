@@ -33,22 +33,20 @@ const Profile: React.FC<ProfileProps> = ({ jobTitle, companyName }) => {
                 {currentUser.email}
               </Card.Text>
               {accountType === accountTypeEnum.MANAGER && (
-                <Card.Text>
-                  <strong>Job Title: </strong>
-                  {jobTitle}
-                </Card.Text>
-              )}
-              {accountType === accountTypeEnum.MANAGER && (
-                <Card.Text>
-                  <strong>Company: </strong>
-                  {companyName}
-                </Card.Text>
-              )}
-              {accountType === accountTypeEnum.MANAGER && (
-                <Card.Text>
-                  <strong>Account Type: </strong>
-                  Manager
-                </Card.Text>
+                <>
+                  <Card.Text>
+                    <strong>Job Title: </strong>
+                    {jobTitle}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Company: </strong>
+                    {companyName}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Account Type: </strong>
+                    Manager
+                  </Card.Text>
+                </>
               )}
             </Card.Body>
           </Card>

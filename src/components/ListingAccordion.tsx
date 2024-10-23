@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import Accordion from "react-bootstrap/esm/Accordion";
+import Accordion from "react-bootstrap/Accordion";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
-import Button from "react-bootstrap/esm/Button";
+import Button from "react-bootstrap/Button";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 

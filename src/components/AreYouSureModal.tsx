@@ -1,5 +1,5 @@
-import Button from "react-bootstrap/esm/Button";
-import Modal from "react-bootstrap/esm/Modal";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import { confirmModalTypeEnum } from "../types/enumTypes";
 import { useEffect, useState } from "react";
 

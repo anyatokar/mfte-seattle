@@ -79,6 +79,7 @@ export async function addListingFirestore(
     buildingID: buildingID || "",
     dateCreated: Timestamp.fromDate(new Date()),
     dateUpdated: Timestamp.fromDate(new Date()),
+    /** YYYY-MM-DD */
     expiryDate: formFields.expiryDate || getMaxExpiryDate(),
     listingID: "",
     managerID: uid,

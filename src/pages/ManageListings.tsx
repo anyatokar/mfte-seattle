@@ -17,9 +17,9 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
-import Spinner from "react-bootstrap/esm/Spinner";
-import Tab from "react-bootstrap/esm/Tab";
-import Nav from "react-bootstrap/esm/Nav";
+import Spinner from "react-bootstrap/Spinner";
+import Tab from "react-bootstrap/Tab";
+import Nav from "react-bootstrap/Nav";
 
 import AreYouSureModal from "../components/AreYouSureModal";
 import IBuilding from "../interfaces/IBuilding";
