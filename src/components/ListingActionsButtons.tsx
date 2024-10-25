@@ -108,7 +108,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     <>
       {/* Show Add Listing only on New Listing Card and if either
       no form is visible (meaning any form) 
-      OR a form is visible and it's listing id is blank */}
+      OR a form is visible and it's listing ID is blank */}
       {!isExistingListing &&
         (!isFormVisible || (isFormVisible && editListingID !== "")) && (
           <Row>

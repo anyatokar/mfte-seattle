@@ -70,7 +70,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               );
             })}
           {type === tableType.availData &&
-            (data as AvailData[]).map((availData) => {
+            (data as AvailData[])?.map((availData) => {
               if (!availData) return null;
 
               const { unitSize, numAvail, dateAvail, maxRent } = availData;

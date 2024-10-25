@@ -29,7 +29,6 @@ const ManageListingsPage: React.FunctionComponent<
 > = ({ name }) => {
   const { currentUser, accountType } = useAuth();
 
-  // TODO: Is use all listings being called too much?
   const [repsListings, isLoadingRepsListings] = useAllListings(
     false,
     currentUser?.uid
@@ -40,50 +39,44 @@ const ManageListingsPage: React.FunctionComponent<
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
     null
   );
-
-  // Use a state to track which listingID is currently being edited
   const [editListingID, setEditListingID] = useState<string>("");
-
+  const [modalListingID, setModalListingID] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
-  const [newListingID, setNewListingID] = useState<string>("");
 
   const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  const handleShow = (listingID: string) => {
+    setModalListingID(listingID); // Set the listingID when showing the modal
+    setShowModal(true);
+  };
 
   const handleConfirm = () => {
-    if (newListingID !== "" && newListingID !== editListingID) {
-      console.log(`newListingID !== "" && "newListingID !== editListingID"`);
-      setEditListingID(newListingID);
-      setIsFormVisible(true);
-    } else {
-      console.log("newListingID === editListingID");
+    if (modalListingID === editListingID) {
+      console.log("modalListingID === editListingID");
       setIsFormVisible(false);
+      setEditListingID("");
+      setSelectedBuilding(null);
+    } else if (modalListingID !== "" && modalListingID !== editListingID) {
+      console.log("Switching listings");
+      setEditListingID(modalListingID);
+      setIsFormVisible(true);
+    } else if (modalListingID === "") {
       setEditListingID("");
       setSelectedBuilding(null);
     }
 
     handleClose();
   };
-  // newlistingID !== "" means its an edit of an existing listing, if the form is visible
+
   function toggleFormCallback(listingID: string, clickedSave: boolean) {
     if (clickedSave) {
-      console.log("Clicked save");
       setIsFormVisible(false);
-      setNewListingID("");
       setEditListingID("");
       setSelectedBuilding(null);
-      // A switch from Edit to another Edit
     } else if (isFormVisible && listingID !== editListingID) {
-      console.log("A switch from Edit to another Edit");
-      setNewListingID(listingID);
-      handleShow();
-      // From open to closed
+      handleShow(listingID);
     } else if (isFormVisible) {
-      console.log("From open to closed");
-      handleShow();
+      handleShow(listingID);
     } else {
-      // From closed to open
-      console.log("From closed to open");
       setIsFormVisible(true);
       setEditListingID(listingID);
     }
