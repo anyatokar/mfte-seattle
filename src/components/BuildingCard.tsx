@@ -9,8 +9,9 @@ import {
 } from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
-import ListingButton from "./ListingButton";
 import BuildingDataTable from "./BuildingDataTable";
+import ListingButton from "./ListingButton";
+import SaveButton from "./SaveButton";
 import WebsiteButton from "./WebsiteButton";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
@@ -160,38 +161,20 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                   {" "}
                   <ListingButton listing={listing} isMarker={false} />
                   <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <Button
-                    className="diy-solid-info-button"
-                    size="sm"
-                    onClick={toggleSave}
-                  >
-                    Saved
-                  </Button>
+                  <SaveButton isSaved={true} onClickCallback={toggleSave} />
                 </Stack>
               ) : (
                 <Stack direction={"horizontal"} gap={2}>
                   <ListingButton listing={listing} isMarker={false} />
                   <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <Button
-                    className="diy-outline-info-button"
-                    size="sm"
-                    onClick={toggleSave}
-                  >
-                    Save
-                  </Button>
+                  <SaveButton isSaved={false} onClickCallback={toggleSave} />
                 </Stack>
               )
             ) : (
               <Stack direction={"horizontal"} gap={2}>
                 <ListingButton listing={listing} isMarker={false} />
                 <WebsiteButton urlForBuilding={urlForBuilding} />
-                <Button
-                  className="diy-outline-info-button"
-                  onClick={handleShowLogin}
-                  size="sm"
-                >
-                  Save
-                </Button>
+                <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
               </Stack>
             ))}
           {accountType === accountTypeEnum.MANAGER && (

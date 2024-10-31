@@ -178,21 +178,23 @@ body {
 }
 
 .diy-outline-info-button {
-  color: #17a2b8;
+  color: #17a2b8 !important;
   border-color: #17a2b8 !important;
   background: none !important;
 }
 
 .diy-outline-info-button:hover,
+.diy-outline-info-button:focus,
 .diy-solid-info-button {
-  color: white;
+  color: white !important;
   background: #17a2b8 !important;
   border-color: #51b7c8 !important;
 }
+
 .diy-outline-info-button:active,
 .diy-solid-info-button:hover,
 .diy-solid-info-button:active {
-  color: white;
+  color: white !important;
   background: #148596 !important;
   border-color: #127a8b !important;
 }

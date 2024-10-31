@@ -9,7 +9,7 @@ const WebsiteButton: React.FC<WebsiteButtonProps> = ({
 }): JSX.Element => {
   return (
     <Button
-      className="diy-outline-info-button me-2"
+      className="diy-outline-info-button"
       size="sm"
       id="listing-page-url"
       href={urlForBuilding}
