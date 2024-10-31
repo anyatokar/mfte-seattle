@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^2.19.3",
+    "bootstrap": "^5.3.3",
     "firebase": "^10.7.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
