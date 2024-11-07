@@ -22,6 +22,9 @@ const ManageProfilePage: React.FunctionComponent<
   const [managerProfile, setManagerProfile] = useState<DocumentData | null>(
     null
   );
+
+  // TODO: temp disable eslint
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
 
   const { currentUser, accountType } = useAuth();
