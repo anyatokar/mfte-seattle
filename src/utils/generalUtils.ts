@@ -29,6 +29,12 @@ export const getMaxExpiryDate = () => {
   return `${year}-${month}-${day}`;
 };
 
+// Input will always be number.
+export function formatCurrency(amount: number | string): string {
+  if (!amount || typeof amount !== "number") return "--";
+  return `$${amount.toFixed().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+}
+
 export function checkPassword(
   passwordValue: string,
   passwordConfirmValue: string

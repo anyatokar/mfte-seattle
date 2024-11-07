@@ -10,10 +10,12 @@ export type UnitSize =
 
 export type AvailData = {
   unitSize: UnitSize;
-  numAvail: number;
+  /** String when in form, gets converted to number before sent to Firestore */
+  numAvail: string | number;
   /** This is a string because it is always a date in Pacific Time, no matter where the user is located. Think of it as move in date */
-  dateAvail: string;
-  maxRent: number;
+  dateAvailString: string;
+  /** String when in form, gets converted to number before sent to Firestore */
+  maxRent: string | number;
 };
 
 export default interface IListing {

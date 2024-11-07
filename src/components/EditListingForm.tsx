@@ -65,13 +65,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         ? availData.map((availDataForUnitSize) => ({
             unitSize: availDataForUnitSize.unitSize,
             numAvail: availDataForUnitSize.numAvail,
-            dateAvail: availDataForUnitSize.dateAvail || "",
+            dateAvailString: availDataForUnitSize.dateAvailString || "",
             maxRent: availDataForUnitSize.maxRent || 0,
           }))
         : unitSizeFields.map((unitSize) => ({
             unitSize: unitSize,
             numAvail: 0,
-            dateAvail: "",
+            dateAvailString: "",
             maxRent: 0,
           })),
     url: url,
@@ -91,7 +91,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       const blankRow = {
         unitSize: unitSize,
         numAvail: 0,
-        dateAvail: "",
+        dateAvailString: "",
         maxRent: 0,
       };
       availData.push(blankRow);
@@ -128,13 +128,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     if (!formFields) return;
 
     const isValid = formFields.availData?.some(
-      (row) => row.numAvail > 0 && row.dateAvail
+      (row) => row.numAvail && row.dateAvailString && row.maxRent
     );
 
     if (!isValid) {
-      alert(
-        "Please add at least one quantity and date to the availability table"
-      );
+      alert("Please fill out at least one row of the availability table.");
       return;
     }
 
@@ -219,8 +217,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                     <td>
                       <Form.Control
                         type="date"
-                        name="dateAvail"
-                        value={availDataForUnitSize.dateAvail || ""}
+                        name="dateAvailString"
+                        value={availDataForUnitSize.dateAvailString || ""}
                         onChange={(event) =>
                           handleInputChange(event, indexInAvailData)
                         }

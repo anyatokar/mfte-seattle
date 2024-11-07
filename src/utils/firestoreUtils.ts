@@ -16,7 +16,7 @@ import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 
 import IBuilding from "../interfaces/IBuilding";
-import IListing from "../interfaces/IListing";
+import IListing, { AvailData } from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
   IUserSignupAuthData,
@@ -64,6 +64,24 @@ export async function deleteBuilding(
     });
 }
 
+function availDataToNum(availData: AvailData[] | undefined): AvailData[] {
+  if (!availData) return [];
+
+  for (const ele of availData) {
+    // The check is for TS and because form fields and listing in db share IListing.
+    // Type will always be string when incoming from the form.
+    if (typeof ele.numAvail === "string") {
+      ele.numAvail = parseInt(ele.numAvail);
+    }
+
+    if (typeof ele.maxRent === "string") {
+      ele.maxRent = parseFloat(ele.maxRent);
+    }
+  }
+
+  return availData;
+}
+
 export async function addListingFirestore(
   buildingName: string,
   formFields: Partial<IListing>,
@@ -73,7 +91,7 @@ export async function addListingFirestore(
   const listing: IListing = {
     buildingName: buildingName || "",
     url: formFields.url || "",
-    availData: formFields.availData || [],
+    availData: availDataToNum(formFields.availData),
     description: formFields.description || "",
     listingStatus: listingStatusEnum.IN_REVIEW,
     buildingID: buildingID || "",
@@ -104,6 +122,10 @@ export async function updateListingFirestore(
   fieldsToUpdate: Partial<IListing>,
   listingID: string
 ) {
+  if (fieldsToUpdate.availData) {
+    fieldsToUpdate.availData = availDataToNum(fieldsToUpdate.availData);
+  }
+
   try {
     const listingDocRef = doc(db, "listingsTEST", listingID);
     await updateDoc(listingDocRef, {

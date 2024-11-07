@@ -3,7 +3,7 @@ import { tableType } from "../types/enumTypes";
 import { amiPercentageType, amiDataType } from "../interfaces/IBuilding";
 import { AvailData } from "../interfaces/IListing";
 import Table from "react-bootstrap/Table";
-import { formatDate } from "../utils/generalUtils";
+import { formatCurrency, formatDate } from "../utils/generalUtils";
 
 interface AmiDataProps {
   type: tableType.amiData;
@@ -73,14 +73,17 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             (data as AvailData[])?.map((availData) => {
               if (!availData) return null;
 
-              const { unitSize, numAvail, dateAvail, maxRent } = availData;
+              const { unitSize, numAvail, dateAvailString, maxRent } =
+                availData;
 
-              return numAvail > 0 ? (
+              return numAvail ? (
                 <tr key={unitSize}>
                   <td>{unitLabels[unitSize]}</td>
                   <td>{numAvail}</td>
-                  <td>{dateAvail ? formatDate(dateAvail) : "--"}</td>
-                  <td>{maxRent ? `$${maxRent}` : "--"}</td>
+                  <td>
+                    {dateAvailString ? formatDate(dateAvailString) : "--"}
+                  </td>
+                  <td>{formatCurrency(maxRent)}</td>
                 </tr>
               ) : null;
             })}
