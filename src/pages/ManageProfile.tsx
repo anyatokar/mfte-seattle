@@ -24,7 +24,7 @@ const ManageProfilePage: React.FunctionComponent<
   );
 
   // TODO: temp disable eslint
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
 
   const { currentUser, accountType } = useAuth();
