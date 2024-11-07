@@ -86,13 +86,10 @@ body {
 }
 
 .nav.nav-pills .nav-link {
-  /* background-color: #eef6f6; */
   color: #06253e;
-  /* border: 1px solid rgba(6, 37, 62, 0.1); */
 }
 
 .nav.nav-pills .nav-link:hover {
-  /* font-weight: 700; */
   background-color: rgba(6, 37, 62, 0.1);
 }
 
@@ -156,13 +153,13 @@ body {
 
 /* Listing accordion */
 .accordion-button:not(.collapsed) {
-  background-color: #f0ecec;
+  background-color: #f0ecec !important;
   color: inherit;
   font-weight: 700;
 }
 
 .accordion-button:hover {
-  background-color: #f0ecec;
+  background-color: #f0ecec !important;
 }
 
 .accordion-button:focus {
