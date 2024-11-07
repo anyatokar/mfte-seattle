@@ -102,7 +102,7 @@ export const Header = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" className="p-0">
-      <Container fluid>
+      <Container fluid className="p-0">
         <LinkContainer to="/">
           <Navbar.Brand>
             <Image
@@ -115,7 +115,7 @@ export const Header = () => {
         </LinkContainer>
         <Navbar.Toggle />
         <Navbar.Collapse>
-          <Nav className="me-auto">
+          <Nav className="me-auto p-0">
             <LinkContainer to="/all-buildings">
               <Nav.Link active={false}>MFTE Map</Nav.Link>
             </LinkContainer>
@@ -135,13 +135,10 @@ export const Header = () => {
             <Dropdown.Divider />
           </Nav>
           {currentUser ? (
-            <Nav>
+            <Nav className="p-0 p-lg-3">
               <Navbar.Text className="me-lg-4 diy-font-italic">
                 {currentUser.displayName && `Hi, ${currentUser.displayName}!`}
               </Navbar.Text>
-              <LinkContainer to="/manage-profile">
-                <Nav.Link active={false}>Profile</Nav.Link>
-              </LinkContainer>
               {accountType === accountTypeEnum.RENTER && (
                 <LinkContainer to="/saved-buildings">
                   <Nav.Link active={false}>Saved</Nav.Link>
@@ -152,6 +149,9 @@ export const Header = () => {
                   <Nav.Link active={false}>Listings</Nav.Link>
                 </LinkContainer>
               )}
+              <LinkContainer to="/manage-profile">
+                <Nav.Link active={false}>Profile</Nav.Link>
+              </LinkContainer>
               <Nav.Link
                 className="logout"
                 active={false}
@@ -161,7 +161,7 @@ export const Header = () => {
               </Nav.Link>
             </Nav>
           ) : (
-            <Nav>
+            <Nav className="p-0 p-md-3">
               <Nav.Link active={false} onClick={showLoginSavedBuildings}>
                 Saved
               </Nav.Link>

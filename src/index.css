@@ -1,7 +1,7 @@
 /* entire app */
 html,
 body {
-  background: #eef6f6;
+  background: #eef6f6 !important;
 }
 
 .main {
@@ -37,8 +37,13 @@ body {
   background: #eef6f6;
 }
 
+.navbar .nav-link:focus {
+  background: #eef6f6;
+}
+
 .navbar .nav-link.active {
-  font-weight: 700;
+  /* font-weight: 700; */
+  background: #eef6f6;
 }
 
 .navbar .nav-link.logout:hover {
@@ -143,6 +148,7 @@ body {
 }
 
 .footer-nav-link-custom:hover,
+.footer-nav-link-custom:focus,
 .footer-nav-link-custom:active {
   text-decoration: underline;
 }

@@ -6,6 +6,12 @@ import ManageListingsPage from "../pages/ManageListings";
 
 const privateRoutes: IRoute[] = [
   {
+    path: "/manage-profile",
+    name: "Manage Profile Page",
+    component: ManageProfilePage,
+    exact: true,
+  },
+  {
     path: "/saved-buildings",
     name: "Saved Buildings Page",
     component: SavedBuildingsPage,
@@ -15,12 +21,6 @@ const privateRoutes: IRoute[] = [
     path: "/manage-listings",
     name: "Manage Listings Page",
     component: ManageListingsPage,
-    exact: true,
-  },
-  {
-    path: "/manage-profile",
-    name: "Manage Profile Page",
-    component: ManageProfilePage,
     exact: true,
   },
 ];

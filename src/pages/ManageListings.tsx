@@ -1,7 +1,11 @@
 import { Profiler, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { expiringSoonDays, isProfilerOn } from "../config/config";
+import {
+  areListingsOn,
+  expiringSoonDays,
+  isProfilerOn,
+} from "../config/config";
 import {
   accountTypeEnum,
   confirmModalTypeEnum,
@@ -149,175 +153,186 @@ const ManageListingsPage: React.FunctionComponent<
           <Col lg={8}>
             <div className="display-5">Manage Listings</div>
             <hr className="my-4 break-line-light" />
+            {!areListingsOn && (
+              <div className="mb-3">
+                <strong>
+                  You can view and edit your listings but this feature isn't
+                  currently live.
+                </strong>
+              </div>
+            )}
           </Col>
         </Row>
 
-        <Tab.Container
-          id="sidebar"
-          activeKey={activeTab}
-          onSelect={(key) => {
-            setActiveTab(key as string);
-          }}
-        >
-          <Row>
-            <Col sm={12} lg={2}>
-              <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey="summary" className="tab">
-                    Summary
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="viewListings" className="tab">
-                    Current
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="archived" className="tab">
-                    Archived
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
-            <Col sm={12} lg={8}>
-              <Tab.Content>
-                <Tab.Pane eventKey="summary">
-                  <Container fluid>
-                    <Row>
-                      <Col xs={12} sm={6} lg={4} className="pb-4">
-                        <Table responsive bordered hover className="mt-0">
-                          <thead>
-                            <tr>
-                              <th>Status</th>
-                              <th>Count</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {summaryTableRows.map((tableRow) => (
-                              <tr key={tableRow.listingStatus}>
-                                <td>{tableRow.label}</td>
-                                <td>
-                                  {isLoadingRepsListings
-                                    ? "--"
-                                    : getCount(tableRow.listingStatus)}
-                                </td>
+        <>
+          <Tab.Container
+            id="sidebar"
+            activeKey={activeTab}
+            onSelect={(key) => {
+              setActiveTab(key as string);
+            }}
+          >
+            <Row>
+              <Col sm={12} lg={2}>
+                <Nav variant="pills" className="flex-column">
+                  <Nav.Item>
+                    <Nav.Link eventKey="summary" className="tab">
+                      Summary
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="viewListings" className="tab">
+                      Current
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="archived" className="tab">
+                      Archived
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </Col>
+              <Col sm={12} lg={8}>
+                <Tab.Content>
+                  <Tab.Pane eventKey="summary">
+                    <Container fluid>
+                      <Row>
+                        <Col xs={12} sm={6} lg={4} className="pb-4">
+                          <Table responsive bordered hover className="mt-0">
+                            <thead>
+                              <tr>
+                                <th>Status</th>
+                                <th>Count</th>
                               </tr>
-                            ))}
-                          </tbody>
-                        </Table>
-                      </Col>
-                    </Row>
-                  </Container>
-                </Tab.Pane>
+                            </thead>
+                            <tbody>
+                              {summaryTableRows.map((tableRow) => (
+                                <tr key={tableRow.listingStatus}>
+                                  <td>{tableRow.label}</td>
+                                  <td>
+                                    {isLoadingRepsListings
+                                      ? "--"
+                                      : getCount(tableRow.listingStatus)}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </Table>
+                        </Col>
+                      </Row>
+                    </Container>
+                  </Tab.Pane>
 
-                <Tab.Pane eventKey="viewListings">
-                  <Container fluid>
-                    {/* TODO: Pull out into a new component to reuse with archived */}
-                    <Row className="pb-2">
-                      <Col>
-                        <ListingCard
-                          listing={null}
-                          toggleFormCallback={toggleFormCallback}
-                          isFormVisible={isFormVisible}
-                          isExistingListing={false}
-                          editListingID={editListingID}
-                          setSelectedBuilding={setSelectedBuilding}
-                          selectedBuilding={selectedBuilding}
-                        />
-                      </Col>
-                    </Row>
+                  <Tab.Pane eventKey="viewListings">
+                    <Container fluid>
+                      {/* TODO: Pull out into a new component to reuse with archived */}
+                      <Row className="pb-2">
+                        <Col>
+                          <ListingCard
+                            listing={null}
+                            toggleFormCallback={toggleFormCallback}
+                            isFormVisible={isFormVisible}
+                            isExistingListing={false}
+                            editListingID={editListingID}
+                            setSelectedBuilding={setSelectedBuilding}
+                            selectedBuilding={selectedBuilding}
+                          />
+                        </Col>
+                      </Row>
 
-                    {isLoadingRepsListings && (
-                      <Spinner animation="border" variant="secondary" />
-                    )}
+                      {isLoadingRepsListings && (
+                        <Spinner animation="border" variant="secondary" />
+                      )}
 
-                    {!isLoadingRepsListings &&
-                      repsListings.filter(
-                        (listing) =>
-                          listing.listingStatus !== listingStatusEnum.ARCHIVED
-                      ).length === 0 && <p>No current listings.</p>}
-                    {!isLoadingRepsListings &&
-                      repsListings.length > 0 &&
-                      repsListings
-                        .filter(
+                      {!isLoadingRepsListings &&
+                        repsListings.filter(
                           (listing) =>
                             listing.listingStatus !== listingStatusEnum.ARCHIVED
-                        )
-                        .sort(
-                          (a, b) =>
-                            new Date(b.dateUpdated?.toDate()).getTime() -
-                            new Date(a.dateUpdated?.toDate()).getTime()
-                        )
-                        .map((listing) => (
-                          <Col className="pb-2" key={listing.listingID}>
-                            <ListingCard
-                              listing={listing}
-                              toggleFormCallback={toggleFormCallback}
-                              isFormVisible={isFormVisible}
-                              isExistingListing={true}
-                              editListingID={editListingID}
-                            />
-                          </Col>
-                        ))}
-                  </Container>
-                </Tab.Pane>
-
-                <Tab.Pane eventKey="addListing">
-                  <ListingCard
-                    isFormVisible={isFormVisible}
-                    listing={null}
-                    toggleFormCallback={toggleFormCallback}
-                    isExistingListing={false}
-                    editListingID={editListingID}
-                    selectedBuilding={selectedBuilding}
-                  />
-                </Tab.Pane>
-
-                <Tab.Pane eventKey="archived">
-                  <Container fluid>
-                    <Row>
-                      <Col>
-                        {isLoadingRepsListings && (
-                          <Spinner animation="border" variant="secondary" />
-                        )}
-                        {!isLoadingRepsListings &&
-                          repsListings.filter(
+                        ).length === 0 && <p>No current listings.</p>}
+                      {!isLoadingRepsListings &&
+                        repsListings.length > 0 &&
+                        repsListings
+                          .filter(
                             (listing) =>
-                              listing.listingStatus ===
+                              listing.listingStatus !==
                               listingStatusEnum.ARCHIVED
-                          ).length === 0 && <p>Archived list is empty.</p>}
-                        {!isLoadingRepsListings &&
-                          repsListings.length > 0 &&
-                          repsListings
-                            .filter(
+                          )
+                          .sort(
+                            (a, b) =>
+                              new Date(b.dateUpdated?.toDate()).getTime() -
+                              new Date(a.dateUpdated?.toDate()).getTime()
+                          )
+                          .map((listing) => (
+                            <Col className="pb-2" key={listing.listingID}>
+                              <ListingCard
+                                listing={listing}
+                                toggleFormCallback={toggleFormCallback}
+                                isFormVisible={isFormVisible}
+                                isExistingListing={true}
+                                editListingID={editListingID}
+                              />
+                            </Col>
+                          ))}
+                    </Container>
+                  </Tab.Pane>
+
+                  <Tab.Pane eventKey="addListing">
+                    <ListingCard
+                      isFormVisible={isFormVisible}
+                      listing={null}
+                      toggleFormCallback={toggleFormCallback}
+                      isExistingListing={false}
+                      editListingID={editListingID}
+                      selectedBuilding={selectedBuilding}
+                    />
+                  </Tab.Pane>
+
+                  <Tab.Pane eventKey="archived">
+                    <Container fluid>
+                      <Row>
+                        <Col>
+                          {isLoadingRepsListings && (
+                            <Spinner animation="border" variant="secondary" />
+                          )}
+                          {!isLoadingRepsListings &&
+                            repsListings.filter(
                               (listing) =>
                                 listing.listingStatus ===
                                 listingStatusEnum.ARCHIVED
-                            )
-                            .sort(
-                              (a, b) =>
-                                new Date(b.dateUpdated?.toDate()).getTime() -
-                                new Date(a.dateUpdated?.toDate()).getTime()
-                            )
-                            .map((listing) => (
-                              <Col className="pb-2" key={listing.listingID}>
-                                <ListingCard
-                                  listing={listing}
-                                  isFormVisible={isFormVisible}
-                                  editListingID={editListingID}
-                                  toggleFormCallback={toggleFormCallback}
-                                  isExistingListing={true}
-                                />
-                              </Col>
-                            ))}
-                      </Col>
-                    </Row>
-                  </Container>
-                </Tab.Pane>
-              </Tab.Content>
-            </Col>
-          </Row>
-        </Tab.Container>
+                            ).length === 0 && <p>Archived list is empty.</p>}
+                          {!isLoadingRepsListings &&
+                            repsListings.length > 0 &&
+                            repsListings
+                              .filter(
+                                (listing) =>
+                                  listing.listingStatus ===
+                                  listingStatusEnum.ARCHIVED
+                              )
+                              .sort(
+                                (a, b) =>
+                                  new Date(b.dateUpdated?.toDate()).getTime() -
+                                  new Date(a.dateUpdated?.toDate()).getTime()
+                              )
+                              .map((listing) => (
+                                <Col className="pb-2" key={listing.listingID}>
+                                  <ListingCard
+                                    listing={listing}
+                                    isFormVisible={isFormVisible}
+                                    editListingID={editListingID}
+                                    toggleFormCallback={toggleFormCallback}
+                                    isExistingListing={true}
+                                  />
+                                </Col>
+                              ))}
+                        </Col>
+                      </Row>
+                    </Container>
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
+        </>
       </Container>
       <AreYouSureModal
         showModal={showModal}
