@@ -41,6 +41,7 @@ const ManageProfilePage: React.FunctionComponent<
     };
 
     fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!currentUser) {

@@ -47,6 +47,7 @@ const AreYouSureModal: React.FunctionComponent<AreYouSureModalProps> = ({
 
   useEffect(() => {
     setModalText(modalTextLookup[confirmType]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

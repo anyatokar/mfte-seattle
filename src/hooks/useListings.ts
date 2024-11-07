@@ -50,6 +50,7 @@ export function useAllListings(
     return () => {
       unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [managerID]);
 
   useEffect(() => {
