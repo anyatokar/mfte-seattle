@@ -5,7 +5,10 @@ import { db } from "../db/firebase";
 
 import IListing from "../interfaces/IListing";
 
-export function useAllListings(): [IListing[], boolean] {
+export function useAllListings(
+  omitExpired: boolean,
+  managerID?: string
+): [IListing[], boolean] {
   const [allListings, setAllListings] = useState([] as Array<IListing>);
   const [isLoadingAllListings, setIsLoadingAllListings] = useState(false);
 
@@ -20,14 +23,35 @@ export function useAllListings(): [IListing[], boolean] {
       querySnapshot.forEach((doc) => {
         listings.push(doc.data() as IListing);
       });
-      setAllListings(listings);
+
+      // Filter out expired listings for map pages
+      if (omitExpired) {
+        const nonExpiredListings = listings.filter(
+          (listing) => new Date(listing.expiryDate) < new Date()
+        );
+        setAllListings(nonExpiredListings);
+      } else {
+        setAllListings(listings);
+      }
+
+      // Filter by managerID if provided
+      if (managerID) {
+        const managersListings = listings.filter(
+          (listing) => listing.managerID === managerID
+        );
+        setAllListings(managersListings);
+      } else {
+        setAllListings(listings);
+      }
+
       setIsLoadingAllListings(false);
     });
 
     return () => {
       unsubscribe();
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [managerID]);
 
   useEffect(() => {
     getAllListings();

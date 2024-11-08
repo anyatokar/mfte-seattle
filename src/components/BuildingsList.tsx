@@ -1,5 +1,5 @@
 import { areListingsOn } from "../config/config";
-import { pageTypeEnum } from "../types/enumTypes";
+import { listingStatusEnum, pageTypeEnum } from "../types/enumTypes";
 
 import BuildingCard from "./BuildingCard";
 
@@ -62,11 +62,13 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
       // Check if each building has an approved listing in allListings
       const hasListingA = allListings.some(
         (listing) =>
-          listing.buildingID === buildingA.buildingID && listing.isApproved
+          listing.buildingID === buildingA.buildingID &&
+          listing.listingStatus === listingStatusEnum.ACTIVE
       );
       const hasListingB = allListings.some(
         (listing) =>
-          listing.buildingID === buildingB.buildingID && listing.isApproved
+          listing.buildingID === buildingB.buildingID &&
+          listing.listingStatus === listingStatusEnum.ACTIVE
       );
 
       // Sort buildings with approved listings first
@@ -81,31 +83,27 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
   return (
     <Container fluid>
       <Row>
-        <Col lg={12}>
-          <Row>
-            {resultBuildings.length > 0 && (
-              <>
-                {resultBuildings.map((building: IBuilding) => (
-                  <Col
-                    key={building.buildingID}
-                    xs={12}
-                    sm={6}
-                    lg={areListingsOn ? 6 : 4}
-                    xl={areListingsOn ? 4 : 3}
-                    className="building-row"
-                  >
-                    <BuildingCard
-                      building={building}
-                      isSaved={checkIsSaved(savedBuildings, building)}
-                      pageType={pageType}
-                      listing={getListing(allListings, building.buildingID)}
-                    />
-                  </Col>
-                ))}
-              </>
-            )}
-          </Row>
-        </Col>
+        {resultBuildings.length > 0 && (
+          <>
+            {resultBuildings.map((building: IBuilding) => (
+              <Col
+                key={building.buildingID}
+                xs={12}
+                sm={6}
+                lg={areListingsOn ? 6 : 4}
+                xl={areListingsOn ? 4 : 3}
+                className="building-row"
+              >
+                <BuildingCard
+                  building={building}
+                  isSaved={checkIsSaved(savedBuildings, building)}
+                  pageType={pageType}
+                  listing={getListing(allListings, building.buildingID)}
+                />
+              </Col>
+            ))}
+          </>
+        )}
       </Row>
     </Container>
   );

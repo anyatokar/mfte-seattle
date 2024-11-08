@@ -18,6 +18,8 @@ export default function Signup({ onLoginClicked }: Props) {
   const passwordRef = useRef() as any;
   const nameRef = useRef() as any;
   const passwordConfirmRef = useRef() as any;
+  const companyNameRef = useRef() as any;
+  const jobTitleRef = useRef() as any;
   const { signupAuth } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,7 +40,9 @@ export default function Signup({ onLoginClicked }: Props) {
       email: emailRef.current.value,
       password: passwordRef.current.value,
       name: nameRef.current.value,
-      accountType: accountTypeEnum.RENTER,
+      accountType: accountTypeEnum.MANAGER,
+      companyName: companyNameRef.current.value,
+      jobTitle: jobTitleRef.current.value,
       uid: "", // Will be filled when uid is created by Auth.
     };
 
@@ -58,7 +62,7 @@ export default function Signup({ onLoginClicked }: Props) {
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title>Sign Up</Modal.Title>
+        <Modal.Title>Manager Sign Up</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -71,6 +75,14 @@ export default function Signup({ onLoginClicked }: Props) {
           <Form.Group id="email" className="mb-2">
             <Form.Label>Email</Form.Label>
             <Form.Control required type="email" ref={emailRef} />
+          </Form.Group>
+          <Form.Group id="companyName" className="mb-2">
+            <Form.Label>Company Name</Form.Label>
+            <Form.Control required type="companyName" ref={companyNameRef} />
+          </Form.Group>
+          <Form.Group id="jobTitle" className="mb-2">
+            <Form.Label>Job Title</Form.Label>
+            <Form.Control required type="jobTitle" ref={jobTitleRef} />
           </Form.Group>
           <Form.Group id="password" className="mb-2">
             <Form.Label>Password (6 or more characters)</Form.Label>

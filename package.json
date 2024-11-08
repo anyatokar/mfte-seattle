@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^2.19.3",
+    "bootstrap": "^5.3.3",
     "firebase": "^10.7.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
@@ -21,6 +22,7 @@
     "start": "PORT=8080 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "prettier": "prettier . --write",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,17 +45,19 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-typescript": "^7.25.9",
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/jest-dom": "^6.6.2",
     "@testing-library/react": "^16.0.1",
     "@types/bootstrap": "^5.2.10",
     "@types/googlemaps": "^3.43.3",
-    "@types/react": "^18.2.58",
+    "@types/react": "^18.3.12",
     "@types/react-bootstrap": "^0.32.35",
-    "@types/react-dom": "^18.2.14",
+    "@types/react-dom": "^18.3.1",
     "@types/react-router-bootstrap": "^0.24.5",
     "@types/react-router-dom": "^5.1.7",
     "@types/testing-library__react": "^10.2.0",
+    "babel-jest": "^29.7.0",
     "eslint-config-react-app": "^7.0.1",
     "prettier": "3.2.5",
     "typescript": "^5.3.3"

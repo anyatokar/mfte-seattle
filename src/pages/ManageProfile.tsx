@@ -1,9 +1,14 @@
-import { Profiler } from "react";
+import { Profiler, useEffect, useState } from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import UpdateProfile from "../auth_components/UpdateProfile";
 import Profile from "../components/Profile";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
+
+import { DocumentData } from "firebase/firestore";
+import { accountTypeEnum } from "../types/enumTypes";
+import { getManagerProfileFirestore } from "../utils/firestoreUtils";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -14,7 +19,33 @@ import Tab from "react-bootstrap/Tab";
 const ManageProfilePage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = ({ name }) => {
-  const { currentUser } = useAuth();
+  const [managerProfile, setManagerProfile] = useState<DocumentData | null>(
+    null
+  );
+
+  // TODO: temp disable eslint
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [loading, setLoading] = useState(true);
+
+  const { currentUser, accountType } = useAuth();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (currentUser && accountType === accountTypeEnum.MANAGER) {
+        try {
+          const profileData = await getManagerProfileFirestore(currentUser.uid);
+          setManagerProfile(profileData);
+        } catch (error) {
+          console.error("Error fetching manager profile:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!currentUser) {
     return null;
@@ -31,14 +62,16 @@ const ManageProfilePage: React.FunctionComponent<
         startTime,
         commitTime
       ) => {
-        console.log({
-          id,
-          phase,
-          actualDuration,
-          baseDuration,
-          startTime,
-          commitTime,
-        });
+        if (isProfilerOn) {
+          console.log({
+            id,
+            phase,
+            actualDuration,
+            baseDuration,
+            startTime,
+            commitTime,
+          });
+        }
       }}
     >
       <Container fluid className="all-pages">
@@ -61,10 +94,16 @@ const ManageProfilePage: React.FunctionComponent<
             <Col sm={12} lg={9} className="p-0">
               <Tab.Content>
                 <Tab.Pane eventKey="profile">
-                  <Profile />
+                  <Profile
+                    jobTitle={managerProfile?.jobTitle}
+                    companyName={managerProfile?.companyName}
+                  />
                 </Tab.Pane>
                 <Tab.Pane eventKey="update">
-                  <UpdateProfile />
+                  <UpdateProfile
+                    jobTitle={managerProfile?.jobTitle}
+                    companyName={managerProfile?.companyName}
+                  />
                 </Tab.Pane>
               </Tab.Content>
             </Col>

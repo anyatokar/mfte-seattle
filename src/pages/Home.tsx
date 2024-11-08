@@ -1,5 +1,6 @@
 import { Profiler } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
 
 import Button from "react-bootstrap/Button";
@@ -26,14 +27,16 @@ const HomePage: React.FunctionComponent<IPage> = ({ name }) => {
         startTime,
         commitTime
       ) => {
-        console.log({
-          id,
-          phase,
-          actualDuration,
-          baseDuration,
-          startTime,
-          commitTime,
-        });
+        if (isProfilerOn) {
+          console.log({
+            id,
+            phase,
+            actualDuration,
+            baseDuration,
+            startTime,
+            commitTime,
+          });
+        }
       }}
     >
       <Container className="all-pages diy-jumbotron">

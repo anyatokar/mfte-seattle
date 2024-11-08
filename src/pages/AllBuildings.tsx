@@ -2,10 +2,11 @@ import { useState, useMemo, Profiler } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { areListingsOn } from "../config/config";
+import { isProfilerOn } from "../config/config";
 
 import { useAllBuildings } from "../hooks/useAllBuildings";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
-import { useAllListings } from "../hooks/useAllListings";
+import { useAllListings } from "../hooks/useListings";
 
 import AllBuildingsList from "../components/BuildingsList";
 import MapTab from "../components/MapTab";
@@ -29,8 +30,8 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   name,
 }) => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildings();
-  const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
-  let [allListings, isLoadingAllListings] = useAllListings();
+  const [savedBuildings] = useSavedBuildings();
+  let [allListings] = useAllListings(true);
 
   // search, filter
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -53,7 +54,6 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   // listings
   if (!areListingsOn) {
     allListings = [];
-    isLoadingAllListings = false;
   }
 
   return (
@@ -67,14 +67,16 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
         startTime,
         commitTime
       ) => {
-        console.log({
-          id,
-          phase,
-          actualDuration,
-          baseDuration,
-          startTime,
-          commitTime,
-        });
+        if (isProfilerOn) {
+          console.log({
+            id,
+            phase,
+            actualDuration,
+            baseDuration,
+            startTime,
+            commitTime,
+          });
+        }
       }}
     >
       <div className="all-pages">
@@ -83,11 +85,7 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
           setSearchQuery={setSearchQuery}
           setActiveFilters={setActiveFilters}
           activeFilters={activeFilters}
-          loading={
-            isLoadingAllBuildings ||
-            isLoadingSavedBuildings ||
-            isLoadingAllListings
-          }
+          loading={isLoadingAllBuildings}
           resultBuildingsUnsorted={resultBuildingsUnsorted}
         />
 

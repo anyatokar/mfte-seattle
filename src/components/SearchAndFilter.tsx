@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-type searchAndFilterPropsType = {
+type SearchAndFilterProps = {
   allBuildings: IBuilding[];
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   setActiveFilters: React.Dispatch<React.SetStateAction<IFilter<IBuilding>[]>>;
@@ -17,7 +17,7 @@ type searchAndFilterPropsType = {
   loading: boolean;
   resultBuildingsUnsorted: IBuilding[];
 };
-const SearchAndFilter: React.FC<searchAndFilterPropsType> = ({
+const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   allBuildings,
   setSearchQuery,
   setActiveFilters,

@@ -7,13 +7,21 @@ import {
   setDoc,
   updateDoc,
   addDoc,
+  Timestamp,
+  DocumentData,
 } from "firebase/firestore";
 
-import { availDataFormType } from "../pages/AddListing";
 import { contactUsFormFieldsType } from "../pages/Contact";
+import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
+import { getMaxExpiryDate } from "./generalUtils";
 
 import IBuilding from "../interfaces/IBuilding";
-import IListing from "../interfaces/IListing";
+import IListing, { AvailData } from "../interfaces/IListing";
+import {
+  IManagerSignupAuthData,
+  IUserSignupAuthData,
+  SignupAuthDataType,
+} from "../interfaces/IUser";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -23,53 +31,12 @@ export async function saveBuilding(
     return;
   }
 
-  const {
-    buildingID,
-    buildingName,
-    phone,
-    phone2,
-    residentialTargetedArea,
-    totalRestrictedUnits,
-    sedu,
-    studioUnits,
-    oneBedroomUnits,
-    twoBedroomUnits,
-    threePlusBedroomUnits,
-    urlForBuilding,
-    streetNum,
-    street,
-    city,
-    state,
-    zip,
-    lat,
-    lng,
-  } = building;
+  const { buildingID, buildingName } = building;
 
   const userDocRef = doc(db, "users", uid);
   const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
 
-  await setDoc(buildingDocRef, {
-    buildingID: buildingID,
-    buildingName: buildingName,
-    phone: phone,
-    phone2: phone2,
-    residentialTargetedArea: residentialTargetedArea,
-    totalRestrictedUnits: totalRestrictedUnits,
-    sedu: sedu,
-    studioUnits: studioUnits,
-    oneBedroomUnits: oneBedroomUnits,
-    twoBedroomUnits: twoBedroomUnits,
-    threePlusBedroomUnits: threePlusBedroomUnits,
-    urlForBuilding: urlForBuilding,
-    streetNum: streetNum,
-    street: street,
-    city: city,
-    state: state,
-    zip: zip,
-    lat: lat,
-    lng: lng,
-    savedTimestamp: new Date(),
-  })
+  await setDoc(buildingDocRef, { ...building, savedTimestamp: new Date() })
     .then(() => {
       console.log(`${buildingName} saved to user list.`);
     })
@@ -97,53 +64,172 @@ export async function deleteBuilding(
     });
 }
 
-export async function getNameFirestore(uid: string): Promise<string | null> {
-  const userDocRef = doc(db, "users", uid);
+function availDataToNum(availData: AvailData[] | undefined): AvailData[] {
+  if (!availData) return [];
+
+  for (const ele of availData) {
+    // The check is for TS and because form fields and listing in db share IListing.
+    // Type will always be string when incoming from the form.
+    if (typeof ele.numAvail === "string") {
+      ele.numAvail = parseInt(ele.numAvail);
+    }
+
+    if (typeof ele.maxRent === "string") {
+      ele.maxRent = parseFloat(ele.maxRent);
+    }
+  }
+
+  return availData;
+}
+
+export async function addListingFirestore(
+  buildingName: string,
+  formFields: Partial<IListing>,
+  buildingID: string,
+  uid: string
+): Promise<string> {
+  const listing: IListing = {
+    buildingName: buildingName || "",
+    url: formFields.url || "",
+    availData: availDataToNum(formFields.availData),
+    description: formFields.description || "",
+    listingStatus: listingStatusEnum.IN_REVIEW,
+    buildingID: buildingID || "",
+    dateCreated: Timestamp.fromDate(new Date()),
+    dateUpdated: Timestamp.fromDate(new Date()),
+    /** YYYY-MM-DD */
+    expiryDate: formFields.expiryDate || getMaxExpiryDate(),
+    listingID: "",
+    managerID: uid,
+  };
+  try {
+    // Create a new document reference with an auto-generated ID
+    const listingDocRef = doc(collection(db, "listings"));
+
+    // Set the document and include the listingID field
+    await setDoc(listingDocRef, {
+      ...listing,
+      listingID: listingDocRef.id,
+    });
+
+    return listingDocRef.id;
+  } catch (error) {
+    console.error("Error adding listing or updating company rep:", error);
+    return "";
+  }
+}
+export async function updateListingFirestore(
+  fieldsToUpdate: Partial<IListing>,
+  listingID: string
+) {
+  if (fieldsToUpdate.availData) {
+    fieldsToUpdate.availData = availDataToNum(fieldsToUpdate.availData);
+  }
+
+  try {
+    const listingDocRef = doc(db, "listings", listingID);
+    await updateDoc(listingDocRef, {
+      ...fieldsToUpdate,
+      dateUpdated: Timestamp.fromDate(new Date()),
+      expiryDate: fieldsToUpdate.expiryDate || getMaxExpiryDate(),
+    });
+    return true;
+  } catch (error) {
+    console.error("Error updating listing:", error);
+    return false;
+  }
+}
+
+export async function deleteListingFirestore(
+  listingID: string,
+  buildingName: string
+) {
+  const listingDocRef = doc(db, "listings", listingID);
+  await deleteDoc(listingDocRef)
+    .then(() => {
+      console.log(
+        `Listing for ${buildingName} deleted from Listings. ListingID was ${listingID}`
+      );
+    })
+    .catch((error: any) => {
+      console.error(
+        `Error deleting listing for ${buildingName}, listingID ${listingID}:`,
+        error
+      );
+    });
+}
+
+export async function getManagerProfileFirestore(
+  uid: string
+): Promise<DocumentData | null> {
+  const userDocRef = doc(db, "managers", uid);
   const userDocSnap = await getDoc(userDocRef);
 
   try {
     if (userDocSnap.exists()) {
-      return userDocSnap.data().name;
+      return userDocSnap.data();
     } else {
-      console.log(`No user in "users" with uid ${uid}`);
+      console.log(`No user in "managers" with uid ${uid}`);
+      return null;
     }
   } catch (error: any) {
     console.error(`Error getting data for user ${uid}:`, error);
-  } finally {
     return null;
   }
 }
 
-export async function updateNameFirestore(
-  uid: string | undefined,
-  name: string
-) {
-  if (!uid) {
-    return;
-  }
-
+export async function getAccountTypeFirestore(
+  uid: string
+): Promise<accountTypeEnum | null> {
   const userDocRef = doc(db, "users", uid);
+  const managerDocRef = doc(db, "managers", uid);
 
-  await updateDoc(userDocRef, {
-    name: name,
-    updateNameTimestamp: new Date(),
-  });
+  try {
+    const userDocSnap = await getDoc(userDocRef);
+    const companyUserDocSnap = await getDoc(managerDocRef);
+
+    if (userDocSnap.exists()) {
+      return accountTypeEnum.RENTER;
+    } else if (companyUserDocSnap.exists()) {
+      return accountTypeEnum.MANAGER;
+    } else {
+      console.log("User doesn't exist in either collection");
+      return null;
+    }
+  } catch (error: any) {
+    console.error(`Error getting user account data for user ${uid}:`, error);
+    return null;
+  }
 }
 
-export async function updateEmailFirestore(
-  uid: string | undefined,
-  email: string
-) {
+export type UpdateData = {
+  uid: string | undefined;
+  accountType: accountTypeEnum | null;
+  key: keyof IManagerSignupAuthData | keyof IUserSignupAuthData;
+  value: string;
+};
+
+export async function updateProfileFirestore(updateData: UpdateData) {
+  const { uid, accountType, key, value } = updateData;
+
   if (!uid) {
     return;
   }
 
   const userDocRef = doc(db, "users", uid);
+  const managerDocRef = doc(db, "managers", uid);
 
-  await updateDoc(userDocRef, {
-    email: email,
-    updateEmailTimestamp: new Date(),
-  });
+  if (accountType === accountTypeEnum.RENTER) {
+    await updateDoc(userDocRef, {
+      [key]: value,
+      updateNameTimestamp: new Date(),
+    });
+  } else if (accountType === accountTypeEnum.MANAGER) {
+    await updateDoc(managerDocRef, {
+      [key]: value,
+      updateNameTimestamp: new Date(),
+    });
+  }
 }
 
 export async function sendMessageFirestore(
@@ -157,51 +243,6 @@ export async function sendMessageFirestore(
     message: formFields.message,
     sentTimestamp: new Date(),
     didReply: false,
-  });
-}
-
-export async function sendListingFirestore(
-  formFields: Partial<IListing> & availDataFormType,
-  buildingID: string | undefined
-) {
-  await addDoc(collection(db, "listings"), {
-    contactName: formFields.contactName,
-    email: formFields.email,
-    companyName: formFields.companyName,
-    jobTitle: formFields.jobTitle,
-    buildingName: formFields.buildingName,
-    url: formFields.url,
-    availData: [
-      {
-        unitSize: "micro",
-        numAvail: parseInt(formFields.microNumAvail),
-        dateAvail: formFields.microDateAvail,
-      },
-      {
-        unitSize: "studio",
-        numAvail: parseInt(formFields.studioNumAvail),
-        dateAvail: formFields.studioDateAvail,
-      },
-      {
-        unitSize: "oneBed",
-        numAvail: parseInt(formFields.oneBedNumAvail),
-        dateAvail: formFields.oneBedDateAvail,
-      },
-      {
-        unitSize: "twoBed",
-        numAvail: parseInt(formFields.twoBedNumAvail),
-        dateAvail: formFields.twoBedDateAvail,
-      },
-      {
-        unitSize: "threePlusBed",
-        numAvail: parseInt(formFields.threePlusBedNumAvail),
-        dateAvail: formFields.threePlusBedDateAvail,
-      },
-    ],
-    message: formFields.message,
-    buildingID: buildingID,
-    sentTimestamp: new Date(),
-    isApproved: false,
   });
 }
 
@@ -223,25 +264,49 @@ export async function addNote(
   });
 }
 
-export async function deleteUserFirestore(uid: string | undefined) {
+export async function deleteUserFirestore(
+  uid: string | undefined,
+  accountType: accountTypeEnum | null
+) {
   if (!uid) {
     return;
   }
 
-  await deleteDoc(doc(db, "users", uid));
+  if (accountType === accountTypeEnum.MANAGER) {
+    await deleteDoc(doc(db, "managers", uid));
+  } else if (accountType === accountTypeEnum.RENTER) {
+    await deleteDoc(doc(db, "users", uid));
+  }
 }
 
-export async function signupFirestore(
-  uid: string,
-  email: string | null,
-  name: string | null
-) {
-  await setDoc(doc(db, "users", uid), {
-    uid: uid,
-    email: email,
-    name: name,
-    signupOrBackfillTimestamp: new Date(),
-    // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
-    recentUser: true,
-  });
+export async function signupFirestore(signupAuthData: SignupAuthDataType) {
+  const { uid, accountType } = signupAuthData;
+
+  if (!uid) return;
+
+  if (accountType === accountTypeEnum.MANAGER) {
+    const { email, name, uid, companyName, jobTitle } = signupAuthData;
+    const managerDocRef = doc(db, "managers", uid);
+    await setDoc(managerDocRef, {
+      accountType: accountType,
+      uid: uid,
+      email: email,
+      name: name,
+      signupTimestamp: new Date(),
+      companyName: companyName,
+      jobTitle: jobTitle,
+    } as Omit<IManagerSignupAuthData, "password">);
+  } else if (accountType === accountTypeEnum.RENTER) {
+    const { email, name, uid } = signupAuthData;
+    const userDocRef = doc(db, "users", uid);
+    await setDoc(userDocRef, {
+      accountType: accountType,
+      uid: uid,
+      email: email,
+      name: name,
+      signupOrBackfillTimestamp: new Date(),
+      // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
+      recentUser: true,
+    } as Omit<IUserSignupAuthData, "password">);
+  }
 }

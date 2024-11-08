@@ -1,5 +1,9 @@
 import { useContext, useState, useEffect, createContext } from "react";
+import { accountTypeEnum } from "../types/enumTypes";
+
 import IProps from "../interfaces/IProps";
+import { SignupAuthDataType } from "../interfaces/IUser";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -12,12 +16,16 @@ import {
   onAuthStateChanged,
   User,
 } from "firebase/auth";
-import { getNameFirestore, signupFirestore } from "../utils/firestoreUtils";
+import {
+  getAccountTypeFirestore,
+  signupFirestore,
+} from "../utils/firestoreUtils";
 
 interface AuthContextProps {
   currentUser: User | null;
+  accountType: accountTypeEnum | null;
   login: (email: string, password: string) => Promise<void>;
-  signupAuth: (email: string, password: string, name: string) => Promise<void>;
+  signupAuth: (signupAuthData: SignupAuthDataType) => Promise<void>;
   logout: () => Promise<void>;
   resetPasswordAuth: (email: string) => Promise<void>;
   updateDisplayNameAuth: (displayName: string) => Promise<void> | undefined;
@@ -38,34 +46,26 @@ export function useAuth() {
 
 const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [accountType, setAccountType] = useState<accountTypeEnum | null>(null);
   const [loading, setLoading] = useState(true);
 
-  async function signupAuth(email: string, password: string, name: string) {
-    return createUserWithEmailAndPassword(getAuth(), email, password).then(
-      (cred) => {
-        if (cred.user) {
-          updateProfile(cred.user, { displayName: name });
-          signupFirestore(cred.user.uid, cred.user.email, name);
-        }
-      }
+  async function signupAuth(signupAuthData: SignupAuthDataType) {
+    const { email, password, name } = signupAuthData;
+
+    const cred = await createUserWithEmailAndPassword(
+      getAuth(),
+      email,
+      password
     );
+    if (cred.user) {
+      await updateProfile(cred.user, { displayName: name });
+
+      await signupFirestore({ ...signupAuthData, uid: cred.user.uid });
+    }
   }
 
   async function login(email: string, password: string): Promise<void> {
-    const cred = await signInWithEmailAndPassword(getAuth(), email, password);
-
-    if (cred.user) {
-      const nameInFirestore = await getNameFirestore(cred.user.uid);
-
-      // Backfill user displayName from Firestore to Auth
-      // only if the displayName doesn't already exist in Auth.
-      if (nameInFirestore && !cred.user.displayName) {
-        updateProfile(cred.user, { displayName: nameInFirestore });
-      }
-
-      // Backfill missing data from Auth to Firestore.
-      signupFirestore(cred.user.uid, cred.user.email, cred.user.displayName);
-    }
+    await signInWithEmailAndPassword(getAuth(), email, password);
   }
 
   function logout() {
@@ -98,17 +98,25 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuth(), (currentUser) => {
+    const unsubscribe = onAuthStateChanged(getAuth(), async (currentUser) => {
       setCurrentUser(currentUser);
+      if (currentUser) {
+        const accountType = await getAccountTypeFirestore(currentUser.uid);
+        setAccountType(accountType);
+      } else {
+        setAccountType(null);
+      }
       setLoading(false);
     });
-    return unsubscribe;
+
+    return () => unsubscribe();
   }, []);
 
   const value: AuthContextProps = {
     currentUser,
+    accountType,
     login,
-    signupAuth,
+    signupAuth: signupAuth,
     logout,
     resetPasswordAuth,
     updateDisplayNameAuth,

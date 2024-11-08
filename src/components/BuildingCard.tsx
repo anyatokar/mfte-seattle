@@ -1,11 +1,17 @@
 import { useState, useContext } from "react";
 
 import { areListingsOn } from "../config/config";
-import { pageTypeEnum, tableType } from "../types/enumTypes";
+import {
+  accountTypeEnum,
+  listingStatusEnum,
+  pageTypeEnum,
+  tableType,
+} from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
-import ListingButton from "./ListingButton";
 import BuildingDataTable from "./BuildingDataTable";
+import ListingButton from "./ListingButton";
+import SaveButton from "./SaveButton";
 import WebsiteButton from "./WebsiteButton";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
@@ -25,6 +31,7 @@ import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import Stack from "react-bootstrap/Stack";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
@@ -60,7 +67,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
 
   const { pageType, listing } = props;
 
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
 
   // All Buildings Page - save/saved button
   const [, /* modalState */ setModalState] = useContext(ModalContext);
@@ -120,66 +127,67 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   };
 
   return (
-    <Card>
+    <Card
+      border={
+        areListingsOn && listing?.listingStatus === listingStatusEnum.ACTIVE
+          ? "success"
+          : ""
+      }
+    >
       <Card.Header>
         <Card.Title className="mt-2">
           <div>
             {buildingName}
-            {areListingsOn && listing?.isApproved && (
-              <Badge
-                pill
-                bg="warning"
-                text="dark"
-                className="units-avail-badge"
-              >
-                Units available!
-              </Badge>
-            )}
+            {areListingsOn &&
+              listing?.listingStatus === listingStatusEnum.ACTIVE && (
+                <Badge
+                  pill
+                  bg="warning"
+                  text="dark"
+                  className="units-avail-badge"
+                >
+                  Units available!
+                </Badge>
+              )}
           </div>
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
         <div className="mt-2">
           {pageType === pageTypeEnum.allBuildings &&
+            accountType !== accountTypeEnum.MANAGER &&
             (currentUser ? (
               wasOriginallySaved || isSaved ? (
-                <>
+                <Stack direction={"horizontal"} gap={2}>
+                  {" "}
+                  <ListingButton listing={listing} isMarker={false} />
                   <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <Button
-                    className="diy-solid-info-button"
-                    size="sm"
-                    onClick={toggleSave}
-                  >
-                    Saved
-                  </Button>
-                </>
+                  <SaveButton isSaved={true} onClickCallback={toggleSave} />
+                </Stack>
               ) : (
-                <>
+                <Stack direction={"horizontal"} gap={2}>
+                  <ListingButton listing={listing} isMarker={false} />
                   <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <Button
-                    className="diy-outline-info-button"
-                    size="sm"
-                    onClick={toggleSave}
-                  >
-                    Save
-                  </Button>
-                </>
+                  <SaveButton isSaved={false} onClickCallback={toggleSave} />
+                </Stack>
               )
             ) : (
-              <>
+              <Stack direction={"horizontal"} gap={2}>
+                <ListingButton listing={listing} isMarker={false} />
                 <WebsiteButton urlForBuilding={urlForBuilding} />
-                <Button
-                  className="diy-outline-info-button"
-                  onClick={handleShowLogin}
-                  size="sm"
-                >
-                  Save
-                </Button>
-              </>
+                <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
+              </Stack>
             ))}
+          {accountType === accountTypeEnum.MANAGER && (
+            <Stack direction={"horizontal"} gap={2}>
+              <ListingButton listing={listing} isMarker={false} />
+              <WebsiteButton urlForBuilding={urlForBuilding} />
+            </Stack>
+          )}
         </div>
 
         {pageType === pageTypeEnum.savedBuildings && (
-          <>
+          <Stack direction={"horizontal"} gap={2}>
+            <ListingButton listing={listing} isMarker={false} />
             <WebsiteButton urlForBuilding={urlForBuilding} />
             <Button
               className="center"
@@ -194,12 +202,14 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
             >
               Remove
             </Button>
-          </>
+          </Stack>
         )}
       </Card.Header>
 
       <ListGroup variant="flush" className="mb-2">
-        {(!areListingsOn || !listing || !listing.isApproved) && (
+        {(!areListingsOn ||
+          !listing ||
+          listing.listingStatus !== listingStatusEnum.ACTIVE) && (
           <ListGroup.Item>
             Contact building for current availability.
           </ListGroup.Item>
@@ -209,18 +219,32 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
           <Tabs
             className="tabs"
             defaultActiveKey={
-              areListingsOn && listing?.isApproved ? "availability" : "contact"
+              areListingsOn &&
+              listing?.listingStatus === listingStatusEnum.ACTIVE
+                ? "availability"
+                : "contact"
             }
           >
-            {areListingsOn && listing?.isApproved && listing?.availData && (
-              <Tab eventKey="availability" title="Availability">
-                <BuildingDataTable
-                  type={tableType.availData}
-                  data={listing.availData}
-                />
-                <ListingButton listing={listing} isMarker={false} />
-              </Tab>
-            )}
+            {areListingsOn &&
+              listing?.listingStatus === listingStatusEnum.ACTIVE &&
+              listing?.availData && (
+                <Tab
+                  eventKey="availability"
+                  title="Availability"
+                  className="mt-2"
+                >
+                  <BuildingDataTable
+                    type={tableType.availData}
+                    data={listing.availData}
+                    showListingForm={false}
+                  />
+                  {listing.description && (
+                    <Card.Text className="mt-2">
+                      <strong>Description:</strong> {listing.description}
+                    </Card.Text>
+                  )}
+                </Tab>
+              )}
 
             <Tab eventKey="contact" title="Contact">
               <div className="mt-2">
@@ -237,7 +261,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
               </div>
             </Tab>
             {amiData && (
-              <Tab eventKey="details" title="Details">
+              <Tab eventKey="details" title="Details" className="mt-2">
                 <BuildingDataTable type={tableType.amiData} data={amiData} />
               </Tab>
             )}
@@ -256,6 +280,11 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     value={noteToAdd}
                     onChange={handleChange}
                   />
+                  {formattedTimestamp && (
+                    <Form.Text>
+                      Updated: {timestampToDateAndTime(formattedTimestamp)}
+                    </Form.Text>
+                  )}
                 </Form.Group>
                 <Button
                   disabled={!isNoteDifferent}
@@ -267,11 +296,6 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                 >
                   Save note
                 </Button>
-                <div>
-                  {formattedTimestamp && (
-                    <p>{`Last saved: ${formattedTimestamp}`}</p>
-                  )}
-                </div>
               </Form>
             </>
           </ListGroup.Item>

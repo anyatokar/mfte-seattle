@@ -1,27 +1,26 @@
 import { Fragment } from "react";
 import { tableType } from "../types/enumTypes";
-
 import { amiPercentageType, amiDataType } from "../interfaces/IBuilding";
-import { availDataType } from "../interfaces/IListing";
-
+import { AvailData } from "../interfaces/IListing";
 import Table from "react-bootstrap/Table";
+import { formatCurrency, formatDate } from "../utils/generalUtils";
 
 interface AmiDataProps {
-  type: "amiData";
+  type: tableType.amiData;
   data: amiDataType[];
 }
 
 interface AvailDataProps {
-  type: "availData";
-  data: availDataType[];
+  type: tableType.availData;
+  data: AvailData[];
+  showListingForm: boolean;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 
-const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
-  type,
-  data,
-}) => {
+const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
+  const { type, data } = props;
+
   const unitLabels: Record<string, string> = {
     micro: "Micro",
     studio: "Studio",
@@ -46,48 +45,51 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
   }
 
   return (
-    <Table responsive bordered hover size="sm">
-      <thead>
-        <tr>
-          <th>Bedrooms</th>
-          <th>{dataHeader}</th>
-          {type === tableType.availData && <th>Earliest Date</th>}
-        </tr>
-      </thead>
-      <tbody>
-        {type === tableType.amiData &&
-          data.map((amiData: amiDataType) => {
-            if (!amiData) return null;
+    <>
+      <Table bordered hover size="sm" className="mt-0" responsive>
+        <thead>
+          <tr>
+            <th>Bedrooms</th>
+            <th>{dataHeader}</th>
+            {type === tableType.availData && <th>Earliest Date</th>}
+            {type === tableType.availData && <th>Max Rent</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {type === tableType.amiData &&
+            (data as amiDataType[]).map((amiData) => {
+              if (!amiData) return null;
 
-            const { unitSize, amiPercentages } = amiData;
+              const { unitSize, amiPercentages } = amiData;
 
-            return (
-              <tr key={unitSize}>
-                <td>{unitLabels[unitSize]}</td>
-                <td>{renderPercentageList(amiPercentages)}</td>
-              </tr>
-            );
-          })}
-        {type === tableType.availData &&
-          data.map((availData: availDataType) => {
-            if (!availData) return null;
+              return (
+                <tr key={unitSize}>
+                  <td>{unitLabels[unitSize]}</td>
+                  <td>{renderPercentageList(amiPercentages)}</td>
+                </tr>
+              );
+            })}
+          {type === tableType.availData &&
+            (data as AvailData[])?.map((availData) => {
+              if (!availData) return null;
 
-            const { unitSize, numAvail, dateAvail } = availData;
+              const { unitSize, numAvail, dateAvailString, maxRent } =
+                availData;
 
-            return numAvail > 0 ? (
-              <Fragment key={unitSize}>
-                <tr>
+              return numAvail ? (
+                <tr key={unitSize}>
                   <td>{unitLabels[unitSize]}</td>
                   <td>{numAvail}</td>
                   <td>
-                    {dateAvail ? dateAvail.toDate().toLocaleDateString() : "--"}
+                    {dateAvailString ? formatDate(dateAvailString) : "--"}
                   </td>
+                  <td>{formatCurrency(maxRent)}</td>
                 </tr>
-              </Fragment>
-            ) : null;
-          })}
-      </tbody>
-    </Table>
+              ) : null;
+            })}
+        </tbody>
+      </Table>
+    </>
   );
 };
 

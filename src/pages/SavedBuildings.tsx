@@ -1,12 +1,12 @@
 import { Profiler } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { isProfilerOn } from "../config/config";
+import IPage from "../interfaces/IPage";
+import { accountTypeEnum, pageTypeEnum } from "../types/enumTypes";
 
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
-import { useAllListings } from "../hooks/useAllListings";
-
-import IPage from "../interfaces/IPage";
-import { pageTypeEnum } from "../types/enumTypes";
+import { useAllListings } from "../hooks/useListings";
 
 import MapTab from "../components/MapTab";
 import AllBuildingsList from "../components/BuildingsList";
@@ -21,11 +21,11 @@ import Spinner from "react-bootstrap/Spinner";
 const SavedBuildingsPage: React.FunctionComponent<
   IPage & RouteComponentProps<any>
 > = ({ name }) => {
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
-  const [allListings, isLoadingAllListings] = useAllListings();
+  const [allListings, isLoadingAllListings] = useAllListings(true);
 
-  if (!currentUser) {
+  if (!currentUser || accountType !== accountTypeEnum.RENTER) {
     return null;
   }
 
@@ -42,14 +42,16 @@ const SavedBuildingsPage: React.FunctionComponent<
         startTime,
         commitTime
       ) => {
-        console.log({
-          id,
-          phase,
-          actualDuration,
-          baseDuration,
-          startTime,
-          commitTime,
-        });
+        if (isProfilerOn) {
+          console.log({
+            id,
+            phase,
+            actualDuration,
+            baseDuration,
+            startTime,
+            commitTime,
+          });
+        }
       }}
     >
       <Container fluid className="all-pages">

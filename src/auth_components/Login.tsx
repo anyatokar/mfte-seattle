@@ -9,12 +9,14 @@ import Modal from "react-bootstrap/Modal";
 type Props = {
   onResetClicked: () => void;
   onSignupClicked: () => void;
+  onRepSignupClicked: () => void;
   afterLogin?: () => void;
 };
 
 export default function Login({
   onResetClicked,
   onSignupClicked,
+  onRepSignupClicked,
   afterLogin,
 }: Props) {
   const emailRef = useRef() as any;
@@ -26,6 +28,7 @@ export default function Login({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     try {
       setError("");
       setLoading(true);
@@ -85,6 +88,10 @@ export default function Login({
           <br />
           <Button onClick={onSignupClicked} variant="link">
             Sign Up
+          </Button>
+          <br />
+          <Button onClick={onRepSignupClicked} variant="link">
+            Manager Sign Up
           </Button>
         </div>
       </Modal.Footer>

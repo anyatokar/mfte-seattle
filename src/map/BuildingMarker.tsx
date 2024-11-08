@@ -10,12 +10,15 @@ import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 
 import { AddressAndPhone } from "../components/BuildingContactInfo";
 import ListingButton from "../components/ListingButton";
+import SaveButton from "../components/SaveButton";
 import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 
-import Button from "react-bootstrap/Button";
+import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
+
+import Stack from "react-bootstrap/Stack";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -63,7 +66,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
 
   function toggleSave() {
@@ -99,7 +102,7 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   };
 
   const icon =
-    areListingsOn && listing?.isApproved
+    areListingsOn && listing?.listingStatus === listingStatusEnum.ACTIVE
       ? svgMarkerListing
       : svgMarkerNoListing;
 
@@ -139,42 +142,33 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
                   phone2={phone2}
                 />
               </div>
-              {currentUser ? (
-                wasOriginallySaved || isSaved ? (
-                  <>
-                    <WebsiteButton urlForBuilding={urlForBuilding} />
-
-                    <Button
-                      className="diy-solid-info-button"
-                      size="sm"
-                      onClick={toggleSave}
-                    >
-                      Saved
-                    </Button>
-                  </>
+              {accountType !== accountTypeEnum.MANAGER &&
+                (currentUser ? (
+                  wasOriginallySaved || isSaved ? (
+                    <Stack direction={"horizontal"} gap={2}>
+                      <WebsiteButton urlForBuilding={urlForBuilding} />
+                      <SaveButton isSaved={true} onClickCallback={toggleSave} />
+                    </Stack>
+                  ) : (
+                    <Stack direction={"horizontal"} gap={2}>
+                      <WebsiteButton urlForBuilding={urlForBuilding} />
+                      <SaveButton
+                        isSaved={false}
+                        onClickCallback={toggleSave}
+                      />
+                    </Stack>
+                  )
                 ) : (
-                  <>
+                  <Stack direction={"horizontal"} gap={2}>
                     <WebsiteButton urlForBuilding={urlForBuilding} />
-                    <Button
-                      className="diy-outline-info-button"
-                      size="sm"
-                      onClick={toggleSave}
-                    >
-                      Save
-                    </Button>
-                  </>
-                )
-              ) : (
-                <>
-                  <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <Button
-                    className="diy-outline-info-button"
-                    size="sm"
-                    onClick={handleShowLogin}
-                  >
-                    Save
-                  </Button>
-                </>
+                    <SaveButton
+                      isSaved={false}
+                      onClickCallback={handleShowLogin}
+                    />
+                  </Stack>
+                ))}
+              {accountType === accountTypeEnum.MANAGER && (
+                <WebsiteButton urlForBuilding={urlForBuilding} />
               )}
             </div>
           </>

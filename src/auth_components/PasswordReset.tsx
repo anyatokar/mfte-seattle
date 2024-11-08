@@ -9,11 +9,13 @@ import Modal from "react-bootstrap/Modal";
 type Props = {
   onLoginClicked?: () => void;
   onSignupClicked?: () => void;
+  onRepSignupClicked?: () => void;
 };
 
 export default function PasswordReset({
   onLoginClicked,
   onSignupClicked,
+  onRepSignupClicked,
 }: Props) {
   const emailRef = useRef() as any;
   const { resetPasswordAuth } = useAuth();
@@ -71,6 +73,10 @@ export default function PasswordReset({
         <div className="w-100 text-center">
           <Button onClick={onSignupClicked} variant="link">
             Sign Up
+          </Button>
+          <br />
+          <Button onClick={onRepSignupClicked} variant="link">
+            Manager Sign Up
           </Button>
           <br />
           <Button onClick={onLoginClicked} variant="link">

@@ -1,29 +1,35 @@
 import { Timestamp } from "firebase/firestore";
+import { listingStatusEnum } from "../types/enumTypes";
 
-export type unitSizeType =
+export type UnitSize =
   | "micro"
   | "studio"
   | "oneBed"
   | "twoBed"
   | "threePlusBed";
 
-export type availDataType = {
-  unitSize: unitSizeType;
-  numAvail: number;
-  dateAvail: Timestamp | null;
+export type AvailData = {
+  unitSize: UnitSize;
+  /** String when in form, gets converted to number before sent to Firestore */
+  numAvail: string | number;
+  /** This is a string because it is always a date in Pacific Time, no matter where the user is located. Think of it as move in date */
+  dateAvailString: string;
+  /** String when in form, gets converted to number before sent to Firestore */
+  maxRent: string | number;
 };
 
 export default interface IListing {
-  isApproved: boolean;
+  listingID: string;
+  listingStatus: listingStatusEnum;
   buildingName: string;
-  contactName: string;
-  email: string;
-  companyName: string;
-  jobTitle: string;
   url: string;
-  message: string;
+  description: string;
   /** This is an array to keep the order from smallest to largest on render. */
-  availData: availDataType[];
+  availData: AvailData[];
   buildingID: string;
-  sentTimestamp: Timestamp;
+  dateCreated: Timestamp;
+  dateUpdated: Timestamp;
+  /** This is a string because it is always a date in Pacific Time, no matter where the user is located. Think of it as move in date */
+  expiryDate: string;
+  managerID: string;
 }
