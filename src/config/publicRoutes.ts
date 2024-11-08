@@ -35,7 +35,7 @@ const publicRoutes: IRoute[] = [
     exact: true,
   },
   {
-    path: "/add-listing",
+    path: "/for-managers",
     name: "Add Listing Page",
     component: AddListingPage,
     exact: true,
