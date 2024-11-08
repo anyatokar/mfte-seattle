@@ -37,12 +37,7 @@ body {
   background: #eef6f6;
 }
 
-.navbar .nav-link:focus {
-  background: #eef6f6;
-}
-
 .navbar .nav-link.active {
-  /* font-weight: 700; */
   background: #eef6f6;
 }
 
@@ -145,7 +140,6 @@ body {
 }
 
 .footer-nav-link-custom:hover,
-.footer-nav-link-custom:focus,
 .footer-nav-link-custom:active {
   text-decoration: underline;
 }
@@ -187,7 +181,6 @@ body {
 }
 
 .diy-outline-info-button:hover,
-.diy-outline-info-button:focus,
 .diy-solid-info-button {
   color: white !important;
   background: #17a2b8 !important;
