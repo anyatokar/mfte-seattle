@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { areListingsOn } from "../config/config";
 import { isProfilerOn } from "../config/config";
 
-import { useAllBuildings } from "../hooks/useAllBuildings";
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useListings";
 
@@ -29,7 +29,7 @@ import Tab from "react-bootstrap/Tab";
 const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   name,
 }) => {
-  const [allBuildings, isLoadingAllBuildings] = useAllBuildings();
+  const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
   let [allListings] = useAllListings(true);
 

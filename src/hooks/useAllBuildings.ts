@@ -3,7 +3,7 @@ import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
 import IBuilding from "../interfaces/IBuilding";
 
-export const useAllBuildings = (shouldFetch = true): [IBuilding[], boolean] => {
+export const useAllBuildings = (): [IBuilding[], boolean] => {
   const [allBuildings, setAllBuildings] = useState<Array<IBuilding>>([]);
   const [isLoadingAllBuildings, setIsLoadingAllBuildings] = useState(true);
 
@@ -26,15 +26,11 @@ export const useAllBuildings = (shouldFetch = true): [IBuilding[], boolean] => {
   }, []);
 
   useEffect(() => {
-    if (shouldFetch) {
-      const unsubscribe = getAllBuildings();
-      return () => {
-        unsubscribe();
-      };
-    } else {
-      setIsLoadingAllBuildings(false);
-    }
-  }, [getAllBuildings, shouldFetch]);
+    const unsubscribe = getAllBuildings();
+    return () => {
+      unsubscribe();
+    };
+  }, [getAllBuildings]);
 
   return [allBuildings, isLoadingAllBuildings];
 };
