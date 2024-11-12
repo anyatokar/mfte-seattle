@@ -14,7 +14,7 @@ The platform currently supports over 100 active daily users.
 
 MFTE is a government program. This app is not affiliated with the Seattle Office of Housing or any government office. For official information about MFTE please visit the [Seattle Office of Housing website](https://seattle.gov/housing).
 
-Users should contact building property management directly for current information about apartment vacancies or renter qualifications.
+Users should contact building property management directly for current information about apartment vacancies and renter qualifications.
 
 ### Why MFTE
 

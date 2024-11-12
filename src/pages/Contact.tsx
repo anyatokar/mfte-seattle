@@ -1,5 +1,5 @@
 import { Profiler, useState } from "react";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import { sendMessageFirestore } from "../utils/firestoreUtils";
 import IPage from "../interfaces/IPage";
@@ -94,40 +94,32 @@ const ContactPage: React.FunctionComponent<
           <Col lg={10} xl={8}>
             <div className="display-5">Contact us</div>
             <hr className="my-4 break-line-light" />
-
             <p className="lead">
               We are always looking to improve this website — your feedback is
               welcome and appreciated.
             </p>
             <p>
-              This website is not affiliated with the Seattle Office of Housing
-              or any property owner.
+              Please note, this is an independent website intended solely to map MFTE units.
+              We are not affiliated with the Seattle Office of Housing or any
+              property owners, and we cannot provide assistance with specific
+              program or property questions.{" "}
             </p>
-            <ul>
-              <li>
-                Have general questions or feedback about the MFTE program?
-                Please explore the&nbsp;
-                <Link id="resources" to="./resources">
-                  Resources
-                </Link>
-                &nbsp;page or contact the&nbsp;
-                <a
-                  id="seattle-housing-website"
-                  href="https://seattle.gov/housing"
-                  title="Seattle Office of Housing government website"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Seattle Office of Housing
-                </a>
-                .
-              </li>
-              <li>
-                Have building-specific questions including apartment
-                availability, details on tenant eligibility, and the application
-                process? Please contact the property directly.
-              </li>
-            </ul>
+            <p>
+              As a suggestion, if you have questions or feedback about the MFTE
+              program, contact the{" "}
+              <a
+                id="seattle-housing-website"
+                href="https://seattle.gov/housing"
+                title="Seattle Office of Housing government website"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Seattle Office of Housing
+              </a>
+              . For inquiries about a specific building such as tenant
+              eligibility or the application process, contact the building’s
+              management directly.
+            </p>
             <hr className="my-4 break-line-light" />
             {isFormVisible ? (
               <>

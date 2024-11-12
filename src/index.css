@@ -148,7 +148,7 @@ body {
 /* Listing accordion */
 .accordion-button:not(.collapsed) {
   background-color: #f0ecec !important;
-  color: inherit;
+  color: black !important;
   font-weight: 700;
 }
 

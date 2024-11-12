@@ -132,23 +132,6 @@ const ResourcesPage: React.FunctionComponent<
                   PDF — City of Seattle — July 2023
                 </div>
               </ListGroup.Item>
-              <ListGroup.Item>
-                <a
-                  id="mfte-faqs"
-                  href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
-                  title="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="fw-bold"
-                >
-                  MFTE FAQs
-                </a>
-                <div className="fw-light">
-                  Two-page overview of the MFTE program. Note the map and income
-                  limits are outdated.
-                </div>
-                <div className="fw-light">PDF — City of Seattle — 2018</div>
-              </ListGroup.Item>
             </ListGroup>
           </Col>
         </Row>
