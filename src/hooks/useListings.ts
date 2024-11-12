@@ -1,25 +1,22 @@
 import { useCallback, useState, useEffect } from "react";
-
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
-
 import IListing from "../interfaces/IListing";
 
 export function useAllListings(
   omitExpired: boolean,
   managerID?: string
 ): [IListing[], boolean] {
-  const [allListings, setAllListings] = useState([] as Array<IListing>);
-  const [isLoadingAllListings, setIsLoadingAllListings] = useState(false);
+  const [allListings, setAllListings] = useState<IListing[]>([]);
+  const [isLoadingAllListings, setIsLoadingAllListings] = useState(true);
 
   const getAllListings = useCallback(() => {
     setIsLoadingAllListings(true);
-
     const q = query(collection(db, "listings"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      console.log("Getting listings.");
-      const listings: Array<IListing> = [];
+      console.log("Listings snapshot.");
+      const listings: IListing[] = [];
       querySnapshot.forEach((doc) => {
         listings.push(doc.data() as IListing);
       });
@@ -47,14 +44,14 @@ export function useAllListings(
       setIsLoadingAllListings(false);
     });
 
+    return unsubscribe;
+  }, [omitExpired, managerID]);
+
+  useEffect(() => {
+    const unsubscribe = getAllListings();
     return () => {
       unsubscribe();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [managerID]);
-
-  useEffect(() => {
-    getAllListings();
   }, [getAllListings]);
 
   return [allListings, isLoadingAllListings];
