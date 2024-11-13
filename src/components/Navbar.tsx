@@ -1,5 +1,5 @@
 import { useEffect, useContext, useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import mftelogo from "../assets/images/mftelogo23.svg";
 
@@ -21,7 +21,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 export const Header = () => {
   const { currentUser, logout, accountType } = useAuth();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [modalState, setModalState] = useContext(ModalContext);
 
   const showModal = modalState !== ModalState.HIDDEN;
@@ -36,8 +36,8 @@ export const Header = () => {
     [setModalState]
   );
 
-  const afterLoginSaved = () => history.push("./saved-buildings");
-  const afterLoginManager = () => history.push("./manage-listings");
+  const afterLoginSaved = () => navigate("./saved-buildings");
+  const afterLoginManager = () => navigate("./manage-listings");
 
   useEffect(() => {
     closeLogin();
@@ -50,7 +50,7 @@ export const Header = () => {
       await logout();
       let message = "Logged out successfully.";
       console.log(message);
-      history.push("/");
+      navigate("/");
     } catch (error: any) {
       let message = "Failed to log out.";
       console.error(`${message}. Error: ${error.message}`);
@@ -161,7 +161,7 @@ export const Header = () => {
               </Nav.Link>
             </Nav>
           ) : (
-            <Nav className="p-0 p-md-3">
+            <Nav className="p-0 p-lg-3">
               <Nav.Link active={false} onClick={showLoginSavedBuildings}>
                 Saved
               </Nav.Link>

@@ -1,6 +1,6 @@
 import { Profiler } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
 import { accountTypeEnum, pageTypeEnum } from "../types/enumTypes";
@@ -18,9 +18,7 @@ import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import Spinner from "react-bootstrap/Spinner";
 
-const SavedBuildingsPage: React.FunctionComponent<
-  IPage & RouteComponentProps<any>
-> = ({ name }) => {
+const SavedBuildingsPage: React.FC<IPage> = ({ name }) => {
   const { currentUser, accountType } = useAuth();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
   const [allListings, isLoadingAllListings] = useAllListings(true);
@@ -29,7 +27,7 @@ const SavedBuildingsPage: React.FunctionComponent<
     return null;
   }
 
-  let loading = isLoadingSavedBuildings || isLoadingAllListings;
+  const loading = isLoadingSavedBuildings || isLoadingAllListings;
 
   return (
     <Profiler
@@ -74,7 +72,6 @@ const SavedBuildingsPage: React.FunctionComponent<
             <Col sm={12} lg={10}>
               <Tab.Content>
                 <Row>
-                  {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for large screens and up */}
                   <Col className="mt-2 mt-lg-0">
                     <p className="lead">
                       Saved buildings — your short list of apartment buildings.
@@ -120,4 +117,4 @@ const SavedBuildingsPage: React.FunctionComponent<
   );
 };
 
-export default withRouter(SavedBuildingsPage);
+export default SavedBuildingsPage;

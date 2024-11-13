@@ -1,5 +1,4 @@
 import { Profiler, useState } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import { sendMessageFirestore } from "../utils/firestoreUtils";
 import IPage from "../interfaces/IPage";
@@ -18,9 +17,7 @@ export type contactUsFormFieldsType = {
   message: string;
 };
 
-const ContactPage: React.FunctionComponent<
-  IPage & RouteComponentProps<any>
-> = ({ name }) => {
+const ContactPage: React.FunctionComponent<IPage> = ({ name }) => {
   function clearFields(): void {
     setFormFields({
       authorName: "",
@@ -226,4 +223,4 @@ const ContactPage: React.FunctionComponent<
   );
 };
 
-export default withRouter(ContactPage);
+export default ContactPage;

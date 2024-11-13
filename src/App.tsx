@@ -1,25 +1,17 @@
 import { Profiler, useState } from "react";
 import PrivateRoute from "./auth_components/PrivateRoute";
-
 import { isProfilerOn } from "./config/config";
 import privateRoutes from "./config/privateRoutes";
 import publicRoutes from "./config/publicRoutes";
-
 import { Header } from "./components/Navbar";
 import { Footer } from "./components/Footer";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  RouteComponentProps,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AuthProvider from "./contexts/AuthContext";
 import { AllBuildingsProvider } from "./contexts/AllBuildingsContext";
-
 import { ModalContext, ModalState } from "./contexts/ModalContext";
 
-const Application: React.FC<{}> = () => {
+const Application: React.FC = () => {
   const modalStateHook = useState(ModalState.HIDDEN);
 
   return (
@@ -46,46 +38,37 @@ const Application: React.FC<{}> = () => {
       }}
     >
       <div className="main">
-        <Router>
+        <BrowserRouter>
           <AllBuildingsProvider>
             <AuthProvider>
               <ModalContext.Provider value={modalStateHook}>
                 <Header />
-                <Switch>
-                  {privateRoutes.map((route) => {
-                    return (
-                      <PrivateRoute
-                        key={route.name}
-                        path={route.path}
-                        exact={route.exact}
-                        component={route.component}
-                        name={route.name}
-                      />
-                    );
-                  })}
+                <Routes>
+                  {privateRoutes.map((route) => (
+                    <Route
+                      key={route.name}
+                      path={route.path}
+                      element={
+                        <PrivateRoute name={route.name}>
+                          <route.component />
+                        </PrivateRoute>
+                      }
+                    />
+                  ))}
 
-                  {publicRoutes.map((route) => {
-                    return (
-                      <Route
-                        key={route.name}
-                        path={route.path}
-                        exact={route.exact}
-                        render={(props: RouteComponentProps<any>) => (
-                          <route.component
-                            name={route.name}
-                            {...props}
-                            {...route.props}
-                          />
-                        )}
-                      />
-                    );
-                  })}
-                </Switch>
+                  {publicRoutes.map((route) => (
+                    <Route
+                      key={route.name}
+                      path={route.path}
+                      element={<route.component />}
+                    />
+                  ))}
+                </Routes>
               </ModalContext.Provider>
             </AuthProvider>
           </AllBuildingsProvider>
           <Footer />
-        </Router>
+        </BrowserRouter>
       </div>
     </Profiler>
   );

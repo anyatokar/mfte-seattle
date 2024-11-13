@@ -1,5 +1,5 @@
 import { Profiler } from "react";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
 
@@ -7,9 +7,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = ({
-  name,
-}) => {
+const AboutPage: React.FunctionComponent<IPage> = ({ name }) => {
   return (
     <Profiler
       id={name}
@@ -177,4 +175,4 @@ const AboutPage: React.FunctionComponent<IPage & RouteComponentProps<any>> = ({
   );
 };
 
-export default withRouter(AboutPage);
+export default AboutPage;

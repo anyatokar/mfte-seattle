@@ -37,8 +37,6 @@ const ReactMap: React.FC<IMap> = ({
   const [isLegendVisible, setIsLegendVisible] = useState(false);
   const mapRef = useRef<GoogleMap>(null);
 
-  
-
   useEffect(() => {
     if (
       areListingsOn &&
@@ -53,7 +51,7 @@ const ReactMap: React.FC<IMap> = ({
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: firebaseConfig.apiKey,
-  });  
+  });
 
   // Legend for pin colors.
   // Seems strange to have it dependent on buildingsToMap changing

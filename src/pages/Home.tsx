@@ -1,5 +1,5 @@
 import { Profiler } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
 
@@ -9,11 +9,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 const HomePage: React.FunctionComponent<IPage> = ({ name }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function onClick(event: any) {
     event.preventDefault();
-    history.push(event.target.value);
+    navigate(event.target.value);
   }
 
   return (

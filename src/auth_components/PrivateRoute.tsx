@@ -1,21 +1,16 @@
-import { Route, Redirect } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { ComponentType } from "react";
+import { ReactNode } from "react";
 import { accountTypeEnum } from "../types/enumTypes";
 
-type PrivateRoutes = {
-  path: string;
-  exact: boolean;
-  component: ComponentType<any>;
+type PrivateRouteProps = {
+  children: ReactNode;
   name: string;
 };
 
-export default function PrivateRoute({
-  component: Component,
-  name,
-  ...rest
-}: PrivateRoutes) {
+export default function PrivateRoute({ children, name }: PrivateRouteProps) {
   const { currentUser, accountType } = useAuth();
+  const location = useLocation();
 
   const isAuthorized =
     currentUser &&
@@ -25,16 +20,11 @@ export default function PrivateRoute({
         accountType === accountTypeEnum.RENTER) ||
       name === "Manage Profile Page");
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthorized ? (
-          <Component {...props} name={name} />
-        ) : (
-          <Redirect to="#" />
-        )
-      }
-    />
-  );
+  // Redirect unauthorized users
+  if (!isAuthorized) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // Render children if authorized
+  return <>{children}</>;
 }

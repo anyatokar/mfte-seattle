@@ -1,5 +1,5 @@
 import { useState, useMemo, Profiler, useEffect } from "react";
-import { RouteComponentProps, useLocation, withRouter } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { areListingsOn } from "../config/config";
 import { isProfilerOn } from "../config/config";
@@ -26,22 +26,20 @@ import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 
-const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
-  name,
-}) => {
+const AllBuildingsPage: React.FC<IPage> = ({ name }) => {
   const location = useLocation();
 
   // UseEffect to trigger logic whenever the route changes
-  useEffect(() => {
-    if (location.pathname === "/all-buildings") {
-      console.log("Navigated to MapPage! Re-triggering logic.");
-      
-      // Place any logic here that you want to run whenever the map tab is selected
-      // For example, re-fetching data, reinitializing state, etc.
-    }
-  }, [location.pathname]); 
+  // useEffect(() => {
+  //   if (location.pathname === "/all-buildings") {
+  //     console.log("Navigated to MapPage! Re-triggering logic.");
 
-  
+  //     // Place any logic here that you want to run whenever the map tab is selected
+  //     // For example, re-fetching data, reinitializing state, etc.
+  //     const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
+  //   }
+  // }, [location.pathname]);
+
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
   let [allListings] = useAllListings(true);
@@ -148,4 +146,4 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   );
 };
 
-export default withRouter(AllBuildingsPage);
+export default AllBuildingsPage;
