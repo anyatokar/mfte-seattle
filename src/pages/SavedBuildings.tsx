@@ -8,7 +8,7 @@ import { accountTypeEnum, pageTypeEnum } from "../types/enumTypes";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useListings";
 
-import MapTab from "../components/MapTab";
+import ReactMap from "../map/ReactMap";
 import AllBuildingsList from "../components/BuildingsList";
 
 import Col from "react-bootstrap/Col";
@@ -97,7 +97,7 @@ const SavedBuildingsPage: React.FunctionComponent<
                   </>
                 )}
                 <Tab.Pane eventKey="map">
-                  <MapTab
+                  <ReactMap
                     buildingsToMap={savedBuildings}
                     savedBuildings={savedBuildings}
                     allListings={allListings}

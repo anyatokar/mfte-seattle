@@ -2,7 +2,7 @@ import { firebaseConfig } from "../db/firebase";
 import { areListingsOn } from "../config/config";
 
 import { createRoot } from "react-dom/client";
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 import { BuildingMarker } from "./BuildingMarker";
@@ -11,6 +11,10 @@ import { checkIsSaved, getListing } from "../components/BuildingsList";
 
 import IBuilding from "../interfaces/IBuilding";
 import IMap from "../interfaces/IMap";
+
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 const containerStyle = {
   width: "100%",
@@ -33,6 +37,8 @@ const ReactMap: React.FC<IMap> = ({
   const [isLegendVisible, setIsLegendVisible] = useState(false);
   const mapRef = useRef<GoogleMap>(null);
 
+  
+
   useEffect(() => {
     if (
       areListingsOn &&
@@ -42,12 +48,12 @@ const ReactMap: React.FC<IMap> = ({
       setSelectedBuilding(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- No need for selectedBuilding in the deps list
-  }, [buildingsToMap]);
+  }, []);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: firebaseConfig.apiKey,
-  });
+  });  
 
   // Legend for pin colors.
   // Seems strange to have it dependent on buildingsToMap changing
@@ -70,33 +76,39 @@ const ReactMap: React.FC<IMap> = ({
       setIsLegendVisible(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buildingsToMap]);
+  }, []);
 
   if (!isLoaded) {
     return null;
   }
 
   return (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={12.5}
-      ref={mapRef}
-      options={{ mapId: "c8d48b060a22a457" }}
-    >
-      <>
-        {buildingsToMap.map((building) => (
-          <BuildingMarker
-            key={building.buildingID}
-            building={building}
-            isSelected={building === selectedBuilding}
-            setSelectedBuilding={setSelectedBuilding}
-            isSaved={checkIsSaved(savedBuildings, building)}
-            listing={getListing(allListings, building.buildingID)}
-          />
-        ))}
-      </>
-    </GoogleMap>
+    <Container fluid>
+      <Row>
+        <Col className="p-0">
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={center}
+            zoom={12.5}
+            ref={mapRef}
+            options={{ mapId: "c8d48b060a22a457" }}
+          >
+            <>
+              {buildingsToMap.map((building) => (
+                <BuildingMarker
+                  key={building.buildingID}
+                  building={building}
+                  isSelected={building === selectedBuilding}
+                  setSelectedBuilding={setSelectedBuilding}
+                  isSaved={checkIsSaved(savedBuildings, building)}
+                  listing={getListing(allListings, building.buildingID)}
+                />
+              ))}
+            </>
+          </GoogleMap>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
