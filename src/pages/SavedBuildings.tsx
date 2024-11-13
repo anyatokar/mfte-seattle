@@ -18,7 +18,7 @@ import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 import Spinner from "react-bootstrap/Spinner";
 
-const SavedBuildingsPage: React.FC<IPage> = ({ name }) => {
+const SavedBuildingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
   const [allListings, isLoadingAllListings] = useAllListings(true);
@@ -31,7 +31,7 @@ const SavedBuildingsPage: React.FC<IPage> = ({ name }) => {
 
   return (
     <Profiler
-      id={name}
+      id={"SavedBuildings"}
       onRender={(
         id,
         phase,

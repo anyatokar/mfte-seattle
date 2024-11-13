@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-const HomePage: React.FunctionComponent<IPage> = ({ name }) => {
+const HomePage: React.FunctionComponent<IPage> = () => {
   const navigate = useNavigate();
 
   function onClick(event: any) {
@@ -18,7 +18,7 @@ const HomePage: React.FunctionComponent<IPage> = ({ name }) => {
 
   return (
     <Profiler
-      id={name}
+      id={"Home"}
       onRender={(
         id,
         phase,

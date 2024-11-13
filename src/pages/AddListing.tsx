@@ -22,10 +22,10 @@ export type AvailDataForm = {
   threePlusBedDateAvail: Timestamp | null;
 };
 
-const AddListingPage: React.FunctionComponent<IPage> = ({ name }) => {
+const AddListingPage: React.FunctionComponent<IPage> = () => {
   return (
     <Profiler
-      id={name}
+      id={"AddListing"}
       onRender={(
         id,
         phase,

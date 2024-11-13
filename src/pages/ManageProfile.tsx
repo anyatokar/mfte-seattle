@@ -15,7 +15,7 @@ import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 
-const ManageProfilePage: React.FunctionComponent<IPage> = ({ name }) => {
+const ManageProfilePage: React.FunctionComponent<IPage> = () => {
   const [managerProfile, setManagerProfile] = useState<DocumentData | null>(
     null
   );
@@ -50,7 +50,7 @@ const ManageProfilePage: React.FunctionComponent<IPage> = ({ name }) => {
 
   return (
     <Profiler
-      id={name}
+      id={"Manage Profile"}
       onRender={(
         id,
         phase,

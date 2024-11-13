@@ -42,6 +42,7 @@ const ReactMap: React.FC<IMap> = ({
   useEffect(() => {
     setBuildingsToMap(resultBuildingsUnsorted);
   }, [resultBuildingsUnsorted]);
+
   useEffect(() => {
     if (
       areListingsOn &&
@@ -78,7 +79,7 @@ const ReactMap: React.FC<IMap> = ({
       root.render(<Legend />);
       setIsLegendVisible(true);
     }
-  }, [buildingsToMap]);
+  }, [resultBuildingsUnsorted]);
 
   if (!isLoaded) {
     return null;

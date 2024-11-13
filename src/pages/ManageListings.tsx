@@ -27,7 +27,7 @@ import Nav from "react-bootstrap/Nav";
 import AreYouSureModal from "../components/AreYouSureModal";
 import IBuilding from "../interfaces/IBuilding";
 
-const ManageListingsPage: React.FunctionComponent<IPage> = ({ name }) => {
+const ManageListingsPage: React.FunctionComponent<IPage> = () => {
   const { currentUser, accountType } = useAuth();
 
   const [repsListings, isLoadingRepsListings] = useAllListings(
@@ -124,7 +124,7 @@ const ManageListingsPage: React.FunctionComponent<IPage> = ({ name }) => {
 
   return (
     <Profiler
-      id={name}
+      id={"ManageListings"}
       onRender={(
         id,
         phase,

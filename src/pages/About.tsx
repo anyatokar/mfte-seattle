@@ -7,10 +7,10 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-const AboutPage: React.FunctionComponent<IPage> = ({ name }) => {
+const AboutPage: React.FunctionComponent<IPage> = () => {
   return (
     <Profiler
-      id={name}
+      id={"About"}
       onRender={(
         id,
         phase,

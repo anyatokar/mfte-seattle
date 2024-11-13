@@ -17,7 +17,7 @@ export type contactUsFormFieldsType = {
   message: string;
 };
 
-const ContactPage: React.FunctionComponent<IPage> = ({ name }) => {
+const ContactPage: React.FunctionComponent<IPage> = () => {
   function clearFields(): void {
     setFormFields({
       authorName: "",
@@ -65,7 +65,7 @@ const ContactPage: React.FunctionComponent<IPage> = ({ name }) => {
 
   return (
     <Profiler
-      id={name}
+      id={"Contact"}
       onRender={(
         id,
         phase,

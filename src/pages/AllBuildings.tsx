@@ -26,20 +26,7 @@ import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 
-const AllBuildingsPage: React.FC<IPage> = ({ name }) => {
-  const location = useLocation();
-
-  // UseEffect to trigger logic whenever the route changes
-  // useEffect(() => {
-  //   if (location.pathname === "/all-buildings") {
-  //     console.log("Navigated to MapPage! Re-triggering logic.");
-
-  //     // Place any logic here that you want to run whenever the map tab is selected
-  //     // For example, re-fetching data, reinitializing state, etc.
-  //     const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
-  //   }
-  // }, [location.pathname]);
-
+const AllBuildingsPage: React.FC<IPage> = () => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
   let [allListings] = useAllListings(true);
@@ -69,7 +56,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ name }) => {
 
   return (
     <Profiler
-      id={name}
+      id={"AllBuildings"}
       onRender={(
         id,
         phase,
