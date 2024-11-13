@@ -123,7 +123,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ name }) => {
                 <Tab.Content>
                   <Tab.Pane eventKey="map">
                     <ReactMap
-                      buildingsToMap={resultBuildingsUnsorted}
+                      resultBuildingsUnsorted={resultBuildingsUnsorted}
                       savedBuildings={savedBuildings}
                       allListings={allListings}
                     />

@@ -27,7 +27,7 @@ const center = {
 };
 
 const ReactMap: React.FC<IMap> = ({
-  buildingsToMap = [],
+  resultBuildingsUnsorted = [],
   savedBuildings,
   allListings,
 }) => {
@@ -36,17 +36,22 @@ const ReactMap: React.FC<IMap> = ({
   );
   const [isLegendVisible, setIsLegendVisible] = useState(false);
   const mapRef = useRef<GoogleMap>(null);
+  const [buildingsToMap, setBuildingsToMap] = useState<IBuilding[]>([]);
 
+  // Update buildingsToMap when resultBuildingsUnsorted changes
+  useEffect(() => {
+    setBuildingsToMap(resultBuildingsUnsorted);
+  }, [resultBuildingsUnsorted]);
   useEffect(() => {
     if (
       areListingsOn &&
       selectedBuilding &&
-      !buildingsToMap.includes(selectedBuilding)
+      !resultBuildingsUnsorted.includes(selectedBuilding)
     ) {
       setSelectedBuilding(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- No need for selectedBuilding in the deps list
-  }, []);
+  }, [resultBuildingsUnsorted]);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -73,8 +78,7 @@ const ReactMap: React.FC<IMap> = ({
       root.render(<Legend />);
       setIsLegendVisible(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [buildingsToMap]);
 
   if (!isLoaded) {
     return null;

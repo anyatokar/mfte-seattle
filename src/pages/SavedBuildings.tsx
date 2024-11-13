@@ -95,7 +95,7 @@ const SavedBuildingsPage: React.FC<IPage> = ({ name }) => {
                 )}
                 <Tab.Pane eventKey="map">
                   <ReactMap
-                    buildingsToMap={savedBuildings}
+                    resultBuildingsUnsorted={savedBuildings}
                     savedBuildings={savedBuildings}
                     allListings={allListings}
                   />
