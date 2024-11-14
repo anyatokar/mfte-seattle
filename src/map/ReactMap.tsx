@@ -1,5 +1,5 @@
 import { firebaseConfig } from "../db/firebase";
-import { areListingsOn } from "../config/config";
+import { allBuildingsMaxHeight, areListingsOn } from "../config/config";
 
 import { createRoot } from "react-dom/client";
 import { useEffect, useState, useRef } from "react";
@@ -18,7 +18,7 @@ import Row from "react-bootstrap/Row";
 
 const containerStyle = {
   width: "100%",
-  height: "90vh",
+  height: allBuildingsMaxHeight,
 };
 
 const center = {
@@ -79,6 +79,7 @@ const ReactMap: React.FC<IMap> = ({
       root.render(<Legend />);
       setIsLegendVisible(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultBuildingsUnsorted]);
 
   if (!isLoaded) {

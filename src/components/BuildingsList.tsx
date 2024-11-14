@@ -13,8 +13,10 @@ import IListing from "../interfaces/IListing";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Spinner from "react-bootstrap/esm/Spinner";
 
-type allBuildingsListProps = {
+type AllBuildingsListProps = {
+  isLoading: boolean;
   resultBuildingsUnsorted: IBuilding[];
   savedBuildings: ISavedBuilding[];
   allListings: IListing[] | [];
@@ -42,7 +44,8 @@ export const getListing = (
   );
 };
 
-const AllBuildingsList: React.FC<allBuildingsListProps> = ({
+const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
+  isLoading,
   resultBuildingsUnsorted,
   savedBuildings,
   pageType,
@@ -82,6 +85,18 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
 
   return (
     <Container fluid>
+      {/* result count */}
+      <Col>
+        {isLoading && <Spinner animation="border" variant="warning" />}
+
+        {!isLoading && pageType === pageTypeEnum.allBuildings && (
+          <p className="mb-0">
+            {resultBuildingsUnsorted.length > 0
+              ? `${resultBuildingsUnsorted.length} buildings found`
+              : "No buildings found"}
+          </p>
+        )}
+      </Col>
       <Row>
         {resultBuildings.length > 0 && (
           <>
@@ -91,8 +106,8 @@ const AllBuildingsList: React.FC<allBuildingsListProps> = ({
                 xs={12}
                 sm={6}
                 lg={areListingsOn ? 6 : 4}
-                xl={areListingsOn ? 4 : 3}
-                className="building-row"
+                xl={areListingsOn ? 6 : 3}
+                className="p-1"
               >
                 <BuildingCard
                   building={building}

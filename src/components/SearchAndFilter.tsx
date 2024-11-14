@@ -30,17 +30,16 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
       <Row>
         <Col sm={12} md={{ span: 11, offset: 1 }} lg={{ span: 10, offset: 2 }}>
           {/* search */}
-          <Row className="p-0 my-0">
-            <Col sm md={9} lg={8}>
+          <Row className="p-0 mt-0 mb-3">
+            <Col sm={6}>
               <SearchInput
                 onChangeSearchQuery={(query) => setSearchQuery(query)}
               />
             </Col>
-          </Row>
 
-          {/* filter */}
-          <Row className="p-0 mt-3">
-            <Col>
+            {/* filter */}
+
+            <Col sm={3}>
               {
                 <Filters<IBuilding>
                   object={allBuildings[0]}
@@ -63,23 +62,6 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                   }}
                 />
               }
-            </Col>
-          </Row>
-
-          {/* result count */}
-          <Row className="p-0 mt-3">
-            <Col>
-              <>
-                {loading ? (
-                  <Spinner animation="border" variant="secondary" size="sm" />
-                ) : (
-                  <p className="mb-0">
-                    {resultBuildingsUnsorted.length > 0
-                      ? `${resultBuildingsUnsorted.length} buildings found`
-                      : "No buildings found"}
-                  </p>
-                )}
-              </>
             </Col>
           </Row>
         </Col>

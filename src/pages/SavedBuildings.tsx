@@ -27,7 +27,7 @@ const SavedBuildingsPage: React.FC<IPage> = () => {
     return null;
   }
 
-  const loading = isLoadingSavedBuildings || isLoadingAllListings;
+  const isLoading = isLoadingSavedBuildings || isLoadingAllListings;
 
   return (
     <Profiler
@@ -79,8 +79,7 @@ const SavedBuildingsPage: React.FC<IPage> = () => {
                     <p>The list and notes are private to your profile.</p>
                   </Col>
                 </Row>
-                {loading && <Spinner animation="border" variant="warning" />}
-                {!loading && savedBuildings.length === 0 && (
+                {!isLoading && savedBuildings.length === 0 && (
                   <>
                     <br />
                     <p>
@@ -102,6 +101,7 @@ const SavedBuildingsPage: React.FC<IPage> = () => {
                 </Tab.Pane>
                 <Tab.Pane eventKey="list">
                   <AllBuildingsList
+                    isLoading={isLoading}
                     resultBuildingsUnsorted={savedBuildings}
                     savedBuildings={savedBuildings}
                     allListings={allListings}

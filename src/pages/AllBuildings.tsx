@@ -1,7 +1,6 @@
-import { useState, useMemo, Profiler, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useMemo, Profiler } from "react";
 
-import { areListingsOn } from "../config/config";
+import { allBuildingsMaxHeight, areListingsOn } from "../config/config";
 import { isProfilerOn } from "../config/config";
 
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
@@ -23,8 +22,6 @@ import { pageTypeEnum } from "../types/enumTypes";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Nav from "react-bootstrap/Nav";
-import Tab from "react-bootstrap/Tab";
 
 const AllBuildingsPage: React.FC<IPage> = () => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
@@ -87,46 +84,31 @@ const AllBuildingsPage: React.FC<IPage> = () => {
           resultBuildingsUnsorted={resultBuildingsUnsorted}
         />
 
-        <hr className="mt-2 mb-3 break-line-light" />
-
         <Container fluid>
-          <Tab.Container id="sidebar" defaultActiveKey="map">
-            <Row>
-              <Col sm={12} lg={2}>
-                <Nav variant="pills" className="flex-column side-nav">
-                  <Nav.Item>
-                    <Nav.Link eventKey="map" className="tab">
-                      Map
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="saved" className="tab">
-                      List
-                    </Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </Col>
-              <Col sm={12} lg={10}>
-                <Tab.Content>
-                  <Tab.Pane eventKey="map">
-                    <ReactMap
-                      resultBuildingsUnsorted={resultBuildingsUnsorted}
-                      savedBuildings={savedBuildings}
-                      allListings={allListings}
-                    />
-                  </Tab.Pane>
-                  <Tab.Pane eventKey="saved">
-                    <AllBuildingsList
-                      resultBuildingsUnsorted={resultBuildingsUnsorted}
-                      savedBuildings={savedBuildings}
-                      allListings={allListings}
-                      pageType={pageTypeEnum.allBuildings}
-                    />
-                  </Tab.Pane>
-                </Tab.Content>
-              </Col>
-            </Row>
-          </Tab.Container>
+          <Row>
+            <Col className="pl-0">
+              <ReactMap
+                resultBuildingsUnsorted={resultBuildingsUnsorted}
+                savedBuildings={savedBuildings}
+                allListings={allListings}
+              />
+            </Col>
+            <Col
+              className="p-0"
+              style={{
+                maxHeight: allBuildingsMaxHeight,
+                overflowY: "auto",
+              }}
+            >
+              <AllBuildingsList
+                isLoading={isLoadingAllBuildings}
+                resultBuildingsUnsorted={resultBuildingsUnsorted}
+                savedBuildings={savedBuildings}
+                allListings={allListings}
+                pageType={pageTypeEnum.allBuildings}
+              />
+            </Col>
+          </Row>
         </Container>
       </div>
     </Profiler>
