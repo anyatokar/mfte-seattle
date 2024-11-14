@@ -20,11 +20,9 @@ export default function PrivateRoute({ children, name }: PrivateRouteProps) {
         accountType === accountTypeEnum.RENTER) ||
       name === "Manage Profile Page");
 
-  // Redirect unauthorized users
   if (!isAuthorized) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  // Render children if authorized
   return <>{children}</>;
 }

@@ -36,6 +36,7 @@ export const Header = () => {
     [setModalState]
   );
 
+  // TODO: this is broken due to the async nature of updating accountType
   const afterLoginSaved = () => navigate("./saved-buildings");
   const afterLoginManager = () => navigate("./manage-listings");
 
