@@ -63,7 +63,7 @@ const AboutPage: React.FunctionComponent<IPage> = () => {
                 <div className="lead">
                   MFTE is a government program. This website is not affiliated
                   with the Seattle Office of Housing or any government office.
-                  For official information about MFTE please visit the&nbsp;
+                  For official information about MFTE please contact the&nbsp;
                   <a
                     id="seattle-housing-website"
                     href="https://seattle.gov/housing"
@@ -71,27 +71,28 @@ const AboutPage: React.FunctionComponent<IPage> = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Seattle Office of Housing website
+                    Seattle Office of Housing
                   </a>
-                  .
-                </div>
-                <div className="lead mt-2">
-                  Contact building property management directly for current
-                  information about apartment vacancies or renter
-                  qualifications.
+                  . Contact building management directly for information about
+                  apartment vacancies and the application process.
                 </div>
               </Col>
             </Row>
 
             <Row className="align-items-center py-3">
               <Col lg={2} className="text-lg-end">
-                <div className="fs-4">Why MFTE</div>
+                <div className="fs-4">Usage</div>
               </Col>
               <Col lg={8}>
                 <div className="lead">
-                  This website highlights the MFTE program because of the
-                  relatively quick application turnaround, higher availability,
-                  and modern apartments in sought-after locations.
+                  Search and filter for apartments that fit your criteria (such
+                  as number of bedrooms, neighborhood, and building name).
+                  Create a free login to keep a short list of properties, view a
+                  personalized map, and add notes. Explore the&nbsp;
+                  <Link id="all-buildings" to="./all-buildings">
+                    MFTE map
+                  </Link>
+                  &nbsp;to get started.
                 </div>
               </Col>
             </Row>
@@ -115,24 +116,6 @@ const AboutPage: React.FunctionComponent<IPage> = () => {
                   </a>
                   . Updated spreadsheets are published by the Seattle Office of
                   Housing roughly twice a year.
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="align-items-center py-3">
-              <Col lg={2} className="text-lg-end">
-                <div className="fs-4">Usage</div>
-              </Col>
-              <Col lg={8}>
-                <div className="lead">
-                  Search and filter for apartments that fit your criteria (such
-                  as number of bedrooms, neighborhood, and building name).
-                  Create a free login to keep a short list of properties, view a
-                  personalized map, and add notes. Explore the&nbsp;
-                  <Link id="all-buildings" to="./all-buildings">
-                    MFTE map
-                  </Link>
-                  &nbsp;to get started.
                 </div>
               </Col>
             </Row>
@@ -163,8 +146,9 @@ const AboutPage: React.FunctionComponent<IPage> = () => {
                     rel="noreferrer"
                   >
                     open-source project
-                  </a>
-                  .
+                  </a>{" "}
+                  and contributions are greatly appreciated. Please get it
+                  touch!
                 </div>
               </Col>
             </Row>
