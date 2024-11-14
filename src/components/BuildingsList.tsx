@@ -105,6 +105,8 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                 key={building.buildingID}
                 xs={12}
                 sm={6}
+                // Split screen starts at md
+                md={12}
                 lg={areListingsOn ? 6 : 4}
                 xl={areListingsOn ? 6 : 3}
                 className="p-1"

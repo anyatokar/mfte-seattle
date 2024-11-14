@@ -21,7 +21,7 @@ export default function SearchInput(props: ISearchProps) {
   return (
     <Form onSubmit={(event) => event.preventDefault()}>
       <Form.Control
-        placeholder="Neighborhood, address, building name"
+        placeholder="Search address, neighborhood, building name"
         id="search"
         type="search"
         aria-label="Search"

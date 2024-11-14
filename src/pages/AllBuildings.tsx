@@ -22,6 +22,8 @@ import { pageTypeEnum } from "../types/enumTypes";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Tab from "react-bootstrap/Tab";
+import Nav from "react-bootstrap/Nav";
 
 const AllBuildingsPage: React.FC<IPage> = () => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
@@ -74,17 +76,16 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         }
       }}
     >
-      <div className="all-pages">
+      <div className="pt-2">
         <SearchAndFilter
           allBuildings={allBuildings}
           setSearchQuery={setSearchQuery}
           setActiveFilters={setActiveFilters}
           activeFilters={activeFilters}
-          loading={isLoadingAllBuildings}
-          resultBuildingsUnsorted={resultBuildingsUnsorted}
         />
 
-        <Container fluid>
+        {/* Only visible on large screens */}
+        <Container fluid className="d-none d-md-block">
           <Row>
             <Col className="pl-0">
               <ReactMap
@@ -109,6 +110,43 @@ const AllBuildingsPage: React.FC<IPage> = () => {
               />
             </Col>
           </Row>
+        </Container>
+
+        {/* Only visible on small screens */}
+        <Container fluid className="d-block d-md-none">
+          <Tab.Container id="sidebar" defaultActiveKey="list">
+            <Nav variant="pills" className="mb-2">
+              <Nav.Item>
+                <Nav.Link eventKey="map" className="tab">
+                  Map View
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="list" className="tab">
+                  List View
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+
+            <Tab.Content>
+              <Tab.Pane eventKey="map">
+                <ReactMap
+                  resultBuildingsUnsorted={resultBuildingsUnsorted}
+                  savedBuildings={savedBuildings}
+                  allListings={allListings}
+                />
+              </Tab.Pane>
+              <Tab.Pane eventKey="list">
+                <AllBuildingsList
+                  isLoading={isLoadingAllBuildings}
+                  resultBuildingsUnsorted={resultBuildingsUnsorted}
+                  savedBuildings={savedBuildings}
+                  allListings={allListings}
+                  pageType={pageTypeEnum.allBuildings}
+                />
+              </Tab.Pane>
+            </Tab.Content>
+          </Tab.Container>
         </Container>
       </div>
     </Profiler>

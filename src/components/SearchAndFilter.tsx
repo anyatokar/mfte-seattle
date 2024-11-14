@@ -7,63 +7,50 @@ import IFilter from "../interfaces/IFilter";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Spinner from "react-bootstrap/Spinner";
 
 type SearchAndFilterProps = {
   allBuildings: IBuilding[];
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   setActiveFilters: React.Dispatch<React.SetStateAction<IFilter<IBuilding>[]>>;
   activeFilters: IFilter<IBuilding>[];
-  loading: boolean;
-  resultBuildingsUnsorted: IBuilding[];
 };
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   allBuildings,
   setSearchQuery,
   setActiveFilters,
   activeFilters,
-  loading,
-  resultBuildingsUnsorted,
 }) => {
   return (
     <Container fluid>
-      <Row>
-        <Col sm={12} md={{ span: 11, offset: 1 }} lg={{ span: 10, offset: 2 }}>
-          {/* search */}
-          <Row className="p-0 mt-0 mb-3">
-            <Col sm={6}>
-              <SearchInput
-                onChangeSearchQuery={(query) => setSearchQuery(query)}
-              />
-            </Col>
+      <Row className="p-0 mt-0 mb-2">
+        {/* search */}
 
-            {/* filter */}
+        <Col sm={6} md={5} className="mb-2 mb-sm-0">
+          <SearchInput onChangeSearchQuery={(query) => setSearchQuery(query)} />
+        </Col>
 
-            <Col sm={3}>
-              {
-                <Filters<IBuilding>
-                  object={allBuildings[0]}
-                  filters={activeFilters}
-                  onChangeFilter={(changedFilterProperty, isChecked) => {
-                    isChecked
-                      ? setActiveFilters([
-                          ...activeFilters.filter(
-                            (filter) =>
-                              filter.property !== changedFilterProperty
-                          ),
-                          { property: changedFilterProperty },
-                        ])
-                      : setActiveFilters(
-                          activeFilters.filter(
-                            (filter) =>
-                              filter.property !== changedFilterProperty
-                          )
-                        );
-                  }}
-                />
-              }
-            </Col>
-          </Row>
+        {/* filter */}
+        <Col>
+          {
+            <Filters<IBuilding>
+              object={allBuildings[0]}
+              filters={activeFilters}
+              onChangeFilter={(changedFilterProperty, isChecked) => {
+                isChecked
+                  ? setActiveFilters([
+                      ...activeFilters.filter(
+                        (filter) => filter.property !== changedFilterProperty
+                      ),
+                      { property: changedFilterProperty },
+                    ])
+                  : setActiveFilters(
+                      activeFilters.filter(
+                        (filter) => filter.property !== changedFilterProperty
+                      )
+                    );
+              }}
+            />
+          }
         </Col>
       </Row>
     </Container>

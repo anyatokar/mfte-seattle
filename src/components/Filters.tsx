@@ -47,10 +47,7 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
     <Dropdown>
       <Dropdown.Toggle variant="outline-secondary">Bedrooms</Dropdown.Toggle>
 
-      <Dropdown.Menu
-        className="p-3"
-        style={{ maxHeight: "200px", overflowY: "auto" }}
-      >
+      <Dropdown.Menu className="p-2">
         {checkboxKeys.map((checkboxKey: checkboxKeyType) => {
           let styledKey = checkboxUILabels[checkboxKey];
           let id = checkboxKey;
