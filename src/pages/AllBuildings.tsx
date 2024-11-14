@@ -1,6 +1,6 @@
 import { useState, useMemo, Profiler } from "react";
 
-import { allBuildingsMaxHeight, areListingsOn } from "../config/config";
+import { areListingsOn } from "../config/config";
 import { isProfilerOn } from "../config/config";
 
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
@@ -95,9 +95,8 @@ const AllBuildingsPage: React.FC<IPage> = () => {
               />
             </Col>
             <Col
-              className="p-0"
+              className="p-0 map-and-list-container"
               style={{
-                maxHeight: allBuildingsMaxHeight,
                 overflowY: "auto",
               }}
             >

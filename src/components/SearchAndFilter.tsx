@@ -25,7 +25,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
       <Row className="p-0 mt-0 mb-2">
         {/* search */}
 
-        <Col sm={6} md={5} className="mb-2 mb-sm-0">
+        <Col sm={8} lg={4} className="mb-2 mb-sm-0">
           <SearchInput onChangeSearchQuery={(query) => setSearchQuery(query)} />
         </Col>
 

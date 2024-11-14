@@ -1,5 +1,5 @@
 import { firebaseConfig } from "../db/firebase";
-import { allBuildingsMaxHeight, areListingsOn } from "../config/config";
+import { areListingsOn } from "../config/config";
 
 import { createRoot } from "react-dom/client";
 import { useEffect, useState, useRef } from "react";
@@ -15,11 +15,6 @@ import IMap from "../interfaces/IMap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-
-const containerStyle = {
-  width: "100%",
-  height: allBuildingsMaxHeight,
-};
 
 const center = {
   lat: 47.608013,
@@ -91,7 +86,7 @@ const ReactMap: React.FC<IMap> = ({
       <Row>
         <Col className="p-0">
           <GoogleMap
-            mapContainerStyle={containerStyle}
+            mapContainerClassName="map-and-list-container"
             center={center}
             zoom={12.5}
             ref={mapRef}

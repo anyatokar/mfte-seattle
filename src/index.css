@@ -202,3 +202,22 @@ body {
   left: 0.5em;
 }
 /* end of misc */
+
+/* map and building lists */
+.map-and-list-container {
+  width: 100%;
+  height: 78vh;
+}
+
+@media (max-width: 768px) {
+  .map-and-list-container {
+    height: 70vh; /* Height for mobile screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .map-and-list-container {
+    height: 65vh; /* Reduced height for very small mobile screens */
+  }
+}
+/* end of map and building lists */
