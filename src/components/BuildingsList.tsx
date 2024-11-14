@@ -60,6 +60,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
     isDescending: false,
   };
 
+  // TODO: Introduce a spinner while this is filtering/sorting?
   const resultBuildings = resultBuildingsUnsorted.sort(
     (buildingA: IBuilding, buildingB: IBuilding) => {
       // Check if each building has an approved listing in allListings
@@ -88,7 +89,6 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
       {/* result count */}
       <Col>
         {isLoading && <Spinner animation="border" variant="warning" />}
-
         {!isLoading && pageType === pageTypeEnum.allBuildings && (
           <p className="mb-0">
             {resultBuildingsUnsorted.length > 0
