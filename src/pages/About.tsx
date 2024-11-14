@@ -57,7 +57,7 @@ const AboutPage: React.FunctionComponent<IPage> = () => {
 
             <Row className="align-items-center py-3">
               <Col lg={2} className="text-lg-end">
-                <div className="fs-4">Disclaimers</div>
+                <div className="fs-4">Disclaimer</div>
               </Col>
               <Col lg={8}>
                 <div className="lead">
@@ -147,7 +147,7 @@ const AboutPage: React.FunctionComponent<IPage> = () => {
                   >
                     open-source project
                   </a>{" "}
-                  and contributions are greatly appreciated. Please get it
+                  and contributions are greatly appreciated. Please get in
                   touch!
                 </div>
               </Col>
