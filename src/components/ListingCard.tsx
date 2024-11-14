@@ -64,7 +64,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     };
   }
 
-  const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
+  const [allBuildings] = useAllBuildingsContext();
 
   const {
     availData,
