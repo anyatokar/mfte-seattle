@@ -36,7 +36,6 @@ export const Header = () => {
     [setModalState]
   );
 
-  // TODO: this is broken due to the async nature of updating accountType
   const afterLoginSaved = () => navigate("./saved-buildings");
   const afterLoginManager = () => navigate("./manage-listings");
 
@@ -120,13 +119,13 @@ export const Header = () => {
             <LinkContainer to="/all-buildings">
               <Nav.Link active={false}>MFTE Map</Nav.Link>
             </LinkContainer>
+            <LinkContainer to="/about">
+              <Nav.Link active={false}>About</Nav.Link>
+            </LinkContainer>
             <LinkContainer to="/resources">
               <Nav.Link active={false}>Resources</Nav.Link>
             </LinkContainer>
             <Dropdown.Divider />
-            <LinkContainer to="/about">
-              <Nav.Link active={false}>About</Nav.Link>
-            </LinkContainer>
             <LinkContainer to="/contact">
               <Nav.Link active={false}>Contact</Nav.Link>
             </LinkContainer>
