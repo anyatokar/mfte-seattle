@@ -209,7 +209,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({
           .then(() => {
             console.log("User successfully deleted from Auth.");
             setMessage("Success! Account deleted.");
-            navigate("/path");
+            navigate("/");
           })
           .catch((error: any) => {
             console.error("Error removing user from Auth: ", error);
