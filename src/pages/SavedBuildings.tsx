@@ -1,6 +1,6 @@
 import { Profiler } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
 import { accountTypeEnum, pageTypeEnum } from "../types/enumTypes";
@@ -8,7 +8,7 @@ import { accountTypeEnum, pageTypeEnum } from "../types/enumTypes";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useListings";
 
-import MapTab from "../components/MapTab";
+import ReactMap from "../map/ReactMap";
 import AllBuildingsList from "../components/BuildingsList";
 
 import Col from "react-bootstrap/Col";
@@ -16,11 +16,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
-import Spinner from "react-bootstrap/Spinner";
 
-const SavedBuildingsPage: React.FunctionComponent<
-  IPage & RouteComponentProps<any>
-> = ({ name }) => {
+const SavedBuildingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
   const [allListings, isLoadingAllListings] = useAllListings(true);
@@ -29,11 +26,11 @@ const SavedBuildingsPage: React.FunctionComponent<
     return null;
   }
 
-  let loading = isLoadingSavedBuildings || isLoadingAllListings;
+  const isLoading = isLoadingSavedBuildings || isLoadingAllListings;
 
   return (
     <Profiler
-      id={name}
+      id={"SavedBuildings"}
       onRender={(
         id,
         phase,
@@ -74,7 +71,6 @@ const SavedBuildingsPage: React.FunctionComponent<
             <Col sm={12} lg={10}>
               <Tab.Content>
                 <Row>
-                  {/* top margin size 3 for all screens (xs and up) | top margin size of 0 for large screens and up */}
                   <Col className="mt-2 mt-lg-0">
                     <p className="lead">
                       Saved buildings — your short list of apartment buildings.
@@ -82,8 +78,7 @@ const SavedBuildingsPage: React.FunctionComponent<
                     <p>The list and notes are private to your profile.</p>
                   </Col>
                 </Row>
-                {loading && <Spinner animation="border" variant="warning" />}
-                {!loading && savedBuildings.length === 0 && (
+                {!isLoading && savedBuildings.length === 0 && (
                   <>
                     <br />
                     <p>
@@ -97,14 +92,15 @@ const SavedBuildingsPage: React.FunctionComponent<
                   </>
                 )}
                 <Tab.Pane eventKey="map">
-                  <MapTab
-                    buildingsToMap={savedBuildings}
+                  <ReactMap
+                    resultBuildingsUnsorted={savedBuildings}
                     savedBuildings={savedBuildings}
                     allListings={allListings}
                   />
                 </Tab.Pane>
                 <Tab.Pane eventKey="list">
                   <AllBuildingsList
+                    isLoading={isLoading}
                     resultBuildingsUnsorted={savedBuildings}
                     savedBuildings={savedBuildings}
                     allListings={allListings}
@@ -120,4 +116,4 @@ const SavedBuildingsPage: React.FunctionComponent<
   );
 };
 
-export default withRouter(SavedBuildingsPage);
+export default SavedBuildingsPage;

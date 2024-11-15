@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   deleteUserFirestore,
   UpdateData,
@@ -44,7 +44,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState<boolean>(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function isNameUpdated() {
     return displayNameRef.current?.value !== currentUser?.displayName;
@@ -209,7 +209,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({
           .then(() => {
             console.log("User successfully deleted from Auth.");
             setMessage("Success! Account deleted.");
-            history.push("/");
+            navigate("/");
           })
           .catch((error: any) => {
             console.error("Error removing user from Auth: ", error);

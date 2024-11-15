@@ -1,5 +1,4 @@
 import { Profiler, useEffect, useState } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import UpdateProfile from "../auth_components/UpdateProfile";
 import Profile from "../components/Profile";
@@ -16,9 +15,7 @@ import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
 
-const ManageProfilePage: React.FunctionComponent<
-  IPage & RouteComponentProps<any>
-> = ({ name }) => {
+const ManageProfilePage: React.FunctionComponent<IPage> = () => {
   const [managerProfile, setManagerProfile] = useState<DocumentData | null>(
     null
   );
@@ -53,7 +50,7 @@ const ManageProfilePage: React.FunctionComponent<
 
   return (
     <Profiler
-      id={name}
+      id={"Manage Profile"}
       onRender={(
         id,
         phase,
@@ -114,4 +111,4 @@ const ManageProfilePage: React.FunctionComponent<
   );
 };
 
-export default withRouter(ManageProfilePage);
+export default ManageProfilePage;

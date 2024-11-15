@@ -1,4 +1,5 @@
 import IFilter from "../interfaces/IFilter";
+import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 
 export interface IFiltersProps<T> {
@@ -43,28 +44,31 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
   };
 
   return (
-    <div>
-      <p className="mb-1">Filter by number of bedrooms:</p>
-      {checkboxKeys.map((checkboxKey: checkboxKeyType) => {
-        let styledKey = checkboxUILabels[checkboxKey];
-        let id = checkboxKey;
+    <Dropdown>
+      <Dropdown.Toggle variant="outline-secondary">Bedrooms</Dropdown.Toggle>
 
-        return (
-          <Form key={id} className="form-check-inline">
-            <Form.Check
-              type="checkbox"
-              label={styledKey}
-              id={id}
-              value={checkboxKey}
-              checked={getChecked(checkboxKey)}
-              onChange={(event) =>
-                onChangeFilter(checkboxKey as any, event.target.checked)
-              }
-            />
-          </Form>
-        );
-      })}
-    </div>
+      <Dropdown.Menu className="p-2">
+        {checkboxKeys.map((checkboxKey: checkboxKeyType) => {
+          let styledKey = checkboxUILabels[checkboxKey];
+          let id = checkboxKey;
+
+          return (
+            <Form key={id}>
+              <Form.Check
+                type="checkbox"
+                label={styledKey}
+                id={id}
+                value={checkboxKey}
+                checked={getChecked(checkboxKey)}
+                onChange={(event) =>
+                  onChangeFilter(checkboxKey as any, event.target.checked)
+                }
+              />
+            </Form>
+          );
+        })}
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
 

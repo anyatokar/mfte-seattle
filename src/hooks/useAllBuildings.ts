@@ -3,16 +3,16 @@ import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
 import IBuilding from "../interfaces/IBuilding";
 
-export const useAllBuildings = (shouldFetch = true): [IBuilding[], boolean] => {
+export const useAllBuildings = (): [IBuilding[], boolean] => {
   const [allBuildings, setAllBuildings] = useState<Array<IBuilding>>([]);
-  const [isLoadingAllBuildings, setIsLoadingAllBuildings] = useState(false);
-
-  const q = query(collection(db, "buildings"));
+  const [isLoadingAllBuildings, setIsLoadingAllBuildings] = useState(true);
 
   const getAllBuildings = useCallback(() => {
-    console.log("Getting all buildings.");
     setIsLoadingAllBuildings(true);
+    const q = query(collection(db, "buildings"));
+
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("Buildings snapshot.");
       const buildings: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
         buildings.push(doc.data() as IBuilding);
@@ -21,17 +21,16 @@ export const useAllBuildings = (shouldFetch = true): [IBuilding[], boolean] => {
       setIsLoadingAllBuildings(false);
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (shouldFetch) {
-      getAllBuildings();
-    }
-  }, [getAllBuildings, shouldFetch]);
+    const unsubscribe = getAllBuildings();
+    return () => {
+      unsubscribe();
+    };
+  }, [getAllBuildings]);
 
   return [allBuildings, isLoadingAllBuildings];
 };

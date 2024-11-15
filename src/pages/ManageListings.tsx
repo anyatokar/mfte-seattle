@@ -1,6 +1,5 @@
 import { Profiler, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { RouteComponentProps, withRouter } from "react-router-dom";
 import {
   areListingsOn,
   expiringSoonDays,
@@ -28,9 +27,7 @@ import Nav from "react-bootstrap/Nav";
 import AreYouSureModal from "../components/AreYouSureModal";
 import IBuilding from "../interfaces/IBuilding";
 
-const ManageListingsPage: React.FunctionComponent<
-  IPage & RouteComponentProps<any>
-> = ({ name }) => {
+const ManageListingsPage: React.FunctionComponent<IPage> = () => {
   const { currentUser, accountType } = useAuth();
 
   const [repsListings, isLoadingRepsListings] = useAllListings(
@@ -127,7 +124,7 @@ const ManageListingsPage: React.FunctionComponent<
 
   return (
     <Profiler
-      id={name}
+      id={"ManageListings"}
       onRender={(
         id,
         phase,
@@ -344,4 +341,4 @@ const ManageListingsPage: React.FunctionComponent<
   );
 };
 
-export default withRouter(ManageListingsPage);
+export default ManageListingsPage;

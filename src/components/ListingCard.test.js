@@ -13,7 +13,7 @@ const mockToggleFormCallback = jest.fn();
 
 // Constants for mock data
 const mockListing = {
-  listingID: "lisingID",
+  listingID: "listingID",
   listingStatus: listingStatusEnum.ACTIVE,
   buildingName: "123 Broadway",
   url: "test-url.com",

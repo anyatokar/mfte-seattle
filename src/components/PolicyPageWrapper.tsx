@@ -12,7 +12,7 @@ const PolicyPageWrapper = ({ policyHtml }: PolicyPageWrapperProps) => {
     <Container className="all-pages diy-jumbotron">
       <Row className="justify-content-center">
         <Col lg={10}>
-          <Card className="scrollable-card p-4">
+          <Card className="scrollable-card-policy p-4">
             <div dangerouslySetInnerHTML={{ __html: policyHtml }} />
           </Card>
         </Col>

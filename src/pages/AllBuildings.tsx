@@ -1,15 +1,14 @@
 import { useState, useMemo, Profiler } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { areListingsOn } from "../config/config";
 import { isProfilerOn } from "../config/config";
 
-import { useAllBuildings } from "../hooks/useAllBuildings";
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 import { useAllListings } from "../hooks/useListings";
 
 import AllBuildingsList from "../components/BuildingsList";
-import MapTab from "../components/MapTab";
+import ReactMap from "../map/ReactMap";
 import SearchAndFilter from "../components/SearchAndFilter";
 
 import { genericSearch } from "../utils/genericSearch";
@@ -23,13 +22,11 @@ import { pageTypeEnum } from "../types/enumTypes";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Nav from "react-bootstrap/Nav";
 import Tab from "react-bootstrap/Tab";
+import Nav from "react-bootstrap/Nav";
 
-const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
-  name,
-}) => {
-  const [allBuildings, isLoadingAllBuildings] = useAllBuildings();
+const AllBuildingsPage: React.FC<IPage> = () => {
+  const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
   let [allListings] = useAllListings(true);
 
@@ -58,7 +55,7 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
 
   return (
     <Profiler
-      id={name}
+      id={"AllBuildings"}
       onRender={(
         id,
         phase,
@@ -79,55 +76,75 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
         }
       }}
     >
-      <div className="all-pages">
+      <div className="pt-2">
         <SearchAndFilter
           allBuildings={allBuildings}
           setSearchQuery={setSearchQuery}
           setActiveFilters={setActiveFilters}
           activeFilters={activeFilters}
-          loading={isLoadingAllBuildings}
-          resultBuildingsUnsorted={resultBuildingsUnsorted}
         />
 
-        <hr className="mt-2 mb-3 break-line-light" />
+        {/* Only visible on large screens */}
+        <Container fluid className="d-none d-md-block">
+          <Row>
+            <Col className="pl-0">
+              <ReactMap
+                resultBuildingsUnsorted={resultBuildingsUnsorted}
+                savedBuildings={savedBuildings}
+                allListings={allListings}
+              />
+            </Col>
+            <Col
+              className="p-0 map-and-list-container"
+              style={{
+                overflowY: "auto",
+              }}
+            >
+              <AllBuildingsList
+                isLoading={isLoadingAllBuildings}
+                resultBuildingsUnsorted={resultBuildingsUnsorted}
+                savedBuildings={savedBuildings}
+                allListings={allListings}
+                pageType={pageTypeEnum.allBuildings}
+              />
+            </Col>
+          </Row>
+        </Container>
 
-        <Container fluid>
+        {/* Only visible on small screens */}
+        <Container fluid className="d-block d-md-none">
           <Tab.Container id="sidebar" defaultActiveKey="map">
-            <Row>
-              <Col sm={12} lg={2}>
-                <Nav variant="pills" className="flex-column side-nav">
-                  <Nav.Item>
-                    <Nav.Link eventKey="map" className="tab">
-                      Map
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="saved" className="tab">
-                      List
-                    </Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </Col>
-              <Col sm={12} lg={10}>
-                <Tab.Content>
-                  <Tab.Pane eventKey="map">
-                    <MapTab
-                      buildingsToMap={resultBuildingsUnsorted}
-                      savedBuildings={savedBuildings}
-                      allListings={allListings}
-                    />
-                  </Tab.Pane>
-                  <Tab.Pane eventKey="saved">
-                    <AllBuildingsList
-                      resultBuildingsUnsorted={resultBuildingsUnsorted}
-                      savedBuildings={savedBuildings}
-                      allListings={allListings}
-                      pageType={pageTypeEnum.allBuildings}
-                    />
-                  </Tab.Pane>
-                </Tab.Content>
-              </Col>
-            </Row>
+            <Nav variant="pills" className="mb-2">
+              <Nav.Item>
+                <Nav.Link eventKey="map" className="tab">
+                  Map View
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="list" className="tab">
+                  List View
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+
+            <Tab.Content>
+              <Tab.Pane eventKey="map">
+                <ReactMap
+                  resultBuildingsUnsorted={resultBuildingsUnsorted}
+                  savedBuildings={savedBuildings}
+                  allListings={allListings}
+                />
+              </Tab.Pane>
+              <Tab.Pane eventKey="list">
+                <AllBuildingsList
+                  isLoading={isLoadingAllBuildings}
+                  resultBuildingsUnsorted={resultBuildingsUnsorted}
+                  savedBuildings={savedBuildings}
+                  allListings={allListings}
+                  pageType={pageTypeEnum.allBuildings}
+                />
+              </Tab.Pane>
+            </Tab.Content>
           </Tab.Container>
         </Container>
       </div>
@@ -135,4 +152,4 @@ const AllBuildingsPage: React.FC<IPage & RouteComponentProps<any>> = ({
   );
 };
 
-export default withRouter(AllBuildingsPage);
+export default AllBuildingsPage;

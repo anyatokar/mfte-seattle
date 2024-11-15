@@ -2,7 +2,7 @@ import { firebaseConfig } from "../db/firebase";
 import { areListingsOn } from "../config/config";
 
 import { createRoot } from "react-dom/client";
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 import { BuildingMarker } from "./BuildingMarker";
@@ -12,10 +12,9 @@ import { checkIsSaved, getListing } from "../components/BuildingsList";
 import IBuilding from "../interfaces/IBuilding";
 import IMap from "../interfaces/IMap";
 
-const containerStyle = {
-  width: "100%",
-  height: "90vh",
-};
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 const center = {
   lat: 47.608013,
@@ -23,7 +22,7 @@ const center = {
 };
 
 const ReactMap: React.FC<IMap> = ({
-  buildingsToMap = [],
+  resultBuildingsUnsorted = [],
   savedBuildings,
   allListings,
 }) => {
@@ -32,17 +31,23 @@ const ReactMap: React.FC<IMap> = ({
   );
   const [isLegendVisible, setIsLegendVisible] = useState(false);
   const mapRef = useRef<GoogleMap>(null);
+  const [buildingsToMap, setBuildingsToMap] = useState<IBuilding[]>([]);
+
+  // Update buildingsToMap when resultBuildingsUnsorted changes
+  useEffect(() => {
+    setBuildingsToMap(resultBuildingsUnsorted);
+  }, [resultBuildingsUnsorted]);
 
   useEffect(() => {
     if (
       areListingsOn &&
       selectedBuilding &&
-      !buildingsToMap.includes(selectedBuilding)
+      !resultBuildingsUnsorted.includes(selectedBuilding)
     ) {
       setSelectedBuilding(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- No need for selectedBuilding in the deps list
-  }, [buildingsToMap]);
+  }, [resultBuildingsUnsorted]);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -70,33 +75,39 @@ const ReactMap: React.FC<IMap> = ({
       setIsLegendVisible(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buildingsToMap]);
+  }, [resultBuildingsUnsorted]);
 
   if (!isLoaded) {
     return null;
   }
 
   return (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={12.5}
-      ref={mapRef}
-      options={{ mapId: "c8d48b060a22a457" }}
-    >
-      <>
-        {buildingsToMap.map((building) => (
-          <BuildingMarker
-            key={building.buildingID}
-            building={building}
-            isSelected={building === selectedBuilding}
-            setSelectedBuilding={setSelectedBuilding}
-            isSaved={checkIsSaved(savedBuildings, building)}
-            listing={getListing(allListings, building.buildingID)}
-          />
-        ))}
-      </>
-    </GoogleMap>
+    <Container fluid>
+      <Row>
+        <Col className="p-0">
+          <GoogleMap
+            mapContainerClassName="map-and-list-container"
+            center={center}
+            zoom={12.5}
+            ref={mapRef}
+            options={{ mapId: "c8d48b060a22a457" }}
+          >
+            <>
+              {buildingsToMap.map((building) => (
+                <BuildingMarker
+                  key={building.buildingID}
+                  building={building}
+                  isSelected={building === selectedBuilding}
+                  setSelectedBuilding={setSelectedBuilding}
+                  isSaved={checkIsSaved(savedBuildings, building)}
+                  listing={getListing(allListings, building.buildingID)}
+                />
+              ))}
+            </>
+          </GoogleMap>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

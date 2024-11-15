@@ -1,5 +1,4 @@
 import { Profiler } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
 import { isProfilerOn } from "../config/config";
 import IPage from "../interfaces/IPage";
 
@@ -8,12 +7,10 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 
-const ResourcesPage: React.FunctionComponent<
-  IPage & RouteComponentProps<any>
-> = ({ name }) => {
+const ResourcesPage: React.FunctionComponent<IPage> = () => {
   return (
     <Profiler
-      id={name}
+      id={"Resources"}
       onRender={(
         id,
         phase,
@@ -132,23 +129,6 @@ const ResourcesPage: React.FunctionComponent<
                   PDF — City of Seattle — July 2023
                 </div>
               </ListGroup.Item>
-              <ListGroup.Item>
-                <a
-                  id="mfte-faqs"
-                  href="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
-                  title="https://www.seattle.gov/Documents/Departments/Housing/Renters/MFTE%20FAQ.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="fw-bold"
-                >
-                  MFTE FAQs
-                </a>
-                <div className="fw-light">
-                  Two-page overview of the MFTE program. Note the map and income
-                  limits are outdated.
-                </div>
-                <div className="fw-light">PDF — City of Seattle — 2018</div>
-              </ListGroup.Item>
             </ListGroup>
           </Col>
         </Row>
@@ -157,4 +137,4 @@ const ResourcesPage: React.FunctionComponent<
   );
 };
 
-export default withRouter(ResourcesPage);
+export default ResourcesPage;

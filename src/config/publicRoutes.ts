@@ -4,16 +4,16 @@ import AboutPage from "../pages/About";
 import AddListingPage from "../pages/AddListing";
 import AllBuildingsPage from "../pages/AllBuildings";
 import ContactPage from "../pages/Contact";
-import HomePage from "../pages/Home";
 import ResourcesPage from "../pages/Resources";
 import CookiesPolicyPage from "../pages/CookiesPolicy";
 import PrivacyPolicyPage from "../pages/PrivacyPolicy";
+import NotFoundPage from "../pages/NotFound";
 
 const publicRoutes: IRoute[] = [
   {
     path: "/",
-    name: "Home Page",
-    component: HomePage,
+    name: "All Buildings Page",
+    component: AllBuildingsPage,
     exact: true,
   },
   {
@@ -60,8 +60,8 @@ const publicRoutes: IRoute[] = [
   },
   {
     path: "*",
-    name: "Home Page",
-    component: HomePage,
+    name: "Not Found Page",
+    component: NotFoundPage,
     exact: true,
   },
 ];

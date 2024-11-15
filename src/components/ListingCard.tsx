@@ -13,7 +13,7 @@ import { expiringSoonDays } from "../config/config";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import { useEffect, useState } from "react";
-import { useAllBuildings } from "../hooks/useAllBuildings";
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import IBuilding from "../interfaces/IBuilding";
 
@@ -64,19 +64,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     };
   }
 
-  let [buildingsAlreadyFetched, setBuildingsAlreadyFetched] = useState(false);
-
-  const [allBuildings, isLoadingAllBuildings] = useAllBuildings(
-    isFormVisible &&
-      editListingID === "" &&
-      !isExistingListing &&
-      !buildingsAlreadyFetched
-  );
-
-  useEffect(() => {
-    if (!isLoadingAllBuildings && allBuildings.length > 0)
-      setBuildingsAlreadyFetched(true);
-  }, [isLoadingAllBuildings, allBuildings]);
+  const [allBuildings] = useAllBuildingsContext();
 
   const {
     availData,

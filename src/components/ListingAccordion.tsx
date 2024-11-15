@@ -3,7 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import Button from "react-bootstrap/Button";
 import { useAuth } from "../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ListingAccordion: React.FC = () => {
   const [, /* modalState */ setModalState] = useContext(ModalContext);
@@ -11,11 +11,11 @@ const ListingAccordion: React.FC = () => {
   const handleShowLogin = () => setModalState(ModalState.LOGIN_MANAGE_LISTINGS);
 
   const { currentUser } = useAuth();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onManageListingsClick = () => {
     if (currentUser) {
-      history.push("/manage-listings");
+      navigate("/manage-listings");
     } else {
       handleShowLogin();
     }

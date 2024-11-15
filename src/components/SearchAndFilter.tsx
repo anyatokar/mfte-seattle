@@ -7,81 +7,50 @@ import IFilter from "../interfaces/IFilter";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Spinner from "react-bootstrap/Spinner";
 
 type SearchAndFilterProps = {
   allBuildings: IBuilding[];
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   setActiveFilters: React.Dispatch<React.SetStateAction<IFilter<IBuilding>[]>>;
   activeFilters: IFilter<IBuilding>[];
-  loading: boolean;
-  resultBuildingsUnsorted: IBuilding[];
 };
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   allBuildings,
   setSearchQuery,
   setActiveFilters,
   activeFilters,
-  loading,
-  resultBuildingsUnsorted,
 }) => {
   return (
     <Container fluid>
-      <Row>
-        <Col sm={12} md={{ span: 11, offset: 1 }} lg={{ span: 10, offset: 2 }}>
-          {/* search */}
-          <Row className="p-0 my-0">
-            <Col sm md={9} lg={8}>
-              <SearchInput
-                onChangeSearchQuery={(query) => setSearchQuery(query)}
-              />
-            </Col>
-          </Row>
+      <Row className="p-0 mt-0 mb-2">
+        {/* search */}
 
-          {/* filter */}
-          <Row className="p-0 mt-3">
-            <Col>
-              {
-                <Filters<IBuilding>
-                  object={allBuildings[0]}
-                  filters={activeFilters}
-                  onChangeFilter={(changedFilterProperty, isChecked) => {
-                    isChecked
-                      ? setActiveFilters([
-                          ...activeFilters.filter(
-                            (filter) =>
-                              filter.property !== changedFilterProperty
-                          ),
-                          { property: changedFilterProperty },
-                        ])
-                      : setActiveFilters(
-                          activeFilters.filter(
-                            (filter) =>
-                              filter.property !== changedFilterProperty
-                          )
-                        );
-                  }}
-                />
-              }
-            </Col>
-          </Row>
+        <Col sm={8} lg={4} className="mb-2 mb-sm-0">
+          <SearchInput onChangeSearchQuery={(query) => setSearchQuery(query)} />
+        </Col>
 
-          {/* result count */}
-          <Row className="p-0 mt-3">
-            <Col>
-              <>
-                {loading ? (
-                  <Spinner animation="border" variant="secondary" size="sm" />
-                ) : (
-                  <p className="mb-0">
-                    {resultBuildingsUnsorted.length > 0
-                      ? `${resultBuildingsUnsorted.length} buildings found`
-                      : "No buildings found"}
-                  </p>
-                )}
-              </>
-            </Col>
-          </Row>
+        {/* filter */}
+        <Col>
+          {
+            <Filters<IBuilding>
+              object={allBuildings[0]}
+              filters={activeFilters}
+              onChangeFilter={(changedFilterProperty, isChecked) => {
+                isChecked
+                  ? setActiveFilters([
+                      ...activeFilters.filter(
+                        (filter) => filter.property !== changedFilterProperty
+                      ),
+                      { property: changedFilterProperty },
+                    ])
+                  : setActiveFilters(
+                      activeFilters.filter(
+                        (filter) => filter.property !== changedFilterProperty
+                      )
+                    );
+              }}
+            />
+          }
         </Col>
       </Row>
     </Container>
