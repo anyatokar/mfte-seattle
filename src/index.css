@@ -211,13 +211,13 @@ body {
 
 @media (max-width: 768px) {
   .map-and-list-container {
-    height: 70vh; /* Height for mobile screens */
+    height: 70vh;
   }
 }
 
 @media (max-width: 576px) {
   .map-and-list-container {
-    height: 65vh; /* Reduced height for very small mobile screens */
+    height: 65vh;
   }
 }
 /* end of map and building lists */
