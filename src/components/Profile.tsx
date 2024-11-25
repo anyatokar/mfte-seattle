@@ -329,7 +329,7 @@ const Profile: React.FC = () => {
                         }}
                       />
                     ) : (
-                      <Card.Text>{displayName}</Card.Text>
+                      displayName
                     )}
                   </Col>
                 </Row>
@@ -350,7 +350,7 @@ const Profile: React.FC = () => {
                         }}
                       />
                     ) : (
-                      <Card.Text>{email}</Card.Text>
+                      email
                     )}
                   </Col>
                 </Row>
@@ -373,7 +373,7 @@ const Profile: React.FC = () => {
                             }}
                           />
                         ) : (
-                          <Card.Text>{jobTitle}</Card.Text>
+                          jobTitle
                         )}
                       </Col>
                     </Row>
@@ -394,15 +394,17 @@ const Profile: React.FC = () => {
                             }}
                           />
                         ) : (
-                          <Card.Text>{companyName}</Card.Text>
+                          companyName
                         )}
                       </Col>
                     </Row>
 
-                    <Card.Text className="mb-2">
-                      <strong>Account Type: </strong>
-                      Manager
-                    </Card.Text>
+                    <Row className="mb-2 d-flex align-items-center">
+                      <Col sm={4}>
+                        <strong>Account Type: </strong>
+                      </Col>
+                      <Col>Manager</Col>
+                    </Row>
                   </>
                 )}
 
