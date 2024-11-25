@@ -13,7 +13,7 @@ import IListing from "../interfaces/IListing";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Spinner from "react-bootstrap/esm/Spinner";
+import Spinner from "react-bootstrap/Spinner";
 
 type AllBuildingsListProps = {
   isLoading: boolean;

@@ -5,8 +5,8 @@ import { useAuth } from "../contexts/AuthContext";
 import IPage from "../interfaces/IPage";
 
 import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/esm/Col";
-import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 const ManageProfilePage: React.FunctionComponent<IPage> = () => {
   const { currentUser } = useAuth();
