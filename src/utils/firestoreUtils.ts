@@ -194,7 +194,7 @@ export async function getAccountTypeFirestore(
       return accountTypeEnum.MANAGER;
     } else {
       console.log("User doesn't exist in either collection");
-      return null;
+      return accountTypeEnum.GHOST;
     }
   } catch (error: any) {
     console.error(`Error getting user account data for user ${uid}:`, error);
