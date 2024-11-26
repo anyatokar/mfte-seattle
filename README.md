@@ -2,39 +2,19 @@
 
 This is the source for [https://mfte-seattle.com](https://mfte-seattle.com)
 
-## About
+## Purpose
 
-### Purpose
+This web application helps people find rent-reduced housing by mapping buildings that participate in Seattle's MFTE (Multifamily Tax Exemption) program.
 
-The purpose of this website is to help people find safe and comfortable rent-reduced housing. It aims to supplement existing government resources by mapping all buildings that participate in the MFTE (Multifamily Tax Exemption) program.
+It currently supports ~3,000 monthly active users.
 
-The platform currently supports over 100 active daily users.
-
-### Disclaimers
-
-MFTE is a government program. This app is not affiliated with the Seattle Office of Housing or any government office. For official information about MFTE please visit the [Seattle Office of Housing website](https://seattle.gov/housing).
-
-Users should contact building property management directly for current information about apartment vacancies and renter qualifications.
-
-### Why MFTE
-
-This app highlights the MFTE program because of the relatively quick application turnaround, higher availability, and modern apartments in sought-after locations.
-
-### Data Source
-
-Buildings are sourced from the spreadsheet of [Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (April 2024)](https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf). Updated spreadsheets are published by the Seattle Office of Housing roughly twice a year.
-
-### Usage
-
-Users can search and filter for apartments that fit their criteria (such as number of bedrooms, neighborhood, and building name). They can create a free login to keep a short list of properties, view a personalized map, and add notes.
-
-Users are encouraged to explore the [MFTE map](./all-buildings) page to get started.
+**New!** A feature that allows building managers to add real-time availability using a manager portal has been deployed (but not yet advertised).
 
 ## Technologies
 
 ### Frontend
 
-This application is built with TypeScript and React for a modular, efficient UI. Bootstrap is used for consistent styling and a responsive layout across devices, ensuring smooth functionality on both desktop and mobile.
+This application is built with TypeScript and React. It uses React-Bootstrap for consistent styling, accessibility, and a responsive layout across devices.
 
 ### Backend
 
@@ -45,6 +25,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Create React App uses Jest as its test runner for unit testing.
 
 For additional information regarding regarding database design and system architecture, see the [design documentation](./DESIGN.md).
+
+### Usage
+
+Users can search and filter for apartments that fit their criteria (such as number of bedrooms, neighborhood, and building name). They can create a free login to keep a short list of properties, view a personalized map, and add notes.
 
 ## Run App Locally
 
@@ -63,3 +47,21 @@ You will also see any lint errors in the console.
 ## Contribute
 
 This is an open-source project and contribution are welcome. For guidelines on how to contribute, please refer to the [contributing documentation](./CONTRIBUTE.md).
+
+## Additional Information
+
+### Disclaimer
+
+MFTE is a government program. This app is not affiliated with the Seattle Office of Housing or any government office. For official information about MFTE please visit the [Seattle Office of Housing website](https://seattle.gov/housing).
+
+Users should contact building management directly for complete information about apartment vacancies and the application process.
+
+### Why MFTE
+
+This app highlights the MFTE program because of the relatively quick application turnaround, higher availability, and modern apartments in sought-after locations.
+
+### Data Source
+
+Buildings are sourced from the spreadsheet of [Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (April 2024)](https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf). Updated spreadsheets are published by the Seattle Office of Housing roughly twice a year.
+
+Vacancy information is submitted directly by building managers.
