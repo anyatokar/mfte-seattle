@@ -24,7 +24,7 @@ export const Footer = () => {
               <Image className="footer-img" src={houses} alt="" />
             </Col>
           </Row>
-          <Row className="justify-content-center pb-3">
+          <Row className="justify-content-center pb-1">
             <Col>
               <SiteMap />
             </Col>
