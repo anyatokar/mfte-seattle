@@ -27,7 +27,7 @@ export default function PrivateRoute({ children, name }: PrivateRouteProps) {
 
   if (accountType !== null && !isAuthorized()) {
     return (
-      // TODO: Can move to its own component. Also, this doesn't handle when user types in a private url but they're not logged in.
+      // TODO: Can move to its own component.
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
