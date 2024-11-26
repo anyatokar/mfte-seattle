@@ -22,7 +22,6 @@ import AreYouSureModal from "./AreYouSureModal";
 
 const Profile: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-
   const {
     currentUser,
     accountType,
@@ -30,7 +29,6 @@ const Profile: React.FC = () => {
     updateEmailAuth,
     updatePasswordAuth,
   } = useAuth();
-
   const [isEditing, setIsEditing] = useState(false);
   const [displayName, setDisplayName] = useState(
     currentUser?.displayName || ""
@@ -44,11 +42,9 @@ const Profile: React.FC = () => {
   });
   const [jobTitle, setJobTitle] = useState("");
   const [companyName, setCompanyName] = useState("");
-
-  const [message, setMessage] = useState<string>("");
-  const [error, setError] = useState<string>("");
-
-  const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState<boolean>(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isAnyFieldUpdated, setIsAnyFieldUpdated] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,25 +69,27 @@ const Profile: React.FC = () => {
     fetchProfile();
   }, [currentUser, accountType]);
 
-  function isNameUpdated() {
+  function isNameUpdated(): boolean {
     return displayName !== currentUser?.displayName;
   }
-  function isEmailUpdated() {
+
+  function isEmailUpdated(): boolean {
     return email !== currentUser?.email;
   }
-  function isPasswordUpdated() {
+
+  function isPasswordUpdated(): boolean {
     return !!password;
   }
 
-  function isJobTitleUpdated() {
+  function isJobTitleUpdated(): boolean {
     return jobTitle !== originalProfileData.jobTitle;
   }
 
-  function isCompanyNameUpdated() {
+  function isCompanyNameUpdated(): boolean {
     return companyName !== originalProfileData.companyName;
   }
 
-  function handleNameChange(value: string) {
+  function handleNameChange(value: string): void {
     if (value !== currentUser?.displayName) {
       setIsAnyFieldUpdated(true);
     } else {
@@ -99,7 +97,7 @@ const Profile: React.FC = () => {
     }
   }
 
-  function handleEmailChange(value: string) {
+  function handleEmailChange(value: string): void {
     if (value !== currentUser?.email) {
       setIsAnyFieldUpdated(true);
     } else {
@@ -107,7 +105,7 @@ const Profile: React.FC = () => {
     }
   }
 
-  function handlePasswordChange(value: string) {
+  function handlePasswordChange(value: string): void {
     if (!!value) {
       setIsAnyFieldUpdated(true);
     } else {
@@ -115,7 +113,7 @@ const Profile: React.FC = () => {
     }
   }
 
-  function handleJobTitleChange(value: string) {
+  function handleJobTitleChange(value: string): void {
     if (value !== originalProfileData.jobTitle) {
       setIsAnyFieldUpdated(true);
     } else {
@@ -123,7 +121,7 @@ const Profile: React.FC = () => {
     }
   }
 
-  function handleCompanyNameChange(value: string) {
+  function handleCompanyNameChange(value: string): void {
     if (value !== originalProfileData.companyName) {
       setIsAnyFieldUpdated(true);
     } else {
@@ -131,7 +129,7 @@ const Profile: React.FC = () => {
     }
   }
 
-  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
     if (!isEditing) {
@@ -248,7 +246,7 @@ const Profile: React.FC = () => {
       });
   }
 
-  function resetForm() {
+  function resetForm(): void {
     setDisplayName(currentUser?.displayName || "");
     setEmail(currentUser?.email || "");
     // TODO: The profile data should probably be pulled from Firestore, not state.
@@ -296,9 +294,8 @@ const Profile: React.FC = () => {
     handleClose();
   };
 
-  function onDelete(event: React.MouseEvent<HTMLElement>) {
+  function onDelete(event: React.MouseEvent<HTMLElement>): void {
     event.preventDefault();
-
     handleShow();
   }
 
@@ -412,19 +409,17 @@ const Profile: React.FC = () => {
                       <strong>Password: </strong>
                     </Col>
                     <Col>
-                      <>
-                        <Form.Control
-                          type="password"
-                          value={password}
-                          onChange={(e) => {
-                            setPassword(e.target.value);
-                            handlePasswordChange(e.target.value);
-                          }}
-                        />
-                        <Form.Text className="text-muted">
-                          Leave blank to keep the same
-                        </Form.Text>
-                      </>
+                      <Form.Control
+                        type="password"
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          handlePasswordChange(e.target.value);
+                        }}
+                      />
+                      <Form.Text className="text-muted">
+                        Leave blank to keep the same
+                      </Form.Text>
                     </Col>
                   </Row>
                 )}
@@ -435,13 +430,11 @@ const Profile: React.FC = () => {
                       <strong>Confirm Password: </strong>
                     </Col>
                     <Col>
-                      <>
-                        <Form.Control
-                          type="password"
-                          value={passwordConfirm}
-                          onChange={(e) => setPasswordConfirm(e.target.value)}
-                        />
-                      </>
+                      <Form.Control
+                        type="password"
+                        value={passwordConfirm}
+                        onChange={(e) => setPasswordConfirm(e.target.value)}
+                      />
                     </Col>
                   </Row>
                 )}
