@@ -217,7 +217,7 @@ body {
 
 @media (max-width: 576px) {
   .map-and-list-container {
-    height: 65vh;
+    height: 60vh;
   }
 }
 /* end of map and building lists */
