@@ -85,7 +85,7 @@ export default function Signup({ onLoginClicked }: Props) {
             <Form.Control required type="jobTitle" ref={jobTitleRef} />
           </Form.Group>
           <Form.Group id="password" className="mb-2">
-            <Form.Label>Password </Form.Label>
+            <Form.Label>Password</Form.Label>
             <Form.Control required type="password" ref={passwordRef} />
             <Form.Text className="text-muted">6 or more characters</Form.Text>
           </Form.Group>

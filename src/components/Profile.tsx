@@ -21,8 +21,6 @@ import Stack from "react-bootstrap/Stack";
 import AreYouSureModal from "./AreYouSureModal";
 
 const Profile: React.FC = () => {
-  // TODO: temp disable eslint
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
 
   const {
