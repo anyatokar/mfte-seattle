@@ -23,6 +23,10 @@ export enum expiryBadgeEnum {
 export enum accountTypeEnum {
   RENTER = "renter",
   MANAGER = "manager",
+  /** This was created for deleting account - when user has to log in again due to timeout */
+  GHOST = "ghost",
+  /** Not logged in, created for restricting private routes */
+  GUEST = "guest",
 }
 
 export enum confirmModalTypeEnum {

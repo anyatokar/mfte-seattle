@@ -47,7 +47,7 @@ export function useAuth() {
 const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [accountType, setAccountType] = useState<accountTypeEnum | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function signupAuth(signupAuthData: SignupAuthDataType) {
     const { email, password, name } = signupAuthData;
@@ -104,9 +104,9 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
         const accountType = await getAccountTypeFirestore(currentUser.uid);
         setAccountType(accountType);
       } else {
-        setAccountType(null);
+        setAccountType(accountTypeEnum.GUEST);
       }
-      setLoading(false);
+      setIsLoading(false);
     });
 
     return () => unsubscribe();
@@ -126,7 +126,7 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {!isLoading && children}
     </AuthContext.Provider>
   );
 };
