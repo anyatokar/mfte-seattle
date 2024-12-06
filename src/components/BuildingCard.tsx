@@ -74,13 +74,13 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
   let wasOriginallySaved = false;
-  let note: string | undefined;
+  let originalNote: string | undefined;
   let formattedTimestamp: string | null | undefined;
 
   if (pageType === pageTypeEnum.allBuildings) {
     wasOriginallySaved = props.isSaved;
   } else if (pageType === pageTypeEnum.savedBuildings) {
-    note = props.building.note;
+    originalNote = props.building.note;
     formattedTimestamp = props.building.noteTimestamp
       ? timestampToDateAndTime(props.building.noteTimestamp)
       : null;
@@ -99,27 +99,25 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   }
 
   // Saved Buildings Page - note form
-  const [noteToAdd, setNoteToAdd] = useState(note);
+  const [updatedNote, setUpdatedNote] = useState(originalNote);
   // Only enable button if updated note is different from saved note.
-  const [isNoteDifferent, setIsNoteDifferent] = useState(false);
 
   const handleChange = (event: any) => {
-    if (event.target.value !== note ) {
-      setNoteToAdd(event.target.value);
+    if (event.target.value !== originalNote ) {
+      setUpdatedNote(event.target.value);
     }
   };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (noteToAdd !== undefined && event.target.value !== note) {
-      updateNote(noteToAdd);
+    if (updatedNote !== undefined && event.target.value !== originalNote) {
+      updateNote(updatedNote);
     }
   };
 
-  const updateNote = (noteToAdd: string) => {
-    return addNote(currentUser?.uid, buildingID, noteToAdd)
+  const updateNote = (updatedNote: string) => {
+    return addNote(currentUser?.uid, buildingID, updatedNote)
       .then(() => {
-        setIsNoteDifferent(false);
         console.log("Note updated successfully.");
       })
       .catch((error: any) => {
@@ -278,7 +276,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     as="textarea"
                     name="note"
                     rows={2}
-                    value={noteToAdd}
+                    value={updatedNote}
                     onChange={handleChange}
                   />
                   {formattedTimestamp && (
@@ -288,7 +286,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                   )}
                 </Form.Group>
                 <Button
-                  disabled={noteToAdd !== note}
+                  disabled={updatedNote !== originalNote}
                   type="submit"
                   title={`Save or update your note!`}
                   value="Save note"
