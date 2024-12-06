@@ -257,6 +257,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             onChange={handleInputChange}
             value={formFields.url}
           />
+          <Form.Text className="text-muted">
+            The url you'd share if a prospective renter asked to view available
+            MFTE units in your building.
+          </Form.Text>
         </Form.Group>
       </Form.Group>
 

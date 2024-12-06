@@ -176,13 +176,15 @@ const ListingCard: React.FC<ListingCardProps> = ({
             {!isExistingListing && isFormVisible && editListingID === "" && (
               <Form>
                 <Form.Select
+                  // TODO: Since this dropdown is not associated with the final submit button, the required is not actually enforced.
+                  // Listings cards need a refactor for better UI as well.
                   required
                   name="buildingName"
                   id="buildingName"
                   onChange={onSelectBuildingChange}
                   value={selectedBuilding?.buildingName || ""}
                 >
-                  <option value="">Select a building</option>
+                  <option value="">Select a building*</option>
                   {allBuildings
                     .sort((a, b) =>
                       a.buildingName.localeCompare(b.buildingName)
