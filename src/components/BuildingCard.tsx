@@ -104,13 +104,14 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   const [isNoteDifferent, setIsNoteDifferent] = useState(false);
 
   const handleChange = (event: any) => {
-    setIsNoteDifferent(event.target.value !== note);
-    setNoteToAdd(event.target.value);
+    if (event.target.value !== note ) {
+      setNoteToAdd(event.target.value);
+    }
   };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (noteToAdd !== undefined && isNoteDifferent) {
+    if (noteToAdd !== undefined && event.target.value !== note) {
       updateNote(noteToAdd);
     }
   };
@@ -287,7 +288,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                   )}
                 </Form.Group>
                 <Button
-                  disabled={!isNoteDifferent}
+                  disabled={noteToAdd !== note}
                   type="submit"
                   title={`Save or update your note!`}
                   value="Save note"
