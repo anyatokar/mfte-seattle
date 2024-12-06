@@ -39,8 +39,11 @@ export const getListing = (
   allListings: IListing[],
   buildingID: IBuilding["buildingID"]
 ) => {
+  // This finds the first active entry.
   return allListings.find(
-    (listing: IListing) => listing.buildingID === buildingID
+    (listing: IListing) =>
+      listing.buildingID === buildingID &&
+      listing.listingStatus === listingStatusEnum.ACTIVE
   );
 };
 
