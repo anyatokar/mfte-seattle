@@ -22,7 +22,6 @@ import { ModalContext, ModalState } from "../contexts/ModalContext";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
-import IListing from "../interfaces/IListing";
 
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
@@ -37,14 +36,12 @@ export interface AllBuildingCardProps {
   building: IBuilding;
   isSaved: boolean;
   pageType: pageTypeEnum.allBuildings;
-  listing: IListing | undefined;
 }
 
 export interface SavedBuildingCardProps {
   building: ISavedBuilding;
   isSaved: boolean;
   pageType: pageTypeEnum.savedBuildings;
-  listing: IListing | undefined;
 }
 
 type BuildingCardProps = AllBuildingCardProps | SavedBuildingCardProps;
@@ -63,9 +60,10 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     state,
     zip,
     amiData,
+    listing,
   } = props.building;
 
-  const { pageType, listing } = props;
+  const { pageType } = props;
 
   const { currentUser, accountType } = useAuth();
 
@@ -74,13 +72,13 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
   let wasOriginallySaved = false;
-  let note: string | undefined;
+  let originalNote: string | undefined;
   let formattedTimestamp: string | null | undefined;
 
   if (pageType === pageTypeEnum.allBuildings) {
     wasOriginallySaved = props.isSaved;
   } else if (pageType === pageTypeEnum.savedBuildings) {
-    note = props.building.note;
+    originalNote = props.building.note;
     formattedTimestamp = props.building.noteTimestamp
       ? timestampToDateAndTime(props.building.noteTimestamp)
       : null;
@@ -99,26 +97,17 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   }
 
   // Saved Buildings Page - note form
-  const [noteToAdd, setNoteToAdd] = useState(note);
-  // Only enable button if updated note is different from saved note.
-  const [isNoteDifferent, setIsNoteDifferent] = useState(false);
-
-  const handleChange = (event: any) => {
-    setIsNoteDifferent(event.target.value !== note);
-    setNoteToAdd(event.target.value);
-  };
+  const [updatedNote, setUpdatedNote] = useState(originalNote);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (noteToAdd !== undefined && isNoteDifferent) {
-      updateNote(noteToAdd);
-    }
+
+    updateNote(updatedNote || "");
   };
 
-  const updateNote = (noteToAdd: string) => {
-    return addNote(currentUser?.uid, buildingID, noteToAdd)
+  const updateNote = (updatedNote: string) => {
+    return addNote(currentUser?.uid, buildingID, updatedNote)
       .then(() => {
-        setIsNoteDifferent(false);
         console.log("Note updated successfully.");
       })
       .catch((error: any) => {
@@ -277,8 +266,8 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     as="textarea"
                     name="note"
                     rows={2}
-                    value={noteToAdd}
-                    onChange={handleChange}
+                    value={updatedNote}
+                    onChange={(event) => setUpdatedNote(event.target.value)}
                   />
                   {formattedTimestamp && (
                     <Form.Text>
@@ -287,7 +276,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                   )}
                 </Form.Group>
                 <Button
-                  disabled={!isNoteDifferent}
+                  disabled={updatedNote === originalNote}
                   type="submit"
                   title={`Save or update your note!`}
                   value="Save note"

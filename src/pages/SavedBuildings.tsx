@@ -6,7 +6,6 @@ import IPage from "../interfaces/IPage";
 import { accountTypeEnum, pageTypeEnum } from "../types/enumTypes";
 
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
-import { useAllListings } from "../hooks/useListings";
 
 import ReactMap from "../map/ReactMap";
 import AllBuildingsList from "../components/BuildingsList";
@@ -20,13 +19,12 @@ import Tab from "react-bootstrap/Tab";
 const SavedBuildingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
   const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
-  const [allListings, isLoadingAllListings] = useAllListings(true);
 
   if (!currentUser || accountType !== accountTypeEnum.RENTER) {
     return null;
   }
 
-  const isLoading = isLoadingSavedBuildings || isLoadingAllListings;
+  const isLoading = isLoadingSavedBuildings;
 
   return (
     <Profiler
@@ -95,7 +93,6 @@ const SavedBuildingsPage: React.FC<IPage> = () => {
                   <ReactMap
                     resultBuildingsUnsorted={savedBuildings}
                     savedBuildings={savedBuildings}
-                    allListings={allListings}
                   />
                 </Tab.Pane>
                 <Tab.Pane eventKey="list">
@@ -103,7 +100,6 @@ const SavedBuildingsPage: React.FC<IPage> = () => {
                     isLoading={isLoading}
                     resultBuildingsUnsorted={savedBuildings}
                     savedBuildings={savedBuildings}
-                    allListings={allListings}
                     pageType={pageTypeEnum.savedBuildings}
                   />
                 </Tab.Pane>

@@ -1,13 +1,9 @@
 import { areListingsOn } from "../config/config";
 import { listingStatusEnum, pageTypeEnum } from "../types/enumTypes";
-
 import BuildingCard from "./BuildingCard";
-
-import { genericSort } from "../utils/genericSort";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
-import ISorter from "../interfaces/ISorter";
 import IListing from "../interfaces/IListing";
 
 import Col from "react-bootstrap/Col";
@@ -19,7 +15,6 @@ type AllBuildingsListProps = {
   isLoading: boolean;
   resultBuildingsUnsorted: IBuilding[];
   savedBuildings: ISavedBuilding[];
-  allListings: IListing[] | [];
   pageType: pageTypeEnum;
 };
 
@@ -52,40 +47,10 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   resultBuildingsUnsorted,
   savedBuildings,
   pageType,
-  allListings,
 }) => {
   if (!resultBuildingsUnsorted) {
     return null;
   }
-
-  const activeSorter: ISorter<IBuilding> = {
-    property: "buildingName",
-    isDescending: false,
-  };
-
-  // TODO: Introduce a spinner while this is filtering/sorting?
-  const resultBuildings = resultBuildingsUnsorted.sort(
-    (buildingA: IBuilding, buildingB: IBuilding) => {
-      // Check if each building has an approved listing in allListings
-      const hasListingA = allListings.some(
-        (listing) =>
-          listing.buildingID === buildingA.buildingID &&
-          listing.listingStatus === listingStatusEnum.ACTIVE
-      );
-      const hasListingB = allListings.some(
-        (listing) =>
-          listing.buildingID === buildingB.buildingID &&
-          listing.listingStatus === listingStatusEnum.ACTIVE
-      );
-
-      // Sort buildings with approved listings first
-      if (hasListingA && !hasListingB) return -1;
-      if (!hasListingA && hasListingB) return 1;
-
-      // Use the genericSort function for sorting by the activeSorter
-      return genericSort(buildingA, buildingB, activeSorter);
-    }
-  );
 
   return (
     <Container fluid>
@@ -101,9 +66,9 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
         )}
       </Col>
       <Row>
-        {resultBuildings.length > 0 && (
+        {resultBuildingsUnsorted.length > 0 && (
           <>
-            {resultBuildings.map((building: IBuilding) => (
+            {resultBuildingsUnsorted.map((building: IBuilding) => (
               <Col
                 key={building.buildingID}
                 xs={12}
@@ -118,7 +83,6 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                   building={building}
                   isSaved={checkIsSaved(savedBuildings, building)}
                   pageType={pageType}
-                  listing={getListing(allListings, building.buildingID)}
                 />
               </Col>
             ))}
