@@ -2,10 +2,14 @@ import { useCallback, useState, useEffect } from "react";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
 import IBuilding from "../interfaces/IBuilding";
+import { useAllListings } from "./useListings";
+import { listingStatusEnum } from "../types/enumTypes";
 
 export const useAllBuildings = (): [IBuilding[], boolean] => {
-  const [allBuildings, setAllBuildings] = useState<Array<IBuilding>>([]);
+  const [allBuildings, setAllBuildings] = useState<IBuilding[]>([]);
   const [isLoadingAllBuildings, setIsLoadingAllBuildings] = useState(true);
+
+  const allListings = useAllListings(true)[0];
 
   const getAllBuildings = useCallback(() => {
     setIsLoadingAllBuildings(true);
@@ -15,8 +19,15 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
       console.log("Buildings snapshot.");
       const buildings: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
-        buildings.push(doc.data() as IBuilding);
+        const building = doc.data() as IBuilding;
+        const listing = findListing(building.buildingID)
+        // If there's a matching listing, add this data to the building
+        if (listing !== undefined) {
+          building.listingData = {...listing};
+        }
+        buildings.push(building);
       });
+
       setAllBuildings(buildings);
       setIsLoadingAllBuildings(false);
     });
@@ -31,6 +42,17 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
       unsubscribe();
     };
   }, [getAllBuildings]);
+
+  const findListing = (
+    buildingID: IBuilding["buildingID"]
+  ) => {
+    // This finds the first active entry.
+    return allListings.find(
+      (listing) =>
+        listing.buildingID === buildingID &&
+        listing.listingStatus === listingStatusEnum.ACTIVE
+    );
+  };
 
   return [allBuildings, isLoadingAllBuildings];
 };

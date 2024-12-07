@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore";
-import { UnitSize } from "./IListing";
+import IListing, { UnitSize } from "./IListing";
 
 export type amiPercentageType = 30 | 40 | 50 | 60 | 65 | 70 | 75 | 80 | 85 | 90;
 
@@ -34,4 +34,5 @@ export default interface IBuilding {
   streetAddress: string;
   /** This is an array to keep the order from smallest to largest on render. */
   amiData: amiDataType[];
+  listingData: IListing;
 }
