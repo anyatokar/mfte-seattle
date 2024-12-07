@@ -14,7 +14,6 @@ import SaveButton from "../components/SaveButton";
 import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
-import IListing from "../interfaces/IListing";
 
 import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
 

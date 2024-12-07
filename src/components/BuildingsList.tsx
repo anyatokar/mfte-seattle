@@ -1,13 +1,9 @@
 import { areListingsOn } from "../config/config";
 import { listingStatusEnum, pageTypeEnum } from "../types/enumTypes";
-
 import BuildingCard from "./BuildingCard";
-
-import { genericSort } from "../utils/genericSort";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
-import ISorter from "../interfaces/ISorter";
 import IListing from "../interfaces/IListing";
 
 import Col from "react-bootstrap/Col";
@@ -55,29 +51,6 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   if (!resultBuildingsUnsorted) {
     return null;
   }
-
-  const activeSorter: ISorter<IBuilding> = {
-    property: "buildingName",
-    isDescending: false,
-  };
-
-  // TODO: Introduce a spinner while this is filtering/sorting?
-  const resultBuildings = resultBuildingsUnsorted.sort(
-    (buildingA: IBuilding, buildingB: IBuilding) => {
-      // Check if each building has an approved listing
-      const hasListingA =
-        buildingA.listing?.listingStatus === listingStatusEnum.ACTIVE;
-      const hasListingB =
-        buildingB.listing?.listingStatus === listingStatusEnum.ACTIVE;
-
-      // Sort buildings with approved listings first
-      if (hasListingA && !hasListingB) return -1;
-      if (!hasListingA && hasListingB) return 1;
-
-      // Use the genericSort function for sorting by the activeSorter
-      return genericSort(buildingA, buildingB, activeSorter);
-    }
-  );
 
   return (
     <Container fluid>
