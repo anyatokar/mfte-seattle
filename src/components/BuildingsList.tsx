@@ -79,18 +79,20 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   return (
     <Container fluid>
       {/* result count */}
-      <Col>
-        {isLoading && <Spinner animation="border" variant="warning" />}
-        {!isLoading && pageType === pageTypeEnum.allBuildings && (
-          <p className="mb-0">
-            {resultBuildingsUnsorted.length > 0
-              ? `${resultBuildingsUnsorted.length} buildings found`
-              : "No buildings found"}
-          </p>
-        )}
-      </Col>
       <Row>
-        {resultBuildings.length > 0 && (
+        <Col>
+          {isLoading && <Spinner animation="border" variant="warning" />}
+          {!isLoading && pageType === pageTypeEnum.allBuildings && (
+            <p className="mb-0">
+              {resultBuildingsUnsorted.length > 0
+                ? `${resultBuildingsUnsorted.length} buildings found`
+                : "No buildings found"}
+            </p>
+          )}
+        </Col>
+      </Row>
+      <Row>
+        {!isLoading && resultBuildings.length > 0 && (
           <>
             {resultBuildings.map((building: IBuilding) => (
               <Col
