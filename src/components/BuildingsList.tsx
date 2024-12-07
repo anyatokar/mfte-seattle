@@ -60,7 +60,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
           {!isLoading && pageType === pageTypeEnum.allBuildings && (
             <p className="mb-0">
               {resultBuildingsUnsorted.length > 0
-                ? `${resultBuildingsUnsorted.length} buildings found`
+                ? `${resultBuildingsUnsorted.length} buildings found.`
                 : "No buildings found"}
             </p>
           )}
