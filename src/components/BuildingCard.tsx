@@ -98,19 +98,11 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
 
   // Saved Buildings Page - note form
   const [updatedNote, setUpdatedNote] = useState(originalNote);
-  // Only enable button if updated note is different from saved note.
-
-  const handleChange = (event: any) => {
-    if (event.target.value !== originalNote) {
-      setUpdatedNote(event.target.value);
-    }
-  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (updatedNote !== undefined && event.target.value !== originalNote) {
-      updateNote(updatedNote);
-    }
+
+    updateNote(updatedNote || "");
   };
 
   const updateNote = (updatedNote: string) => {
@@ -275,7 +267,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                     name="note"
                     rows={2}
                     value={updatedNote}
-                    onChange={handleChange}
+                    onChange={(event) => setUpdatedNote(event.target.value)}
                   />
                   {formattedTimestamp && (
                     <Form.Text>
@@ -284,7 +276,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
                   )}
                 </Form.Group>
                 <Button
-                  disabled={updatedNote !== originalNote}
+                  disabled={updatedNote === originalNote}
                   type="submit"
                   title={`Save or update your note!`}
                   value="Save note"
