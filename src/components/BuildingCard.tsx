@@ -22,7 +22,6 @@ import { ModalContext, ModalState } from "../contexts/ModalContext";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
-import IListing from "../interfaces/IListing";
 
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
@@ -37,14 +36,12 @@ export interface AllBuildingCardProps {
   building: IBuilding;
   isSaved: boolean;
   pageType: pageTypeEnum.allBuildings;
-  listing: IListing | undefined;
 }
 
 export interface SavedBuildingCardProps {
   building: ISavedBuilding;
   isSaved: boolean;
   pageType: pageTypeEnum.savedBuildings;
-  listing: IListing | undefined;
 }
 
 type BuildingCardProps = AllBuildingCardProps | SavedBuildingCardProps;
@@ -63,9 +60,10 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     state,
     zip,
     amiData,
+    listing,
   } = props.building;
 
-  const { pageType, listing } = props;
+  const { pageType } = props;
 
   const { currentUser, accountType } = useAuth();
 
@@ -103,7 +101,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   // Only enable button if updated note is different from saved note.
 
   const handleChange = (event: any) => {
-    if (event.target.value !== originalNote ) {
+    if (event.target.value !== originalNote) {
       setUpdatedNote(event.target.value);
     }
   };

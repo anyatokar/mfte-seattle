@@ -1,11 +1,8 @@
 import { useState, useMemo, Profiler } from "react";
-
-import { areListingsOn } from "../config/config";
 import { isProfilerOn } from "../config/config";
 
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
-import { useAllListings } from "../hooks/useListings";
 
 import AllBuildingsList from "../components/BuildingsList";
 import ReactMap from "../map/ReactMap";
@@ -28,7 +25,6 @@ import Nav from "react-bootstrap/Nav";
 const AllBuildingsPage: React.FC<IPage> = () => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
-  let [allListings] = useAllListings(true);
 
   // search, filter
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -47,11 +43,6 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       )
       .filter((building) => genericFilter<IBuilding>(building, activeFilters));
   }, [allBuildings, searchQuery, activeFilters]);
-
-  // listings
-  if (!areListingsOn) {
-    allListings = [];
-  }
 
   return (
     <Profiler
@@ -91,7 +82,6 @@ const AllBuildingsPage: React.FC<IPage> = () => {
               <ReactMap
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
-                allListings={allListings}
               />
             </Col>
             <Col
@@ -104,7 +94,6 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                 isLoading={isLoadingAllBuildings}
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
-                allListings={allListings}
                 pageType={pageTypeEnum.allBuildings}
               />
             </Col>
@@ -132,7 +121,6 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                 <ReactMap
                   resultBuildingsUnsorted={resultBuildingsUnsorted}
                   savedBuildings={savedBuildings}
-                  allListings={allListings}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="list">
@@ -140,7 +128,6 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                   isLoading={isLoadingAllBuildings}
                   resultBuildingsUnsorted={resultBuildingsUnsorted}
                   savedBuildings={savedBuildings}
-                  allListings={allListings}
                   pageType={pageTypeEnum.allBuildings}
                 />
               </Tab.Pane>

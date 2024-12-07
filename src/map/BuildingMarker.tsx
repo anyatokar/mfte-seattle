@@ -25,7 +25,6 @@ interface IBuildingMarkerProps {
   isSelected: boolean;
   setSelectedBuilding: (building: IBuilding | null) => void;
   isSaved: boolean;
-  listing: IListing | undefined;
 }
 
 export function BuildingMarker(props: IBuildingMarkerProps) {
@@ -34,7 +33,6 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
     isSelected,
     setSelectedBuilding,
     isSaved: wasOriginallySaved,
-    listing,
   } = props;
 
   const {
@@ -102,7 +100,8 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
   };
 
   const icon =
-    areListingsOn && listing?.listingStatus === listingStatusEnum.ACTIVE
+    areListingsOn &&
+    building.listing?.listingStatus === listingStatusEnum.ACTIVE
       ? svgMarkerListing
       : svgMarkerNoListing;
 
@@ -119,13 +118,15 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
         <InfoWindow onCloseClick={clearSelection}>
           <>
             <div>
-              {areListingsOn && listing?.url && (
+              {areListingsOn && building.listing?.url && (
                 <>
-                  <ListingButton listing={listing} isMarker={true} />
+                  <ListingButton listing={building.listing} isMarker={true} />
                 </>
               )}
             </div>
-            <div className={areListingsOn && listing?.url ? "pt-2" : ""}>
+            <div
+              className={areListingsOn && building.listing?.url ? "pt-2" : ""}
+            >
               <div>
                 <strong>{buildingName}</strong>
               </div>

@@ -19,7 +19,6 @@ type AllBuildingsListProps = {
   isLoading: boolean;
   resultBuildingsUnsorted: IBuilding[];
   savedBuildings: ISavedBuilding[];
-  allListings: IListing[] | [];
   pageType: pageTypeEnum;
 };
 
@@ -52,7 +51,6 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   resultBuildingsUnsorted,
   savedBuildings,
   pageType,
-  allListings,
 }) => {
   if (!resultBuildingsUnsorted) {
     return null;
@@ -66,17 +64,11 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   // TODO: Introduce a spinner while this is filtering/sorting?
   const resultBuildings = resultBuildingsUnsorted.sort(
     (buildingA: IBuilding, buildingB: IBuilding) => {
-      // Check if each building has an approved listing in allListings
-      const hasListingA = allListings.some(
-        (listing) =>
-          listing.buildingID === buildingA.buildingID &&
-          listing.listingStatus === listingStatusEnum.ACTIVE
-      );
-      const hasListingB = allListings.some(
-        (listing) =>
-          listing.buildingID === buildingB.buildingID &&
-          listing.listingStatus === listingStatusEnum.ACTIVE
-      );
+      // Check if each building has an approved listing
+      const hasListingA =
+        buildingA.listing?.listingStatus === listingStatusEnum.ACTIVE;
+      const hasListingB =
+        buildingB.listing?.listingStatus === listingStatusEnum.ACTIVE;
 
       // Sort buildings with approved listings first
       if (hasListingA && !hasListingB) return -1;
@@ -101,9 +93,9 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
         )}
       </Col>
       <Row>
-        {resultBuildings.length > 0 && (
+        {resultBuildingsUnsorted.length > 0 && (
           <>
-            {resultBuildings.map((building: IBuilding) => (
+            {resultBuildingsUnsorted.map((building: IBuilding) => (
               <Col
                 key={building.buildingID}
                 xs={12}
@@ -118,7 +110,6 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                   building={building}
                   isSaved={checkIsSaved(savedBuildings, building)}
                   pageType={pageType}
-                  listing={getListing(allListings, building.buildingID)}
                 />
               </Col>
             ))}

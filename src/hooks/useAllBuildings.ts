@@ -1,9 +1,9 @@
 import { useCallback, useState, useEffect } from "react";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
-import IBuilding from "../interfaces/IBuilding";
 import { useAllListings } from "./useListings";
 import { listingStatusEnum } from "../types/enumTypes";
+import IBuilding from "../interfaces/IBuilding";
 
 export const useAllBuildings = (): [IBuilding[], boolean] => {
   const [allBuildings, setAllBuildings] = useState<IBuilding[]>([]);
@@ -12,6 +12,15 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
   const allListings = useAllListings(true)[0];
 
   const getAllBuildings = useCallback(() => {
+    const findListing = (buildingID: IBuilding["buildingID"]) => {
+      // This finds the first active entry.
+      return allListings.find(
+        (listing) =>
+          listing.buildingID === buildingID &&
+          listing.listingStatus === listingStatusEnum.ACTIVE
+      );
+    };
+
     setIsLoadingAllBuildings(true);
     const q = query(collection(db, "buildings"));
 
@@ -20,10 +29,10 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
       const buildings: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
         const building = doc.data() as IBuilding;
-        const listing = findListing(building.buildingID)
+        const listing = findListing(building.buildingID);
         // If there's a matching listing, add this data to the building
         if (listing !== undefined) {
-          building.listingData = {...listing};
+          building.listing = { ...listing };
         }
         buildings.push(building);
       });
@@ -33,8 +42,7 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
     });
 
     return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [allListings]);
 
   useEffect(() => {
     const unsubscribe = getAllBuildings();
@@ -42,17 +50,6 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
       unsubscribe();
     };
   }, [getAllBuildings]);
-
-  const findListing = (
-    buildingID: IBuilding["buildingID"]
-  ) => {
-    // This finds the first active entry.
-    return allListings.find(
-      (listing) =>
-        listing.buildingID === buildingID &&
-        listing.listingStatus === listingStatusEnum.ACTIVE
-    );
-  };
 
   return [allBuildings, isLoadingAllBuildings];
 };

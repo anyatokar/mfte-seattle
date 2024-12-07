@@ -34,5 +34,5 @@ export default interface IBuilding {
   streetAddress: string;
   /** This is an array to keep the order from smallest to largest on render. */
   amiData: amiDataType[];
-  listingData: IListing;
+  listing: IListing;
 }
