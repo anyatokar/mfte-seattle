@@ -60,40 +60,36 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
           {!isLoading && pageType === pageTypeEnum.allBuildings && (
             <p className="mb-0">
               {resultBuildingsUnsorted.length > 0
-                ? `${resultBuildingsUnsorted.length} buildings found.`
+                ? `${resultBuildingsUnsorted.length} buildings found!`
                 : "No buildings found"}
             </p>
           )}
-          {(isLoading || resultBuildingsUnsorted === null) && (
-            <Spinner animation="border" variant="warning" />
-          )}
+          {isLoading && <Spinner animation="border" variant="warning" />}
         </Col>
       </Row>
       <Row>
-        {!isLoading &&
-          resultBuildingsUnsorted !== null &&
-          resultBuildingsUnsorted.length > 0 && (
-            <>
-              {resultBuildingsUnsorted.map((building: IBuilding) => (
-                <Col
-                  key={building.buildingID}
-                  xs={12}
-                  sm={6}
-                  // Split screen starts at md
-                  md={12}
-                  lg={areListingsOn ? 6 : 4}
-                  xl={areListingsOn ? 6 : 3}
-                  className="p-1"
-                >
-                  <BuildingCard
-                    building={building}
-                    isSaved={checkIsSaved(savedBuildings, building)}
-                    pageType={pageType}
-                  />
-                </Col>
-              ))}
-            </>
-          )}
+        {!isLoading && resultBuildingsUnsorted.length > 0 && (
+          <>
+            {resultBuildingsUnsorted.map((building: IBuilding) => (
+              <Col
+                key={building.buildingID}
+                xs={12}
+                sm={6}
+                // Split screen starts at md
+                md={12}
+                lg={areListingsOn ? 6 : 4}
+                xl={areListingsOn ? 6 : 3}
+                className="p-1"
+              >
+                <BuildingCard
+                  building={building}
+                  isSaved={checkIsSaved(savedBuildings, building)}
+                  pageType={pageType}
+                />
+              </Col>
+            ))}
+          </>
+        )}
       </Row>
     </Container>
   );
