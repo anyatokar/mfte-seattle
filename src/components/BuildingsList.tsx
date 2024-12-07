@@ -1,13 +1,10 @@
-import { useState, useEffect } from "react";
 import { areListingsOn } from "../config/config";
 import { listingStatusEnum, pageTypeEnum } from "../types/enumTypes";
 import BuildingCard from "./BuildingCard";
-import { genericSort } from "../utils/genericSort";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
-import ISorter from "../interfaces/ISorter";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -51,33 +48,6 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   savedBuildings,
   pageType,
 }) => {
-  const [resultBuildings, setResultBuildings] = useState<IBuilding[] | null>(
-    null
-  );
-
-  useEffect(() => {
-    const activeSorter: ISorter<IBuilding> = {
-      property: "buildingName",
-      isDescending: false,
-    };
-
-    const sortedBuildings = resultBuildingsUnsorted.sort(
-      (buildingA: IBuilding, buildingB: IBuilding) => {
-        const hasListingA =
-          buildingA.listing?.listingStatus === listingStatusEnum.ACTIVE;
-        const hasListingB =
-          buildingB.listing?.listingStatus === listingStatusEnum.ACTIVE;
-
-        if (hasListingA && !hasListingB) return -1;
-        if (!hasListingA && hasListingB) return 1;
-
-        return genericSort(buildingA, buildingB, activeSorter);
-      }
-    );
-
-    setResultBuildings(sortedBuildings);
-  }, [resultBuildingsUnsorted]);
-
   if (!resultBuildingsUnsorted) {
     return null;
   }
@@ -94,34 +64,36 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                 : "No buildings found"}
             </p>
           )}
-          {(isLoading || resultBuildings === null) && (
+          {(isLoading || resultBuildingsUnsorted === null) && (
             <Spinner animation="border" variant="warning" />
           )}
         </Col>
       </Row>
       <Row>
-        {!isLoading && resultBuildings && resultBuildings.length > 0 && (
-          <>
-            {resultBuildings.map((building: IBuilding) => (
-              <Col
-                key={building.buildingID}
-                xs={12}
-                sm={6}
-                // Split screen starts at md
-                md={12}
-                lg={areListingsOn ? 6 : 4}
-                xl={areListingsOn ? 6 : 3}
-                className="p-1"
-              >
-                <BuildingCard
-                  building={building}
-                  isSaved={checkIsSaved(savedBuildings, building)}
-                  pageType={pageType}
-                />
-              </Col>
-            ))}
-          </>
-        )}
+        {!isLoading &&
+          resultBuildingsUnsorted !== null &&
+          resultBuildingsUnsorted.length > 0 && (
+            <>
+              {resultBuildingsUnsorted.map((building: IBuilding) => (
+                <Col
+                  key={building.buildingID}
+                  xs={12}
+                  sm={6}
+                  // Split screen starts at md
+                  md={12}
+                  lg={areListingsOn ? 6 : 4}
+                  xl={areListingsOn ? 6 : 3}
+                  className="p-1"
+                >
+                  <BuildingCard
+                    building={building}
+                    isSaved={checkIsSaved(savedBuildings, building)}
+                    pageType={pageType}
+                  />
+                </Col>
+              ))}
+            </>
+          )}
       </Row>
     </Container>
   );
