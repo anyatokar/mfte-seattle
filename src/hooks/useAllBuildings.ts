@@ -11,7 +11,7 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
   const [allBuildings, setAllBuildings] = useState<IBuilding[]>([]);
   const [isLoadingAllBuildings, setIsLoadingAllBuildings] = useState(true);
 
-  const allListings = useAllListings(true)[0];
+  const [allListings, isLoadingAllListings] = useAllListings(true);
 
   const getAllBuildings = useCallback(() => {
     const findListing = (buildingID: IBuilding["buildingID"]) => {
@@ -27,6 +27,11 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
     const q = query(collection(db, "buildings"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      if (isLoadingAllListings) {
+        console.log("Loading all listings");
+        return;
+      }
+
       console.log("Buildings snapshot.");
       const buildings: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
@@ -63,7 +68,7 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
     });
 
     return unsubscribe;
-  }, [allListings]);
+  }, [allListings, isLoadingAllListings]);
 
   useEffect(() => {
     const unsubscribe = getAllBuildings();
