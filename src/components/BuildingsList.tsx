@@ -67,7 +67,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
           {isLoading && (
             <div className="d-flex align-items-center">
               <Spinner animation="border" variant="secondary" role="status" />
-              <span className="text-muted ms-2">Loading buildings list</span>
+              <span className="text-muted ms-2">Loading buildings</span>
             </div>
           )}
         </Col>
