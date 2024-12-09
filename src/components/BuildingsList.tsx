@@ -64,7 +64,12 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                 : "No buildings found"}
             </p>
           )}
-          {isLoading && <Spinner animation="border" variant="warning" />}
+          {isLoading && (
+            <div>
+              <Spinner animation="border" variant="warning" />
+              <span>Loading buildings list</span>
+            </div>
+          )}
         </Col>
       </Row>
       <Row>
