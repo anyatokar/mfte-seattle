@@ -1,12 +1,10 @@
 import { areListingsOn } from "../config/config";
 import { listingStatusEnum, pageTypeEnum } from "../types/enumTypes";
 import BuildingCard from "./BuildingCard";
-import { genericSort } from "../utils/genericSort";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
-import ISorter from "../interfaces/ISorter";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -54,45 +52,30 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
     return null;
   }
 
-  const activeSorter: ISorter<IBuilding> = {
-    property: "buildingName",
-    isDescending: false,
-  };
-
-  const resultBuildings = resultBuildingsUnsorted.sort(
-    (buildingA: IBuilding, buildingB: IBuilding) => {
-      // Check if each building has an approved listing
-      const hasListingA =
-        buildingA.listing?.listingStatus === listingStatusEnum.ACTIVE;
-      const hasListingB =
-        buildingB.listing?.listingStatus === listingStatusEnum.ACTIVE;
-
-      // Sort buildings with approved listings first
-      if (hasListingA && !hasListingB) return -1;
-      if (!hasListingA && hasListingB) return 1;
-
-      // Use the genericSort function for sorting by the activeSorter
-      return genericSort(buildingA, buildingB, activeSorter);
-    }
-  );
-
   return (
     <Container fluid>
       {/* result count */}
-      <Col>
-        {isLoading && <Spinner animation="border" variant="warning" />}
-        {!isLoading && pageType === pageTypeEnum.allBuildings && (
-          <p className="mb-0">
-            {resultBuildingsUnsorted.length > 0
-              ? `${resultBuildingsUnsorted.length} buildings found`
-              : "No buildings found"}
-          </p>
-        )}
-      </Col>
       <Row>
-        {resultBuildings.length > 0 && (
+        <Col>
+          {!isLoading && pageType === pageTypeEnum.allBuildings && (
+            <p className="mb-0">
+              {resultBuildingsUnsorted.length > 0
+                ? `${resultBuildingsUnsorted.length} buildings found`
+                : "No buildings found"}
+            </p>
+          )}
+          {isLoading && (
+            <div className="d-flex align-items-center">
+              <Spinner animation="border" variant="secondary" role="status" />
+              <span className="text-muted ms-2">Loading buildings</span>
+            </div>
+          )}
+        </Col>
+      </Row>
+      <Row>
+        {!isLoading && resultBuildingsUnsorted.length > 0 && (
           <>
-            {resultBuildings.map((building: IBuilding) => (
+            {resultBuildingsUnsorted.map((building: IBuilding) => (
               <Col
                 key={building.buildingID}
                 xs={12}
