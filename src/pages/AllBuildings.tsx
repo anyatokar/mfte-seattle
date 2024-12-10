@@ -27,10 +27,8 @@ const AllBuildingsPage: React.FC<IPage> = () => {
   const [savedBuildings] = useSavedBuildings();
 
   // search, filter
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [activeFilters, setActiveFilters] = useState<Array<IFilter<IBuilding>>>(
-    []
-  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeFilters, setActiveFilters] = useState<IFilter<IBuilding>[]>([]);
 
   const resultBuildingsUnsorted = useMemo(() => {
     return allBuildings

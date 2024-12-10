@@ -26,14 +26,12 @@ interface IBuildingMarkerProps {
   isSaved: boolean;
 }
 
-export function BuildingMarker(props: IBuildingMarkerProps) {
-  const {
-    building,
-    isSelected,
-    setSelectedBuilding,
-    isSaved: wasOriginallySaved,
-  } = props;
-
+const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
+  building,
+  isSelected,
+  setSelectedBuilding,
+  isSaved: wasOriginallySaved,
+}) => {
   const {
     buildingID,
     buildingName,
@@ -176,4 +174,6 @@ export function BuildingMarker(props: IBuildingMarkerProps) {
       )}
     </Marker>
   );
-}
+};
+
+export default BuildingMarker;
