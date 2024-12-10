@@ -1,7 +1,7 @@
 const Legend: React.FC = () => {
   return (
     <div style={legendStyles}>
-      <h6 style={legendHeaderStyle}>Legend</h6>
+      <h6 className="visually-hidden">Legend</h6>
       <div style={legendItemStyle}>
         <span style={colorBox(true)}></span>
         <span>MFTE units available</span>
@@ -16,26 +16,20 @@ const Legend: React.FC = () => {
 
 const legendStyles: React.CSSProperties = {
   background: "white",
-  padding: "10px",
-  margin: "10px",
+  padding: "7px",
+  margin: "3px",
   border: "1px solid #ccc",
   fontSize: "14px",
   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-  borderRadius: "8px",
+  borderRadius: "5px",
   maxWidth: "200px",
-};
-
-const legendHeaderStyle: React.CSSProperties = {
-  fontSize: "16px",
-  fontWeight: "bold",
-  marginBottom: "10px",
 };
 
 const legendItemStyle: React.CSSProperties = {
   display: "flex",
   alignItems: "center",
-  marginBottom: "5px",
-  gap: "3px",
+  marginBottom: "0px",
+  gap: "2px",
 };
 
 const colorBox = (hasListing: boolean): React.CSSProperties => ({
