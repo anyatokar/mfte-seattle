@@ -1,11 +1,10 @@
 import { firebaseConfig } from "../db/firebase";
 import { areListingsOn } from "../config/config";
 
-import { createRoot } from "react-dom/client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
-import { BuildingMarker } from "./BuildingMarker";
+import BuildingMarker from "./BuildingMarker";
 import Legend from "./Legend";
 import { checkIsSaved } from "../components/BuildingsList";
 
@@ -28,11 +27,9 @@ const ReactMap: React.FC<IMap> = ({
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
     null
   );
-  const [isLegendVisible, setIsLegendVisible] = useState(false);
-  const mapRef = useRef<GoogleMap>(null);
-  const [buildingsToMap, setBuildingsToMap] = useState<IBuilding[]>([]);
 
-  // Update buildingsToMap when resultBuildingsUnsorted changes
+  const [buildingsToMap, setBuildingsToMap] = useState(resultBuildingsUnsorted);
+
   useEffect(() => {
     setBuildingsToMap(resultBuildingsUnsorted);
   }, [resultBuildingsUnsorted]);
@@ -41,57 +38,30 @@ const ReactMap: React.FC<IMap> = ({
     if (
       areListingsOn &&
       selectedBuilding &&
-      !resultBuildingsUnsorted.includes(selectedBuilding)
+      !resultBuildingsUnsorted.some(
+        (b) => b.buildingID === selectedBuilding.buildingID
+      )
     ) {
       setSelectedBuilding(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- No need for selectedBuilding in the deps list
-  }, [resultBuildingsUnsorted]);
+  }, [resultBuildingsUnsorted, selectedBuilding]);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: firebaseConfig.apiKey,
   });
 
-  // Legend for pin colors.
-  // Seems strange to have it dependent on buildingsToMap changing
-  // but it's so it persists when navigating between pages.
-  // There's a isLegendVisible tag to keep it from rendering on every filter.
-  useEffect(() => {
-    if (isLoaded && mapRef.current && !isLegendVisible) {
-      const map = mapRef.current.state.map;
-
-      // Create a div for the custom legend
-      const legendDiv = document.createElement("div");
-
-      // Push the custom legend div to the map controls at the bottom-right corner
-      map?.controls[window.google.maps.ControlPosition.LEFT_BOTTOM].push(
-        legendDiv
-      );
-
-      const root = createRoot(legendDiv);
-      root.render(<Legend />);
-      setIsLegendVisible(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultBuildingsUnsorted]);
-
-  if (!isLoaded) {
-    return null;
-  }
-
   return (
-    <Container fluid>
-      <Row>
-        <Col className="p-0">
-          <GoogleMap
-            mapContainerClassName="map-and-list-container"
-            center={center}
-            zoom={12.5}
-            ref={mapRef}
-            options={{ mapId: "c8d48b060a22a457" }}
-          >
-            <>
+    isLoaded && (
+      <Container fluid>
+        <Row>
+          <Col className="p-0">
+            <GoogleMap
+              mapContainerClassName="map-and-list-container"
+              center={center}
+              zoom={12.5}
+              options={{ mapId: "c8d48b060a22a457" }}
+            >
               {buildingsToMap.map((building) => (
                 <BuildingMarker
                   key={building.buildingID}
@@ -101,11 +71,20 @@ const ReactMap: React.FC<IMap> = ({
                   isSaved={checkIsSaved(savedBuildings, building)}
                 />
               ))}
-            </>
-          </GoogleMap>
-        </Col>
-      </Row>
-    </Container>
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "10px",
+                  left: "10px",
+                }}
+              >
+                {<Legend />}
+              </div>
+            </GoogleMap>
+          </Col>
+        </Row>
+      </Container>
+    )
   );
 };
 

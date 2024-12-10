@@ -46,7 +46,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
   return (
     <>
-      <Table bordered hover size="sm" className="mt-0" responsive>
+      <Table bordered hover size="sm" className="my-0" responsive>
         <thead>
           <tr>
             <th>Bedrooms</th>

@@ -82,7 +82,7 @@ const SavedBuildingsPage: React.FC<IPage> = () => {
                     <p>
                       Empty for now! To start your list, use the Save button on
                       the&nbsp;
-                      <Link id="all-buildings" to="./all-buildings">
+                      <Link id="all-buildings" to="../all-buildings">
                         MFTE map
                       </Link>
                       .

@@ -89,7 +89,7 @@ const AboutPage: React.FunctionComponent<IPage> = () => {
                   as number of bedrooms, neighborhood, and building name).
                   Create a free login to keep a short list of properties, view a
                   personalized map, and add notes. Explore the&nbsp;
-                  <Link id="all-buildings" to="./all-buildings">
+                  <Link id="all-buildings" to="../all-buildings">
                     MFTE map
                   </Link>
                   &nbsp;to get started.
