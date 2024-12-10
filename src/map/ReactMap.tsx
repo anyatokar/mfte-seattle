@@ -24,15 +24,15 @@ const ReactMap: React.FC<IMap> = ({
   resultBuildingsUnsorted = [],
   savedBuildings,
 }) => {
+  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
+    null
+  );
+
   const [buildingsToMap, setBuildingsToMap] = useState(resultBuildingsUnsorted);
 
   useEffect(() => {
     setBuildingsToMap(resultBuildingsUnsorted);
   }, [resultBuildingsUnsorted]);
-
-  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
-    null
-  );
 
   useEffect(() => {
     if (
