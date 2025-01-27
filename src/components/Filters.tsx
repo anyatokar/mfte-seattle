@@ -38,35 +38,30 @@ const checkboxUILabels: CheckboxMap = {
 };
 
 const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
-  const getChecked = (checkboxKey: CheckboxKey) => {
-    const x = filters.filter((x) => x.property === checkboxKey);
-    return x.length === 1;
-  };
+  const isChecked = (checkboxKey: CheckboxKey) =>
+    filters.some((filter) => filter.property === checkboxKey);
 
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="outline-secondary">Bedrooms</Dropdown.Toggle>
+      <Dropdown.Toggle variant="outline-secondary" id="bedroom-filter-dropdown">
+        Bedrooms
+      </Dropdown.Toggle>
 
-      <Dropdown.Menu className="p-2">
-        {checkboxKeys.map((checkboxKey: CheckboxKey) => {
-          let styledKey = checkboxUILabels[checkboxKey];
-          let id = checkboxKey;
-
-          return (
-            <Form key={id}>
-              <Form.Check
-                type="checkbox"
-                label={styledKey}
-                id={id}
-                value={checkboxKey}
-                checked={getChecked(checkboxKey)}
-                onChange={(e) =>
-                  onChangeFilter(checkboxKey as any, e.target.checked)
-                }
-              />
-            </Form>
-          );
-        })}
+      <Dropdown.Menu className="p-2" aria-labelledby="bedroom-filter-dropdown">
+        {checkboxKeys.map((checkboxKey) => (
+          <Form key={checkboxKey}>
+            <Form.Check
+              type="checkbox"
+              label={checkboxUILabels[checkboxKey]}
+              id={checkboxKey}
+              value={checkboxKey}
+              checked={isChecked(checkboxKey)}
+              onChange={(e) =>
+                onChangeFilter(checkboxKey as keyof T, e.target.checked)
+              }
+            />
+          </Form>
+        ))}
       </Dropdown.Menu>
     </Dropdown>
   );
