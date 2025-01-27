@@ -17,6 +17,7 @@ export default function PasswordReset({
   onSignupClicked,
   onRepSignupClicked,
 }: Props) {
+  // TODO: This should be using useState
   const emailRef = useRef() as any;
   const { resetPasswordAuth } = useAuth();
   const [error, setError] = useState("");

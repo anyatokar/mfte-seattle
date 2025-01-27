@@ -2,6 +2,8 @@ import { Button } from "react-bootstrap";
 import IListing from "../interfaces/IListing";
 import { listingStatusEnum } from "../types/enumTypes";
 
+// TODO: If listing URL is the same as the website, don't show it?
+
 interface ListingButtonProps {
   listing: IListing | undefined;
   isMarker: boolean;
