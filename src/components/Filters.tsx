@@ -8,20 +8,20 @@ export interface IFiltersProps<T> {
   onChangeFilter: (filterProperty: keyof T, isChecked: boolean) => void;
 }
 
-type checkboxKeyType =
+type CheckboxKey =
   | "sedu"
   | "studioUnits"
   | "oneBedroomUnits"
   | "twoBedroomUnits"
   | "threePlusBedroomUnits";
 
-type checkboxUILabelType = "Micro" | "Studio" | "One" | "Two" | "Three+";
+type CheckboxUILabel = "Micro" | "Studio" | "One" | "Two" | "Three+";
 
-type checkboxMapType = {
-  [key in checkboxKeyType]: checkboxUILabelType;
+type CheckboxMap = {
+  [key in CheckboxKey]: CheckboxUILabel;
 };
 
-const checkboxKeys: checkboxKeyType[] = [
+const checkboxKeys: CheckboxKey[] = [
   "sedu",
   "studioUnits",
   "oneBedroomUnits",
@@ -29,7 +29,7 @@ const checkboxKeys: checkboxKeyType[] = [
   "threePlusBedroomUnits",
 ];
 
-const checkboxUILabels: checkboxMapType = {
+const checkboxUILabels: CheckboxMap = {
   sedu: "Micro",
   studioUnits: "Studio",
   oneBedroomUnits: "One",
@@ -38,7 +38,7 @@ const checkboxUILabels: checkboxMapType = {
 };
 
 const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
-  const getChecked = (checkboxKey: checkboxKeyType) => {
+  const getChecked = (checkboxKey: CheckboxKey) => {
     const x = filters.filter((x) => x.property === checkboxKey);
     return x.length === 1;
   };
@@ -48,7 +48,7 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
       <Dropdown.Toggle variant="outline-secondary">Bedrooms</Dropdown.Toggle>
 
       <Dropdown.Menu className="p-2">
-        {checkboxKeys.map((checkboxKey: checkboxKeyType) => {
+        {checkboxKeys.map((checkboxKey: CheckboxKey) => {
           let styledKey = checkboxUILabels[checkboxKey];
           let id = checkboxKey;
 
@@ -60,8 +60,8 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
                 id={id}
                 value={checkboxKey}
                 checked={getChecked(checkboxKey)}
-                onChange={(event) =>
-                  onChangeFilter(checkboxKey as any, event.target.checked)
+                onChange={(e) =>
+                  onChangeFilter(checkboxKey as any, e.target.checked)
                 }
               />
             </Form>
