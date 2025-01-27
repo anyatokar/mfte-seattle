@@ -1,4 +1,4 @@
-import { useState, useMemo, Profiler } from "react";
+import { useState, useMemo, Profiler, useRef, useEffect } from "react";
 import { isProfilerOn } from "../config/config";
 
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
@@ -41,6 +41,19 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       )
       .filter((building) => genericFilter<IBuilding>(building, activeFilters));
   }, [allBuildings, searchQuery, activeFilters]);
+
+  const buildingsListRef = useRef<HTMLDivElement | null>(null);
+
+  // Scroll to top when buildings change
+  useEffect(() => {
+    if (buildingsListRef.current) {
+      buildingsListRef.current.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  }, [resultBuildingsUnsorted]);
 
   return (
     <Profiler
@@ -87,6 +100,8 @@ const AllBuildingsPage: React.FC<IPage> = () => {
               style={{
                 overflowY: "auto",
               }}
+              // Ref to scroll to the top of the list on search input
+              ref={buildingsListRef}
             >
               <AllBuildingsList
                 isLoading={isLoadingAllBuildings}

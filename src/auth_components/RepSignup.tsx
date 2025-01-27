@@ -14,6 +14,7 @@ type Props = {
 };
 
 export default function Signup({ onLoginClicked }: Props) {
+  // TODO: This should be using useState
   const emailRef = useRef() as any;
   const passwordRef = useRef() as any;
   const nameRef = useRef() as any;
