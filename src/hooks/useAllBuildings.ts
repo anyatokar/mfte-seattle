@@ -68,6 +68,8 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
     });
 
     return unsubscribe;
+    // getAllBuildings function is recreated when listings deps change.
+    // This triggers the useEffect below, since the function is in the deps array.
   }, [allListings, isLoadingAllListings]);
 
   useEffect(() => {

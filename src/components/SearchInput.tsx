@@ -4,19 +4,22 @@ import useDebounce from "../hooks/useDebounce";
 import Form from "react-bootstrap/Form";
 
 export interface ISearchProps {
-  onChangeSearchQuery: (searchQuery: string) => void;
+  // Need to bubble up final query string to AllBuildings component. 
+  setSearchQuery: (searchQuery: string) => void;
 }
 
-export default function SearchInput(props: ISearchProps) {
-  const [searchQuery, setSearchQuery] = useState<string | undefined>();
-  const { onChangeSearchQuery } = props;
-  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+const SearchInput: React.FC<ISearchProps> = ({ setSearchQuery }) => {
+  const [inputValue, setInputValue] = useState<string | undefined>();
+  // This runs every time component re-renders (on every keystroke).
+  // But it only updates when user stops typing.
+  const debouncedSearchQuery = useDebounce(inputValue);
 
   useEffect(() => {
     if (debouncedSearchQuery !== undefined) {
-      onChangeSearchQuery(debouncedSearchQuery);
+      setSearchQuery(debouncedSearchQuery);
     }
-  }, [debouncedSearchQuery, onChangeSearchQuery]);
+    // If the debounced value is not updated, we don't set the search query.
+  }, [debouncedSearchQuery, setSearchQuery]);
 
   return (
     <Form onSubmit={(event) => event.preventDefault()}>
@@ -25,8 +28,10 @@ export default function SearchInput(props: ISearchProps) {
         id="search"
         type="search"
         aria-label="Search"
-        onChange={(event) => setSearchQuery(event.target.value)}
+        onChange={(event) => setInputValue(event.target.value)}
       />
     </Form>
   );
-}
+};
+
+export default SearchInput;
