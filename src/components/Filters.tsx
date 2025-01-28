@@ -8,20 +8,20 @@ export interface IFiltersProps<T> {
   onChangeFilter: (filterProperty: keyof T, isChecked: boolean) => void;
 }
 
-type checkboxKeyType =
+type CheckboxKey =
   | "sedu"
   | "studioUnits"
   | "oneBedroomUnits"
   | "twoBedroomUnits"
   | "threePlusBedroomUnits";
 
-type checkboxUILabelType = "Micro" | "Studio" | "One" | "Two" | "Three+";
+type CheckboxUILabel = "Micro" | "Studio" | "One" | "Two" | "Three+";
 
-type checkboxMapType = {
-  [key in checkboxKeyType]: checkboxUILabelType;
+type CheckboxMap = {
+  [key in CheckboxKey]: CheckboxUILabel;
 };
 
-const checkboxKeys: checkboxKeyType[] = [
+const checkboxKeys: CheckboxKey[] = [
   "sedu",
   "studioUnits",
   "oneBedroomUnits",
@@ -29,7 +29,7 @@ const checkboxKeys: checkboxKeyType[] = [
   "threePlusBedroomUnits",
 ];
 
-const checkboxUILabels: checkboxMapType = {
+const checkboxUILabels: CheckboxMap = {
   sedu: "Micro",
   studioUnits: "Studio",
   oneBedroomUnits: "One",
@@ -38,35 +38,30 @@ const checkboxUILabels: checkboxMapType = {
 };
 
 const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
-  const getChecked = (checkboxKey: checkboxKeyType) => {
-    const x = filters.filter((x) => x.property === checkboxKey);
-    return x.length === 1;
-  };
+  const isChecked = (checkboxKey: CheckboxKey) =>
+    filters.some((filter) => filter.property === checkboxKey);
 
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="outline-secondary">Bedrooms</Dropdown.Toggle>
+      <Dropdown.Toggle variant="outline-secondary" id="bedroom-filter-dropdown">
+        Bedrooms
+      </Dropdown.Toggle>
 
-      <Dropdown.Menu className="p-2">
-        {checkboxKeys.map((checkboxKey: checkboxKeyType) => {
-          let styledKey = checkboxUILabels[checkboxKey];
-          let id = checkboxKey;
-
-          return (
-            <Form key={id}>
-              <Form.Check
-                type="checkbox"
-                label={styledKey}
-                id={id}
-                value={checkboxKey}
-                checked={getChecked(checkboxKey)}
-                onChange={(event) =>
-                  onChangeFilter(checkboxKey as any, event.target.checked)
-                }
-              />
-            </Form>
-          );
-        })}
+      <Dropdown.Menu className="p-2" aria-labelledby="bedroom-filter-dropdown">
+        {checkboxKeys.map((checkboxKey) => (
+          <Form key={checkboxKey}>
+            <Form.Check
+              type="checkbox"
+              label={checkboxUILabels[checkboxKey]}
+              id={checkboxKey}
+              value={checkboxKey}
+              checked={isChecked(checkboxKey)}
+              onChange={(e) =>
+                onChangeFilter(checkboxKey as keyof T, e.target.checked)
+              }
+            />
+          </Form>
+        ))}
       </Dropdown.Menu>
     </Dropdown>
   );
