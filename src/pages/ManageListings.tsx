@@ -27,7 +27,7 @@ import Nav from "react-bootstrap/Nav";
 import AreYouSureModal from "../components/AreYouSureModal";
 import IBuilding from "../interfaces/IBuilding";
 
-const ManageListingsPage: React.FunctionComponent<IPage> = () => {
+const ManageListingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
 
   const [repsListings, isLoadingRepsListings] = useAllListings(

@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 
-const ResourcesPage: React.FunctionComponent<IPage> = () => {
+const ResourcesPage: React.FC<IPage> = () => {
   return (
     <Profiler
       id={"Resources"}

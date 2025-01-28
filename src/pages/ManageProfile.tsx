@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-const ManageProfilePage: React.FunctionComponent<IPage> = () => {
+const ManageProfilePage: React.FC<IPage> = () => {
   const { currentUser } = useAuth();
 
   if (!currentUser) {
