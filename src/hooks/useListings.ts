@@ -24,7 +24,7 @@ export function useAllListings(
       // Filter out expired listings for map pages
       if (omitExpired) {
         const nonExpiredListings = listings.filter(
-          (listing) => new Date(listing.expiryDate) < new Date()
+          (listing) => Date.now() <= new Date(listing.expiryDate).getTime()
         );
         setAllListings(nonExpiredListings);
       } else {
