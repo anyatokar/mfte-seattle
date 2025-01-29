@@ -1,8 +1,8 @@
-import { useState } from "react";
-import IFilter from "../interfaces/IFilter";
+import { useEffect, useState } from "react";
+import BedroomCheckbox from "./BedroomCheckbox";
+import useDebounce from "../hooks/useDebounce";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
-import BedroomCheckbox from "./BedroomCheckbox";
 
 export interface IFiltersProps<T> {
   object: T;
@@ -40,7 +40,7 @@ const checkboxUILabels: CheckboxMap = {
 };
 
 const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
-  const bedroomCheckboxes = {
+  const initialCheckboxes = {
     sedu: false,
     studioUnits: false,
     oneBedroomUnits: false,
@@ -49,10 +49,16 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
   };
 
   const [bedroomCheckboxStatus, setBedroomCheckboxStatus] =
-    useState(bedroomCheckboxes);
+    useState(initialCheckboxes);
 
   const isChecked = (checkboxKey: CheckboxKey) =>
     filters.some((filter) => filter.property === checkboxKey);
+
+  const debouncedCheckboxStatus = useDebounce(bedroomCheckboxStatus);
+
+  useEffect(() => {
+    onChangeFilter(bedroomCheckboxStatus, debouncedCheckboxStatus);
+  }, [debouncedCheckboxStatus]);
 
   return (
     <Dropdown>
@@ -66,7 +72,6 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
             <BedroomCheckbox
               label={checkboxUILabels[checkboxKey]}
               checkboxKey={checkboxKey}
-              onChangeFilter={onChangeFilter}
             />
           </Form>
         ))}

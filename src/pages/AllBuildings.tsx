@@ -9,10 +9,9 @@ import ReactMap from "../map/ReactMap";
 import SearchAndFilter from "../components/SearchAndFilter";
 
 import { genericSearch } from "../utils/genericSearch";
-import { genericFilter } from "../utils/genericFilter";
+import { buildingsFilter } from "../utils/buildingsFilter";
 
 import IBuilding from "../interfaces/IBuilding";
-import IFilter from "../interfaces/IFilter";
 import IPage from "../interfaces/IPage";
 import { pageTypeEnum } from "../types/enumTypes";
 
@@ -28,7 +27,9 @@ const AllBuildingsPage: React.FC<IPage> = () => {
 
   // search, filter
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilters, setActiveFilters] = useState<IFilter<IBuilding>[]>([]);
+  const [activeFilters, setActiveFilters] = useState<Set<keyof IBuilding>>(
+    new Set()
+  );
 
   const resultBuildingsUnsorted = useMemo(() => {
     return allBuildings
@@ -39,7 +40,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
           searchQuery
         )
       )
-      .filter((building) => genericFilter<IBuilding>(building, activeFilters));
+      .filter((building) => buildingsFilter(building, activeFilters));
   }, [allBuildings, searchQuery, activeFilters]);
 
   const buildingsListRef = useRef<HTMLDivElement | null>(null);
