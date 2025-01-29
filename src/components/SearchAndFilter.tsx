@@ -9,27 +9,22 @@ import Dropdown from "react-bootstrap/esm/Dropdown";
 import Form from "react-bootstrap/esm/Form";
 import BedroomCheckbox from "./BedroomCheckbox";
 import { BedroomsKeyEnum } from "../types/enumTypes";
+import { useReducer } from "react";
 
 type SearchAndFilterProps = {
   allBuildings: IBuilding[];
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  setActiveFilters: any;
-  activeFilters: any;
+  handleCheckboxChange: any;
+  activeFilters: Set<BedroomsKeyEnum>;
 };
+
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   allBuildings,
   setSearchQuery,
-  setActiveFilters,
   activeFilters,
+  handleCheckboxChange,
 }) => {
-  // Currently processes on filter property at a time.
-  // What if it was given an object of properties?
-
-  // overwrite old filters with new filters.
-  // do this after enough new filters are collected - debounce.
-  function handleChangeFilter(updatedFilters: Set<IBuilding>) {
-    setActiveFilters(updatedFilters);
-  }
+  console.log(activeFilters);
 
   const checkboxKeys: BedroomsKeyEnum[] = [
     BedroomsKeyEnum.SEDU,
@@ -67,7 +62,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                   <Form key={checkboxKey}>
                     <BedroomCheckbox
                       checkboxKey={checkboxKey}
-                      //  handleChangeFilter={(updatedFilters) => handleChangeFilter}
+                      handleCheckboxChange={handleCheckboxChange}
                     />
                   </Form>
                 ))}

@@ -1,4 +1,11 @@
-import { useState, useMemo, Profiler, useRef, useEffect } from "react";
+import {
+  useState,
+  useMemo,
+  Profiler,
+  useRef,
+  useEffect,
+  useReducer,
+} from "react";
 import { isProfilerOn } from "../config/config";
 
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
@@ -13,7 +20,7 @@ import { buildingsFilter } from "../utils/buildingsFilter";
 
 import IBuilding from "../interfaces/IBuilding";
 import IPage from "../interfaces/IPage";
-import { pageTypeEnum } from "../types/enumTypes";
+import { BedroomsKeyEnum, pageTypeEnum } from "../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -21,15 +28,43 @@ import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 
+function filterReducer(
+  state: Set<BedroomsKeyEnum>,
+  action: { type: "checked" | "unchecked"; checkbox: BedroomsKeyEnum }
+): Set<BedroomsKeyEnum> {
+  switch (action.type) {
+    case "checked": {
+      return new Set(state).add(action.checkbox);
+    }
+    case "unchecked": {
+      const newState = new Set(state);
+      newState.delete(action.checkbox);
+      return newState;
+    }
+    default:
+      return state;
+  }
+}
+
 const AllBuildingsPage: React.FC<IPage> = () => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
 
   // search, filter
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilters, setActiveFilters] = useState<Set<keyof IBuilding>>(
-    new Set()
+  const [activeFilters, dispatch] = useReducer(
+    filterReducer,
+    new Set<BedroomsKeyEnum>()
   );
+
+  const handleCheckboxChange = (checkbox: BedroomsKeyEnum) => {
+    console.log(checkbox);
+    if (activeFilters.has(checkbox)) {
+      dispatch({ type: "unchecked", checkbox });
+    } else {
+      dispatch({ type: "checked", checkbox });
+    }
+  };
 
   const resultBuildingsUnsorted = useMemo(() => {
     return allBuildings
@@ -43,9 +78,9 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       .filter((building) => buildingsFilter(building, activeFilters));
   }, [allBuildings, searchQuery, activeFilters]);
 
+  // Scroll to top when buildings change
   const buildingsListRef = useRef<HTMLDivElement | null>(null);
 
-  // Scroll to top when buildings change
   useEffect(() => {
     if (buildingsListRef.current) {
       buildingsListRef.current.scrollTo({
@@ -83,7 +118,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         <SearchAndFilter
           allBuildings={allBuildings}
           setSearchQuery={setSearchQuery}
-          setActiveFilters={setActiveFilters}
+          handleCheckboxChange={handleCheckboxChange}
           activeFilters={activeFilters}
         />
 
