@@ -34,3 +34,20 @@ export enum confirmModalTypeEnum {
   LISTING_CANCEL_EDIT = "listingCancelEdit",
   ACCOUNT_DELETE = "accountDelete",
 }
+
+// Bedrooms
+export enum BedroomsKeyEnum {
+  SEDU = "sedu",
+  STUDIO = "studioUnits",
+  ONE_BED = "oneBedroomUnits",
+  TWO_BED = "twoBedroomUnits",
+  THREE_PLUS = "threePlusBedroomUnits",
+}
+
+export enum BedroomLabelEnum {
+  sedu = "Micro",
+  studioUnits = "Studio",
+  oneBedroomUnits = "One",
+  twoBedroomUnits = "Two",
+  threePlusBedroomUnits = "Three+",
+}

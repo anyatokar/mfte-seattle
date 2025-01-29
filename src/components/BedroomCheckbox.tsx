@@ -1,16 +1,13 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { CheckboxKey, CheckboxUILabel } from "./Filters";
+import { BedroomLabelEnum, BedroomsKeyEnum } from "../types/enumTypes";
 
 type BedroomCheckboxProps = {
-  label: CheckboxUILabel;
-  checkboxKey: CheckboxKey;
+  checkboxKey: BedroomsKeyEnum;
+  // handleChangeFilter: () => void;
 };
 
-const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
-  label,
-  checkboxKey,
-}) => {
+const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({ checkboxKey }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   function handleClick(e: React.ChangeEvent<HTMLInputElement>) {
@@ -20,7 +17,7 @@ const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
   return (
     <Form.Check
       type="checkbox"
-      label={label}
+      label={BedroomLabelEnum[checkboxKey]}
       id={checkboxKey}
       value={checkboxKey}
       checked={isChecked}
