@@ -21,6 +21,7 @@ import Stack from "react-bootstrap/Stack";
 import AreYouSureModal from "./AreYouSureModal";
 
 const Profile: React.FC = () => {
+  // TODO: This is a lot of states - put the fields in an object?
   const [isLoading, setIsLoading] = useState(false);
   const {
     currentUser,

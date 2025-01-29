@@ -1,6 +1,8 @@
+import { useState } from "react";
 import IFilter from "../interfaces/IFilter";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
+import BedroomCheckbox from "./BedroomCheckbox";
 
 export interface IFiltersProps<T> {
   object: T;
@@ -8,14 +10,14 @@ export interface IFiltersProps<T> {
   onChangeFilter: (filterProperty: keyof T, isChecked: boolean) => void;
 }
 
-type CheckboxKey =
+export type CheckboxKey =
   | "sedu"
   | "studioUnits"
   | "oneBedroomUnits"
   | "twoBedroomUnits"
   | "threePlusBedroomUnits";
 
-type CheckboxUILabel = "Micro" | "Studio" | "One" | "Two" | "Three+";
+export type CheckboxUILabel = "Micro" | "Studio" | "One" | "Two" | "Three+";
 
 type CheckboxMap = {
   [key in CheckboxKey]: CheckboxUILabel;
@@ -38,6 +40,17 @@ const checkboxUILabels: CheckboxMap = {
 };
 
 const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
+  const bedroomCheckboxes = {
+    sedu: false,
+    studioUnits: false,
+    oneBedroomUnits: false,
+    twoBedroomUnits: false,
+    threePlusBedroomUnits: false,
+  };
+
+  const [bedroomCheckboxStatus, setBedroomCheckboxStatus] =
+    useState(bedroomCheckboxes);
+
   const isChecked = (checkboxKey: CheckboxKey) =>
     filters.some((filter) => filter.property === checkboxKey);
 
@@ -50,15 +63,10 @@ const Filters = <T,>({ filters, onChangeFilter }: IFiltersProps<T>) => {
       <Dropdown.Menu className="p-2" aria-labelledby="bedroom-filter-dropdown">
         {checkboxKeys.map((checkboxKey) => (
           <Form key={checkboxKey}>
-            <Form.Check
-              type="checkbox"
+            <BedroomCheckbox
               label={checkboxUILabels[checkboxKey]}
-              id={checkboxKey}
-              value={checkboxKey}
-              checked={isChecked(checkboxKey)}
-              onChange={(e) =>
-                onChangeFilter(checkboxKey as keyof T, e.target.checked)
-              }
+              checkboxKey={checkboxKey}
+              onChangeFilter={onChangeFilter}
             />
           </Form>
         ))}
