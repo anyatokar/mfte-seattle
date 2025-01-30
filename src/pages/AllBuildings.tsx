@@ -116,10 +116,8 @@ const AllBuildingsPage: React.FC<IPage> = () => {
     >
       <div className="pt-2">
         <SearchAndFilter
-          allBuildings={allBuildings}
           setSearchQuery={setSearchQuery}
-          handleCheckboxChange={handleCheckboxChange}
-          activeFilters={activeFilters}
+          onCheckboxChange={handleCheckboxChange}
         />
 
         {/* Only visible on large screens */}

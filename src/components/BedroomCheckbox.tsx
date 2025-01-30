@@ -4,18 +4,18 @@ import { BedroomLabelEnum, BedroomsKeyEnum } from "../types/enumTypes";
 
 type BedroomCheckboxProps = {
   checkboxKey: BedroomsKeyEnum;
-  handleCheckboxChange: (checkboxKey: BedroomsKeyEnum) => void;
+  onCheckboxChange: (checkboxKey: BedroomsKeyEnum) => void;
 };
 
 const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
   checkboxKey,
-  handleCheckboxChange,
+  onCheckboxChange,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
-  function handleClick() {
-    setIsChecked(prevState => !prevState);
-    handleCheckboxChange(checkboxKey);
+  function handleCheck() {
+    setIsChecked((prevState) => !prevState);
+    onCheckboxChange(checkboxKey);
   }
 
   return (
@@ -25,7 +25,7 @@ const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
       id={checkboxKey}
       value={checkboxKey}
       checked={isChecked}
-      onChange={() => handleClick()}
+      onChange={() => handleCheck()}
     />
   );
 };

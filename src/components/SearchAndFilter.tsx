@@ -1,31 +1,22 @@
 import SearchInput from "./SearchInput";
-
-import IBuilding from "../interfaces/IBuilding";
+import BedroomCheckbox from "./BedroomCheckbox";
+import { BedroomsKeyEnum } from "../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Dropdown from "react-bootstrap/esm/Dropdown";
 import Form from "react-bootstrap/esm/Form";
-import BedroomCheckbox from "./BedroomCheckbox";
-import { BedroomsKeyEnum } from "../types/enumTypes";
-import { useReducer } from "react";
 
 type SearchAndFilterProps = {
-  allBuildings: IBuilding[];
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  handleCheckboxChange: any;
-  activeFilters: Set<BedroomsKeyEnum>;
+  onCheckboxChange: any;
 };
 
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
-  allBuildings,
   setSearchQuery,
-  activeFilters,
-  handleCheckboxChange,
+  onCheckboxChange,
 }) => {
-  console.log(activeFilters);
-
   const checkboxKeys: BedroomsKeyEnum[] = [
     BedroomsKeyEnum.SEDU,
     BedroomsKeyEnum.STUDIO,
@@ -62,7 +53,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                   <Form key={checkboxKey}>
                     <BedroomCheckbox
                       checkboxKey={checkboxKey}
-                      handleCheckboxChange={handleCheckboxChange}
+                      onCheckboxChange={onCheckboxChange}
                     />
                   </Form>
                 ))}
