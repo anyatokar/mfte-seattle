@@ -13,8 +13,8 @@ const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
-  function handleClick(e: React.ChangeEvent<HTMLInputElement>) {
-    setIsChecked(e.target.checked);
+  function handleClick() {
+    setIsChecked(prevState => !prevState);
     handleCheckboxChange(checkboxKey);
   }
 
@@ -25,7 +25,7 @@ const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
       id={checkboxKey}
       value={checkboxKey}
       checked={isChecked}
-      onChange={(e) => handleClick(e)}
+      onChange={() => handleClick()}
     />
   );
 };
