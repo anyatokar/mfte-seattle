@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect } from "react";
-import { collection, query, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "../db/firebase";
 import IListing from "../interfaces/IListing";
 
@@ -12,35 +12,27 @@ export function useAllListings(
 
   const getAllListings = useCallback(() => {
     setIsLoadingAllListings(true);
-    const q = query(collection(db, "listings"));
+
+    let constraints = [];
+
+    if (omitExpired) {
+      constraints.push(where("expiryDate", ">=", new Date().toISOString()));
+    }
+
+    if (managerID) {
+      constraints.push(where("managerID", "==", managerID));
+    }
+
+    const q = query(collection(db, "listings"), ...constraints);
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("Listings snapshot.");
-      const listings: IListing[] = [];
-      querySnapshot.forEach((doc) => {
-        listings.push(doc.data() as IListing);
-      });
+      const listings: IListing[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as IListing),
+      }));
 
-      // Filter out expired listings for map pages
-      if (omitExpired) {
-        const nonExpiredListings = listings.filter(
-          (listing) => Date.now() <= new Date(listing.expiryDate).getTime()
-        );
-        setAllListings(nonExpiredListings);
-      } else {
-        setAllListings(listings);
-      }
-
-      // Filter by managerID if provided
-      if (managerID) {
-        const managersListings = listings.filter(
-          (listing) => listing.managerID === managerID
-        );
-        setAllListings(managersListings);
-      } else {
-        setAllListings(listings);
-      }
-
+      setAllListings(listings);
       setIsLoadingAllListings(false);
     });
 
