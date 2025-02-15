@@ -4,7 +4,7 @@ import { BedroomLabelEnum, BedroomsKeyEnum } from "../types/enumTypes";
 
 type BedroomCheckboxProps = {
   checkboxKey: BedroomsKeyEnum;
-  onCheckboxChange: (checkboxKey: BedroomsKeyEnum) => void;
+  onCheckboxChange: (checkbox: BedroomsKeyEnum) => void;
 };
 
 const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({

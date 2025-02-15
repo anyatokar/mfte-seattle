@@ -57,8 +57,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
     new Set<BedroomsKeyEnum>()
   );
 
-  const handleCheckboxChange = (checkbox: BedroomsKeyEnum) => {
-    console.log(checkbox);
+  const handleCheckboxChange = (checkbox: BedroomsKeyEnum): void => {
     if (activeFilters.has(checkbox)) {
       dispatch({ type: "unchecked", checkbox });
     } else {

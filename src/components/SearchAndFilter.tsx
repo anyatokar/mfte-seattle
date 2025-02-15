@@ -10,7 +10,7 @@ import Form from "react-bootstrap/esm/Form";
 
 type SearchAndFilterProps = {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  onCheckboxChange: any;
+  onCheckboxChange: (checkbox: BedroomsKeyEnum) => void;
 };
 
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
