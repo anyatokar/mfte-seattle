@@ -1,55 +1,64 @@
-import Filters from "./Filters";
 import SearchInput from "./SearchInput";
-
-import IBuilding from "../interfaces/IBuilding";
-import IFilter from "../interfaces/IFilter";
+import BedroomCheckbox from "./BedroomCheckbox";
+import { BedroomsKeyEnum } from "../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Dropdown from "react-bootstrap/esm/Dropdown";
+import Form from "react-bootstrap/esm/Form";
 
 type SearchAndFilterProps = {
-  allBuildings: IBuilding[];
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  setActiveFilters: React.Dispatch<React.SetStateAction<IFilter<IBuilding>[]>>;
-  activeFilters: IFilter<IBuilding>[];
+  onCheckboxChange: (checkbox: BedroomsKeyEnum) => void;
 };
+
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
-  allBuildings,
   setSearchQuery,
-  setActiveFilters,
-  activeFilters,
+  onCheckboxChange,
 }) => {
+  const checkboxKeys: BedroomsKeyEnum[] = [
+    BedroomsKeyEnum.SEDU,
+    BedroomsKeyEnum.STUDIO,
+    BedroomsKeyEnum.ONE_BED,
+    BedroomsKeyEnum.TWO_BED,
+    BedroomsKeyEnum.THREE_PLUS,
+  ];
+
   return (
     <Container fluid>
       <Row className="p-0 mt-0 mb-2">
         {/* search */}
 
         <Col sm={8} lg={4} className="mb-2 mb-sm-0">
-          <SearchInput onChangeSearchQuery={(query) => setSearchQuery(query)} />
+          <SearchInput setSearchQuery={(query) => setSearchQuery(query)} />
         </Col>
 
         {/* filter */}
         <Col>
           {
-            <Filters<IBuilding>
-              object={allBuildings[0]}
-              filters={activeFilters}
-              onChangeFilter={(changedFilterProperty, isChecked) => {
-                isChecked
-                  ? setActiveFilters([
-                      ...activeFilters.filter(
-                        (filter) => filter.property !== changedFilterProperty
-                      ),
-                      { property: changedFilterProperty },
-                    ])
-                  : setActiveFilters(
-                      activeFilters.filter(
-                        (filter) => filter.property !== changedFilterProperty
-                      )
-                    );
-              }}
-            />
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="outline-secondary"
+                id="bedroom-filter-dropdown"
+              >
+                Bedrooms
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu
+                className="p-2"
+                aria-labelledby="bedroom-filter-dropdown"
+              >
+                {checkboxKeys.map((checkboxKey) => (
+                  <Form key={checkboxKey}>
+                    <BedroomCheckbox
+                      checkboxKey={checkboxKey}
+                      onCheckboxChange={onCheckboxChange}
+                    />
+                  </Form>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
           }
         </Col>
       </Row>

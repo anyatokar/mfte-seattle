@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-const NotFoundPage: React.FunctionComponent<IPage> = () => {
+const NotFoundPage: React.FC<IPage> = () => {
   return (
     <Profiler
       id={"Not Found"}

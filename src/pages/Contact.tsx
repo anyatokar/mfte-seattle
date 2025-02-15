@@ -17,7 +17,7 @@ export type contactUsFormFieldsType = {
   message: string;
 };
 
-const ContactPage: React.FunctionComponent<IPage> = () => {
+const ContactPage: React.FC<IPage> = () => {
   function clearFields(): void {
     setFormFields({
       authorName: "",

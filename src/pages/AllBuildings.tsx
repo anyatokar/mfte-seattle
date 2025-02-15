@@ -1,4 +1,11 @@
-import { useState, useMemo, Profiler, useRef, useEffect } from "react";
+import {
+  useState,
+  useMemo,
+  Profiler,
+  useRef,
+  useEffect,
+  useReducer,
+} from "react";
 import { isProfilerOn } from "../config/config";
 
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
@@ -9,12 +16,11 @@ import ReactMap from "../map/ReactMap";
 import SearchAndFilter from "../components/SearchAndFilter";
 
 import { genericSearch } from "../utils/genericSearch";
-import { genericFilter } from "../utils/genericFilter";
+import { buildingsFilter } from "../utils/buildingsFilter";
 
 import IBuilding from "../interfaces/IBuilding";
-import IFilter from "../interfaces/IFilter";
 import IPage from "../interfaces/IPage";
-import { pageTypeEnum } from "../types/enumTypes";
+import { BedroomsKeyEnum, pageTypeEnum } from "../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -22,13 +28,42 @@ import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 
+function filterReducer(
+  state: Set<BedroomsKeyEnum>,
+  action: { type: "checked" | "unchecked"; checkbox: BedroomsKeyEnum }
+): Set<BedroomsKeyEnum> {
+  switch (action.type) {
+    case "checked": {
+      return new Set(state).add(action.checkbox);
+    }
+    case "unchecked": {
+      const newState = new Set(state);
+      newState.delete(action.checkbox);
+      return newState;
+    }
+    default:
+      return state;
+  }
+}
+
 const AllBuildingsPage: React.FC<IPage> = () => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
 
   // search, filter
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilters, setActiveFilters] = useState<IFilter<IBuilding>[]>([]);
+  const [activeFilters, dispatch] = useReducer(
+    filterReducer,
+    new Set<BedroomsKeyEnum>()
+  );
+
+  const handleCheckboxChange = (checkbox: BedroomsKeyEnum): void => {
+    if (activeFilters.has(checkbox)) {
+      dispatch({ type: "unchecked", checkbox });
+    } else {
+      dispatch({ type: "checked", checkbox });
+    }
+  };
 
   const resultBuildingsUnsorted = useMemo(() => {
     return allBuildings
@@ -39,12 +74,12 @@ const AllBuildingsPage: React.FC<IPage> = () => {
           searchQuery
         )
       )
-      .filter((building) => genericFilter<IBuilding>(building, activeFilters));
+      .filter((building) => buildingsFilter(building, activeFilters));
   }, [allBuildings, searchQuery, activeFilters]);
 
+  // Scroll to top when buildings change
   const buildingsListRef = useRef<HTMLDivElement | null>(null);
 
-  // Scroll to top when buildings change
   useEffect(() => {
     if (buildingsListRef.current) {
       buildingsListRef.current.scrollTo({
@@ -80,10 +115,8 @@ const AllBuildingsPage: React.FC<IPage> = () => {
     >
       <div className="pt-2">
         <SearchAndFilter
-          allBuildings={allBuildings}
           setSearchQuery={setSearchQuery}
-          setActiveFilters={setActiveFilters}
-          activeFilters={activeFilters}
+          onCheckboxChange={handleCheckboxChange}
         />
 
         {/* Only visible on large screens */}

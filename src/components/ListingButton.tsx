@@ -24,7 +24,7 @@ export default function ListingButton(props: ListingButtonProps) {
           rel="noreferrer"
           variant="success"
         >
-          {isMarker ? "View Listing Page" : "Listings"}
+          {isMarker ? "View Listings" : "Listings"}
         </Button>
       )}
     </>

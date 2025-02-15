@@ -9,7 +9,7 @@ type AreYouSureModalProps = {
   handleConfirm: () => void;
   confirmType: confirmModalTypeEnum;
 };
-const AreYouSureModal: React.FunctionComponent<AreYouSureModalProps> = ({
+const AreYouSureModal: React.FC<AreYouSureModalProps> = ({
   showModal,
   handleClose,
   handleConfirm,
