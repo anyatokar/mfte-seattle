@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 import Alert from "react-bootstrap/Alert";
@@ -17,8 +17,7 @@ export default function PasswordReset({
   onSignupClicked,
   onRepSignupClicked,
 }: Props) {
-  // TODO: This should be using useState
-  const emailRef = useRef() as any;
+  const [email, setEmail] = useState("");
   const { resetPasswordAuth } = useAuth();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -30,7 +29,7 @@ export default function PasswordReset({
       setMessage("");
       setError("");
       setLoading(true);
-      await resetPasswordAuth(emailRef.current.value);
+      await resetPasswordAuth(email);
       setMessage("Please check your inbox for the reset link.");
     } catch (error: any) {
       console.error("Firebase Authentication Error:", error);
@@ -58,7 +57,11 @@ export default function PasswordReset({
         <Form onSubmit={handleFormSubmit}>
           <Form.Group id="email" className="mb-3">
             <p>Enter your email to receive a reset link in your inbox.</p>
-            <Form.Control required type="email" ref={emailRef} />
+            <Form.Control
+              required
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </Form.Group>
           <Button
             className="diy-solid-info-button w-100"

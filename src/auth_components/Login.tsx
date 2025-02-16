@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 import Alert from "react-bootstrap/Alert";
@@ -19,8 +19,9 @@ export default function Login({
   onRepSignupClicked,
   afterLogin,
 }: Props) {
-  const emailRef = useRef() as any;
-  const passwordRef = useRef() as any;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const { login } = useAuth();
 
   const [error, setError] = useState("");
@@ -32,7 +33,7 @@ export default function Login({
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
+      await login(email, password);
       if (afterLogin) {
         afterLogin();
       }
@@ -64,11 +65,19 @@ export default function Login({
         <Form onSubmit={handleSubmit}>
           <Form.Group id="email" className="mb-2">
             <Form.Label>Email</Form.Label>
-            <Form.Control required type="email" ref={emailRef} />
+            <Form.Control
+              required
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </Form.Group>
           <Form.Group id="password" className="mb-3">
             <Form.Label>Password</Form.Label>
-            <Form.Control required type="password" ref={passwordRef} />
+            <Form.Control
+              required
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </Form.Group>
           <Button
             className="diy-solid-info-button w-100"
