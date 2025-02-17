@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 import Alert from "react-bootstrap/Alert";
@@ -14,13 +14,14 @@ type Props = {
 };
 
 export default function Signup({ onLoginClicked }: Props) {
-  // TODO: This should be using useState
-  const emailRef = useRef() as any;
-  const passwordRef = useRef() as any;
-  const nameRef = useRef() as any;
-  const passwordConfirmRef = useRef() as any;
-  const companyNameRef = useRef() as any;
-  const jobTitleRef = useRef() as any;
+  const [formFields, setFormFields] = useState({
+    email: "",
+    password: "",
+    name: "",
+    passwordConfirm: "",
+    companyName: "",
+    jobTitle: "",
+  });
   const { signupAuth } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,8 +30,8 @@ export default function Signup({ onLoginClicked }: Props) {
     event.preventDefault();
 
     const errorMessage = checkPassword(
-      passwordRef.current.value,
-      passwordConfirmRef.current.value
+      formFields.password,
+      formFields.passwordConfirm
     );
 
     if (errorMessage) {
@@ -38,12 +39,12 @@ export default function Signup({ onLoginClicked }: Props) {
     }
 
     const signupAuthData: SignupAuthDataType = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-      name: nameRef.current.value,
+      email: formFields.email,
+      password: formFields.password,
+      name: formFields.name,
       accountType: accountTypeEnum.MANAGER,
-      companyName: companyNameRef.current.value,
-      jobTitle: jobTitleRef.current.value,
+      companyName: formFields.companyName,
+      jobTitle: formFields.jobTitle,
       uid: "", // Will be filled when uid is created by Auth.
     };
 
@@ -71,28 +72,67 @@ export default function Signup({ onLoginClicked }: Props) {
         <Form onSubmit={handleFormSubmit}>
           <Form.Group id="name" className="mb-2">
             <Form.Label>Name</Form.Label>
-            <Form.Control required type="name" ref={nameRef} />
+            <Form.Control
+              required
+              type="name"
+              onChange={(e) =>
+                setFormFields({ ...formFields, name: e.target.value })
+              }
+            />
           </Form.Group>
           <Form.Group id="email" className="mb-2">
             <Form.Label>Email</Form.Label>
-            <Form.Control required type="email" ref={emailRef} />
+            <Form.Control
+              required
+              type="email"
+              onChange={(e) =>
+                setFormFields({ ...formFields, email: e.target.value })
+              }
+            />
           </Form.Group>
           <Form.Group id="companyName" className="mb-2">
             <Form.Label>Company Name</Form.Label>
-            <Form.Control required type="companyName" ref={companyNameRef} />
+            <Form.Control
+              required
+              type="companyName"
+              onChange={(e) =>
+                setFormFields({ ...formFields, companyName: e.target.value })
+              }
+            />
           </Form.Group>
           <Form.Group id="jobTitle" className="mb-2">
             <Form.Label>Job Title</Form.Label>
-            <Form.Control required type="jobTitle" ref={jobTitleRef} />
+            <Form.Control
+              required
+              type="jobTitle"
+              onChange={(e) =>
+                setFormFields({ ...formFields, jobTitle: e.target.value })
+              }
+            />
           </Form.Group>
           <Form.Group id="password" className="mb-2">
             <Form.Label>Password</Form.Label>
-            <Form.Control required type="password" ref={passwordRef} />
+            <Form.Control
+              required
+              type="password"
+              onChange={(e) =>
+                setFormFields({ ...formFields, password: e.target.value })
+              }
+            />
             <Form.Text className="text-muted">6 or more characters</Form.Text>
           </Form.Group>
           <Form.Group id="password-confirm" className="mb-3">
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control required type="password" ref={passwordConfirmRef} />
+            <Form.Control
+              required
+              type="password"
+              onChange={(e) =>
+                setFormFields({
+                  ...formFields,
+                  passwordConfirm: e.target.value,
+                })
+              }
+            />
           </Form.Group>
           <Button
             className="diy-solid-info-button w-100"
