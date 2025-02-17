@@ -98,7 +98,8 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                     <Form.Control
                       autoFocus
                       type="search"
-                      placeholder="Type to filter..."
+                      aria-label="Filter neighborhoods"
+                      placeholder="Type to filter"
                       onChange={(e) => setDropdownFilter(e.target.value)}
                       value={dropdownFilter}
                     />
