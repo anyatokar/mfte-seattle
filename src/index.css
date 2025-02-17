@@ -1,9 +1,8 @@
 /* entire app */
 html,
 body {
-  body {
-    background: linear-gradient(to top, #87cefa, #f2fbfc);
-  }
+  background: linear-gradient(to top, #87cefa, #f2fbfc);
+
 }
 
 .main {
