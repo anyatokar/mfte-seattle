@@ -34,8 +34,7 @@ const AboutPage: React.FC<IPage> = () => {
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={8}>
-            <div className="display-5">About</div>
-            <hr className="my-4 break-line-light" />
+            <div className="display-6 mb-5">About</div>
           </Col>
         </Row>
 

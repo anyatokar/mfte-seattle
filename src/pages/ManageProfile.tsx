@@ -41,8 +41,7 @@ const ManageProfilePage: React.FC<IPage> = () => {
       <Container fluid className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={8}>
-            <div className="display-5">Profile</div>
-            <hr className="my-4 break-line-light" />
+            <div className="display-6 mb-5">Profile</div>
             <Profile />
           </Col>
         </Row>

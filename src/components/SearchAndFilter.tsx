@@ -48,7 +48,6 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     <Container fluid>
       <Row className="p-0 mt-0 mb-2">
         {/* search */}
-
         <Col sm={8} lg={4} className="mb-2 mb-sm-0">
           <SearchInput setSearchQuery={(query) => setSearchQuery(query)} />
         </Col>
@@ -59,7 +58,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
             {
               <Dropdown>
                 <Dropdown.Toggle
-                  variant="outline-secondary"
+                  className="diy-solid-info-button "
                   id="bedroom-filter-dropdown"
                 >
                   Bedrooms
@@ -82,7 +81,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
             {
               <Dropdown>
                 <Dropdown.Toggle
-                  variant="outline-secondary"
+                  className="diy-solid-info-button "
                   id="neighborhood-filter-dropdown"
                 >
                   Neighborhood

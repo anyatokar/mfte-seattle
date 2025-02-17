@@ -33,7 +33,7 @@ const NotFoundPage: React.FC<IPage> = () => {
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
-            <div className="display-5">404: Not Found</div>
+            <div className="display-6">404: Not Found</div>
             <p className="lead">Try navigating to a different page.</p>
           </Col>
         </Row>
