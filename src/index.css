@@ -1,7 +1,9 @@
 /* entire app */
 html,
 body {
-  background: #eef6f6 !important;
+  body {
+    background: linear-gradient(to top, #87cefa, #f2fbfc);
+  }
 }
 
 .main {
@@ -14,38 +16,33 @@ body {
 /* navbar section */
 .navbar {
   background: white;
-  border-bottom-right-radius: 15%;
-  border-bottom-left-radius: 15%;
   text-align: center;
 }
+/* navbar section */
 
 .navbar-brand {
-  margin-left: 1em;
+  margin-left: 0.5em;
 }
 
 .navbar-toggler {
-  margin-right: 1em;
+  margin-right: 0.5em;
 }
 
-.navbar .nav-link,
-.navbar-text {
+.navbar .nav-link {
   color: black !important;
-  border-radius: 10%;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
 }
 
-.navbar .nav-link:hover {
-  background: #eef6f6;
-}
-
+.navbar .nav-link:hover,
 .navbar .nav-link.active {
-  background: #eef6f6;
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #51b7c8;
+  transition: text-decoration-color 0.4s ease;
 }
-
-.navbar .nav-link.logout:hover {
-  color: red !important;
-  background: none;
-}
-/* end of navbar section */
 
 /* building card tabs */
 .tabs .nav-link,
@@ -60,7 +57,6 @@ body {
 .tabs .nav-link.active {
   font-weight: 600;
 }
-
 /* end of building card tabs */
 
 /* entire pages below navbar, above footer*/
@@ -72,6 +68,13 @@ body {
 
 .diy-jumbotron {
   max-width: 90%;
+}
+
+.display-6 {
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #51b7c8;
 }
 /* end of entire pages, above footer */
 
@@ -93,7 +96,6 @@ body {
   color: white;
   font-weight: 700;
 }
-
 /* end of pills pages - navigation */
 
 /* pills pages - sort misc fields */
@@ -159,9 +161,6 @@ body {
 /* End of listing accordion */
 
 /* misc */
-.break-line-light {
-  color: lightblue;
-}
 
 .delete-link:hover {
   color: red !important;

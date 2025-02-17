@@ -49,8 +49,7 @@ const AddListingPage: React.FC<IPage> = () => {
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
-            <div className="display-5">For Property Owners & Managers</div>
-            <hr className="my-4 break-line-light" />
+            <div className="display-6 mb-5">For Property Owners & Managers</div>
             <p className="lead">
               Looking to reach more prospective tenants for MFTE units?
             </p>

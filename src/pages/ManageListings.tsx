@@ -148,8 +148,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
       <Container fluid className="all-pages">
         <Row className="justify-content-center">
           <Col lg={8}>
-            <div className="display-5">Manage Listings</div>
-            <hr className="my-4 break-line-light" />
+            <div className="display-6 mb-5">Manage Listings</div>
             {!areListingsOn && (
               <div className="mb-3">
                 <strong>

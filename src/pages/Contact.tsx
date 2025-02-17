@@ -89,9 +89,8 @@ const ContactPage: React.FC<IPage> = () => {
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
-            <div className="display-5">Contact us</div>
-            <hr className="my-4 break-line-light" />
-            <p className="lead">
+            <div className="display-6 mb-5">Contact us</div>
+            <p className="lead mb-4">
               We are always looking to improve this website — your feedback is
               welcome and appreciated.
             </p>
@@ -117,7 +116,7 @@ const ContactPage: React.FC<IPage> = () => {
               eligibility or the application process, contact the building’s
               management directly.
             </p>
-            <hr className="my-4 break-line-light" />
+
             {isFormVisible ? (
               <>
                 <p>All fields are required.</p>
