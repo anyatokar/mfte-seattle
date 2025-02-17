@@ -39,10 +39,10 @@ const Application: React.FC = () => {
     >
       <div className="main">
         <BrowserRouter>
-          <AllBuildingsProvider>
-            <AuthProvider>
-              <ModalContext.Provider value={modalStateHook}>
-                <Header />
+          <AuthProvider>
+            <ModalContext.Provider value={modalStateHook}>
+              <Header />
+              <AllBuildingsProvider>
                 <Routes>
                   {privateRoutes.map((route) => (
                     <Route
@@ -64,9 +64,10 @@ const Application: React.FC = () => {
                     />
                   ))}
                 </Routes>
-              </ModalContext.Provider>
-            </AuthProvider>
-          </AllBuildingsProvider>
+              </AllBuildingsProvider>
+            </ModalContext.Provider>
+          </AuthProvider>
+
           <Footer />
         </BrowserRouter>
       </div>
