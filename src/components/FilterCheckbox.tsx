@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Form from "react-bootstrap/Form";
 
 type FilterCheckboxProps = {
@@ -10,12 +9,9 @@ type FilterCheckboxProps = {
 const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
   checkboxKey,
   onCheckboxChange,
-  isChecked: isPreviouslyChecked,
+  isChecked,
 }) => {
-  const [isChecked, setIsChecked] = useState(isPreviouslyChecked);
-
   function handleCheck() {
-    setIsChecked((prevState) => !prevState);
     onCheckboxChange(checkboxKey);
   }
 
@@ -26,7 +22,7 @@ const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
       id={checkboxKey}
       value={checkboxKey}
       checked={isChecked}
-      onChange={() => handleCheck()}
+      onChange={handleCheck}
     />
   );
 };

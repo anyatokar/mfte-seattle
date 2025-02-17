@@ -31,24 +31,32 @@ import Nav from "react-bootstrap/Nav";
 function filterReducer(
   state: ActiveFilters,
   action: {
-    type: "checked" | "unchecked";
+    type: "checked" | "unchecked" | "clearAll";
     category: "bedrooms" | "neighborhoods";
-    checkbox: BedroomsKeyEnum | string;
+    checkbox?: BedroomsKeyEnum | string; // Optional for clearAll
   }
 ): ActiveFilters {
   switch (action.type) {
     case "checked": {
       return {
         ...state,
-        [action.category]: new Set(state[action.category]).add(action.checkbox),
+        [action.category]: new Set(state[action.category]).add(
+          action.checkbox!
+        ),
       };
     }
     case "unchecked": {
       const newState = new Set(state[action.category]);
-      newState.delete(action.checkbox);
+      newState.delete(action.checkbox!);
       return {
         ...state,
         [action.category]: newState,
+      };
+    }
+    case "clearAll": {
+      return {
+        ...state,
+        [action.category]: new Set(),
       };
     }
     default:
@@ -57,7 +65,7 @@ function filterReducer(
 }
 
 export type HandleCheckboxChange = (
-  checkbox: BedroomsKeyEnum | string, // Allow either type for checkbox
+  checkbox: BedroomsKeyEnum | string,
   category: "bedrooms" | "neighborhoods"
 ) => void;
 
@@ -85,8 +93,10 @@ const AllBuildingsPage: React.FC<IPage> = () => {
   };
 
   // Handler for Neighborhoods
-  const handleNeighborhoodsChange = (checkbox: string): void => {
-    if (activeFilters.neighborhoods.has(checkbox)) {
+  const handleNeighborhoodsChange = (checkbox?: string): void => {
+    if (!checkbox) {
+      dispatch({ type: "clearAll", category: "neighborhoods" });
+    } else if (activeFilters.neighborhoods.has(checkbox)) {
       dispatch({ type: "unchecked", category: "neighborhoods", checkbox });
     } else {
       dispatch({ type: "checked", category: "neighborhoods", checkbox });
