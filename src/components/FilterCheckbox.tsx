@@ -1,16 +1,18 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 
-type BedroomCheckboxProps = {
+type FilterCheckboxProps = {
   checkboxKey: string;
   onCheckboxChange: (checkbox: string) => void;
+  isChecked: boolean;
 };
 
-const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
+const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
   checkboxKey,
   onCheckboxChange,
+  isChecked: isPreviouslyChecked,
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(isPreviouslyChecked);
 
   function handleCheck() {
     setIsChecked((prevState) => !prevState);
@@ -29,4 +31,4 @@ const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
   );
 };
 
-export default BedroomCheckbox;
+export default FilterCheckbox;

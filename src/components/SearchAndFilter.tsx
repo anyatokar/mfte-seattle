@@ -10,19 +10,22 @@ import Form from "react-bootstrap/esm/Form";
 import { Stack } from "react-bootstrap";
 import FilterCheckbox from "./FilterCheckbox";
 import { useState } from "react";
+import { ActiveFilters } from "../utils/buildingsFilter";
 
 type SearchAndFilterProps = {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   onBedroomsChange: (checkbox: BedroomsKeyEnum) => void;
   onNeighborhoodsChange: (checkbox: string) => void;
-  neighborhoods: Set<string>;
+  allNeighborhoods: Set<string>;
+  activeNeighborhoodFilters: ActiveFilters["neighborhoods"];
 };
 
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   setSearchQuery,
   onBedroomsChange,
   onNeighborhoodsChange,
-  neighborhoods,
+  allNeighborhoods: neighborhoods,
+  activeNeighborhoodFilters,
 }) => {
   const [dropdownFilter, setDropdownFilter] = useState("");
 
@@ -31,8 +34,6 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
       neighborhood.toLowerCase().includes(dropdownFilter.toLowerCase())
     )
     .sort();
-
-  console.log(filteredNeighborhoods.length);
 
   const checkboxKeys: BedroomsKeyEnum[] = [
     BedroomsKeyEnum.SEDU,
@@ -106,6 +107,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                         key={neighborhood}
                         checkboxKey={neighborhood}
                         onCheckboxChange={onNeighborhoodsChange}
+                        isChecked={activeNeighborhoodFilters.has(neighborhood)}
                       />
                     ))}
                   </Form>

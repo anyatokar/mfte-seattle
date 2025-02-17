@@ -66,7 +66,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
   const [savedBuildings] = useSavedBuildings();
 
   // search, filter
-  const neighborhoods = new Set(
+  const allNeighborhoods = new Set(
     allBuildings.map((building) => building.residentialTargetedArea)
   );
   const [searchQuery, setSearchQuery] = useState("");
@@ -146,7 +146,8 @@ const AllBuildingsPage: React.FC<IPage> = () => {
           setSearchQuery={setSearchQuery}
           onBedroomsChange={handleBedroomsChange}
           onNeighborhoodsChange={handleNeighborhoodsChange}
-          neighborhoods={neighborhoods}
+          allNeighborhoods={allNeighborhoods}
+          activeNeighborhoodFilters={activeFilters.neighborhoods}
         />
 
         {/* Only visible on large screens */}
