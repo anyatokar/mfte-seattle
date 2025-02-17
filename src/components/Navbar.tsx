@@ -104,10 +104,10 @@ export const Header = () => {
     <Navbar collapseOnSelect expand="lg" className="p-0">
       <Container fluid className="p-0">
         <LinkContainer to="/">
-          <Navbar.Brand>
+          <Navbar.Brand className="py-0">
             <Image
               src={mftelogo}
-              height="80"
+              height="70"
               width="80"
               alt="MFTE Seattle website logo: a teal map pin with a house on it"
             />
