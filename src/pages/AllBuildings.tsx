@@ -51,6 +51,9 @@ const AllBuildingsPage: React.FC<IPage> = () => {
   const [savedBuildings] = useSavedBuildings();
 
   // search, filter
+  const neighborhoods = new Set(
+    allBuildings.map((building) => building.residentialTargetedArea)
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilters, dispatch] = useReducer(
     filterReducer,
@@ -117,6 +120,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         <SearchAndFilter
           setSearchQuery={setSearchQuery}
           onCheckboxChange={handleCheckboxChange}
+          neighborhoods={neighborhoods}
         />
 
         {/* Only visible on large screens */}

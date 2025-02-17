@@ -4,6 +4,7 @@ export function buildingsFilter(
   building: IBuilding,
   activeFilters: Set<keyof IBuilding>
 ): boolean {
+  console.log(activeFilters);
   if (activeFilters.size === 0) {
     return true;
   }

@@ -7,16 +7,31 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Dropdown from "react-bootstrap/esm/Dropdown";
 import Form from "react-bootstrap/esm/Form";
+import { Stack } from "react-bootstrap";
+import FilterCheckbox from "./FilterCheckbox";
+import { useState } from "react";
 
 type SearchAndFilterProps = {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   onCheckboxChange: (checkbox: BedroomsKeyEnum) => void;
+  neighborhoods: Set<string>;
 };
 
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   setSearchQuery,
   onCheckboxChange,
+  neighborhoods,
 }) => {
+  const [dropdownFilter, setDropdownFilter] = useState("");
+
+  const filteredNeighborhoods = [...neighborhoods]
+    .filter((neighborhood) =>
+      neighborhood.toLowerCase().includes(dropdownFilter.toLowerCase())
+    )
+    .sort();
+
+  console.log(filteredNeighborhoods.length);
+
   const checkboxKeys: BedroomsKeyEnum[] = [
     BedroomsKeyEnum.SEDU,
     BedroomsKeyEnum.STUDIO,
@@ -36,30 +51,66 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
 
         {/* filter */}
         <Col>
-          {
-            <Dropdown>
-              <Dropdown.Toggle
-                variant="outline-secondary"
-                id="bedroom-filter-dropdown"
-              >
-                Bedrooms
-              </Dropdown.Toggle>
+          <Stack direction="horizontal" gap={2}>
+            {
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="outline-secondary"
+                  id="bedroom-filter-dropdown"
+                >
+                  Bedrooms
+                </Dropdown.Toggle>
 
-              <Dropdown.Menu
-                className="p-2"
-                aria-labelledby="bedroom-filter-dropdown"
-              >
-                {checkboxKeys.map((checkboxKey) => (
-                  <Form key={checkboxKey}>
-                    <BedroomCheckbox
-                      checkboxKey={checkboxKey}
-                      onCheckboxChange={onCheckboxChange}
+                <Dropdown.Menu
+                  className="p-2"
+                  aria-labelledby="bedroom-filter-dropdown"
+                >
+                  {checkboxKeys.map((checkboxKey) => (
+                    <Form key={checkboxKey}>
+                      <FilterCheckbox
+                        checkboxKey={checkboxKey}
+                        onCheckboxChange={onCheckboxChange}
+                      />
+                    </Form>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            }
+
+            {
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="outline-secondary"
+                  id="neighborhood-filter-dropdown"
+                >
+                  Neighborhood
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu
+                  style={{ maxHeight: "200px", overflowY: "auto" }}
+                  className="p-2"
+                  aria-labelledby="neighborhood-filter-dropdown"
+                >
+                  <Form>
+                    <Form.Control
+                      autoFocus
+                      type="search"
+                      placeholder="Type to filter..."
+                      onChange={(e) => setDropdownFilter(e.target.value)}
+                      value={dropdownFilter}
                     />
+                    {[...filteredNeighborhoods].map((neighborhood) => (
+                      <FilterCheckbox
+                        key={neighborhood}
+                        checkboxKey={neighborhood}
+                        onCheckboxChange={onCheckboxChange}
+                      />
+                    ))}
                   </Form>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          }
+                </Dropdown.Menu>
+              </Dropdown>
+            }
+          </Stack>
         </Col>
       </Row>
     </Container>
