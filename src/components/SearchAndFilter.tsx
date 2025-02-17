@@ -13,13 +13,15 @@ import { useState } from "react";
 
 type SearchAndFilterProps = {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  onCheckboxChange: (checkbox: BedroomsKeyEnum) => void;
+  onBedroomsChange: (checkbox: BedroomsKeyEnum) => void;
+  onNeighborhoodsChange: (checkbox: string) => void;
   neighborhoods: Set<string>;
 };
 
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   setSearchQuery,
-  onCheckboxChange,
+  onBedroomsChange,
+  onNeighborhoodsChange,
   neighborhoods,
 }) => {
   const [dropdownFilter, setDropdownFilter] = useState("");
@@ -67,9 +69,9 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                 >
                   {checkboxKeys.map((checkboxKey) => (
                     <Form key={checkboxKey}>
-                      <FilterCheckbox
+                      <BedroomCheckbox
                         checkboxKey={checkboxKey}
-                        onCheckboxChange={onCheckboxChange}
+                        onCheckboxChange={onBedroomsChange}
                       />
                     </Form>
                   ))}
@@ -103,7 +105,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                       <FilterCheckbox
                         key={neighborhood}
                         checkboxKey={neighborhood}
-                        onCheckboxChange={onCheckboxChange}
+                        onCheckboxChange={onNeighborhoodsChange}
                       />
                     ))}
                   </Form>

@@ -16,7 +16,7 @@ import ReactMap from "../map/ReactMap";
 import SearchAndFilter from "../components/SearchAndFilter";
 
 import { genericSearch } from "../utils/genericSearch";
-import { buildingsFilter } from "../utils/buildingsFilter";
+import { ActiveFilters, buildingsFilter } from "../utils/buildingsFilter";
 
 import IBuilding from "../interfaces/IBuilding";
 import IPage from "../interfaces/IPage";
@@ -29,22 +29,37 @@ import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 
 function filterReducer(
-  state: Set<BedroomsKeyEnum>,
-  action: { type: "checked" | "unchecked"; checkbox: BedroomsKeyEnum }
-): Set<BedroomsKeyEnum> {
+  state: ActiveFilters,
+  action: {
+    type: "checked" | "unchecked";
+    category: "bedrooms" | "neighborhoods";
+    checkbox: BedroomsKeyEnum | string;
+  }
+): ActiveFilters {
   switch (action.type) {
     case "checked": {
-      return new Set(state).add(action.checkbox);
+      return {
+        ...state,
+        [action.category]: new Set(state[action.category]).add(action.checkbox),
+      };
     }
     case "unchecked": {
-      const newState = new Set(state);
+      const newState = new Set(state[action.category]);
       newState.delete(action.checkbox);
-      return newState;
+      return {
+        ...state,
+        [action.category]: newState,
+      };
     }
     default:
       return state;
   }
 }
+
+export type HandleCheckboxChange = (
+  checkbox: BedroomsKeyEnum | string, // Allow either type for checkbox
+  category: "bedrooms" | "neighborhoods"
+) => void;
 
 const AllBuildingsPage: React.FC<IPage> = () => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
@@ -55,16 +70,26 @@ const AllBuildingsPage: React.FC<IPage> = () => {
     allBuildings.map((building) => building.residentialTargetedArea)
   );
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilters, dispatch] = useReducer(
-    filterReducer,
-    new Set<BedroomsKeyEnum>()
-  );
+  const [activeFilters, dispatch] = useReducer(filterReducer, {
+    bedrooms: new Set<BedroomsKeyEnum>(),
+    neighborhoods: new Set<string>(),
+  });
 
-  const handleCheckboxChange = (checkbox: BedroomsKeyEnum): void => {
-    if (activeFilters.has(checkbox)) {
-      dispatch({ type: "unchecked", checkbox });
+  // Handler for Bedrooms
+  const handleBedroomsChange = (checkbox: BedroomsKeyEnum): void => {
+    if (activeFilters.bedrooms.has(checkbox)) {
+      dispatch({ type: "unchecked", category: "bedrooms", checkbox });
     } else {
-      dispatch({ type: "checked", checkbox });
+      dispatch({ type: "checked", category: "bedrooms", checkbox });
+    }
+  };
+
+  // Handler for Neighborhoods
+  const handleNeighborhoodsChange = (checkbox: string): void => {
+    if (activeFilters.neighborhoods.has(checkbox)) {
+      dispatch({ type: "unchecked", category: "neighborhoods", checkbox });
+    } else {
+      dispatch({ type: "checked", category: "neighborhoods", checkbox });
     }
   };
 
@@ -119,7 +144,8 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       <div className="pt-2">
         <SearchAndFilter
           setSearchQuery={setSearchQuery}
-          onCheckboxChange={handleCheckboxChange}
+          onBedroomsChange={handleBedroomsChange}
+          onNeighborhoodsChange={handleNeighborhoodsChange}
           neighborhoods={neighborhoods}
         />
 
