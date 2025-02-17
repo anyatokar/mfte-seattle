@@ -58,7 +58,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
             {
               <Dropdown>
                 <Dropdown.Toggle
-                  variant="outline-secondary"
+                  className="diy-solid-info-button "
                   id="bedroom-filter-dropdown"
                 >
                   Bedrooms
@@ -81,7 +81,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
             {
               <Dropdown>
                 <Dropdown.Toggle
-                  variant="outline-secondary"
+                  className="diy-solid-info-button "
                   id="neighborhood-filter-dropdown"
                 >
                   Neighborhood
