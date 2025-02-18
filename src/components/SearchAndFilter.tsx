@@ -93,7 +93,6 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                 >
                   <Form>
                     <Form.Control
-                      autoFocus
                       type="search"
                       aria-label="Filter neighborhoods"
                       placeholder="Filter list"
