@@ -62,6 +62,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               <Dropdown.Toggle
                 className="diy-solid-info-button "
                 id="bedroom-filter-dropdown"
+                size="sm"
               >
                 Bedrooms
               </Dropdown.Toggle>
@@ -82,8 +83,9 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
 
             <Dropdown>
               <Dropdown.Toggle
-                className="diy-solid-info-button "
+                className="diy-solid-info-button"
                 id="neighborhood-filter-dropdown"
+                size="sm"
               >
                 Neighborhood
               </Dropdown.Toggle>
@@ -99,6 +101,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                     placeholder="Filter list"
                     onChange={(e) => setDropdownFilter(e.target.value)}
                     value={dropdownFilter}
+                    size="sm"
                   />
                   <Button
                     variant="link"

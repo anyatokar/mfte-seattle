@@ -29,6 +29,7 @@ const SearchInput: React.FC<ISearchProps> = ({ setSearchQuery }) => {
         type="search"
         aria-label="Search"
         onChange={(event) => setInputValue(event.target.value)}
+        size="sm"
       />
     </Form>
   );
