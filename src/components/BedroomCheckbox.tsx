@@ -25,7 +25,7 @@ const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
       id={checkboxKey}
       value={checkboxKey}
       checked={isChecked}
-      onChange={() => handleCheck()}
+      onChange={handleCheck}
     />
   );
 };
