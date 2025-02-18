@@ -23,7 +23,7 @@ const KnownAvailSwitch: React.FC<KnownAvailSwitchProps> = ({
         checked={isSwitchOn}
         onChange={handleCheck}
       />
-      <Form.Label htmlFor="custom-switch" className="mb-0">
+      <Form.Label htmlFor="custom-switch" className="mb-0 small">
         Known Availability
       </Form.Label>
     </>
