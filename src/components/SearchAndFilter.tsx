@@ -120,7 +120,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                 </Form>
               </Dropdown.Menu>
             </Dropdown>
-            <Form>
+            <Form className="d-flex align-items-center">
               <KnownAvailSwitch onCheckboxChange={onAvailOnlyToggle} />
             </Form>
           </Stack>

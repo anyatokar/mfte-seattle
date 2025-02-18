@@ -16,13 +16,17 @@ const KnownAvailSwitch: React.FC<KnownAvailSwitchProps> = ({
   }
 
   return (
-    <Form.Check
-      type="switch"
-      id="custom-switch"
-      label={"Known Availability"}
-      checked={isSwitchOn}
-      onChange={handleCheck}
-    />
+    <>
+      <Form.Check
+        type="switch"
+        id="availability-switch"
+        checked={isSwitchOn}
+        onChange={handleCheck}
+      />
+      <Form.Label htmlFor="custom-switch" className="mb-0">
+        Known Availability
+      </Form.Label>
+    </>
   );
 };
 
