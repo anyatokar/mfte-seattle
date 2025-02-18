@@ -25,7 +25,6 @@ const SearchInput: React.FC<ISearchProps> = ({ setSearchQuery }) => {
     <Form onSubmit={(event) => event.preventDefault()} className="mb-1">
       <Form.Control
         placeholder="Search address, building name, neighborhood"
-        autoFocus
         id="search"
         type="search"
         aria-label="Search"
