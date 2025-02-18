@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { BedroomLabelEnum, BedroomsKeyEnum } from "../types/enumTypes";
+import { BedroomLabelEnum, BedroomsKeyEnum } from "../../types/enumTypes";
 
 type BedroomCheckboxProps = {
   checkboxKey: BedroomsKeyEnum;
@@ -25,7 +25,7 @@ const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
       id={checkboxKey}
       value={checkboxKey}
       checked={isChecked}
-      onChange={() => handleCheck()}
+      onChange={handleCheck}
     />
   );
 };
