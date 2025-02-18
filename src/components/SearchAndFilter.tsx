@@ -1,8 +1,8 @@
 import { useState } from "react";
 import SearchInput from "./SearchInput";
-import BedroomCheckbox from "./BedroomCheckbox";
-import FilterCheckbox from "./FilterCheckbox";
-import KnownAvailSwitch from "./KnownAvailSwitch";
+import BedroomCheckbox from "./checkboxes/BedroomCheckbox";
+import FilterCheckbox from "./checkboxes/FilterCheckbox";
+import KnownAvailSwitch from "./checkboxes/KnownAvailSwitch";
 import { ActiveFilters } from "../utils/buildingsFilter";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 

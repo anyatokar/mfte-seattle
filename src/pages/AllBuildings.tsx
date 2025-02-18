@@ -96,7 +96,6 @@ const AllBuildingsPage: React.FC<IPage> = () => {
 
   // Handler for Avail Switch
   const handleAvailOnlyToggle = () => {
-    console.log("hi");
     dispatch({ type: "toggleAvailOnly", category: "isAvailOnly" });
   };
 
