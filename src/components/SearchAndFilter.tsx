@@ -107,7 +107,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                     variant="link"
                     onClick={() => onNeighborhoodsChange()}
                   >
-                    Deselect All
+                    Remove Filter
                   </Button>
                   {[...filteredNeighborhoods].map((neighborhood) => (
                     <FilterCheckbox
