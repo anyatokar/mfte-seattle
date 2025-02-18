@@ -207,14 +207,14 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         {/* Only visible on small screens */}
         <Container fluid className="d-block d-md-none">
           <Tab.Container id="sidebar" defaultActiveKey="map">
-            <Nav variant="pills" className="mb-2">
+            <Nav variant="pills" className="mb-2 small">
               <Nav.Item>
-                <Nav.Link eventKey="map" className="tab">
+                <Nav.Link eventKey="map" className="tab small py-1 px-2">
                   Map View
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="list" className="tab">
+                <Nav.Link eventKey="list" className="tab small py-1 px-2">
                   List View
                 </Nav.Link>
               </Nav.Item>
