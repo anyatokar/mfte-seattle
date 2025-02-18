@@ -44,6 +44,8 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     BedroomsKeyEnum.THREE_PLUS,
   ];
 
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+
   return (
     <Container fluid>
       <Row className="p-0 mt-0 mb-2">
@@ -55,68 +57,72 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
         {/* filter */}
         <Col>
           <Stack direction="horizontal" gap={2}>
-            {
-              <Dropdown>
-                <Dropdown.Toggle
-                  className="diy-solid-info-button "
-                  id="bedroom-filter-dropdown"
-                >
-                  Bedrooms
-                </Dropdown.Toggle>
-                <Dropdown.Menu
-                  className="p-2"
-                  aria-labelledby="bedroom-filter-dropdown"
-                >
-                  {checkboxKeys.map((checkboxKey) => (
-                    <Form key={checkboxKey}>
-                      <BedroomCheckbox
-                        checkboxKey={checkboxKey}
-                        onCheckboxChange={onBedroomsChange}
-                      />
-                    </Form>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
-            }
-            {
-              <Dropdown>
-                <Dropdown.Toggle
-                  className="diy-solid-info-button "
-                  id="neighborhood-filter-dropdown"
-                >
-                  Neighborhood
-                </Dropdown.Toggle>
-                <Dropdown.Menu
-                  style={{ maxHeight: "200px", overflowY: "auto" }}
-                  className="p-2"
-                  aria-labelledby="neighborhood-filter-dropdown"
-                >
-                  <Form>
-                    <Form.Control
-                      type="search"
-                      aria-label="Filter neighborhoods"
-                      placeholder="Filter list"
-                      onChange={(e) => setDropdownFilter(e.target.value)}
-                      value={dropdownFilter}
+            <Dropdown>
+              <Dropdown.Toggle
+                className="diy-solid-info-button "
+                id="bedroom-filter-dropdown"
+              >
+                Bedrooms
+              </Dropdown.Toggle>
+              <Dropdown.Menu
+                className="p-2"
+                aria-labelledby="bedroom-filter-dropdown"
+              >
+                {checkboxKeys.map((checkboxKey) => (
+                  <Form key={checkboxKey}>
+                    <BedroomCheckbox
+                      checkboxKey={checkboxKey}
+                      onCheckboxChange={onBedroomsChange}
                     />
-                    <Button
-                      variant="link"
-                      onClick={() => onNeighborhoodsChange()}
-                    >
-                      Deselect All
-                    </Button>
-                    {[...filteredNeighborhoods].map((neighborhood) => (
-                      <FilterCheckbox
-                        key={neighborhood}
-                        checkboxKey={neighborhood}
-                        onCheckboxChange={onNeighborhoodsChange}
-                        isChecked={activeNeighborhoodFilters.has(neighborhood)}
-                      />
-                    ))}
                   </Form>
-                </Dropdown.Menu>
-              </Dropdown>
-            }
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown>
+              <Dropdown.Toggle
+                className="diy-solid-info-button "
+                id="neighborhood-filter-dropdown"
+              >
+                Neighborhood
+              </Dropdown.Toggle>
+              <Dropdown.Menu
+                style={{ maxHeight: "200px", overflowY: "auto" }}
+                className="p-2"
+                aria-labelledby="neighborhood-filter-dropdown"
+              >
+                <Form>
+                  <Form.Control
+                    type="search"
+                    aria-label="Filter neighborhoods"
+                    placeholder="Filter list"
+                    onChange={(e) => setDropdownFilter(e.target.value)}
+                    value={dropdownFilter}
+                  />
+                  <Button
+                    variant="link"
+                    onClick={() => onNeighborhoodsChange()}
+                  >
+                    Deselect All
+                  </Button>
+                  {[...filteredNeighborhoods].map((neighborhood) => (
+                    <FilterCheckbox
+                      key={neighborhood}
+                      checkboxKey={neighborhood}
+                      onCheckboxChange={onNeighborhoodsChange}
+                      isChecked={activeNeighborhoodFilters.has(neighborhood)}
+                    />
+                  ))}
+                </Form>
+              </Dropdown.Menu>
+            </Dropdown>
+            <Form.Check
+              type="switch"
+              id="custom-switch"
+              label={"Known Availability"}
+              checked={isSwitchOn}
+              onChange={() => setIsSwitchOn((prevState) => !prevState)}
+            />
           </Stack>
         </Col>
       </Row>

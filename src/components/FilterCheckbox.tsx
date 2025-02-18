@@ -11,10 +11,6 @@ const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
   onCheckboxChange,
   isChecked,
 }) => {
-  function handleCheck() {
-    onCheckboxChange(checkboxKey);
-  }
-
   return (
     <Form.Check
       type="checkbox"
@@ -22,7 +18,7 @@ const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
       id={checkboxKey}
       value={checkboxKey}
       checked={isChecked}
-      onChange={handleCheck}
+      onChange={() => onCheckboxChange(checkboxKey)}
     />
   );
 };
