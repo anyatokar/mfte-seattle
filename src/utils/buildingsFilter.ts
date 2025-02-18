@@ -1,5 +1,5 @@
 import IBuilding from "../interfaces/IBuilding";
-import { UnitSize } from "../interfaces/IListing";
+import IListing, { UnitSize } from "../interfaces/IListing";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 
 export type ActiveFilters = {
@@ -26,15 +26,28 @@ function filterBedrooms(
   };
 
   if (isAvailOnly) {
-    return (
-      building.listing?.availData.some((unit) =>
-        bedrooms.has(unitSizeToBedroomsKey[unit.unitSize])
-      ) ?? false
+    if (!building.listing) return false;
+
+    return [...bedrooms].some((filterProperty) =>
+      building.listing.availData.some(
+        (avails) =>
+          unitSizeToBedroomsKey[avails.unitSize] === filterProperty &&
+          Number(avails.numAvail) > 0
+      )
     );
   }
 
-  return [...bedrooms].some((filterProperty) =>
-    Boolean(building[filterProperty])
+  return [...bedrooms].some((filterProperty) => !!building[filterProperty]);
+}
+
+function hasListings(listing: IListing) {
+  if (!listing) return false;
+
+  const expiryDate = new Date(listing.expiryDate);
+  const currentDate = new Date();
+
+  return (
+    listing && listing.listingStatus === "active" && currentDate < expiryDate
   );
 }
 
@@ -44,12 +57,14 @@ export function buildingsFilter(
 ): boolean {
   const { neighborhoods } = activeFilters;
 
+  const listingsResult =
+    (activeFilters.isAvailOnly && hasListings(building.listing)) ||
+    !activeFilters.isAvailOnly;
   const bedroomsResult = filterBedrooms(building, activeFilters);
-
   const neighborhoodsResult =
     // If no boxes are checked, evaluate to be the same as the box is checked - omit that dropdown.
     activeFilters.neighborhoods.size === 0 ||
     neighborhoods.has(building.residentialTargetedArea);
 
-  return bedroomsResult && neighborhoodsResult;
+  return listingsResult && bedroomsResult && neighborhoodsResult;
 }

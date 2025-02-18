@@ -28,14 +28,18 @@ import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 
-function filterReducer(
+type FilterAction =
+  | {
+      type: "checked" | "unchecked" | "clearAll";
+      category: "bedrooms" | "neighborhoods";
+      checkbox?: BedroomsKeyEnum | string;
+    }
+  | { type: "toggleAvailOnly"; category: "isAvailOnly" };
+
+const filterReducer = (
   state: ActiveFilters,
-  action: {
-    type: "checked" | "unchecked" | "clearAll";
-    category: "bedrooms" | "neighborhoods";
-    checkbox?: BedroomsKeyEnum | string; // Optional for clearAll
-  }
-): ActiveFilters {
+  action: FilterAction
+): ActiveFilters => {
   switch (action.type) {
     case "checked": {
       return {
@@ -59,10 +63,16 @@ function filterReducer(
         [action.category]: new Set(),
       };
     }
+    case "toggleAvailOnly": {
+      return {
+        ...state,
+        isAvailOnly: !state.isAvailOnly, // Toggle the isAvailOnly flag
+      };
+    }
     default:
       return state;
   }
-}
+};
 
 export type HandleCheckboxChange = (
   checkbox: BedroomsKeyEnum | string,
@@ -81,7 +91,14 @@ const AllBuildingsPage: React.FC<IPage> = () => {
   const [activeFilters, dispatch] = useReducer(filterReducer, {
     bedrooms: new Set<BedroomsKeyEnum>(),
     neighborhoods: new Set<string>(),
+    isAvailOnly: false,
   });
+
+  // Handler for Avail Switch
+  const handleAvailOnlyToggle = () => {
+    console.log("hi");
+    dispatch({ type: "toggleAvailOnly", category: "isAvailOnly" });
+  };
 
   // Handler for Bedrooms
   const handleBedroomsChange = (checkbox: BedroomsKeyEnum): void => {
@@ -158,6 +175,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
           onNeighborhoodsChange={handleNeighborhoodsChange}
           allNeighborhoods={allNeighborhoods}
           activeNeighborhoodFilters={activeFilters.neighborhoods}
+          onAvailOnlyToggle={handleAvailOnlyToggle}
         />
 
         {/* Only visible on large screens */}

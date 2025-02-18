@@ -2,6 +2,7 @@ import { useState } from "react";
 import SearchInput from "./SearchInput";
 import BedroomCheckbox from "./BedroomCheckbox";
 import FilterCheckbox from "./FilterCheckbox";
+import KnownAvailSwitch from "./KnownAvailSwitch";
 import { ActiveFilters } from "../utils/buildingsFilter";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 
@@ -17,6 +18,7 @@ type SearchAndFilterProps = {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   onBedroomsChange: (checkbox: BedroomsKeyEnum) => void;
   onNeighborhoodsChange: (checkbox?: string) => void;
+  onAvailOnlyToggle: () => void;
   allNeighborhoods: Set<string>;
   activeNeighborhoodFilters: ActiveFilters["neighborhoods"];
 };
@@ -25,6 +27,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   setSearchQuery,
   onBedroomsChange,
   onNeighborhoodsChange,
+  onAvailOnlyToggle,
   allNeighborhoods: neighborhoods,
   activeNeighborhoodFilters,
 }) => {
@@ -43,8 +46,6 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     BedroomsKeyEnum.TWO_BED,
     BedroomsKeyEnum.THREE_PLUS,
   ];
-
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
 
   return (
     <Container fluid>
@@ -116,13 +117,9 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                 </Form>
               </Dropdown.Menu>
             </Dropdown>
-            <Form.Check
-              type="switch"
-              id="custom-switch"
-              label={"Known Availability"}
-              checked={isSwitchOn}
-              onChange={() => setIsSwitchOn((prevState) => !prevState)}
-            />
+            <Form>
+              <KnownAvailSwitch onCheckboxChange={onAvailOnlyToggle} />
+            </Form>
           </Stack>
         </Col>
       </Row>
