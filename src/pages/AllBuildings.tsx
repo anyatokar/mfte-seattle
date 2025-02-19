@@ -36,7 +36,6 @@ export type HandleCheckboxChange = (
 
 const AllBuildingsPage: React.FC<IPage> = () => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
-  const [savedBuildings] = useSavedBuildings();
 
   // search, filter
   const allNeighborhoods = new Set(
@@ -111,10 +110,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         <Container fluid className="d-none d-md-block">
           <Row>
             <Col className="px-1">
-              <ReactMap
-                resultBuildingsUnsorted={resultBuildingsUnsorted}
-                savedBuildings={savedBuildings}
-              />
+              <ReactMap resultBuildingsUnsorted={resultBuildingsUnsorted} />
             </Col>
             <Col
               className="p-0 map-and-list-container"
@@ -127,7 +123,6 @@ const AllBuildingsPage: React.FC<IPage> = () => {
               <AllBuildingsList
                 isLoading={isLoadingAllBuildings}
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
-                savedBuildings={savedBuildings}
                 pageType={pageTypeEnum.allBuildings}
               />
             </Col>
@@ -152,16 +147,12 @@ const AllBuildingsPage: React.FC<IPage> = () => {
 
             <Tab.Content>
               <Tab.Pane eventKey="map">
-                <ReactMap
-                  resultBuildingsUnsorted={resultBuildingsUnsorted}
-                  savedBuildings={savedBuildings}
-                />
+                <ReactMap resultBuildingsUnsorted={resultBuildingsUnsorted} />
               </Tab.Pane>
               <Tab.Pane eventKey="list">
                 <AllBuildingsList
                   isLoading={isLoadingAllBuildings}
                   resultBuildingsUnsorted={resultBuildingsUnsorted}
-                  savedBuildings={savedBuildings}
                   pageType={pageTypeEnum.allBuildings}
                 />
               </Tab.Pane>

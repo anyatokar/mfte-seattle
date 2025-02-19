@@ -34,13 +34,11 @@ import Stack from "react-bootstrap/Stack";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
-  isSaved: boolean;
   pageType: pageTypeEnum.allBuildings;
 }
 
 export interface SavedBuildingCardProps {
   building: ISavedBuilding;
-  isSaved: boolean;
   pageType: pageTypeEnum.savedBuildings;
 }
 
@@ -61,6 +59,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     zip,
     amiData,
     listing,
+    savedData,
   } = props.building;
 
   const { pageType } = props;
@@ -76,7 +75,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   let formattedTimestamp: string | null | undefined;
 
   if (pageType === pageTypeEnum.allBuildings) {
-    wasOriginallySaved = props.isSaved;
+    wasOriginallySaved = !!savedData;
   } else if (pageType === pageTypeEnum.savedBuildings) {
     originalNote = props.building.note;
     formattedTimestamp = props.building.noteTimestamp

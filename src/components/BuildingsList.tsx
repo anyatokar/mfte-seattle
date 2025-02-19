@@ -4,7 +4,6 @@ import BuildingCard from "./BuildingCard";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
-import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -14,20 +13,7 @@ import Spinner from "react-bootstrap/Spinner";
 type AllBuildingsListProps = {
   isLoading: boolean;
   resultBuildingsUnsorted: IBuilding[];
-  savedBuildings: ISavedBuilding[];
   pageType: pageTypeEnum;
-};
-
-// TODO: For saved list, they're all going to be in the saved so this can be more efficient.
-// Result of combining AllBuildingsList and SavedBuildingsList components.
-export const checkIsSaved = (
-  savedBuildings: ISavedBuilding[],
-  building: IBuilding
-) => {
-  return !!savedBuildings.find(
-    (savedBuilding: IBuilding) =>
-      savedBuilding.buildingID === building.buildingID
-  );
 };
 
 export const getListing = (
@@ -45,7 +31,6 @@ export const getListing = (
 const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   isLoading,
   resultBuildingsUnsorted,
-  savedBuildings,
   pageType,
 }) => {
   if (!resultBuildingsUnsorted) {
@@ -86,11 +71,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                 xl={areListingsOn ? 6 : 3}
                 className="p-1"
               >
-                <BuildingCard
-                  building={building}
-                  isSaved={checkIsSaved(savedBuildings, building)}
-                  pageType={pageType}
-                />
+                <BuildingCard building={building} pageType={pageType} />
               </Col>
             ))}
           </>

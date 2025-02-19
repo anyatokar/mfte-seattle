@@ -23,14 +23,12 @@ interface IBuildingMarkerProps {
   building: IBuilding;
   isSelected: boolean;
   setSelectedBuilding: (building: IBuilding | null) => void;
-  isSaved: boolean;
 }
 
 const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   building,
   isSelected,
   setSelectedBuilding,
-  isSaved: wasOriginallySaved,
 }) => {
   const {
     buildingID,
@@ -47,6 +45,8 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     lat,
     lng,
   } = building;
+
+  const wasOriginallySaved = !!building.savedData;
 
   const onMarkerClick = useCallback(
     () => setSelectedBuilding(isSelected ? null : building),
