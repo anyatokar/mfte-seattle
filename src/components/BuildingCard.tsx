@@ -1,6 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-
-import { areListingsOn } from "../config/config";
 import { listingStatusEnum, tableType } from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
@@ -98,26 +96,23 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   return (
     <Card
       border={
-        areListingsOn && listing?.listingStatus === listingStatusEnum.ACTIVE
-          ? "success"
-          : ""
+        listing?.listingStatus === listingStatusEnum.ACTIVE ? "success" : ""
       }
     >
       <Card.Header>
         <Card.Title className="mt-2">
           <div>
             {buildingName}
-            {areListingsOn &&
-              listing?.listingStatus === listingStatusEnum.ACTIVE && (
-                <Badge
-                  pill
-                  bg="warning"
-                  text="dark"
-                  className="units-avail-badge"
-                >
-                  Units available!
-                </Badge>
-              )}
+            {listing?.listingStatus === listingStatusEnum.ACTIVE && (
+              <Badge
+                pill
+                bg="warning"
+                text="dark"
+                className="units-avail-badge"
+              >
+                Units available!
+              </Badge>
+            )}
           </div>
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
@@ -148,9 +143,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
       </Card.Header>
 
       <ListGroup variant="flush" className="mb-2">
-        {(!areListingsOn ||
-          !listing ||
-          listing.listingStatus !== listingStatusEnum.ACTIVE) && (
+        {(!listing || listing.listingStatus !== listingStatusEnum.ACTIVE) && (
           <ListGroup.Item>
             Contact building for current availability.
           </ListGroup.Item>
@@ -160,14 +153,12 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
           <Tabs
             className="tabs"
             defaultActiveKey={
-              areListingsOn &&
               listing?.listingStatus === listingStatusEnum.ACTIVE
                 ? "availability"
                 : "contact"
             }
           >
-            {areListingsOn &&
-              listing?.listingStatus === listingStatusEnum.ACTIVE &&
+            {listing?.listingStatus === listingStatusEnum.ACTIVE &&
               listing?.availData && (
                 <Tab
                   eventKey="availability"

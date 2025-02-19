@@ -1,7 +1,6 @@
 /// <reference types="googlemaps" />
 import { useCallback, useState, useContext } from "react";
 import { InfoWindow, Marker } from "@react-google-maps/api";
-import { areListingsOn } from "../config/config";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -102,15 +101,13 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
         <InfoWindow onCloseClick={clearSelection}>
           <>
             <div>
-              {areListingsOn && building.listing?.url && (
+              {building.listing?.url && (
                 <>
                   <ListingButton listing={building.listing} isMarker={true} />
                 </>
               )}
             </div>
-            <div
-              className={areListingsOn && building.listing?.url ? "pt-2" : ""}
-            >
+            <div className={building.listing?.url ? "pt-2" : ""}>
               <div>
                 <strong>{buildingName}</strong>
               </div>

@@ -1,4 +1,3 @@
-import { areListingsOn } from "../config/config";
 import BuildingCard from "./BuildingCard";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -64,8 +63,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                 sm={6}
                 // Split screen starts at md
                 md={12}
-                lg={areListingsOn ? 6 : 4}
-                xl={areListingsOn ? 6 : 3}
+                lg={6}
                 className="p-1"
               >
                 <BuildingCard
