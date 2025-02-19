@@ -71,7 +71,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                 xl={areListingsOn ? 6 : 3}
                 className="p-1"
               >
-                <BuildingCard building={building} pageType={pageType} />
+                <BuildingCard building={building} />
               </Col>
             ))}
           </>

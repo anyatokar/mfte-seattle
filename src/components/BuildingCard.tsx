@@ -1,12 +1,7 @@
 import { useState, useContext } from "react";
 
 import { areListingsOn } from "../config/config";
-import {
-  accountTypeEnum,
-  listingStatusEnum,
-  pageTypeEnum,
-  tableType,
-} from "../types/enumTypes";
+import { listingStatusEnum, tableType } from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
 import BuildingDataTable from "./BuildingDataTable";
@@ -21,7 +16,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
 import IBuilding from "../interfaces/IBuilding";
-import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
@@ -34,17 +28,9 @@ import Stack from "react-bootstrap/Stack";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
-  pageType: pageTypeEnum.allBuildings;
 }
 
-export interface SavedBuildingCardProps {
-  building: ISavedBuilding;
-  pageType: pageTypeEnum.savedBuildings;
-}
-
-type BuildingCardProps = AllBuildingCardProps | SavedBuildingCardProps;
-
-const BuildingCard: React.FC<BuildingCardProps> = (props) => {
+const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
   const {
     buildingID,
     buildingName,
@@ -60,9 +46,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     amiData,
     listing,
     savedData,
-  } = props.building;
-
-  const { pageType } = props;
+  } = building;
 
   const { currentUser, accountType } = useAuth();
 
@@ -70,18 +54,9 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  let wasOriginallySaved = false;
+  let wasOriginallySaved = !!savedData;
   let originalNote: string | undefined;
   let formattedTimestamp: string | null | undefined;
-
-  if (pageType === pageTypeEnum.allBuildings) {
-    wasOriginallySaved = !!savedData;
-  } else if (pageType === pageTypeEnum.savedBuildings) {
-    originalNote = props.building.note;
-    formattedTimestamp = props.building.noteTimestamp
-      ? timestampToDateAndTime(props.building.noteTimestamp)
-      : null;
-  }
 
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
 
@@ -91,7 +66,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
-      saveBuilding(currentUser?.uid, props.building);
+      saveBuilding(currentUser?.uid, building);
     }
   }
 
@@ -141,57 +116,29 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
         <div className="mt-2">
-          {pageType === pageTypeEnum.allBuildings &&
-            accountType !== accountTypeEnum.MANAGER &&
-            (currentUser ? (
-              wasOriginallySaved || isSaved ? (
-                <Stack direction={"horizontal"} gap={2}>
-                  {" "}
-                  <ListingButton listing={listing} isMarker={false} />
-                  <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <SaveButton isSaved={true} onClickCallback={toggleSave} />
-                </Stack>
-              ) : (
-                <Stack direction={"horizontal"} gap={2}>
-                  <ListingButton listing={listing} isMarker={false} />
-                  <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <SaveButton isSaved={false} onClickCallback={toggleSave} />
-                </Stack>
-              )
+          {currentUser ? (
+            wasOriginallySaved || isSaved ? (
+              <Stack direction={"horizontal"} gap={2}>
+                {" "}
+                <ListingButton listing={listing} isMarker={false} />
+                <WebsiteButton urlForBuilding={urlForBuilding} />
+                <SaveButton isSaved={true} onClickCallback={toggleSave} />
+              </Stack>
             ) : (
               <Stack direction={"horizontal"} gap={2}>
                 <ListingButton listing={listing} isMarker={false} />
                 <WebsiteButton urlForBuilding={urlForBuilding} />
-                <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
+                <SaveButton isSaved={false} onClickCallback={toggleSave} />
               </Stack>
-            ))}
-          {accountType === accountTypeEnum.MANAGER && (
+            )
+          ) : (
             <Stack direction={"horizontal"} gap={2}>
               <ListingButton listing={listing} isMarker={false} />
               <WebsiteButton urlForBuilding={urlForBuilding} />
+              <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
             </Stack>
           )}
         </div>
-
-        {pageType === pageTypeEnum.savedBuildings && (
-          <Stack direction={"horizontal"} gap={2}>
-            <ListingButton listing={listing} isMarker={false} />
-            <WebsiteButton urlForBuilding={urlForBuilding} />
-            <Button
-              className="center"
-              size="sm"
-              variant="outline-danger"
-              title={`Remove ${buildingName} from saved buildings list`}
-              type="button"
-              value="Remove"
-              onClick={() => {
-                deleteBuilding(currentUser?.uid, buildingID, buildingName);
-              }}
-            >
-              Remove
-            </Button>
-          </Stack>
-        )}
       </Card.Header>
 
       <ListGroup variant="flush" className="mb-2">
@@ -255,7 +202,7 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
             )}
           </Tabs>
         </ListGroup.Item>
-        {pageType === pageTypeEnum.savedBuildings && (
+        {!!savedData && (
           <ListGroup.Item>
             <>
               <Form onSubmit={handleSubmit}>
