@@ -1,9 +1,8 @@
 import { areListingsOn } from "../config/config";
-import { listingStatusEnum } from "../types/enumTypes";
 import BuildingCard from "./BuildingCard";
 
 import IBuilding from "../interfaces/IBuilding";
-import IListing from "../interfaces/IListing";
+import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -13,23 +12,23 @@ import Spinner from "react-bootstrap/Spinner";
 type AllBuildingsListProps = {
   isLoading: boolean;
   resultBuildingsUnsorted: IBuilding[];
+  savedBuildings: ISavedBuilding[];
 };
 
-export const getListing = (
-  allListings: IListing[],
-  buildingID: IBuilding["buildingID"]
-) => {
-  // This finds the first active entry.
-  return allListings.find(
-    (listing: IListing) =>
-      listing.buildingID === buildingID &&
-      listing.listingStatus === listingStatusEnum.ACTIVE
+export const checkIsSaved = (
+  savedBuildings: ISavedBuilding[],
+  building: IBuilding
+): ISavedBuilding | undefined => {
+  return savedBuildings.find(
+    (savedBuilding: IBuilding) =>
+      savedBuilding.buildingID === building.buildingID
   );
 };
 
 const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   isLoading,
   resultBuildingsUnsorted,
+  savedBuildings,
 }) => {
   if (!resultBuildingsUnsorted) {
     return null;
@@ -69,7 +68,10 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                 xl={areListingsOn ? 6 : 3}
                 className="p-1"
               >
-                <BuildingCard building={building} />
+                <BuildingCard
+                  building={building}
+                  savedHomeData={checkIsSaved(savedBuildings, building)}
+                />
               </Col>
             ))}
           </>

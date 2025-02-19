@@ -9,6 +9,7 @@ import {
 import { isProfilerOn } from "../config/config";
 
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+import { useSavedBuildings } from "../hooks/useSavedBuildings";
 
 import AllBuildingsList from "../components/BuildingsList";
 import SearchAndFilter from "../components/SearchAndFilter";
@@ -35,6 +36,7 @@ export type HandleCheckboxChange = (
 
 const AllBuildingsPage: React.FC<IPage> = () => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
+  const [savedBuildings] = useSavedBuildings();
 
   // search, filter
   const allNeighborhoods = new Set(
@@ -50,7 +52,9 @@ const AllBuildingsPage: React.FC<IPage> = () => {
   });
 
   const resultBuildingsUnsorted = useMemo(() => {
-    return allBuildings
+    let filterResult;
+
+    filterResult = allBuildings
       .filter((building) =>
         genericSearch<IBuilding>(
           building,
@@ -59,7 +63,17 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         )
       )
       .filter((building) => buildingsFilter(building, activeFilters));
-  }, [allBuildings, searchQuery, activeFilters]);
+
+    // Additional filter for saved buildings.
+    if (activeFilters.isSavedOnly) {
+      filterResult = filterResult.filter((building) =>
+        savedBuildings.some(
+          (savedBuilding) => savedBuilding.buildingID === building.buildingID
+        )
+      );
+    }
+    return filterResult;
+  }, [allBuildings, searchQuery, activeFilters, savedBuildings]);
 
   // Scroll to top when buildings change
   const buildingsListRef = useRef<HTMLDivElement | null>(null);
@@ -122,6 +136,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
               <AllBuildingsList
                 isLoading={isLoadingAllBuildings}
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
+                savedBuildings={savedBuildings}
               />
             </Col>
           </Row>
@@ -151,6 +166,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                 <AllBuildingsList
                   isLoading={isLoadingAllBuildings}
                   resultBuildingsUnsorted={resultBuildingsUnsorted}
+                  savedBuildings={savedBuildings}
                 />
               </Tab.Pane>
             </Tab.Content>

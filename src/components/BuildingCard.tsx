@@ -16,9 +16,9 @@ import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
 import IBuilding from "../interfaces/IBuilding";
+import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 import Badge from "react-bootstrap/Badge";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -28,9 +28,14 @@ import Stack from "react-bootstrap/Stack";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
+  /** There is saved data in the building, but that's only fetched on initial load and and listing update. */
+  savedHomeData: ISavedBuilding | undefined;
 }
 
-const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
+const BuildingCard: React.FC<AllBuildingCardProps> = ({
+  building,
+  savedHomeData,
+}) => {
   const {
     buildingID,
     buildingName,
@@ -45,7 +50,6 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
     zip,
     amiData,
     listing,
-    savedData,
   } = building;
 
   const { currentUser } = useAuth();
@@ -54,11 +58,10 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  let wasOriginallySaved = !!savedData;
-  const [isSaved, setIsSaved] = useState(wasOriginallySaved);
+  const [isSaved, setIsSaved] = useState(!!savedHomeData);
 
   function toggleSave() {
-    if (wasOriginallySaved || isSaved) {
+    if (!!savedHomeData || isSaved) {
       setIsSaved(false);
       setUpdatedNote("");
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
@@ -69,7 +72,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
   }
 
   // Saved Buildings - note form
-  const originalNote = savedData?.note || "";
+  const originalNote = savedHomeData?.note || "";
   const [updatedNote, setUpdatedNote] = useState(originalNote);
 
   // This runs every time component re-renders (on every keystroke).
@@ -120,7 +123,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
         <div className="mt-2">
           {currentUser ? (
-            wasOriginallySaved || isSaved ? (
+            !!savedHomeData || isSaved ? (
               <Stack direction={"horizontal"} gap={2}>
                 {" "}
                 <ListingButton listing={listing} isMarker={false} />
@@ -205,7 +208,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
             )}
           </Tabs>
         </ListGroup.Item>
-        {wasOriginallySaved || isSaved ? (
+        {!!savedHomeData || isSaved ? (
           <ListGroup.Item>
             <Form>
               <Form.Label>Notes</Form.Label>
