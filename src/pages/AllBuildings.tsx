@@ -12,11 +12,12 @@ import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 
 import AllBuildingsList from "../components/BuildingsList";
-import ReactMap from "../map/ReactMap";
 import SearchAndFilter from "../components/SearchAndFilter";
+import ReactMap from "../map/ReactMap";
 
 import { genericSearch } from "../utils/genericSearch";
-import { ActiveFilters, buildingsFilter } from "../utils/buildingsFilter";
+import { buildingsFilter } from "../utils/buildingsFilter";
+import { filterReducer } from "../reducers/filterReducer";
 
 import IBuilding from "../interfaces/IBuilding";
 import IPage from "../interfaces/IPage";
@@ -27,52 +28,6 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-
-type FilterAction =
-  | {
-      type: "checked" | "unchecked" | "clearAll";
-      category: "bedrooms" | "neighborhoods";
-      checkbox?: BedroomsKeyEnum | string;
-    }
-  | { type: "toggleSwitch"; category: "isAvailOnly" | "isSavedOnly" };
-
-const filterReducer = (
-  state: ActiveFilters,
-  action: FilterAction
-): ActiveFilters => {
-  switch (action.type) {
-    case "checked": {
-      return {
-        ...state,
-        [action.category]: new Set(state[action.category]).add(
-          action.checkbox!
-        ),
-      };
-    }
-    case "unchecked": {
-      const newState = new Set(state[action.category]);
-      newState.delete(action.checkbox!);
-      return {
-        ...state,
-        [action.category]: newState,
-      };
-    }
-    case "clearAll": {
-      return {
-        ...state,
-        [action.category]: new Set(),
-      };
-    }
-    case "toggleSwitch": {
-      return {
-        ...state,
-        [action.category]: !state[action.category],
-      };
-    }
-    default:
-      return state;
-  }
-};
 
 export type HandleCheckboxChange = (
   checkbox: BedroomsKeyEnum | string,
@@ -88,42 +43,13 @@ const AllBuildingsPage: React.FC<IPage> = () => {
     allBuildings.map((building) => building.residentialTargetedArea)
   );
   const [searchQuery, setSearchQuery] = useState("");
+
   const [activeFilters, dispatch] = useReducer(filterReducer, {
     bedrooms: new Set<BedroomsKeyEnum>(),
     neighborhoods: new Set<string>(),
     isAvailOnly: false,
     isSavedOnly: false,
   });
-
-  // Handler for Avail Switch
-  const handleAvailOnlyToggle = () => {
-    dispatch({ type: "toggleSwitch", category: "isAvailOnly" });
-  };
-
-  // Handler for Saved Switch
-  const handleSavedOnlyToggle = () => {
-    dispatch({ type: "toggleSwitch", category: "isSavedOnly" });
-  };
-
-  // Handler for Bedrooms
-  const handleBedroomsChange = (checkbox: BedroomsKeyEnum): void => {
-    if (activeFilters.bedrooms.has(checkbox)) {
-      dispatch({ type: "unchecked", category: "bedrooms", checkbox });
-    } else {
-      dispatch({ type: "checked", category: "bedrooms", checkbox });
-    }
-  };
-
-  // Handler for Neighborhoods
-  const handleNeighborhoodsChange = (checkbox?: string): void => {
-    if (!checkbox) {
-      dispatch({ type: "clearAll", category: "neighborhoods" });
-    } else if (activeFilters.neighborhoods.has(checkbox)) {
-      dispatch({ type: "unchecked", category: "neighborhoods", checkbox });
-    } else {
-      dispatch({ type: "checked", category: "neighborhoods", checkbox });
-    }
-  };
 
   const resultBuildingsUnsorted = useMemo(() => {
     return allBuildings
@@ -176,12 +102,9 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       <div className="pt-2">
         <SearchAndFilter
           setSearchQuery={setSearchQuery}
-          onBedroomsChange={handleBedroomsChange}
-          onNeighborhoodsChange={handleNeighborhoodsChange}
           allNeighborhoods={allNeighborhoods}
-          activeNeighborhoodFilters={activeFilters.neighborhoods}
-          onAvailOnlyToggle={handleAvailOnlyToggle}
-          onSavedOnlyToggle={handleSavedOnlyToggle}
+          activeFilters={activeFilters}
+          dispatch={dispatch}
         />
 
         {/* Only visible on large screens */}

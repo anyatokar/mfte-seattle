@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import SearchInput from "./SearchInput";
 import BedroomCheckbox from "./checkboxes/BedroomCheckbox";
 import FilterCheckbox from "./checkboxes/FilterCheckbox";
 import FilterSwitch from "./checkboxes/FilterSwitch";
 import { ActiveFilters } from "../utils/buildingsFilter";
+import { FilterAction } from "../reducers/filterReducer";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 
 import Button from "react-bootstrap/Button";
@@ -16,23 +17,47 @@ import Stack from "react-bootstrap/Stack";
 
 type SearchAndFilterProps = {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  onBedroomsChange: (checkbox: BedroomsKeyEnum) => void;
-  onNeighborhoodsChange: (checkbox?: string) => void;
-  onAvailOnlyToggle: () => void;
-  onSavedOnlyToggle: () => void;
   allNeighborhoods: Set<string>;
-  activeNeighborhoodFilters: ActiveFilters["neighborhoods"];
+  activeFilters: ActiveFilters;
+  dispatch: Dispatch<FilterAction>;
 };
 
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   setSearchQuery,
-  onBedroomsChange,
-  onNeighborhoodsChange,
-  onAvailOnlyToggle,
-  onSavedOnlyToggle,
   allNeighborhoods: neighborhoods,
-  activeNeighborhoodFilters,
+  activeFilters,
+  dispatch,
 }) => {
+  // Handler for Avail Switch
+  const handleAvailOnlyToggle = () => {
+    dispatch({ type: "toggleSwitch", category: "isAvailOnly" });
+  };
+
+  // Handler for Saved Switch
+  const handleSavedOnlyToggle = () => {
+    dispatch({ type: "toggleSwitch", category: "isSavedOnly" });
+  };
+
+  // Handler for Bedrooms
+  const handleBedroomsChange = (checkbox: BedroomsKeyEnum): void => {
+    if (activeFilters.bedrooms.has(checkbox)) {
+      dispatch({ type: "unchecked", category: "bedrooms", checkbox });
+    } else {
+      dispatch({ type: "checked", category: "bedrooms", checkbox });
+    }
+  };
+
+  // Handler for Neighborhoods
+  const handleNeighborhoodsChange = (checkbox?: string): void => {
+    if (!checkbox) {
+      dispatch({ type: "clearAll", category: "neighborhoods" });
+    } else if (activeFilters.neighborhoods.has(checkbox)) {
+      dispatch({ type: "unchecked", category: "neighborhoods", checkbox });
+    } else {
+      dispatch({ type: "checked", category: "neighborhoods", checkbox });
+    }
+  };
+
   const [dropdownFilter, setDropdownFilter] = useState("");
 
   const filteredNeighborhoods = [...neighborhoods]
@@ -76,7 +101,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                   <Form key={checkboxKey}>
                     <BedroomCheckbox
                       checkboxKey={checkboxKey}
-                      onCheckboxChange={onBedroomsChange}
+                      onCheckboxChange={handleBedroomsChange}
                     />
                   </Form>
                 ))}
@@ -107,7 +132,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                   />
                   <Button
                     variant="link"
-                    onClick={() => onNeighborhoodsChange()}
+                    onClick={() => handleNeighborhoodsChange()}
                   >
                     Remove Filter
                   </Button>
@@ -115,8 +140,8 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                     <FilterCheckbox
                       key={neighborhood}
                       checkboxKey={neighborhood}
-                      onCheckboxChange={onNeighborhoodsChange}
-                      isChecked={activeNeighborhoodFilters.has(neighborhood)}
+                      onCheckboxChange={handleNeighborhoodsChange}
+                      isChecked={activeFilters.neighborhoods.has(neighborhood)}
                     />
                   ))}
                 </Form>
@@ -124,11 +149,11 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
             </Dropdown>
 
             <FilterSwitch
-              onCheckboxChange={onAvailOnlyToggle}
+              onCheckboxChange={handleAvailOnlyToggle}
               type="knownOnly"
             />
             <FilterSwitch
-              onCheckboxChange={onSavedOnlyToggle}
+              onCheckboxChange={handleSavedOnlyToggle}
               type="savedOnly"
             />
           </Stack>
