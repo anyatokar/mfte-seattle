@@ -2,7 +2,7 @@ import { useState } from "react";
 import SearchInput from "./SearchInput";
 import BedroomCheckbox from "./checkboxes/BedroomCheckbox";
 import FilterCheckbox from "./checkboxes/FilterCheckbox";
-import KnownAvailSwitch from "./checkboxes/KnownAvailSwitch";
+import FilterSwitch from "./checkboxes/FilterSwitch";
 import { ActiveFilters } from "../utils/buildingsFilter";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 
@@ -19,6 +19,7 @@ type SearchAndFilterProps = {
   onBedroomsChange: (checkbox: BedroomsKeyEnum) => void;
   onNeighborhoodsChange: (checkbox?: string) => void;
   onAvailOnlyToggle: () => void;
+  onSavedOnlyToggle: () => void;
   allNeighborhoods: Set<string>;
   activeNeighborhoodFilters: ActiveFilters["neighborhoods"];
 };
@@ -28,6 +29,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   onBedroomsChange,
   onNeighborhoodsChange,
   onAvailOnlyToggle,
+  onSavedOnlyToggle,
   allNeighborhoods: neighborhoods,
   activeNeighborhoodFilters,
 }) => {
@@ -120,9 +122,15 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                 </Form>
               </Dropdown.Menu>
             </Dropdown>
-            <Form className="d-flex align-items-center">
-              <KnownAvailSwitch onCheckboxChange={onAvailOnlyToggle} />
-            </Form>
+
+            <FilterSwitch
+              onCheckboxChange={onAvailOnlyToggle}
+              type="knownOnly"
+            />
+            <FilterSwitch
+              onCheckboxChange={onSavedOnlyToggle}
+              type="savedOnly"
+            />
           </Stack>
         </Col>
       </Row>

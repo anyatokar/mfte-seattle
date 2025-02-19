@@ -34,7 +34,7 @@ type FilterAction =
       category: "bedrooms" | "neighborhoods";
       checkbox?: BedroomsKeyEnum | string;
     }
-  | { type: "toggleAvailOnly"; category: "isAvailOnly" };
+  | { type: "toggleSwitch"; category: "isAvailOnly" | "isSavedOnly" };
 
 const filterReducer = (
   state: ActiveFilters,
@@ -63,10 +63,10 @@ const filterReducer = (
         [action.category]: new Set(),
       };
     }
-    case "toggleAvailOnly": {
+    case "toggleSwitch": {
       return {
         ...state,
-        isAvailOnly: !state.isAvailOnly, // Toggle the isAvailOnly flag
+        [action.category]: !state[action.category],
       };
     }
     default:
@@ -92,11 +92,17 @@ const AllBuildingsPage: React.FC<IPage> = () => {
     bedrooms: new Set<BedroomsKeyEnum>(),
     neighborhoods: new Set<string>(),
     isAvailOnly: false,
+    isSavedOnly: false,
   });
 
   // Handler for Avail Switch
   const handleAvailOnlyToggle = () => {
-    dispatch({ type: "toggleAvailOnly", category: "isAvailOnly" });
+    dispatch({ type: "toggleSwitch", category: "isAvailOnly" });
+  };
+
+  // Handler for Saved Switch
+  const handleSavedOnlyToggle = () => {
+    dispatch({ type: "toggleSwitch", category: "isSavedOnly" });
   };
 
   // Handler for Bedrooms
@@ -175,6 +181,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
           allNeighborhoods={allNeighborhoods}
           activeNeighborhoodFilters={activeFilters.neighborhoods}
           onAvailOnlyToggle={handleAvailOnlyToggle}
+          onSavedOnlyToggle={handleSavedOnlyToggle}
         />
 
         {/* Only visible on large screens */}

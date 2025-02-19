@@ -6,6 +6,7 @@ export type ActiveFilters = {
   bedrooms: Set<BedroomsKeyEnum>;
   neighborhoods: Set<string>;
   isAvailOnly: boolean;
+  isSavedOnly: boolean;
 };
 
 function filterBedrooms(
