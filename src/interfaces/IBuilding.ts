@@ -35,5 +35,5 @@ export default interface IBuilding {
   /** This is an array to keep the order from smallest to largest on render. */
   amiData: amiDataType[];
   listing: IListing;
-  savedData: { note?: string; noteTimestamp?: string | Timestamp };
+  savedData?: { note?: string; noteTimestamp?: string | Timestamp };
 }

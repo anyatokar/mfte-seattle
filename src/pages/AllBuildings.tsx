@@ -9,7 +9,6 @@ import {
 import { isProfilerOn } from "../config/config";
 
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { useSavedBuildings } from "../hooks/useSavedBuildings";
 
 import AllBuildingsList from "../components/BuildingsList";
 import SearchAndFilter from "../components/SearchAndFilter";

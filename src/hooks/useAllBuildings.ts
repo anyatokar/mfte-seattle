@@ -47,6 +47,11 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
         return;
       }
 
+      if (isLoadingSavedBuildings) {
+        console.log("Loading saved buildings");
+        return;
+      }
+
       console.log("Buildings snapshot.");
       const buildings: Array<IBuilding> = [];
       querySnapshot.forEach((doc) => {
@@ -56,7 +61,6 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
         if (listing !== undefined) {
           building.listing = { ...listing };
         }
-        // If user is logged in and this building is saved, add saved data to building
         const savedData = findSavedData(building.buildingID);
         // If there's a matching saved building, add this data to the building
         if (savedData !== undefined) {
@@ -84,7 +88,10 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
         }
       );
 
-      console.log(sortedBuildings);
+      // TODO: remove
+      console.log(
+        sortedBuildings.find((building) => building.buildingName === "Batik")
+      );
       setAllBuildings(sortedBuildings);
       setIsLoadingAllBuildings(false);
     });
@@ -93,6 +100,8 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
     // getAllBuildings function is recreated when listings deps change.
     // This triggers the useEffect below, since the function is in the deps array.
   }, [allListings, isLoadingAllListings]);
+
+  // savedBuildings, isLoadingSavedBuildings
 
   useEffect(() => {
     const unsubscribe = getAllBuildings();

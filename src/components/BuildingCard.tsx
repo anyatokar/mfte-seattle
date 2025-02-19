@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { areListingsOn } from "../config/config";
 import { listingStatusEnum, tableType } from "../types/enumTypes";
@@ -10,7 +10,7 @@ import SaveButton from "./SaveButton";
 import WebsiteButton from "./WebsiteButton";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
-import { timestampToDateAndTime } from "../utils/generalUtils";
+import useDebounce from "../hooks/useDebounce";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -48,21 +48,19 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
     savedData,
   } = building;
 
-  const { currentUser, accountType } = useAuth();
+  const { currentUser } = useAuth();
 
   // All Buildings Page - save/saved button
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
   let wasOriginallySaved = !!savedData;
-  let originalNote: string | undefined;
-  let formattedTimestamp: string | null | undefined;
-
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
 
   function toggleSave() {
     if (wasOriginallySaved || isSaved) {
       setIsSaved(false);
+      setUpdatedNote("");
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
@@ -71,23 +69,28 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
   }
 
   // Saved Buildings - note form
+  const originalNote = savedData?.note || "";
   const [updatedNote, setUpdatedNote] = useState(originalNote);
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  // This runs every time component re-renders (on every keystroke).
+  // But it only updates when user stops typing.
+  const debouncedNote = useDebounce(updatedNote, 1000);
 
-    updateNote(updatedNote || "");
-  };
+  useEffect(() => {
+    if (debouncedNote !== undefined && debouncedNote !== originalNote) {
+      handleNoteUpdate(debouncedNote);
+    }
+  }, [debouncedNote]);
 
-  const updateNote = (updatedNote: string) => {
-    return addNote(currentUser?.uid, buildingID, updatedNote)
+  async function handleNoteUpdate(debouncedNote: string): Promise<void> {
+    return addNote(currentUser?.uid, buildingID, debouncedNote)
       .then(() => {
         console.log("Note updated successfully.");
       })
       .catch((error: any) => {
         console.error("Error updating document: ", error);
       });
-  };
+  }
 
   return (
     <Card
@@ -202,39 +205,22 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
             )}
           </Tabs>
         </ListGroup.Item>
-        {!!savedData && (
+        {wasOriginallySaved || isSaved ? (
           <ListGroup.Item>
-            <>
-              <Form onSubmit={handleSubmit}>
-                <Form.Label>Notes</Form.Label>
-                <Form.Group className="mb-2">
-                  <Form.Control
-                    as="textarea"
-                    name="note"
-                    rows={2}
-                    value={updatedNote}
-                    onChange={(event) => setUpdatedNote(event.target.value)}
-                  />
-                  {formattedTimestamp && (
-                    <Form.Text>
-                      Updated: {timestampToDateAndTime(formattedTimestamp)}
-                    </Form.Text>
-                  )}
-                </Form.Group>
-                <Button
-                  disabled={updatedNote === originalNote}
-                  type="submit"
-                  title={`Save or update your note!`}
-                  value="Save note"
-                  size="sm"
-                  className="diy-solid-info-button"
-                >
-                  Save note
-                </Button>
-              </Form>
-            </>
+            <Form>
+              <Form.Label>Notes</Form.Label>
+              <Form.Group className="mb-2">
+                <Form.Control
+                  as="textarea"
+                  name="note"
+                  rows={2}
+                  value={updatedNote}
+                  onChange={(e) => setUpdatedNote(e.target.value)}
+                />
+              </Form.Group>
+            </Form>
           </ListGroup.Item>
-        )}
+        ) : null}
       </ListGroup>
     </Card>
   );
