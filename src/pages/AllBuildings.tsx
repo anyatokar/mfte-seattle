@@ -187,7 +187,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         {/* Only visible on large screens */}
         <Container fluid className="d-none d-md-block">
           <Row>
-            <Col className="pl-0">
+            <Col className="px-1">
               <ReactMap
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
