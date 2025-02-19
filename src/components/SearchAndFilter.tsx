@@ -1,4 +1,4 @@
-import { Dispatch, useState } from "react";
+import { Dispatch, useContext, useState } from "react";
 import SearchInput from "./SearchInput";
 import BedroomCheckbox from "./checkboxes/BedroomCheckbox";
 import FilterCheckbox from "./checkboxes/FilterCheckbox";
@@ -6,6 +6,8 @@ import FilterSwitch from "./checkboxes/FilterSwitch";
 import { ActiveFilters } from "../utils/buildingsFilter";
 import { FilterAction } from "../reducers/filterReducer";
 import { BedroomsKeyEnum } from "../types/enumTypes";
+import { ModalContext, ModalState } from "../contexts/ModalContext";
+import { useAuth } from "../contexts/AuthContext";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -33,8 +35,11 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     dispatch({ type: "toggleSwitch", category: "isAvailOnly" });
   };
 
+  const [, /* modalState */ setModalState] = useContext(ModalContext);
+  const { currentUser } = useAuth();
   // Handler for Saved Switch
   const handleSavedOnlyToggle = () => {
+    if (!currentUser) return setModalState(ModalState.LOGIN);
     dispatch({ type: "toggleSwitch", category: "isSavedOnly" });
   };
 

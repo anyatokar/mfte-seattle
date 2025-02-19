@@ -157,9 +157,6 @@ export const Header = () => {
             </Nav>
           ) : (
             <Nav className="p-0 p-lg-3">
-              <Nav.Link active={false} onClick={showLoginSavedBuildings}>
-                Saved
-              </Nav.Link>
               <Nav.Link active={false} onClick={showLogin}>
                 Log In / Sign Up
               </Nav.Link>
