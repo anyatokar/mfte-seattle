@@ -4,22 +4,37 @@ import { db } from "../db/firebase";
 import { useAllListings } from "./useListings";
 import { listingStatusEnum } from "../types/enumTypes";
 import IBuilding from "../interfaces/IBuilding";
+import { useSavedBuildings } from "./useSavedBuildings";
+import IListing from "../interfaces/IListing";
+import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 export const useAllBuildings = (): [IBuilding[], boolean] => {
   const [allBuildings, setAllBuildings] = useState<IBuilding[]>([]);
   const [isLoadingAllBuildings, setIsLoadingAllBuildings] = useState(true);
 
   const [allListings, isLoadingAllListings] = useAllListings(true);
+  const [savedBuildings, isLoadingSavedBuildings] = useSavedBuildings();
 
   // The function is created once on mount, then it only gets re-created when the dependencies change.
   // Each time the function is created or re-created, the useEffect hook runs to execute the function.
   const getAllBuildings = useCallback(() => {
-    const findListing = (buildingID: IBuilding["buildingID"]) => {
+    const findListing = (
+      buildingID: IBuilding["buildingID"]
+    ): IListing | undefined => {
       // This finds the first active entry.
       return allListings.find(
         (listing) =>
           listing.buildingID === buildingID &&
           listing.listingStatus === listingStatusEnum.ACTIVE
+      );
+    };
+
+    const findSavedData = (
+      buildingID: IBuilding["buildingID"]
+    ): ISavedBuilding | undefined => {
+      // This finds the first active entry.
+      return savedBuildings.find(
+        (savedBuilding) => savedBuilding.buildingID === buildingID
       );
     };
 
@@ -41,6 +56,16 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
         if (listing !== undefined) {
           building.listing = { ...listing };
         }
+        // If user is logged in and this building is saved, add saved data to building
+        const savedData = findSavedData(building.buildingID);
+        // If there's a matching saved building, add this data to the building
+        if (savedData !== undefined) {
+          building.savedData = {
+            note: savedData.note,
+            noteTimestamp: savedData.noteTimestamp,
+          };
+        }
+
         buildings.push(building);
       });
 
@@ -59,6 +84,7 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
         }
       );
 
+      console.log(sortedBuildings);
       setAllBuildings(sortedBuildings);
       setIsLoadingAllBuildings(false);
     });

@@ -1,6 +1,6 @@
 import IBuilding from "../interfaces/IBuilding";
 import IListing, { UnitSize } from "../interfaces/IListing";
-import { BedroomsKeyEnum } from "../types/enumTypes";
+import { BedroomsKeyEnum, listingStatusEnum } from "../types/enumTypes";
 
 export type ActiveFilters = {
   bedrooms: Set<BedroomsKeyEnum>;
@@ -48,7 +48,9 @@ function hasListings(listing: IListing) {
   const currentDate = new Date();
 
   return (
-    listing && listing.listingStatus === "active" && currentDate < expiryDate
+    listing &&
+    listing.listingStatus === listingStatusEnum.ACTIVE &&
+    currentDate < expiryDate
   );
 }
 
