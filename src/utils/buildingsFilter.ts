@@ -41,19 +41,6 @@ function filterBedrooms(
   return [...bedrooms].some((filterProperty) => !!building[filterProperty]);
 }
 
-function hasListings(listing: IListing) {
-  if (!listing) return false;
-
-  const expiryDate = new Date(listing.expiryDate);
-  const currentDate = new Date();
-
-  return (
-    listing &&
-    listing.listingStatus === listingStatusEnum.ACTIVE &&
-    currentDate < expiryDate
-  );
-}
-
 export function buildingsFilter(
   building: IBuilding,
   activeFilters: ActiveFilters
@@ -61,7 +48,8 @@ export function buildingsFilter(
   const { neighborhoods } = activeFilters;
 
   const listingsResult =
-    (activeFilters.isAvailOnly && hasListings(building.listing)) ||
+    (activeFilters.isAvailOnly &&
+      building.listing?.listingStatus === listingStatusEnum.ACTIVE) ||
     !activeFilters.isAvailOnly;
   const bedroomsResult = filterBedrooms(building, activeFilters);
   const neighborhoodsResult =

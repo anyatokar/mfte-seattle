@@ -123,7 +123,10 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         <Container fluid className="d-none d-md-block">
           <Row>
             <Col className="px-1">
-              <ReactMap resultBuildingsUnsorted={resultBuildingsUnsorted} />
+              <ReactMap
+                resultBuildingsUnsorted={resultBuildingsUnsorted}
+                savedBuildings={savedBuildings}
+              />
             </Col>
             <Col
               className="p-0 map-and-list-container"
@@ -160,7 +163,10 @@ const AllBuildingsPage: React.FC<IPage> = () => {
 
             <Tab.Content>
               <Tab.Pane eventKey="map">
-                <ReactMap resultBuildingsUnsorted={resultBuildingsUnsorted} />
+                <ReactMap
+                  resultBuildingsUnsorted={resultBuildingsUnsorted}
+                  savedBuildings={savedBuildings}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey="list">
                 <AllBuildingsList
