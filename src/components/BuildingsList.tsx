@@ -1,5 +1,5 @@
 import { areListingsOn } from "../config/config";
-import { listingStatusEnum, pageTypeEnum } from "../types/enumTypes";
+import { listingStatusEnum } from "../types/enumTypes";
 import BuildingCard from "./BuildingCard";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -13,7 +13,6 @@ import Spinner from "react-bootstrap/Spinner";
 type AllBuildingsListProps = {
   isLoading: boolean;
   resultBuildingsUnsorted: IBuilding[];
-  pageType: pageTypeEnum;
 };
 
 export const getListing = (
@@ -31,7 +30,6 @@ export const getListing = (
 const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   isLoading,
   resultBuildingsUnsorted,
-  pageType,
 }) => {
   if (!resultBuildingsUnsorted) {
     return null;
@@ -42,7 +40,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
       {/* result count */}
       <Row>
         <Col>
-          {!isLoading && pageType === pageTypeEnum.allBuildings && (
+          {!isLoading && (
             <p className="mb-0">
               {resultBuildingsUnsorted.length > 0
                 ? `${resultBuildingsUnsorted.length} buildings found`

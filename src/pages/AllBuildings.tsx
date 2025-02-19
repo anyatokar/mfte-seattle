@@ -21,7 +21,7 @@ import { filterReducer } from "../reducers/filterReducer";
 
 import IBuilding from "../interfaces/IBuilding";
 import IPage from "../interfaces/IPage";
-import { BedroomsKeyEnum, pageTypeEnum } from "../types/enumTypes";
+import { BedroomsKeyEnum } from "../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -123,7 +123,6 @@ const AllBuildingsPage: React.FC<IPage> = () => {
               <AllBuildingsList
                 isLoading={isLoadingAllBuildings}
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
-                pageType={pageTypeEnum.allBuildings}
               />
             </Col>
           </Row>
@@ -153,7 +152,6 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                 <AllBuildingsList
                   isLoading={isLoadingAllBuildings}
                   resultBuildingsUnsorted={resultBuildingsUnsorted}
-                  pageType={pageTypeEnum.allBuildings}
                 />
               </Tab.Pane>
             </Tab.Content>

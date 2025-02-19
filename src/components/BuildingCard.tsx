@@ -70,7 +70,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({ building }) => {
     }
   }
 
-  // Saved Buildings Page - note form
+  // Saved Buildings - note form
   const [updatedNote, setUpdatedNote] = useState(originalNote);
 
   const handleSubmit = (event: any) => {
