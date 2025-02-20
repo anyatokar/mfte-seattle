@@ -49,7 +49,7 @@ const colorBox = (
   marginRight: "5px",
   opacity: type === "hasListing" ? 1 : 0.8,
   borderRadius: "4px",
-  border: type === "saved" ? "2px solid black" : "none",
+  border: type === "saved" ? "3px solid black" : "1px solid black",
 });
 
 export default Legend;
