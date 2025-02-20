@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
+import { useAuth } from "../../contexts/AuthContext";
 
 type FilterSwitchProps = {
   onCheckboxChange: () => void;
@@ -12,8 +13,12 @@ const FilterSwitch: React.FC<FilterSwitchProps> = ({
 }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
 
+  const { currentUser } = useAuth();
+
   function handleCheck() {
-    setIsSwitchOn((prevState) => !prevState);
+    if (type === "knownOnly" || currentUser) {
+      setIsSwitchOn((prevState) => !prevState);
+    }
     onCheckboxChange();
   }
 
