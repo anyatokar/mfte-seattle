@@ -4,7 +4,7 @@ import { ActiveFilters } from "../utils/buildingsFilter";
 export type FilterAction =
   | {
       type: "checked" | "unchecked" | "clearAll";
-      category: "bedrooms" | "neighborhoods";
+      category: "bedrooms" | "neighborhoods" | "ami";
       checkbox?: BedroomsKeyEnum | string;
     }
   | { type: "toggleSwitch"; category: "isAvailOnly" | "isSavedOnly" };
