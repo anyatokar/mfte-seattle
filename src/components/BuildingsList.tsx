@@ -1,3 +1,4 @@
+import { MutableRefObject } from "react";
 import BuildingCard from "./BuildingCard";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -12,6 +13,7 @@ type AllBuildingsListProps = {
   isLoading: boolean;
   resultBuildingsUnsorted: IBuilding[];
   savedBuildings: ISavedBuilding[];
+  shouldScroll: MutableRefObject<boolean>;
 };
 
 export const checkIsSaved = (
@@ -19,8 +21,7 @@ export const checkIsSaved = (
   building: IBuilding
 ): ISavedBuilding | undefined => {
   return savedBuildings.find(
-    (savedBuilding: IBuilding) =>
-      savedBuilding.buildingID === building.buildingID
+    (savedBuilding) => savedBuilding.buildingID === building.buildingID
   );
 };
 
@@ -28,6 +29,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   isLoading,
   resultBuildingsUnsorted,
   savedBuildings,
+  shouldScroll,
 }) => {
   if (!resultBuildingsUnsorted) {
     return null;
@@ -69,6 +71,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                 <BuildingCard
                   building={building}
                   savedHomeData={checkIsSaved(savedBuildings, building)}
+                  shouldScroll={shouldScroll}
                 />
               </Col>
             ))}

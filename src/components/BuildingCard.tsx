@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, MutableRefObject } from "react";
 import { listingStatusEnum, tableType } from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
@@ -26,13 +26,14 @@ import Stack from "react-bootstrap/Stack";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
-  /** There is saved data in the building, but that's only fetched on initial load and and listing update. */
   savedHomeData: ISavedBuilding | undefined;
+  shouldScroll: MutableRefObject<boolean>;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
   building,
   savedHomeData,
+  shouldScroll,
 }) => {
   const {
     buildingID,
@@ -58,15 +59,16 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
 
   const [isSaved, setIsSaved] = useState(!!savedHomeData);
 
-  function toggleSave() {
+  function handleToggleSaveBuilding() {
     if (!!savedHomeData || isSaved) {
       setIsSaved(false);
       setUpdatedNote("");
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
-      saveBuilding(currentUser?.uid, building);
+      saveBuilding(currentUser?.uid, buildingID, buildingName);
     }
+    shouldScroll.current = false;
   }
 
   // Saved Buildings - note form
@@ -79,6 +81,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
 
   useEffect(() => {
     if (debouncedNote !== undefined && debouncedNote !== originalNote) {
+      shouldScroll.current = false;
       handleNoteUpdate(debouncedNote);
     }
   }, [debouncedNote]);
@@ -123,13 +126,19 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                 {" "}
                 <ListingButton listing={listing} isMarker={false} />
                 <WebsiteButton urlForBuilding={urlForBuilding} />
-                <SaveButton isSaved={true} onClickCallback={toggleSave} />
+                <SaveButton
+                  isSaved={true}
+                  onClickCallback={handleToggleSaveBuilding}
+                />
               </Stack>
             ) : (
               <Stack direction={"horizontal"} gap={2}>
                 <ListingButton listing={listing} isMarker={false} />
                 <WebsiteButton urlForBuilding={urlForBuilding} />
-                <SaveButton isSaved={false} onClickCallback={toggleSave} />
+                <SaveButton
+                  isSaved={false}
+                  onClickCallback={handleToggleSaveBuilding}
+                />
               </Stack>
             )
           ) : (

@@ -73,19 +73,22 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       );
     }
     return filterResult;
-  }, [allBuildings, searchQuery, activeFilters]);
+  }, [allBuildings, searchQuery, activeFilters, savedBuildings]);
 
   // Scroll to top when buildings change
   const buildingsListRef = useRef<HTMLDivElement | null>(null);
+  /** If prev action is save, unsave, or note in list view (not map), don't scroll. */
+  const shouldScroll = useRef<boolean>(true);
 
   useEffect(() => {
-    if (buildingsListRef.current) {
+    if (buildingsListRef.current && shouldScroll.current) {
       buildingsListRef.current.scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth",
       });
     }
+    shouldScroll.current = true;
   }, [resultBuildingsUnsorted]);
 
   return (
@@ -140,6 +143,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                 isLoading={isLoadingAllBuildings}
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
+                shouldScroll={shouldScroll}
               />
             </Col>
           </Row>
@@ -173,6 +177,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                   isLoading={isLoadingAllBuildings}
                   resultBuildingsUnsorted={resultBuildingsUnsorted}
                   savedBuildings={savedBuildings}
+                  shouldScroll={shouldScroll}
                 />
               </Tab.Pane>
             </Tab.Content>
