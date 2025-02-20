@@ -15,7 +15,6 @@ import { contactUsFormFieldsType } from "../pages/Contact";
 import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 
-import IBuilding from "../interfaces/IBuilding";
 import IListing, { AvailData } from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
@@ -25,18 +24,21 @@ import {
 
 export async function saveBuilding(
   uid: string | undefined,
-  building: IBuilding
+  buildingID: string,
+  buildingName: string
 ) {
-  if (!uid || !building) {
+  if (!uid || !buildingID) {
     return;
   }
-
-  const { buildingID, buildingName } = building;
 
   const userDocRef = doc(db, "users", uid);
   const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
 
-  await setDoc(buildingDocRef, { ...building, savedTimestamp: new Date() })
+  await setDoc(buildingDocRef, {
+    buildingID,
+    buildingName,
+    savedTimestamp: new Date(),
+  })
     .then(() => {
       console.log(`${buildingName} saved to user list.`);
     })

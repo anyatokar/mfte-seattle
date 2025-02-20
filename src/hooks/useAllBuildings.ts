@@ -4,6 +4,8 @@ import { db } from "../db/firebase";
 import { useAllListings } from "./useListings";
 import { listingStatusEnum } from "../types/enumTypes";
 import IBuilding from "../interfaces/IBuilding";
+import IListing from "../interfaces/IListing";
+import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 export const useAllBuildings = (): [IBuilding[], boolean] => {
   const [allBuildings, setAllBuildings] = useState<IBuilding[]>([]);
@@ -14,7 +16,9 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
   // The function is created once on mount, then it only gets re-created when the dependencies change.
   // Each time the function is created or re-created, the useEffect hook runs to execute the function.
   const getAllBuildings = useCallback(() => {
-    const findListing = (buildingID: IBuilding["buildingID"]) => {
+    const findListing = (
+      buildingID: IBuilding["buildingID"]
+    ): IListing | undefined => {
       // This finds the first active entry.
       return allListings.find(
         (listing) =>
@@ -41,6 +45,7 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
         if (listing !== undefined) {
           building.listing = { ...listing };
         }
+
         buildings.push(building);
       });
 

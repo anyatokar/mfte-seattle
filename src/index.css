@@ -49,7 +49,7 @@ body {
 }
 
 .tabs .nav-link:hover {
-  background: #eef6f6;
+  background: #f2fbfc;
 }
 
 .tabs .nav-link.active {
@@ -196,6 +196,14 @@ body {
 .units-avail-badge {
   position: relative;
   left: 0.5em;
+}
+
+.form-check-input {
+  cursor: pointer !important;
+}
+
+.form-check-label {
+  cursor: pointer !important;
 }
 /* end of misc */
 

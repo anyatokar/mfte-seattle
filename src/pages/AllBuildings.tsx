@@ -12,67 +12,22 @@ import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";
 
 import AllBuildingsList from "../components/BuildingsList";
-import ReactMap from "../map/ReactMap";
 import SearchAndFilter from "../components/SearchAndFilter";
+import ReactMap from "../map/ReactMap";
 
 import { genericSearch } from "../utils/genericSearch";
-import { ActiveFilters, buildingsFilter } from "../utils/buildingsFilter";
+import { buildingsFilter } from "../utils/buildingsFilter";
+import { filterReducer } from "../reducers/filterReducer";
 
 import IBuilding from "../interfaces/IBuilding";
 import IPage from "../interfaces/IPage";
-import { BedroomsKeyEnum, pageTypeEnum } from "../types/enumTypes";
+import { BedroomsKeyEnum } from "../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-
-type FilterAction =
-  | {
-      type: "checked" | "unchecked" | "clearAll";
-      category: "bedrooms" | "neighborhoods";
-      checkbox?: BedroomsKeyEnum | string;
-    }
-  | { type: "toggleAvailOnly"; category: "isAvailOnly" };
-
-const filterReducer = (
-  state: ActiveFilters,
-  action: FilterAction
-): ActiveFilters => {
-  switch (action.type) {
-    case "checked": {
-      return {
-        ...state,
-        [action.category]: new Set(state[action.category]).add(
-          action.checkbox!
-        ),
-      };
-    }
-    case "unchecked": {
-      const newState = new Set(state[action.category]);
-      newState.delete(action.checkbox!);
-      return {
-        ...state,
-        [action.category]: newState,
-      };
-    }
-    case "clearAll": {
-      return {
-        ...state,
-        [action.category]: new Set(),
-      };
-    }
-    case "toggleAvailOnly": {
-      return {
-        ...state,
-        isAvailOnly: !state.isAvailOnly, // Toggle the isAvailOnly flag
-      };
-    }
-    default:
-      return state;
-  }
-};
 
 export type HandleCheckboxChange = (
   checkbox: BedroomsKeyEnum | string,
@@ -88,39 +43,18 @@ const AllBuildingsPage: React.FC<IPage> = () => {
     allBuildings.map((building) => building.residentialTargetedArea)
   );
   const [searchQuery, setSearchQuery] = useState("");
+
   const [activeFilters, dispatch] = useReducer(filterReducer, {
     bedrooms: new Set<BedroomsKeyEnum>(),
     neighborhoods: new Set<string>(),
     isAvailOnly: false,
+    isSavedOnly: false,
   });
 
-  // Handler for Avail Switch
-  const handleAvailOnlyToggle = () => {
-    dispatch({ type: "toggleAvailOnly", category: "isAvailOnly" });
-  };
-
-  // Handler for Bedrooms
-  const handleBedroomsChange = (checkbox: BedroomsKeyEnum): void => {
-    if (activeFilters.bedrooms.has(checkbox)) {
-      dispatch({ type: "unchecked", category: "bedrooms", checkbox });
-    } else {
-      dispatch({ type: "checked", category: "bedrooms", checkbox });
-    }
-  };
-
-  // Handler for Neighborhoods
-  const handleNeighborhoodsChange = (checkbox?: string): void => {
-    if (!checkbox) {
-      dispatch({ type: "clearAll", category: "neighborhoods" });
-    } else if (activeFilters.neighborhoods.has(checkbox)) {
-      dispatch({ type: "unchecked", category: "neighborhoods", checkbox });
-    } else {
-      dispatch({ type: "checked", category: "neighborhoods", checkbox });
-    }
-  };
-
   const resultBuildingsUnsorted = useMemo(() => {
-    return allBuildings
+    let filterResult;
+
+    filterResult = allBuildings
       .filter((building) =>
         genericSearch<IBuilding>(
           building,
@@ -129,19 +63,32 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         )
       )
       .filter((building) => buildingsFilter(building, activeFilters));
-  }, [allBuildings, searchQuery, activeFilters]);
+
+    // Additional filter for saved buildings.
+    if (activeFilters.isSavedOnly) {
+      filterResult = filterResult.filter((building) =>
+        savedBuildings.some(
+          (savedBuilding) => savedBuilding.buildingID === building.buildingID
+        )
+      );
+    }
+    return filterResult;
+  }, [allBuildings, searchQuery, activeFilters, savedBuildings]);
 
   // Scroll to top when buildings change
   const buildingsListRef = useRef<HTMLDivElement | null>(null);
+  /** If prev action is save, unsave, or note in list view (not map), don't scroll. */
+  const shouldScroll = useRef<boolean>(true);
 
   useEffect(() => {
-    if (buildingsListRef.current) {
+    if (buildingsListRef.current && shouldScroll.current) {
       buildingsListRef.current.scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth",
       });
     }
+    shouldScroll.current = true;
   }, [resultBuildingsUnsorted]);
 
   return (
@@ -170,17 +117,15 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       <div className="pt-2">
         <SearchAndFilter
           setSearchQuery={setSearchQuery}
-          onBedroomsChange={handleBedroomsChange}
-          onNeighborhoodsChange={handleNeighborhoodsChange}
           allNeighborhoods={allNeighborhoods}
-          activeNeighborhoodFilters={activeFilters.neighborhoods}
-          onAvailOnlyToggle={handleAvailOnlyToggle}
+          activeFilters={activeFilters}
+          dispatch={dispatch}
         />
 
         {/* Only visible on large screens */}
         <Container fluid className="d-none d-md-block">
           <Row>
-            <Col className="pl-0">
+            <Col className="px-1">
               <ReactMap
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
@@ -198,16 +143,16 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                 isLoading={isLoadingAllBuildings}
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
-                pageType={pageTypeEnum.allBuildings}
+                shouldScroll={shouldScroll}
               />
             </Col>
           </Row>
         </Container>
 
         {/* Only visible on small screens */}
-        <Container fluid className="d-block d-md-none">
+        <Container fluid className="d-block d-md-none mt-1">
           <Tab.Container id="sidebar" defaultActiveKey="map">
-            <Nav variant="pills" className="mb-2 small">
+            <Nav variant="pills" className="mb-1 small">
               <Nav.Item>
                 <Nav.Link eventKey="map" className="tab small py-1 px-2">
                   Map View
@@ -232,7 +177,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                   isLoading={isLoadingAllBuildings}
                   resultBuildingsUnsorted={resultBuildingsUnsorted}
                   savedBuildings={savedBuildings}
-                  pageType={pageTypeEnum.allBuildings}
+                  shouldScroll={shouldScroll}
                 />
               </Tab.Pane>
             </Tab.Content>

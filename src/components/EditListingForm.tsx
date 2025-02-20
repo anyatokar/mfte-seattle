@@ -146,7 +146,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       );
       if (listingID) {
         console.log(
-          `Successfully added listing for ${selectedBuilding?.buildingName}, with listingID: ${listingID}`
+          `Successfully added listing for ${selectedBuilding?.buildingName}. ListingID: ${listingID}`
         );
         toggleFormCallback("", true);
       }

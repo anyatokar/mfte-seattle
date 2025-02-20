@@ -1,12 +1,5 @@
-import { useState, useContext } from "react";
-
-import { areListingsOn } from "../config/config";
-import {
-  accountTypeEnum,
-  listingStatusEnum,
-  pageTypeEnum,
-  tableType,
-} from "../types/enumTypes";
+import { useState, useContext, useEffect, MutableRefObject } from "react";
+import { listingStatusEnum, tableType } from "../types/enumTypes";
 
 import { AddressAndPhone } from "./BuildingContactInfo";
 import BuildingDataTable from "./BuildingDataTable";
@@ -15,7 +8,7 @@ import SaveButton from "./SaveButton";
 import WebsiteButton from "./WebsiteButton";
 
 import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
-import { timestampToDateAndTime } from "../utils/generalUtils";
+import useDebounce from "../hooks/useDebounce";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -24,7 +17,6 @@ import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 import Badge from "react-bootstrap/Badge";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -34,19 +26,15 @@ import Stack from "react-bootstrap/Stack";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
-  isSaved: boolean;
-  pageType: pageTypeEnum.allBuildings;
+  savedHomeData: ISavedBuilding | undefined;
+  shouldScroll: MutableRefObject<boolean>;
 }
 
-export interface SavedBuildingCardProps {
-  building: ISavedBuilding;
-  isSaved: boolean;
-  pageType: pageTypeEnum.savedBuildings;
-}
-
-type BuildingCardProps = AllBuildingCardProps | SavedBuildingCardProps;
-
-const BuildingCard: React.FC<BuildingCardProps> = (props) => {
+const BuildingCard: React.FC<AllBuildingCardProps> = ({
+  building,
+  savedHomeData,
+  shouldScroll,
+}) => {
   const {
     buildingID,
     buildingName,
@@ -61,144 +49,110 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
     zip,
     amiData,
     listing,
-  } = props.building;
+  } = building;
 
-  const { pageType } = props;
-
-  const { currentUser, accountType } = useAuth();
+  const { currentUser } = useAuth();
 
   // All Buildings Page - save/saved button
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  let wasOriginallySaved = false;
-  let originalNote: string | undefined;
-  let formattedTimestamp: string | null | undefined;
+  const [isSaved, setIsSaved] = useState(!!savedHomeData);
 
-  if (pageType === pageTypeEnum.allBuildings) {
-    wasOriginallySaved = props.isSaved;
-  } else if (pageType === pageTypeEnum.savedBuildings) {
-    originalNote = props.building.note;
-    formattedTimestamp = props.building.noteTimestamp
-      ? timestampToDateAndTime(props.building.noteTimestamp)
-      : null;
-  }
-
-  const [isSaved, setIsSaved] = useState(wasOriginallySaved);
-
-  function toggleSave() {
-    if (wasOriginallySaved || isSaved) {
+  function handleToggleSaveBuilding() {
+    if (!!savedHomeData || isSaved) {
       setIsSaved(false);
+      setUpdatedNote("");
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
-      saveBuilding(currentUser?.uid, props.building);
+      saveBuilding(currentUser?.uid, buildingID, buildingName);
     }
+    shouldScroll.current = false;
   }
 
-  // Saved Buildings Page - note form
+  // Saved Buildings - note form
+  const originalNote = savedHomeData?.note || "";
   const [updatedNote, setUpdatedNote] = useState(originalNote);
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  // This runs every time component re-renders (on every keystroke).
+  // But it only updates when user stops typing.
+  const debouncedNote = useDebounce(updatedNote, 1000);
 
-    updateNote(updatedNote || "");
-  };
+  useEffect(() => {
+    if (debouncedNote !== undefined && debouncedNote !== originalNote) {
+      shouldScroll.current = false;
+      handleNoteUpdate(debouncedNote);
+    }
+  }, [debouncedNote]);
 
-  const updateNote = (updatedNote: string) => {
-    return addNote(currentUser?.uid, buildingID, updatedNote)
+  async function handleNoteUpdate(debouncedNote: string): Promise<void> {
+    return addNote(currentUser?.uid, buildingID, debouncedNote)
       .then(() => {
         console.log("Note updated successfully.");
       })
       .catch((error: any) => {
         console.error("Error updating document: ", error);
       });
-  };
+  }
 
   return (
     <Card
       border={
-        areListingsOn && listing?.listingStatus === listingStatusEnum.ACTIVE
-          ? "success"
-          : ""
+        listing?.listingStatus === listingStatusEnum.ACTIVE ? "success" : ""
       }
     >
       <Card.Header>
         <Card.Title className="mt-2">
           <div>
             {buildingName}
-            {areListingsOn &&
-              listing?.listingStatus === listingStatusEnum.ACTIVE && (
-                <Badge
-                  pill
-                  bg="warning"
-                  text="dark"
-                  className="units-avail-badge"
-                >
-                  Units available!
-                </Badge>
-              )}
+            {listing?.listingStatus === listingStatusEnum.ACTIVE && (
+              <Badge
+                pill
+                bg="warning"
+                text="dark"
+                className="units-avail-badge"
+              >
+                Units available!
+              </Badge>
+            )}
           </div>
         </Card.Title>
         <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
         <div className="mt-2">
-          {pageType === pageTypeEnum.allBuildings &&
-            accountType !== accountTypeEnum.MANAGER &&
-            (currentUser ? (
-              wasOriginallySaved || isSaved ? (
-                <Stack direction={"horizontal"} gap={2}>
-                  {" "}
-                  <ListingButton listing={listing} isMarker={false} />
-                  <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <SaveButton isSaved={true} onClickCallback={toggleSave} />
-                </Stack>
-              ) : (
-                <Stack direction={"horizontal"} gap={2}>
-                  <ListingButton listing={listing} isMarker={false} />
-                  <WebsiteButton urlForBuilding={urlForBuilding} />
-                  <SaveButton isSaved={false} onClickCallback={toggleSave} />
-                </Stack>
-              )
+          {currentUser ? (
+            !!savedHomeData || isSaved ? (
+              <Stack direction={"horizontal"} gap={2}>
+                {" "}
+                <ListingButton listing={listing} isMarker={false} />
+                <WebsiteButton urlForBuilding={urlForBuilding} />
+                <SaveButton
+                  isSaved={true}
+                  onClickCallback={handleToggleSaveBuilding}
+                />
+              </Stack>
             ) : (
               <Stack direction={"horizontal"} gap={2}>
                 <ListingButton listing={listing} isMarker={false} />
                 <WebsiteButton urlForBuilding={urlForBuilding} />
-                <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
+                <SaveButton
+                  isSaved={false}
+                  onClickCallback={handleToggleSaveBuilding}
+                />
               </Stack>
-            ))}
-          {accountType === accountTypeEnum.MANAGER && (
+            )
+          ) : (
             <Stack direction={"horizontal"} gap={2}>
               <ListingButton listing={listing} isMarker={false} />
               <WebsiteButton urlForBuilding={urlForBuilding} />
+              <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
             </Stack>
           )}
         </div>
-
-        {pageType === pageTypeEnum.savedBuildings && (
-          <Stack direction={"horizontal"} gap={2}>
-            <ListingButton listing={listing} isMarker={false} />
-            <WebsiteButton urlForBuilding={urlForBuilding} />
-            <Button
-              className="center"
-              size="sm"
-              variant="outline-danger"
-              title={`Remove ${buildingName} from saved buildings list`}
-              type="button"
-              value="Remove"
-              onClick={() => {
-                deleteBuilding(currentUser?.uid, buildingID, buildingName);
-              }}
-            >
-              Remove
-            </Button>
-          </Stack>
-        )}
       </Card.Header>
 
       <ListGroup variant="flush" className="mb-2">
-        {(!areListingsOn ||
-          !listing ||
-          listing.listingStatus !== listingStatusEnum.ACTIVE) && (
+        {(!listing || listing.listingStatus !== listingStatusEnum.ACTIVE) && (
           <ListGroup.Item>
             Contact building for current availability.
           </ListGroup.Item>
@@ -208,14 +162,12 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
           <Tabs
             className="tabs"
             defaultActiveKey={
-              areListingsOn &&
               listing?.listingStatus === listingStatusEnum.ACTIVE
                 ? "availability"
                 : "contact"
             }
           >
-            {areListingsOn &&
-              listing?.listingStatus === listingStatusEnum.ACTIVE &&
+            {listing?.listingStatus === listingStatusEnum.ACTIVE &&
               listing?.availData && (
                 <Tab
                   eventKey="availability"
@@ -256,39 +208,22 @@ const BuildingCard: React.FC<BuildingCardProps> = (props) => {
             )}
           </Tabs>
         </ListGroup.Item>
-        {pageType === pageTypeEnum.savedBuildings && (
+        {!!savedHomeData || isSaved ? (
           <ListGroup.Item>
-            <>
-              <Form onSubmit={handleSubmit}>
-                <Form.Label>Notes</Form.Label>
-                <Form.Group className="mb-2">
-                  <Form.Control
-                    as="textarea"
-                    name="note"
-                    rows={2}
-                    value={updatedNote}
-                    onChange={(event) => setUpdatedNote(event.target.value)}
-                  />
-                  {formattedTimestamp && (
-                    <Form.Text>
-                      Updated: {timestampToDateAndTime(formattedTimestamp)}
-                    </Form.Text>
-                  )}
-                </Form.Group>
-                <Button
-                  disabled={updatedNote === originalNote}
-                  type="submit"
-                  title={`Save or update your note!`}
-                  value="Save note"
-                  size="sm"
-                  className="diy-solid-info-button"
-                >
-                  Save note
-                </Button>
-              </Form>
-            </>
+            <Form>
+              <Form.Label>Notes</Form.Label>
+              <Form.Group className="mb-2">
+                <Form.Control
+                  as="textarea"
+                  name="note"
+                  rows={2}
+                  value={updatedNote}
+                  onChange={(e) => setUpdatedNote(e.target.value)}
+                />
+              </Form.Group>
+            </Form>
           </ListGroup.Item>
-        )}
+        ) : null}
       </ListGroup>
     </Card>
   );

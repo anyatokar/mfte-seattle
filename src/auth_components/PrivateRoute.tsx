@@ -19,8 +19,6 @@ export default function PrivateRoute({ children, name }: PrivateRouteProps) {
       currentUser &&
       ((name === "Manage Listings Page" &&
         accountType === accountTypeEnum.MANAGER) ||
-        (name === "Saved Buildings Page" &&
-          accountType === accountTypeEnum.RENTER) ||
         name === "Manage Profile Page")
     );
   }
@@ -40,12 +38,6 @@ export default function PrivateRoute({ children, name }: PrivateRouteProps) {
               {name === "Manage Listings Page" && (
                 <p className="lead">
                   The Manage Listings page restricted to manager accounts.
-                </p>
-              )}
-              {name === "Saved Buildings Page" && (
-                <p className="lead">
-                  The Saved Buildings page is restricted to non-manager
-                  accounts.
                 </p>
               )}
               {name === "Manage Profile Page" && (

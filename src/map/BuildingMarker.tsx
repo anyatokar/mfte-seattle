@@ -1,7 +1,6 @@
 /// <reference types="googlemaps" />
 import { useCallback, useState, useContext } from "react";
 import { InfoWindow, Marker } from "@react-google-maps/api";
-import { areListingsOn } from "../config/config";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -14,7 +13,6 @@ import SaveButton from "../components/SaveButton";
 import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
-
 import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
 
 import Stack from "react-bootstrap/Stack";
@@ -70,37 +68,25 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
-      saveBuilding(currentUser?.uid, building);
+      saveBuilding(currentUser?.uid, buildingID, buildingName);
     }
   }
 
-  const svgMarkerNoListing = {
-    path: "M0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-    fillColor: "#10345c",
-    strokeColor: "black",
-    strokeWeight: 1,
-    fillOpacity: 0.8,
-    rotation: 0,
-    scale: 1.25,
-    anchor: new google.maps.Point(0, 20),
-  };
+  function getIcon() {
+    const hasListing =
+      building.listing?.listingStatus === listingStatusEnum.ACTIVE;
 
-  const svgMarkerListing = {
-    path: "M0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-    fillColor: "red",
-    strokeColor: "black",
-    strokeWeight: 1,
-    fillOpacity: 1,
-    rotation: 0,
-    scale: 1.25,
-    anchor: new google.maps.Point(0, 20),
-  };
-
-  const icon =
-    areListingsOn &&
-    building.listing?.listingStatus === listingStatusEnum.ACTIVE
-      ? svgMarkerListing
-      : svgMarkerNoListing;
+    return {
+      path: "M0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+      fillColor: hasListing ? "red" : "#10345c",
+      strokeColor: "black",
+      strokeWeight: wasOriginallySaved || isSaved ? 3 : 1,
+      fillOpacity: hasListing ? 1 : 0.8,
+      rotation: 0,
+      scale: 1.25,
+      anchor: new google.maps.Point(0, 20),
+    };
+  }
 
   return (
     <Marker
@@ -109,21 +95,19 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
         lng: lng,
       }}
       onClick={onMarkerClick}
-      icon={icon}
+      icon={getIcon()}
     >
       {isSelected && (
         <InfoWindow onCloseClick={clearSelection}>
           <>
             <div>
-              {areListingsOn && building.listing?.url && (
+              {building.listing?.url && (
                 <>
                   <ListingButton listing={building.listing} isMarker={true} />
                 </>
               )}
             </div>
-            <div
-              className={areListingsOn && building.listing?.url ? "pt-2" : ""}
-            >
+            <div className={building.listing?.url ? "pt-2" : ""}>
               <div>
                 <strong>{buildingName}</strong>
               </div>

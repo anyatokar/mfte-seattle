@@ -139,11 +139,6 @@ export const Header = () => {
               <Navbar.Text className="me-lg-4 diy-font-italic">
                 {currentUser.displayName && `Hi, ${currentUser.displayName}!`}
               </Navbar.Text>
-              {accountType === accountTypeEnum.RENTER && (
-                <LinkContainer to="/saved-buildings">
-                  <Nav.Link active={false}>Saved</Nav.Link>
-                </LinkContainer>
-              )}
               {accountType === accountTypeEnum.MANAGER && (
                 <LinkContainer to="/manage-listings">
                   <Nav.Link active={false}>Listings</Nav.Link>
@@ -162,9 +157,6 @@ export const Header = () => {
             </Nav>
           ) : (
             <Nav className="p-0 p-lg-3">
-              <Nav.Link active={false} onClick={showLoginSavedBuildings}>
-                Saved
-              </Nav.Link>
               <Nav.Link active={false} onClick={showLogin}>
                 Log In / Sign Up
               </Nav.Link>

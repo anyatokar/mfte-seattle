@@ -1,10 +1,6 @@
 import { Profiler, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import {
-  areListingsOn,
-  expiringSoonDays,
-  isProfilerOn,
-} from "../config/config";
+import { expiringSoonDays, isProfilerOn } from "../config/config";
 import {
   accountTypeEnum,
   confirmModalTypeEnum,
@@ -149,14 +145,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
         <Row className="justify-content-center">
           <Col lg={8}>
             <div className="display-6 mb-5">Manage Listings</div>
-            {!areListingsOn && (
-              <div className="mb-3">
-                <strong>
-                  You can view and edit your listings but this feature isn't
-                  currently live.
-                </strong>
-              </div>
-            )}
           </Col>
         </Row>
 

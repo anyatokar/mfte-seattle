@@ -1,5 +1,4 @@
 import { firebaseConfig } from "../db/firebase";
-import { areListingsOn } from "../config/config";
 
 import { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
@@ -36,7 +35,6 @@ const ReactMap: React.FC<IMap> = ({
 
   useEffect(() => {
     if (
-      areListingsOn &&
       selectedBuilding &&
       !resultBuildingsUnsorted.some(
         (b) => b.buildingID === selectedBuilding.buildingID
@@ -68,7 +66,7 @@ const ReactMap: React.FC<IMap> = ({
                   building={building}
                   isSelected={building === selectedBuilding}
                   setSelectedBuilding={setSelectedBuilding}
-                  isSaved={checkIsSaved(savedBuildings, building)}
+                  isSaved={!!checkIsSaved(savedBuildings, building)}
                 />
               ))}
               <div
