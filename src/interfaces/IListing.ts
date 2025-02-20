@@ -16,6 +16,7 @@ export type AvailData = {
   dateAvailString: string;
   /** String when in form, gets converted to number before sent to Firestore */
   maxRent: string | number;
+  percentAmi: string;
 };
 
 export default interface IListing {
