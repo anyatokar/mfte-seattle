@@ -152,11 +152,12 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
       </Card.Header>
 
       <ListGroup variant="flush" className="mb-2">
-        {(!listing || listing.listingStatus !== listingStatusEnum.ACTIVE) && (
-          <ListGroup.Item>
-            Contact building for current availability.
-          </ListGroup.Item>
-        )}
+        {!listing ||
+          (listing.listingStatus !== listingStatusEnum.ACTIVE && (
+            <ListGroup.Item>
+              Contact building for current availability.
+            </ListGroup.Item>
+          ))}
 
         <ListGroup.Item>
           <Tabs

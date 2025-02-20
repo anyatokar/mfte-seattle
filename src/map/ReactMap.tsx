@@ -5,7 +5,7 @@ import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 import BuildingMarker from "./BuildingMarker";
 import Legend from "./Legend";
-import { checkIsSaved } from "../components/BuildingsList";
+import { getSavedData } from "../components/BuildingsList";
 
 import IBuilding from "../interfaces/IBuilding";
 import IMap from "../interfaces/IMap";
@@ -66,7 +66,7 @@ const ReactMap: React.FC<IMap> = ({
                   building={building}
                   isSelected={building === selectedBuilding}
                   setSelectedBuilding={setSelectedBuilding}
-                  isSaved={!!checkIsSaved(savedBuildings, building)}
+                  isSaved={!!getSavedData(savedBuildings, building)}
                 />
               ))}
               <div
