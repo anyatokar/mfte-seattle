@@ -1,5 +1,4 @@
 import IBuilding, { amiPercentageType } from "../interfaces/IBuilding";
-import { UnitSize } from "../interfaces/IListing";
 import { BedroomsKeyEnum, listingStatusEnum } from "../types/enumTypes";
 
 export type ActiveFilters = {
@@ -50,12 +49,14 @@ function filterAmi(building: IBuilding, activeFilters: ActiveFilters): boolean {
 
   const bedroomSet = bedrooms.size === 0 ? fullBedroomSet : bedrooms;
 
+  // TODO: Collect realtime AMI percentage data so that this filter can be applied to it.
+  // This is just looking at fixed data.
   for (const selectedBedroom of bedroomSet) {
     for (const amiFilterUnit of [...ami]) {
-      for (const buildingAmiData of building.amiData) {
+      for (const buildingAmiObj of building.amiData) {
         if (
-          buildingAmiData.unitSize === selectedBedroom &&
-          buildingAmiData.amiPercentages.includes(
+          buildingAmiObj.unitSize === selectedBedroom &&
+          buildingAmiObj.amiPercentages.includes(
             Number(amiFilterUnit) as amiPercentageType
           )
         ) {

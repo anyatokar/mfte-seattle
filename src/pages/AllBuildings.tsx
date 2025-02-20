@@ -162,7 +162,10 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         {/* Only visible on small screens */}
         <Container fluid className="d-block d-md-none mt-1">
           <Tab.Container id="sidebar" defaultActiveKey="map">
-            <Nav variant="pills" className="mb-1 small">
+            <Nav
+              variant="pills"
+              className="mb-1 small d-flex justify-content-end"
+            >
               <Nav.Item>
                 <Nav.Link eventKey="map" className="tab small py-1 px-2">
                   Map View
