@@ -1,6 +1,9 @@
 import { Dispatch, useContext, useState } from "react";
 import SearchInput from "./SearchInput";
 import FilterSwitch from "./checkboxes/FilterSwitch";
+import BedroomDropdown from "./searchAndFilter/BedroomDropdown";
+import NeighborhoodDropdown from "./searchAndFilter/NeighborhoodDropdown";
+import AmiDropdown from "./searchAndFilter/AmiDropdown";
 import { ActiveFilters } from "../utils/buildingsFilter";
 import { FilterAction } from "../reducers/filterReducer";
 import { BedroomsKeyEnum } from "../types/enumTypes";
@@ -11,12 +14,11 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import BedroomDropdown from "./searchAndFilter/BedroomDropdown";
-import NeighborhoodDropdown from "./searchAndFilter/NeighborhoodDropdown";
 
 type SearchAndFilterProps = {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   allNeighborhoods: Set<string>;
+  allAmi: Set<string>;
   activeFilters: ActiveFilters;
   dispatch: Dispatch<FilterAction>;
 };
@@ -24,6 +26,7 @@ type SearchAndFilterProps = {
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   setSearchQuery,
   allNeighborhoods,
+  allAmi,
   activeFilters,
   dispatch,
 }) => {
@@ -60,6 +63,17 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     }
   };
 
+  // Handler for Amis
+  const handleAmiChange = (checkbox?: string): void => {
+    if (!checkbox) {
+      dispatch({ type: "clearAll", category: "ami" });
+    } else if (activeFilters.ami.has(checkbox)) {
+      dispatch({ type: "unchecked", category: "ami", checkbox });
+    } else {
+      dispatch({ type: "checked", category: "ami", checkbox });
+    }
+  };
+
   return (
     <Container fluid>
       <Row className="p-0 mt-0 mb-1">
@@ -82,6 +96,11 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               allNeighborhoods={allNeighborhoods}
               activeFilters={activeFilters}
             />
+            <AmiDropdown
+              onAmiChange={handleAmiChange}
+              allAmi={allAmi}
+              activeFilters={activeFilters}
+            />
             <FilterSwitch
               onCheckboxChange={handleAvailOnlyToggle}
               type="knownOnly"
@@ -96,12 +115,17 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
 
       {/* filter for small screens */}
       <Row className="d-md-none d-flex align-items-center ">
-        <Col sm={5} className="mb-1">
+        <Col sm={6} className="mb-1">
           <Stack direction="horizontal" gap={2}>
             <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
             <NeighborhoodDropdown
               onNeighborhoodsChange={handleNeighborhoodsChange}
               allNeighborhoods={allNeighborhoods}
+              activeFilters={activeFilters}
+            />
+            <AmiDropdown
+              onAmiChange={handleAmiChange}
+              allAmi={allAmi}
               activeFilters={activeFilters}
             />
           </Stack>

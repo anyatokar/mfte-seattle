@@ -1,10 +1,11 @@
 import IBuilding from "../interfaces/IBuilding";
-import IListing, { UnitSize } from "../interfaces/IListing";
+import { UnitSize } from "../interfaces/IListing";
 import { BedroomsKeyEnum, listingStatusEnum } from "../types/enumTypes";
 
 export type ActiveFilters = {
   bedrooms: Set<BedroomsKeyEnum>;
   neighborhoods: Set<string>;
+  ami: Set<string>;
   isAvailOnly: boolean;
   isSavedOnly: boolean;
 };

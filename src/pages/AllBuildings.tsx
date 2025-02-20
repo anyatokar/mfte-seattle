@@ -31,7 +31,7 @@ import Nav from "react-bootstrap/Nav";
 
 export type HandleCheckboxChange = (
   checkbox: BedroomsKeyEnum | string,
-  category: "bedrooms" | "neighborhoods"
+  category: "bedrooms" | "neighborhoods" | "ami"
 ) => void;
 
 const AllBuildingsPage: React.FC<IPage> = () => {
@@ -42,11 +42,20 @@ const AllBuildingsPage: React.FC<IPage> = () => {
   const allNeighborhoods = new Set(
     allBuildings.map((building) => building.residentialTargetedArea)
   );
+
+  const allAmi = new Set(
+    allBuildings.flatMap((building) =>
+      building.amiData.flatMap((amiData) =>
+        amiData.amiPercentages.map((percentage) => percentage.toString())
+      )
+    )
+  );
   const [searchQuery, setSearchQuery] = useState("");
 
   const [activeFilters, dispatch] = useReducer(filterReducer, {
     bedrooms: new Set<BedroomsKeyEnum>(),
     neighborhoods: new Set<string>(),
+    ami: new Set<string>(),
     isAvailOnly: false,
     isSavedOnly: false,
   });
@@ -118,6 +127,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         <SearchAndFilter
           setSearchQuery={setSearchQuery}
           allNeighborhoods={allNeighborhoods}
+          allAmi={allAmi}
           activeFilters={activeFilters}
           dispatch={dispatch}
         />
