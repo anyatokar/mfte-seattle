@@ -73,7 +73,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       );
     }
     return filterResult;
-  }, [allBuildings, searchQuery, activeFilters, savedBuildings]);
+  }, [allBuildings, searchQuery, activeFilters]);
 
   // Scroll to top when buildings change
   const buildingsListRef = useRef<HTMLDivElement | null>(null);
