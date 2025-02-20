@@ -22,7 +22,7 @@ const SearchInput: React.FC<ISearchProps> = ({ setSearchQuery }) => {
   }, [debouncedSearchQuery, setSearchQuery]);
 
   return (
-    <Form onSubmit={(event) => event.preventDefault()} className="mb-1">
+    <Form onSubmit={(event) => event.preventDefault()} className="mb-1 w-100">
       <Form.Control
         placeholder="Search address, building name, neighborhood"
         id="search"

@@ -64,7 +64,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     <Container fluid>
       <Row className="p-0 mt-0 mb-1">
         {/* search */}
-        <Col sm={7} md={6} lg={4} className="mb-md-0">
+        <Col sm={7} md={6} lg={4} className="d-flex align-items-center mb-md-0">
           <SearchInput setSearchQuery={(query) => setSearchQuery(query)} />
         </Col>
 
@@ -90,7 +90,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
       </Row>
 
       {/* filter for small screens */}
-      <Row className="d-md-none">
+      <Row className="d-md-none d-flex align-items-center ">
         <Col sm={5} className="mb-1">
           <Stack direction="horizontal" gap={2}>
             <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
@@ -101,7 +101,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
             />
           </Stack>
         </Col>
-        <Col sm={6} className="mb-1">
+        <Col sm={6}>
           <Stack direction="horizontal" gap={2}>
             <FilterSwitch
               onCheckboxChange={handleAvailOnlyToggle}
