@@ -68,7 +68,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
-      saveBuilding(currentUser?.uid, building);
+      saveBuilding(currentUser?.uid, buildingID, buildingName);
     }
   }
 
