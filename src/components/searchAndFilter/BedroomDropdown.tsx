@@ -12,7 +12,7 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
   onBedroomsChange,
 }) => {
   const checkboxKeys: BedroomsKeyEnum[] = [
-    BedroomsKeyEnum.SEDU,
+    BedroomsKeyEnum.MICRO,
     BedroomsKeyEnum.STUDIO,
     BedroomsKeyEnum.ONE_BED,
     BedroomsKeyEnum.TWO_BED,

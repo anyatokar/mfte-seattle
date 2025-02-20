@@ -10,14 +10,6 @@ export type ActiveFilters = {
   isSavedOnly: boolean;
 };
 
-const unitSizeToBedroomsKey: Record<UnitSize, BedroomsKeyEnum> = {
-  micro: BedroomsKeyEnum.SEDU,
-  studio: BedroomsKeyEnum.STUDIO,
-  oneBed: BedroomsKeyEnum.ONE_BED,
-  twoBed: BedroomsKeyEnum.TWO_BED,
-  threePlusBed: BedroomsKeyEnum.THREE_PLUS,
-};
-
 function filterBedrooms(
   building: IBuilding,
   activeFilters: ActiveFilters
@@ -30,16 +22,17 @@ function filterBedrooms(
   if (isAvailOnly) {
     if (!building.listing) return false;
 
-    return [...bedrooms].some((filterProperty) =>
+    return [...bedrooms].some((checkedBedroom) =>
       building.listing.availData.some(
-        (avails) =>
-          unitSizeToBedroomsKey[avails.unitSize] === filterProperty &&
-          Number(avails.numAvail) > 0
+        (availObj) =>
+          availObj.unitSize === checkedBedroom && Number(availObj.numAvail) > 0
       )
     );
   }
 
-  return [...bedrooms].some((filterProperty) => !!building[filterProperty]);
+  return [...bedrooms].some((checkedBedroom) =>
+    building.amiData.some((amiObj) => amiObj.unitSize === checkedBedroom)
+  );
 }
 
 function filterAmi(building: IBuilding, activeFilters: ActiveFilters): boolean {
@@ -48,7 +41,7 @@ function filterAmi(building: IBuilding, activeFilters: ActiveFilters): boolean {
   if (ami.size === 0) return true;
 
   const fullBedroomSet = new Set([
-    BedroomsKeyEnum.SEDU,
+    BedroomsKeyEnum.MICRO,
     BedroomsKeyEnum.STUDIO,
     BedroomsKeyEnum.ONE_BED,
     BedroomsKeyEnum.TWO_BED,
@@ -61,7 +54,7 @@ function filterAmi(building: IBuilding, activeFilters: ActiveFilters): boolean {
     for (const amiFilterUnit of [...ami]) {
       for (const buildingAmiData of building.amiData) {
         if (
-          unitSizeToBedroomsKey[buildingAmiData.unitSize] === selectedBedroom &&
+          buildingAmiData.unitSize === selectedBedroom &&
           buildingAmiData.amiPercentages.includes(
             Number(amiFilterUnit) as amiPercentageType
           )
