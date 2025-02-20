@@ -26,8 +26,6 @@ export const Header = () => {
 
   const showModal = modalState !== ModalState.HIDDEN;
   const showLogin = () => setModalState(ModalState.LOGIN);
-  const showLoginSavedBuildings = () =>
-    setModalState(ModalState.LOGIN_SAVED_BUILDINGS);
   const showReset = () => setModalState(ModalState.RESET);
   const showSignup = () => setModalState(ModalState.SIGNUP);
   const showRepSignup = () => setModalState(ModalState.REP_SIGNUP);
@@ -36,7 +34,6 @@ export const Header = () => {
     [setModalState]
   );
 
-  const afterLoginSaved = () => navigate("./saved-buildings");
   const afterLoginManager = () => navigate("./manage-listings");
 
   useEffect(() => {
@@ -73,7 +70,6 @@ export const Header = () => {
           onResetClicked={showReset}
           onSignupClicked={showSignup}
           onRepSignupClicked={showRepSignup}
-          afterLogin={afterLoginSaved}
         />
       );
     } else if (modalState === ModalState.RESET) {
