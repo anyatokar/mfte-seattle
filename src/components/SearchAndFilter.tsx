@@ -90,12 +90,13 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
         {/* filter for large screens */}
         <Col className="mb-1 d-none d-md-block">
           <Stack direction="horizontal" gap={2}>
-            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
             <NeighborhoodDropdown
               onNeighborhoodsChange={handleNeighborhoodsChange}
               allNeighborhoods={allNeighborhoods}
               activeFilters={activeFilters}
             />
+            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
+
             <AmiDropdown
               onAmiChange={handleAmiChange}
               allAmi={allAmi}
@@ -117,12 +118,12 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
       <Row className="d-md-none d-flex align-items-center ">
         <Col sm={7} className="mb-1">
           <Stack direction="horizontal" gap={2}>
-            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
             <NeighborhoodDropdown
               onNeighborhoodsChange={handleNeighborhoodsChange}
               allNeighborhoods={allNeighborhoods}
               activeFilters={activeFilters}
             />
+            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
             <AmiDropdown
               onAmiChange={handleAmiChange}
               allAmi={allAmi}
