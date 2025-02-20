@@ -16,7 +16,7 @@ type AllBuildingsListProps = {
   shouldScroll: MutableRefObject<boolean>;
 };
 
-export const checkIsSaved = (
+export const getSavedData = (
   savedBuildings: ISavedBuilding[],
   building: IBuilding
 ): ISavedBuilding | undefined => {
@@ -70,7 +70,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
               >
                 <BuildingCard
                   building={building}
-                  savedHomeData={checkIsSaved(savedBuildings, building)}
+                  savedHomeData={getSavedData(savedBuildings, building)}
                   shouldScroll={shouldScroll}
                 />
               </Col>
