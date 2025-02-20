@@ -64,7 +64,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     <Container fluid>
       <Row className="p-0 mt-0 mb-1">
         {/* search */}
-        <Col sm={7} md={6} lg={4} className="d-flex align-items-center mb-md-0">
+        <Col sm={7} md={6} lg={4} className="d-flex align-items-center mb-md-0 pe-md-0">
           <SearchInput setSearchQuery={(query) => setSearchQuery(query)} />
         </Col>
 
