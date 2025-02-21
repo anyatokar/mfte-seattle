@@ -14,6 +14,8 @@ export type Address = {
   zip: string;
   neighborhood: string;
   streetAddress: string;
+  lat: number;
+  lng: number;
 };
 
 export type Contact = {
@@ -27,8 +29,6 @@ export default interface IBuilding {
   dateCode: string;
   IDWithDateCode: string;
   buildingName: string;
-  lat: number;
-  lng: number;
   updatedTimestamp: Timestamp;
   amiData: AmiData;
   address: Address;

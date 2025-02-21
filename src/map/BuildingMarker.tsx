@@ -35,9 +35,6 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     buildingName,
     address,
     contact,
-
-    lat,
-    lng,
   } = building;
 
   const onMarkerClick = useCallback(
@@ -85,8 +82,8 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   return (
     <Marker
       position={{
-        lat: lat,
-        lng: lng,
+        lat: address.lat,
+        lng: address.lng,
       }}
       onClick={onMarkerClick}
       icon={getIcon()}
