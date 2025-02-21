@@ -28,7 +28,7 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
     };
 
     setIsLoadingAllBuildings(true);
-    const q = query(collection(db, "buildings"), orderBy("buildingName"));
+    const q = query(collection(db, "buildingsTEST"), orderBy("buildingName"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       if (isLoadingAllListings) {
