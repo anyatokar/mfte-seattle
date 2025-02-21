@@ -84,8 +84,7 @@ export function buildingsFilter(
 
   const neighborhoodsResult =
     // If no boxes are checked, evaluate to be the same as the box is checked - omit that dropdown.
-    neighborhoods.size === 0 ||
-    neighborhoods.has(building.residentialTargetedArea);
+    neighborhoods.size === 0 || neighborhoods.has(building.address.neighborhood);
 
   const amiResult = filterAmi(building, activeFilters);
 

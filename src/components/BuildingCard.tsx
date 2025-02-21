@@ -40,7 +40,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     buildingName,
     phone,
     phone2,
-    residentialTargetedArea,
+    neighborhood,
     urlForBuilding,
     streetNum,
     street,
@@ -118,7 +118,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             )}
           </div>
         </Card.Title>
-        <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
+        <Card.Subtitle>{neighborhood}</Card.Subtitle>
         <div className="mt-2">
           {currentUser ? (
             !!savedHomeData || isSaved ? (

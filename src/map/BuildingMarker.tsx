@@ -34,7 +34,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     buildingID,
     buildingName,
     urlForBuilding,
-    residentialTargetedArea,
+    neighborhood,
     streetNum,
     street,
     city,
@@ -111,7 +111,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
               <div>
                 <strong>{buildingName}</strong>
               </div>
-              <div>{residentialTargetedArea}</div>
+              <div>{neighborhood}</div>
               <div className="my-2">
                 <AddressAndPhone
                   buildingName={buildingName}

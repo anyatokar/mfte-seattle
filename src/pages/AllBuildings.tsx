@@ -40,7 +40,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
 
   // search, filter
   const allNeighborhoods = new Set(
-    allBuildings.map((building) => building.residentialTargetedArea)
+    allBuildings.map((building) => building.address.neighborhood)
   );
 
   const allAmi = new Set(
@@ -67,7 +67,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       .filter((building) =>
         genericSearch<IBuilding>(
           building,
-          ["buildingName", "residentialTargetedArea", "streetAddress", "zip"],
+          ["buildingName", "neighborhood", "streetAddress", "zip"],
           searchQuery
         )
       )
