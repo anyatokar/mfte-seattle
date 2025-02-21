@@ -35,7 +35,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     threePlusBed: "Three+",
   };
 
-  const dataHeader = type === tableType.amiData ? "% of AMI" : "# Available";
+  const dataHeader = type === tableType.amiData ? "% of AMI" : "#";
 
   function renderPercentageList(percentages: AmiPercentage[]): ReactNode {
     if (!percentages) return null;
@@ -53,9 +53,9 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       <Table bordered hover size="sm" className="my-0" responsive>
         <thead>
           <tr>
-            <th>Bedrooms</th>
+            <th>Size</th>
             <th>{dataHeader}</th>
-            {type === tableType.availData && <th>Earliest Date</th>}
+            {type === tableType.availData && <th>Date</th>}
             {/* {type === tableType.availData && <th>% AMI</th>} */}
             {type === tableType.availData && <th>Max Rent</th>}
           </tr>

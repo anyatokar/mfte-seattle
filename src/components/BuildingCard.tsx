@@ -157,11 +157,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
           >
             {listing?.listingStatus === listingStatusEnum.ACTIVE &&
               listing?.availData && (
-                <Tab
-                  eventKey="availability"
-                  title="Availability"
-                  className="mt-2"
-                >
+                <Tab eventKey="availability" title="Available" className="mt-2">
                   <BuildingDataTable
                     type={tableType.availData}
                     data={listing.availData}
