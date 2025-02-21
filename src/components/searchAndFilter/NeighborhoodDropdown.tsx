@@ -30,7 +30,7 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
         id="neighborhood-filter-dropdown"
         size="sm"
       >
-        Neighborhood
+        District
       </Dropdown.Toggle>
       <Dropdown.Menu
         style={{ maxHeight: "200px", overflowY: "auto" }}

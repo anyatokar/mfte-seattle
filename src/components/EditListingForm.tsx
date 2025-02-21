@@ -66,12 +66,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             unitSize: availDataForUnitSize.unitSize,
             numAvail: availDataForUnitSize.numAvail,
             dateAvailString: availDataForUnitSize.dateAvailString || "",
+            percentAmi: availDataForUnitSize.percentAmi || "",
             maxRent: availDataForUnitSize.maxRent || 0,
           }))
         : unitSizeFields.map((unitSize) => ({
             unitSize: unitSize,
             numAvail: 0,
             dateAvailString: "",
+            percentAmi: "",
             maxRent: 0,
           })),
     url: url,
@@ -92,6 +94,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         unitSize: unitSize,
         numAvail: 0,
         dateAvailString: "",
+        percentAmi: "",
         maxRent: 0,
       };
       availData.push(blankRow);
@@ -170,14 +173,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Form.Group as={Row} className="mb-0">
               <Form.Group as={Col} className="mb-md-0">
                 <p>
-                  {selectedBuilding.streetNum} {selectedBuilding.street}
+                  {selectedBuilding.address.streetNum}{" "}
+                  {selectedBuilding.address.street}
                   <br />
-                  {selectedBuilding.city}, {selectedBuilding.state}{" "}
-                  {selectedBuilding.zip}
-                  {selectedBuilding.phone ? <br /> : null}
-                  {selectedBuilding.phone}
-                  {selectedBuilding.phone2 ? <br /> : null}
-                  {selectedBuilding.phone2}
+                  {selectedBuilding.address.city},{" "}
+                  {selectedBuilding.address.state}
+                  {selectedBuilding.address.zip}
+                  {selectedBuilding.contact.phone ? <br /> : null}
+                  {selectedBuilding.contact.phone}
+                  {selectedBuilding.contact.phone2 ? <br /> : null}
+                  {selectedBuilding.contact.phone2}
                 </p>
               </Form.Group>
             </Form.Group>
@@ -195,6 +200,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 <th>Unit Type</th>
                 <th>Number of Units Available</th>
                 <th>Earliest Available Date</th>
+                <th>%AMI</th>
                 <th>Max Rent</th>
               </tr>
             </thead>
@@ -222,6 +228,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                         onChange={(event) =>
                           handleInputChange(event, indexInAvailData)
                         }
+                      />
+                    </td>
+                    <td>
+                      <Form.Control
+                        type="text"
+                        name="percentAmi"
+                        onChange={(event) =>
+                          handleInputChange(event, indexInAvailData)
+                        }
+                        value={availDataForUnitSize.percentAmi}
                       />
                     </td>
                     <td>

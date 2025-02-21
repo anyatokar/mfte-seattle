@@ -159,6 +159,10 @@ body {
 /* End of listing accordion */
 
 /* misc */
+.dropdown-menu {
+  position: fixed !important;
+}
+
 .delete-link:hover {
   color: red !important;
 }

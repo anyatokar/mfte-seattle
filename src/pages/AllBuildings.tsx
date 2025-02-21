@@ -40,16 +40,16 @@ const AllBuildingsPage: React.FC<IPage> = () => {
 
   // search, filter
   const allNeighborhoods = new Set(
-    allBuildings.map((building) => building.residentialTargetedArea)
+    allBuildings.map((building) => building.address.neighborhood)
   );
 
   const allAmi = new Set(
-    allBuildings.flatMap((building) =>
-      building.amiData.flatMap((amiData) =>
-        amiData.amiPercentages.map((percentage) => percentage.toString())
-      )
-    )
+    allBuildings
+      .flatMap((building) => Object.values(building.amiData))
+      .flat()
+      .map(String)
   );
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const [activeFilters, dispatch] = useReducer(filterReducer, {
@@ -67,7 +67,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
       .filter((building) =>
         genericSearch<IBuilding>(
           building,
-          ["buildingName", "residentialTargetedArea", "streetAddress", "zip"],
+          ["buildingName", "neighborhood", "streetAddress", "zip"],
           searchQuery
         )
       )
@@ -162,7 +162,10 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         {/* Only visible on small screens */}
         <Container fluid className="d-block d-md-none mt-1">
           <Tab.Container id="sidebar" defaultActiveKey="map">
-            <Nav variant="pills" className="mb-1 small">
+            <Nav
+              variant="pills"
+              className="mb-1 small d-flex justify-content-end"
+            >
               <Nav.Item>
                 <Nav.Link eventKey="map" className="tab small py-1 px-2">
                   Map View

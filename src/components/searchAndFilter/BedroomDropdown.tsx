@@ -12,7 +12,7 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
   onBedroomsChange,
 }) => {
   const checkboxKeys: BedroomsKeyEnum[] = [
-    BedroomsKeyEnum.SEDU,
+    BedroomsKeyEnum.MICRO,
     BedroomsKeyEnum.STUDIO,
     BedroomsKeyEnum.ONE_BED,
     BedroomsKeyEnum.TWO_BED,
@@ -26,7 +26,7 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
         id="bedroom-filter-dropdown"
         size="sm"
       >
-        Bedrooms
+        Size
       </Dropdown.Toggle>
       <Dropdown.Menu className="p-2" aria-labelledby="bedroom-filter-dropdown">
         {checkboxKeys.map((checkboxKey) => (

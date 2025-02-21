@@ -23,7 +23,7 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
         id="ami-filter-dropdown"
         size="sm"
       >
-        AMI %
+        % AMI
       </Dropdown.Toggle>
       <Dropdown.Menu
         style={{ maxHeight: "200px", overflowY: "auto" }}
