@@ -1,4 +1,5 @@
-import IBuilding, { amiPercentageType } from "../interfaces/IBuilding";
+import IBuilding, { AmiData, AmiPercentage } from "../interfaces/IBuilding";
+
 import { BedroomsKeyEnum, listingStatusEnum } from "../types/enumTypes";
 
 export type ActiveFilters = {
@@ -15,7 +16,6 @@ function filterBedrooms(
 ): boolean {
   const { bedrooms, isAvailOnly } = activeFilters;
 
-  // If no filters are applied, return true.
   if (bedrooms.size === 0) return true;
 
   if (isAvailOnly) {
@@ -29,9 +29,14 @@ function filterBedrooms(
     );
   }
 
-  return [...bedrooms].some((checkedBedroom) =>
-    building.amiData.some((amiObj) => amiObj.unitSize === checkedBedroom)
-  );
+  for (let selectedBedroom of [...bedrooms]) {
+    return (
+      building.amiData[selectedBedroom] &&
+      building.amiData[selectedBedroom].length > 0
+    );
+  }
+
+  return false;
 }
 
 function filterAmi(building: IBuilding, activeFilters: ActiveFilters): boolean {
@@ -52,17 +57,15 @@ function filterAmi(building: IBuilding, activeFilters: ActiveFilters): boolean {
   // TODO: Collect realtime AMI percentage data so that this filter can be applied to it.
   // This is just looking at fixed data.
   for (const selectedBedroom of bedroomSet) {
+    const amiDataForBedroom =
+      building.amiData[selectedBedroom as keyof AmiData];
+
     for (const amiFilterUnit of [...ami]) {
-      for (const buildingAmiObj of building.amiData) {
-        if (
-          buildingAmiObj.unitSize === selectedBedroom &&
-          buildingAmiObj.amiPercentages.includes(
-            Number(amiFilterUnit) as amiPercentageType
-          )
-        ) {
-          return true;
-        }
-      }
+      if (
+        amiDataForBedroom &&
+        amiDataForBedroom.includes(Number(amiFilterUnit) as AmiPercentage)
+      )
+        return true;
     }
   }
 
@@ -84,7 +87,8 @@ export function buildingsFilter(
 
   const neighborhoodsResult =
     // If no boxes are checked, evaluate to be the same as the box is checked - omit that dropdown.
-    neighborhoods.size === 0 || neighborhoods.has(building.address.neighborhood);
+    neighborhoods.size === 0 ||
+    neighborhoods.has(building.address.neighborhood);
 
   const amiResult = filterAmi(building, activeFilters);
 

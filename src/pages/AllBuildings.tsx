@@ -44,12 +44,12 @@ const AllBuildingsPage: React.FC<IPage> = () => {
   );
 
   const allAmi = new Set(
-    allBuildings.flatMap((building) =>
-      building.amiData.flatMap((amiData) =>
-        amiData.amiPercentages.map((percentage) => percentage.toString())
-      )
-    )
+    allBuildings
+      .flatMap((building) => Object.values(building.amiData))
+      .flat()
+      .map(String)
   );
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const [activeFilters, dispatch] = useReducer(filterReducer, {
