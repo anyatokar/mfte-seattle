@@ -52,6 +52,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             <th>Bedrooms</th>
             <th>{dataHeader}</th>
             {type === tableType.availData && <th>Earliest Date</th>}
+            {/* {type === tableType.availData && <th>% AMI</th>} */}
             {type === tableType.availData && <th>Max Rent</th>}
           </tr>
         </thead>
@@ -73,8 +74,13 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             (data as AvailData[])?.map((availData) => {
               if (!availData) return null;
 
-              const { unitSize, numAvail, dateAvailString, maxRent } =
-                availData;
+              const {
+                unitSize,
+                numAvail,
+                dateAvailString,
+                maxRent,
+                // percentAmi,
+              } = availData;
 
               return numAvail ? (
                 <tr key={unitSize}>
@@ -83,6 +89,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
                   </td>
+                  {/* <td>{percentAmi ?? "--"}</td> */}
                   <td>{formatCurrency(maxRent)}</td>
                 </tr>
               ) : null;
