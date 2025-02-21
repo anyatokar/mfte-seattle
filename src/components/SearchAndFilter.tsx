@@ -88,60 +88,30 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
         </Col>
 
         {/* filter for large screens */}
-        <Col className="mb-1 d-none d-md-block">
-          <Stack direction="horizontal" gap={2}>
-            <NeighborhoodDropdown
-              onNeighborhoodsChange={handleNeighborhoodsChange}
-              allNeighborhoods={allNeighborhoods}
-              activeFilters={activeFilters}
-            />
-            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
-
-            <AmiDropdown
-              onAmiChange={handleAmiChange}
-              allAmi={allAmi}
-              activeFilters={activeFilters}
-            />
-            <FilterSwitch
-              onCheckboxChange={handleAvailOnlyToggle}
-              type="knownOnly"
-            />
-            <FilterSwitch
-              onCheckboxChange={handleSavedOnlyToggle}
-              type="savedOnly"
-            />
-          </Stack>
-        </Col>
-      </Row>
-
-      {/* filter for small screens */}
-      <Row className="d-md-none d-flex align-items-center ">
-        <Col sm={7} className="mb-1">
-          <Stack direction="horizontal" gap={2}>
-            <NeighborhoodDropdown
-              onNeighborhoodsChange={handleNeighborhoodsChange}
-              allNeighborhoods={allNeighborhoods}
-              activeFilters={activeFilters}
-            />
-            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
-            <AmiDropdown
-              onAmiChange={handleAmiChange}
-              allAmi={allAmi}
-              activeFilters={activeFilters}
-            />
-          </Stack>
-        </Col>
-        <Col sm={6}>
-          <Stack direction="horizontal" gap={2}>
-            <FilterSwitch
-              onCheckboxChange={handleAvailOnlyToggle}
-              type="knownOnly"
-            />
-            <FilterSwitch
-              onCheckboxChange={handleSavedOnlyToggle}
-              type="savedOnly"
-            />
-          </Stack>
+        <Col className="mb-1">
+          <div className="d-flex overflow-x-auto flex-nowrap">
+            <Stack direction="horizontal" gap={1}>
+              <NeighborhoodDropdown
+                onNeighborhoodsChange={handleNeighborhoodsChange}
+                allNeighborhoods={allNeighborhoods}
+                activeFilters={activeFilters}
+              />
+              <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
+              <AmiDropdown
+                onAmiChange={handleAmiChange}
+                allAmi={allAmi}
+                activeFilters={activeFilters}
+              />
+              <FilterSwitch
+                onCheckboxChange={handleAvailOnlyToggle}
+                type="knownOnly"
+              />
+              <FilterSwitch
+                onCheckboxChange={handleSavedOnlyToggle}
+                type="savedOnly"
+              />
+            </Stack>
+          </div>
         </Col>
       </Row>
     </Container>
