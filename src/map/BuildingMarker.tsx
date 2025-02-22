@@ -30,12 +30,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   setSelectedBuilding,
   isSaved: wasOriginallySaved,
 }) => {
-  const {
-    buildingID,
-    buildingName,
-    address,
-    contact,
-  } = building;
+  const { buildingID, buildingName, address, contact } = building;
 
   const onMarkerClick = useCallback(
     () => setSelectedBuilding(isSelected ? null : building),

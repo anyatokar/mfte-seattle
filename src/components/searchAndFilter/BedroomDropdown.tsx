@@ -26,7 +26,7 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
         id="bedroom-filter-dropdown"
         size="sm"
       >
-        Bedrooms
+        Size
       </Dropdown.Toggle>
       <Dropdown.Menu className="p-2" aria-labelledby="bedroom-filter-dropdown">
         {checkboxKeys.map((checkboxKey) => (

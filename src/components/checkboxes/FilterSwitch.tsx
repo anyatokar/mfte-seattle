@@ -28,19 +28,18 @@ const FilterSwitch: React.FC<FilterSwitchProps> = ({
   };
 
   return (
-    <div className="d-flex align-items-center gap-0">
+    <Form className="mx-1 d-flex align-items-center gap-1">
       <Form.Check
-        type="switch"
+        type="checkbox"
         id={`${type}-switch`}
         checked={isSwitchOn}
         onChange={handleCheck}
       />
-      <Form>
-        <Form.Label htmlFor={`${type}-switch`} className="mb-0 small">
-          {labels[type]}
-        </Form.Label>
-      </Form>
-    </div>
+
+      <Form.Label htmlFor={`${type}-switch`} className="mb-0 small">
+        {labels[type]}
+      </Form.Label>
+    </Form>
   );
 };
 
