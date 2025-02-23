@@ -10,6 +10,7 @@ export type UnitAvailData = {
   /** String when in form, gets converted to number before sent to Firestore */
   maxRent: string | number;
   percentAmi: string;
+  rowIndex: number;
 };
 
 export type AvailDataArray = UnitAvailData[];

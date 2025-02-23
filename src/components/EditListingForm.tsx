@@ -68,6 +68,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     dateAvailString: "",
     percentAmi: "",
     maxRent: "",
+    rowIndex: 0,
   };
 
   const originalFormFields: Partial<ListingWithRequired> = {
@@ -86,19 +87,41 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   if (!currentUser) return null;
 
-  const handleInputChange = (e: any, rowIndex?: number) => {
+  const handleAddRow = () => {
+    // const prevFormFields = formFields;
+    // const prevDataArray = prevFormFields.availDataArray
+
+    // const newDataArray = [...prevDataArray || [], blankAvailRow]
+
+    // setFormFields({
+    //   ...prevFormFields,
+    //   availDataArray: newDataArray, // Correctly update availDataArray
+    // });
+
+    const newRow = {
+      ...blankAvailRow,
+      rowIndex: formFields.availDataArray?.length || 0,
+    };
+
+    setFormFields((prev) => ({
+      ...prev,
+      availDataArray: [...(prev.availDataArray || []), newRow],
+    }));
+  };
+
+  const handleInputChange = (e: any, rowId?: number) => {
     const { name, value } = e.target;
 
     setFormFields((prev) => {
       let newAvailData = [...(prev.availDataArray || [])];
 
       // If updating a specific row
-      if (rowIndex !== undefined) {
-        newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
+      if (rowId !== undefined) {
+        newAvailData[rowId] = { ...newAvailData[rowId], [name]: value };
 
         if (name === "unitSize") {
-          newAvailData[rowIndex] = {
-            ...newAvailData[rowIndex],
+          newAvailData[rowId] = {
+            ...newAvailData[rowId],
             percentAmi: "",
           };
         }
@@ -272,14 +295,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {formFields.availDataArray?.map((unitAvailData, rowIndex) => (
-                    <tr key={unitAvailData.unitSize}>
+                  {formFields.availDataArray?.map((unitAvailData) => (
+                    <tr key={unitAvailData.rowIndex}>
                       <td>
                         <Form.Select
                           required
                           name="unitSize"
                           id="unitSize"
-                          onChange={(e) => handleInputChange(e, rowIndex)}
+                          onChange={(e) =>
+                            handleInputChange(e, unitAvailData.rowIndex)
+                          }
                           value={unitAvailData.unitSize}
                         >
                           <option value=""></option>
@@ -296,7 +321,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           required
                           name="percentAmi"
                           id="percentAmi"
-                          onChange={(e) => handleInputChange(e, rowIndex)}
+                          onChange={(e) =>
+                            handleInputChange(e, unitAvailData.rowIndex)
+                          }
                           value={unitAvailData.percentAmi}
                           disabled={!unitAvailData.unitSize}
                         >
@@ -316,7 +343,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           min="0"
                           name="numAvail"
                           value={unitAvailData.numAvail}
-                          onChange={(e) => handleInputChange(e, rowIndex)}
+                          onChange={(e) =>
+                            handleInputChange(e, unitAvailData.rowIndex)
+                          }
                         />
                       </td>
                       <td>
@@ -324,7 +353,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           type="date"
                           name="dateAvailString"
                           value={unitAvailData.dateAvailString || ""}
-                          onChange={(e) => handleInputChange(e, rowIndex)}
+                          onChange={(e) =>
+                            handleInputChange(e, unitAvailData.rowIndex)
+                          }
                         />
                       </td>
 
@@ -337,7 +368,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             name="maxRent"
                             value={unitAvailData.maxRent}
                             onChange={(event) =>
-                              handleInputChange(event, rowIndex)
+                              handleInputChange(event, unitAvailData.rowIndex)
                             }
                           />
                         </InputGroup>
@@ -356,7 +387,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             </Col>
             <Row>
               <Col>
-                <Button>Add Row</Button>
+                <Button onClick={handleAddRow}>Add Row</Button>
               </Col>
             </Row>
           </Row>
