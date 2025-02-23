@@ -26,6 +26,7 @@ import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 
 import { AddressAndPhone } from "./AddressAndPhone";
+import TextWithOverlay from "./TextWithOverlay";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -248,6 +249,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   onChange={(e) => handleInputChange(e)}
                 />
               ))}
+              <a
+                id="income-and-rent-limits"
+                href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
+                title="Income and Rent Limits (FY 2024)"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Income and Rent Limits (FY 2024)
+              </a>
             </Col>
           </Row>
         </Form.Group>
@@ -268,35 +278,25 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                     <th>% AMI</th>
 
                     <th>
-                      Quantity
-                      <br />
-                      <small className="text-muted">
-                        # of units of selected size and % AMI.
-                      </small>
+                      <TextWithOverlay
+                        text={"Quantity"}
+                        overlay={"# of units of selected size and % AMI."}
+                      />
                     </th>
 
                     <th>
-                      Move-in Date
-                      <small className="text-muted">
-                        <br />
-                        If multiple units available enter the earliest date.
-                      </small>
+                      <TextWithOverlay
+                        text={"Move-in Date"}
+                        overlay={
+                          "If multiple units available enter the earliest date."
+                        }
+                      />
                     </th>
                     <th>
-                      Rent
-                      <br />
-                      <small className="text-muted">
-                        Blanks will be set to max rent per{" "}
-                        <a
-                          id="income-and-rent-limits"
-                          href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
-                          title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Income and Rent Limits (FY 2024)
-                        </a>
-                      </small>
+                      <TextWithOverlay
+                        text={"  Rent"}
+                        overlay={"Blanks will be set to max rent per"}
+                      />
                     </th>
                     <th></th>
                   </tr>
