@@ -88,25 +88,31 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   if (!currentUser) return null;
 
   const handleAddRow = () => {
-    // const prevFormFields = formFields;
-    // const prevDataArray = prevFormFields.availDataArray
-
-    // const newDataArray = [...prevDataArray || [], blankAvailRow]
-
-    // setFormFields({
-    //   ...prevFormFields,
-    //   availDataArray: newDataArray, // Correctly update availDataArray
-    // });
-
     const newRow = {
       ...blankAvailRow,
       rowIndex: formFields.availDataArray?.length || 0,
     };
 
-    setFormFields((prev) => ({
-      ...prev,
-      availDataArray: [...(prev.availDataArray || []), newRow],
-    }));
+    const newAvailDataArray = [...(formFields.availDataArray || []), newRow];
+
+    setFormFields({
+      ...formFields,
+      availDataArray: newAvailDataArray,
+    });
+  };
+
+  const handleDeleteRow = (rowIndex: number) => {
+    if (!formFields.availDataArray) return;
+
+    const newAvailDataArray = formFields.availDataArray.filter(
+      (row) => row.rowIndex !== rowIndex
+    );
+
+    console.log(newAvailDataArray);
+    setFormFields({
+      ...formFields,
+      availDataArray: newAvailDataArray,
+    });
   };
 
   const handleInputChange = (e: any, rowId?: number) => {
@@ -292,6 +298,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                         </a>
                       </small>
                     </th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -379,6 +386,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                               `${ProgramKeyEnumToLabel[formFields.program]} & ${BedroomLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]} & ${unitAvailData.percentAmi}% AMI ⟶ ${formatCurrency(getMaxRent(unitAvailData))}`}
                           </Form.Text>
                         </div>
+                      </td>
+                      <td>
+                        <Button
+                          variant="outline-danger"
+                          onClick={() =>
+                            handleDeleteRow(unitAvailData.rowIndex)
+                          }
+                        >
+                          Delete
+                        </Button>
                       </td>
                     </tr>
                   ))}
