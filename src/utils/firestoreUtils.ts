@@ -15,7 +15,7 @@ import { contactUsFormFieldsType } from "../pages/Contact";
 import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 
-import IListing, { AvailData } from "../interfaces/IListing";
+import IListing, { AvailDataArray } from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
   IUserSignupAuthData,
@@ -66,10 +66,12 @@ export async function deleteBuilding(
     });
 }
 
-function availDataToNum(availData: AvailData[] | undefined): AvailData[] {
-  if (!availData) return [];
+function availDataToNum(
+  availDataArray: AvailDataArray | undefined
+): AvailDataArray {
+  if (!availDataArray) return [];
 
-  for (const ele of availData) {
+  for (const ele of availDataArray) {
     // The check is for TS and because form fields and listing in db share IListing.
     // Type will always be string when incoming from the form.
     if (typeof ele.numAvail === "string") {
@@ -81,7 +83,7 @@ function availDataToNum(availData: AvailData[] | undefined): AvailData[] {
     }
   }
 
-  return availData;
+  return availDataArray;
 }
 
 export async function addListingFirestore(
@@ -93,7 +95,7 @@ export async function addListingFirestore(
   const listing: IListing = {
     buildingName: buildingName || "",
     url: formFields.url || "",
-    availData: availDataToNum(formFields.availData),
+    availDataArray: availDataToNum(formFields.availDataArray),
     description: formFields.description || "",
     listingStatus: listingStatusEnum.IN_REVIEW,
     buildingID: buildingID || "",
@@ -103,6 +105,8 @@ export async function addListingFirestore(
     expiryDate: formFields.expiryDate || getMaxExpiryDate(),
     listingID: "",
     managerID: uid,
+    program: formFields.program,
+    feedback: formFields.feedback || "",
   };
   try {
     // Create a new document reference with an auto-generated ID
@@ -124,8 +128,10 @@ export async function updateListingFirestore(
   fieldsToUpdate: Partial<IListing>,
   listingID: string
 ) {
-  if (fieldsToUpdate.availData) {
-    fieldsToUpdate.availData = availDataToNum(fieldsToUpdate.availData);
+  if (fieldsToUpdate.availDataArray) {
+    fieldsToUpdate.availDataArray = availDataToNum(
+      fieldsToUpdate.availDataArray
+    );
   }
 
   try {

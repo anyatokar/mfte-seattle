@@ -42,7 +42,12 @@ export enum BedroomsKeyEnum {
 export enum BedroomLabelEnum {
   micro = "Micro",
   studio = "Studio",
-  oneBed = "One",
-  twoBed = "Two",
-  threePlusBed = "Three+",
+  oneBed = "One Bedroom",
+  twoBed = "Two Bedroom",
+  threePlusBed = "Three+ Bedroom",
+}
+
+export enum ProgramKeyEnum {
+  P6 = "P6",
+  P345 = "P345",
 }

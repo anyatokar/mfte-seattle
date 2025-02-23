@@ -4,12 +4,14 @@ interface addressAndPhoneProps {
   buildingName: string;
   address: Address;
   contact: Contact;
+  withLinks: boolean;
 }
 
 const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
   buildingName,
   address,
   contact,
+  withLinks,
 }) => {
   const { streetNum, street, city, state, zip } = address;
   const { phone, phone2 } = contact;
@@ -32,30 +34,37 @@ const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
       >
         <div> View on Google Maps</div>
       </a>
-      <>
-        {phone && (
-          <div className="first-phone-num">
-            <a
-              className="address-phone-link"
-              href={phone1Ref}
-              title={`Call ${buildingName}`}
-            >
-              {phone}
-            </a>
-          </div>
-        )}
-        {phone2 && (
-          <>
-            <a
-              className="address-phone-link"
-              href={phone2Ref}
-              title={`Call ${buildingName}`}
-            >
-              {phone2}
-            </a>
-          </>
-        )}
-      </>
+      {withLinks ? (
+        <>
+          {phone && (
+            <div className="first-phone-num">
+              <a
+                className="address-phone-link"
+                href={phone1Ref}
+                title={`Call ${buildingName}`}
+              >
+                {phone}
+              </a>
+            </div>
+          )}
+          {phone2 && (
+            <>
+              <a
+                className="address-phone-link"
+                href={phone2Ref}
+                title={`Call ${buildingName}`}
+              >
+                {phone2}
+              </a>
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          {phone && <div className="first-phone-num">{phone}</div>}
+          {phone2 && <>{phone2}</>}
+        </>
+      )}
     </div>
   );
 };

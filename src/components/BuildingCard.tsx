@@ -156,11 +156,11 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             }
           >
             {listing?.listingStatus === listingStatusEnum.ACTIVE &&
-              listing?.availData && (
+              listing?.availDataArray && (
                 <Tab eventKey="availability" title="Available" className="mt-2">
                   <BuildingDataTable
                     type={tableType.availData}
-                    data={listing.availData}
+                    data={listing.availDataArray}
                     showListingForm={false}
                   />
                   {listing.description && (
@@ -177,6 +177,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   buildingName={buildingName}
                   address={address}
                   contact={contact}
+                  withLinks={true}
                 />
               </div>
             </Tab>

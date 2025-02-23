@@ -22,13 +22,15 @@ type PartialWithRequired<T, K extends keyof T> = Partial<T> &
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
-  | "availData"
+  | "availDataArray"
   | "buildingName"
   | "url"
   | "listingID"
   | "expiryDate"
   | "buildingID"
   | "description"
+  | "feedback"
+  | "program"
 >;
 
 type ListingCardProps = {
@@ -53,7 +55,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 }) => {
   if (listing === null) {
     listing = {
-      availData: [],
+      availDataArray: [],
       url: "",
       expiryDate: "",
       listingID: "",
@@ -61,13 +63,15 @@ const ListingCard: React.FC<ListingCardProps> = ({
       buildingName: "",
       listingStatus: undefined,
       description: "",
+      feedback: "",
+      program: undefined,
     };
   }
 
   const [allBuildings] = useAllBuildingsContext();
 
   const {
-    availData,
+    availDataArray,
     buildingName,
     listingStatus,
     url,
@@ -76,6 +80,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
     dateUpdated,
     buildingID,
     description,
+    feedback,
+    program,
   } = listing;
 
   type badgeObjectType = { label: string; bg: string; text?: string };
@@ -150,7 +156,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
       (building) => value === building.buildingName
     );
 
-    if (setSelectedBuilding) setSelectedBuilding(selectedBuilding || null);
+    if (setSelectedBuilding) {
+      setSelectedBuilding(selectedBuilding || null);
+    }
   };
 
   return (
@@ -219,13 +227,16 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <Row>
           <Card.Body data-testid="body-form-visible" as={Col}>
             <EditListingForm
+              key={selectedBuilding?.buildingID}
               listing={{
                 url,
-                availData,
+                availDataArray,
                 expiryDate,
                 listingID,
                 buildingID,
                 description,
+                feedback,
+                program,
               }}
               selectedBuilding={selectedBuilding || null}
               isExistingListing={isExistingListing}
@@ -242,7 +253,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             >
               <BuildingDataTable
                 type={tableType.availData}
-                data={availData}
+                data={availDataArray}
                 showListingForm={true}
               />
               <Card.Text className="mt-3">

@@ -4,10 +4,10 @@ import {
   // BedroomsKeyEnum,
   tableType,
 } from "../types/enumTypes";
-import { AvailData } from "../interfaces/IListing";
 import Table from "react-bootstrap/Table";
 import { formatCurrency, formatDate } from "../utils/generalUtils";
 import { AmiData, AmiPercentage } from "../interfaces/IBuilding";
+import { AvailDataArray } from "../interfaces/IListing";
 
 interface AmiDataProps {
   type: tableType.amiData;
@@ -16,7 +16,7 @@ interface AmiDataProps {
 
 interface AvailDataProps {
   type: tableType.availData;
-  data: AvailData[];
+  data: AvailDataArray;
   showListingForm: boolean;
 }
 
@@ -75,46 +75,21 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               );
             })}
           {type === tableType.availData &&
-            // order.map((unit) => {
-            //   const availData = data[unit as keyof AvailData];
+            order.map((unit) => {
+              const unitAvailData = data?.find((ele) => ele.unitSize === unit);
 
-            //   if (!availData) return null;
-
-            //   const {
-            //     numAvail,
-            //     dateAvailString,
-            //     maxRent,
-            //     // percentAmi,
-            //   } = availData;
-
-            //   return numAvail ? (
-            //     <tr key={unit}>
-            //       <td>{unitLabels[unit]}</td>
-            //       <td>{numAvail}</td>
-            //       <td>
-            //         {dateAvailString ? formatDate(dateAvailString) : "--"}
-            //       </td>
-            //       {/* <td>{percentAmi ?? "--"}</td> */}
-            //       <td>{formatCurrency(maxRent)}</td>
-            //     </tr>
-            //   ) : null;
-            // }
-            // )
-
-            (data as AvailData[])?.map((availData) => {
-              if (!availData) return null;
+              if (!unitAvailData) return null;
 
               const {
-                unitSize,
                 numAvail,
                 dateAvailString,
                 maxRent,
                 // percentAmi,
-              } = availData;
+              } = unitAvailData;
 
               return numAvail ? (
-                <tr key={unitSize}>
-                  <td>{unitLabels[unitSize]}</td>
+                <tr key={unit}>
+                  <td>{unitLabels[unit]}</td>
                   <td>{numAvail}</td>
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
