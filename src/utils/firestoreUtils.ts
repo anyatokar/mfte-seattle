@@ -87,13 +87,12 @@ function availDataToNum(
 }
 
 export async function addListingFirestore(
-  buildingName: string,
   formFields: Partial<IListing>,
   buildingID: string,
   uid: string
 ): Promise<string> {
   const listing: IListing = {
-    buildingName: buildingName || "",
+    buildingName: formFields.buildingName || "",
     url: formFields.url || "",
     availDataArray: availDataToNum(formFields.availDataArray),
     description: formFields.description || "",

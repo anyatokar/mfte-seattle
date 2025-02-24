@@ -13,9 +13,7 @@ import { expiringSoonDays } from "../config/config";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import { useEffect, useState } from "react";
-import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { Col, Container, Form, Row } from "react-bootstrap";
-import IBuilding from "../interfaces/IBuilding";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -40,8 +38,6 @@ type ListingCardProps = {
   /** Existing, as opposed to a New listing card */
   isExistingListing: boolean;
   editListingID: string;
-  selectedBuilding?: IBuilding | null;
-  setSelectedBuilding?: React.Dispatch<React.SetStateAction<IBuilding | null>>;
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -50,8 +46,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
   isExistingListing,
   toggleFormCallback,
   editListingID,
-  selectedBuilding,
-  setSelectedBuilding,
 }) => {
   if (listing === null) {
     listing = {
@@ -67,8 +61,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
       program: undefined,
     };
   }
-
-  const [allBuildings] = useAllBuildingsContext();
 
   const {
     availDataArray,
@@ -147,20 +139,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
     // eslint-disable-next-line
   }, [listing]);
 
-  const onSelectBuildingChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const { value } = event.target;
-    // This assumes building names are unique.
-    const selectedBuilding = allBuildings.find(
-      (building) => value === building.buildingName
-    );
-
-    if (setSelectedBuilding) {
-      setSelectedBuilding(selectedBuilding || null);
-    }
-  };
-
   return (
     <Card as={Container} fluid>
       <Card.Header data-testid="listing-card-header" as={Row} className="p-3">
@@ -181,33 +159,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 )}
               </div>
             )}
-            {!isExistingListing && isFormVisible && editListingID === "" && (
-              <Form>
-                <Form.Select
-                  // TODO: Since this dropdown is not associated with the final submit button, the required is not actually enforced.
-                  // Listings cards need a refactor for better UI as well.
-                  required
-                  name="buildingName"
-                  id="buildingName"
-                  onChange={onSelectBuildingChange}
-                  value={selectedBuilding?.buildingName || ""}
-                >
-                  <option value="">Select a building*</option>
-                  {allBuildings
-                    .sort((a, b) =>
-                      a.buildingName.localeCompare(b.buildingName)
-                    )
-                    .map((selectedBuilding) => (
-                      <option
-                        key={selectedBuilding.buildingID}
-                        value={selectedBuilding.buildingName}
-                      >
-                        {selectedBuilding.buildingName}
-                      </option>
-                    ))}
-                </Form.Select>
-              </Form>
-            )}
           </Card.Title>
         </Col>
 
@@ -227,18 +178,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <Row>
           <Card.Body data-testid="body-form-visible" as={Col}>
             <EditListingForm
-              key={selectedBuilding?.buildingID}
-              listing={{
-                url,
-                availDataArray,
-                expiryDate,
-                listingID,
-                buildingID,
-                description,
-                feedback,
-                program,
-              }}
-              selectedBuilding={selectedBuilding || null}
+              isFormVisible={isFormVisible}
+              key={listingID}
+              listing={listing}
               isExistingListing={isExistingListing}
               toggleFormCallback={toggleFormCallback}
             />

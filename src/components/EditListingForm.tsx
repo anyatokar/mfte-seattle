@@ -27,7 +27,7 @@ import Table from "react-bootstrap/Table";
 
 import { AddressAndPhone } from "./AddressAndPhone";
 import TextWithOverlay from "./TextWithOverlay";
-
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 type ListingWithRequired = PartialWithRequired<
   IListing,
   | "availDataArray"
@@ -39,19 +39,18 @@ type ListingWithRequired = PartialWithRequired<
   | "feedback"
   | "program"
 >;
-
 type EditListingFormProps = {
   listing: ListingWithRequired;
-  selectedBuilding: IBuilding | null;
   isExistingListing: boolean;
   toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
+  isFormVisible: boolean;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
   listing,
   isExistingListing,
   toggleFormCallback,
-  selectedBuilding,
+  isFormVisible,
 }) => {
   const {
     availDataArray,
@@ -63,6 +62,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     program,
   } = listing;
 
+  console.log("isExistingListing", listing);
+
   const blankAvailRow: UnitAvailData = {
     unitSize: undefined,
     numAvail: "",
@@ -72,7 +73,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     rowIndex: 0,
   };
 
-  const originalFormFields: Partial<ListingWithRequired> = {
+  const originalFormFields: Partial<IListing> = {
+    buildingName: listing.buildingName,
     availDataArray:
       availDataArray.length > 0 ? availDataArray : [blankAvailRow],
     url: url,
@@ -83,6 +85,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
+  console.log("og form fields", originalFormFields);
 
   const { currentUser } = useAuth();
 
@@ -116,6 +119,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     });
   };
 
+  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
+    null
+  );
+
+  const [allBuildings] = useAllBuildingsContext();
+
   const handleInputChange = (e: any, rowId?: number) => {
     const { name, value } = e.target;
 
@@ -132,6 +141,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             percentAmi: "",
           };
         }
+      }
+      if (name === "buildingName") {
+        // This assumes building names are unique.
+        const selectedBuilding = allBuildings.find(
+          (building) => value === building.buildingName
+        );
+
+        console.log("value", value);
+
+        setSelectedBuilding(selectedBuilding || null);
       }
 
       return {
@@ -160,10 +179,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     if (!isExistingListing) {
       const listingID = await addListingFirestore(
-        selectedBuilding?.buildingName || "",
         formFields,
-
         selectedBuilding?.buildingID || "",
+
         currentUser.uid
       );
       if (listingID) {
@@ -215,6 +233,31 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   return (
     <Form onSubmit={handleFormSubmit}>
+      {!isExistingListing && isFormVisible && listing.listingID === "" && (
+        <Form>
+          <Form.Select
+            // TODO: Since this dropdown is not associated with the final submit button, the required is not actually enforced.
+            // Listings cards need a refactor for better UI as well.
+            required
+            name="buildingName"
+            id="buildingName"
+            onChange={handleInputChange}
+          >
+            <option value="">Select a building*</option>
+            {allBuildings
+              .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
+              .map((selectedBuilding) => (
+                <option
+                  key={selectedBuilding.buildingID}
+                  value={selectedBuilding.buildingName}
+                >
+                  {selectedBuilding.buildingName}
+                </option>
+              ))}
+          </Form.Select>
+        </Form>
+      )}
+
       {/* Address */}
       {/* TODO: Maybe show address for existing listing as well? */}
       {selectedBuilding && (
@@ -231,7 +274,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Row>
       )}
 
-      {selectedBuilding && (
+      {(selectedBuilding || isExistingListing) && (
         <Form.Group>
           <Row className="mb-3">
             <Col>
@@ -249,21 +292,24 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   onChange={(e) => handleInputChange(e)}
                 />
               ))}
-              <a
-                id="income-and-rent-limits"
-                href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
-                title="Income and Rent Limits (FY 2024)"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Income and Rent Limits (FY 2024)
-              </a>
+              <Form.Text className="text-muted">
+                Income limits:{" "}
+                <a
+                  id="income-and-rent-limits"
+                  href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
+                  title="Income and Rent Limits (FY 2024)"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Income and Rent Limits (FY 2024)
+                </a>
+              </Form.Text>
             </Col>
           </Row>
         </Form.Group>
       )}
 
-      {selectedBuilding && formFields.program && (
+      {(isExistingListing || (selectedBuilding && formFields.program)) && (
         <Form.Group>
           {/* Table */}
           <Row className="mb-3">
@@ -419,7 +465,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 name="url"
                 onChange={handleInputChange}
                 value={formFields.url}
-                disabled={!selectedBuilding}
               />
               <Form.Text className="text-muted">
                 Url you'd share with a prospective renter to view available MFTE
@@ -471,7 +516,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 id="feedback"
                 rows={3}
                 onChange={handleInputChange}
-                value={formFields.description}
+                value={formFields.feedback}
               />
               <Form.Text className="text-muted">
                 Won't be shared publicly. Suggestions on how to improve this

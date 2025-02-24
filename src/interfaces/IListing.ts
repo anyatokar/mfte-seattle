@@ -1,5 +1,9 @@
 import { Timestamp } from "firebase/firestore";
-import { BedroomsKeyEnum, listingStatusEnum } from "../types/enumTypes";
+import {
+  BedroomsKeyEnum,
+  listingStatusEnum,
+  ProgramKeyEnum,
+} from "../types/enumTypes";
 
 export type UnitAvailData = {
   unitSize: BedroomsKeyEnum | undefined;
@@ -21,7 +25,6 @@ export default interface IListing {
   buildingName: string;
   url: string;
   description: string;
-  /** This is an array to keep the order from smallest to largest on render. */
   availDataArray: AvailDataArray;
   buildingID: string;
   dateCreated: Timestamp;
@@ -30,5 +33,5 @@ export default interface IListing {
   expiryDate: string;
   managerID: string;
   feedback: string;
-  program: "P345" | "P6" | undefined;
+  program: ProgramKeyEnum | undefined;
 }
