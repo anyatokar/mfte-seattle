@@ -1,15 +1,21 @@
 import { BedroomsKeyEnum } from "../../types/enumTypes";
 import BedroomCheckbox from "../checkboxes/BedroomCheckbox";
+import TextWithOverlay from "../TextWithOverlay";
+import { ActiveFilters } from "../../utils/buildingsFilter";
 
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 
 type BedroomFilterProps = {
-  onBedroomsChange: (checkbox: BedroomsKeyEnum) => void;
+  onBedroomsChange: (checkbox?: BedroomsKeyEnum) => void;
+  activeFilters: ActiveFilters;
 };
 
 const BedroomDropdown: React.FC<BedroomFilterProps> = ({
   onBedroomsChange,
+  activeFilters,
 }) => {
   const checkboxKeys: BedroomsKeyEnum[] = [
     BedroomsKeyEnum.MICRO,
@@ -19,6 +25,8 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
     BedroomsKeyEnum.THREE_PLUS,
   ];
 
+  const overlayText = [...activeFilters.bedrooms].join(", ");
+
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -26,9 +34,20 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
         id="bedroom-filter-dropdown"
         size="sm"
       >
-        Size
+        Size{" "}
+        {activeFilters.bedrooms.size > 0 && (
+          <Badge>
+            <TextWithOverlay
+              text={String(activeFilters.bedrooms.size)}
+              overlay={overlayText}
+            />
+          </Badge>
+        )}
       </Dropdown.Toggle>
       <Dropdown.Menu className="p-2" aria-labelledby="bedroom-filter-dropdown">
+        <Button variant="link" onClick={() => onBedroomsChange()}>
+          Remove Filter
+        </Button>
         {checkboxKeys.map((checkboxKey) => (
           <Form key={checkboxKey}>
             <BedroomCheckbox

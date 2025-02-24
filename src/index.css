@@ -159,6 +159,10 @@ body {
 /* End of listing accordion */
 
 /* misc */
+.tooltip {
+  position: fixed;
+}
+
 .delete-link:hover {
   color: red !important;
 }

@@ -44,8 +44,10 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   };
 
   // Handler for Bedrooms
-  const handleBedroomsChange = (checkbox: BedroomsKeyEnum): void => {
-    if (activeFilters.bedrooms.has(checkbox)) {
+  const handleBedroomsChange = (checkbox?: BedroomsKeyEnum): void => {
+    if (!checkbox) {
+      dispatch({ type: "clearAll", category: "bedrooms" });
+    } else if (activeFilters.bedrooms.has(checkbox)) {
       dispatch({ type: "unchecked", category: "bedrooms", checkbox });
     } else {
       dispatch({ type: "checked", category: "bedrooms", checkbox });
@@ -95,7 +97,10 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               allNeighborhoods={allNeighborhoods}
               activeFilters={activeFilters}
             />
-            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
+            <BedroomDropdown
+              onBedroomsChange={handleBedroomsChange}
+              activeFilters={activeFilters}
+            />
 
             <AmiDropdown
               onAmiChange={handleAmiChange}
@@ -123,7 +128,10 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               allNeighborhoods={allNeighborhoods}
               activeFilters={activeFilters}
             />
-            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
+            <BedroomDropdown
+              onBedroomsChange={handleBedroomsChange}
+              activeFilters={activeFilters}
+            />
             <AmiDropdown
               onAmiChange={handleAmiChange}
               allAmi={allAmi}

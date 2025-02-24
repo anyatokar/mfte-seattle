@@ -1,8 +1,10 @@
 import FilterCheckbox from "../checkboxes/FilterCheckbox";
 import { ActiveFilters } from "../../utils/buildingsFilter";
+import TextWithOverlay from "../TextWithOverlay";
 
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
-import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
 
 type AmiFilterProps = {
@@ -16,6 +18,8 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
   allAmi,
   activeFilters,
 }) => {
+  const overlayText = [...activeFilters.ami].join(", ");
+
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -23,7 +27,15 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
         id="ami-filter-dropdown"
         size="sm"
       >
-        % AMI
+        % AMI{" "}
+        {activeFilters.ami.size > 0 && (
+          <Badge>
+            <TextWithOverlay
+              text={String(activeFilters.ami.size)}
+              overlay={overlayText}
+            />
+          </Badge>
+        )}
       </Dropdown.Toggle>
       <Dropdown.Menu
         style={{ maxHeight: "200px", overflowY: "auto" }}

@@ -221,7 +221,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     if (!unitSize || !percentAmi || !formFields.program) return 0;
 
     if (unitAvailData.unitSize && unitAvailData.percentAmi) {
-      if (formFields.program === "P6") {
+      if (formFields.program === ProgramKeyEnum.P6) {
         return p6UnitPricing[unitSize][Number(percentAmi)];
       } else {
         return p345UnitPricing[unitSize][Number(percentAmi)];
@@ -236,7 +236,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       {!isExistingListing && isFormVisible && listing.listingID === "" && (
         <Form>
           <Form.Select
-            // TODO: Since this dropdown is not associated with the final submit button, the required is not actually enforced.
             // Listings cards need a refactor for better UI as well.
             required
             name="buildingName"
@@ -497,7 +496,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           </Row>
 
           <Row className="mb-3">
-            <Form.Group className="mb-0 mb-md-0">
+            <Col className="mb-0 mb-md-0">
               <Form.Label>Description (max 200 characters)</Form.Label>
 
               <Form.Control
@@ -512,7 +511,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               <Form.Text className="text-muted">
                 Will be shared as part of the listing.
               </Form.Text>
-            </Form.Group>
+            </Col>
           </Row>
 
           <Row className="mb-3">

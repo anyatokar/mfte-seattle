@@ -25,10 +25,10 @@ export type Contact = {
 };
 
 export type SearchFields = {
-  buildingName: string,
-  neighborhood: string,
-  streetAddress: string,
-  zip: string,
+  buildingName: string;
+  neighborhood: string;
+  streetAddress: string;
+  zip: string;
 };
 
 export default interface IBuilding {
