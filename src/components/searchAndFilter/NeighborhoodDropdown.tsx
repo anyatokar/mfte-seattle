@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FilterCheckbox from "../checkboxes/FilterCheckbox";
 import { ActiveFilters } from "../../utils/buildingsFilter";
-import TextWithOverlay from "../TextWithOverlay";
+import TooltipWrapper from "../TooltipWrapper";
 
 import Badge from "react-bootstrap/Badge";
 
@@ -39,7 +39,7 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
         District{" "}
         {activeFilters.neighborhoods.size > 0 && (
           <Badge>
-            <TextWithOverlay
+            <TooltipWrapper
               text={String(activeFilters.neighborhoods.size)}
               overlay={overlayText}
             />

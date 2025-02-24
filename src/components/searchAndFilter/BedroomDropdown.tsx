@@ -1,6 +1,6 @@
-import { BedroomsKeyEnum } from "../../types/enumTypes";
+import { unitSizeLabelEnum, BedroomsKeyEnum } from "../../types/enumTypes";
 import BedroomCheckbox from "../checkboxes/BedroomCheckbox";
-import TextWithOverlay from "../TextWithOverlay";
+import TooltipWrapper from "../TooltipWrapper";
 import { ActiveFilters } from "../../utils/buildingsFilter";
 
 import Badge from "react-bootstrap/Badge";
@@ -25,7 +25,9 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
     BedroomsKeyEnum.THREE_PLUS,
   ];
 
-  const overlayText = [...activeFilters.bedrooms].join(", ");
+  const overlayText = [...activeFilters.bedrooms]
+    .map((bedroom) => unitSizeLabelEnum[bedroom])
+    .join(", ");
 
   return (
     <Dropdown>
@@ -37,7 +39,7 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
         Size{" "}
         {activeFilters.bedrooms.size > 0 && (
           <Badge>
-            <TextWithOverlay
+            <TooltipWrapper
               text={String(activeFilters.bedrooms.size)}
               overlay={overlayText}
             />

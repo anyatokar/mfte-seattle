@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import {
-  BedroomLabelEnum,
+  unitSizeLabelEnum,
   BedroomsKeyEnum,
   ProgramKeyEnum,
 } from "../types/enumTypes";
@@ -11,9 +11,12 @@ import {
 } from "../utils/firestoreUtils";
 import { formatCurrency, getMaxExpiryDate } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 
 import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
+
+import TooltipWrapper from "./TooltipWrapper";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing, { UnitAvailData } from "../interfaces/IListing";
@@ -26,8 +29,7 @@ import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 
 import { AddressAndPhone } from "./AddressAndPhone";
-import TextWithOverlay from "./TextWithOverlay";
-import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+
 type ListingWithRequired = PartialWithRequired<
   IListing,
   | "availDataArray"
@@ -323,14 +325,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                     <th>% AMI</th>
 
                     <th>
-                      <TextWithOverlay
+                      <TooltipWrapper
                         text={"Quantity"}
                         overlay={"# of units of selected size and % AMI."}
                       />
                     </th>
 
                     <th>
-                      <TextWithOverlay
+                      <TooltipWrapper
                         text={"Move-in Date"}
                         overlay={
                           "If multiple units available enter the earliest date."
@@ -338,7 +340,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       />
                     </th>
                     <th>
-                      <TextWithOverlay
+                      <TooltipWrapper
                         text={"  Rent"}
                         overlay={
                           "Blanks will be set to max for program, size, and % AMI."
@@ -362,11 +364,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           value={unitAvailData.unitSize}
                         >
                           <option value={unitAvailData.unitSize}>
-                            {unitAvailData.unitSize}
+                            {unitAvailData.unitSize
+                              ? unitSizeLabelEnum[unitAvailData.unitSize]
+                              : ""}
                           </option>
                           {availSizes.map((unitSize) => (
                             <option key={unitSize} value={unitSize}>
-                              {BedroomLabelEnum[unitSize]}
+                              {unitSizeLabelEnum[unitSize]}
                             </option>
                           ))}
                         </Form.Select>
@@ -437,7 +441,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           <Form.Text>
                             {!!getMaxRent(unitAvailData) &&
                               formFields.program &&
-                              `${ProgramKeyEnumToLabel[formFields.program]} & ${BedroomLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]} & ${unitAvailData.percentAmi}% AMI ⟶ ${formatCurrency(getMaxRent(unitAvailData))}`}
+                              `${ProgramKeyEnumToLabel[formFields.program]} & ${unitSizeLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]} & ${unitAvailData.percentAmi}% AMI ⟶ ${formatCurrency(getMaxRent(unitAvailData))} max with utilities`}
                           </Form.Text>
                         </div>
                       </td>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { BedroomLabelEnum, BedroomsKeyEnum } from "../../types/enumTypes";
+import { unitSizeLabelEnum, BedroomsKeyEnum } from "../../types/enumTypes";
 
 type BedroomCheckboxProps = {
   checkboxKey: BedroomsKeyEnum;
@@ -21,7 +21,7 @@ const BedroomCheckbox: React.FC<BedroomCheckboxProps> = ({
   return (
     <Form.Check
       type="checkbox"
-      label={BedroomLabelEnum[checkboxKey]}
+      label={unitSizeLabelEnum[checkboxKey]}
       id={checkboxKey}
       value={checkboxKey}
       checked={isChecked}

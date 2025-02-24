@@ -1,6 +1,6 @@
 import { Fragment, ReactNode } from "react";
 import {
-  BedroomLabelEnum,
+  unitSizeLabelEnum,
   BedroomsKeyEnum,
   tableType,
 } from "../types/enumTypes";
@@ -33,8 +33,6 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     BedroomsKeyEnum.THREE_PLUS,
   ];
 
-  const dataHeader = type === tableType.amiData ? "% of AMI" : "#";
-
   function renderPercentageList(percentages: AmiPercentage[]): ReactNode {
     if (!percentages) return null;
 
@@ -52,10 +50,11 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         <thead>
           <tr>
             <th>Size</th>
-            <th>{dataHeader}</th>
-            {type === tableType.availData && <th>Date</th>}
-            {/* {type === tableType.availData && <th>% AMI</th>} */}
-            {type === tableType.availData && <th>Max Rent</th>}
+            {type === tableType.availData && <th>% AMI</th>}
+            {/* TODO: Rent including untilities? */}
+            {type === tableType.availData && <th>Rent</th>}
+            {type === tableType.availData && <th>Move-in Date</th>}
+            {type === tableType.availData && <th># Available</th>}
           </tr>
         </thead>
         <tbody>
@@ -67,7 +66,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
               return (
                 <tr key={unit}>
-                  <td>{BedroomLabelEnum[unit]}</td>
+                  <td>{unitSizeLabelEnum[unit]}</td>
                   <td>{renderPercentageList(amiPercentages)}</td>
                 </tr>
               );
@@ -78,22 +77,20 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
               if (!unitAvailData) return null;
 
-              const {
-                numAvail,
-                dateAvailString,
-                maxRent,
-                // percentAmi,
-              } = unitAvailData;
+              const { numAvail, dateAvailString, maxRent, percentAmi } =
+                unitAvailData;
 
               return numAvail ? (
                 <tr key={unit}>
-                  <td>{BedroomLabelEnum[unit]}</td>
-                  <td>{numAvail}</td>
+                  <td style={{ minWidth: "65px" }}>
+                    {unitSizeLabelEnum[unit]}
+                  </td>
+                  <td>{percentAmi ?? "--"}</td>
+                  <td>{formatCurrency(maxRent)}</td>
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
                   </td>
-                  {/* <td>{percentAmi ?? "--"}</td> */}
-                  <td>{formatCurrency(maxRent)}</td>
+                  <td>{numAvail}</td>
                 </tr>
               ) : null;
             })}

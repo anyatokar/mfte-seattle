@@ -1,6 +1,7 @@
 import FilterCheckbox from "../checkboxes/FilterCheckbox";
 import { ActiveFilters } from "../../utils/buildingsFilter";
-import TextWithOverlay from "../TextWithOverlay";
+
+import TooltipWrapper from "../TooltipWrapper";
 
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
@@ -30,7 +31,7 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
         % AMI{" "}
         {activeFilters.ami.size > 0 && (
           <Badge>
-            <TextWithOverlay
+            <TooltipWrapper
               text={String(activeFilters.ami.size)}
               overlay={overlayText}
             />
