@@ -19,7 +19,7 @@ import { genericSearch } from "../utils/genericSearch";
 import { buildingsFilter } from "../utils/buildingsFilter";
 import { filterReducer } from "../reducers/filterReducer";
 
-import IBuilding from "../interfaces/IBuilding";
+import { SearchFields } from "../interfaces/IBuilding";
 import IPage from "../interfaces/IPage";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 
@@ -65,8 +65,8 @@ const AllBuildingsPage: React.FC<IPage> = () => {
 
     filterResult = allBuildings
       .filter((building) =>
-        genericSearch<IBuilding>(
-          building,
+        genericSearch<SearchFields>(
+          building.searchFields,
           ["buildingName", "neighborhood", "streetAddress", "zip"],
           searchQuery
         )

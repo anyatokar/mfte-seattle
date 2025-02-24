@@ -24,6 +24,13 @@ export type Contact = {
   urlForBuilding: string;
 };
 
+export type SearchFields = {
+  buildingName: string,
+  neighborhood: string,
+  streetAddress: string,
+  zip: string,
+};
+
 export default interface IBuilding {
   buildingID: string;
   dateCode: string;
@@ -34,4 +41,5 @@ export default interface IBuilding {
   address: Address;
   contact: Contact;
   listing: IListing;
+  searchFields: SearchFields;
 }
