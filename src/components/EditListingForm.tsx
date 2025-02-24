@@ -62,8 +62,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     program,
   } = listing;
 
-  console.log("isExistingListing", listing);
-
   const blankAvailRow: UnitAvailData = {
     unitSize: undefined,
     numAvail: "",
@@ -85,7 +83,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
-  console.log("og form fields", originalFormFields);
 
   const { currentUser } = useAuth();
 
@@ -112,18 +109,23 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       (row) => row.rowIndex !== rowIndex
     );
 
-    console.log(newAvailDataArray);
     setFormFields({
       ...formFields,
       availDataArray: newAvailDataArray,
     });
   };
 
-  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
-    null
-  );
-
   const [allBuildings] = useAllBuildingsContext();
+
+  function findSelectedBuilding(buildingName: string): IBuilding | undefined {
+    return allBuildings.find(
+      (building) => buildingName === building.buildingName
+    );
+  }
+
+  const [selectedBuilding, setSelectedBuilding] = useState<
+    IBuilding | undefined
+  >(findSelectedBuilding(listing.buildingName || ""));
 
   const handleInputChange = (e: any, rowId?: number) => {
     const { name, value } = e.target;
@@ -148,9 +150,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           (building) => value === building.buildingName
         );
 
-        console.log("value", value);
-
-        setSelectedBuilding(selectedBuilding || null);
+        setSelectedBuilding(selectedBuilding || undefined);
       }
 
       return {
@@ -341,7 +341,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                     <th>
                       <TextWithOverlay
                         text={"  Rent"}
-                        overlay={"Blanks will be set to max rent per"}
+                        overlay={
+                          "Blanks will be set to max for program, size, and % AMI."
+                        }
                       />
                     </th>
                     <th></th>
@@ -360,7 +362,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           }
                           value={unitAvailData.unitSize}
                         >
-                          <option value=""></option>
+                          <option value={unitAvailData.unitSize}>
+                            {unitAvailData.unitSize}
+                          </option>
                           {availSizes.map((unitSize) => (
                             <option key={unitSize} value={unitSize}>
                               {BedroomLabelEnum[unitSize]}
@@ -369,6 +373,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                         </Form.Select>
                       </td>
 
+                      {/* AMI */}
                       <td>
                         <Form.Select
                           required
@@ -377,10 +382,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           onChange={(e) =>
                             handleInputChange(e, unitAvailData.rowIndex)
                           }
-                          value={unitAvailData.percentAmi}
+                          value={unitAvailData.percentAmi || ""}
                           disabled={!unitAvailData.unitSize}
                         >
-                          <option value=""></option>
+                          <option value={unitAvailData.percentAmi}>
+                            {unitAvailData.percentAmi}
+                          </option>
                           {selectedBuilding?.amiData[
                             unitAvailData.unitSize as BedroomsKeyEnum
                           ]?.map((percent) => (
@@ -390,6 +397,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           ))}
                         </Form.Select>
                       </td>
+
+                      {/* Quantity */}
                       <td>
                         <Form.Control
                           type="number"
