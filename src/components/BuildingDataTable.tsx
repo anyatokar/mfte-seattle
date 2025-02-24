@@ -1,7 +1,7 @@
 import { Fragment, ReactNode } from "react";
 import {
-  // BedroomLabelEnum,
-  // BedroomsKeyEnum,
+  BedroomLabelEnum,
+  BedroomsKeyEnum,
   tableType,
 } from "../types/enumTypes";
 import Table from "react-bootstrap/Table";
@@ -25,15 +25,13 @@ type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const { type, data } = props;
 
-  const order = ["micro", "studio", "oneBed", "twoBed", "threePlusBed"];
-
-  const unitLabels: Record<string, string> = {
-    micro: "Micro",
-    studio: "Studio",
-    oneBed: "One",
-    twoBed: "Two",
-    threePlusBed: "Three+",
-  };
+  const order: BedroomsKeyEnum[] = [
+    BedroomsKeyEnum.MICRO,
+    BedroomsKeyEnum.STUDIO,
+    BedroomsKeyEnum.ONE_BED,
+    BedroomsKeyEnum.TWO_BED,
+    BedroomsKeyEnum.THREE_PLUS,
+  ];
 
   const dataHeader = type === tableType.amiData ? "% of AMI" : "#";
 
@@ -69,7 +67,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
               return (
                 <tr key={unit}>
-                  <td>{unitLabels[unit]}</td>
+                  <td>{BedroomLabelEnum[unit]}</td>
                   <td>{renderPercentageList(amiPercentages)}</td>
                 </tr>
               );
@@ -89,7 +87,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
               return numAvail ? (
                 <tr key={unit}>
-                  <td>{unitLabels[unit]}</td>
+                  <td>{BedroomLabelEnum[unit]}</td>
                   <td>{numAvail}</td>
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
