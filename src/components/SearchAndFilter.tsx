@@ -1,4 +1,4 @@
-import { Dispatch, useContext, useState } from "react";
+import { Dispatch, useContext } from "react";
 import SearchInput from "./SearchInput";
 import FilterSwitch from "./checkboxes/FilterSwitch";
 import BedroomDropdown from "./searchAndFilter/BedroomDropdown";
@@ -44,8 +44,10 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   };
 
   // Handler for Bedrooms
-  const handleBedroomsChange = (checkbox: BedroomsKeyEnum): void => {
-    if (activeFilters.bedrooms.has(checkbox)) {
+  const handleBedroomsChange = (checkbox?: BedroomsKeyEnum): void => {
+    if (!checkbox) {
+      dispatch({ type: "clearAll", category: "bedrooms" });
+    } else if (activeFilters.bedrooms.has(checkbox)) {
       dispatch({ type: "unchecked", category: "bedrooms", checkbox });
     } else {
       dispatch({ type: "checked", category: "bedrooms", checkbox });
@@ -90,12 +92,16 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
         {/* filter for large screens */}
         <Col className="mb-1 d-none d-md-block">
           <Stack direction="horizontal" gap={2}>
-            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
             <NeighborhoodDropdown
               onNeighborhoodsChange={handleNeighborhoodsChange}
               allNeighborhoods={allNeighborhoods}
               activeFilters={activeFilters}
             />
+            <BedroomDropdown
+              onBedroomsChange={handleBedroomsChange}
+              activeFilters={activeFilters}
+            />
+
             <AmiDropdown
               onAmiChange={handleAmiChange}
               allAmi={allAmi}
@@ -117,10 +123,13 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
       <Row className="d-md-none d-flex align-items-center ">
         <Col sm={7} className="mb-1">
           <Stack direction="horizontal" gap={2}>
-            <BedroomDropdown onBedroomsChange={handleBedroomsChange} />
             <NeighborhoodDropdown
               onNeighborhoodsChange={handleNeighborhoodsChange}
               allNeighborhoods={allNeighborhoods}
+              activeFilters={activeFilters}
+            />
+            <BedroomDropdown
+              onBedroomsChange={handleBedroomsChange}
               activeFilters={activeFilters}
             />
             <AmiDropdown

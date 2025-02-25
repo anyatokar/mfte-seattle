@@ -1,9 +1,26 @@
 import { useState } from "react";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import {
+  unitSizeLabelEnum,
+  BedroomsKeyEnum,
+  ProgramKeyEnum,
+} from "../types/enumTypes";
+import {
   addListingFirestore,
   updateListingFirestore,
 } from "../utils/firestoreUtils";
+import { formatCurrency, getMaxExpiryDate } from "../utils/generalUtils";
+import { useAuth } from "../contexts/AuthContext";
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+
+import { p6UnitPricing } from "../config/P6-unit-pricing";
+import { p345UnitPricing } from "../config/P345-unit-pricing";
+
+import { AddressAndPhone } from "./AddressAndPhone";
+import TooltipWrapper from "./TooltipWrapper";
+
+import IBuilding from "../interfaces/IBuilding";
+import IListing, { UnitAvailData } from "../interfaces/IListing";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -12,71 +29,57 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 
-import IBuilding from "../interfaces/IBuilding";
-import IListing from "../interfaces/IListing";
-
-import { useAuth } from "../contexts/AuthContext";
-import { getMaxExpiryDate } from "../utils/generalUtils";
-
 type ListingWithRequired = PartialWithRequired<
   IListing,
-  | "availData"
+  | "availDataArray"
   | "url"
   | "expiryDate"
   | "listingID"
   | "buildingID"
   | "description"
+  | "feedback"
+  | "program"
 >;
-
 type EditListingFormProps = {
   listing: ListingWithRequired;
-  selectedBuilding: IBuilding | null;
   isExistingListing: boolean;
   toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
+  isFormVisible: boolean;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
   listing,
   isExistingListing,
   toggleFormCallback,
-  selectedBuilding,
+  isFormVisible,
 }) => {
-  const { availData, url, expiryDate, listingID, description } = listing;
+  const {
+    availDataArray,
+    url,
+    expiryDate,
+    listingID,
+    description,
+    feedback,
+    program,
+  } = listing;
 
-  const unitSizeLabels = {
-    micro: "Micro/Pods",
-    studio: "Studios",
-    oneBed: "One Beds",
-    twoBed: "Two Beds",
-    threePlusBed: "Three+ Beds",
+  const blankAvailRow: UnitAvailData = {
+    unitSize: undefined,
+    dateAvailString: "",
+    percentAmi: "",
+    maxRent: "",
+    rowId: `${Date.now()}`,
   };
 
-  const unitSizeFields: Array<keyof typeof unitSizeLabels> = [
-    "micro",
-    "studio",
-    "oneBed",
-    "twoBed",
-    "threePlusBed",
-  ];
-
-  const originalFormFields: Partial<ListingWithRequired> = {
-    availData:
-      availData.length > 0
-        ? availData.map((availDataForUnitSize) => ({
-            unitSize: availDataForUnitSize.unitSize,
-            numAvail: availDataForUnitSize.numAvail,
-            dateAvailString: availDataForUnitSize.dateAvailString || "",
-            maxRent: availDataForUnitSize.maxRent || 0,
-          }))
-        : unitSizeFields.map((unitSize) => ({
-            unitSize: unitSize,
-            numAvail: 0,
-            dateAvailString: "",
-            maxRent: 0,
-          })),
+  const originalFormFields: Partial<IListing> = {
+    buildingName: listing.buildingName,
+    availDataArray:
+      availDataArray.length > 0 ? availDataArray : [blankAvailRow],
     url: url,
     expiryDate: expiryDate,
     description: description,
+    feedback: feedback,
+    program: program,
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
@@ -85,62 +88,93 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   if (!currentUser) return null;
 
-  // If this is a new listing, creates blanks for availData
-  if (availData.length === 0) {
-    for (let unitSize of unitSizeFields) {
-      const blankRow = {
-        unitSize: unitSize,
-        numAvail: 0,
-        dateAvailString: "",
-        maxRent: 0,
-      };
-      availData.push(blankRow);
-    }
+  const handleAddRow = () => {
+    const newRow = {
+      ...blankAvailRow,
+      rowId: `${Date.now()}`,
+    };
+
+    const newAvailDataArray = [...(formFields.availDataArray || []), newRow];
+
+    setFormFields({
+      ...formFields,
+      availDataArray: newAvailDataArray,
+    });
+  };
+
+  const handleDeleteRow = (rowId: string) => {
+    if (!formFields.availDataArray) return;
+
+    const newAvailDataArray = formFields.availDataArray.filter(
+      (row) => row.rowId !== rowId
+    );
+
+    setFormFields({
+      ...formFields,
+      availDataArray: newAvailDataArray,
+    });
+  };
+
+  const [allBuildings] = useAllBuildingsContext();
+
+  function findSelectedBuilding(buildingName: string): IBuilding | undefined {
+    return allBuildings.find(
+      (building) => buildingName === building.buildingName
+    );
   }
 
-  const handleInputChange = (event: any, indexInAvailData?: number) => {
-    const { name, value } = event.target;
+  const [selectedBuilding, setSelectedBuilding] = useState<
+    IBuilding | undefined
+  >(findSelectedBuilding(listing.buildingName || ""));
 
-    // updating the availData object
-    if (indexInAvailData !== undefined) {
-      setFormFields((prev) => {
-        const newAvailData = [...(prev.availData || [])];
-        newAvailData[indexInAvailData] = {
-          ...newAvailData[indexInAvailData],
-          [name]: value,
-        };
-        return { ...prev, availData: newAvailData };
-      });
-    } else {
-      // updating the rest, expiryDate, URL, etc.
-      setFormFields((prev) => ({
+  const handleInputChange = (e: any, rowId?: string) => {
+    const { name, value } = e.target;
+
+    setFormFields((prev) => {
+      const newAvailData = [...(prev.availDataArray || [])];
+
+      // If updating a specific row
+
+      //Find the index of the row with the specific rowId
+      const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
+
+      if (rowId !== undefined) {
+        newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
+
+        if (name === "unitSize") {
+          newAvailData[rowIndex] = {
+            ...newAvailData[rowIndex],
+            percentAmi: "",
+          };
+        }
+      }
+      if (name === "buildingName") {
+        // This assumes building names are unique.
+        const selectedBuilding = allBuildings.find(
+          (building) => value === building.buildingName
+        );
+
+        setSelectedBuilding(selectedBuilding || undefined);
+      }
+
+      return {
         ...prev,
         [name]: value,
-      }));
-    }
+        availDataArray: newAvailData,
+      };
+    });
   };
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (
-    event
+    e
   ) => {
-    event.preventDefault();
+    e.preventDefault();
 
     if (!formFields) return;
 
-    const isValid = formFields.availData?.some(
-      (row) => row.numAvail && row.dateAvailString && row.maxRent
-    );
-
-    if (!isValid) {
-      alert("Please fill out at least one row of the availability table.");
-      return;
-    }
-
     if (!isExistingListing) {
       const listingID = await addListingFirestore(
-        selectedBuilding?.buildingName || "",
         formFields,
-
         selectedBuilding?.buildingID || "",
         currentUser.uid
       );
@@ -161,143 +195,343 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     }
   };
 
+  const ProgramKeyEnumToLabel: Record<ProgramKeyEnum, string> = {
+    [ProgramKeyEnum.P6]: "P6",
+    [ProgramKeyEnum.P345]: "P3, P4, or P5",
+  };
+
+  const programOptionsArray: ProgramKeyEnum[] = [
+    ProgramKeyEnum.P6,
+    ProgramKeyEnum.P345,
+  ];
+
+  const availSizes: BedroomsKeyEnum[] = selectedBuilding
+    ? (Object.keys(selectedBuilding.amiData) as BedroomsKeyEnum[])
+    : [];
+
+  function getMaxRent(unitAvailData: UnitAvailData): number {
+    const { unitSize, percentAmi } = unitAvailData;
+
+    if (!unitSize || !percentAmi || !formFields.program) return 0;
+
+    if (unitAvailData.unitSize && unitAvailData.percentAmi) {
+      if (formFields.program === ProgramKeyEnum.P6) {
+        return p6UnitPricing[unitSize][Number(percentAmi)];
+      } else {
+        return p345UnitPricing[unitSize][Number(percentAmi)];
+      }
+    }
+
+    return 0;
+  }
+
   return (
     <Form onSubmit={handleFormSubmit}>
-      {!isExistingListing && (
-        <>
-          {/* Address */}
-          {selectedBuilding && (
-            <Form.Group as={Row} className="mb-0">
-              <Form.Group as={Col} className="mb-md-0">
-                <p>
-                  {selectedBuilding.streetNum} {selectedBuilding.street}
-                  <br />
-                  {selectedBuilding.city}, {selectedBuilding.state}{" "}
-                  {selectedBuilding.zip}
-                  {selectedBuilding.phone ? <br /> : null}
-                  {selectedBuilding.phone}
-                  {selectedBuilding.phone2 ? <br /> : null}
-                  {selectedBuilding.phone2}
-                </p>
-              </Form.Group>
-            </Form.Group>
-          )}
-        </>
+      {!isExistingListing && isFormVisible && listing.listingID === "" && (
+        <Row className="mb-3">
+          <Col md={6} className="mb-md-0">
+            <Form.Select
+              //TODO: Listings cards need a refactor for better UI as well.
+              required
+              name="buildingName"
+              id="buildingName"
+              onChange={handleInputChange}
+            >
+              <option value="">Select a building</option>
+              {allBuildings
+                .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
+                .map((selectedBuilding) => (
+                  <option
+                    key={selectedBuilding.buildingID}
+                    value={selectedBuilding.buildingName}
+                  >
+                    {selectedBuilding.buildingName}
+                  </option>
+                ))}
+            </Form.Select>
+          </Col>
+        </Row>
       )}
 
-      {/* Table */}
-      <Form.Group as={Row} className="mb-3">
-        <Form.Group as={Col} className="mb-0 mb-md-0">
-          <Form.Label>Availability* (at least one row required)</Form.Label>
-          <Table bordered hover responsive size="sm" className="mt-0">
-            <thead>
-              <tr>
-                <th>Unit Type</th>
-                <th>Number of Units Available</th>
-                <th>Earliest Available Date</th>
-                <th>Max Rent</th>
-              </tr>
-            </thead>
-            <tbody>
-              {formFields.availData?.map(
-                (availDataForUnitSize, indexInAvailData) => (
-                  <tr key={availDataForUnitSize.unitSize}>
-                    <td>{unitSizeLabels[availDataForUnitSize.unitSize]}</td>
-                    <td>
-                      <Form.Control
-                        type="number"
-                        min="0"
-                        name="numAvail"
-                        value={availDataForUnitSize.numAvail}
-                        onChange={(event) =>
-                          handleInputChange(event, indexInAvailData)
-                        }
+      {/* Address */}
+      {/* TODO: Maybe show address for existing listing as well? */}
+      {selectedBuilding && (
+        <Row className="mb-3">
+          <Col className="mb-md-0">
+            <Form.Label className="mb-0 fw-bold">
+              Confirm location and contact info:
+            </Form.Label>
+
+            <AddressAndPhone
+              buildingName={selectedBuilding.buildingName}
+              address={selectedBuilding.address}
+              contact={selectedBuilding.contact}
+              withLinks={false}
+            />
+          </Col>
+        </Row>
+      )}
+
+      {(selectedBuilding || isExistingListing) && (
+        <Form.Group>
+          <Row className="mb-3">
+            <Col>
+              <Form.Label className="mb-0 fw-bold">MFTE program:</Form.Label>
+
+              {programOptionsArray.map((program) => (
+                <Form.Check
+                  required
+                  key={program}
+                  type="radio"
+                  label={ProgramKeyEnumToLabel[program]}
+                  name="program"
+                  id={program}
+                  value={program}
+                  checked={formFields.program === program}
+                  onChange={(e) => handleInputChange(e)}
+                />
+              ))}
+            </Col>
+          </Row>
+        </Form.Group>
+      )}
+
+      {(isExistingListing || (selectedBuilding && formFields.program)) && (
+        <Form.Group>
+          {/* URL */}
+          <Row className="mb-3">
+            <Col className="mb-0 mb-md-0">
+              <Form.Label className="mb-0 fw-bold">Listings URL:</Form.Label>
+              <Form.Control
+                required
+                type="url"
+                name="url"
+                onChange={handleInputChange}
+                value={formFields.url}
+              />
+              <Form.Text>
+                {`Url you'd share with a prospective renter to view available MFTE
+                  units. Often ends with /floorplans`}
+                <br />
+                {`Include http://`}
+              </Form.Text>
+            </Col>
+          </Row>
+
+          {/* Table */}
+          <Row className="mb-3">
+            <Col className="mb-0">
+              <Form.Label className="fw-bold">MFTE availability:</Form.Label>
+              <Table bordered hover responsive size="sm" className="mt-0">
+                <thead>
+                  <tr>
+                    <th style={{ minWidth: "100px" }}>Size</th>
+                    <th style={{ minWidth: "100px" }}>% AMI</th>
+                    <th style={{ minWidth: "150px" }}>Rent</th>
+
+                    <th style={{ minWidth: "150px" }}>
+                      <TooltipWrapper
+                        label="Move-in Date"
+                        overlay="Earliest date if multiple units available."
+                        placement="top"
                       />
-                    </td>
-                    <td>
-                      <Form.Control
-                        type="date"
-                        name="dateAvailString"
-                        value={availDataForUnitSize.dateAvailString || ""}
-                        onChange={(event) =>
-                          handleInputChange(event, indexInAvailData)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <InputGroup>
-                        <InputGroup.Text>$</InputGroup.Text>
+                    </th>
+
+                    <th>Delete Row</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {formFields.availDataArray?.map((unitAvailData) => (
+                    <tr key={unitAvailData.rowId}>
+                      <td>
+                        <Form.Select
+                          required
+                          name="unitSize"
+                          id="unitSize"
+                          onChange={(e) =>
+                            handleInputChange(e, unitAvailData.rowId)
+                          }
+                          value={unitAvailData.unitSize}
+                        >
+                          <option value={unitAvailData.unitSize}>
+                            {unitAvailData.unitSize
+                              ? unitSizeLabelEnum[unitAvailData.unitSize]
+                              : ""}
+                          </option>
+                          {availSizes.map((unitSize) => (
+                            <option key={unitSize} value={unitSize}>
+                              {unitSizeLabelEnum[unitSize]}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </td>
+
+                      {/* AMI */}
+                      <td>
+                        <Form.Select
+                          required
+                          name="percentAmi"
+                          id="percentAmi"
+                          onChange={(e) =>
+                            handleInputChange(e, unitAvailData.rowId)
+                          }
+                          value={unitAvailData.percentAmi || ""}
+                          disabled={!unitAvailData.unitSize}
+                        >
+                          <option value={unitAvailData.percentAmi}>
+                            {unitAvailData.percentAmi}
+                          </option>
+                          {selectedBuilding?.amiData[
+                            unitAvailData.unitSize as BedroomsKeyEnum
+                          ]?.map((percent) => (
+                            <option key={percent} value={percent}>
+                              {percent}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </td>
+                      <td style={{ maxWidth: "100px" }}>
+                        <InputGroup>
+                          <InputGroup.Text>$</InputGroup.Text>
+                          <Form.Control
+                            required
+                            type="number"
+                            min="0"
+                            name="maxRent"
+                            value={unitAvailData.maxRent}
+                            onChange={(event) =>
+                              handleInputChange(event, unitAvailData.rowId)
+                            }
+                          />
+                        </InputGroup>
+                        <div className="text-end">
+                          <Form.Text>
+                            {!!getMaxRent(unitAvailData) &&
+                              formFields.program &&
+                              `${ProgramKeyEnumToLabel[formFields.program]}, 
+                              ${unitSizeLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]}, 
+                              ${unitAvailData.percentAmi}% AMI ⟶ 
+                              ${formatCurrency(getMaxRent(unitAvailData))} max with utilities*`}
+                          </Form.Text>
+                        </div>
+                      </td>
+                      <td style={{ maxWidth: "100px" }}>
                         <Form.Control
-                          type="number"
-                          min="0"
-                          name="maxRent"
-                          value={availDataForUnitSize.maxRent || ""}
-                          onChange={(event) =>
-                            handleInputChange(event, indexInAvailData)
+                          required
+                          type="date"
+                          name="dateAvailString"
+                          value={unitAvailData.dateAvailString || ""}
+                          onChange={(e) =>
+                            handleInputChange(e, unitAvailData.rowId)
                           }
                         />
-                      </InputGroup>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </Table>
-        </Form.Group>
-      </Form.Group>
+                      </td>
 
-      {/* URL */}
-      <Form.Group as={Row} className="mb-3">
-        <Form.Group as={Col} className="mb-0 mb-md-0">
-          <Form.Label>Listing URL* (include http://)</Form.Label>
-          <Form.Control
-            required
-            type="url"
-            name="url"
-            onChange={handleInputChange}
-            value={formFields.url}
-          />
-          <Form.Text className="text-muted">
-            The url you'd share if a prospective renter asked to view available
-            MFTE units in your building.
-          </Form.Text>
-        </Form.Group>
-      </Form.Group>
+                      <td className="text-center">
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => handleDeleteRow(unitAvailData.rowId)}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
+            <Row>
+              <Col>
+                <Button onClick={handleAddRow}>Add Row</Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Text className="mt-0 pt-0">
+                  *Max rent calculation based on{" "}
+                  <a
+                    id="income-and-rent-limits"
+                    href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
+                    title="Income and Rent Limits (FY 2024)"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Income and Rent Limits (FY 2024)
+                  </a>
+                </Form.Text>
+              </Col>
+            </Row>
+          </Row>
 
-      {/* Expiry Date */}
-      <Form.Group as={Row} className="mb-3">
-        <Form.Label>Listing Expiration Date (up to 60 days)</Form.Label>
-        <Form.Group as={Col} md={6} className="mb-0 mb-md-0">
-          <Form.Control
-            type="date"
-            name="expiryDate"
-            value={formFields.expiryDate || ""}
-            max={getMaxExpiryDate()}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-      </Form.Group>
+          {/* Expiry Date */}
+          <Row className="mb-3">
+            <Form.Label className="mb-0 fw-bold">
+              Listing expiration date:
+            </Form.Label>
+            <Col md={6} className="mb-0 mb-md-0">
+              <Form.Control
+                type="date"
+                name="expiryDate"
+                value={formFields.expiryDate || ""}
+                max={getMaxExpiryDate()}
+                onChange={handleInputChange}
+              />
+            </Col>
+            <Form.Text>
+              Optional. Up to 60 days. If left blank will be set to the max of
+              60 days.
+            </Form.Text>
+          </Row>
 
-      <Form.Group as={Row} className="mb-3">
-        <Form.Group as={Col} className="mb-0 mb-md-0">
-          <Form.Label>Description (max 200 characters)</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="description"
-            id="description"
-            rows={3}
-            onChange={handleInputChange}
-            value={formFields.description}
-            maxLength={200}
-          />
-        </Form.Group>
-      </Form.Group>
+          <Row className="mb-3">
+            <Col className="mb-0 mb-md-0">
+              <Form.Label className="mb-0 fw-bold">
+                Featured description:{" "}
+              </Form.Label>
 
-      <Form.Group as={Col} className="text-end">
-        <Button variant="success" type="submit" size="lg">
-          Save
-        </Button>
-      </Form.Group>
+              <Form.Control
+                as="textarea"
+                name="description"
+                id="description"
+                rows={3}
+                onChange={handleInputChange}
+                value={formFields.description}
+                maxLength={200}
+              />
+              <Form.Text>
+                Optional. Will be shared as part of the listing. Max 200
+                characters.
+              </Form.Text>
+            </Col>
+          </Row>
+
+          <Row className="mb-3">
+            <Col className="mb-0 mb-md-0">
+              <Form.Label className="mb-0 fw-bold">Form feedback:</Form.Label>
+
+              <Form.Control
+                as="textarea"
+                name="feedback"
+                id="feedback"
+                rows={3}
+                onChange={handleInputChange}
+                value={formFields.feedback}
+              />
+              <Form.Text>
+                Optional. Won't be shared publicly. Feedback can include data
+                corrections, suggestions on form improvement, user experience,
+                etc. Thank you!
+              </Form.Text>
+            </Col>
+          </Row>
+
+          <Form.Group className="text-end">
+            <Button variant="success" type="submit" size="lg">
+              Submit
+            </Button>
+          </Form.Group>
+        </Form.Group>
+      )}
     </Form>
   );
 };

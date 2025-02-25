@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect, MutableRefObject } from "react";
 import { listingStatusEnum, tableType } from "../types/enumTypes";
 
-import { AddressAndPhone } from "./BuildingContactInfo";
+import { AddressAndPhone } from "./AddressAndPhone";
 import BuildingDataTable from "./BuildingDataTable";
 import ListingButton from "./ListingButton";
 import SaveButton from "./SaveButton";
@@ -35,21 +35,8 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   savedHomeData,
   shouldScroll,
 }) => {
-  const {
-    buildingID,
-    buildingName,
-    phone,
-    phone2,
-    residentialTargetedArea,
-    urlForBuilding,
-    streetNum,
-    street,
-    city,
-    state,
-    zip,
-    amiData,
-    listing,
-  } = building;
+  const { buildingID, buildingName, address, contact, amiData, listing } =
+    building;
 
   const { currentUser } = useAuth();
 
@@ -118,14 +105,14 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             )}
           </div>
         </Card.Title>
-        <Card.Subtitle>{residentialTargetedArea}</Card.Subtitle>
+        <Card.Subtitle>{address.neighborhood}</Card.Subtitle>
         <div className="mt-2">
           {currentUser ? (
             !!savedHomeData || isSaved ? (
               <Stack direction={"horizontal"} gap={2}>
                 {" "}
                 <ListingButton listing={listing} isMarker={false} />
-                <WebsiteButton urlForBuilding={urlForBuilding} />
+                <WebsiteButton urlForBuilding={contact.urlForBuilding} />
                 <SaveButton
                   isSaved={true}
                   onClickCallback={handleToggleSaveBuilding}
@@ -134,7 +121,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             ) : (
               <Stack direction={"horizontal"} gap={2}>
                 <ListingButton listing={listing} isMarker={false} />
-                <WebsiteButton urlForBuilding={urlForBuilding} />
+                <WebsiteButton urlForBuilding={contact.urlForBuilding} />
                 <SaveButton
                   isSaved={false}
                   onClickCallback={handleToggleSaveBuilding}
@@ -144,7 +131,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
           ) : (
             <Stack direction={"horizontal"} gap={2}>
               <ListingButton listing={listing} isMarker={false} />
-              <WebsiteButton urlForBuilding={urlForBuilding} />
+              <WebsiteButton urlForBuilding={contact.urlForBuilding} />
               <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
             </Stack>
           )}
@@ -164,21 +151,16 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             className="tabs"
             defaultActiveKey={
               listing?.listingStatus === listingStatusEnum.ACTIVE
-                ? "availability"
+                ? "available"
                 : "contact"
             }
           >
             {listing?.listingStatus === listingStatusEnum.ACTIVE &&
-              listing?.availData && (
-                <Tab
-                  eventKey="availability"
-                  title="Availability"
-                  className="mt-2"
-                >
+              listing?.availDataArray && (
+                <Tab eventKey="available" title="Available" className="mt-2">
                   <BuildingDataTable
                     type={tableType.availData}
-                    data={listing.availData}
-                    showListingForm={false}
+                    data={listing.availDataArray}
                   />
                   {listing.description && (
                     <Card.Text className="mt-2">
@@ -192,13 +174,9 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
               <div className="mt-2">
                 <AddressAndPhone
                   buildingName={buildingName}
-                  streetNum={streetNum}
-                  street={street}
-                  city={city}
-                  state={state}
-                  zip={zip}
-                  phone={phone}
-                  phone2={phone2}
+                  address={address}
+                  contact={contact}
+                  withLinks={true}
                 />
               </div>
             </Tab>

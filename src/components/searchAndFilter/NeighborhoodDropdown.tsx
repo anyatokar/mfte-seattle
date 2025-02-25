@@ -2,9 +2,11 @@ import { useState } from "react";
 import FilterCheckbox from "../checkboxes/FilterCheckbox";
 import { ActiveFilters } from "../../utils/buildingsFilter";
 
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
-import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
+import TooltipWrapper from "../TooltipWrapper";
 
 type NeighborhoodFilterProps = {
   onNeighborhoodsChange: (checkbox?: string) => void;
@@ -23,6 +25,9 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
       neighborhood.toLowerCase().includes(dropdownFilter.toLowerCase())
     )
     .sort();
+
+  const overlayText = [...activeFilters.neighborhoods].join(", ");
+
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -30,7 +35,16 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
         id="neighborhood-filter-dropdown"
         size="sm"
       >
-        Neighborhood
+        District{" "}
+        {activeFilters.neighborhoods.size > 0 && (
+          <Badge>
+            <TooltipWrapper
+              label={String(activeFilters.neighborhoods.size)}
+              overlay={overlayText}
+              placement={"right"}
+            />
+          </Badge>
+        )}
       </Dropdown.Toggle>
       <Dropdown.Menu
         style={{ maxHeight: "200px", overflowY: "auto" }}

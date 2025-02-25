@@ -1,11 +1,34 @@
 import { Timestamp } from "firebase/firestore";
-import IListing, { UnitSize } from "./IListing";
+import IListing from "./IListing";
+import { BedroomsKeyEnum } from "../types/enumTypes";
 
-export type amiPercentageType = 30 | 40 | 50 | 60 | 65 | 70 | 75 | 80 | 85 | 90;
+export type AmiPercentage = 30 | 40 | 50 | 60 | 65 | 70 | 75 | 80 | 85 | 90;
 
-export type amiDataType = {
-  unitSize: UnitSize;
-  amiPercentages: amiPercentageType[];
+export type AmiData = { [key in BedroomsKeyEnum]: AmiPercentage[] };
+
+export type Address = {
+  streetNum: string;
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+  neighborhood: string;
+  streetAddress: string;
+  lat: number;
+  lng: number;
+};
+
+export type Contact = {
+  phone: string | null;
+  phone2: string | null;
+  urlForBuilding: string;
+};
+
+export type SearchFields = {
+  buildingName: string;
+  neighborhood: string;
+  streetAddress: string;
+  zip: string;
 };
 
 export default interface IBuilding {
@@ -13,26 +36,10 @@ export default interface IBuilding {
   dateCode: string;
   IDWithDateCode: string;
   buildingName: string;
-  phone: string | null;
-  phone2: string | null;
-  residentialTargetedArea: string;
-  totalRestrictedUnits: 0 | string;
-  sedu: 0 | string;
-  studioUnits: 0 | string;
-  oneBedroomUnits: 0 | string;
-  twoBedroomUnits: 0 | string;
-  threePlusBedroomUnits: 0 | string;
-  urlForBuilding: string;
-  lat: number;
-  lng: number;
-  streetNum: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
   updatedTimestamp: Timestamp;
-  streetAddress: string;
-  /** This is an array to keep the order from smallest to largest on render. */
-  amiData: amiDataType[];
+  amiData: AmiData;
+  address: Address;
+  contact: Contact;
   listing: IListing;
+  searchFields: SearchFields;
 }

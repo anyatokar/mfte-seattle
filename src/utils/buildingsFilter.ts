@@ -1,5 +1,5 @@
-import IBuilding, { amiPercentageType } from "../interfaces/IBuilding";
-import { UnitSize } from "../interfaces/IListing";
+import IBuilding, { AmiData, AmiPercentage } from "../interfaces/IBuilding";
+
 import { BedroomsKeyEnum, listingStatusEnum } from "../types/enumTypes";
 
 export type ActiveFilters = {
@@ -10,36 +10,32 @@ export type ActiveFilters = {
   isSavedOnly: boolean;
 };
 
-const unitSizeToBedroomsKey: Record<UnitSize, BedroomsKeyEnum> = {
-  micro: BedroomsKeyEnum.SEDU,
-  studio: BedroomsKeyEnum.STUDIO,
-  oneBed: BedroomsKeyEnum.ONE_BED,
-  twoBed: BedroomsKeyEnum.TWO_BED,
-  threePlusBed: BedroomsKeyEnum.THREE_PLUS,
-};
-
 function filterBedrooms(
   building: IBuilding,
   activeFilters: ActiveFilters
 ): boolean {
   const { bedrooms, isAvailOnly } = activeFilters;
 
-  // If no filters are applied, return true.
   if (bedrooms.size === 0) return true;
 
   if (isAvailOnly) {
     if (!building.listing) return false;
 
-    return [...bedrooms].some((filterProperty) =>
-      building.listing.availData.some(
-        (avails) =>
-          unitSizeToBedroomsKey[avails.unitSize] === filterProperty &&
-          Number(avails.numAvail) > 0
+    return [...bedrooms].some((checkedBedroom) =>
+      building.listing.availDataArray.some(
+        (availObj) => availObj.unitSize === checkedBedroom
       )
     );
   }
 
-  return [...bedrooms].some((filterProperty) => !!building[filterProperty]);
+  for (const selectedBedroom of [...bedrooms]) {
+    return (
+      building.amiData[selectedBedroom] &&
+      building.amiData[selectedBedroom].length > 0
+    );
+  }
+
+  return false;
 }
 
 function filterAmi(building: IBuilding, activeFilters: ActiveFilters): boolean {
@@ -48,7 +44,7 @@ function filterAmi(building: IBuilding, activeFilters: ActiveFilters): boolean {
   if (ami.size === 0) return true;
 
   const fullBedroomSet = new Set([
-    BedroomsKeyEnum.SEDU,
+    BedroomsKeyEnum.MICRO,
     BedroomsKeyEnum.STUDIO,
     BedroomsKeyEnum.ONE_BED,
     BedroomsKeyEnum.TWO_BED,
@@ -57,18 +53,18 @@ function filterAmi(building: IBuilding, activeFilters: ActiveFilters): boolean {
 
   const bedroomSet = bedrooms.size === 0 ? fullBedroomSet : bedrooms;
 
+  // TODO: Collect realtime AMI percentage data so that this filter can be applied to it.
+  // This is just looking at fixed data.
   for (const selectedBedroom of bedroomSet) {
+    const amiDataForBedroom =
+      building.amiData[selectedBedroom as keyof AmiData];
+
     for (const amiFilterUnit of [...ami]) {
-      for (const buildingAmiData of building.amiData) {
-        if (
-          unitSizeToBedroomsKey[buildingAmiData.unitSize] === selectedBedroom &&
-          buildingAmiData.amiPercentages.includes(
-            Number(amiFilterUnit) as amiPercentageType
-          )
-        ) {
-          return true;
-        }
-      }
+      if (
+        amiDataForBedroom &&
+        amiDataForBedroom.includes(Number(amiFilterUnit) as AmiPercentage)
+      )
+        return true;
     }
   }
 
@@ -91,7 +87,7 @@ export function buildingsFilter(
   const neighborhoodsResult =
     // If no boxes are checked, evaluate to be the same as the box is checked - omit that dropdown.
     neighborhoods.size === 0 ||
-    neighborhoods.has(building.residentialTargetedArea);
+    neighborhoods.has(building.address.neighborhood);
 
   const amiResult = filterAmi(building, activeFilters);
 

@@ -1,39 +1,39 @@
-import { Fragment } from "react";
-import { tableType } from "../types/enumTypes";
-import { amiPercentageType, amiDataType } from "../interfaces/IBuilding";
-import { AvailData } from "../interfaces/IListing";
+import { Fragment, ReactNode } from "react";
+import {
+  unitSizeLabelEnum,
+  BedroomsKeyEnum,
+  tableType,
+} from "../types/enumTypes";
 import Table from "react-bootstrap/Table";
 import { formatCurrency, formatDate } from "../utils/generalUtils";
+import { AmiData, AmiPercentage } from "../interfaces/IBuilding";
+import { AvailDataArray } from "../interfaces/IListing";
 
 interface AmiDataProps {
   type: tableType.amiData;
-  data: amiDataType[];
+  data: AmiData;
 }
 
 interface AvailDataProps {
   type: tableType.availData;
-  data: AvailData[];
-  showListingForm: boolean;
+  data: AvailDataArray;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 
-const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
-  const { type, data } = props;
+const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
+  type,
+  data,
+}) => {
+  const order: BedroomsKeyEnum[] = [
+    BedroomsKeyEnum.MICRO,
+    BedroomsKeyEnum.STUDIO,
+    BedroomsKeyEnum.ONE_BED,
+    BedroomsKeyEnum.TWO_BED,
+    BedroomsKeyEnum.THREE_PLUS,
+  ];
 
-  const unitLabels: Record<string, string> = {
-    micro: "Micro",
-    studio: "Studio",
-    oneBed: "One",
-    twoBed: "Two",
-    threePlusBed: "Three+",
-  };
-
-  const dataHeader = type === tableType.amiData ? "% of AMI" : "# Available";
-
-  function renderPercentageList(
-    percentages: amiPercentageType[]
-  ): React.ReactNode {
+  function renderPercentageList(percentages: AmiPercentage[]): ReactNode {
     if (!percentages) return null;
 
     return percentages.map((item, index) => (
@@ -49,41 +49,42 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       <Table bordered hover size="sm" className="my-0" responsive>
         <thead>
           <tr>
-            <th>Bedrooms</th>
-            <th>{dataHeader}</th>
-            {type === tableType.availData && <th>Earliest Date</th>}
-            {type === tableType.availData && <th>Max Rent</th>}
+            <th>Size</th>
+            <th>% AMI</th>
+            {/* TODO: Rent including utilities? */}
+            {type === tableType.availData && <th>Rent</th>}
+            {type === tableType.availData && <th>Move-in Date</th>}
           </tr>
         </thead>
         <tbody>
           {type === tableType.amiData &&
-            (data as amiDataType[]).map((amiData) => {
-              if (!amiData) return null;
+            order.map((unit) => {
+              const amiPercentages = data[unit as keyof AmiData];
 
-              const { unitSize, amiPercentages } = amiData;
+              if (!amiPercentages) return null;
 
               return (
-                <tr key={unitSize}>
-                  <td>{unitLabels[unitSize]}</td>
+                <tr key={unit}>
+                  <td>{unitSizeLabelEnum[unit]}</td>
                   <td>{renderPercentageList(amiPercentages)}</td>
                 </tr>
               );
             })}
           {type === tableType.availData &&
-            (data as AvailData[])?.map((availData) => {
-              if (!availData) return null;
+            data.map((unitAvailData) => {
+              const { dateAvailString, maxRent, percentAmi, rowId, unitSize } =
+                unitAvailData;
 
-              const { unitSize, numAvail, dateAvailString, maxRent } =
-                availData;
-
-              return numAvail ? (
-                <tr key={unitSize}>
-                  <td>{unitLabels[unitSize]}</td>
-                  <td>{numAvail}</td>
+              return rowId && unitSize ? (
+                <tr key={rowId}>
+                  <td style={{ minWidth: "65px" }}>
+                    {unitSizeLabelEnum[unitSize]}
+                  </td>
+                  <td style={{ minWidth: "60px" }}>{percentAmi ?? "--"}</td>
+                  <td>{formatCurrency(maxRent)}</td>
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
                   </td>
-                  <td>{formatCurrency(maxRent)}</td>
                 </tr>
               ) : null;
             })}

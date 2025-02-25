@@ -69,7 +69,7 @@ describe("ListingCard Component", () => {
     expect(screen.getByText(/12\/10\/2024/i)).toBeInTheDocument();
     expect(screen.getByText(/Description:/i)).toBeInTheDocument();
     expect(screen.getByText(/Apts available/i)).toBeInTheDocument();
-    expect(screen.getByText(/Listing updated:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Last update:/i)).toBeInTheDocument();
     expect(screen.getByText(/1\/14\/2024/i)).toBeInTheDocument();
   });
 });

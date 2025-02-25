@@ -107,7 +107,7 @@ const Profile: React.FC = () => {
   }
 
   function handlePasswordChange(value: string): void {
-    if (!!value) {
+    if (value) {
       setIsAnyFieldUpdated(true);
     } else {
       setIsAnyFieldUpdated(false);

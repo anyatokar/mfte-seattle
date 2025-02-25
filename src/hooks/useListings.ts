@@ -13,7 +13,7 @@ export function useAllListings(
   const getAllListings = useCallback(() => {
     setIsLoadingAllListings(true);
 
-    let constraints = [];
+    const constraints = [];
 
     if (omitExpired) {
       constraints.push(where("expiryDate", ">=", new Date().toISOString()));
@@ -30,6 +30,10 @@ export function useAllListings(
       const listings: IListing[] = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...(doc.data() as IListing),
+        // Temp fix for key name change availData >> availDataArray
+        availDataArray: doc.data().availDataArray
+          ? doc.data().availDataArray
+          : doc.data().availData,
       }));
 
       setAllListings(listings);

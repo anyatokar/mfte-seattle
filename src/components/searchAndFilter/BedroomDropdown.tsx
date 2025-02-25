@@ -1,23 +1,33 @@
-import { BedroomsKeyEnum } from "../../types/enumTypes";
+import { unitSizeLabelEnum, BedroomsKeyEnum } from "../../types/enumTypes";
 import BedroomCheckbox from "../checkboxes/BedroomCheckbox";
+import TooltipWrapper from "../TooltipWrapper";
+import { ActiveFilters } from "../../utils/buildingsFilter";
 
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 
 type BedroomFilterProps = {
-  onBedroomsChange: (checkbox: BedroomsKeyEnum) => void;
+  onBedroomsChange: (checkbox?: BedroomsKeyEnum) => void;
+  activeFilters: ActiveFilters;
 };
 
 const BedroomDropdown: React.FC<BedroomFilterProps> = ({
   onBedroomsChange,
+  activeFilters,
 }) => {
   const checkboxKeys: BedroomsKeyEnum[] = [
-    BedroomsKeyEnum.SEDU,
+    BedroomsKeyEnum.MICRO,
     BedroomsKeyEnum.STUDIO,
     BedroomsKeyEnum.ONE_BED,
     BedroomsKeyEnum.TWO_BED,
     BedroomsKeyEnum.THREE_PLUS,
   ];
+
+  const overlayText = [...activeFilters.bedrooms]
+    .map((bedroom) => unitSizeLabelEnum[bedroom])
+    .join(", ");
 
   return (
     <Dropdown>
@@ -26,9 +36,21 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
         id="bedroom-filter-dropdown"
         size="sm"
       >
-        Bedrooms
+        Size{" "}
+        {activeFilters.bedrooms.size > 0 && (
+          <Badge>
+            <TooltipWrapper
+              label={String(activeFilters.bedrooms.size)}
+              overlay={overlayText}
+              placement={"right"}
+            />
+          </Badge>
+        )}
       </Dropdown.Toggle>
       <Dropdown.Menu className="p-2" aria-labelledby="bedroom-filter-dropdown">
+        <Button variant="link" onClick={() => onBedroomsChange()}>
+          Remove Filter
+        </Button>
         {checkboxKeys.map((checkboxKey) => (
           <Form key={checkboxKey}>
             <BedroomCheckbox

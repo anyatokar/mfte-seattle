@@ -21,7 +21,6 @@ import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 
 import AreYouSureModal from "../components/AreYouSureModal";
-import IBuilding from "../interfaces/IBuilding";
 
 const ManageListingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
@@ -33,9 +32,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
   const defaultActiveKey: string = "viewListings";
   const [activeTab, setActiveTab] = useState<string>(defaultActiveKey);
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
-  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
-    null
-  );
   const [editListingID, setEditListingID] = useState<string>("");
   const [modalListingID, setModalListingID] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
@@ -51,14 +47,12 @@ const ManageListingsPage: React.FC<IPage> = () => {
       console.log("modalListingID === editListingID");
       setIsFormVisible(false);
       setEditListingID("");
-      setSelectedBuilding(null);
     } else if (modalListingID !== "" && modalListingID !== editListingID) {
       console.log("Switching listings");
       setEditListingID(modalListingID);
       setIsFormVisible(true);
     } else if (modalListingID === "") {
       setEditListingID("");
-      setSelectedBuilding(null);
     }
 
     handleClose();
@@ -68,7 +62,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
     if (clickedSave) {
       setIsFormVisible(false);
       setEditListingID("");
-      setSelectedBuilding(null);
     } else if (isFormVisible && listingID !== editListingID) {
       handleShow(listingID);
     } else if (isFormVisible) {
@@ -218,8 +211,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                             isFormVisible={isFormVisible}
                             isExistingListing={false}
                             editListingID={editListingID}
-                            setSelectedBuilding={setSelectedBuilding}
-                            selectedBuilding={selectedBuilding}
                           />
                         </Col>
                       </Row>
@@ -267,7 +258,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                       toggleFormCallback={toggleFormCallback}
                       isExistingListing={false}
                       editListingID={editListingID}
-                      selectedBuilding={selectedBuilding}
                     />
                   </Tab.Pane>
 

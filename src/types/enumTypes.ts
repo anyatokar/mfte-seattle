@@ -32,17 +32,22 @@ export enum confirmModalTypeEnum {
 
 // Bedrooms
 export enum BedroomsKeyEnum {
-  SEDU = "sedu",
-  STUDIO = "studioUnits",
-  ONE_BED = "oneBedroomUnits",
-  TWO_BED = "twoBedroomUnits",
-  THREE_PLUS = "threePlusBedroomUnits",
+  MICRO = "micro",
+  STUDIO = "studio",
+  ONE_BED = "oneBed",
+  TWO_BED = "twoBed",
+  THREE_PLUS = "threePlusBed",
 }
 
-export enum BedroomLabelEnum {
-  sedu = "Micro",
-  studioUnits = "Studio",
-  oneBedroomUnits = "One",
-  twoBedroomUnits = "Two",
-  threePlusBedroomUnits = "Three+",
+export enum unitSizeLabelEnum {
+  micro = "Micro",
+  studio = "Studio",
+  oneBed = "1 Bed",
+  twoBed = "2 Bed",
+  threePlusBed = "3+ Bed",
+}
+
+export enum ProgramKeyEnum {
+  P6 = "P6",
+  P345 = "P345",
 }

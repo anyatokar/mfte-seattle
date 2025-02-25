@@ -7,13 +7,13 @@ import { ModalContext, ModalState } from "../contexts/ModalContext";
 
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 
-import { AddressAndPhone } from "../components/BuildingContactInfo";
+import { AddressAndPhone } from "../components/AddressAndPhone";
 import ListingButton from "../components/ListingButton";
 import SaveButton from "../components/SaveButton";
 import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
-import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
+import { listingStatusEnum } from "../types/enumTypes";
 
 import Stack from "react-bootstrap/Stack";
 
@@ -30,21 +30,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   setSelectedBuilding,
   isSaved: wasOriginallySaved,
 }) => {
-  const {
-    buildingID,
-    buildingName,
-    urlForBuilding,
-    residentialTargetedArea,
-    streetNum,
-    street,
-    city,
-    state,
-    zip,
-    phone,
-    phone2,
-    lat,
-    lng,
-  } = building;
+  const { buildingID, buildingName, address, contact } = building;
 
   const onMarkerClick = useCallback(
     () => setSelectedBuilding(isSelected ? null : building),
@@ -59,7 +45,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  const { currentUser, accountType } = useAuth();
+  const { currentUser } = useAuth();
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
 
   function toggleSave() {
@@ -91,8 +77,8 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   return (
     <Marker
       position={{
-        lat: lat,
-        lng: lng,
+        lat: address.lat,
+        lng: address.lng,
       }}
       onClick={onMarkerClick}
       icon={getIcon()}
@@ -111,46 +97,36 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
               <div>
                 <strong>{buildingName}</strong>
               </div>
-              <div>{residentialTargetedArea}</div>
+              <div>{address.neighborhood}</div>
               <div className="my-2">
                 <AddressAndPhone
                   buildingName={buildingName}
-                  streetNum={streetNum}
-                  street={street}
-                  city={city}
-                  state={state}
-                  zip={zip}
-                  phone={phone}
-                  phone2={phone2}
+                  address={address}
+                  contact={contact}
+                  withLinks={true}
                 />
               </div>
-              {accountType !== accountTypeEnum.MANAGER &&
-                (currentUser ? (
-                  wasOriginallySaved || isSaved ? (
-                    <Stack direction={"horizontal"} gap={2}>
-                      <WebsiteButton urlForBuilding={urlForBuilding} />
-                      <SaveButton isSaved={true} onClickCallback={toggleSave} />
-                    </Stack>
-                  ) : (
-                    <Stack direction={"horizontal"} gap={2}>
-                      <WebsiteButton urlForBuilding={urlForBuilding} />
-                      <SaveButton
-                        isSaved={false}
-                        onClickCallback={toggleSave}
-                      />
-                    </Stack>
-                  )
+
+              {currentUser ? (
+                wasOriginallySaved || isSaved ? (
+                  <Stack direction={"horizontal"} gap={2}>
+                    <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                    <SaveButton isSaved={true} onClickCallback={toggleSave} />
+                  </Stack>
                 ) : (
                   <Stack direction={"horizontal"} gap={2}>
-                    <WebsiteButton urlForBuilding={urlForBuilding} />
-                    <SaveButton
-                      isSaved={false}
-                      onClickCallback={handleShowLogin}
-                    />
+                    <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                    <SaveButton isSaved={false} onClickCallback={toggleSave} />
                   </Stack>
-                ))}
-              {accountType === accountTypeEnum.MANAGER && (
-                <WebsiteButton urlForBuilding={urlForBuilding} />
+                )
+              ) : (
+                <Stack direction={"horizontal"} gap={2}>
+                  <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                  <SaveButton
+                    isSaved={false}
+                    onClickCallback={handleShowLogin}
+                  />
+                </Stack>
               )}
             </div>
           </>

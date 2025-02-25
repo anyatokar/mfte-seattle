@@ -5,7 +5,6 @@ import { useAllListings } from "./useListings";
 import { listingStatusEnum } from "../types/enumTypes";
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
-import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 export const useAllBuildings = (): [IBuilding[], boolean] => {
   const [allBuildings, setAllBuildings] = useState<IBuilding[]>([]);
@@ -28,7 +27,7 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
     };
 
     setIsLoadingAllBuildings(true);
-    const q = query(collection(db, "buildings"), orderBy("buildingName"));
+    const q = query(collection(db, "buildings_2"), orderBy("buildingName"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       if (isLoadingAllListings) {
