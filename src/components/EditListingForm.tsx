@@ -68,7 +68,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     dateAvailString: "",
     percentAmi: "",
     maxRent: "",
-    rowIndex: 0,
+    rowId: `${Date.now()}`,
   };
 
   const originalFormFields: Partial<IListing> = {
@@ -91,7 +91,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   const handleAddRow = () => {
     const newRow = {
       ...blankAvailRow,
-      rowIndex: formFields.availDataArray?.length || 0,
+      rowId: `${Date.now()}`,
     };
 
     const newAvailDataArray = [...(formFields.availDataArray || []), newRow];
@@ -102,11 +102,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     });
   };
 
-  const handleDeleteRow = (rowIndex: number) => {
+  const handleDeleteRow = (rowId: string) => {
     if (!formFields.availDataArray) return;
 
     const newAvailDataArray = formFields.availDataArray.filter(
-      (row) => row.rowIndex !== rowIndex
+      (row) => row.rowId !== rowId
     );
 
     setFormFields({
@@ -127,19 +127,23 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     IBuilding | undefined
   >(findSelectedBuilding(listing.buildingName || ""));
 
-  const handleInputChange = (e: any, rowId?: number) => {
+  const handleInputChange = (e: any, rowId?: string) => {
     const { name, value } = e.target;
 
     setFormFields((prev) => {
       let newAvailData = [...(prev.availDataArray || [])];
 
       // If updating a specific row
+
+      //Find the index of the row with the specific rowId
+      const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
+
       if (rowId !== undefined) {
-        newAvailData[rowId] = { ...newAvailData[rowId], [name]: value };
+        newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
 
         if (name === "unitSize") {
-          newAvailData[rowId] = {
-            ...newAvailData[rowId],
+          newAvailData[rowIndex] = {
+            ...newAvailData[rowIndex],
             percentAmi: "",
           };
         }
@@ -167,15 +171,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     e.preventDefault();
 
     if (!formFields) return;
-
-    const isValid = formFields.availDataArray?.some(
-      (row) => row.dateAvailString && row.maxRent
-    );
-
-    if (!isValid) {
-      alert("Please fill out at least one row of the availability table.");
-      return;
-    }
 
     if (!isExistingListing) {
       const listingID = await addListingFirestore(
@@ -342,20 +337,19 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       />
                     </th>
 
-                    {/* Delete Column*/}
-                    <th></th>
+                    <th>Delete Row</th>
                   </tr>
                 </thead>
                 <tbody>
                   {formFields.availDataArray?.map((unitAvailData) => (
-                    <tr key={unitAvailData.rowIndex}>
+                    <tr key={unitAvailData.rowId}>
                       <td>
                         <Form.Select
                           required
                           name="unitSize"
                           id="unitSize"
                           onChange={(e) =>
-                            handleInputChange(e, unitAvailData.rowIndex)
+                            handleInputChange(e, unitAvailData.rowId)
                           }
                           value={unitAvailData.unitSize}
                         >
@@ -379,7 +373,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           name="percentAmi"
                           id="percentAmi"
                           onChange={(e) =>
-                            handleInputChange(e, unitAvailData.rowIndex)
+                            handleInputChange(e, unitAvailData.rowId)
                           }
                           value={unitAvailData.percentAmi || ""}
                           disabled={!unitAvailData.unitSize}
@@ -400,12 +394,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                         <InputGroup>
                           <InputGroup.Text>$</InputGroup.Text>
                           <Form.Control
+                            required
                             type="number"
                             min="0"
                             name="maxRent"
                             value={unitAvailData.maxRent}
                             onChange={(event) =>
-                              handleInputChange(event, unitAvailData.rowIndex)
+                              handleInputChange(event, unitAvailData.rowId)
                             }
                           />
                         </InputGroup>
@@ -422,11 +417,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       </td>
                       <td style={{ maxWidth: "100px" }}>
                         <Form.Control
+                          required
                           type="date"
                           name="dateAvailString"
                           value={unitAvailData.dateAvailString || ""}
                           onChange={(e) =>
-                            handleInputChange(e, unitAvailData.rowIndex)
+                            handleInputChange(e, unitAvailData.rowId)
                           }
                         />
                       </td>
@@ -434,9 +430,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       <td className="text-center">
                         <Button
                           variant="outline-danger"
-                          onClick={() =>
-                            handleDeleteRow(unitAvailData.rowIndex)
-                          }
+                          onClick={() => handleDeleteRow(unitAvailData.rowId)}
                         >
                           Delete
                         </Button>

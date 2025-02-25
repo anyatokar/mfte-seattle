@@ -72,16 +72,11 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
             })}
           {type === tableType.availData &&
             data.map((unitAvailData) => {
-              const {
-                dateAvailString,
-                maxRent,
-                percentAmi,
-                rowIndex,
-                unitSize,
-              } = unitAvailData;
+              const { dateAvailString, maxRent, percentAmi, rowId, unitSize } =
+                unitAvailData;
 
-              return unitSize && percentAmi ? (
-                <tr key={rowIndex}>
+              return rowId && unitSize ? (
+                <tr key={rowId}>
                   <td style={{ minWidth: "65px" }}>
                     {unitSizeLabelEnum[unitSize]}
                   </td>
