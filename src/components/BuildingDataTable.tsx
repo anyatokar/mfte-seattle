@@ -76,10 +76,9 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
 
               if (!unitAvailData) return null;
 
-              const { numAvail, dateAvailString, maxRent, percentAmi } =
-                unitAvailData;
+              const { dateAvailString, maxRent, percentAmi } = unitAvailData;
 
-              return numAvail ? (
+              return percentAmi ? (
                 <tr key={unit}>
                   <td style={{ minWidth: "65px" }}>
                     {unitSizeLabelEnum[unit]}

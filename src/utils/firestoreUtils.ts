@@ -74,10 +74,6 @@ function availDataToNum(
   for (const ele of availDataArray) {
     // The check is for TS and because form fields and listing in db share IListing.
     // Type will always be string when incoming from the form.
-    if (typeof ele.numAvail === "string") {
-      ele.numAvail = parseInt(ele.numAvail);
-    }
-
     if (typeof ele.maxRent === "string") {
       ele.maxRent = parseFloat(ele.maxRent);
     }

@@ -38,7 +38,6 @@ jest.mock("../hooks/useAllBuildings", () => ({
 const mockAvailData = [
   {
     unitSize: "studio",
-    numAvail: 2,
     maxRent: 2000,
   },
 ];

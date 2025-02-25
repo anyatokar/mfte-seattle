@@ -9,19 +9,6 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-export type AvailDataForm = {
-  microNumAvail: string;
-  microDateAvail: Timestamp | null;
-  studioNumAvail: string;
-  studioDateAvail: Timestamp | null;
-  oneBedNumAvail: string;
-  oneBedDateAvail: Timestamp | null;
-  twoBedNumAvail: string;
-  twoBedDateAvail: Timestamp | null;
-  threePlusBedNumAvail: string;
-  threePlusBedDateAvail: Timestamp | null;
-};
-
 const AddListingPage: React.FC<IPage> = () => {
   return (
     <Profiler

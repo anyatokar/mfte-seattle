@@ -23,8 +23,7 @@ function filterBedrooms(
 
     return [...bedrooms].some((checkedBedroom) =>
       building.listing.availDataArray.some(
-        (availObj) =>
-          availObj.unitSize === checkedBedroom && Number(availObj.numAvail) > 0
+        (availObj) => availObj.unitSize === checkedBedroom
       )
     );
   }

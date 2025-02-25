@@ -65,7 +65,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const blankAvailRow: UnitAvailData = {
     unitSize: undefined,
-    numAvail: "",
     dateAvailString: "",
     percentAmi: "",
     maxRent: "",
@@ -170,7 +169,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     if (!formFields) return;
 
     const isValid = formFields.availDataArray?.some(
-      (row) => row.numAvail && row.dateAvailString && row.maxRent
+      (row) => row.dateAvailString && row.maxRent
     );
 
     if (!isValid) {
@@ -281,6 +280,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
               {programOptionsArray.map((program) => (
                 <Form.Check
+                  required
                   key={program}
                   type="radio"
                   label={ProgramKeyEnumToLabel[program]}
@@ -385,7 +385,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           ))}
                         </Form.Select>
                       </td>
-                      <td>
+                      <td style={{ maxWidth: "100px" }}>
                         <InputGroup>
                           <InputGroup.Text>$</InputGroup.Text>
                           <Form.Control
@@ -406,7 +406,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           </Form.Text>
                         </div>
                       </td>
-                      <td>
+                      <td style={{ maxWidth: "100px" }}>
                         <Form.Control
                           type="date"
                           name="dateAvailString"
@@ -417,7 +417,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                         />
                       </td>
 
-                      <td>
+                      <td className="text-center">
                         <Button
                           variant="outline-danger"
                           onClick={() =>
