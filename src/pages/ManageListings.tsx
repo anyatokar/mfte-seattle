@@ -21,7 +21,6 @@ import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 
 import AreYouSureModal from "../components/AreYouSureModal";
-import IBuilding from "../interfaces/IBuilding";
 
 const ManageListingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();

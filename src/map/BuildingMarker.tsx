@@ -13,7 +13,7 @@ import SaveButton from "../components/SaveButton";
 import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
-import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
+import { listingStatusEnum } from "../types/enumTypes";
 
 import Stack from "react-bootstrap/Stack";
 
@@ -45,7 +45,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  const { currentUser, accountType } = useAuth();
+  const { currentUser } = useAuth();
   const [isSaved, setIsSaved] = useState(wasOriginallySaved);
 
   function toggleSave() {

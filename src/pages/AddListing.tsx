@@ -1,6 +1,5 @@
 import { Profiler } from "react";
 import { isProfilerOn } from "../config/config";
-import { Timestamp } from "firebase/firestore";
 import ListingAccordion from "../components/ListingAccordion";
 
 import IPage from "../interfaces/IPage";

@@ -13,7 +13,7 @@ export function useAllListings(
   const getAllListings = useCallback(() => {
     setIsLoadingAllListings(true);
 
-    let constraints = [];
+    const constraints = [];
 
     if (omitExpired) {
       constraints.push(where("expiryDate", ">=", new Date().toISOString()));

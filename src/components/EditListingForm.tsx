@@ -131,7 +131,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     const { name, value } = e.target;
 
     setFormFields((prev) => {
-      let newAvailData = [...(prev.availDataArray || [])];
+      const newAvailData = [...(prev.availDataArray || [])];
 
       // If updating a specific row
 

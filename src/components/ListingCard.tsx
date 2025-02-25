@@ -13,7 +13,7 @@ import { expiringSoonDays } from "../config/config";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import { useEffect, useState } from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -70,10 +70,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     listingID,
     expiryDate,
     dateUpdated,
-    buildingID,
     description,
-    feedback,
-    program,
   } = listing;
 
   type badgeObjectType = { label: string; bg: string; text?: string };

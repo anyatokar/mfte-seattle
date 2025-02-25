@@ -28,7 +28,7 @@ function filterBedrooms(
     );
   }
 
-  for (let selectedBedroom of [...bedrooms]) {
+  for (const selectedBedroom of [...bedrooms]) {
     return (
       building.amiData[selectedBedroom] &&
       building.amiData[selectedBedroom].length > 0

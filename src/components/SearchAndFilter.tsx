@@ -1,4 +1,4 @@
-import { Dispatch, useContext, useState } from "react";
+import { Dispatch, useContext } from "react";
 import SearchInput from "./SearchInput";
 import FilterSwitch from "./checkboxes/FilterSwitch";
 import BedroomDropdown from "./searchAndFilter/BedroomDropdown";
