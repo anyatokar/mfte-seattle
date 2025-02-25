@@ -103,35 +103,30 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                   buildingName={buildingName}
                   address={address}
                   contact={contact}
+                  withLinks={true}
                 />
               </div>
-              {accountType !== accountTypeEnum.MANAGER &&
-                (currentUser ? (
-                  wasOriginallySaved || isSaved ? (
-                    <Stack direction={"horizontal"} gap={2}>
-                      <WebsiteButton urlForBuilding={contact.urlForBuilding} />
-                      <SaveButton isSaved={true} onClickCallback={toggleSave} />
-                    </Stack>
-                  ) : (
-                    <Stack direction={"horizontal"} gap={2}>
-                      <WebsiteButton urlForBuilding={contact.urlForBuilding} />
-                      <SaveButton
-                        isSaved={false}
-                        onClickCallback={toggleSave}
-                      />
-                    </Stack>
-                  )
+
+              {currentUser ? (
+                wasOriginallySaved || isSaved ? (
+                  <Stack direction={"horizontal"} gap={2}>
+                    <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                    <SaveButton isSaved={true} onClickCallback={toggleSave} />
+                  </Stack>
                 ) : (
                   <Stack direction={"horizontal"} gap={2}>
                     <WebsiteButton urlForBuilding={contact.urlForBuilding} />
-                    <SaveButton
-                      isSaved={false}
-                      onClickCallback={handleShowLogin}
-                    />
+                    <SaveButton isSaved={false} onClickCallback={toggleSave} />
                   </Stack>
-                ))}
-              {accountType === accountTypeEnum.MANAGER && (
-                <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                )
+              ) : (
+                <Stack direction={"horizontal"} gap={2}>
+                  <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                  <SaveButton
+                    isSaved={false}
+                    onClickCallback={handleShowLogin}
+                  />
+                </Stack>
               )}
             </div>
           </>
