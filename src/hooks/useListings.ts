@@ -31,7 +31,9 @@ export function useAllListings(
         id: doc.id,
         ...(doc.data() as IListing),
         // Temp fix for key name change availData >> availDataArray
-        availDataArray: doc.data().availData,
+        availDataArray: doc.data().availDataArray
+          ? doc.data().availDataArray
+          : doc.data().availData,
       }));
 
       setAllListings(listings);

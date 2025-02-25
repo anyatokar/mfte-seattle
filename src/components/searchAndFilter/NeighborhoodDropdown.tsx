@@ -1,13 +1,12 @@
 import { useState } from "react";
 import FilterCheckbox from "../checkboxes/FilterCheckbox";
 import { ActiveFilters } from "../../utils/buildingsFilter";
-import TooltipWrapper from "../TooltipWrapper";
 
 import Badge from "react-bootstrap/Badge";
-
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
+import TooltipWrapper from "../TooltipWrapper";
 
 type NeighborhoodFilterProps = {
   onNeighborhoodsChange: (checkbox?: string) => void;
@@ -40,8 +39,9 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
         {activeFilters.neighborhoods.size > 0 && (
           <Badge>
             <TooltipWrapper
-              text={String(activeFilters.neighborhoods.size)}
+              label={String(activeFilters.neighborhoods.size)}
               overlay={overlayText}
+              placement={"right"}
             />
           </Badge>
         )}

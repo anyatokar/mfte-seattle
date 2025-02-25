@@ -161,7 +161,7 @@ body {
 /* misc */
 .tooltip {
   position: fixed;
-  max-width: 100px;
+  max-width: 95px;
 }
 
 .delete-link:hover {

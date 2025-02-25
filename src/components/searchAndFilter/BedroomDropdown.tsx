@@ -40,8 +40,9 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
         {activeFilters.bedrooms.size > 0 && (
           <Badge>
             <TooltipWrapper
-              text={String(activeFilters.bedrooms.size)}
+              label={String(activeFilters.bedrooms.size)}
               overlay={overlayText}
+              placement={"right"}
             />
           </Badge>
         )}

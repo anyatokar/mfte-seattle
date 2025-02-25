@@ -16,6 +16,7 @@ import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
 
+import { AddressAndPhone } from "./AddressAndPhone";
 import TooltipWrapper from "./TooltipWrapper";
 
 import IBuilding from "../interfaces/IBuilding";
@@ -27,8 +28,6 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
-
-import { AddressAndPhone } from "./AddressAndPhone";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -183,7 +182,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       const listingID = await addListingFirestore(
         formFields,
         selectedBuilding?.buildingID || "",
-
         currentUser.uid
       );
       if (listingID) {
@@ -323,30 +321,17 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   <tr>
                     <th>Size</th>
                     <th>% AMI</th>
+                    <th>Rent</th>
 
                     <th>
                       <TooltipWrapper
-                        text={"Quantity"}
-                        overlay={"# of units of selected size and % AMI."}
+                        label="Move-in Date"
+                        overlay="Earliest date if multiple units available."
+                        placement="top"
                       />
                     </th>
 
-                    <th>
-                      <TooltipWrapper
-                        text={"Move-in Date"}
-                        overlay={
-                          "If multiple units available enter the earliest date."
-                        }
-                      />
-                    </th>
-                    <th>
-                      <TooltipWrapper
-                        text={"  Rent"}
-                        overlay={
-                          "Blanks will be set to max for program, size, and % AMI."
-                        }
-                      />
-                    </th>
+                    {/* Delete Column*/}
                     <th></th>
                   </tr>
                 </thead>
@@ -400,30 +385,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           ))}
                         </Form.Select>
                       </td>
-
-                      {/* Quantity */}
-                      <td>
-                        <Form.Control
-                          type="number"
-                          min="0"
-                          name="numAvail"
-                          value={unitAvailData.numAvail}
-                          onChange={(e) =>
-                            handleInputChange(e, unitAvailData.rowIndex)
-                          }
-                        />
-                      </td>
-                      <td>
-                        <Form.Control
-                          type="date"
-                          name="dateAvailString"
-                          value={unitAvailData.dateAvailString || ""}
-                          onChange={(e) =>
-                            handleInputChange(e, unitAvailData.rowIndex)
-                          }
-                        />
-                      </td>
-
                       <td>
                         <InputGroup>
                           <InputGroup.Text>$</InputGroup.Text>
@@ -445,6 +406,17 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           </Form.Text>
                         </div>
                       </td>
+                      <td>
+                        <Form.Control
+                          type="date"
+                          name="dateAvailString"
+                          value={unitAvailData.dateAvailString || ""}
+                          onChange={(e) =>
+                            handleInputChange(e, unitAvailData.rowIndex)
+                          }
+                        />
+                      </td>
+
                       <td>
                         <Button
                           variant="outline-danger"
@@ -531,8 +503,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 value={formFields.feedback}
               />
               <Form.Text className="text-muted">
-                Won't be shared publicly. Suggestions on how to improve this
-                form are welcome.
+                Won't be shared publicly. Notes about any issues with the data,
+                suggestions on how to improve this form, etc.
               </Form.Text>
             </Col>
           </Row>

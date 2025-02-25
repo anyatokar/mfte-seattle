@@ -32,8 +32,9 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
         {activeFilters.ami.size > 0 && (
           <Badge>
             <TooltipWrapper
-              text={String(activeFilters.ami.size)}
+              label={String(activeFilters.ami.size)}
               overlay={overlayText}
+              placement={"right"}
             />
           </Badge>
         )}
