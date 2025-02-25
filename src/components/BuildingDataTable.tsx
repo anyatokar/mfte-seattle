@@ -17,14 +17,14 @@ interface AmiDataProps {
 interface AvailDataProps {
   type: tableType.availData;
   data: AvailDataArray;
-  showListingForm: boolean;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 
-const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
-  const { type, data } = props;
-
+const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
+  type,
+  data,
+}) => {
   const order: BedroomsKeyEnum[] = [
     BedroomsKeyEnum.MICRO,
     BedroomsKeyEnum.STUDIO,
@@ -50,11 +50,10 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         <thead>
           <tr>
             <th>Size</th>
-            {type === tableType.availData && <th>% AMI</th>}
+            <th>% AMI</th>
             {/* TODO: Rent including untilities? */}
             {type === tableType.availData && <th>Rent</th>}
             {type === tableType.availData && <th>Move-in Date</th>}
-            {type === tableType.availData && <th># Available</th>}
           </tr>
         </thead>
         <tbody>
@@ -85,12 +84,11 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                   <td style={{ minWidth: "65px" }}>
                     {unitSizeLabelEnum[unit]}
                   </td>
-                  <td>{percentAmi ?? "--"}</td>
+                  <td style={{ minWidth: "60px" }}>{percentAmi ?? "--"}</td>
                   <td>{formatCurrency(maxRent)}</td>
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
                   </td>
-                  <td>{numAvail}</td>
                 </tr>
               ) : null;
             })}

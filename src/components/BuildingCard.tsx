@@ -161,7 +161,6 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   <BuildingDataTable
                     type={tableType.availData}
                     data={listing.availDataArray}
-                    showListingForm={false}
                   />
                   {listing.description && (
                     <Card.Text className="mt-2">

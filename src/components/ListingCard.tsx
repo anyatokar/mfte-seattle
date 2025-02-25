@@ -196,7 +196,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
               <BuildingDataTable
                 type={tableType.availData}
                 data={availDataArray}
-                showListingForm={true}
               />
               <Card.Text className="mt-3">
                 <strong>URL:</strong>{" "}

@@ -9,7 +9,7 @@ type TooltipWrapperProps = {
 const TooltipWrapper: React.FC<TooltipWrapperProps> = ({ text, overlay }) => {
   return (
     <OverlayTrigger
-      placement="top"
+      placement="bottom"
       delay={{ show: 200, hide: 800 }}
       overlay={<Tooltip id="tooltip">{overlay}</Tooltip>}
     >
