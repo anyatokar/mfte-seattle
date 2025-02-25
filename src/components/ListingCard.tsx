@@ -233,8 +233,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
       )}
       {isExistingListing && (
         <Card.Footer as={Row}>
-          Listing updated:{" "}
-          {dateUpdated ? timestampToDateAndTime(dateUpdated) : ""}
+          Last update: {dateUpdated ? timestampToDateAndTime(dateUpdated) : ""}
         </Card.Footer>
       )}
     </Card>

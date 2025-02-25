@@ -234,15 +234,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     <Form onSubmit={handleFormSubmit}>
       {!isExistingListing && isFormVisible && listing.listingID === "" && (
         <Row className="mb-3">
-          <Col className="mb-md-0">
+          <Col md={6} className="mb-md-0">
             <Form.Select
-              // Listings cards need a refactor for better UI as well.
+              //TODO: Listings cards need a refactor for better UI as well.
               required
               name="buildingName"
               id="buildingName"
               onChange={handleInputChange}
             >
-              <option value="">Select a building*</option>
+              <option value="">Select a building</option>
               {allBuildings
                 .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
                 .map((selectedBuilding) => (
