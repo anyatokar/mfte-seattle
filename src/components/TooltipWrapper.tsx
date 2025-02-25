@@ -17,7 +17,11 @@ const TooltipWrapper: React.FC<TooltipWrapperProps> = ({
     <OverlayTrigger
       placement={placement}
       delay={{ show: 200, hide: 800 }}
-      overlay={<Tooltip id="tooltip">{overlay}</Tooltip>}
+      overlay={
+        <Tooltip className="custom-tooltip" id="tooltip">
+          {overlay}
+        </Tooltip>
+      }
     >
       <span>{label}</span>
     </OverlayTrigger>

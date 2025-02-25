@@ -159,7 +159,7 @@ body {
 /* End of listing accordion */
 
 /* misc */
-.tooltip {
+.custom-tooltip {
   position: fixed;
   max-width: 95px;
 }

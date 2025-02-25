@@ -232,32 +232,30 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      <Form.Label>
-        Fields below the table are optional. If presented with any inaccurate
-        data, please note it in the feedback section.
-      </Form.Label>
       {!isExistingListing && isFormVisible && listing.listingID === "" && (
-        <Form>
-          <Form.Select
-            // Listings cards need a refactor for better UI as well.
-            required
-            name="buildingName"
-            id="buildingName"
-            onChange={handleInputChange}
-          >
-            <option value="">Select a building*</option>
-            {allBuildings
-              .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
-              .map((selectedBuilding) => (
-                <option
-                  key={selectedBuilding.buildingID}
-                  value={selectedBuilding.buildingName}
-                >
-                  {selectedBuilding.buildingName}
-                </option>
-              ))}
-          </Form.Select>
-        </Form>
+        <Row className="mb-3">
+          <Col className="mb-md-0">
+            <Form.Select
+              // Listings cards need a refactor for better UI as well.
+              required
+              name="buildingName"
+              id="buildingName"
+              onChange={handleInputChange}
+            >
+              <option value="">Select a building*</option>
+              {allBuildings
+                .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
+                .map((selectedBuilding) => (
+                  <option
+                    key={selectedBuilding.buildingID}
+                    value={selectedBuilding.buildingName}
+                  >
+                    {selectedBuilding.buildingName}
+                  </option>
+                ))}
+            </Form.Select>
+          </Col>
+        </Row>
       )}
 
       {/* Address */}
@@ -303,28 +301,28 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Form.Group>
       )}
 
-      {/* URL */}
-      <Row className="mb-3">
-        <Col className="mb-0 mb-md-0">
-          <Form.Label className="mb-0 fw-bold">Listings URL:</Form.Label>
-          <Form.Control
-            required
-            type="url"
-            name="url"
-            onChange={handleInputChange}
-            value={formFields.url}
-          />
-          <Form.Text>
-            {`Url you'd share with a prospective renter to view available MFTE
-                  units. Often ends with /floorplans`}
-            <br />
-            {`Include http://`}
-          </Form.Text>
-        </Col>
-      </Row>
-
       {(isExistingListing || (selectedBuilding && formFields.program)) && (
         <Form.Group>
+          {/* URL */}
+          <Row className="mb-3">
+            <Col className="mb-0 mb-md-0">
+              <Form.Label className="mb-0 fw-bold">Listings URL:</Form.Label>
+              <Form.Control
+                required
+                type="url"
+                name="url"
+                onChange={handleInputChange}
+                value={formFields.url}
+              />
+              <Form.Text>
+                {`Url you'd share with a prospective renter to view available MFTE
+                  units. Often ends with /floorplans`}
+                <br />
+                {`Include http://`}
+              </Form.Text>
+            </Col>
+          </Row>
+
           {/* Table */}
           <Row className="mb-3">
             <Col className="mb-0">
@@ -332,11 +330,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               <Table bordered hover responsive size="sm" className="mt-0">
                 <thead>
                   <tr>
-                    <th>Size</th>
-                    <th>% AMI</th>
-                    <th>Rent</th>
+                    <th style={{ minWidth: "100px" }}>Size</th>
+                    <th style={{ minWidth: "100px" }}>% AMI</th>
+                    <th style={{ minWidth: "150px" }}>Rent</th>
 
-                    <th>
+                    <th style={{ minWidth: "150px" }}>
                       <TooltipWrapper
                         label="Move-in Date"
                         overlay="Earliest date if multiple units available."
