@@ -51,7 +51,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
           <tr>
             <th>Size</th>
             <th>% AMI</th>
-            {/* TODO: Rent including untilities? */}
+            {/* TODO: Rent including utilities? */}
             {type === tableType.availData && <th>Rent</th>}
             {type === tableType.availData && <th>Move-in Date</th>}
           </tr>
@@ -71,17 +71,19 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = ({
               );
             })}
           {type === tableType.availData &&
-            order.map((unit) => {
-              const unitAvailData = data?.find((ele) => ele.unitSize === unit);
+            data.map((unitAvailData) => {
+              const {
+                dateAvailString,
+                maxRent,
+                percentAmi,
+                rowIndex,
+                unitSize,
+              } = unitAvailData;
 
-              if (!unitAvailData) return null;
-
-              const { dateAvailString, maxRent, percentAmi } = unitAvailData;
-
-              return percentAmi ? (
-                <tr key={unit}>
+              return unitSize && percentAmi ? (
+                <tr key={rowIndex}>
                   <td style={{ minWidth: "65px" }}>
-                    {unitSizeLabelEnum[unit]}
+                    {unitSizeLabelEnum[unitSize]}
                   </td>
                   <td style={{ minWidth: "60px" }}>{percentAmi ?? "--"}</td>
                   <td>{formatCurrency(maxRent)}</td>
