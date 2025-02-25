@@ -6,7 +6,7 @@ This is the source for [https://mfte-seattle.com](https://mfte-seattle.com)
 
 This web application helps people find rent-reduced housing by mapping buildings that participate in Seattle's MFTE (Multifamily Tax Exemption) program.
 
-It currently supports ~3,000 monthly active users.
+It currently supports 3,000 monthly active users on average.
 
 **New!** A feature that allows building managers to add real-time availability using a manager portal has been deployed (but not yet advertised).
 
@@ -19,10 +19,6 @@ This application is built with TypeScript and React. It uses React-Bootstrap for
 ### Backend
 
 The backend relies fully on Google Cloud Firebase, using Firebase Hosting for serving the app, Firebase Authentication for secure user login, and Firestore as the database to manage and sync data in real-time. It also uses Google Analytics to better understand usage and impact.
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started). To learn React, check out the [React documentation](https://reactjs.org/).
-
-Create React App uses Jest as its test runner for unit testing.
 
 For additional information regarding regarding database design and system architecture, see the [design documentation](./DESIGN.md).
 
