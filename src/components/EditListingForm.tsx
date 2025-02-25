@@ -232,6 +232,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   return (
     <Form onSubmit={handleFormSubmit}>
+      <Form.Label>
+        Fields below the table are optional. If presented with any inaccurate
+        data, please note it in the feedback section.
+      </Form.Label>
       {!isExistingListing && isFormVisible && listing.listingID === "" && (
         <Form>
           <Form.Select
@@ -261,7 +265,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       {selectedBuilding && (
         <Row className="mb-3">
           <Col className="mb-md-0">
-            <Form.Label>Confirm address and phone number</Form.Label>
+            <Form.Label className="mb-0 fw-bold">
+              Confirm location and contact info:
+            </Form.Label>
+
             <AddressAndPhone
               buildingName={selectedBuilding.buildingName}
               address={selectedBuilding.address}
@@ -276,7 +283,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         <Form.Group>
           <Row className="mb-3">
             <Col>
-              <Form.Label className="mb-0">MFTE Program*</Form.Label>
+              <Form.Label className="mb-0 fw-bold">MFTE program:</Form.Label>
 
               {programOptionsArray.map((program) => (
                 <Form.Check
@@ -291,31 +298,37 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   onChange={(e) => handleInputChange(e)}
                 />
               ))}
-              <Form.Text className="text-muted">
-                Income limits:{" "}
-                <a
-                  id="income-and-rent-limits"
-                  href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
-                  title="Income and Rent Limits (FY 2024)"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Income and Rent Limits (FY 2024)
-                </a>
-              </Form.Text>
             </Col>
           </Row>
         </Form.Group>
       )}
 
+      {/* URL */}
+      <Row className="mb-3">
+        <Col className="mb-0 mb-md-0">
+          <Form.Label className="mb-0 fw-bold">Listings URL:</Form.Label>
+          <Form.Control
+            required
+            type="url"
+            name="url"
+            onChange={handleInputChange}
+            value={formFields.url}
+          />
+          <Form.Text>
+            {`Url you'd share with a prospective renter to view available MFTE
+                  units. Often ends with /floorplans`}
+            <br />
+            {`Include http://`}
+          </Form.Text>
+        </Col>
+      </Row>
+
       {(isExistingListing || (selectedBuilding && formFields.program)) && (
         <Form.Group>
           {/* Table */}
           <Row className="mb-3">
-            <Col className="mb-0 mb-md-0">
-              <Form.Label>
-                MFTE Availability* (at least one row required)
-              </Form.Label>
+            <Col className="mb-0">
+              <Form.Label className="fw-bold">MFTE availability:</Form.Label>
               <Table bordered hover responsive size="sm" className="mt-0">
                 <thead>
                   <tr>
@@ -402,7 +415,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           <Form.Text>
                             {!!getMaxRent(unitAvailData) &&
                               formFields.program &&
-                              `${ProgramKeyEnumToLabel[formFields.program]} & ${unitSizeLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]} & ${unitAvailData.percentAmi}% AMI ⟶ ${formatCurrency(getMaxRent(unitAvailData))} max with utilities`}
+                              `${ProgramKeyEnumToLabel[formFields.program]}, 
+                              ${unitSizeLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]}, 
+                              ${unitAvailData.percentAmi}% AMI ⟶ 
+                              ${formatCurrency(getMaxRent(unitAvailData))} max with utilities*`}
                           </Form.Text>
                         </div>
                       </td>
@@ -437,29 +453,29 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 <Button onClick={handleAddRow}>Add Row</Button>
               </Col>
             </Row>
-          </Row>
-
-          {/* URL */}
-          <Row className="mb-3">
-            <Col className="mb-0 mb-md-0">
-              <Form.Label>Listings URL* (include http://)</Form.Label>
-              <Form.Control
-                required
-                type="url"
-                name="url"
-                onChange={handleInputChange}
-                value={formFields.url}
-              />
-              <Form.Text className="text-muted">
-                Url you'd share with a prospective renter to view available MFTE
-                units. Often ends with /floorplans
-              </Form.Text>
-            </Col>
+            <Row>
+              <Col>
+                <Form.Text className="mt-0 pt-0">
+                  *Max rent calculation based on{" "}
+                  <a
+                    id="income-and-rent-limits"
+                    href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
+                    title="Income and Rent Limits (FY 2024)"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Income and Rent Limits (FY 2024)
+                  </a>
+                </Form.Text>
+              </Col>
+            </Row>
           </Row>
 
           {/* Expiry Date */}
           <Row className="mb-3">
-            <Form.Label>Listing Expiration Date (up to 60 days)</Form.Label>
+            <Form.Label className="mb-0 fw-bold">
+              Listing expiration date:
+            </Form.Label>
             <Col md={6} className="mb-0 mb-md-0">
               <Form.Control
                 type="date"
@@ -469,11 +485,17 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 onChange={handleInputChange}
               />
             </Col>
+            <Form.Text>
+              Optional. Up to 60 days. If left blank will be set to the max of
+              60 days.
+            </Form.Text>
           </Row>
 
           <Row className="mb-3">
             <Col className="mb-0 mb-md-0">
-              <Form.Label>Description (max 200 characters)</Form.Label>
+              <Form.Label className="mb-0 fw-bold">
+                Featured description:{" "}
+              </Form.Label>
 
               <Form.Control
                 as="textarea"
@@ -484,15 +506,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 value={formFields.description}
                 maxLength={200}
               />
-              <Form.Text className="text-muted">
-                Will be shared as part of the listing.
+              <Form.Text>
+                Optional. Will be shared as part of the listing. Max 200
+                characters.
               </Form.Text>
             </Col>
           </Row>
 
           <Row className="mb-3">
             <Col className="mb-0 mb-md-0">
-              <Form.Label>Additional comments</Form.Label>
+              <Form.Label className="mb-0 fw-bold">Form feedback:</Form.Label>
 
               <Form.Control
                 as="textarea"
@@ -502,16 +525,17 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 onChange={handleInputChange}
                 value={formFields.feedback}
               />
-              <Form.Text className="text-muted">
-                Won't be shared publicly. Notes about any issues with the data,
-                suggestions on how to improve this form, etc.
+              <Form.Text>
+                Optional. Won't be shared publicly. Feedback can include data
+                corrections, suggestions on form improvement, user experience,
+                etc. Thank you!
               </Form.Text>
             </Col>
           </Row>
 
           <Form.Group className="text-end">
             <Button variant="success" type="submit" size="lg">
-              Save
+              Submit
             </Button>
           </Form.Group>
         </Form.Group>
