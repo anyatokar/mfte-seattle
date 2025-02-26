@@ -22,6 +22,7 @@ const center = {
 const ReactMap: React.FC<IMap> = ({
   resultBuildingsUnsorted = [],
   savedBuildings,
+  mapHeight,
 }) => {
   const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
     null
@@ -53,9 +54,12 @@ const ReactMap: React.FC<IMap> = ({
     isLoaded && (
       <Container fluid>
         <Row>
-          <Col className="p-0">
+          <Col
+            className="p-0 map-and-list-container"
+            style={{ width: "100%", height: mapHeight }}
+          >
             <GoogleMap
-              mapContainerClassName="map-and-list-container"
+              mapContainerClassName="map-container"
               center={center}
               zoom={12.5}
               options={{ mapId: "c8d48b060a22a457" }}

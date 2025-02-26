@@ -5,6 +5,7 @@ import {
   useRef,
   useEffect,
   useReducer,
+  useLayoutEffect,
 } from "react";
 import { isProfilerOn } from "../config/config";
 
@@ -25,16 +26,16 @@ import { BedroomsKeyEnum } from "../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
-import Nav from "react-bootstrap/Nav";
 
 export type HandleCheckboxChange = (
   checkbox: BedroomsKeyEnum | string,
   category: "bedrooms" | "neighborhoods" | "ami"
 ) => void;
 
-const AllBuildingsPage: React.FC<IPage> = () => {
+const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
 
@@ -100,6 +101,43 @@ const AllBuildingsPage: React.FC<IPage> = () => {
     shouldScroll.current = true;
   }, [resultBuildingsUnsorted]);
 
+  const [mapHeight, setMapHeight] = useState(0);
+
+  const searchAndFilterRef = useRef<HTMLDivElement | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const sideNavRef = useRef<HTMLDivElement | null>(null);
+
+  useLayoutEffect(() => {
+    const updateMapHeight = () => {
+      if (
+        !topNavRef.current ||
+        !searchAndFilterRef.current ||
+        !mapContainerRef.current ||
+        !sideNavRef.current
+      )
+        return;
+
+      const topNavHeight = topNavRef.current.offsetHeight;
+      const searchAndFilterHeight = searchAndFilterRef.current.offsetHeight;
+      const sideNavHeight = sideNavRef.current.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      // The 5px is to eliminate the scrollbar
+      const newMapHeight =
+        windowHeight - topNavHeight - searchAndFilterHeight - sideNavHeight - 5;
+      setMapHeight(newMapHeight);
+    };
+
+    // Initial calculation
+    updateMapHeight();
+
+    // Update on resize
+    window.addEventListener("resize", updateMapHeight);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener("resize", updateMapHeight);
+  }, [topNavRef, searchAndFilterRef, mapContainerRef, sideNavRef]);
+
   return (
     <Profiler
       id={"AllBuildings"}
@@ -123,7 +161,7 @@ const AllBuildingsPage: React.FC<IPage> = () => {
         }
       }}
     >
-      <div className="pt-2">
+      <div className="pt-2" ref={searchAndFilterRef}>
         <SearchAndFilter
           setSearchQuery={setSearchQuery}
           allNeighborhoods={allNeighborhoods}
@@ -131,37 +169,43 @@ const AllBuildingsPage: React.FC<IPage> = () => {
           activeFilters={activeFilters}
           dispatch={dispatch}
         />
+      </div>
 
-        {/* Only visible on large screens */}
-        <Container fluid className="d-none d-md-block">
-          <Row>
-            <Col className="px-1">
-              <ReactMap
-                resultBuildingsUnsorted={resultBuildingsUnsorted}
-                savedBuildings={savedBuildings}
-              />
-            </Col>
-            <Col
-              className="p-0 map-and-list-container"
-              style={{
-                overflowY: "auto",
-              }}
-              // Ref to scroll to the top of the list on search input
-              ref={buildingsListRef}
-            >
-              <AllBuildingsList
-                isLoading={isLoadingAllBuildings}
-                resultBuildingsUnsorted={resultBuildingsUnsorted}
-                savedBuildings={savedBuildings}
-                shouldScroll={shouldScroll}
-              />
-            </Col>
-          </Row>
-        </Container>
+      {/* Only visible on large screens */}
+      <Container fluid className="d-none d-md-block map-and-list-container">
+        <Row>
+          <Col className="px-1" ref={mapContainerRef}>
+            <ReactMap
+              mapHeight={mapHeight}
+              resultBuildingsUnsorted={resultBuildingsUnsorted}
+              savedBuildings={savedBuildings}
+            />
+          </Col>
+          <Col
+            style={{
+              height: `${mapHeight}px`,
+              overflowY: "auto",
+            }}
+            // Ref to scroll to the top of the list on search input
+            ref={buildingsListRef}
+          >
+            <AllBuildingsList
+              isLoading={isLoadingAllBuildings}
+              resultBuildingsUnsorted={resultBuildingsUnsorted}
+              savedBuildings={savedBuildings}
+              shouldScroll={shouldScroll}
+            />
+          </Col>
+        </Row>
+      </Container>
 
-        {/* Only visible on small screens */}
-        <Container fluid className="d-block d-md-none mt-1">
-          <Tab.Container id="sidebar" defaultActiveKey="map">
+      {/* Only visible on small screens */}
+      <Container
+        fluid
+        className="d-block d-md-none mt-1 map-and-list-container"
+      >
+        <Tab.Container id="sidebar" defaultActiveKey="map">
+          <div ref={sideNavRef}>
             <Nav
               variant="pills"
               className="mb-1 small d-flex justify-content-end"
@@ -177,26 +221,27 @@ const AllBuildingsPage: React.FC<IPage> = () => {
                 </Nav.Link>
               </Nav.Item>
             </Nav>
+          </div>
 
-            <Tab.Content>
-              <Tab.Pane eventKey="map">
-                <ReactMap
-                  resultBuildingsUnsorted={resultBuildingsUnsorted}
-                  savedBuildings={savedBuildings}
-                />
-              </Tab.Pane>
-              <Tab.Pane eventKey="list">
-                <AllBuildingsList
-                  isLoading={isLoadingAllBuildings}
-                  resultBuildingsUnsorted={resultBuildingsUnsorted}
-                  savedBuildings={savedBuildings}
-                  shouldScroll={shouldScroll}
-                />
-              </Tab.Pane>
-            </Tab.Content>
-          </Tab.Container>
-        </Container>
-      </div>
+          <Tab.Content ref={mapContainerRef}>
+            <Tab.Pane eventKey="map">
+              <ReactMap
+                resultBuildingsUnsorted={resultBuildingsUnsorted}
+                savedBuildings={savedBuildings}
+                mapHeight={mapHeight}
+              />
+            </Tab.Pane>
+            <Tab.Pane eventKey="list">
+              <AllBuildingsList
+                isLoading={isLoadingAllBuildings}
+                resultBuildingsUnsorted={resultBuildingsUnsorted}
+                savedBuildings={savedBuildings}
+                shouldScroll={shouldScroll}
+              />
+            </Tab.Pane>
+          </Tab.Content>
+        </Tab.Container>
+      </Container>
     </Profiler>
   );
 };
