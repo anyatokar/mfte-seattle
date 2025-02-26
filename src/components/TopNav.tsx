@@ -19,7 +19,7 @@ import Modal from "react-bootstrap/Modal";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
-export const Header = () => {
+export const TopNav = () => {
   const { currentUser, logout, accountType } = useAuth();
   const navigate = useNavigate();
   const [modalState, setModalState] = useContext(ModalContext);

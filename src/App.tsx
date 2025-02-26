@@ -3,7 +3,7 @@ import PrivateRoute from "./auth_components/PrivateRoute";
 import { isProfilerOn } from "./config/config";
 import privateRoutes from "./config/privateRoutes";
 import publicRoutes from "./config/publicRoutes";
-import { Header } from "./components/Navbar";
+import { TopNav } from "./components/TopNav";
 import { Footer } from "./components/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -41,7 +41,7 @@ const Application: React.FC = () => {
         <BrowserRouter>
           <AuthProvider>
             <ModalContext.Provider value={modalStateHook}>
-              <Header />
+              <TopNav />
               <AllBuildingsProvider>
                 <Routes>
                   {privateRoutes.map((route) => (
