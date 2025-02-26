@@ -18,6 +18,7 @@ import Image from "react-bootstrap/Image";
 import Modal from "react-bootstrap/Modal";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Offcanvas from "react-bootstrap/esm/Offcanvas";
 
 export const TopNav = () => {
   const { currentUser, logout, accountType } = useAuth();
@@ -96,73 +97,86 @@ export const TopNav = () => {
     }
   }
 
+  const greeting = currentUser ? (
+    <Navbar.Text className="me-lg-4 diy-font-italic d-flex align-items-center">
+      {currentUser.displayName && `Hi, ${currentUser.displayName}!`}
+    </Navbar.Text>
+  ) : null;
+
   return (
-    <Navbar collapseOnSelect expand="lg" className="p-0">
-      <Container fluid className="p-0">
-        <LinkContainer to="/">
-          <Navbar.Brand className="py-0">
-            <Image
-              src={mftelogo}
-              height="70"
-              width="80"
-              alt="MFTE Seattle website logo: a teal map pin with a house on it"
-            />
-          </Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle />
-        <Navbar.Collapse>
-          <Nav className="me-auto p-0">
-            <LinkContainer to="/all-buildings">
-              <Nav.Link active={false}>MFTE Map</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/about">
-              <Nav.Link active={false}>About</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/resources">
-              <Nav.Link active={false}>Resources</Nav.Link>
-            </LinkContainer>
-            <Dropdown.Divider />
-            <LinkContainer to="/contact">
-              <Nav.Link active={false}>Contact</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/for-managers">
-              <Nav.Link active={false}>For Property Managers</Nav.Link>
-            </LinkContainer>
-            <Dropdown.Divider />
-          </Nav>
-          {currentUser ? (
-            <Nav className="p-0 p-lg-3">
-              <Navbar.Text className="me-lg-4 diy-font-italic">
-                {currentUser.displayName && `Hi, ${currentUser.displayName}!`}
-              </Navbar.Text>
-              {accountType === accountTypeEnum.MANAGER && (
-                <LinkContainer to="/manage-listings">
-                  <Nav.Link active={false}>Listings</Nav.Link>
+    <>
+      <Navbar collapseOnSelect expand="lg" className="top-navbar p-0">
+        <Container fluid className="py-0">
+          <LinkContainer to="/">
+            <Navbar.Brand className="py-0">
+              <Image
+                src={mftelogo}
+                height="65"
+                width="75"
+                alt="MFTE Seattle website logo: a teal map pin with a house on it"
+              />
+            </Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle />
+          <Navbar.Offcanvas placement="end" className="offset-navbar">
+            <Offcanvas.Header closeButton />
+
+            <Offcanvas.Body className="d-lg-flex align-items-lg-center">
+              <Nav className="me-auto p-0">
+                <div className="d-md-none">{greeting}</div>
+                <LinkContainer to="/all-buildings">
+                  <Nav.Link active={false}>MFTE Map</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to="/about">
+                  <Nav.Link active={false}>About</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/resources">
+                  <Nav.Link active={false}>Resources</Nav.Link>
+                </LinkContainer>
+                <Dropdown.Divider />
+                <LinkContainer to="/contact">
+                  <Nav.Link active={false}>Contact</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/for-managers">
+                  <Nav.Link active={false}>For Property Managers</Nav.Link>
+                </LinkContainer>
+                <Dropdown.Divider />
+              </Nav>
+
+              {currentUser ? (
+                <Nav className="p-0 p-lg-3">
+                  <div className="d-none d-lg-block">{greeting}</div>
+
+                  {accountType === accountTypeEnum.MANAGER && (
+                    <LinkContainer to="/manage-listings">
+                      <Nav.Link active={false}>Listings</Nav.Link>
+                    </LinkContainer>
+                  )}
+                  <LinkContainer to="/manage-profile">
+                    <Nav.Link active={false}>Profile</Nav.Link>
+                  </LinkContainer>
+                  <Nav.Link
+                    className="logout"
+                    active={false}
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Nav.Link>
+                </Nav>
+              ) : (
+                <Nav className="p-0 p-lg-3">
+                  <Nav.Link active={false} onClick={showLogin}>
+                    Log In / Sign Up
+                  </Nav.Link>
+                  <Modal show={showModal} onHide={closeLogin}>
+                    {chooseModalComponent()}
+                  </Modal>
+                </Nav>
               )}
-              <LinkContainer to="/manage-profile">
-                <Nav.Link active={false}>Profile</Nav.Link>
-              </LinkContainer>
-              <Nav.Link
-                className="logout"
-                active={false}
-                onClick={handleLogout}
-              >
-                Logout
-              </Nav.Link>
-            </Nav>
-          ) : (
-            <Nav className="p-0 p-lg-3">
-              <Nav.Link active={false} onClick={showLogin}>
-                Log In / Sign Up
-              </Nav.Link>
-              <Modal show={showModal} onHide={closeLogin}>
-                {chooseModalComponent()}
-              </Modal>
-            </Nav>
-          )}
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+            </Offcanvas.Body>
+          </Navbar.Offcanvas>
+        </Container>
+      </Navbar>
+    </>
   );
 };

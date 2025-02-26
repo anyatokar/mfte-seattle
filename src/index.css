@@ -12,26 +12,36 @@ body {
 /* end of entire app */
 
 /* navbar section */
-.navbar {
-  background: white;
+.top-navbar {
+  background: white !important;
   text-align: center;
 }
 
-.navbar-brand {
+/* For screens smaller than lg (992px) */
+@media (max-width: 991.98px) {
+  .offset-navbar {
+    width: 13em !important;
+  }
+}
+
+.top-navbar-brand {
   margin-left: 0.5em;
 }
 
-.navbar-toggler {
+.top-navbar-toggler {
   margin-right: 0.5em;
 }
 
-.navbar .nav-link {
+.offset-navbar .nav-link,
+.top-navbar .nav-link {
   color: black !important;
   text-decoration: none;
   position: relative;
   display: inline-block;
 }
 
+.offset-navbar .nav-link:hover,
+.offset-navbar .nav-link.active,
 .navbar .nav-link:hover,
 .navbar .nav-link.active {
   text-decoration: underline;

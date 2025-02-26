@@ -120,7 +120,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
       </Row>
 
       {/* filter for small screens */}
-      <Row className="d-md-none d-flex align-items-center ">
+      <Row className="d-md-none d-flex align-items-center">
         <Col sm={7} className="mb-1">
           <Stack direction="horizontal" gap={2}>
             <NeighborhoodDropdown
