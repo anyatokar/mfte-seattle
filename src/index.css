@@ -2,7 +2,8 @@
 /* entire app */
 html,
 body {
-  background: linear-gradient(to top, #e2fbfd, #f2fbfc);
+background: linear-gradient(to top, #e2fbfd, #f2fbfc);
+min-height: 100vh
 }
 
 .main {

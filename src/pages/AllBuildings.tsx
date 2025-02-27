@@ -122,13 +122,11 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
       const sideNavHeight = sideNavRef.current.offsetHeight;
       const windowHeight = window.innerHeight;
 
-      // The 10px is to eliminate the scrollbar
       const newMapHeight =
         windowHeight -
         topNavHeight -
         searchAndFilterHeight -
-        sideNavHeight -
-        10;
+        sideNavHeight
       setMapHeight(newMapHeight);
     };
 
