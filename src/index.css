@@ -1,3 +1,4 @@
+/* TODO: audit for px vs em choices */
 /* entire app */
 html,
 body {
@@ -8,6 +9,22 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vdh; /* dynamically adjusts to viewport changes (when mobile browser bars appear/disappear) */
+}
+
+input,
+select,
+textarea {
+  font-size: max(
+    16px,
+    1em
+  ) !important; /* respects user preferences while setting a minimum to prevent autozoom on mobile */
+}
+
+.text-size-override {
+  font-size: max(
+    16px,
+    1em
+  ) !important; /* respects user preferences while setting a minimum to prevent autozoom on mobile */
 }
 /* end of entire app */
 

@@ -215,12 +215,18 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
               className="mb-1 small d-flex justify-content-end"
             >
               <Nav.Item>
-                <Nav.Link eventKey="map" className="tab small py-1 px-2">
+                <Nav.Link
+                  eventKey="map"
+                  className="tab small py-1 px-2 text-size-override"
+                >
                   Map View
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="list" className="tab small py-1 px-2">
+                <Nav.Link
+                  eventKey="list"
+                  className="tab small py-1 px-2 text-size-override"
+                >
                   List View
                 </Nav.Link>
               </Nav.Item>

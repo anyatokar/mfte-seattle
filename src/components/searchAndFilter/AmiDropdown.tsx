@@ -24,7 +24,7 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
   return (
     <Dropdown>
       <Dropdown.Toggle
-        className="diy-solid-info-button"
+        className="diy-solid-info-button text-size-override"
         id="ami-filter-dropdown"
         size="sm"
       >
@@ -34,7 +34,7 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
             <TooltipWrapper
               label={String(activeFilters.ami.size)}
               overlay={overlayText}
-              placement={"right"}
+              placement="right"
             />
           </Badge>
         )}

@@ -32,7 +32,7 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
   return (
     <Dropdown>
       <Dropdown.Toggle
-        className="diy-solid-info-button "
+        className="diy-solid-info-button text-size-override"
         id="bedroom-filter-dropdown"
         size="sm"
       >
@@ -42,7 +42,7 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
             <TooltipWrapper
               label={String(activeFilters.bedrooms.size)}
               overlay={overlayText}
-              placement={"right"}
+              placement="right"
             />
           </Badge>
         )}
