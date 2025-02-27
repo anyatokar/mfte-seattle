@@ -1,5 +1,5 @@
 /// <reference types="googlemaps" />
-import { useCallback, useState, useContext } from "react";
+import { useCallback, useState, useContext, MutableRefObject } from "react";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 
 import { useAuth } from "../contexts/AuthContext";
@@ -16,19 +16,22 @@ import IBuilding from "../interfaces/IBuilding";
 import { listingStatusEnum } from "../types/enumTypes";
 
 import Stack from "react-bootstrap/Stack";
+import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
   isSelected: boolean;
   setSelectedBuilding: (building: IBuilding | null) => void;
-  isSaved: boolean;
+  savedHomeData: ISavedBuilding | undefined;
+  shouldScroll: MutableRefObject<boolean>;
 }
 
 const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   building,
   isSelected,
   setSelectedBuilding,
-  isSaved: wasOriginallySaved,
+  savedHomeData,
+  shouldScroll,
 }) => {
   const { buildingID, buildingName, address, contact } = building;
 
@@ -46,16 +49,18 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
   const { currentUser } = useAuth();
-  const [isSaved, setIsSaved] = useState(wasOriginallySaved);
+  const [isSaved, setIsSaved] = useState(!!savedHomeData);
 
-  function toggleSave() {
-    if (wasOriginallySaved || isSaved) {
+  function handleToggleSaveBuilding() {
+    if (!!savedHomeData || isSaved) {
       setIsSaved(false);
+      // setUpdatedNote("");
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
       setIsSaved(true);
       saveBuilding(currentUser?.uid, buildingID, buildingName);
     }
+    shouldScroll.current = false;
   }
 
   function getIcon() {
@@ -66,7 +71,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
       path: "M0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
       fillColor: hasListing ? "red" : "#10345c",
       strokeColor: "black",
-      strokeWeight: wasOriginallySaved || isSaved ? 3 : 1,
+      strokeWeight: !!savedHomeData || isSaved ? 3 : 1,
       fillOpacity: hasListing ? 1 : 0.8,
       rotation: 0,
       scale: 1.25,
@@ -108,15 +113,21 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
               </div>
 
               {currentUser ? (
-                wasOriginallySaved || isSaved ? (
+                !!savedHomeData || isSaved ? (
                   <Stack direction={"horizontal"} gap={2}>
                     <WebsiteButton urlForBuilding={contact.urlForBuilding} />
-                    <SaveButton isSaved={true} onClickCallback={toggleSave} />
+                    <SaveButton
+                      isSaved={true}
+                      onClickCallback={handleToggleSaveBuilding}
+                    />
                   </Stack>
                 ) : (
                   <Stack direction={"horizontal"} gap={2}>
                     <WebsiteButton urlForBuilding={contact.urlForBuilding} />
-                    <SaveButton isSaved={false} onClickCallback={toggleSave} />
+                    <SaveButton
+                      isSaved={false}
+                      onClickCallback={handleToggleSaveBuilding}
+                    />
                   </Stack>
                 )
               ) : (

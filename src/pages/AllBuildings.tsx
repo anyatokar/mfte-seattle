@@ -183,6 +183,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
               mapHeight={mapHeight}
               resultBuildingsUnsorted={resultBuildingsUnsorted}
               savedBuildings={savedBuildings}
+              shouldScroll={shouldScroll}
             />
           </Col>
           <Col
@@ -239,6 +240,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
                 mapHeight={mapHeight}
+                shouldScroll={shouldScroll}
               />
             </Tab.Pane>
             <Tab.Pane eventKey="list">
