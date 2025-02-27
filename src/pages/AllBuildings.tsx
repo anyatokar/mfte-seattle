@@ -187,6 +187,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
             />
           </Col>
           <Col
+            className="px-0"
             style={{
               height: `${mapHeight}px`,
               overflowY: "auto",
