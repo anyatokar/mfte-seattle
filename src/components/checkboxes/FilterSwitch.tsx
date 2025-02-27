@@ -36,7 +36,10 @@ const FilterSwitch: React.FC<FilterSwitchProps> = ({
         onChange={handleCheck}
       />
 
-      <Form.Label htmlFor={`${type}-switch`} className="mb-0 small">
+      <Form.Label
+        htmlFor={`${type}-switch`}
+        className="mb-0 small text-size-override"
+      >
         {labels[type]}
       </Form.Label>
     </Form>

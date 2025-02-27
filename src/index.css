@@ -15,6 +15,10 @@ select,
 textarea {
   font-size: 16px !important; /* to prevent autozoom on mobile */
 }
+
+.text-size-override {
+  font-size: 16px !important;
+}
 /* end of entire app */
 
 /* navbar section */
