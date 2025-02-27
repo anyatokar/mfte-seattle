@@ -1,3 +1,4 @@
+/* TODO: audit for px vs em choices */
 /* entire app */
 html,
 body {
@@ -13,11 +14,17 @@ body {
 input,
 select,
 textarea {
-  font-size: 16px !important; /* to prevent autozoom on mobile */
+  font-size: max(
+    16px,
+    1em
+  ) !important; /* respects user preferences while setting a minimum to prevent autozoom on mobile */
 }
 
 .text-size-override {
-  font-size: 16px !important;
+  font-size: max(
+    16px,
+    1em
+  ) !important; /* respects user preferences while setting a minimum to prevent autozoom on mobile */
 }
 /* end of entire app */
 

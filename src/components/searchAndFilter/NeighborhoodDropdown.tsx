@@ -31,7 +31,7 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
   return (
     <Dropdown>
       <Dropdown.Toggle
-        className="diy-solid-info-button"
+        className="diy-solid-info-button text-size-override"
         id="neighborhood-filter-dropdown"
         size="sm"
       >
@@ -41,7 +41,7 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
             <TooltipWrapper
               label={String(activeFilters.neighborhoods.size)}
               overlay={overlayText}
-              placement={"right"}
+              placement="right"
             />
           </Badge>
         )}
