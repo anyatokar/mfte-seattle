@@ -122,8 +122,13 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
       const sideNavHeight = sideNavRef.current.offsetHeight;
       const windowHeight = window.innerHeight;
 
+      // The 5px to account for minor margins etc.
       const newMapHeight =
-        windowHeight - topNavHeight - searchAndFilterHeight - sideNavHeight;
+        windowHeight -
+        topNavHeight -
+        searchAndFilterHeight -
+        sideNavHeight -
+        5;
       setMapHeight(newMapHeight);
     };
 
