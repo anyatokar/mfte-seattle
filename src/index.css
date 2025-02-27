@@ -13,7 +13,7 @@ body {
 input,
 select,
 textarea {
-  font-size: 16px; /* to prevent autozoom on mobile */
+  font-size: 16px !important; /* to prevent autozoom on mobile */
 }
 /* end of entire app */
 
