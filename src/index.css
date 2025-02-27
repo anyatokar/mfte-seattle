@@ -7,32 +7,41 @@ body {
 .main {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vdh; /* dynamically adjusts to viewport changes (when mobile browser bars appear/disappear) */
 }
 /* end of entire app */
 
 /* navbar section */
-.navbar {
-  background: white;
+.top-navbar {
+  background: white !important;
   text-align: center;
 }
-/* navbar section */
 
-.navbar-brand {
+/* For screens smaller than lg (992px) */
+@media (max-width: 991.98px) {
+  .offset-navbar {
+    width: 13em !important;
+  }
+}
+
+.top-navbar-brand {
   margin-left: 0.5em;
 }
 
-.navbar-toggler {
+.top-navbar-toggler {
   margin-right: 0.5em;
 }
 
-.navbar .nav-link {
+.offset-navbar .nav-link,
+.top-navbar .nav-link {
   color: black !important;
   text-decoration: none;
   position: relative;
   display: inline-block;
 }
 
+.offset-navbar .nav-link:hover,
+.offset-navbar .nav-link.active,
 .navbar .nav-link:hover,
 .navbar .nav-link.active {
   text-decoration: underline;
@@ -41,6 +50,7 @@ body {
   text-decoration-color: #51b7c8;
   transition: text-decoration-color 0.4s ease;
 }
+/* end of navbar section */
 
 /* building card tabs */
 .tabs .nav-link,
@@ -213,20 +223,8 @@ body {
 /* end of misc */
 
 /* map and building lists */
-.map-and-list-container {
+.map-container {
   width: 100%;
-  height: 78vh;
-}
-
-@media (max-width: 768px) {
-  .map-and-list-container {
-    height: 70vh;
-  }
-}
-
-@media (max-width: 576px) {
-  .map-and-list-container {
-    height: 65vh;
-  }
+  height: 100%;
 }
 /* end of map and building lists */

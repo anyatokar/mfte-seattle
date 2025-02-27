@@ -1,9 +1,9 @@
-import { Profiler, useState } from "react";
+import { Profiler, useRef, useState } from "react";
 import PrivateRoute from "./auth_components/PrivateRoute";
 import { isProfilerOn } from "./config/config";
 import privateRoutes from "./config/privateRoutes";
 import publicRoutes from "./config/publicRoutes";
-import { Header } from "./components/Navbar";
+import { TopNav } from "./components/TopNav";
 import { Footer } from "./components/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -13,6 +13,7 @@ import { ModalContext, ModalState } from "./contexts/ModalContext";
 
 const Application: React.FC = () => {
   const modalStateHook = useState(ModalState.HIDDEN);
+  const topNavRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <Profiler
@@ -41,7 +42,9 @@ const Application: React.FC = () => {
         <BrowserRouter>
           <AuthProvider>
             <ModalContext.Provider value={modalStateHook}>
-              <Header />
+              <div ref={topNavRef} className="topnav-container">
+                <TopNav />
+              </div>
               <AllBuildingsProvider>
                 <Routes>
                   {privateRoutes.map((route) => (
@@ -60,7 +63,7 @@ const Application: React.FC = () => {
                     <Route
                       key={route.name}
                       path={route.path}
-                      element={<route.component />}
+                      element={<route.component topNavRef={topNavRef} />}
                     />
                   ))}
                 </Routes>
