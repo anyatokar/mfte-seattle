@@ -9,6 +9,12 @@ body {
   flex-direction: column;
   min-height: 100vdh; /* dynamically adjusts to viewport changes (when mobile browser bars appear/disappear) */
 }
+
+input,
+select,
+textarea {
+  font-size: 16px; /* to prevent autozoom on mobile */
+}
 /* end of entire app */
 
 /* navbar section */
