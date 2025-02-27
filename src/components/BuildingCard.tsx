@@ -1,24 +1,21 @@
-import { useState, useContext, useEffect, MutableRefObject } from "react";
+import { useContext, MutableRefObject } from "react";
 import { listingStatusEnum, tableType } from "../types/enumTypes";
+import { deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
+import { useAuth } from "../contexts/AuthContext";
+import { ModalContext, ModalState } from "../contexts/ModalContext";
 
 import { AddressAndPhone } from "./AddressAndPhone";
+import BuildingCardNote from "./BuildingCardNote";
 import BuildingDataTable from "./BuildingDataTable";
 import ListingButton from "./ListingButton";
 import SaveButton from "./SaveButton";
 import WebsiteButton from "./WebsiteButton";
-
-import { addNote, deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
-import useDebounce from "../hooks/useDebounce";
-
-import { useAuth } from "../contexts/AuthContext";
-import { ModalContext, ModalState } from "../contexts/ModalContext";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -44,43 +41,13 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  const [isSaved, setIsSaved] = useState(!!savedHomeData);
-
   function handleToggleSaveBuilding() {
-    if (!!savedHomeData || isSaved) {
-      setIsSaved(false);
-      setUpdatedNote("");
+    if (savedHomeData) {
       deleteBuilding(currentUser?.uid, buildingID, buildingName);
     } else {
-      setIsSaved(true);
       saveBuilding(currentUser?.uid, buildingID, buildingName);
     }
     shouldScroll.current = false;
-  }
-
-  // Saved Buildings - note form
-  const originalNote = savedHomeData?.note || "";
-  const [updatedNote, setUpdatedNote] = useState(originalNote);
-
-  // This runs every time component re-renders (on every keystroke).
-  // But it only updates when user stops typing.
-  const debouncedNote = useDebounce(updatedNote, 1000);
-
-  useEffect(() => {
-    if (debouncedNote !== undefined && debouncedNote !== originalNote) {
-      shouldScroll.current = false;
-      handleNoteUpdate(debouncedNote);
-    }
-  }, [debouncedNote]);
-
-  async function handleNoteUpdate(debouncedNote: string): Promise<void> {
-    return addNote(currentUser?.uid, buildingID, debouncedNote)
-      .then(() => {
-        console.log("Note updated successfully.");
-      })
-      .catch((error: any) => {
-        console.error("Error updating document: ", error);
-      });
   }
 
   return (
@@ -108,7 +75,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
         <Card.Subtitle>{address.neighborhood}</Card.Subtitle>
         <div className="mt-2">
           {currentUser ? (
-            !!savedHomeData || isSaved ? (
+            savedHomeData ? (
               <Stack direction={"horizontal"} gap={2}>
                 {" "}
                 <ListingButton listing={listing} isMarker={false} />
@@ -187,20 +154,14 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             )}
           </Tabs>
         </ListGroup.Item>
-        {!!savedHomeData || isSaved ? (
+        {savedHomeData && currentUser ? (
           <ListGroup.Item>
-            <Form>
-              <Form.Label>Notes</Form.Label>
-              <Form.Group className="mb-2">
-                <Form.Control
-                  as="textarea"
-                  name="note"
-                  rows={2}
-                  value={updatedNote}
-                  onChange={(e) => setUpdatedNote(e.target.value)}
-                />
-              </Form.Group>
-            </Form>
+            <BuildingCardNote
+              buildingID={buildingID}
+              savedHomeData={savedHomeData}
+              shouldScroll={shouldScroll}
+              currentUserId={currentUser.uid}
+            />
           </ListGroup.Item>
         ) : null}
       </ListGroup>
