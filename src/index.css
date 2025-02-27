@@ -2,14 +2,16 @@
 /* entire app */
 html,
 body {
-background: linear-gradient(to top, #e2fbfd, #f2fbfc);
-min-height: 100vh
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(to top, #e2fbfd, #f2fbfc);
+  background-attachment: fixed;
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  min-height: 100vdh; /* dynamically adjusts to viewport changes (when mobile browser bars appear/disappear) */
+  min-height: 100dvh;
 }
 
 input,
