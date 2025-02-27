@@ -1,27 +1,16 @@
-import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { useAuth } from "../../contexts/AuthContext";
 
 type FilterSwitchProps = {
   onCheckboxChange: () => void;
   type: "knownOnly" | "savedOnly";
+  isChecked: boolean;
 };
 
 const FilterSwitch: React.FC<FilterSwitchProps> = ({
   onCheckboxChange,
   type,
+  isChecked,
 }) => {
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
-
-  const { currentUser } = useAuth();
-
-  function handleCheck() {
-    if (type === "knownOnly" || currentUser) {
-      setIsSwitchOn((prevState) => !prevState);
-    }
-    onCheckboxChange();
-  }
-
   const labels = {
     knownOnly: "Known Availability",
     savedOnly: "Saved",
@@ -31,13 +20,13 @@ const FilterSwitch: React.FC<FilterSwitchProps> = ({
     <Form className="mx-1 d-flex align-items-center gap-1">
       <Form.Check
         type="checkbox"
-        id={`${type}-switch`}
-        checked={isSwitchOn}
-        onChange={handleCheck}
+        id={`${type}-checkbox`}
+        checked={isChecked}
+        onChange={onCheckboxChange}
       />
 
       <Form.Label
-        htmlFor={`${type}-switch`}
+        htmlFor={`${type}-checkbox`}
         className="mb-0 small text-size-override"
       >
         {labels[type]}

@@ -310,8 +310,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 value={formFields.url}
               />
               <Form.Text>
-                {`Url you'd share with a prospective renter to view available MFTE
-                  units. Often ends with /floorplans`}
+                {`Url to view available MFTE units. Often ends with /floorplans`}
                 <br />
                 {`Include http://`}
               </Form.Text>
@@ -518,7 +517,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 value={formFields.feedback}
               />
               <Form.Text>
-                Optional. Won't be shared publicly. Feedback can include data
+                Optional. Will not be shared publicly. Feedback can include data
                 corrections, suggestions on form improvement, user experience,
                 etc. Thank you!
               </Form.Text>
