@@ -44,22 +44,17 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
         if (listing !== undefined) {
           building.listing = { ...listing };
         }
-
         buildings.push(building);
       });
-
+      // Most recently updated listing is first
       const sortedBuildings = buildings.sort(
         (buildingA: IBuilding, buildingB: IBuilding) => {
-          const hasListingA =
-            buildingA.listing?.listingStatus === listingStatusEnum.ACTIVE;
-          const hasListingB =
-            buildingB.listing?.listingStatus === listingStatusEnum.ACTIVE;
+          const dateUpdatedA =
+            buildingA.listing?.dateUpdated?.toMillis?.() || 0;
+          const dateUpdatedB =
+            buildingB.listing?.dateUpdated?.toMillis?.() || 0;
 
-          if (hasListingA && !hasListingB) {
-            return -1;
-          } else {
-            return 1;
-          }
+          return dateUpdatedB - dateUpdatedA;
         }
       );
 
