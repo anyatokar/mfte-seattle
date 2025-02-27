@@ -165,7 +165,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
         }
       }}
     >
-      <div className="pt-2" ref={searchAndFilterRef}>
+      <div className="all-buildings-page pt-2" ref={searchAndFilterRef}>
         <SearchAndFilter
           setSearchQuery={setSearchQuery}
           allNeighborhoods={allNeighborhoods}
