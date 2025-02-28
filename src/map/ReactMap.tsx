@@ -67,7 +67,7 @@ const ReactMap: React.FC<IMap> = ({
                 mapTypeControl: true,
                 mapTypeControlOptions: {
                   style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                  position: google.maps.ControlPosition.TOP_RIGHT,
+                  position: google.maps.ControlPosition.TOP_LEFT,
                   mapTypeIds: [
                     google.maps.MapTypeId.ROADMAP,
                     google.maps.MapTypeId.SATELLITE,
