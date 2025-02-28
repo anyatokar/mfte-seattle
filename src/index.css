@@ -247,4 +247,11 @@ textarea {
   width: 100%;
   height: 100%;
 }
+
+/* Google Maps controls */
+.gm-style-mtc button {
+  font-size: max(16px, 1em) !important;
+  min-width: 0 !important;
+  padding: 8px 16px !important;
+}
 /* end of map and building lists */

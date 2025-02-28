@@ -63,7 +63,20 @@ const ReactMap: React.FC<IMap> = ({
               mapContainerClassName="map-container"
               center={center}
               zoom={12.5}
-              options={{ mapId: "c8d48b060a22a457" }}
+              options={{
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                  position: google.maps.ControlPosition.TOP_RIGHT,
+                  mapTypeIds: [
+                    google.maps.MapTypeId.ROADMAP,
+                    google.maps.MapTypeId.SATELLITE,
+                    google.maps.MapTypeId.TERRAIN,
+                    google.maps.MapTypeId.HYBRID,
+                  ],
+                },
+                mapId: "c8d48b060a22a457",
+              }}
             >
               {buildingsToMap.map((building) => (
                 <BuildingMarker
