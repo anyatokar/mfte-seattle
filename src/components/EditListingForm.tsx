@@ -86,6 +86,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const { currentUser } = useAuth();
 
+  const [allBuildings] = useAllBuildingsContext();
+
+  const [selectedBuilding, setSelectedBuilding] = useState<
+    IBuilding | undefined
+  >(findSelectedBuilding(listing.buildingName || ""));
+
   if (!currentUser) return null;
 
   const handleAddRow = () => {
@@ -115,17 +121,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     });
   };
 
-  const [allBuildings] = useAllBuildingsContext();
-
   function findSelectedBuilding(buildingName: string): IBuilding | undefined {
     return allBuildings.find(
       (building) => buildingName === building.buildingName
     );
   }
-
-  const [selectedBuilding, setSelectedBuilding] = useState<
-    IBuilding | undefined
-  >(findSelectedBuilding(listing.buildingName || ""));
 
   const handleInputChange = (e: any, rowId?: string) => {
     const { name, value } = e.target;
@@ -196,8 +196,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   };
 
   const ProgramKeyEnumToLabel: Record<ProgramKeyEnum, string> = {
-    [ProgramKeyEnum.P6]: "P6",
-    [ProgramKeyEnum.P345]: "P3, P4, or P5",
+    [ProgramKeyEnum.P6]: "MFTE P6",
+    [ProgramKeyEnum.P345]: "MFTE P3, P4, P5, IZ or MHA",
   };
 
   const programOptionsArray: ProgramKeyEnum[] = [
@@ -276,7 +276,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         <Form.Group>
           <Row className="mb-3">
             <Col>
-              <Form.Label className="mb-0 fw-bold">MFTE program:</Form.Label>
+              <Form.Label className="mb-0 fw-bold">Program:</Form.Label>
 
               {programOptionsArray.map((program) => (
                 <Form.Check
@@ -310,7 +310,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 value={formFields.url}
               />
               <Form.Text>
-                {`Url to view available MFTE units. Often ends with /floorplans`}
+                {`Url to view available rent-reduced units. Often ends with /floorplans`}
                 <br />
                 {`Include http://`}
               </Form.Text>

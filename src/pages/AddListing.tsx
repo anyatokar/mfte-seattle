@@ -37,13 +37,13 @@ const AddListingPage: React.FC<IPage> = () => {
           <Col lg={10} xl={8}>
             <div className="display-6 mb-5">For Property Owners & Managers</div>
             <p className="lead">
-              Looking to reach more prospective tenants for MFTE units?
+              Looking to reach more prospective tenants for rent-reduced units?
             </p>
             <p>
-              List your currently available or soon-to-be-available MFTE
-              apartments on this website. This is an opportunity to increase
-              your building's visibility to people searching for rent-reduced
-              housing.
+              List your currently available or soon-to-be-available MFTE, IZ,
+              and MHA apartments on this website. This is an opportunity to
+              increase your building's visibility to people searching for
+              rent-reduced housing.
             </p>
             <ListingAccordion />
           </Col>

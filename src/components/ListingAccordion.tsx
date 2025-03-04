@@ -104,7 +104,7 @@ const ListingAccordion: React.FC = () => {
               Recognizing that more than half of our visits come from mobile
               devices, this site provides an optimized experience across phones,
               tablets, and desktops, making it easier for a wider range of users
-              to find MFTE units.
+              to find rent-reduced units.
             </p>
           </Accordion.Body>
         </Accordion.Item>
@@ -113,9 +113,9 @@ const ListingAccordion: React.FC = () => {
           <Accordion.Header>Disclaimer</Accordion.Header>
           <Accordion.Body>
             <p>
-              This website maps buildings participating in the MFTE program
-              using publicly available data. It is not affiliated with the
-              Seattle Office of Housing or any other government agency.
+              This website maps buildings participating in the MFTE, IZ, and MHA
+              programs using publicly available data. It is not affiliated with
+              the Seattle Office of Housing or any other government agency.
             </p>
           </Accordion.Body>
         </Accordion.Item>

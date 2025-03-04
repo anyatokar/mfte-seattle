@@ -51,13 +51,15 @@ const ResourcesPage: React.FC<IPage> = () => {
                   Seattle Office of Housing
                 </a>
 
-                <div className="fw-light">website — City of Seattle</div>
+                <div className="fw-light">
+                  website — Seattle Office of Housing
+                </div>
               </ListGroup.Item>
 
               <ListGroup.Item style={{ background: "none" }}>
                 <div className="fw-light">
-                  Information about the MFTE program and other income and
-                  rent-restricted properties.
+                  Information about the MFTE, IZ, MHA programs and other income
+                  and rent-restricted properties.
                 </div>
                 <a
                   id="mfte-city-website-renters"
@@ -69,7 +71,9 @@ const ResourcesPage: React.FC<IPage> = () => {
                   MFTE Main Resources Page
                 </a>
 
-                <div className="fw-light">website — City of Seattle</div>
+                <div className="fw-light">
+                  website — Seattle Office of Housing
+                </div>
               </ListGroup.Item>
 
               <ListGroup.Item style={{ background: "none" }}>
@@ -88,7 +92,7 @@ const ResourcesPage: React.FC<IPage> = () => {
                 </a>
 
                 <div className="fw-light">
-                  PDF — City of Seattle — April 2024
+                  PDF — Seattle Office of Housing — April 2024
                 </div>
               </ListGroup.Item>
 
@@ -104,7 +108,7 @@ const ResourcesPage: React.FC<IPage> = () => {
                 </a>
 
                 <div className="fw-light">
-                  PDF — City of Seattle — April 22, 2024
+                  PDF — Seattle Office of Housing — April 22, 2024
                 </div>
               </ListGroup.Item>
 
@@ -123,7 +127,7 @@ const ResourcesPage: React.FC<IPage> = () => {
                   Detailed Renters' Guide
                 </a>
                 <div className="fw-light">
-                  PDF — City of Seattle — July 2023
+                  PDF — Seattle Office of Housing — July 2023
                 </div>
               </ListGroup.Item>
             </ListGroup>

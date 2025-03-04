@@ -4,11 +4,11 @@ This is the source for [https://mfte-seattle.com](https://mfte-seattle.com)
 
 ## Purpose
 
-This web application helps people find rent-reduced housing by mapping buildings that participate in Seattle's MFTE (Multifamily Tax Exemption) program.
+This web application rent-reduced housing in Seattle by featuring currently available and generally existing units in a user-friendly and accessible way.
 
 It currently supports 3,000 monthly active users on average.
 
-**New!** A feature that allows building managers to add real-time availability using a manager portal has been deployed (but not yet advertised).
+**New!** Soft-launched a feature that allows building managers to add real-time availability using a manager portal.
 
 ## Technologies
 
@@ -24,7 +24,7 @@ For additional information regarding regarding database design and system archit
 
 ### Usage
 
-Users can search and filter for apartments that fit their criteria (such as number of bedrooms, neighborhood, and building name). They can create a free login to keep a short list of properties, view a personalized map, and add notes.
+Prospective renters can search and filter for apartments that fit their criteria. They can create a free login to keep a short list of properties, view a personalized map, and add notes. Building managers can create a free manager account to add and update listings.
 
 ## Run App Locally
 
@@ -42,22 +42,10 @@ You will also see any lint errors in the console.
 
 ## Contribute
 
-This is an open-source project and contribution are welcome. For guidelines on how to contribute, please refer to the [contributing documentation](./CONTRIBUTE.md).
-
-## Additional Information
-
-### Disclaimer
-
-MFTE is a government program. This app is not affiliated with the Seattle Office of Housing or any government office. For official information about MFTE please visit the [Seattle Office of Housing website](https://seattle.gov/housing).
-
-Users should contact building management directly for complete information about apartment vacancies and the application process.
-
-### Why MFTE
-
-This app highlights the MFTE program because of the relatively quick application turnaround, higher availability, and modern apartments in sought-after locations.
+This is an open-source project and contributions are welcome. For guidelines on how to contribute, please refer to the [contributing documentation](./CONTRIBUTE.md).
 
 ### Data Source
 
-Buildings are sourced from the spreadsheet of [Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (April 2024)](https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf). Updated spreadsheets are published by the Seattle Office of Housing roughly twice a year.
+Data is sourced from the spreadsheet of [Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (April 2024)](https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf) and from direct communication with property owners.
 
-Vacancy information is submitted directly by building managers.
+Real-time availability information is submitted directly by building managers.

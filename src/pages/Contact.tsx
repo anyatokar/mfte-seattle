@@ -96,9 +96,9 @@ const ContactPage: React.FC<IPage> = () => {
             </p>
             <p>
               Please note, this is an independent website intended solely to map
-              MFTE units. We are not affiliated with the Seattle Office of
-              Housing or any property owners, and we cannot provide assistance
-              with specific program or property questions.{" "}
+              rent-reduced units. We are not affiliated with the Seattle Office
+              of Housing or any property owners, and we cannot provide
+              assistance with specific program or property questions.{" "}
             </p>
             <p>
               As a suggestion, if you have questions or feedback about the MFTE
