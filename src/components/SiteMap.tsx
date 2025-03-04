@@ -30,7 +30,7 @@ const SiteMap = () => {
         </Link>
       </Nav.Item>
       <Nav.Item className="px-3 px-md-4 pt-1">
-        Copyright © 2021-2024 Anya Tokar
+        Copyright © 2021-2025 Anya Tokar
       </Nav.Item>
     </Nav>
   );
