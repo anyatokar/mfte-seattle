@@ -196,8 +196,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   };
 
   const ProgramKeyEnumToLabel: Record<ProgramKeyEnum, string> = {
-    [ProgramKeyEnum.P6]: "P6",
-    [ProgramKeyEnum.P345]: "P3, P4, or P5",
+    [ProgramKeyEnum.P6]: "MFTE P6",
+    [ProgramKeyEnum.P345]: "MFTE P3, P4, P5, IZ or MHA",
   };
 
   const programOptionsArray: ProgramKeyEnum[] = [
@@ -276,7 +276,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         <Form.Group>
           <Row className="mb-3">
             <Col>
-              <Form.Label className="mb-0 fw-bold">MFTE program:</Form.Label>
+              <Form.Label className="mb-0 fw-bold">Program:</Form.Label>
 
               {programOptionsArray.map((program) => (
                 <Form.Check

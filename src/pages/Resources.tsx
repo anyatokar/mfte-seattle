@@ -58,8 +58,8 @@ const ResourcesPage: React.FC<IPage> = () => {
 
               <ListGroup.Item style={{ background: "none" }}>
                 <div className="fw-light">
-                  Information about the MFTE program and other income and
-                  rent-restricted properties.
+                  Information about the MFTE, IZ, MHA programs and other income
+                  and rent-restricted properties.
                 </div>
                 <a
                   id="mfte-city-website-renters"
