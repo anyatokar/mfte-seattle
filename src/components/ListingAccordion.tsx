@@ -104,7 +104,7 @@ const ListingAccordion: React.FC = () => {
               Recognizing that more than half of our visits come from mobile
               devices, this site provides an optimized experience across phones,
               tablets, and desktops, making it easier for a wider range of users
-              to find MFTE units.
+              to find rent-reduced units.
             </p>
           </Accordion.Body>
         </Accordion.Item>
