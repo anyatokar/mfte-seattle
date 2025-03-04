@@ -86,6 +86,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const { currentUser } = useAuth();
 
+  const [allBuildings] = useAllBuildingsContext();
+
+  const [selectedBuilding, setSelectedBuilding] = useState<
+    IBuilding | undefined
+  >(findSelectedBuilding(listing.buildingName || ""));
+
   if (!currentUser) return null;
 
   const handleAddRow = () => {
@@ -115,17 +121,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     });
   };
 
-  const [allBuildings] = useAllBuildingsContext();
-
   function findSelectedBuilding(buildingName: string): IBuilding | undefined {
     return allBuildings.find(
       (building) => buildingName === building.buildingName
     );
   }
-
-  const [selectedBuilding, setSelectedBuilding] = useState<
-    IBuilding | undefined
-  >(findSelectedBuilding(listing.buildingName || ""));
 
   const handleInputChange = (e: any, rowId?: string) => {
     const { name, value } = e.target;
@@ -310,7 +310,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 value={formFields.url}
               />
               <Form.Text>
-                {`Url to view available MFTE units. Often ends with /floorplans`}
+                {`Url to view available rent-reduced units. Often ends with /floorplans`}
                 <br />
                 {`Include http://`}
               </Form.Text>
