@@ -135,7 +135,8 @@ const AboutPage: React.FC<IPage> = () => {
                 </div>
               </Col>
             </Row>
-            <Row className="align-items-center py-3">
+
+            <Row className="align-items-center pb-3">
               <Col lg={2} className="text-lg-end">
                 <div className="fs-4">Ownership</div>
               </Col>
