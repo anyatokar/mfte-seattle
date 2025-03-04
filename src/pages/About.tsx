@@ -46,9 +46,9 @@ const AboutPage: React.FC<IPage> = () => {
               </Col>
               <Col lg={8}>
                 <div className="lead">
-                  To help people find rent-reduced housing in Seattle by
-                  featuring currently available and generally existing units in
-                  a user-friendly and accessible way.
+                  Help people find rent-reduced housing in Seattle by featuring
+                  currently available and generally existing units in a
+                  user-friendly and accessible way.
                 </div>
               </Col>
             </Row>
@@ -128,7 +128,7 @@ const AboutPage: React.FC<IPage> = () => {
                 <div className="lead">
                   Create a free manager account to add and update listings for
                   your buildings. View the{" "}
-                  <Link id="all-buildings" to="../all-buildings">
+                  <Link id="for-managers" to="../for-managers">
                     property managers
                   </Link>{" "}
                   page for complete information.
