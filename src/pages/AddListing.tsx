@@ -40,8 +40,8 @@ const AddListingPage: React.FC<IPage> = () => {
               Looking to reach more prospective tenants for rent-reduced units?
             </p>
             <p>
-              List your currently available or soon-to-be-available rent-reduced
-              apartments on this website. This is an opportunity to increase
+              List your currently available or soon-to-be-available MFTE, IZ,
+              MHA apartments on this website. This is an opportunity to increase
               your building's visibility to people searching for rent-reduced
               housing.
             </p>
