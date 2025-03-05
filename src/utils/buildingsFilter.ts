@@ -19,6 +19,7 @@ function filterBedrooms(
   if (bedrooms.size === 0) return true;
 
   if (isAvailOnly) {
+
     if (!building.listing) return false;
 
     return [...bedrooms].some((checkedBedroom) =>

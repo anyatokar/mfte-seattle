@@ -1,6 +1,10 @@
+import { AmiPercentage } from "../interfaces/IBuilding";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 
-export const p6UnitPricing: Record<BedroomsKeyEnum, Record<number, number>> = {
+export const p6UnitPricing: Record<
+  BedroomsKeyEnum,
+  Record<AmiPercentage, number>
+> = {
   [BedroomsKeyEnum.MICRO]: {
     30: 693,
     40: 924,
