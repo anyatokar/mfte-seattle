@@ -4,6 +4,7 @@ import {
   listingStatusEnum,
   ProgramKeyEnum,
 } from "../types/enumTypes";
+import { PercentAmi } from "./IBuilding";
 
 export type UnitAvailData = {
   unitSize: BedroomsKeyEnum | undefined;
@@ -11,7 +12,7 @@ export type UnitAvailData = {
   dateAvailString: string;
   /** String when in form, gets converted to number before sent to Firestore */
   maxRent: string | number;
-  percentAmi: string;
+  percentAmi: PercentAmi | undefined;
   rowId: string;
 };
 

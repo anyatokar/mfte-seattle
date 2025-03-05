@@ -19,13 +19,13 @@ const mockBuildings = [
     buildingID: "buildingID-1",
     buildingName: "building 1",
     streetAddress: "34 street address",
-    amiData: [{ unitSize: "studio", amiPercentages: [60, 75] }],
+    amiData: [{ unitSize: "studio", percentAmis: [60, 75] }],
   },
   {
     buildingID: "buildingID-2",
     buildingName: "building 2",
     streetAddress: "34 street address",
-    amiData: [{ unitSize: "studio", amiPercentages: [60, 75] }],
+    amiData: [{ unitSize: "studio", percentAmis: [60, 75] }],
   },
 ];
 
