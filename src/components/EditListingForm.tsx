@@ -213,9 +213,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     if (unitAvailData.unitSize && unitAvailData.percentAmi) {
       if (formFields.program === ProgramKeyEnum.P6) {
-        return p6UnitPricing[unitSize][Number(percentAmi) as AmiPercentage];
+        return p6UnitPricing[unitSize][percentAmi as AmiPercentage];
       } else {
-        return p345UnitPricing[unitSize][Number(percentAmi) as AmiPercentage];
+        return p345UnitPricing[unitSize][percentAmi as AmiPercentage];
       }
     }
 
@@ -228,7 +228,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         <Row className="mb-3">
           <Col md={6} className="mb-md-0">
             <Form.Select
-              //TODO: Listings cards need a refactor for better UI as well.
+              //TODO: Listings cards need a refactor for better UI.
               required
               name="buildingName"
               id="buildingName"
@@ -251,7 +251,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       )}
 
       {/* Address */}
-      {/* TODO: Maybe show address for existing listing as well? */}
+      {/* TODO: Maybe show address for existing listing? */}
       {selectedBuilding && (
         <Row className="mb-3">
           <Col className="mb-md-0">

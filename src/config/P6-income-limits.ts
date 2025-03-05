@@ -1,5 +1,5 @@
 import { AmiPercentage } from "../interfaces/IBuilding";
-/** Index + 1 = family size */
+/** Index + 1 = household size */
 export const p6maxIncomeData: Record<AmiPercentage, number[]> = {
   30: [27726, 31689, 35651, 39608, 42780, 45947],
   40: [36968, 42251, 47535, 52810, 57040, 61262],

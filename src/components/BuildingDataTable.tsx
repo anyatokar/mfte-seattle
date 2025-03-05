@@ -137,7 +137,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                           variant="link"
                           className="p-0 m-0"
                           onClick={() =>
-                            handleShowModal(Number(percentAmi) as AmiPercentage)
+                            handleShowModal(percentAmi as AmiPercentage)
                           }
                         >
                           Max Income
@@ -164,7 +164,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
           </Modal.Header>
           <Modal.Body>
             <p>
-              Income limits are determined by % AMI, program type, and family
+              Income limits are determined by % AMI, program type, and household
               size.
               <br />
               <strong>% AMI: </strong>
@@ -177,7 +177,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             <Table bordered hover size="sm" className="my-0" responsive>
               <thead>
                 <tr>
-                  <th>Family Size</th>
+                  <th>Household Size</th>
                   <th>{props.program ? "Max Annual Income" : "MFTE P6"}</th>
                   {!props.program && (
                     <th>
