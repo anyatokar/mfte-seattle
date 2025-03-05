@@ -2,7 +2,7 @@ import { Timestamp } from "firebase/firestore";
 import IListing from "./IListing";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 
-export type AmiPercentage =
+export type PercentAmi =
   | "30"
   | "40"
   | "50"
@@ -14,7 +14,7 @@ export type AmiPercentage =
   | "85"
   | "90";
 
-export type AmiData = { [key in BedroomsKeyEnum]: AmiPercentage[] };
+export type AmiData = { [key in BedroomsKeyEnum]: PercentAmi[] };
 
 export type Address = {
   streetNum: string;

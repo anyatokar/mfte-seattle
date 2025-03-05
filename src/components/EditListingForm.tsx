@@ -21,7 +21,7 @@ import { p345UnitPricing } from "../config/P345-unit-pricing";
 import { AddressAndPhone } from "./AddressAndPhone";
 import TooltipWrapper from "./TooltipWrapper";
 
-import IBuilding, { AmiPercentage } from "../interfaces/IBuilding";
+import IBuilding from "../interfaces/IBuilding";
 import IListing, { UnitAvailData } from "../interfaces/IListing";
 
 import Button from "react-bootstrap/Button";
@@ -68,7 +68,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   const blankAvailRow: UnitAvailData = {
     unitSize: undefined,
     dateAvailString: "",
-    percentAmi: "",
+    percentAmi: undefined,
     maxRent: "",
     rowId: `${Date.now()}`,
   };
@@ -137,7 +137,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       // If updating a specific row
 
-      //Find the index of the row with the specific rowId
+      // Find the index of the row with the specific rowId
       const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
 
       if (rowId !== undefined) {
@@ -146,7 +146,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         if (name === "unitSize") {
           newAvailData[rowIndex] = {
             ...newAvailData[rowIndex],
-            percentAmi: "",
+            // TODO: Is this percentAmi needed?
+            percentAmi: undefined,
           };
         }
       }
@@ -213,9 +214,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     if (unitAvailData.unitSize && unitAvailData.percentAmi) {
       if (formFields.program === ProgramKeyEnum.P6) {
-        return p6UnitPricing[unitSize][percentAmi as AmiPercentage];
+        return p6UnitPricing[unitSize][percentAmi];
       } else {
-        return p345UnitPricing[unitSize][percentAmi as AmiPercentage];
+        return p345UnitPricing[unitSize][percentAmi];
       }
     }
 

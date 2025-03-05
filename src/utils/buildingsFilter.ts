@@ -1,10 +1,10 @@
-import IBuilding, { AmiPercentage } from "../interfaces/IBuilding";
+import IBuilding, { PercentAmi } from "../interfaces/IBuilding";
 import { BedroomsKeyEnum, listingStatusEnum } from "../types/enumTypes";
 
 export type ActiveFilters = {
   bedrooms: Set<BedroomsKeyEnum>;
   neighborhoods: Set<string>;
-  ami: Set<string>;
+  ami: Set<PercentAmi>;
   isAvailOnly: boolean;
   isSavedOnly: boolean;
 };
@@ -65,7 +65,7 @@ function filterBedroomsAndAmi(
           )?.percentAmi
         : building.amiData[selectedBedroom];
 
-      if (data && data.includes(selectedAmi as AmiPercentage)) {
+      if (data && data.includes(selectedAmi)) {
         return true;
       }
     }
