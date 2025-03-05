@@ -132,6 +132,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                     {percentAmi ? (
                       <>
                         {percentAmi}
+                        <br />
                         <Button
                           size="sm"
                           variant="link"

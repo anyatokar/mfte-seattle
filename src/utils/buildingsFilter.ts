@@ -39,11 +39,13 @@ function filterBedroomsAndAmi(
   if (bedrooms.size === 0) {
     // Put all the ami values into a set, see if the set includes selected ami.
     const data = isAvailOnly
-      ? new Set(building.listing.availDataArray
-          .flatMap((unitAvailData) => unitAvailData.percentAmi)
-          .filter((percent) => percent !== undefined))
-      // TODO: Consider amis array in the building data to reduce operations needed
-      : new Set(Object.values(building.amiData).flat());
+      ? new Set(
+          building.listing.availDataArray
+            .flatMap((unitAvailData) => unitAvailData.percentAmi)
+            .filter((percent) => percent !== undefined)
+        )
+      : // TODO: Consider amis array in the building data to reduce operations needed
+        new Set(Object.values(building.amiData).flat());
 
     for (const selectedAmi of [...ami]) {
       if (data.has(selectedAmi)) {
