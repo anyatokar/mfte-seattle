@@ -54,5 +54,10 @@ export enum ProgramKeyEnum {
 
 export enum ProgramLabelEnum {
   P6 = "MFTE P6",
-  P345 = "Non-MFTE P6 developer agreements. Includes: MFTE Programs 3-5, IZ-Housing Bonus, MHA, MPC-Yesler Terrace",
+  P345 = "Non-MFTE P6 developer agreement. Includes MFTE Programs 3-5, IZ-Housing Bonus, MHA, MPC-Yesler Terrace",
+}
+
+export enum ProgramLabelShortEnum {
+  P6 = "MFTE P6",
+  P345 = "Non-MFTE P6 developer agreement",
 }

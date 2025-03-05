@@ -5,6 +5,7 @@ import {
   BedroomsKeyEnum,
   ProgramKeyEnum,
   ProgramLabelEnum,
+  ProgramLabelShortEnum,
 } from "../types/enumTypes";
 import {
   addListingFirestore,
@@ -279,7 +280,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   required
                   key={program}
                   type="radio"
-                  label={ProgramKeyEnum[program]}
+                  label={ProgramLabelEnum[program]}
                   name="program"
                   id={program}
                   value={program}
@@ -403,7 +404,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           <Form.Text>
                             {!!getMaxRent(unitAvailData) &&
                               formFields.program &&
-                              `${ProgramLabelEnum[formFields.program]}, 
+                              `${ProgramLabelShortEnum[formFields.program]}, 
                               ${unitSizeLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]}, 
                               ${unitAvailData.percentAmi}% AMI ⟶ 
                               ${formatCurrency(getMaxRent(unitAvailData))} max with utilities*`}
