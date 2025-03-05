@@ -67,6 +67,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       } else if (props.program === ProgramKeyEnum.P6) {
         return [p6maxIncomeData[amiPercent]];
       } else {
+        // TODO: Remove when there is no more unknown program types in listings.
         return [p345maxIncomeData[amiPercent], p6maxIncomeData[amiPercent]];
       }
     }
@@ -162,8 +163,10 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             <Modal.Title>Income Limits</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {/* Put your content for the modal here */}
             <p>
+              Income limits are determined by % AMI, program type, and family
+              size.
+              <br />
               <strong>% AMI: </strong>
               {amiPercent}
               <br />
@@ -216,8 +219,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               </tbody>
             </Table>
             <div className="pt-2 text-muted">
-              Percent AMI and program type provided by building management. Max
-              annual income limit data sourced from{" "}
+              % AMI and program provided by building management. Max annual
+              income limit data sourced from{" "}
               <a
                 id="income-and-rent-limits"
                 href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
