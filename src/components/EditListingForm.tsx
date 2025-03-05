@@ -4,6 +4,8 @@ import {
   unitSizeLabelEnum,
   BedroomsKeyEnum,
   ProgramKeyEnum,
+  ProgramLabelEnum,
+  ProgramLabelShortEnum,
 } from "../types/enumTypes";
 import {
   addListingFirestore,
@@ -19,7 +21,7 @@ import { p345UnitPricing } from "../config/P345-unit-pricing";
 import { AddressAndPhone } from "./AddressAndPhone";
 import TooltipWrapper from "./TooltipWrapper";
 
-import IBuilding from "../interfaces/IBuilding";
+import IBuilding, { AmiPercentage } from "../interfaces/IBuilding";
 import IListing, { UnitAvailData } from "../interfaces/IListing";
 
 import Button from "react-bootstrap/Button";
@@ -195,11 +197,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     }
   };
 
-  const ProgramKeyEnumToLabel: Record<ProgramKeyEnum, string> = {
-    [ProgramKeyEnum.P6]: "MFTE P6",
-    [ProgramKeyEnum.P345]: "MFTE P3, P4, P5, IZ or MHA",
-  };
-
   const programOptionsArray: ProgramKeyEnum[] = [
     ProgramKeyEnum.P6,
     ProgramKeyEnum.P345,
@@ -216,9 +213,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     if (unitAvailData.unitSize && unitAvailData.percentAmi) {
       if (formFields.program === ProgramKeyEnum.P6) {
-        return p6UnitPricing[unitSize][Number(percentAmi)];
+        return p6UnitPricing[unitSize][Number(percentAmi) as AmiPercentage];
       } else {
-        return p345UnitPricing[unitSize][Number(percentAmi)];
+        return p345UnitPricing[unitSize][Number(percentAmi) as AmiPercentage];
       }
     }
 
@@ -283,7 +280,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   required
                   key={program}
                   type="radio"
-                  label={ProgramKeyEnumToLabel[program]}
+                  label={ProgramLabelEnum[program]}
                   name="program"
                   id={program}
                   value={program}
@@ -407,7 +404,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           <Form.Text>
                             {!!getMaxRent(unitAvailData) &&
                               formFields.program &&
-                              `${ProgramKeyEnumToLabel[formFields.program]}, 
+                              `${ProgramLabelShortEnum[formFields.program]}, 
                               ${unitSizeLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]}, 
                               ${unitAvailData.percentAmi}% AMI ⟶ 
                               ${formatCurrency(getMaxRent(unitAvailData))} max with utilities*`}

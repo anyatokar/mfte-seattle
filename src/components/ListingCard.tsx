@@ -71,6 +71,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
     expiryDate,
     dateUpdated,
     description,
+    program,
   } = listing;
 
   type badgeObjectType = { label: string; bg: string; text?: string };
@@ -193,6 +194,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
               <BuildingDataTable
                 type={tableType.availData}
                 data={availDataArray}
+                program={program}
               />
               <Card.Text className="mt-3">
                 <strong>URL:</strong>{" "}
