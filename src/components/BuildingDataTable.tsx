@@ -33,15 +33,15 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const { type, data } = props;
 
   const [showModal, setShowModal] = useState(false);
-  const [amiPercent, setAmiPercent] = useState<PercentAmi | null>(null);
+  const [percentAmi, setPercentAmi] = useState<PercentAmi | null>(null);
 
   const handleClose = () => {
     setShowModal(false);
-    setAmiPercent(null);
+    setPercentAmi(null);
   };
 
-  const handleShowModal = (amiPercent: PercentAmi) => {
-    setAmiPercent(amiPercent);
+  const handleShowModal = (percentAmi: PercentAmi) => {
+    setPercentAmi(percentAmi);
     setShowModal(true);
   };
 
@@ -59,16 +59,16 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   }
 
   function getModalData(
-    amiPercent: PercentAmi
+    percentAmi: PercentAmi
   ): [number[], number[]?] | undefined {
     if (type === tableType.availData) {
       if (props.program === ProgramKeyEnum.P345) {
-        return [p345maxIncomeData[amiPercent]];
+        return [p345maxIncomeData[percentAmi]];
       } else if (props.program === ProgramKeyEnum.P6) {
-        return [p6maxIncomeData[amiPercent]];
+        return [p6maxIncomeData[percentAmi]];
       } else {
         // TODO: Remove when there is no more unknown program types in listings.
-        return [p345maxIncomeData[amiPercent], p6maxIncomeData[amiPercent]];
+        return [p345maxIncomeData[percentAmi], p6maxIncomeData[percentAmi]];
       }
     }
   }
@@ -156,7 +156,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         </tbody>
       </Table>
 
-      {amiPercent && type === tableType.availData && (
+      {percentAmi && type === tableType.availData && (
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Income Limits</Modal.Title>
@@ -167,7 +167,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               size.
               <br />
               <strong>% AMI: </strong>
-              {amiPercent}
+              {percentAmi}
               <br />
               <strong>Program: </strong>
               {getModalSentence()}
@@ -187,7 +187,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               </thead>
               <tbody>
                 {props.program &&
-                  getModalData(amiPercent)?.[0].map((percentData, index) => (
+                  getModalData(percentAmi)?.[0].map((percentData, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{formatCurrency(percentData)}</td>
@@ -195,13 +195,13 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                   ))}
 
                 {/* TODO: Delete when every listing has program data. */}
-                {!props.program && getModalData(amiPercent)?.[0]
-                  ? getModalData(amiPercent)?.[0].map((percentData, index) => (
+                {!props.program && getModalData(percentAmi)?.[0]
+                  ? getModalData(percentAmi)?.[0].map((percentData, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>
                           {formatCurrency(
-                            getModalData(amiPercent)?.[1]?.[index] ?? 0
+                            getModalData(percentAmi)?.[1]?.[index] ?? 0
                           )}
                         </td>
                         <td>{formatCurrency(percentData ?? 0)}</td>
