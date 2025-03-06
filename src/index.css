@@ -78,10 +78,6 @@ textarea {
   color: black !important;
 }
 
-.tabs .nav-link:hover {
-  background: #f2fbfc;
-}
-
 .tabs .nav-link.active {
   font-weight: 600;
 }

@@ -8,15 +8,14 @@ import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 
 import { AddressAndPhone } from "../components/AddressAndPhone";
-import ListingButton from "../components/ListingButton";
-import SaveButton from "../components/SaveButton";
 import WebsiteButton from "../components/WebsiteButton";
+import SaveButton from "../components/SaveButton";
 
 import IBuilding from "../interfaces/IBuilding";
+import ISavedBuilding from "../interfaces/ISavedBuilding";
 import { listingStatusEnum } from "../types/enumTypes";
 
 import Stack from "react-bootstrap/Stack";
-import ISavedBuilding from "../interfaces/ISavedBuilding";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -87,13 +86,6 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
       {isSelected && (
         <InfoWindow onCloseClick={clearSelection}>
           <>
-            <div>
-              {building.listing?.url && (
-                <>
-                  <ListingButton listing={building.listing} isMarker={true} />
-                </>
-              )}
-            </div>
             <div className={building.listing?.url ? "pt-2" : ""}>
               <div>
                 <strong>{buildingName}</strong>
@@ -111,7 +103,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
               {currentUser ? (
                 savedHomeData ? (
                   <Stack direction={"horizontal"} gap={2}>
-                    <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                    <WebsiteButton building={building} />
                     <SaveButton
                       isSaved={true}
                       onClickCallback={handleToggleSaveBuilding}
@@ -119,7 +111,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                   </Stack>
                 ) : (
                   <Stack direction={"horizontal"} gap={2}>
-                    <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                    <WebsiteButton building={building} />
                     <SaveButton
                       isSaved={false}
                       onClickCallback={handleToggleSaveBuilding}
@@ -128,7 +120,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                 )
               ) : (
                 <Stack direction={"horizontal"} gap={2}>
-                  <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                  <WebsiteButton building={building} />
                   <SaveButton
                     isSaved={false}
                     onClickCallback={handleShowLogin}
