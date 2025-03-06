@@ -79,7 +79,7 @@ textarea {
 }
 
 .tabs .nav-link.active {
-  font-weight: 600;
+  font-weight: 700;
 }
 /* end of building card tabs */
 
@@ -118,7 +118,6 @@ textarea {
 .nav.nav-pills .nav-link.active {
   background-color: rgba(6, 37, 62, 1);
   color: white;
-  font-weight: 700;
 }
 /* end of pills pages - navigation */
 
