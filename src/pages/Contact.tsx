@@ -202,14 +202,11 @@ const ContactPage: React.FC<IPage> = () => {
                       value={formFields.message}
                     />
                   </Form.Group>
-
-                  <Button
-                    type="submit"
-                    className="diy-solid-info-button"
-                    size="lg"
-                  >
-                    Send message
-                  </Button>
+                  <Form.Group className="text-end">
+                    <Button type="submit" variant="dark">
+                      Send message
+                    </Button>
+                  </Form.Group>
                 </Form>
               </>
             ) : (

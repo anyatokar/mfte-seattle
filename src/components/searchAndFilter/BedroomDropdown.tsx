@@ -32,7 +32,8 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
   return (
     <Dropdown>
       <Dropdown.Toggle
-        className="diy-solid-info-button text-size-override"
+        variant="outline-primary"
+        className="text-size-override"
         id="bedroom-filter-dropdown"
         size="sm"
       >

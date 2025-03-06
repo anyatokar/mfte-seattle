@@ -444,7 +444,7 @@ const Profile: React.FC = () => {
                   <Stack direction={"horizontal"} gap={2}>
                     <Button
                       disabled={isLoading || (isEditing && !isAnyFieldUpdated)}
-                      className="diy-solid-info-button"
+                      variant="outline-primary"
                       type="submit"
                     >
                       {isEditing ? "Save" : "Update"}

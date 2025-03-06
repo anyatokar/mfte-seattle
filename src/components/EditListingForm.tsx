@@ -438,26 +438,30 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               </Table>
             </Col>
             <Row>
-              <Col>
-                <Button onClick={handleAddRow}>Add Row</Button>
+              <Col className="text-end">
+                <Button onClick={handleAddRow} size="sm">
+                  Add Row
+                </Button>
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <Form.Text className="mt-0 pt-0">
-                  *Max rent calculation based on{" "}
-                  <a
-                    id="income-and-rent-limits"
-                    href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
-                    title="Income and Rent Limits (FY 2024)"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Income and Rent Limits (FY 2024)
-                  </a>
-                </Form.Text>
-              </Col>
-            </Row>
+            {formFields.availDataArray?.[0]?.percentAmi && (
+              <Row>
+                <Col>
+                  <Form.Text className="mt-0 pt-0">
+                    *Max rent calculation based on{" "}
+                    <a
+                      id="income-and-rent-limits"
+                      href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
+                      title="Income and Rent Limits (FY 2024)"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Income and Rent Limits (FY 2024)
+                    </a>
+                  </Form.Text>
+                </Col>
+              </Row>
+            )}
           </Row>
 
           {/* Expiry Date */}
@@ -523,7 +527,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           </Row>
 
           <Form.Group className="text-end">
-            <Button variant="success" type="submit" size="lg">
+            <Button variant="success" type="submit">
               Submit
             </Button>
           </Form.Group>

@@ -24,7 +24,8 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
   return (
     <Dropdown>
       <Dropdown.Toggle
-        className="diy-solid-info-button text-size-override"
+        variant="outline-primary"
+        className="text-size-override"
         id="ami-filter-dropdown"
         size="sm"
       >

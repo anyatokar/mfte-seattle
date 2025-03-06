@@ -9,14 +9,13 @@ const WebsiteButton: React.FC<WebsiteButtonProps> = ({
 }): JSX.Element => {
   return (
     <Button
-      className="diy-outline-info-button"
+      variant="outline-dark"
       size="sm"
       id="listing-page-url"
       href={urlForBuilding}
       title={`Open new tab: ${urlForBuilding}`}
       target="_blank"
       rel="noreferrer"
-      variant="primary"
     >
       Website
     </Button>
