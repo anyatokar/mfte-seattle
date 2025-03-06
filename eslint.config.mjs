@@ -5,7 +5,7 @@ import pluginReact from "eslint-plugin-react";
 import reactJsxRuntime from "eslint-plugin-react/configs/jsx-runtime.js";
 
 /** @type {import('eslint').Linter.Config[]} */
-export default [
+const eslintConfig = [
   {
     ignores: [
       "**/node_modules/**",
@@ -51,3 +51,5 @@ export default [
     },
   },
 ];
+
+export default eslintConfig;
