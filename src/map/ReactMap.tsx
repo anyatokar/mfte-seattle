@@ -14,9 +14,17 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-const center = {
+const seattle = {
   lat: 47.608013,
   lng: -122.315,
+};
+const mapBounds = {
+  latLngBounds: {
+    north: 47.9,
+    south: 47.4919,
+    west: -122.4594,
+    east: -122.2244,
+  },
 };
 
 const ReactMap: React.FC<IMap> = ({
@@ -61,9 +69,10 @@ const ReactMap: React.FC<IMap> = ({
           >
             <GoogleMap
               mapContainerClassName="map-container"
-              center={center}
+              center={seattle}
               zoom={12.5}
               options={{
+                restriction: mapBounds,
                 mapTypeControl: true,
                 mapTypeControlOptions: {
                   style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
