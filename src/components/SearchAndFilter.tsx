@@ -9,6 +9,7 @@ import { FilterAction } from "../reducers/filterReducer";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { useAuth } from "../contexts/AuthContext";
+import { PercentAmi } from "../interfaces/IBuilding";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -18,7 +19,7 @@ import Stack from "react-bootstrap/Stack";
 type SearchAndFilterProps = {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   allNeighborhoods: Set<string>;
-  allAmi: Set<string>;
+  allAmi: Set<PercentAmi>;
   activeFilters: ActiveFilters;
   dispatch: Dispatch<FilterAction>;
 };
@@ -66,7 +67,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   };
 
   // Handler for Amis
-  const handleAmiChange = (checkbox?: string): void => {
+  const handleAmiChange = (checkbox?: PercentAmi): void => {
     if (!checkbox) {
       dispatch({ type: "clearAll", category: "ami" });
     } else if (activeFilters.ami.has(checkbox)) {

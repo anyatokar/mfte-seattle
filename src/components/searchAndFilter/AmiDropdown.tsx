@@ -1,7 +1,7 @@
 import FilterCheckbox from "../checkboxes/FilterCheckbox";
-import { ActiveFilters } from "../../utils/buildingsFilter";
-
 import TooltipWrapper from "../TooltipWrapper";
+import { ActiveFilters } from "../../utils/buildingsFilter";
+import { PercentAmi } from "../../interfaces/IBuilding";
 
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
@@ -9,8 +9,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 
 type AmiFilterProps = {
-  onAmiChange: (checkbox?: string) => void;
-  allAmi: Set<string>;
+  onAmiChange: (checkbox?: PercentAmi) => void;
+  allAmi: Set<PercentAmi>;
   activeFilters: ActiveFilters;
 };
 
