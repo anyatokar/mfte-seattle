@@ -163,8 +163,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
           </Modal.Header>
           <Modal.Body>
             <p>
-              Income limits are determined by % AMI, program type, and household
-              size.
+              Income limits are determined by % AMI, household
+              size, and program type.
               <br />
               <strong>% AMI: </strong>
               {percentAmi}
