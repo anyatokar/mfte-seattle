@@ -427,6 +427,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       <td className="text-center">
                         <Button
                           variant="outline-danger"
+                          size="sm"
                           onClick={() => handleDeleteRow(unitAvailData.rowId)}
                         >
                           Delete

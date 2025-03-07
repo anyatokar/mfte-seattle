@@ -203,8 +203,8 @@ const ContactPage: React.FC<IPage> = () => {
                     />
                   </Form.Group>
                   <Form.Group className="text-end">
-                    <Button type="submit" variant="dark">
-                      Send message
+                    <Button type="submit" variant="success">
+                      Send
                     </Button>
                   </Form.Group>
                 </Form>

@@ -442,14 +442,7 @@ const Profile: React.FC = () => {
 
                 <div className="d-flex justify-content-center">
                   <Stack direction={"horizontal"} gap={2}>
-                    <Button
-                      disabled={isLoading || (isEditing && !isAnyFieldUpdated)}
-                      variant="outline-primary"
-                      type="submit"
-                    >
-                      {isEditing ? "Save" : "Update"}
-                    </Button>
-                    {isEditing && (
+                  {isEditing && (
                       <Button
                         variant="outline-danger"
                         onClick={() => resetForm()}
@@ -457,6 +450,13 @@ const Profile: React.FC = () => {
                         Cancel
                       </Button>
                     )}
+                    <Button
+                      disabled={isLoading || (isEditing && !isAnyFieldUpdated)}
+                      variant="success"
+                      type="submit"
+                    >
+                      {isEditing ? "Save" : "Update"}
+                    </Button>
                   </Stack>
                 </div>
               </Form>
