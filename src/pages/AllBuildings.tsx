@@ -20,7 +20,7 @@ import { genericSearch } from "../utils/genericSearch";
 import { buildingsFilter } from "../utils/buildingsFilter";
 import { filterReducer } from "../reducers/filterReducer";
 
-import { SearchFields } from "../interfaces/IBuilding";
+import { PercentAmi, SearchFields } from "../interfaces/IBuilding";
 import IPage from "../interfaces/IPage";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 
@@ -45,10 +45,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
   );
 
   const allAmi = new Set(
-    allBuildings
-      .flatMap((building) => Object.values(building.amiData))
-      .flat()
-      .map(String)
+    allBuildings.flatMap((building) => Object.values(building.amiData)).flat()
   );
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -56,7 +53,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
   const [activeFilters, dispatch] = useReducer(filterReducer, {
     bedrooms: new Set<BedroomsKeyEnum>(),
     neighborhoods: new Set<string>(),
-    ami: new Set<string>(),
+    ami: new Set<PercentAmi>(),
     isAvailOnly: false,
     isSavedOnly: false,
   });

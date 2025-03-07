@@ -64,7 +64,8 @@ export default function PasswordReset({
             />
           </Form.Group>
           <Button
-            className="diy-solid-info-button w-100"
+            variant="dark"
+            className="w-100"
             disabled={loading}
             type="submit"
           >

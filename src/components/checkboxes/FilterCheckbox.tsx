@@ -1,16 +1,17 @@
+import { PercentAmi } from "../../interfaces/IBuilding";
 import Form from "react-bootstrap/Form";
 
-type FilterCheckboxProps = {
-  checkboxKey: string;
-  onCheckboxChange: (checkbox: string) => void;
+type FilterCheckboxProps<T extends string | PercentAmi> = {
+  checkboxKey: T;
+  onCheckboxChange: (checkbox: T) => void;
   isChecked: boolean;
 };
 
-const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
+const FilterCheckbox = <T extends string | PercentAmi>({
   checkboxKey,
   onCheckboxChange,
   isChecked,
-}) => {
+}: FilterCheckboxProps<T>) => {
   return (
     <Form.Check
       type="checkbox"

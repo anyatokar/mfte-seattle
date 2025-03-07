@@ -7,7 +7,6 @@ import { ModalContext, ModalState } from "../contexts/ModalContext";
 import { AddressAndPhone } from "./AddressAndPhone";
 import BuildingCardNote from "./BuildingCardNote";
 import BuildingDataTable from "./BuildingDataTable";
-import ListingButton from "./ListingButton";
 import SaveButton from "./SaveButton";
 import WebsiteButton from "./WebsiteButton";
 
@@ -77,9 +76,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
           {currentUser ? (
             savedHomeData ? (
               <Stack direction={"horizontal"} gap={2}>
-                {" "}
-                <ListingButton listing={listing} isMarker={false} />
-                <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                <WebsiteButton building={building} />
                 <SaveButton
                   isSaved={true}
                   onClickCallback={handleToggleSaveBuilding}
@@ -87,8 +84,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
               </Stack>
             ) : (
               <Stack direction={"horizontal"} gap={2}>
-                <ListingButton listing={listing} isMarker={false} />
-                <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+                <WebsiteButton building={building} />
                 <SaveButton
                   isSaved={false}
                   onClickCallback={handleToggleSaveBuilding}
@@ -97,8 +93,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             )
           ) : (
             <Stack direction={"horizontal"} gap={2}>
-              <ListingButton listing={listing} isMarker={false} />
-              <WebsiteButton urlForBuilding={contact.urlForBuilding} />
+              <WebsiteButton building={building} />
               <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
             </Stack>
           )}

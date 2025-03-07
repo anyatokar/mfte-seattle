@@ -11,7 +11,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({
 }): JSX.Element => {
   return (
     <Button
-      className={isSaved ? "diy-solid-info-button" : "diy-outline-info-button"}
+      variant={isSaved ? "dark" : "outline-dark"}
       size="sm"
       onClick={onClickCallback}
     >

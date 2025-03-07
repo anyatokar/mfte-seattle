@@ -1,7 +1,7 @@
 import FilterCheckbox from "../checkboxes/FilterCheckbox";
-import { ActiveFilters } from "../../utils/buildingsFilter";
-
 import TooltipWrapper from "../TooltipWrapper";
+import { ActiveFilters } from "../../utils/buildingsFilter";
+import { PercentAmi } from "../../interfaces/IBuilding";
 
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
@@ -9,8 +9,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 
 type AmiFilterProps = {
-  onAmiChange: (checkbox?: string) => void;
-  allAmi: Set<string>;
+  onAmiChange: (checkbox?: PercentAmi) => void;
+  allAmi: Set<PercentAmi>;
   activeFilters: ActiveFilters;
 };
 
@@ -24,7 +24,8 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
   return (
     <Dropdown>
       <Dropdown.Toggle
-        className="diy-solid-info-button text-size-override"
+        variant="outline-primary"
+        className="text-size-override"
         id="ami-filter-dropdown"
         size="sm"
       >

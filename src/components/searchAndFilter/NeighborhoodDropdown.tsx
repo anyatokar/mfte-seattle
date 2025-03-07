@@ -31,7 +31,8 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
   return (
     <Dropdown>
       <Dropdown.Toggle
-        className="diy-solid-info-button text-size-override"
+        variant="outline-primary"
+        className="text-size-override"
         id="neighborhood-filter-dropdown"
         size="sm"
       >

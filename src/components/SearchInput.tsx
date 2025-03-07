@@ -23,11 +23,11 @@ const SearchInput: React.FC<ISearchProps> = ({ setSearchQuery }) => {
 
   return (
     <Form onSubmit={(event) => event.preventDefault()} className="mb-1 w-100">
+      <Form.Label className="visually-hidden">Search</Form.Label>
       <Form.Control
         placeholder="Search address, building name, neighborhood"
         id="search"
         type="search"
-        aria-label="Search"
         onChange={(event) => setInputValue(event.target.value)}
         size="sm"
       />
