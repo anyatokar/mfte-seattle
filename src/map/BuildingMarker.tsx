@@ -24,7 +24,6 @@ interface IBuildingMarkerProps {
   setSelectedBuilding: (building: IBuilding | null) => void;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
-  justClosedInfoWindow: MutableRefObject<boolean>;
 }
 
 const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
@@ -35,7 +34,6 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   shouldScroll,
   setMarkerRef,
   markerRef,
-  justClosedInfoWindow,
 }) => {
   const { buildingID, buildingName, address, contact } = building;
 
@@ -53,8 +51,8 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     shouldScroll.current = false;
   }
 
+  // TODO: Fix flashing
   function handleClose() {
-    justClosedInfoWindow.current = true;
     setSelectedBuilding(null);
   }
 

@@ -30,7 +30,6 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
   );
 
   const clusterer = useRef<MarkerClusterer | null>(null);
-  const justClosedInfoWindow = useRef(false);
 
   useEffect(() => {
     if (!map) return;
@@ -41,7 +40,7 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
 
   useEffect(() => {
     // To prevent (re-rendering) flashing pins on info window interaction
-    if (selectedBuilding || justClosedInfoWindow.current) return;
+    if (selectedBuilding) return;
 
     clusterer.current?.clearMarkers();
     clusterer.current?.addMarkers(Object.values(markers));
@@ -77,7 +76,6 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
           setSelectedBuilding={setSelectedBuilding}
           savedHomeData={getSavedData(savedBuildings, building)}
           shouldScroll={shouldScroll}
-          justClosedInfoWindow={justClosedInfoWindow}
         />
       ))}
     </>
