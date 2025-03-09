@@ -1,9 +1,9 @@
-/// <reference types="googlemaps" />
 import { useCallback, useContext, MutableRefObject } from "react";
-import { InfoWindow, Marker } from "@react-google-maps/api";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
+import { AdvancedMarker, InfoWindow, Pin } from "@vis.gl/react-google-maps";
+import { Marker } from "@googlemaps/markerclusterer";
 
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 
@@ -13,16 +13,18 @@ import SaveButton from "../components/SaveButton";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
-import { listingStatusEnum } from "../types/enumTypes";
-
 import Stack from "react-bootstrap/Stack";
+import { MarkersObj } from "./AllMarkers";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
+  setMarkerRef: (marker: Marker | null, key: string) => MarkersObj | undefined;
+  markerRef: Marker;
   isSelected: boolean;
   setSelectedBuilding: (building: IBuilding | null) => void;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
+  justClosedInfoWindow: MutableRefObject<boolean>;
 }
 
 const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
@@ -31,18 +33,11 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   setSelectedBuilding,
   savedHomeData,
   shouldScroll,
+  setMarkerRef,
+  markerRef,
+  justClosedInfoWindow,
 }) => {
   const { buildingID, buildingName, address, contact } = building;
-
-  const onMarkerClick = useCallback(
-    () => setSelectedBuilding(isSelected ? null : building),
-    [isSelected, building, setSelectedBuilding]
-  );
-
-  const clearSelection = useCallback(
-    () => setSelectedBuilding(null),
-    [setSelectedBuilding]
-  );
 
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
@@ -58,33 +53,22 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     shouldScroll.current = false;
   }
 
-  function getIcon() {
-    const hasListing =
-      building.listing?.listingStatus === listingStatusEnum.ACTIVE;
-
-    return {
-      path: "M0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-      fillColor: hasListing ? "red" : "#10345c",
-      strokeColor: "black",
-      strokeWeight: currentUser && savedHomeData ? 3 : 1,
-      fillOpacity: hasListing ? 1 : 0.8,
-      rotation: 0,
-      scale: 1.25,
-      anchor: new google.maps.Point(0, 20),
-    };
+  function handleClose() {
+    justClosedInfoWindow.current = true;
+    setSelectedBuilding(null);
   }
 
   return (
-    <Marker
-      position={{
-        lat: address.lat,
-        lng: address.lng,
-      }}
-      onClick={onMarkerClick}
-      icon={getIcon()}
+    <AdvancedMarker
+      key={building.buildingID}
+      position={{ lat: building.address.lat, lng: building.address.lng }}
+      ref={(marker) => setMarkerRef(marker, building.buildingID)}
+      onClick={() => setSelectedBuilding(building)}
     >
+      <Pin background={"#FBBC04"} glyphColor={"#000"} borderColor={"#000"} />
+
       {isSelected && (
-        <InfoWindow onCloseClick={clearSelection}>
+        <InfoWindow anchor={markerRef} onClose={handleClose}>
           <>
             <div className={building.listing?.url ? "pt-2" : ""}>
               <div>
@@ -131,7 +115,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
           </>
         </InfoWindow>
       )}
-    </Marker>
+    </AdvancedMarker>
   );
 };
 
