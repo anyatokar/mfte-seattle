@@ -51,7 +51,6 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     shouldScroll.current = false;
   }
 
-  // TODO: Fix flashing
   function handleClose() {
     setSelectedBuilding(null);
   }

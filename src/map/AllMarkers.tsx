@@ -39,12 +39,9 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
   }, [map]);
 
   useEffect(() => {
-    // To prevent (re-rendering) flashing pins on info window interaction
-    if (selectedBuilding) return;
-
     clusterer.current?.clearMarkers();
     clusterer.current?.addMarkers(Object.values(markers));
-  }, [markers, selectedBuilding]);
+  }, [markers]);
 
   const setMarkerRef = (
     marker: Marker | null,
