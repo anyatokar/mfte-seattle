@@ -442,7 +442,7 @@ const Profile: React.FC = () => {
 
                 <div className="d-flex justify-content-center">
                   <Stack direction={"horizontal"} gap={2}>
-                  {isEditing && (
+                    {isEditing && (
                       <Button
                         variant="outline-danger"
                         onClick={() => resetForm()}

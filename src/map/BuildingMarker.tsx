@@ -1,9 +1,14 @@
-/// <reference types="googlemaps" />
-import { useCallback, useContext, MutableRefObject } from "react";
-import { InfoWindow, Marker } from "@react-google-maps/api";
+import { useContext, MutableRefObject } from "react";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
+import {
+  AdvancedMarker,
+  InfoWindow,
+  Pin,
+  useAdvancedMarkerRef,
+} from "@vis.gl/react-google-maps";
+import { Marker } from "@googlemaps/markerclusterer";
 
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 
@@ -13,36 +18,32 @@ import SaveButton from "../components/SaveButton";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
-import { listingStatusEnum } from "../types/enumTypes";
-
 import Stack from "react-bootstrap/Stack";
+import { MarkersObj } from "./AllMarkers";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
+  updateMarkerRefs: (
+    marker: Marker | null,
+    key: string
+  ) => MarkersObj | undefined;
   isSelected: boolean;
-  setSelectedBuilding: (building: IBuilding | null) => void;
+  clearSelection: () => void;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
+  onMarkerClick: (ev: google.maps.MapMouseEvent, building: IBuilding) => void;
 }
 
 const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   building,
   isSelected,
-  setSelectedBuilding,
+  clearSelection,
   savedHomeData,
   shouldScroll,
+  updateMarkerRefs,
+  onMarkerClick,
 }) => {
   const { buildingID, buildingName, address, contact } = building;
-
-  const onMarkerClick = useCallback(
-    () => setSelectedBuilding(isSelected ? null : building),
-    [isSelected, building, setSelectedBuilding]
-  );
-
-  const clearSelection = useCallback(
-    () => setSelectedBuilding(null),
-    [setSelectedBuilding]
-  );
 
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
@@ -58,39 +59,36 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     shouldScroll.current = false;
   }
 
-  function getIcon() {
-    const hasListing =
-      building.listing?.listingStatus === listingStatusEnum.ACTIVE;
-
-    return {
-      path: "M0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-      fillColor: hasListing ? "red" : "#10345c",
-      strokeColor: "black",
-      strokeWeight: currentUser && savedHomeData ? 3 : 1,
-      fillOpacity: hasListing ? 1 : 0.8,
-      rotation: 0,
-      scale: 1.25,
-      anchor: new google.maps.Point(0, 20),
-    };
-  }
+  const [markerRef, marker] = useAdvancedMarkerRef();
 
   return (
-    <Marker
-      position={{
-        lat: address.lat,
-        lng: address.lng,
+    <AdvancedMarker
+      key={building.buildingID}
+      position={{ lat: building.address.lat, lng: building.address.lng }}
+      ref={(marker) => {
+        markerRef(marker);
+        updateMarkerRefs(marker, building.buildingID);
       }}
-      onClick={onMarkerClick}
-      icon={getIcon()}
+      onClick={(ev) => onMarkerClick(ev, building)}
+      clickable={true}
     >
+      <Pin background={"#FBBC04"} glyphColor={"#000"} borderColor={"#000"} />
+
       {isSelected && (
-        <InfoWindow onCloseClick={clearSelection}>
-          <>
-            <div className={building.listing?.url ? "pt-2" : ""}>
+        <InfoWindow
+          headerContent={
+            <>
               <div>
                 <strong>{buildingName}</strong>
               </div>
               <div>{address.neighborhood}</div>
+            </>
+          }
+          anchor={marker}
+          onCloseClick={clearSelection}
+        >
+          <>
+            <div className={building.listing?.url ? "pt-2" : ""}>
               <div className="my-2">
                 <AddressAndPhone
                   buildingName={buildingName}
@@ -131,7 +129,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
           </>
         </InfoWindow>
       )}
-    </Marker>
+    </AdvancedMarker>
   );
 };
 

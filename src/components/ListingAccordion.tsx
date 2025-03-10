@@ -30,15 +30,17 @@ const ListingAccordion: React.FC = () => {
           </Accordion.Header>
           <Accordion.Body>
             <p>
-              On the map, buildings with available units are marked with red
-              pins and link to the building's official listing page. Dark blue
-              pins represent buildings without listings.
+              Users can filter the map and buildings list by known availability.
             </p>
             <p>
-              In list view, buildings with available units are shown at the top.
-              Each listing includes a link to the building’s listing page, as
-              well as details on the number of available units, the earliest
-              availability date, maximum rent, and a short description.
+              In list view, buildings with available units are displayed at the
+              top.
+            </p>
+            <p>
+              Each listing includes a link to the building’s listing page, an
+              optional short description, as well as a table of available units
+              with unit size, % AMI, income limits, monthly rent, and move-in
+              date.
             </p>
           </Accordion.Body>
         </Accordion.Item>
@@ -97,14 +99,10 @@ const ListingAccordion: React.FC = () => {
           <Accordion.Body>
             <p>
               This website averages 3,000 active monthly users and consistently
-              ranks as a top search result for MFTE properties in Seattle across
-              major search engines.
-            </p>
-            <p>
-              Recognizing that more than half of our visits come from mobile
-              devices, this site provides an optimized experience across phones,
-              tablets, and desktops, making it easier for a wider range of users
-              to find rent-reduced units.
+              ranks as a top result for MFTE properties in Seattle across search
+              engines. It provides an accessible and optimized experience across
+              devices, making it easier for a wide range of users to find
+              rent-reduced apartments that fit their criteria.
             </p>
           </Accordion.Body>
         </Accordion.Item>
@@ -113,9 +111,9 @@ const ListingAccordion: React.FC = () => {
           <Accordion.Header>Disclaimer</Accordion.Header>
           <Accordion.Body>
             <p>
-              This website maps buildings participating in the MFTE, IZ, and MHA
-              programs using publicly available data. It is not affiliated with
-              the Seattle Office of Housing or any other government agency.
+              This website maps buildings participating in rent-reduced programs
+              using publicly available data. It is not affiliated with the
+              Seattle Office of Housing or other government agencies.
             </p>
           </Accordion.Body>
         </Accordion.Item>
