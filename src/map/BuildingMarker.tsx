@@ -1,8 +1,8 @@
-import { useContext, MutableRefObject, useRef } from "react";
+import { useContext, MutableRefObject } from "react";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
-import { AdvancedMarker, InfoWindow, Pin } from "@vis.gl/react-google-maps";
+import { AdvancedMarker, InfoWindow, Pin, useAdvancedMarkerRef } from "@vis.gl/react-google-maps";
 import { Marker } from "@googlemaps/markerclusterer";
 
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
@@ -54,18 +54,18 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     shouldScroll.current = false;
   }
 
-  const markerRef = useRef<Marker | null>(null);
+  const [markerRef, marker] = useAdvancedMarkerRef();
 
-  function setRef(marker: Marker | null) {
-    markerRef.current = marker;
-    updateMarkerRefs(marker, building.buildingID);
-  }
+
 
   return (
     <AdvancedMarker
       key={building.buildingID}
       position={{ lat: building.address.lat, lng: building.address.lng }}
-      ref={(marker) => setRef(marker)}
+      ref={(marker) => {
+        markerRef(marker);
+        updateMarkerRefs(marker, building.buildingID);
+      }}
       onClick={(ev) => onMarkerClick(ev, building)}
       clickable={true}
     >
@@ -81,7 +81,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
               <div>{address.neighborhood}</div>
             </>
           }
-          anchor={markerRef.current}
+          anchor={marker}
           onCloseClick={clearSelection}
         >
           <>
