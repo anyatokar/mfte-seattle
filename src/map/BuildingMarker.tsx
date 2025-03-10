@@ -1,4 +1,4 @@
-import { useContext, MutableRefObject} from "react";
+import { useContext, MutableRefObject, useRef } from "react";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -18,8 +18,10 @@ import { MarkersObj } from "./AllMarkers";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
-  setMarkerRef: (marker: Marker | null, key: string) => MarkersObj | undefined;
-  markerRef: Marker;
+  updateMarkerRefs: (
+    marker: Marker | null,
+    key: string
+  ) => MarkersObj | undefined;
   isSelected: boolean;
   clearSelection: () => void;
   savedHomeData: ISavedBuilding | undefined;
@@ -33,8 +35,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   clearSelection,
   savedHomeData,
   shouldScroll,
-  setMarkerRef,
-  markerRef,
+  updateMarkerRefs,
   onMarkerClick,
 }) => {
   const { buildingID, buildingName, address, contact } = building;
@@ -53,11 +54,18 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     shouldScroll.current = false;
   }
 
+  const markerRef = useRef<Marker | null>(null);
+
+  function setRef(marker: Marker | null) {
+    markerRef.current = marker;
+    updateMarkerRefs(marker, building.buildingID);
+  }
+
   return (
     <AdvancedMarker
       key={building.buildingID}
       position={{ lat: building.address.lat, lng: building.address.lng }}
-      ref={(marker) => setMarkerRef(marker, building.buildingID)}
+      ref={(marker) => setRef(marker)}
       onClick={(ev) => onMarkerClick(ev, building)}
       clickable={true}
     >
@@ -73,8 +81,8 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
               <div>{address.neighborhood}</div>
             </>
           }
-          anchor={markerRef}
-          onClose={clearSelection}
+          anchor={markerRef.current}
+          onCloseClick={clearSelection}
         >
           <>
             <div className={building.listing?.url ? "pt-2" : ""}>

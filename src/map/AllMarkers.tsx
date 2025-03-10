@@ -43,7 +43,7 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
     clusterer.current?.addMarkers(Object.values(markers));
   }, [markers]);
 
-  const setMarkerRef = (
+  const updateMarkerRefs = (
     marker: Marker | null,
     key: string
   ): MarkersObj | undefined => {
@@ -78,8 +78,7 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
         <BuildingMarker
           key={building.buildingID}
           building={building}
-          setMarkerRef={setMarkerRef}
-          markerRef={markers[building.buildingID]}
+          updateMarkerRefs={updateMarkerRefs}
           isSelected={building.buildingID === selectedBuilding?.buildingID}
           clearSelection={() => setSelectedBuilding(null)}
           savedHomeData={getSavedData(savedBuildings, building)}
