@@ -59,9 +59,10 @@ const AboutPage: React.FC<IPage> = () => {
               </Col>
               <Col lg={8}>
                 <div className="lead">
-                  Multifamily Tax Exemption (MFTE), Incentive Zoning (IZ), and
-                  Mandatory Housing Affordability (MHA). Data is sourced from
-                  the spreadsheet of
+                  Multifamily Tax Exemption (MFTE), Incentive Zoning (IZ),
+                  Mandatory Housing Affordability (MHA), and Master Planned
+                  Community (MPC)-Yesler Terrace. Data is sourced from the
+                  spreadsheet of
                   <a
                     id="properties-spreadsheet-april-2024"
                     href="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"

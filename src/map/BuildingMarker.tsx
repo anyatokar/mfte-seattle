@@ -2,7 +2,12 @@ import { useContext, MutableRefObject } from "react";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
-import { AdvancedMarker, InfoWindow, Pin, useAdvancedMarkerRef } from "@vis.gl/react-google-maps";
+import {
+  AdvancedMarker,
+  InfoWindow,
+  Pin,
+  useAdvancedMarkerRef,
+} from "@vis.gl/react-google-maps";
 import { Marker } from "@googlemaps/markerclusterer";
 
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
@@ -55,8 +60,6 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   }
 
   const [markerRef, marker] = useAdvancedMarkerRef();
-
-
 
   return (
     <AdvancedMarker

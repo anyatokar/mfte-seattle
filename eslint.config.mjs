@@ -45,6 +45,7 @@ const eslintConfig = [
       // React rules
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
+      "react/no-unescaped-entities": "off",
 
       // TypeScript rules
       "@typescript-eslint/no-explicit-any": "warn",

@@ -37,9 +37,10 @@ const ListingAccordion: React.FC = () => {
               top.
             </p>
             <p>
-              Each listing includes a link to the building’s listing page, as
-              well as details on unit size, % AMI (with income limits), monthly
-              rent, move-in date, and a short description.
+              Each listing includes a link to the building’s listing page, an
+              optional short description, as well as a table of available units
+              with unit size, % AMI, income limits, monthly rent, and move-in
+              date.
             </p>
           </Accordion.Body>
         </Accordion.Item>
@@ -93,13 +94,26 @@ const ListingAccordion: React.FC = () => {
           </Accordion.Body>
         </Accordion.Item>
 
+        <Accordion.Item eventKey="2">
+          <Accordion.Header>Website Metrics</Accordion.Header>
+          <Accordion.Body>
+            <p>
+              This website averages 3,000 active monthly users and consistently
+              ranks as a top result for MFTE properties in Seattle across search
+              engines. It provides an accessible and optimized experience across
+              devices, making it easier for a wide range of users to find
+              rent-reduced apartments that fit their criteria.
+            </p>
+          </Accordion.Body>
+        </Accordion.Item>
+
         <Accordion.Item eventKey="3">
           <Accordion.Header>Disclaimer</Accordion.Header>
           <Accordion.Body>
             <p>
               This website maps buildings participating in rent-reduced programs
               using publicly available data. It is not affiliated with the
-              Seattle Office of Housing or any other government agency.
+              Seattle Office of Housing or other government agencies.
             </p>
           </Accordion.Body>
         </Accordion.Item>
