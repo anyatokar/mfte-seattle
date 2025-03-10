@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@react-google-maps/api": "^2.20.6",
+    "@googlemaps/markerclusterer": "^2.5.3",
+    "@vis.gl/react-google-maps": "latest",
     "bootstrap": "^5.3.3",
     "firebase": "^11.3.1",
     "react": "^19.0.0",
@@ -46,7 +47,6 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@types/bootstrap": "^5.2.10",
-    "@types/googlemaps": "^3.43.3",
     "@types/node": "^22.13.4",
     "@types/react": "^18.3.12",
     "@types/react-bootstrap": "^0.32.37",
