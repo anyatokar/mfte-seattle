@@ -1,4 +1,4 @@
-import { useCallback, useContext, MutableRefObject } from "react";
+import { useContext, MutableRefObject} from "react";
 
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -21,7 +21,7 @@ interface IBuildingMarkerProps {
   setMarkerRef: (marker: Marker | null, key: string) => MarkersObj | undefined;
   markerRef: Marker;
   isSelected: boolean;
-  setSelectedBuilding: (building: IBuilding | null) => void;
+  clearSelection: () => void;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
   onMarkerClick: (ev: google.maps.MapMouseEvent, building: IBuilding) => void;
@@ -30,7 +30,7 @@ interface IBuildingMarkerProps {
 const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   building,
   isSelected,
-  setSelectedBuilding,
+  clearSelection,
   savedHomeData,
   shouldScroll,
   setMarkerRef,
@@ -65,15 +65,19 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
 
       {isSelected && (
         <InfoWindow
-          anchor={markerRef}
-          onClose={() => setSelectedBuilding(null)}
-        >
-          <>
-            <div className={building.listing?.url ? "pt-2" : ""}>
+          headerContent={
+            <>
               <div>
                 <strong>{buildingName}</strong>
               </div>
               <div>{address.neighborhood}</div>
+            </>
+          }
+          anchor={markerRef}
+          onClose={clearSelection}
+        >
+          <>
+            <div className={building.listing?.url ? "pt-2" : ""}>
               <div className="my-2">
                 <AddressAndPhone
                   buildingName={buildingName}

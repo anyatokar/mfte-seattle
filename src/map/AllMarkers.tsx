@@ -80,8 +80,8 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
           building={building}
           setMarkerRef={setMarkerRef}
           markerRef={markers[building.buildingID]}
-          isSelected={building === selectedBuilding}
-          setSelectedBuilding={setSelectedBuilding}
+          isSelected={building.buildingID === selectedBuilding?.buildingID}
+          clearSelection={() => setSelectedBuilding(null)}
           savedHomeData={getSavedData(savedBuildings, building)}
           shouldScroll={shouldScroll}
           onMarkerClick={handleMarkerClick}
