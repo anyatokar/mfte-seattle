@@ -61,6 +61,17 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
     });
   };
 
+  function handleMarkerClick(
+    ev: google.maps.MapMouseEvent,
+    building: IBuilding
+  ) {
+    if (!map) return;
+    if (!ev.latLng) return;
+    console.log("marker clicked:", ev.latLng.toString());
+    map.panTo(ev.latLng);
+    setSelectedBuilding(building);
+  }
+
   return (
     <>
       {buildingsToMap.map((building) => (
@@ -73,6 +84,7 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
           setSelectedBuilding={setSelectedBuilding}
           savedHomeData={getSavedData(savedBuildings, building)}
           shouldScroll={shouldScroll}
+          onMarkerClick={handleMarkerClick}
         />
       ))}
     </>

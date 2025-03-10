@@ -24,6 +24,7 @@ interface IBuildingMarkerProps {
   setSelectedBuilding: (building: IBuilding | null) => void;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
+  onMarkerClick: (ev: google.maps.MapMouseEvent, building: IBuilding) => void;
 }
 
 const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
@@ -34,6 +35,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   shouldScroll,
   setMarkerRef,
   markerRef,
+  onMarkerClick,
 }) => {
   const { buildingID, buildingName, address, contact } = building;
 
@@ -51,21 +53,21 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
     shouldScroll.current = false;
   }
 
-  function handleClose() {
-    setSelectedBuilding(null);
-  }
-
   return (
     <AdvancedMarker
       key={building.buildingID}
       position={{ lat: building.address.lat, lng: building.address.lng }}
       ref={(marker) => setMarkerRef(marker, building.buildingID)}
-      onClick={() => setSelectedBuilding(building)}
+      onClick={(ev) => onMarkerClick(ev, building)}
+      clickable={true}
     >
       <Pin background={"#FBBC04"} glyphColor={"#000"} borderColor={"#000"} />
 
       {isSelected && (
-        <InfoWindow anchor={markerRef} onClose={handleClose}>
+        <InfoWindow
+          anchor={markerRef}
+          onClose={() => setSelectedBuilding(null)}
+        >
           <>
             <div className={building.listing?.url ? "pt-2" : ""}>
               <div>
