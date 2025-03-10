@@ -1936,7 +1936,7 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.3.tgz#a73bab8eb491d7b8b7be2f0e6c310647835afe83"
   integrity sha512-2xCRM9q9FlzGZCdgDMJwc0gyUkWFtkosy7Xxr6sFgQwn+wMNIWd7xIvYNauU1r64B5L5rsGKy/n9TKJ0aAFeqQ==
 
-"@googlemaps/markerclusterer@^2.5.1":
+"@googlemaps/markerclusterer@^2.5.3":
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/@googlemaps/markerclusterer/-/markerclusterer-2.5.3.tgz#9f891ce7e8e161775f3a3e2c9f66956810284591"
   integrity sha512-x7lX0R5yYOoiNectr10wLgCBasNcXFHiADIBdmn7jQllF2B5ENQw5XtZK+hIw4xnV0Df0xhN4LN98XqA5jaiOw==
@@ -3155,15 +3155,10 @@ camelcase@^6.2.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.3.0.tgz#5685b95eb209ac9c0c177467778c9c84df58ba9a"
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
-caniuse-lite@^1.0.30001565:
-  version "1.0.30001566"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001566.tgz#61a8e17caf3752e3e426d4239c549ebbb37fef0d"
-  integrity sha512-ggIhCsTxmITBAMmK8yZjEhCO5/47jKXPu6Dha/wuCS4JePVL+3uiDEBuhu2aIoT+bqTOR8L76Ip1ARL9xYsEJA==
-
-caniuse-lite@^1.0.30001669:
-  version "1.0.30001669"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001669.tgz#fda8f1d29a8bfdc42de0c170d7f34a9cf19ed7a3"
-  integrity sha512-DlWzFDJqstqtIVx1zeSpIMLjunf5SmwOw0N2Ck/QSQdS8PLS4+9HrLaYei4w8BIAL7IB/UEDu889d8vhCTPA0w==
+caniuse-lite@^1.0.30001565, caniuse-lite@^1.0.30001669:
+  version "1.0.30001703"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001703.tgz"
+  integrity sha512-kRlAGTRWgPsOj7oARC9m1okJEXdL/8fekFVcxA8Hl7GH4r/sN4OJn/i6Flde373T50KS7Y37oFbMwlE8+F42kQ==
 
 chalk@^2.4.2:
   version "2.4.2"
