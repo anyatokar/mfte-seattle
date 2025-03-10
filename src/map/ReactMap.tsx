@@ -18,7 +18,7 @@ const seattle = {
 };
 const mapBounds = {
   latLngBounds: {
-    north: 47.9,
+    north: 47.75,
     south: 47.4919,
     west: -122.4594,
     east: -122.2244,
@@ -47,7 +47,7 @@ const ReactMap: React.FC<IMap> = ({
             >
               <Map
                 className="map-container"
-                defaultZoom={12.5}
+                defaultZoom={11}
                 defaultCenter={seattle}
                 restriction={mapBounds}
                 mapId={"c8d48b060a22a457"}
