@@ -452,7 +452,9 @@ const Profile: React.FC = () => {
                     )}
                     <Button
                       disabled={isLoading || (isEditing && !isAnyFieldUpdated)}
-                      variant="success"
+                      variant={
+                        isEditing ? "outline-success" : "outline-primary"
+                      }
                       type="submit"
                     >
                       {isEditing ? "Save" : "Update"}
