@@ -46,9 +46,78 @@ const AboutPage: React.FC<IPage> = () => {
               </Col>
               <Col lg={8}>
                 <div className="lead">
-                  Help people find rent-reduced housing in Seattle by featuring
-                  currently available and generally existing units in a
-                  user-friendly and accessible way.
+                  The purpose of this website is to help people find
+                  rent-reduced housing in Seattle by featuring currently
+                  available and generally existing units in a user-friendly and
+                  accessible way.
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="align-items-center pb-3">
+              <Col lg={2} className="text-lg-end">
+                <div className="fs-4">
+                  How to use this website for prospective renters
+                </div>
+              </Col>
+              <Col lg={8}>
+                <div className="lead">
+                  Search and filter apartments that fit your criteria. Create a
+                  free login to keep a short list of properties, view a
+                  personalized map, and add notes. Explore the{" "}
+                  <Link id="all-buildings" to="../all-buildings">
+                    map
+                  </Link>{" "}
+                  to get started.
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="align-items-center pb-3">
+              <Col lg={2} className="text-lg-end">
+                <div className="fs-4">Do I qualify?</div>
+              </Col>
+              <Col lg={8}>
+                <div className="lead">
+                  Your household income must fall within the income limit for
+                  the apartment, which is based on a percentage of the area
+                  median income (% AMI). Each building may have additional
+                  requirements. Reach out to building management for complete
+                  information.
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="align-items-center pb-3">
+              <Col lg={2} className="text-lg-end">
+                <div className="fs-4">How do I apply?</div>
+              </Col>
+              <Col lg={8}>
+                <div className="lead">
+                  Each building manages their own application process so contact
+                  the building directly. The distinction between types of
+                  rent-reduced programs featured on this website (MFTE, IZ, MHA,
+                  and MPC-YT) does not make a difference for the application
+                  process. Many properties use MFTE as a blanket term for
+                  rent-reduced programs.
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="align-items-center pb-3">
+              <Col lg={2} className="text-lg-end">
+                <div className="fs-4">
+                  How to use this website for property managers
+                </div>
+              </Col>
+              <Col lg={8}>
+                <div className="lead">
+                  Create a free manager account to add and update listings for
+                  your buildings. View the{" "}
+                  <Link id="for-managers" to="../for-managers">
+                    property managers
+                  </Link>{" "}
+                  page for complete information.
                 </div>
               </Col>
             </Row>
@@ -81,58 +150,6 @@ const AboutPage: React.FC<IPage> = () => {
                     contact us
                   </Link>{" "}
                   form to suggest it.
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="align-items-center pb-3">
-              <Col lg={2} className="text-lg-end">
-                <div className="fs-4">
-                  How to use this website for prospective renters
-                </div>
-              </Col>
-              <Col lg={8}>
-                <div className="lead">
-                  Search and filter apartments that fit your criteria. Create a
-                  free login to keep a short list of properties, view a
-                  personalized map, and add notes. Explore the{" "}
-                  <Link id="all-buildings" to="../all-buildings">
-                    map
-                  </Link>{" "}
-                  to get started.
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="align-items-center pb-3">
-              <Col lg={2} className="text-lg-end">
-                <div className="fs-4">How do I apply?</div>
-              </Col>
-              <Col lg={8}>
-                <div className="lead">
-                  Each building manages their own application process so contact
-                  the building directly. The distinction between MFTE, IZ, MHA
-                  does not make a difference from the renter's perspective. Many
-                  properties use MFTE as a blanket term for rent-reduced
-                  programs.
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="align-items-center pb-3">
-              <Col lg={2} className="text-lg-end">
-                <div className="fs-4">
-                  How to use this website for property managers
-                </div>
-              </Col>
-              <Col lg={8}>
-                <div className="lead">
-                  Create a free manager account to add and update listings for
-                  your buildings. View the{" "}
-                  <Link id="for-managers" to="../for-managers">
-                    property managers
-                  </Link>{" "}
-                  page for complete information.
                 </div>
               </Col>
             </Row>

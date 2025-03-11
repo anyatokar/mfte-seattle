@@ -13,7 +13,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 const seattle = {
-  lat: 47.608013,
+  lat: 47.62,
   lng: -122.315,
 };
 
@@ -39,7 +39,7 @@ const ReactMap: React.FC<IMap> = ({
             >
               <Map
                 className="map-container"
-                defaultZoom={11}
+                defaultZoom={10.9}
                 defaultCenter={seattle}
                 mapId={"c8d48b060a22a457"}
                 onCameraChanged={(ev: MapCameraChangedEvent) =>

@@ -30,7 +30,8 @@ const ListingAccordion: React.FC = () => {
           </Accordion.Header>
           <Accordion.Body>
             <p>
-              Users can filter the map and buildings list by known availability.
+              Prospective renters can filter the map and buildings list by known
+              availability.
             </p>
             <p>
               In list view, buildings with available units are displayed at the

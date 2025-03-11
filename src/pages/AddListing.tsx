@@ -37,8 +37,8 @@ const AddListingPage: React.FC<IPage> = () => {
           <Col lg={10} xl={8}>
             <div className="display-6 mb-5">For Property Owners & Managers</div>
             <p className="lead">
-              Contribute currently available rent-reduced apartments in your
-              building to reach this website's 3K monthly active users.
+              Add listings for currently available rent-reduced apartments in
+              your building to reach this website's 3K monthly active users.
             </p>
             <ListingAccordion />
           </Col>
