@@ -11,7 +11,6 @@ import { AmiData, PercentAmi } from "../interfaces/IBuilding";
 import { AvailDataArray } from "../interfaces/IListing";
 import { p6maxIncomeData } from "../config/P6-income-limits";
 import { p345maxIncomeData } from "../config/P345-income-limits";
-import { colWidths } from "../config/config";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";

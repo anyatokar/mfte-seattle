@@ -394,8 +394,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             min="0"
                             name="maxRent"
                             value={unitAvailData.maxRent}
-                            onChange={(event) =>
-                              handleInputChange(event, unitAvailData.rowId)
+                            onChange={(e) =>
+                              handleInputChange(e, unitAvailData.rowId)
                             }
                           />
                         </InputGroup>
@@ -411,16 +411,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                         </div>
                       </td>
                       <td style={{ maxWidth: colWidths.aptNum }}>
-                        <InputGroup>
                           <Form.Control
                             type="string"
                             name="aptNum"
                             value={unitAvailData.aptNum}
-                            onChange={(event) =>
-                              handleInputChange(event, unitAvailData.rowId)
+                            onChange={(e) =>
+                              handleInputChange(e, unitAvailData.rowId)
                             }
                           />
-                        </InputGroup>
                       </td>
                       <td style={{ maxWidth: colWidths.dateAvail }}>
                         <Form.Control
