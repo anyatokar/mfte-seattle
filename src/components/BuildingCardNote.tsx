@@ -11,7 +11,7 @@ export interface AllBuildingCardProps {
   currentUserId: string;
 }
 
-const BuildingCard: React.FC<AllBuildingCardProps> = ({
+const BuildingCardNote: React.FC<AllBuildingCardProps> = ({
   buildingID,
   savedHomeData,
   shouldScroll,
@@ -59,4 +59,4 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   );
 };
 
-export default BuildingCard;
+export default BuildingCardNote;

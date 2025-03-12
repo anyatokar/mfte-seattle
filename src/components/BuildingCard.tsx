@@ -19,17 +19,20 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Stack from "react-bootstrap/Stack";
+import Modal from "react-bootstrap/esm/Modal";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
+  isModal?: boolean;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
   building,
   savedHomeData,
   shouldScroll,
+  isModal,
 }) => {
   const { buildingID, buildingName, address, contact, amiData, listing } =
     building;
@@ -49,56 +52,59 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     shouldScroll.current = false;
   }
 
-  return (
-    <Card
-      border={
-        listing?.listingStatus === listingStatusEnum.ACTIVE ? "success" : ""
-      }
-    >
-      <Card.Header>
-        <Card.Title className="mt-2">
-          <div>
-            {buildingName}
-            {listing?.listingStatus === listingStatusEnum.ACTIVE && (
-              <Badge
-                pill
-                bg="warning"
-                text="dark"
-                className="units-avail-badge"
-              >
-                Units available!
-              </Badge>
-            )}
-          </div>
-        </Card.Title>
-        <Card.Subtitle>{address.neighborhood}</Card.Subtitle>
-        <div className="mt-2">
-          {currentUser ? (
-            savedHomeData ? (
-              <Stack direction={"horizontal"} gap={2}>
-                <WebsiteButton building={building} />
-                <SaveButton
-                  isSaved={true}
-                  onClickCallback={handleToggleSaveBuilding}
-                />
-              </Stack>
-            ) : (
-              <Stack direction={"horizontal"} gap={2}>
-                <WebsiteButton building={building} />
-                <SaveButton
-                  isSaved={false}
-                  onClickCallback={handleToggleSaveBuilding}
-                />
-              </Stack>
-            )
+  const header = (
+    <Card.Header>
+      <Card.Title className="mt-2">
+        <div>
+          {buildingName}
+          {listing?.listingStatus === listingStatusEnum.ACTIVE && (
+            <Badge pill bg="warning" text="dark" className="units-avail-badge">
+              Units available!
+            </Badge>
+          )}
+        </div>
+      </Card.Title>
+      <Card.Subtitle>{address.neighborhood}</Card.Subtitle>
+      <div className="mt-2">
+        {currentUser ? (
+          savedHomeData ? (
+            <Stack direction={"horizontal"} gap={2}>
+              <WebsiteButton building={building} />
+              <SaveButton
+                isSaved={true}
+                onClickCallback={handleToggleSaveBuilding}
+              />
+            </Stack>
           ) : (
             <Stack direction={"horizontal"} gap={2}>
               <WebsiteButton building={building} />
-              <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
+              <SaveButton
+                isSaved={false}
+                onClickCallback={handleToggleSaveBuilding}
+              />
             </Stack>
-          )}
-        </div>
-      </Card.Header>
+          )
+        ) : (
+          <Stack direction={"horizontal"} gap={2}>
+            <WebsiteButton building={building} />
+            <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
+          </Stack>
+        )}
+      </div>
+    </Card.Header>
+  );
+
+  const showHeader = false;
+
+  return (
+    <Card
+      border={
+        listing?.listingStatus === listingStatusEnum.ACTIVE && showHeader
+          ? "success"
+          : ""
+      }
+    >
+      {showHeader ? header : null}
 
       <ListGroup variant="flush" className="mb-2">
         {!listing ||

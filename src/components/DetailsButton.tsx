@@ -30,7 +30,7 @@ const DetailsButton: React.FC<DetailsButtonProps> = ({
         variant="outline-dark"
         onClick={() => setShowModal(true)}
       >
-        Details
+        Full Details
       </Button>
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton />

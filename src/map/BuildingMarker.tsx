@@ -21,6 +21,7 @@ import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import Stack from "react-bootstrap/Stack";
 import { MarkersObj } from "./AllMarkers";
+import BuildingCard from "../components/BuildingCard";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -83,6 +84,36 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                 <strong>{buildingName}</strong>
               </div>
               <div>{address.neighborhood}</div>
+
+              <div className="mt-2">
+                {currentUser ? (
+                  savedHomeData ? (
+                    <Stack direction={"horizontal"} gap={2}>
+                      <WebsiteButton building={building} />
+                      <SaveButton
+                        isSaved={true}
+                        onClickCallback={handleToggleSaveBuilding}
+                      />
+                    </Stack>
+                  ) : (
+                    <Stack direction={"horizontal"} gap={2}>
+                      <WebsiteButton building={building} />
+                      <SaveButton
+                        isSaved={false}
+                        onClickCallback={handleToggleSaveBuilding}
+                      />
+                    </Stack>
+                  )
+                ) : (
+                  <Stack direction={"horizontal"} gap={2}>
+                    <WebsiteButton building={building} />
+                    <SaveButton
+                      isSaved={false}
+                      onClickCallback={handleShowLogin}
+                    />
+                  </Stack>
+                )}
+              </div>
             </>
           }
           anchor={marker}
@@ -90,57 +121,11 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
         >
           <>
             <div className={building.listing?.url ? "pt-2" : ""}>
-              <div className="my-2">
-                <AddressAndPhone
-                  buildingName={buildingName}
-                  address={address}
-                  contact={contact}
-                  withLinks={true}
-                />
-              </div>
-
-              {currentUser ? (
-                savedHomeData ? (
-                  <Stack direction={"horizontal"} gap={2}>
-                    <DetailsButton
-                      building={building}
-                      savedHomeData={savedHomeData}
-                      shouldScroll={shouldScroll}
-                    />
-                    <WebsiteButton building={building} />
-                    <SaveButton
-                      isSaved={true}
-                      onClickCallback={handleToggleSaveBuilding}
-                    />
-                  </Stack>
-                ) : (
-                  <Stack direction={"horizontal"} gap={2}>
-                    <DetailsButton
-                      building={building}
-                      savedHomeData={savedHomeData}
-                      shouldScroll={shouldScroll}
-                    />
-                    <WebsiteButton building={building} />
-                    <SaveButton
-                      isSaved={false}
-                      onClickCallback={handleToggleSaveBuilding}
-                    />
-                  </Stack>
-                )
-              ) : (
-                <Stack direction={"horizontal"} gap={2}>
-                  <DetailsButton
-                    building={building}
-                    savedHomeData={savedHomeData}
-                    shouldScroll={shouldScroll}
-                  />
-                  <WebsiteButton building={building} />
-                  <SaveButton
-                    isSaved={false}
-                    onClickCallback={handleShowLogin}
-                  />
-                </Stack>
-              )}
+              <BuildingCard
+                building={building}
+                savedHomeData={savedHomeData}
+                shouldScroll={shouldScroll}
+              />
             </div>
           </>
         </InfoWindow>
