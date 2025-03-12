@@ -11,6 +11,7 @@ import { AmiData, PercentAmi } from "../interfaces/IBuilding";
 import { AvailDataArray } from "../interfaces/IListing";
 import { p6maxIncomeData } from "../config/P6-income-limits";
 import { p345maxIncomeData } from "../config/P345-income-limits";
+import { colWidths } from "../config/config";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -101,6 +102,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             <th style={{ minWidth: "100px" }}>% AMI</th>
             {/* TODO: Rent including utilities? */}
             {type === tableType.availData && <th>Rent</th>}
+            {type === tableType.availData && <th>Apt #</th>}
             {type === tableType.availData && <th>Move-in Date</th>}
           </tr>
         </thead>
@@ -120,15 +122,15 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             })}
           {type === tableType.availData &&
             data.map((unitAvailData) => {
-              const { dateAvailString, maxRent, percentAmi, rowId, unitSize } =
+              const { dateAvailString, maxRent, percentAmi, rowId, unitSize, aptNum } =
                 unitAvailData;
 
               return rowId && unitSize ? (
                 <tr key={rowId}>
-                  <td style={{ minWidth: "65px" }}>
+                  <td style={{ minWidth: colWidths.unitSize }}>
                     {unitSizeLabelEnum[unitSize]}
                   </td>
-                  <td style={{ minWidth: "60px" }}>
+                  <td style={{ minWidth: colWidths.percentAmi }}>
                     {percentAmi ? (
                       <>
                         {percentAmi}
@@ -147,6 +149,9 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                     )}
                   </td>
                   <td>{formatCurrency(maxRent)}</td>
+                  <td>
+                    {aptNum ? aptNum : "--"}
+                  </td>
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
                   </td>

@@ -13,6 +13,7 @@ import {
 import { formatCurrency, getMaxExpiryDate } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+import { colWidths } from "../config/config";
 
 import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
@@ -70,6 +71,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     percentAmi: undefined,
     maxRent: "",
     rowId: `${Date.now()}`,
+    aptNum: "",
   };
 
   const originalFormFields: Partial<IListing> = {
@@ -321,18 +323,17 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               <Table bordered hover responsive size="sm" className="mt-0">
                 <thead>
                   <tr>
-                    <th style={{ minWidth: "100px" }}>Size</th>
-                    <th style={{ minWidth: "100px" }}>% AMI</th>
-                    <th style={{ minWidth: "150px" }}>Rent</th>
-
-                    <th style={{ minWidth: "150px" }}>
+                    <th style={{ minWidth: colWidths.unitSize }}>Size</th>
+                    <th style={{ minWidth: colWidths.percentAmi }}>% AMI</th>
+                    <th style={{ minWidth: colWidths.rent }}>Rent</th>
+                    <th style={{ minWidth: colWidths.aptNum }}>Apt #</th>
+                    <th style={{ minWidth: colWidths.dateAvail }}>
                       <TooltipWrapper
                         label="Move-in Date"
-                        overlay="Earliest date if multiple units available."
+                        overlay="Earliest date if multiple units available"
                         placement="top"
                       />
                     </th>
-
                     <th>Delete Row</th>
                   </tr>
                 </thead>
@@ -386,7 +387,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           ))}
                         </Form.Select>
                       </td>
-                      <td style={{ maxWidth: "100px" }}>
+                      <td style={{ maxWidth: colWidths.rent }}>
                         <InputGroup>
                           <InputGroup.Text>$</InputGroup.Text>
                           <Form.Control
@@ -411,7 +412,19 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           </Form.Text>
                         </div>
                       </td>
-                      <td style={{ maxWidth: "100px" }}>
+                      <td style={{ maxWidth: colWidths.aptNum }}>
+                        <InputGroup>
+                          <Form.Control
+                            type="string"
+                            name="aptNum"
+                            value={unitAvailData.aptNum}
+                            onChange={(event) =>
+                              handleInputChange(event, unitAvailData.rowId)
+                            }
+                          />
+                        </InputGroup>
+                      </td>
+                      <td style={{ maxWidth: colWidths.dateAvail }}>
                         <Form.Control
                           required
                           type="date"
@@ -422,12 +435,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           }
                         />
                       </td>
-
                       <td className="text-center">
                         <Button
                           variant="outline-danger"
                           size="sm"
                           onClick={() => handleDeleteRow(unitAvailData.rowId)}
+                          disabled={formFields.availDataArray ? formFields.availDataArray.length <= 1 : true}
                         >
                           Delete
                         </Button>
