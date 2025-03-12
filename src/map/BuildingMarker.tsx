@@ -13,8 +13,9 @@ import { Marker } from "@googlemaps/markerclusterer";
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
 
 import { AddressAndPhone } from "../components/AddressAndPhone";
-import WebsiteButton from "../components/WebsiteButton";
+import DetailsButton from "../components/DetailsButton";
 import SaveButton from "../components/SaveButton";
+import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
@@ -101,6 +102,11 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
               {currentUser ? (
                 savedHomeData ? (
                   <Stack direction={"horizontal"} gap={2}>
+                    <DetailsButton
+                      building={building}
+                      savedHomeData={savedHomeData}
+                      shouldScroll={shouldScroll}
+                    />
                     <WebsiteButton building={building} />
                     <SaveButton
                       isSaved={true}
@@ -109,6 +115,11 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                   </Stack>
                 ) : (
                   <Stack direction={"horizontal"} gap={2}>
+                    <DetailsButton
+                      building={building}
+                      savedHomeData={savedHomeData}
+                      shouldScroll={shouldScroll}
+                    />
                     <WebsiteButton building={building} />
                     <SaveButton
                       isSaved={false}
@@ -118,6 +129,11 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                 )
               ) : (
                 <Stack direction={"horizontal"} gap={2}>
+                  <DetailsButton
+                    building={building}
+                    savedHomeData={savedHomeData}
+                    shouldScroll={shouldScroll}
+                  />
                   <WebsiteButton building={building} />
                   <SaveButton
                     isSaved={false}
