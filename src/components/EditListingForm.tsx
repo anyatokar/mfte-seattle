@@ -160,10 +160,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         setSelectedBuilding(selectedBuilding || undefined);
       }
 
+      const update = rowId
+        ? { availDataArray: newAvailData }
+        : { [name]: value };
+
       return {
         ...prev,
-        [name]: value,
-        availDataArray: newAvailData,
+        ...update,
       };
     });
   };
@@ -411,14 +414,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                         </div>
                       </td>
                       <td style={{ maxWidth: colWidths.aptNum }}>
-                          <Form.Control
-                            type="string"
-                            name="aptNum"
-                            value={unitAvailData.aptNum}
-                            onChange={(e) =>
-                              handleInputChange(e, unitAvailData.rowId)
-                            }
-                          />
+                        <Form.Control
+                          type="string"
+                          name="aptNum"
+                          value={unitAvailData.aptNum}
+                          onChange={(e) =>
+                            handleInputChange(e, unitAvailData.rowId)
+                          }
+                        />
                       </td>
                       <td style={{ maxWidth: colWidths.dateAvail }}>
                         <Form.Control
