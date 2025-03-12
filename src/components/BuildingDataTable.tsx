@@ -97,11 +97,13 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       <Table bordered hover size="sm" className="my-0" responsive>
         <thead>
           <tr>
-            <th>Size</th>
-            <th>% AMI</th>
+            <th style={{ minWidth: "65px" }}>Size</th>
+            <th style={{ minWidth: "60px" }}>% AMI</th>
             {/* TODO: Rent including utilities? */}
             {type === tableType.availData && <th>Rent</th>}
-            {type === tableType.availData && <th>Apt #</th>}
+            {type === tableType.availData && (
+              <th style={{ minWidth: "60px" }}>Apt #</th>
+            )}
             {type === tableType.availData && <th>Move-in Date</th>}
           </tr>
         </thead>

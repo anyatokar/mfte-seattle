@@ -415,6 +415,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       </td>
                       <td style={{ maxWidth: colWidths.aptNum }}>
                         <Form.Control
+                          required
                           type="string"
                           name="aptNum"
                           value={unitAvailData.aptNum}
