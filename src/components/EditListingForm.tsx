@@ -19,7 +19,6 @@ import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
 
 import { AddressAndPhone } from "./AddressAndPhone";
-import TooltipWrapper from "./TooltipWrapper";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing, { UnitAvailData } from "../interfaces/IListing";
