@@ -14,7 +14,7 @@ export type UnitAvailData = {
   maxRent: string | number;
   percentAmi: PercentAmi | undefined;
   rowId: string;
-  aptNum: string
+  aptNum: string;
 };
 
 export type AvailDataArray = UnitAvailData[];

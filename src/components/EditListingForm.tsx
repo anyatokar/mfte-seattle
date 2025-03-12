@@ -319,8 +319,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           {/* Table */}
           <Row className="mb-3">
             <Col className="mb-0">
-              <Form.Label className="fw-bold">MFTE availability:</Form.Label>
-              <Table bordered hover responsive size="sm" className="mt-0">
+              <Form.Label className="fw-bold mb-0">Available units:</Form.Label>
+              <div>
+                <Form.Text>List all available rent reduced units.</Form.Text>
+              </div>
+              <Table bordered hover responsive size="sm">
                 <thead>
                   <tr>
                     <th style={{ minWidth: colWidths.unitSize }}>Size</th>
@@ -328,11 +331,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                     <th style={{ minWidth: colWidths.rent }}>Rent</th>
                     <th style={{ minWidth: colWidths.aptNum }}>Apt #</th>
                     <th style={{ minWidth: colWidths.dateAvail }}>
-                      <TooltipWrapper
-                        label="Move-in Date"
-                        overlay="Earliest date if multiple units available"
-                        placement="top"
-                      />
+                      Move-in Date
                     </th>
                     <th>Delete Row</th>
                   </tr>
@@ -440,7 +439,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           variant="outline-danger"
                           size="sm"
                           onClick={() => handleDeleteRow(unitAvailData.rowId)}
-                          disabled={formFields.availDataArray ? formFields.availDataArray.length <= 1 : true}
+                          disabled={
+                            formFields.availDataArray
+                              ? formFields.availDataArray.length <= 1
+                              : true
+                          }
                         >
                           Delete
                         </Button>
@@ -533,7 +536,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               />
               <Form.Text>
                 Optional. Will not be shared publicly. Feedback can include data
-                corrections, suggestions on form improvement, user experience,
+                corrections, suggestions for form improvement, user experience,
                 etc. Thank you!
               </Form.Text>
             </Col>

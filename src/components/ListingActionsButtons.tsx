@@ -114,7 +114,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
           <Row>
             <Col>
               <Button variant="success" onClick={onAddClick}>
-                Add Listing
+                Add Building
               </Button>
             </Col>
           </Row>
