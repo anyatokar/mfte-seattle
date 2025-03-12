@@ -111,12 +111,12 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
             <FilterSwitch
               onCheckboxChange={handleAvailOnlyToggle}
               type="knownOnly"
-              isChecked={!!activeFilters.isAvailOnly}
+              isChecked={activeFilters.isAvailOnly}
             />
             <FilterSwitch
               onCheckboxChange={handleSavedOnlyToggle}
               type="savedOnly"
-              isChecked={!!activeFilters.isSavedOnly}
+              isChecked={activeFilters.isSavedOnly}
             />
           </Stack>
         </Col>
@@ -147,12 +147,12 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
             <FilterSwitch
               onCheckboxChange={handleAvailOnlyToggle}
               type="knownOnly"
-              isChecked={!!activeFilters.isAvailOnly}
+              isChecked={activeFilters.isAvailOnly}
             />
             <FilterSwitch
               onCheckboxChange={handleSavedOnlyToggle}
               type="savedOnly"
-              isChecked={!!activeFilters.isSavedOnly}
+              isChecked={activeFilters.isSavedOnly}
             />
           </Stack>
         </Col>
