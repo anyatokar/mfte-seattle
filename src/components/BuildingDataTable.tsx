@@ -98,9 +98,10 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         <thead>
           <tr>
             <th>Size</th>
-            <th style={{ minWidth: "100px" }}>% AMI</th>
+            <th>% AMI</th>
             {/* TODO: Rent including utilities? */}
             {type === tableType.availData && <th>Rent</th>}
+            {type === tableType.availData && <th>Apt #</th>}
             {type === tableType.availData && <th>Move-in Date</th>}
           </tr>
         </thead>
@@ -120,15 +121,19 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             })}
           {type === tableType.availData &&
             data.map((unitAvailData) => {
-              const { dateAvailString, maxRent, percentAmi, rowId, unitSize } =
-                unitAvailData;
+              const {
+                dateAvailString,
+                maxRent,
+                percentAmi,
+                rowId,
+                unitSize,
+                aptNum,
+              } = unitAvailData;
 
               return rowId && unitSize ? (
                 <tr key={rowId}>
-                  <td style={{ minWidth: "65px" }}>
-                    {unitSizeLabelEnum[unitSize]}
-                  </td>
-                  <td style={{ minWidth: "60px" }}>
+                  <td>{unitSizeLabelEnum[unitSize]}</td>
+                  <td>
                     {percentAmi ? (
                       <>
                         {percentAmi}
@@ -147,6 +152,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                     )}
                   </td>
                   <td>{formatCurrency(maxRent)}</td>
+                  <td>{aptNum ? aptNum : "--"}</td>
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
                   </td>
