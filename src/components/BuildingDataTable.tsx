@@ -99,7 +99,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         <thead>
           <tr>
             <th>Size</th>
-            <th style={{ minWidth: "100px" }}>% AMI</th>
+            <th>% AMI</th>
             {/* TODO: Rent including utilities? */}
             {type === tableType.availData && <th>Rent</th>}
             {type === tableType.availData && <th>Apt #</th>}
@@ -133,10 +133,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
               return rowId && unitSize ? (
                 <tr key={rowId}>
-                  <td style={{ minWidth: colWidths.unitSize }}>
-                    {unitSizeLabelEnum[unitSize]}
-                  </td>
-                  <td style={{ minWidth: colWidths.percentAmi }}>
+                  <td>{unitSizeLabelEnum[unitSize]}</td>
+                  <td>
                     {percentAmi ? (
                       <>
                         {percentAmi}
