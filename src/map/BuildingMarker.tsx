@@ -11,17 +11,17 @@ import {
 import { Marker } from "@googlemaps/markerclusterer";
 
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
+import { tableType } from "../types/enumTypes";
 
 import { AddressAndPhone } from "../components/AddressAndPhone";
-import DetailsButton from "../components/DetailsButton";
+import BuildingDataTable from "../components/BuildingDataTable";
+import { MarkersObj } from "./AllMarkers";
 import SaveButton from "../components/SaveButton";
 import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import Stack from "react-bootstrap/Stack";
-import { MarkersObj } from "./AllMarkers";
-import BuildingCard from "../components/BuildingCard";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -78,6 +78,8 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
 
       {isSelected && (
         <InfoWindow
+          anchor={marker}
+          onCloseClick={clearSelection}
           headerContent={
             <>
               <div>
@@ -114,20 +116,26 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                   </Stack>
                 )}
               </div>
+
+              <div className="my-2">
+                <AddressAndPhone
+                  buildingName={buildingName}
+                  address={address}
+                  contact={contact}
+                  withLinks={true}
+                />
+              </div>
             </>
           }
-          anchor={marker}
-          onCloseClick={clearSelection}
         >
-          <>
-            <div className={building.listing?.url ? "pt-2" : ""}>
-              <BuildingCard
-                building={building}
-                savedHomeData={savedHomeData}
-                shouldScroll={shouldScroll}
-              />
-            </div>
-          </>
+          {building.listing && (
+            <BuildingDataTable
+              type={tableType.availData}
+              program={building.listing.program}
+              data={building.listing.availDataArray}
+              isMarker={true}
+            />
+          )}
         </InfoWindow>
       )}
     </AdvancedMarker>

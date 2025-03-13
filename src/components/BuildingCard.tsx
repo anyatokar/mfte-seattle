@@ -19,20 +19,17 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Stack from "react-bootstrap/Stack";
-import Modal from "react-bootstrap/esm/Modal";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
-  isModal?: boolean;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
   building,
   savedHomeData,
   shouldScroll,
-  isModal,
 }) => {
   const { buildingID, buildingName, address, contact, amiData, listing } =
     building;
@@ -130,6 +127,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                     type={tableType.availData}
                     data={listing.availDataArray}
                     program={listing.program}
+                    isMarker={false}
                   />
                   {listing.description && (
                     <Card.Text className="mt-2">
@@ -151,7 +149,11 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             </Tab>
             {amiData && (
               <Tab eventKey="details" title="Details" className="mt-2">
-                <BuildingDataTable type={tableType.amiData} data={amiData} />
+                <BuildingDataTable
+                  type={tableType.amiData}
+                  data={amiData}
+                  isMarker={false}
+                />
               </Tab>
             )}
           </Tabs>

@@ -19,18 +19,20 @@ import Table from "react-bootstrap/Table";
 interface AmiDataProps {
   type: tableType.amiData;
   data: AmiData;
+  isMarker: boolean;
 }
 
 interface AvailDataProps {
   type: tableType.availData;
   data: AvailDataArray;
   program: ProgramKeyEnum | undefined;
+  isMarker: boolean;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 
 const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
-  const { type, data } = props;
+  const { type, data, isMarker } = props;
 
   const [showModal, setShowModal] = useState(false);
   const [percentAmi, setPercentAmi] = useState<PercentAmi | null>(null);
@@ -97,14 +99,18 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       <Table bordered hover size="sm" className="my-0" responsive>
         <thead>
           <tr>
-            <th style={{ minWidth: "65px" }}>Size</th>
-            <th style={{ minWidth: "60px" }}>% AMI</th>
+            <th style={isMarker ? { minWidth: "50px" } : { minWidth: "65px" }}>
+              Size
+            </th>
+            <th style={{ whiteSpace: "nowrap" }}>% AMI</th>
             {/* TODO: Rent including utilities? */}
             {type === tableType.availData && <th>Rent</th>}
             {type === tableType.availData && (
-              <th style={{ minWidth: "60px" }}>Apt #</th>
+              <th style={{ whiteSpace: "nowrap" }}>Apt #</th>
             )}
-            {type === tableType.availData && <th>Move-in Date</th>}
+            {type === tableType.availData && (
+              <th style={{ whiteSpace: "nowrap" }}>Move-in Date</th>
+            )}
           </tr>
         </thead>
         <tbody>
