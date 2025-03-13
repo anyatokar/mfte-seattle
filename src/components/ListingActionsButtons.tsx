@@ -13,7 +13,6 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { getMaxExpiryDate } from "../utils/generalUtils";
 import { useState } from "react";
 import AreYouSureModal from "./AreYouSureModal";
 import Row from "react-bootstrap/Row";
@@ -56,14 +55,6 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   const onCancelClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     toggleFormCallback(listing.listingID, false);
-  };
-
-  const onRenewClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    updateListingFirestore(
-      { expiryDate: getMaxExpiryDate() },
-      listing.listingID
-    );
   };
 
   const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -134,11 +125,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
           )}
 
           <Dropdown.Item eventKey="edit" onClick={onEditClick}>
-            Edit
-          </Dropdown.Item>
-
-          <Dropdown.Item eventKey="renew" onClick={onRenewClick}>
-            Renew
+            Edit / Renew
           </Dropdown.Item>
 
           <Dropdown.Divider />
