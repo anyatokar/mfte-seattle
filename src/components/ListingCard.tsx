@@ -195,6 +195,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 type={tableType.availData}
                 data={availDataArray}
                 program={program}
+                isMarker={false}
               />
               <Card.Text className="mt-3">
                 <strong>URL:</strong>{" "}
