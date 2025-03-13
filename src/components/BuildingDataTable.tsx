@@ -55,7 +55,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         return ProgramLabelEnum[ProgramKeyEnum.P6];
       } else {
         // TODO: Remove when there is no more unknown program types in listings.
-        return "Program is unknown therefore both limits are listed.";
+        return "Unknown therefore both annual income limits are listed.";
       }
     }
   }
@@ -177,8 +177,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
           </Modal.Header>
           <Modal.Body>
             <p>
-              Income limits are determined by % AMI, household size, and program
-              type.
+              Determined by percent area median income (% AMI), household size,
+              and program type.
               <br />
               <strong>% AMI: </strong>
               {percentAmi}
@@ -194,7 +194,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                   <th>{props.program ? "Max Annual Income" : "MFTE P6"}</th>
                   {!props.program && (
                     <th>
-                      Other developer agreements (includes MFTE P3-5, IZ, MHA)
+                      Other developer agreements (includes MFTE P3-5, IZ, MHA,
+                      MPC-YT)
                     </th>
                   )}
                 </tr>
