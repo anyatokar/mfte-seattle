@@ -323,7 +323,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Col className="mb-0">
               <Form.Label className="fw-bold mb-0">Available units:</Form.Label>
               <div>
-                <Form.Text>List all available rent reduced units.</Form.Text>
+                <Form.Text>List all available rent-reduced units.</Form.Text>
               </div>
               <Table bordered hover responsive size="sm">
                 <thead>
