@@ -91,18 +91,13 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     </Card.Header>
   );
 
-  const showHeader = false;
-
   return (
     <Card
       border={
-        listing?.listingStatus === listingStatusEnum.ACTIVE && showHeader
-          ? "success"
-          : ""
+        listing?.listingStatus === listingStatusEnum.ACTIVE ? "success" : ""
       }
     >
       {header}
-
       <ListGroup variant="flush" className="mb-2">
         {!listing ||
           (listing.listingStatus !== listingStatusEnum.ACTIVE && (
