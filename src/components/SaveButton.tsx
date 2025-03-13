@@ -13,6 +13,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({
     <Button
       variant={isSaved ? "dark" : "outline-dark"}
       size="sm"
+      id="save-button"
       onClick={onClickCallback}
     >
       {isSaved ? "Saved" : "Save"}

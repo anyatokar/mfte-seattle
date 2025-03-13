@@ -11,15 +11,17 @@ import {
 import { Marker } from "@googlemaps/markerclusterer";
 
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
+import { tableType } from "../types/enumTypes";
 
 import { AddressAndPhone } from "../components/AddressAndPhone";
-import WebsiteButton from "../components/WebsiteButton";
+import BuildingDataTable from "../components/BuildingDataTable";
+import { MarkersObj } from "./AllMarkers";
 import SaveButton from "../components/SaveButton";
+import WebsiteButton from "../components/WebsiteButton";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
 import Stack from "react-bootstrap/Stack";
-import { MarkersObj } from "./AllMarkers";
 
 interface IBuildingMarkerProps {
   building: IBuilding;
@@ -76,19 +78,43 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
 
       {isSelected && (
         <InfoWindow
-          headerContent={
-            <>
-              <div>
-                <strong>{buildingName}</strong>
-              </div>
-              <div>{address.neighborhood}</div>
-            </>
-          }
           anchor={marker}
           onCloseClick={clearSelection}
-        >
-          <>
-            <div className={building.listing?.url ? "pt-2" : ""}>
+          headerContent={
+            <>
+              <h6 className="mb-0">{buildingName}</h6>
+              <div>{address.neighborhood}</div>
+
+              <div className="mt-2">
+                {currentUser ? (
+                  savedHomeData ? (
+                    <Stack direction={"horizontal"} gap={2}>
+                      <WebsiteButton building={building} />
+                      <SaveButton
+                        isSaved={true}
+                        onClickCallback={handleToggleSaveBuilding}
+                      />
+                    </Stack>
+                  ) : (
+                    <Stack direction={"horizontal"} gap={2}>
+                      <WebsiteButton building={building} />
+                      <SaveButton
+                        isSaved={false}
+                        onClickCallback={handleToggleSaveBuilding}
+                      />
+                    </Stack>
+                  )
+                ) : (
+                  <Stack direction={"horizontal"} gap={2}>
+                    <WebsiteButton building={building} />
+                    <SaveButton
+                      isSaved={false}
+                      onClickCallback={handleShowLogin}
+                    />
+                  </Stack>
+                )}
+              </div>
+
               <div className="my-2">
                 <AddressAndPhone
                   buildingName={buildingName}
@@ -97,36 +123,17 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                   withLinks={true}
                 />
               </div>
-
-              {currentUser ? (
-                savedHomeData ? (
-                  <Stack direction={"horizontal"} gap={2}>
-                    <WebsiteButton building={building} />
-                    <SaveButton
-                      isSaved={true}
-                      onClickCallback={handleToggleSaveBuilding}
-                    />
-                  </Stack>
-                ) : (
-                  <Stack direction={"horizontal"} gap={2}>
-                    <WebsiteButton building={building} />
-                    <SaveButton
-                      isSaved={false}
-                      onClickCallback={handleToggleSaveBuilding}
-                    />
-                  </Stack>
-                )
-              ) : (
-                <Stack direction={"horizontal"} gap={2}>
-                  <WebsiteButton building={building} />
-                  <SaveButton
-                    isSaved={false}
-                    onClickCallback={handleShowLogin}
-                  />
-                </Stack>
-              )}
-            </div>
-          </>
+            </>
+          }
+        >
+          {building.listing && (
+            <BuildingDataTable
+              type={tableType.availData}
+              program={building.listing.program}
+              data={building.listing.availDataArray}
+              isMarker={true}
+            />
+          )}
         </InfoWindow>
       )}
     </AdvancedMarker>

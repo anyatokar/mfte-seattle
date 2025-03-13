@@ -49,57 +49,55 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     shouldScroll.current = false;
   }
 
+  const header = (
+    <Card.Header>
+      <Card.Title className="mt-2">
+        <div>
+          {buildingName}
+          {listing?.listingStatus === listingStatusEnum.ACTIVE && (
+            <Badge pill bg="warning" text="dark" className="units-avail-badge">
+              Units available!
+            </Badge>
+          )}
+        </div>
+      </Card.Title>
+      <Card.Subtitle>{address.neighborhood}</Card.Subtitle>
+      <div className="mt-2">
+        {currentUser ? (
+          savedHomeData ? (
+            <Stack direction={"horizontal"} gap={2}>
+              <WebsiteButton building={building} />
+              <SaveButton
+                isSaved={true}
+                onClickCallback={handleToggleSaveBuilding}
+              />
+            </Stack>
+          ) : (
+            <Stack direction={"horizontal"} gap={2}>
+              <WebsiteButton building={building} />
+              <SaveButton
+                isSaved={false}
+                onClickCallback={handleToggleSaveBuilding}
+              />
+            </Stack>
+          )
+        ) : (
+          <Stack direction={"horizontal"} gap={2}>
+            <WebsiteButton building={building} />
+            <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
+          </Stack>
+        )}
+      </div>
+    </Card.Header>
+  );
+
   return (
     <Card
       border={
         listing?.listingStatus === listingStatusEnum.ACTIVE ? "success" : ""
       }
     >
-      <Card.Header>
-        <Card.Title className="mt-2">
-          <div>
-            {buildingName}
-            {listing?.listingStatus === listingStatusEnum.ACTIVE && (
-              <Badge
-                pill
-                bg="warning"
-                text="dark"
-                className="units-avail-badge"
-              >
-                Units available!
-              </Badge>
-            )}
-          </div>
-        </Card.Title>
-        <Card.Subtitle>{address.neighborhood}</Card.Subtitle>
-        <div className="mt-2">
-          {currentUser ? (
-            savedHomeData ? (
-              <Stack direction={"horizontal"} gap={2}>
-                <WebsiteButton building={building} />
-                <SaveButton
-                  isSaved={true}
-                  onClickCallback={handleToggleSaveBuilding}
-                />
-              </Stack>
-            ) : (
-              <Stack direction={"horizontal"} gap={2}>
-                <WebsiteButton building={building} />
-                <SaveButton
-                  isSaved={false}
-                  onClickCallback={handleToggleSaveBuilding}
-                />
-              </Stack>
-            )
-          ) : (
-            <Stack direction={"horizontal"} gap={2}>
-              <WebsiteButton building={building} />
-              <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
-            </Stack>
-          )}
-        </div>
-      </Card.Header>
-
+      {header}
       <ListGroup variant="flush" className="mb-2">
         {!listing ||
           (listing.listingStatus !== listingStatusEnum.ACTIVE && (
@@ -124,6 +122,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                     type={tableType.availData}
                     data={listing.availDataArray}
                     program={listing.program}
+                    isMarker={false}
                   />
                   {listing.description && (
                     <Card.Text className="mt-2">
@@ -145,7 +144,11 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             </Tab>
             {amiData && (
               <Tab eventKey="details" title="Details" className="mt-2">
-                <BuildingDataTable type={tableType.amiData} data={amiData} />
+                <BuildingDataTable
+                  type={tableType.amiData}
+                  data={amiData}
+                  isMarker={false}
+                />
               </Tab>
             )}
           </Tabs>
