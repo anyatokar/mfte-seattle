@@ -104,7 +104,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             </th>
             <th style={{ whiteSpace: "nowrap" }}>% AMI</th>
             {type === tableType.availData && (
-              <th style={{ whiteSpace: "nowrap" }}>Max Income</th>
+              <th style={{ whiteSpace: "nowrap" }}>Income</th>
             )}
             {/* TODO: Rent including utilities? */}
             {type === tableType.availData && <th>Rent</th>}
@@ -153,7 +153,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                         className="p-0 m-0"
                         onClick={() => handleShowModal(percentAmi)}
                       >
-                        View
+                        Max
                       </Button>
                     ) : (
                       "--"
