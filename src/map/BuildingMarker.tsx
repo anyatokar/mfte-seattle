@@ -82,9 +82,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
           onCloseClick={clearSelection}
           headerContent={
             <>
-              <div>
-                <strong>{buildingName}</strong>
-              </div>
+              <h6 className="mb-0">{buildingName}</h6>
               <div>{address.neighborhood}</div>
 
               <div className="mt-2">

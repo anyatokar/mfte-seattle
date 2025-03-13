@@ -55,7 +55,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         return ProgramLabelEnum[ProgramKeyEnum.P6];
       } else {
         // TODO: Remove when there is no more unknown program types in listings.
-        return "Exact program is unknown therefore both limits are listed.";
+        return "Program is unknown therefore both limits are listed.";
       }
     }
   }
@@ -103,6 +103,9 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               Size
             </th>
             <th style={{ whiteSpace: "nowrap" }}>% AMI</th>
+            {type === tableType.availData && (
+              <th style={{ whiteSpace: "nowrap" }}>Max Income</th>
+            )}
             {/* TODO: Rent including utilities? */}
             {type === tableType.availData && <th>Rent</th>}
             {type === tableType.availData && (
@@ -141,20 +144,17 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               return rowId && unitSize ? (
                 <tr key={rowId}>
                   <td>{unitSizeLabelEnum[unitSize]}</td>
-                  <td>
+                  <td>{percentAmi ?? "--"}</td>
+                  <td className={percentAmi ? "py-0" : ""}>
                     {percentAmi ? (
-                      <>
-                        {percentAmi}
-                        <br />
-                        <Button
-                          size="sm"
-                          variant="link"
-                          className="p-0 m-0"
-                          onClick={() => handleShowModal(percentAmi)}
-                        >
-                          Max Income
-                        </Button>
-                      </>
+                      <Button
+                        size="sm"
+                        variant="link"
+                        className="p-0 m-0"
+                        onClick={() => handleShowModal(percentAmi)}
+                      >
+                        View
+                      </Button>
                     ) : (
                       "--"
                     )}

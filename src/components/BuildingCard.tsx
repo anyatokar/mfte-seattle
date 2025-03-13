@@ -101,7 +101,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
           : ""
       }
     >
-      {showHeader ? header : null}
+      {header}
 
       <ListGroup variant="flush" className="mb-2">
         {!listing ||
