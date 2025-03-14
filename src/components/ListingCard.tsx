@@ -2,7 +2,7 @@ import BuildingDataTable from "./BuildingDataTable";
 import {
   expiryBadgeEnum,
   listingStatusEnum,
-  tableType,
+  TableTypeEnum,
 } from "../types/enumTypes";
 import ListingActionsButtons from "./ListingActionsButtons";
 import IListing from "../interfaces/IListing";
@@ -192,7 +192,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
               as={Col}
             >
               <BuildingDataTable
-                type={tableType.availData}
+                type={TableTypeEnum.availData}
                 data={availDataArray}
                 program={program}
                 isMarker={false}

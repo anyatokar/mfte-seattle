@@ -1,5 +1,5 @@
 import { useContext, MutableRefObject } from "react";
-import { listingStatusEnum, tableType } from "../types/enumTypes";
+import { listingStatusEnum, TableTypeEnum } from "../types/enumTypes";
 import { deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -119,7 +119,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
               listing?.availDataArray && (
                 <Tab eventKey="available" title="Available" className="mt-2">
                   <BuildingDataTable
-                    type={tableType.availData}
+                    type={TableTypeEnum.availData}
                     data={listing.availDataArray}
                     program={listing.program}
                     isMarker={false}
@@ -145,7 +145,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             {amiData && (
               <Tab eventKey="details" title="Details" className="mt-2">
                 <BuildingDataTable
-                  type={tableType.amiData}
+                  type={TableTypeEnum.amiData}
                   data={amiData}
                   isMarker={false}
                 />

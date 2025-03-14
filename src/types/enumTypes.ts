@@ -1,4 +1,4 @@
-export enum tableType {
+export enum TableTypeEnum {
   amiData = "amiData",
   availData = "availData",
 }
