@@ -91,6 +91,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const [allBuildings] = useAllBuildingsContext();
 
+  const [isNotListed, setIsNotListed] = useState(false);
+
   const [selectedBuilding, setSelectedBuilding] = useState<
     IBuilding | undefined
   >(findSelectedBuilding(listing.buildingName || ""));
@@ -154,11 +156,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       }
       if (name === "buildingName") {
         // This assumes building names are unique.
-        const selectedBuilding = allBuildings.find(
-          (building) => value === building.buildingName
-        );
-
-        setSelectedBuilding(selectedBuilding || undefined);
+        setSelectedBuilding(findSelectedBuilding(value) || undefined);
       }
 
       const update = rowId
@@ -240,6 +238,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               onChange={handleInputChange}
             >
               <option value="">Select a building</option>
+              <option value="Not Listed">Not Listed</option>
               <Dropdown.Divider />
               {allBuildings
                 .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
