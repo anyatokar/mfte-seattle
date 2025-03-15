@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { Address, AmiData, Contact, PercentAmi } from "../interfaces/IBuilding";
+import { Address, AmiData, Contact } from "../interfaces/IBuilding";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import BuildingDataTable from "./BuildingDataTable";
 import { BedroomsKeyEnum, TableTypeEnum } from "../types/enumTypes";
 
-const NotListedForm: React.FC = (): JSX.Element => {
+type NotListedFormProps = {
+  onClickCallback: any;
+  tableFields: any;
+};
+const NotListedForm: React.FC<NotListedFormProps> = ({
+  onClickCallback,
+  tableFields,
+}): JSX.Element => {
   const emptyAddressFormFields: PartialWithRequired<
     Address,
     "streetAddress" | "zip" | "neighborhood"
@@ -99,34 +106,6 @@ const NotListedForm: React.FC = (): JSX.Element => {
     }
   };
 
-  const blankTable2: Record<BedroomsKeyEnum, Set<PercentAmi>> = {
-    [BedroomsKeyEnum.MICRO]: new Set(),
-    [BedroomsKeyEnum.STUDIO]: new Set(),
-    [BedroomsKeyEnum.ONE_BED]: new Set(),
-    [BedroomsKeyEnum.TWO_BED]: new Set(),
-    [BedroomsKeyEnum.THREE_PLUS]: new Set(),
-  };
-
-  const [tableFields, setTableFields] = useState(blankTable2);
-
-  function handleToggleAmi(
-    ami: PercentAmi,
-    unit: BedroomsKeyEnum,
-    isChecked: boolean
-  ) {
-    if (isChecked) {
-      setTableFields((prev) => ({
-        ...prev,
-        [unit]: prev[unit].delete(ami),
-      }));
-    } else {
-      setTableFields((prev) => ({
-        ...prev,
-        [unit]: prev[unit].add(ami),
-      }));
-    }
-  }
-
   return (
     <>
       <h6>Address</h6>
@@ -208,7 +187,7 @@ const NotListedForm: React.FC = (): JSX.Element => {
           type={TableTypeEnum.amiData}
           data={blankTable}
           isMarker={false}
-          onClickCallback={handleToggleAmi}
+          onClickCallback={onClickCallback}
           tableFields={tableFields}
         />
       </Row>

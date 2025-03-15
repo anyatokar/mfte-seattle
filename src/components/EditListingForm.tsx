@@ -21,7 +21,7 @@ import { p345UnitPricing } from "../config/P345-unit-pricing";
 import { AddressAndPhone } from "./AddressAndPhone";
 import NotListedForm from "./NotListedForm";
 
-import IBuilding from "../interfaces/IBuilding";
+import IBuilding, { AmiData, PercentAmi } from "../interfaces/IBuilding";
 import IListing, { UnitAvailData } from "../interfaces/IListing";
 
 import Button from "react-bootstrap/Button";
@@ -212,8 +212,39 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     ProgramKeyEnum.P345,
   ];
 
-  const availSizes: BedroomsKeyEnum[] = selectedBuilding
-    ? (Object.keys(selectedBuilding.amiData) as BedroomsKeyEnum[])
+  const blankTable: AmiData = {
+    [BedroomsKeyEnum.MICRO]: [],
+    [BedroomsKeyEnum.STUDIO]: [],
+    [BedroomsKeyEnum.ONE_BED]: [],
+    [BedroomsKeyEnum.TWO_BED]: [],
+    [BedroomsKeyEnum.THREE_PLUS]: [],
+  };
+
+  const [tableFields, setTableFields] = useState(blankTable);
+
+  // Would be way simpler if Amis were a set but Firestore doesn't store the data type
+  function handleToggleAmi(
+    ami: PercentAmi,
+    unit: BedroomsKeyEnum,
+    isChecked: boolean
+  ) {
+    if (isChecked) {
+      setTableFields((prev) => ({
+        ...prev,
+        [unit]: prev[unit].filter((item) => item !== ami),
+      }));
+    } else {
+      setTableFields((prev) => ({
+        ...prev,
+        [unit]: prev[unit].includes(ami) ? prev[unit] : [...prev[unit], ami],
+      }));
+    }
+  }
+
+  const amiData = isNotListed ? tableFields : selectedBuilding?.amiData;
+
+  const availSizes: BedroomsKeyEnum[] = amiData
+    ? (Object.keys(amiData) as BedroomsKeyEnum[])
     : [];
 
   function getMaxRent(unitAvailData: UnitAvailData): number {
@@ -262,7 +293,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Row>
       )}
 
-      {isNotListed && <NotListedForm />}
+      {isNotListed && (
+        <NotListedForm
+          onClickCallback={handleToggleAmi}
+          tableFields={tableFields}
+        />
+      )}
 
       {/* Address */}
       {/* TODO: Maybe show address for existing listing? */}
@@ -399,7 +435,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             <option value={unitAvailData.percentAmi}>
                               {unitAvailData.percentAmi}
                             </option>
-                            {selectedBuilding?.amiData[
+                            {amiData?.[
                               unitAvailData.unitSize as BedroomsKeyEnum
                             ]?.map((percent) => (
                               <option key={percent} value={percent}>

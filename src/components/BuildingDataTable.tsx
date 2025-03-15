@@ -136,7 +136,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       return (
         <>
           {[...allAmi].sort().map((ami) => {
-            const isChecked = props.tableFields[unit].has(ami);
+            const isChecked = props.tableFields[unit].includes(ami);
 
             return (
               <Form.Check
@@ -146,7 +146,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                 label={ami}
                 value={ami}
                 checked={isChecked}
-                onChange={() => props.onClickCallback(ami, unit, false)}
+                onChange={() => props.onClickCallback(ami, unit, isChecked)}
               />
             );
           })}
