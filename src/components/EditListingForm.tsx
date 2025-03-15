@@ -19,6 +19,7 @@ import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
 
 import { AddressAndPhone } from "./AddressAndPhone";
+import NotListedForm from "./NotListedForm";
 
 import IBuilding from "../interfaces/IBuilding";
 import IListing, { UnitAvailData } from "../interfaces/IListing";
@@ -154,9 +155,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           };
         }
       }
+
       if (name === "buildingName") {
         // This assumes building names are unique.
-        setSelectedBuilding(findSelectedBuilding(value) || undefined);
+        if (value === "Not Listed") {
+          setIsNotListed(true);
+        } else {
+          setIsNotListed(false);
+          setSelectedBuilding(findSelectedBuilding(value));
+        }
       }
 
       const update = rowId
@@ -255,9 +262,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Row>
       )}
 
+      {isNotListed && <NotListedForm />}
+
       {/* Address */}
       {/* TODO: Maybe show address for existing listing? */}
-      {selectedBuilding && (
+      {!isNotListed && selectedBuilding && (
         <Row className="mb-3">
           <Col className="mb-md-0">
             <Form.Label className="mb-0 fw-bold">
@@ -274,7 +283,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Row>
       )}
 
-      {(selectedBuilding || isExistingListing) && (
+      {(selectedBuilding || isExistingListing || isNotListed) && (
         <Form.Group>
           <Row className="mb-3">
             <Col>
@@ -298,27 +307,34 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Form.Group>
       )}
 
-      {(isExistingListing || (selectedBuilding && formFields.program)) && (
-        <Form.Group>
-          {/* URL */}
-          <Row className="mb-3">
-            <Col className="mb-0 mb-md-0">
-              <Form.Label className="mb-0 fw-bold">Listings URL:</Form.Label>
-              <Form.Control
-                required
-                type="url"
-                name="url"
-                onChange={handleInputChange}
-                value={formFields.url}
-              />
-              <Form.Text>
-                {`Url to view available rent-reduced units. Often ends with /floorplans`}
-                <br />
-                {`Include http://`}
-              </Form.Text>
-            </Col>
-          </Row>
+      {!isNotListed &&
+        (isExistingListing || (selectedBuilding && formFields.program)) && (
+          <>
+            {/* URL */}
+            <Row className="mb-3">
+              <Col className="mb-0 mb-md-0">
+                <Form.Label className="mb-0 fw-bold">Listings URL:</Form.Label>
+                <Form.Control
+                  required
+                  type="url"
+                  name="url"
+                  onChange={handleInputChange}
+                  value={formFields.url}
+                />
+                <Form.Text>
+                  {`Url to view available rent-reduced units. Often ends with /floorplans`}
+                  <br />
+                  {`Include http://`}
+                </Form.Text>
+              </Col>
+            </Row>
+          </>
+        )}
 
+      {(isNotListed ||
+        isExistingListing ||
+        (selectedBuilding && formFields.program)) && (
+        <>
           {/* Table */}
           <Row className="mb-3">
             <Row>
@@ -553,7 +569,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               Submit
             </Button>
           </Form.Group>
-        </Form.Group>
+        </>
       )}
     </Form>
   );
