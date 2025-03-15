@@ -237,6 +237,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         ...prev,
         [unit]: prev[unit].includes(ami) ? prev[unit] : [...prev[unit], ami],
       }));
+      // TODO: Not ideal UI but resets the avail table for data consistency.
+      setFormFields((prev) => ({
+        ...prev,
+        availDataArray: originalFormFields.availDataArray,
+      }));
     }
   }
 
@@ -396,6 +401,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 <div>
                   <Form.Text>
                     Currently or soon-to-be-available rent-reduced units.
+                    <br />
+                    Making any changes to the "All rent-reduced units" table
+                    above will reset this table, so fill that out completely
+                    first.
                   </Form.Text>
                 </div>
                 <Table bordered hover responsive size="sm">

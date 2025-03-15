@@ -168,9 +168,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
             onChange={handleInputChange}
             name="phone"
           />
-          <Form.Text>
-            Phone number to ask about rent-reduced units.
-          </Form.Text>
+          <Form.Text>Phone number to ask about rent-reduced units.</Form.Text>
         </Col>
       </Row>
 
