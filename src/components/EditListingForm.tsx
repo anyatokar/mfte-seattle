@@ -92,8 +92,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const [allBuildings] = useAllBuildingsContext();
 
-  const [isNotListed, setIsNotListed] = useState(false);
-
   const [selectedBuilding, setSelectedBuilding] = useState<
     IBuilding | undefined
   >(findSelectedBuilding(listing.buildingName || ""));
@@ -157,11 +155,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       }
 
       if (name === "buildingName") {
-        // This assumes building names are unique.
+        setFormFields(originalFormFields);
+        setAmiDataFields(blankTable);
         if (value === "Not Listed") {
-          setIsNotListed(true);
+          setSelectedBuilding({} as IBuilding);
         } else {
-          setIsNotListed(false);
+          // This assumes building names are unique.
           setSelectedBuilding(findSelectedBuilding(value));
         }
       }
@@ -220,7 +219,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     [BedroomsKeyEnum.THREE_PLUS]: [],
   };
 
-  const [tableFields, setTableFields] = useState(blankTable);
+  const [amiDataFields, setAmiDataFields] = useState(blankTable);
 
   // Would be way simpler if Amis were a set but Firestore doesn't store the data type
   function handleToggleAmi(
@@ -229,12 +228,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     isChecked: boolean
   ) {
     if (isChecked) {
-      setTableFields((prev) => ({
+      setAmiDataFields((prev) => ({
         ...prev,
         [unit]: prev[unit].filter((item) => item !== ami),
       }));
     } else {
-      setTableFields((prev) => ({
+      setAmiDataFields((prev) => ({
         ...prev,
         [unit]: prev[unit].includes(ami) ? prev[unit] : [...prev[unit], ami],
       }));
@@ -254,9 +253,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     return filteredFields;
   };
 
-  const amiData = isNotListed
-    ? filterNonEmptyFields(tableFields)
-    : selectedBuilding?.amiData;
+  const amiData: AmiData =
+    selectedBuilding && selectedBuilding.amiData
+      ? selectedBuilding.amiData
+      : filterNonEmptyFields(amiDataFields);
 
   const availSizes: BedroomsKeyEnum[] = amiData
     ? (Object.keys(amiData) as BedroomsKeyEnum[])
@@ -308,16 +308,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Row>
       )}
 
-      {isNotListed && (
+      {selectedBuilding && !selectedBuilding.buildingID && (
         <NotListedForm
           onClickCallback={handleToggleAmi}
-          tableFields={tableFields}
+          amiDataFields={amiDataFields}
         />
       )}
 
       {/* Address */}
       {/* TODO: Maybe show address for existing listing? */}
-      {!isNotListed && selectedBuilding && (
+      {selectedBuilding?.buildingID && (
         <Row className="mb-3">
           <Col className="mb-md-0">
             <Form.Label className="mb-0 fw-bold">
@@ -334,11 +334,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Row>
       )}
 
-      {(selectedBuilding || isExistingListing || isNotListed) && (
+      {(selectedBuilding || isExistingListing) && (
         <Form.Group>
           <Row className="mb-3">
             <Col>
-              <Form.Label className="mb-0 fw-bold">Program:</Form.Label>
+              <h6>Program</h6>
 
               {programOptionsArray.map((program) => (
                 <Form.Check
@@ -358,13 +358,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Form.Group>
       )}
 
-      {!isNotListed &&
+      {!selectedBuilding?.buildingID &&
         (isExistingListing || (selectedBuilding && formFields.program)) && (
           <>
+            <hr />
+            <h5>Add Listings</h5>
             {/* URL */}
             <Row className="mb-3">
-              <Col className="mb-0 mb-md-0">
-                <Form.Label className="mb-0 fw-bold">Listings URL:</Form.Label>
+              <Col md={8} className="mb-0 mb-md-0">
+                <Form.Label className="mb-0 fw-bold">Listings URL</Form.Label>
                 <Form.Control
                   required
                   type="url"
@@ -382,16 +384,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           </>
         )}
 
-      {(isNotListed ||
-        isExistingListing ||
-        (selectedBuilding && formFields.program)) && (
+      {(isExistingListing || (selectedBuilding && formFields.program)) && (
         <>
           {/* Table */}
           <Row className="mb-3">
             <Row>
               <Col className="mb-0">
-                <Form.Label className="fw-bold mb-0">
-                  Available units:
+                <Form.Label className="mb-0 fw-bold">
+                  Available units
                 </Form.Label>
                 <div>
                   <Form.Text>
@@ -558,7 +558,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           {/* Expiry Date */}
           <Row className="mb-3">
             <Form.Label className="mb-0 fw-bold">
-              Listing expiration date:
+              Listing expiration date
             </Form.Label>
             <Col md={6} className="mb-0 mb-md-0">
               <Form.Control
@@ -578,7 +578,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           <Row className="mb-3">
             <Col className="mb-0 mb-md-0">
               <Form.Label className="mb-0 fw-bold">
-                Featured description:{" "}
+                Featured description
               </Form.Label>
 
               <Form.Control
@@ -599,7 +599,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
           <Row className="mb-3">
             <Col className="mb-0 mb-md-0">
-              <Form.Label className="mb-0 fw-bold">Form feedback:</Form.Label>
+              <Form.Label className="mb-0 fw-bold">Form feedback</Form.Label>
 
               <Form.Control
                 as="textarea"

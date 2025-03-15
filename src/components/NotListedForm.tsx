@@ -7,11 +7,11 @@ import { BedroomsKeyEnum, TableTypeEnum } from "../types/enumTypes";
 
 type NotListedFormProps = {
   onClickCallback: any;
-  tableFields: any;
+  amiDataFields: AmiData;
 };
 const NotListedForm: React.FC<NotListedFormProps> = ({
   onClickCallback,
-  tableFields,
+  amiDataFields,
 }): JSX.Element => {
   const emptyAddressFormFields: PartialWithRequired<
     Address,
@@ -100,10 +100,10 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
 
   return (
     <>
-      <h6>Address</h6>
+      <h5>Add new building</h5>
       <Row className="mb-2">
         <Col md={6}>
-          <Form.Label className="mb-0">Building Name</Form.Label>
+          <Form.Label className="mb-0">Building name</Form.Label>
           <Form.Control
             name="buildingName"
             value={formFields.buildingName}
@@ -111,6 +111,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
           />
         </Col>
       </Row>
+      <Form.Label className="mb-0 fw-bold">Address</Form.Label>
       <Row className="mb-2">
         <Col md={6}>
           <Form.Label className="mb-0">District</Form.Label>
@@ -149,7 +150,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         </Col>
       </Row>
 
-      <h6>Contact</h6>
+      <Form.Label className="mb-0 fw-bold">Contact</Form.Label>
       <Row className="mb-3">
         <Col md={6}>
           <Form.Label className="mb-0">Website</Form.Label>
@@ -158,25 +159,30 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
             onChange={handleInputChange}
             name="urlForBuilding"
           />
+          <Form.Text>General website for the building.</Form.Text>
         </Col>
-        <Col md={3}>
+        <Col md={4}>
           <Form.Label className="mb-0">Phone</Form.Label>
           <Form.Control
             value={formFields.contact.phone || ""}
             onChange={handleInputChange}
             name="phone"
           />
+          <Form.Text>
+            Phone number to ask about rent-reduced units.
+          </Form.Text>
         </Col>
       </Row>
 
-      <h6 className="mb-0">All rent-reduced units</h6>
+      <Form.Label className="mb-0 fw-bold">All rent-reduced units</Form.Label>
+      <br />
       <Form.Text>All rent-reduced units regardless of availability.</Form.Text>
       <Row className="mb-3">
         <BuildingDataTable
           type={TableTypeEnum.amiData}
           data={blankTable}
           onClickCallback={onClickCallback}
-          tableFields={tableFields}
+          tableFields={amiDataFields}
         />
       </Row>
     </>
