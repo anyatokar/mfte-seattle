@@ -99,34 +99,6 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     "90",
   ];
 
-  // const blankTable: Record<BedroomsKeyEnum, Set<PercentAmi>> = {
-  //   [BedroomsKeyEnum.MICRO]: new Set(),
-  //   [BedroomsKeyEnum.STUDIO]: new Set(),
-  //   [BedroomsKeyEnum.ONE_BED]: new Set(),
-  //   [BedroomsKeyEnum.TWO_BED]: new Set(),
-  //   [BedroomsKeyEnum.THREE_PLUS]: new Set(),
-  // };
-
-  // const [tableFields, setTableFields] = useState(blankTable);
-
-  // function handleToggleAmi(
-  //   ami: PercentAmi,
-  //   unit: BedroomsKeyEnum,
-  //   isChecked: boolean
-  // ) {
-  //   if (isChecked) {
-  //     setTableFields((prev) => ({
-  //       ...prev,
-  //       [unit]: prev[unit].delete(ami),
-  //     }));
-  //   } else {
-  //     setTableFields((prev) => ({
-  //       ...prev,
-  //       [unit]: prev[unit].add(ami),
-  //     }));
-  //   }
-  // }
-
   function renderPercentageList(
     percentages: PercentAmi[],
     unit: BedroomsKeyEnum

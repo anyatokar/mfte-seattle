@@ -30,14 +30,6 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
     urlForBuilding: "",
   };
 
-  // const [buildingName, setBuildingName] = useState("");
-  // const [addressFormFields, setAddressFormFields] = useState(
-  //   emptyAddressFormFields
-  // );
-  // const [contactFormFields, setContactFormFields] = useState(
-  //   emptyContactFormFields
-  // );
-
   type FormFields = {
     buildingName: string;
     address: PartialWithRequired<
