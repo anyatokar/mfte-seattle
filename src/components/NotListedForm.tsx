@@ -170,10 +170,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
       </Row>
 
       <h6 className="mb-0">All rent-reduced units</h6>
-      <Form.Text>
-        Breakdown of all rent-reduced units in the building regardless of
-        availability
-      </Form.Text>
+      <Form.Text>All rent-reduced units regardless of availability.</Form.Text>
       <Row className="mb-3">
         <BuildingDataTable
           type={TableTypeEnum.amiData}

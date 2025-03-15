@@ -394,7 +394,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   Available units:
                 </Form.Label>
                 <div>
-                  <Form.Text>List all available rent-reduced units.</Form.Text>
+                  <Form.Text>
+                    Currently or soon-to-be-available rent-reduced units.
+                  </Form.Text>
                 </div>
                 <Table bordered hover responsive size="sm">
                   <thead>
