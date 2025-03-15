@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { Address, Contact, PercentAmi } from "../interfaces/IBuilding";
+import { Address, AmiData, Contact, PercentAmi } from "../interfaces/IBuilding";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import BuildingDataTable from "./BuildingDataTable";
 import { BedroomsKeyEnum, TableTypeEnum } from "../types/enumTypes";
@@ -38,12 +38,23 @@ const NotListedForm: React.FC = (): JSX.Element => {
       "streetAddress" | "zip" | "neighborhood" | "neighborhood"
     >;
     contact: PartialWithRequired<Contact, "phone" | "urlForBuilding">;
+    amiData: AmiData;
+  };
+
+  // TODO: This gets overwritten... needs a refactor
+  const blankTable: AmiData = {
+    [BedroomsKeyEnum.MICRO]: [],
+    [BedroomsKeyEnum.STUDIO]: [],
+    [BedroomsKeyEnum.ONE_BED]: [],
+    [BedroomsKeyEnum.TWO_BED]: [],
+    [BedroomsKeyEnum.THREE_PLUS]: [],
   };
 
   const emptyFormFields: FormFields = {
     buildingName: "",
     address: emptyAddressFormFields,
     contact: emptyContactFormFields,
+    amiData: blankTable,
   };
 
   const [formFields, setFormFields] = useState(emptyFormFields);
@@ -57,14 +68,6 @@ const NotListedForm: React.FC = (): JSX.Element => {
   //   }
   // };
 
-  // TODO: This gets overwritten... needs a refactor
-  const blankTable: Record<BedroomsKeyEnum, PercentAmi[]> = {
-    [BedroomsKeyEnum.MICRO]: [],
-    [BedroomsKeyEnum.STUDIO]: [],
-    [BedroomsKeyEnum.ONE_BED]: [],
-    [BedroomsKeyEnum.TWO_BED]: [],
-    [BedroomsKeyEnum.THREE_PLUS]: [],
-  };
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
 
@@ -95,6 +98,34 @@ const NotListedForm: React.FC = (): JSX.Element => {
       }));
     }
   };
+
+  const blankTable2: Record<BedroomsKeyEnum, Set<PercentAmi>> = {
+    [BedroomsKeyEnum.MICRO]: new Set(),
+    [BedroomsKeyEnum.STUDIO]: new Set(),
+    [BedroomsKeyEnum.ONE_BED]: new Set(),
+    [BedroomsKeyEnum.TWO_BED]: new Set(),
+    [BedroomsKeyEnum.THREE_PLUS]: new Set(),
+  };
+
+  const [tableFields, setTableFields] = useState(blankTable2);
+
+  function handleToggleAmi(
+    ami: PercentAmi,
+    unit: BedroomsKeyEnum,
+    isChecked: boolean
+  ) {
+    if (isChecked) {
+      setTableFields((prev) => ({
+        ...prev,
+        [unit]: prev[unit].delete(ami),
+      }));
+    } else {
+      setTableFields((prev) => ({
+        ...prev,
+        [unit]: prev[unit].add(ami),
+      }));
+    }
+  }
 
   return (
     <>
@@ -177,6 +208,8 @@ const NotListedForm: React.FC = (): JSX.Element => {
           type={TableTypeEnum.amiData}
           data={blankTable}
           isMarker={false}
+          onClickCallback={handleToggleAmi}
+          tableFields={tableFields}
         />
       </Row>
     </>
