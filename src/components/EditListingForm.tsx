@@ -241,7 +241,22 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     }
   }
 
-  const amiData = isNotListed ? tableFields : selectedBuilding?.amiData;
+  const filterNonEmptyFields = (fields: AmiData) => {
+    const filteredFields = {} as AmiData;
+
+    for (const key in fields) {
+      const value = fields[key as BedroomsKeyEnum];
+      if (value && value.length > 0) {
+        filteredFields[key as BedroomsKeyEnum] = value;
+      }
+    }
+
+    return filteredFields;
+  };
+
+  const amiData = isNotListed
+    ? filterNonEmptyFields(tableFields)
+    : selectedBuilding?.amiData;
 
   const availSizes: BedroomsKeyEnum[] = amiData
     ? (Object.keys(amiData) as BedroomsKeyEnum[])
