@@ -20,7 +20,7 @@ import Table from "react-bootstrap/Table";
 interface AmiDataProps {
   type: TableTypeEnum.amiData;
   data: AmiData;
-  isMarker: boolean;
+  isMarker?: boolean;
   onClickCallback?: any;
   tableFields?: any;
 }
@@ -29,13 +29,13 @@ interface AvailDataProps {
   type: TableTypeEnum.availData;
   data: AvailDataArray;
   program: ProgramKeyEnum | undefined;
-  isMarker: boolean;
+  isMarker?: boolean;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 
 const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
-  const { type, data, isMarker } = props;
+  const { type, data, isMarker = false } = props;
 
   const [showModal, setShowModal] = useState(false);
   const [percentAmi, setPercentAmi] = useState<PercentAmi | null>(null);

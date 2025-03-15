@@ -186,7 +186,6 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         <BuildingDataTable
           type={TableTypeEnum.amiData}
           data={blankTable}
-          isMarker={false}
           onClickCallback={onClickCallback}
           tableFields={tableFields}
         />
