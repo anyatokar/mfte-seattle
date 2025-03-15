@@ -11,7 +11,7 @@ import {
 import { Marker } from "@googlemaps/markerclusterer";
 
 import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
-import { tableType } from "../types/enumTypes";
+import { TableTypeEnum } from "../types/enumTypes";
 
 import { AddressAndPhone } from "../components/AddressAndPhone";
 import BuildingDataTable from "../components/BuildingDataTable";
@@ -128,7 +128,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
         >
           {building.listing && (
             <BuildingDataTable
-              type={tableType.availData}
+              type={TableTypeEnum.availData}
               program={building.listing.program}
               data={building.listing.availDataArray}
               isMarker={true}

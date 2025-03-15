@@ -2,7 +2,7 @@ import { Fragment, ReactNode, useState } from "react";
 import {
   unitSizeLabelEnum,
   BedroomsKeyEnum,
-  tableType,
+  TableTypeEnum,
   ProgramKeyEnum,
   ProgramLabelEnum,
 } from "../types/enumTypes";
@@ -13,26 +13,29 @@ import { p6maxIncomeData } from "../config/P6-income-limits";
 import { p345maxIncomeData } from "../config/P345-income-limits";
 
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 
 interface AmiDataProps {
-  type: tableType.amiData;
+  type: TableTypeEnum.amiData;
   data: AmiData;
-  isMarker: boolean;
+  isMarker?: boolean;
+  onClickCallback?: any;
+  tableFields?: any;
 }
 
 interface AvailDataProps {
-  type: tableType.availData;
+  type: TableTypeEnum.availData;
   data: AvailDataArray;
   program: ProgramKeyEnum | undefined;
-  isMarker: boolean;
+  isMarker?: boolean;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 
 const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
-  const { type, data, isMarker } = props;
+  const { type, data, isMarker = false } = props;
 
   const [showModal, setShowModal] = useState(false);
   const [percentAmi, setPercentAmi] = useState<PercentAmi | null>(null);
@@ -48,7 +51,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   };
 
   function getModalSentence(): string | undefined {
-    if (type === tableType.availData) {
+    if (type === TableTypeEnum.availData) {
       if (props.program === ProgramKeyEnum.P345) {
         return ProgramLabelEnum[ProgramKeyEnum.P345];
       } else if (props.program === ProgramKeyEnum.P6) {
@@ -63,7 +66,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   function getModalData(
     percentAmi: PercentAmi
   ): [number[], number[]?] | undefined {
-    if (type === tableType.availData) {
+    if (type === TableTypeEnum.availData) {
       if (props.program === ProgramKeyEnum.P345) {
         return [p345maxIncomeData[percentAmi]];
       } else if (props.program === ProgramKeyEnum.P6) {
@@ -83,8 +86,45 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     BedroomsKeyEnum.THREE_PLUS,
   ];
 
-  function renderPercentageList(percentages: PercentAmi[]): ReactNode {
-    if (!percentages) return null;
+  const allAmi: PercentAmi[] = [
+    "30",
+    "40",
+    "50",
+    "60",
+    "65",
+    "70",
+    "75",
+    "80",
+    "85",
+    "90",
+  ];
+
+  function renderPercentageList(
+    percentages: PercentAmi[],
+    unit: BedroomsKeyEnum
+  ): ReactNode {
+    if (percentages === undefined || type === TableTypeEnum.availData) return;
+    if (percentages.length === 0) {
+      return (
+        <>
+          {[...allAmi].sort().map((ami) => {
+            const isChecked = props.tableFields[unit].includes(ami);
+
+            return (
+              <Form.Check
+                inline
+                key={ami}
+                type="checkbox"
+                label={ami}
+                value={ami}
+                checked={isChecked}
+                onChange={() => props.onClickCallback(ami, unit, isChecked)}
+              />
+            );
+          })}
+        </>
+      );
+    }
 
     return percentages.map((item, index) => (
       <Fragment key={index}>
@@ -103,21 +143,21 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               Size
             </th>
             <th style={{ whiteSpace: "nowrap" }}>% AMI</th>
-            {type === tableType.availData && (
+            {type === TableTypeEnum.availData && (
               <th style={{ whiteSpace: "nowrap" }}>Income</th>
             )}
             {/* TODO: Rent including utilities? */}
-            {type === tableType.availData && <th>Rent</th>}
-            {type === tableType.availData && (
+            {type === TableTypeEnum.availData && <th>Rent</th>}
+            {type === TableTypeEnum.availData && (
               <th style={{ whiteSpace: "nowrap" }}>Apt #</th>
             )}
-            {type === tableType.availData && (
+            {type === TableTypeEnum.availData && (
               <th style={{ whiteSpace: "nowrap" }}>Move-in Date</th>
             )}
           </tr>
         </thead>
         <tbody>
-          {type === tableType.amiData &&
+          {type === TableTypeEnum.amiData &&
             order.map((unit) => {
               const percentAmis = data[unit as keyof AmiData];
 
@@ -126,11 +166,11 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               return (
                 <tr key={unit}>
                   <td>{unitSizeLabelEnum[unit]}</td>
-                  <td>{renderPercentageList(percentAmis)}</td>
+                  <td>{renderPercentageList(percentAmis, unit)}</td>
                 </tr>
               );
             })}
-          {type === tableType.availData &&
+          {type === TableTypeEnum.availData &&
             data.map((unitAvailData) => {
               const {
                 dateAvailString,
@@ -170,7 +210,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         </tbody>
       </Table>
 
-      {percentAmi && type === tableType.availData && (
+      {percentAmi && type === TableTypeEnum.availData && (
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Income Limits</Modal.Title>
