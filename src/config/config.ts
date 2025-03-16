@@ -11,7 +11,7 @@ export const expiringSoonDays = 14;
 export const isProfilerOn = false;
 
 export const colWidths = {
-  unitSize: "100px",
+  unitSize: "120px",
   percentAmi: "100px",
   rent: "150px",
   aptNum: "100px",

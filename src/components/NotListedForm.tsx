@@ -161,15 +161,17 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
           />
           <Form.Text>General website for the building.</Form.Text>
         </Col>
-        <Col md={4}>
+      </Row>
+      <Row className="mb-3">
+        <Col md={3}>
           <Form.Label className="mb-0">Phone</Form.Label>
           <Form.Control
             value={formFields.contact.phone || ""}
             onChange={handleInputChange}
             name="phone"
           />
-          <Form.Text>Phone number to ask about rent-reduced units.</Form.Text>
         </Col>
+        <Form.Text>Phone number to ask about rent-reduced units.</Form.Text>
       </Row>
 
       <Form.Label className="mb-0 fw-bold">All rent-reduced units</Form.Label>
