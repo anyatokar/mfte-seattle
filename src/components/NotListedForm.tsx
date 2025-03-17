@@ -87,6 +87,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         <Col md={6}>
           <Form.Label className="mb-0">Building name</Form.Label>
           <Form.Control
+            required
             name="buildingName"
             value={selectedBuilding.buildingName}
             onChange={handleInputChange}
@@ -98,6 +99,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         <Col md={6}>
           <Form.Label className="mb-0">District</Form.Label>
           <Form.Control
+            required
             name="neighborhood"
             value={selectedBuilding.address.neighborhood}
             onChange={handleInputChange}
@@ -109,6 +111,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         <Col md={6}>
           <Form.Label className="mb-0">Street address</Form.Label>
           <Form.Control
+            required
             name="streetAddress"
             value={selectedBuilding.address.streetAddress}
             onChange={handleInputChange}
@@ -123,6 +126,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         <Col md={3}>
           <Form.Label className="mb-0">Zip</Form.Label>
           <Form.Control
+            required
             type="text"
             value={selectedBuilding.address.zip}
             onChange={handleInputChange}
@@ -137,6 +141,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         <Col md={6}>
           <Form.Label className="mb-0">Website</Form.Label>
           <Form.Control
+            required
             value={selectedBuilding.contact.urlForBuilding}
             onChange={handleInputChange}
             name="urlForBuilding"
@@ -148,6 +153,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         <Col md={3}>
           <Form.Label className="mb-0">Phone</Form.Label>
           <Form.Control
+            required
             value={selectedBuilding.contact.phone || ""}
             onChange={handleInputChange}
             name="phone"

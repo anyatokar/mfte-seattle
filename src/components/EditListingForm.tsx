@@ -140,6 +140,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     if (buildingName === undefined) {
       return undefined;
     }
+
     return allBuildings.find(
       (building) => buildingName === building.buildingName
     );

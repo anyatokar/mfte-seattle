@@ -224,6 +224,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                           (listing) =>
                             listing.listingStatus !== listingStatusEnum.ARCHIVED
                         ).length === 0 && <p>No current listings.</p>}
+
                       {!isLoadingRepsListings &&
                         repsListings.length > 0 &&
                         repsListings
