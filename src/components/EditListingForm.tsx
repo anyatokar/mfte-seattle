@@ -97,7 +97,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const [selectedBuilding, setSelectedBuilding] = useState<
     IBuilding | undefined
-  >(findSelectedBuilding(listing.buildingName || ""));
+  >(findSelectedBuilding(listing.buildingName));
 
   if (!currentUser) return null;
 
@@ -128,7 +128,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     });
   };
 
-  function findSelectedBuilding(buildingName: string): IBuilding | undefined {
+  function findSelectedBuilding(
+    buildingName: string | undefined
+  ): IBuilding | undefined {
+    if (buildingName === undefined) {
+      return undefined;
+    }
     return allBuildings.find(
       (building) => buildingName === building.buildingName
     );
@@ -159,9 +164,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       if (name === "buildingName") {
         setFormFields(originalFormFields);
-        setAmiDataFields(blankTable);
         if (value === "Not Listed") {
-          setSelectedBuilding({} as IBuilding);
+          setSelectedBuilding({ amiData: blankTable } as IBuilding);
         } else {
           // This assumes building names are unique.
           setSelectedBuilding(findSelectedBuilding(value));
@@ -189,7 +193,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     if (!isExistingListing) {
       const listingID = await addListingFirestore(
         formFields,
-        selectedBuilding?.buildingID || "",
+        selectedBuilding,
         currentUser.uid
       );
       if (listingID) {
@@ -222,7 +226,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     [BedroomsKeyEnum.THREE_PLUS]: [],
   };
 
-  const [amiDataFields, setAmiDataFields] = useState(blankTable);
   function updateAvailRow(unit: BedroomsKeyEnum, ami: PercentAmi) {
     if (!formFields.availDataArray) return;
     const updatedAvailDataArray: AvailDataArray = [];
@@ -231,7 +234,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       let updatedRow = { ...row };
 
       if (row.unitSize === unit) {
-        if (Object.keys(amiDataFields[unit]).length <= 1) {
+        if (
+          selectedBuilding &&
+          Object.keys(selectedBuilding.amiData[unit]).length <= 1
+        ) {
           updatedRow = { ...row, unitSize: undefined, percentAmi: undefined };
         } else if (row.percentAmi === ami) {
           updatedRow = { ...row, percentAmi: undefined };
@@ -255,21 +261,40 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     isChecked: boolean
   ) {
     if (isChecked) {
-      setAmiDataFields((prev) => ({
-        ...prev,
-        [unit]: prev[unit].filter((item) => item !== ami),
-      }));
+      setSelectedBuilding((prev) =>
+        prev
+          ? {
+              ...prev,
+              amiData: {
+                ...prev.amiData,
+                [unit]: prev.amiData[unit].filter((item) => item !== ami),
+              },
+            }
+          : prev
+      );
 
       updateAvailRow(unit, ami);
     } else {
-      setAmiDataFields((prev) => ({
-        ...prev,
-        [unit]: prev[unit].includes(ami) ? prev[unit] : [...prev[unit], ami],
-      }));
+      setSelectedBuilding((prev) =>
+        prev
+          ? {
+              ...prev,
+              amiData: {
+                ...prev.amiData,
+                [unit]: prev.amiData[unit].includes(ami)
+                  ? prev.amiData[unit]
+                  : [...prev.amiData[unit], ami],
+              },
+            }
+          : prev
+      );
     }
   }
 
-  const filterNonEmptyFields = (fields: AmiData) => {
+  const filterNonEmptyFields = (
+    fields: AmiData | undefined
+  ): AmiData | undefined => {
+    if (fields === undefined) return;
     const filteredFields = {} as AmiData;
 
     for (const key in fields) {
@@ -282,10 +307,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     return filteredFields;
   };
 
-  const amiData: AmiData =
-    selectedBuilding && selectedBuilding.amiData
-      ? selectedBuilding.amiData
-      : filterNonEmptyFields(amiDataFields);
+  const amiData: AmiData | undefined = filterNonEmptyFields(
+    selectedBuilding?.amiData
+  );
 
   const availSizes: BedroomsKeyEnum[] = amiData
     ? (Object.keys(amiData) as BedroomsKeyEnum[])
@@ -340,7 +364,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       {selectedBuilding && !selectedBuilding.buildingID && (
         <NotListedForm
           onClickCallback={handleToggleAmi}
-          amiDataFields={amiDataFields}
+          amiData={selectedBuilding.amiData}
         />
       )}
 
@@ -446,7 +470,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                               handleInputChange(e, unitAvailData.rowId)
                             }
                             value={unitAvailData.unitSize}
-                            disabled={Object.values(amiData).length === 0}
+                            disabled={
+                              !selectedBuilding ||
+                              Object.values(selectedBuilding.amiData).length ===
+                                0
+                            }
                           >
                             <option value={unitAvailData.unitSize}>
                               {unitAvailData.unitSize

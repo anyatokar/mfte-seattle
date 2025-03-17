@@ -21,6 +21,7 @@ import {
   IUserSignupAuthData,
   SignupAuthDataType,
 } from "../interfaces/IUser";
+import IBuilding from "../interfaces/IBuilding";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -84,16 +85,16 @@ function availDataToNum(
 
 export async function addListingFirestore(
   formFields: Partial<IListing>,
-  buildingID: string,
+  selectedBuilding: IBuilding | undefined,
   uid: string
 ): Promise<string> {
   const listing: IListing = {
     buildingName: formFields.buildingName || "",
+    buildingID: selectedBuilding?.buildingID || "",
     url: formFields.url || "",
     availDataArray: availDataToNum(formFields.availDataArray),
     description: formFields.description || "",
     listingStatus: listingStatusEnum.IN_REVIEW,
-    buildingID: buildingID || "",
     dateCreated: Timestamp.fromDate(new Date()),
     dateUpdated: Timestamp.fromDate(new Date()),
     /** YYYY-MM-DD */

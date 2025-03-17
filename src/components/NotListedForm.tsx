@@ -7,11 +7,11 @@ import { BedroomsKeyEnum, TableTypeEnum } from "../types/enumTypes";
 
 type NotListedFormProps = {
   onClickCallback: any;
-  amiDataFields: AmiData;
+  amiData: AmiData;
 };
 const NotListedForm: React.FC<NotListedFormProps> = ({
   onClickCallback,
-  amiDataFields,
+  amiData,
 }): JSX.Element => {
   const emptyAddressFormFields: PartialWithRequired<
     Address,
@@ -182,7 +182,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
           type={TableTypeEnum.amiData}
           data={blankTable}
           onClickCallback={onClickCallback}
-          tableFields={amiDataFields}
+          tableFields={amiData}
         />
       </Row>
     </>
