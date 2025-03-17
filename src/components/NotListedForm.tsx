@@ -1,45 +1,24 @@
-import { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { Address, AmiData, Contact } from "../interfaces/IBuilding";
-import { PartialWithRequired } from "../types/partialWithRequiredType";
+import { AmiData } from "../interfaces/IBuilding";
 import BuildingDataTable from "./BuildingDataTable";
 import { BedroomsKeyEnum, TableTypeEnum } from "../types/enumTypes";
+import { SelectedBuilding } from "../interfaces/IListing";
 
 type NotListedFormProps = {
   onClickCallback: any;
   amiData: AmiData;
+  setSelectedBuilding: React.Dispatch<
+    React.SetStateAction<SelectedBuilding | undefined>
+  >;
+  selectedBuilding: SelectedBuilding;
 };
+
 const NotListedForm: React.FC<NotListedFormProps> = ({
   onClickCallback,
   amiData,
+  setSelectedBuilding,
+  selectedBuilding,
 }): JSX.Element => {
-  const emptyAddressFormFields: PartialWithRequired<
-    Address,
-    "streetAddress" | "zip" | "neighborhood"
-  > = {
-    streetAddress: "",
-    zip: "",
-    neighborhood: "",
-  };
-
-  const emptyContactFormFields: PartialWithRequired<
-    Contact,
-    "phone" | "urlForBuilding"
-  > = {
-    phone: "",
-    urlForBuilding: "",
-  };
-
-  type FormFields = {
-    buildingName: string;
-    address: PartialWithRequired<
-      Address,
-      "streetAddress" | "zip" | "neighborhood" | "neighborhood"
-    >;
-    contact: PartialWithRequired<Contact, "phone" | "urlForBuilding">;
-    amiData: AmiData;
-  };
-
   // TODO: This gets overwritten... needs a refactor
   const blankTable: AmiData = {
     [BedroomsKeyEnum.MICRO]: [],
@@ -48,15 +27,6 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
     [BedroomsKeyEnum.TWO_BED]: [],
     [BedroomsKeyEnum.THREE_PLUS]: [],
   };
-
-  const emptyFormFields: FormFields = {
-    buildingName: "",
-    address: emptyAddressFormFields,
-    contact: emptyContactFormFields,
-    amiData: blankTable,
-  };
-
-  const [formFields, setFormFields] = useState(emptyFormFields);
 
   // const [zip, setZip] = useState("");
   // const handleChange = (e) => {
@@ -71,30 +41,42 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
     const { name, value } = e.target;
 
     if (["streetAddress", "zip", "neighborhood", "district"].includes(name)) {
-      setFormFields((prev) => ({
-        ...prev,
-        address: {
-          ...prev.address,
-          [name]: value,
-        },
-      }));
+      setSelectedBuilding((prev) =>
+        prev
+          ? {
+              ...prev,
+              address: {
+                ...prev.address,
+                [name]: value,
+              },
+            }
+          : prev
+      );
     }
 
     if (["phone", "urlForBuilding"].includes(name)) {
-      setFormFields((prev) => ({
-        ...prev,
-        contact: {
-          ...prev.contact,
-          [name]: value,
-        },
-      }));
+      setSelectedBuilding((prev) =>
+        prev
+          ? {
+              ...prev,
+              contact: {
+                ...prev.contact,
+                [name]: value,
+              },
+            }
+          : prev
+      );
     }
 
     if (name === "buildingName") {
-      setFormFields((prev) => ({
-        ...prev,
-        buildingName: value,
-      }));
+      setSelectedBuilding((prev) =>
+        prev
+          ? {
+              ...prev,
+              buildingName: value,
+            }
+          : prev
+      );
     }
   };
 
@@ -106,7 +88,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
           <Form.Label className="mb-0">Building name</Form.Label>
           <Form.Control
             name="buildingName"
-            value={formFields.buildingName}
+            value={selectedBuilding.buildingName}
             onChange={handleInputChange}
           />
         </Col>
@@ -117,7 +99,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
           <Form.Label className="mb-0">District</Form.Label>
           <Form.Control
             name="neighborhood"
-            value={formFields.address.neighborhood}
+            value={selectedBuilding.address.neighborhood}
             onChange={handleInputChange}
           />
           <Form.Text>e.g. Capitol Hill</Form.Text>
@@ -128,7 +110,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
           <Form.Label className="mb-0">Street address</Form.Label>
           <Form.Control
             name="streetAddress"
-            value={formFields.address.streetAddress}
+            value={selectedBuilding.address.streetAddress}
             onChange={handleInputChange}
           />
         </Col>
@@ -142,7 +124,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
           <Form.Label className="mb-0">Zip</Form.Label>
           <Form.Control
             type="text"
-            value={formFields.address.zip}
+            value={selectedBuilding.address.zip}
             onChange={handleInputChange}
             inputMode="numeric"
             name="zip"
@@ -155,7 +137,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         <Col md={6}>
           <Form.Label className="mb-0">Website</Form.Label>
           <Form.Control
-            value={formFields.contact.urlForBuilding}
+            value={selectedBuilding.contact.urlForBuilding}
             onChange={handleInputChange}
             name="urlForBuilding"
           />
@@ -166,7 +148,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         <Col md={3}>
           <Form.Label className="mb-0">Phone</Form.Label>
           <Form.Control
-            value={formFields.contact.phone || ""}
+            value={selectedBuilding.contact.phone || ""}
             onChange={handleInputChange}
             name="phone"
           />

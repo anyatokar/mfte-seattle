@@ -4,7 +4,26 @@ import {
   listingStatusEnum,
   ProgramKeyEnum,
 } from "../types/enumTypes";
-import { PercentAmi } from "./IBuilding";
+import { Address, AmiData, Contact, PercentAmi } from "./IBuilding";
+import { PartialWithRequired } from "../types/partialWithRequiredType";
+
+export type PartialAddress = PartialWithRequired<
+  Address,
+  "streetAddress" | "zip" | "neighborhood" | "neighborhood"
+>;
+
+export type PartialContact = PartialWithRequired<
+  Contact,
+  "phone" | "urlForBuilding"
+>;
+
+export type SelectedBuilding = {
+  buildingName: string;
+  buildingID: string;
+  address: PartialAddress;
+  contact: PartialContact;
+  amiData: AmiData;
+};
 
 export type UnitAvailData = {
   unitSize: BedroomsKeyEnum | undefined;
@@ -34,4 +53,8 @@ export default interface IListing {
   managerID: string;
   feedback: string;
   program: ProgramKeyEnum | undefined;
+  // When adding listing for a building not in the buildings collection.
+  amiData?: AmiData;
+  address?: PartialAddress;
+  contact?: PartialContact;
 }

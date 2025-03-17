@@ -1,9 +1,10 @@
 import { Address, Contact } from "../interfaces/IBuilding";
+import { PartialAddress, PartialContact } from "../interfaces/IListing";
 
 interface addressAndPhoneProps {
   buildingName: string;
-  address: Address;
-  contact: Contact;
+  address: Address | PartialAddress;
+  contact: Contact | PartialContact;
   withLinks: boolean;
 }
 

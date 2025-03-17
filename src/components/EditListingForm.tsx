@@ -21,9 +21,15 @@ import { p345UnitPricing } from "../config/P345-unit-pricing";
 import { AddressAndPhone } from "./AddressAndPhone";
 import NotListedForm from "./NotListedForm";
 
-import IBuilding, { AmiData, PercentAmi } from "../interfaces/IBuilding";
+import IBuilding, {
+  Address,
+  AmiData,
+  Contact,
+  PercentAmi,
+} from "../interfaces/IBuilding";
 import IListing, {
   AvailDataArray,
+  SelectedBuilding,
   UnitAvailData,
 } from "../interfaces/IListing";
 
@@ -96,7 +102,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   const [allBuildings] = useAllBuildingsContext();
 
   const [selectedBuilding, setSelectedBuilding] = useState<
-    IBuilding | undefined
+    SelectedBuilding | undefined
   >(findSelectedBuilding(listing.buildingName));
 
   if (!currentUser) return null;
@@ -165,7 +171,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       if (name === "buildingName") {
         setFormFields(originalFormFields);
         if (value === "Not Listed") {
-          setSelectedBuilding({ amiData: blankTable } as IBuilding);
+          setSelectedBuilding(emptySelectedBuilding);
         } else {
           // This assumes building names are unique.
           setSelectedBuilding(findSelectedBuilding(value));
@@ -218,12 +224,37 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     ProgramKeyEnum.P345,
   ];
 
+  const emptyAddressSelectedBuilding: PartialWithRequired<
+    Address,
+    "streetAddress" | "zip" | "neighborhood"
+  > = {
+    streetAddress: "",
+    zip: "",
+    neighborhood: "",
+  };
+
+  const emptyContactSelectedBuilding: PartialWithRequired<
+    Contact,
+    "phone" | "urlForBuilding"
+  > = {
+    phone: "",
+    urlForBuilding: "",
+  };
+
   const blankTable: AmiData = {
     [BedroomsKeyEnum.MICRO]: [],
     [BedroomsKeyEnum.STUDIO]: [],
     [BedroomsKeyEnum.ONE_BED]: [],
     [BedroomsKeyEnum.TWO_BED]: [],
     [BedroomsKeyEnum.THREE_PLUS]: [],
+  };
+
+  const emptySelectedBuilding: SelectedBuilding = {
+    buildingName: "",
+    buildingID: "",
+    address: emptyAddressSelectedBuilding,
+    contact: emptyContactSelectedBuilding,
+    amiData: blankTable,
   };
 
   function updateAvailRow(unit: BedroomsKeyEnum, ami: PercentAmi) {
@@ -365,6 +396,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         <NotListedForm
           onClickCallback={handleToggleAmi}
           amiData={selectedBuilding.amiData}
+          setSelectedBuilding={setSelectedBuilding}
+          selectedBuilding={selectedBuilding}
         />
       )}
 

@@ -15,13 +15,15 @@ import { contactUsFormFieldsType } from "../pages/Contact";
 import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 
-import IListing, { AvailDataArray } from "../interfaces/IListing";
+import IListing, {
+  AvailDataArray,
+  SelectedBuilding,
+} from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
   IUserSignupAuthData,
   SignupAuthDataType,
 } from "../interfaces/IUser";
-import IBuilding from "../interfaces/IBuilding";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -85,10 +87,10 @@ function availDataToNum(
 
 export async function addListingFirestore(
   formFields: Partial<IListing>,
-  selectedBuilding: IBuilding | undefined,
+  selectedBuilding: SelectedBuilding | undefined,
   uid: string
 ): Promise<string> {
-  const listing: IListing = {
+  let listing: IListing = {
     buildingName: formFields.buildingName || "",
     buildingID: selectedBuilding?.buildingID || "",
     url: formFields.url || "",
@@ -104,6 +106,15 @@ export async function addListingFirestore(
     program: formFields.program,
     feedback: formFields.feedback || "",
   };
+
+  if (selectedBuilding) {
+    listing = {
+      ...listing,
+      amiData: selectedBuilding.amiData,
+      address: selectedBuilding.address,
+      contact: selectedBuilding.contact,
+    };
+  }
   try {
     // Create a new document reference with an auto-generated ID
     const listingDocRef = doc(collection(db, "listings"));
