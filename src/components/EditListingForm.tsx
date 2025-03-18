@@ -369,41 +369,36 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Col>
       </Row>
 
-      {/* New form, new building */}
-      {selectedBuilding && !selectedBuilding.buildingID && (
-        <NotListedForm
-          onClickCallback={handleToggleAmi}
-          amiData={selectedBuilding.amiData}
-          setSelectedBuilding={setSelectedBuilding}
-          selectedBuilding={selectedBuilding}
-        />
-      )}
-
       {/* Address */}
       {/* TODO: Maybe show address for existing listing? */}
       {/* New form, existing building */}
-      {selectedBuilding?.buildingID && (
-        <Row className="mb-3">
-          <Col className="mb-md-0">
-            <Form.Label className="mb-0 fw-bold">
-              Confirm location and contact info:
-            </Form.Label>
-
-            <AddressAndPhone
-              buildingName={selectedBuilding.buildingName}
-              address={selectedBuilding.address}
-              contact={selectedBuilding.contact}
-              withLinks={false}
-            />
-            <Button variant="outline-primary" size="sm">
-              Edit
-            </Button>
-          </Col>
-        </Row>
-      )}
-
       {selectedBuilding && (
         <>
+          <Row className="mb-3">
+            <Col className="mb-md-0">
+              {/* New form, new building */}
+              {selectedBuilding && !selectedBuilding.buildingID ? (
+                <NotListedForm
+                  onClickCallback={handleToggleAmi}
+                  amiData={selectedBuilding.amiData}
+                  setSelectedBuilding={setSelectedBuilding}
+                  selectedBuilding={selectedBuilding}
+                />
+              ) : (
+                <AddressAndPhone
+                  buildingName={selectedBuilding.buildingName}
+                  address={selectedBuilding.address}
+                  contact={selectedBuilding.contact}
+                  withLinks={false}
+                />
+              )}
+
+              <Button variant="outline-primary" size="sm">
+                Edit
+              </Button>
+            </Col>
+          </Row>
+
           <Program
             selectedProgram={formFields.program}
             onProgramInputChange={handleInputChange}

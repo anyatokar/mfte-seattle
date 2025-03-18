@@ -49,10 +49,12 @@ const Program: React.FC<ProgramProps> = ({
       </Row>
     </>
   ) : (
-    <>
-      <strong>Program:</strong>{" "}
-      {selectedProgram ? ProgramLabelEnum[selectedProgram] : ""}
-    </>
+    <Row>
+      <Col>
+        <strong>Program:</strong>{" "}
+        {selectedProgram ? ProgramLabelEnum[selectedProgram] : ""}
+      </Col>
+    </Row>
   );
 };
 

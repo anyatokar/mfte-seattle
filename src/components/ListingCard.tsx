@@ -7,7 +7,6 @@ import {
 import ListingActionsButtons from "./ListingActionsButtons";
 import IListing from "../interfaces/IListing";
 import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
-import EditListingForm from "./EditListingForm";
 import { expiringSoonDays } from "../config/config";
 
 import Badge from "react-bootstrap/Badge";
@@ -69,7 +68,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
     buildingName,
     listingStatus,
     url,
-    listingID,
     expiryDate,
     dateUpdated,
     description,
@@ -157,11 +155,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <Card as={Container} fluid>
-      <Card.Header data-testid="listing-card-header" as={Row} className="p-3">
-        <Col className="d-flex align-items-center p-0" xs={8} md={6}>
-          <Card.Title className="mb-0 w-100">
-            <div className="d-flex align-items-center">
-              <span>{buildingName}</span>
+      <Card.Header className="px-0" data-testid="listing-card-header" as={Row}>
+        <div className="d-flex align-items-center">
+          <Col>
+            <Card.Title className="m-0">
+              {buildingName}
               {statusBadge && (
                 <Badge
                   pill
@@ -172,83 +170,93 @@ const ListingCard: React.FC<ListingCardProps> = ({
                   {statusBadge.label}
                 </Badge>
               )}
-            </div>
-          </Card.Title>
-        </Col>
+            </Card.Title>
+          </Col>
 
-        <Col className="d-flex align-items-center justify-content-end p-0">
-          <ListingActionsButtons
-            listing={listing}
-            editListingID={editListingID}
-            onEditClick={onEditClick}
-          />
-        </Col>
+          <Col className="d-flex align-items-center justify-content-end">
+            <ListingActionsButtons
+              listing={listing}
+              editListingID={editListingID}
+              onEditClick={onEditClick}
+            />
+          </Col>
+        </div>
       </Card.Header>
 
-      <Row>
-        <Card.Body
-          data-testid="body-form-not-visible-existing-listing"
-          as={Col}
-        >
-          <div className="mb-2">
-            {building && (
-              <>
-                <AddressAndPhone
-                  buildingName={building.buildingName}
-                  address={building.address}
-                  contact={building.contact}
-                  withLinks={false}
-                />
-                <Program selectedProgram={listing.program} />
-                <BuildingDataTable
-                  type={TableTypeEnum.amiData}
-                  data={building.amiData}
-                />
-              </>
-            )}
-          </div>
+      <Card.Body
+        className="py-2 px-0"
+        data-testid="body-form-not-visible-existing-listing"
+      >
+        {building && (
+          <>
+            <Card.Text className="mb-0">
+              <strong>Address and contact:</strong>
+            </Card.Text>
+            <AddressAndPhone
+              buildingName={building.buildingName}
+              address={building.address}
+              contact={building.contact}
+              withLinks={false}
+            />
 
-          <BuildingDataTable
-            type={TableTypeEnum.availData}
-            data={availDataArray}
-            program={program}
-          />
+            <div className="mt-3">
+              <Program selectedProgram={listing.program} />
+            </div>
 
-          <Card.Text className="mt-3">
-            <strong>URL:</strong>{" "}
-            <a
-              id="addressLink"
-              href={url}
-              target="_blank"
-              rel="noreferrer"
-              className="address-phone-link"
+            <Card.Text className="mt-3 mb-0">
+              <strong>All rent-reduced units in building:</strong>
+            </Card.Text>
+            <BuildingDataTable
+              type={TableTypeEnum.amiData}
+              data={building.amiData}
+            />
+          </>
+        )}
+
+        <Card.Text className="mt-3 mb-0">
+          <strong>Available rent-reduced units:</strong>
+        </Card.Text>
+        <BuildingDataTable
+          type={TableTypeEnum.availData}
+          data={availDataArray}
+          program={program}
+        />
+
+        <Card.Text className="mt-3">
+          <strong>URL:</strong>{" "}
+          <a
+            id="addressLink"
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            className="address-phone-link"
+          >
+            {url}
+          </a>
+        </Card.Text>
+
+        <Card.Text className="d-flex align-items-center">
+          <strong className="me-1">Expires:</strong> {formatDate(expiryDate)}
+          {expiryBadge && (
+            <Badge
+              pill
+              bg={expiryBadge.bg}
+              text={expiryBadge.text}
+              className="ms-2"
             >
-              {url}
-            </a>
-          </Card.Text>
+              {expiryBadge.label}
+            </Badge>
+          )}
+        </Card.Text>
+        <Card.Text className="mt-3">
+          <strong>Description:</strong> {description}
+        </Card.Text>
+      </Card.Body>
 
-          <Card.Text className="d-flex align-items-center">
-            <strong className="me-1">Expires:</strong>
-            {formatDate(expiryDate)}
-            {expiryBadge && (
-              <Badge
-                pill
-                bg={expiryBadge.bg}
-                text={expiryBadge.text}
-                className="ms-2"
-              >
-                {expiryBadge.label}
-              </Badge>
-            )}
-          </Card.Text>
-          <Card.Text className="mt-3">
-            <strong>Description:</strong> {description}
-          </Card.Text>
-        </Card.Body>
-      </Row>
-
-      <Card.Footer as={Row}>
-        Last update: {dateUpdated ? timestampToDateAndTime(dateUpdated) : ""}
+      <Card.Footer as={Row} className="px-0">
+        <Card.Text>
+          Last update: {dateUpdated ? timestampToDateAndTime(dateUpdated) : ""}
+        </Card.Text>
       </Card.Footer>
     </Card>
   );

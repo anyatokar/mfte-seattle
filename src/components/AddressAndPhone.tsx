@@ -1,14 +1,14 @@
 import { Address, Contact } from "../interfaces/IBuilding";
 import { PartialAddress, PartialContact } from "../interfaces/IListing";
 
-interface addressAndPhoneProps {
+interface AddressAndPhoneProps {
   buildingName: string;
   address: Address | PartialAddress;
   contact: Contact | PartialContact;
   withLinks: boolean;
 }
 
-const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
+const AddressAndPhone: React.FC<AddressAndPhoneProps> = ({
   buildingName,
   address,
   contact,
