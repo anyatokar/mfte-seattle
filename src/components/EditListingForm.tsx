@@ -494,9 +494,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             }
                             value={unitAvailData.unitSize}
                             disabled={
-                              !selectedBuilding ||
-                              Object.values(selectedBuilding.amiData).length ===
-                                0
+                              selectedBuilding &&
+                              Object.values(selectedBuilding.amiData).flat()
+                                .length === 0
                             }
                           >
                             <option value={unitAvailData.unitSize}>
