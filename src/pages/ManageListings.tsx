@@ -236,7 +236,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                               <ListingCard
                                 listing={listing}
                                 toggleFormCallback={toggleFormCallback}
-                                isExistingListing={true}
                                 editListingID={editListingID}
                                 onEditClick={() =>
                                   setShowAddBuildingModal(true)
@@ -251,7 +250,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                     <ListingCard
                       listing={null}
                       toggleFormCallback={toggleFormCallback}
-                      isExistingListing={false}
                       editListingID={editListingID}
                       onEditClick={() => setShowAddBuildingModal(true)}
                     />
@@ -289,7 +287,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                                     listing={listing}
                                     editListingID={editListingID}
                                     toggleFormCallback={toggleFormCallback}
-                                    isExistingListing={true}
                                     onEditClick={() =>
                                       setShowAddBuildingModal(true)
                                     }

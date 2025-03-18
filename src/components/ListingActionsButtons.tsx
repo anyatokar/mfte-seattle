@@ -22,7 +22,6 @@ type ListingWithRequired = PartialWithRequired<
 >;
 
 type ListingActionsButtonsPropsType = {
-  isExistingListing: boolean;
   toggleFormCallback: (editListingID: string, clickedSave: boolean) => void;
   listing: ListingWithRequired;
   editListingID: string;

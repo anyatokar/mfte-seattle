@@ -43,14 +43,12 @@ import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 
 type EditListingFormProps = {
-  isExistingListing: boolean;
   toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
   listing?: ListingWithRequired;
   onClose?: () => void;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
-  isExistingListing,
   toggleFormCallback,
   listing,
   onClose,
@@ -178,7 +176,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     if (!formFields) return;
 
-    if (!isExistingListing) {
+    // TODO: temp true
+    if (true) {
       const listingID = await addListingFirestore(
         formFields,
         selectedBuilding,
@@ -353,33 +352,32 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      {!isExistingListing && (
-        <Row className="mb-3">
-          <Col md={6} className="mb-md-0">
-            <Form.Label>Select building</Form.Label>
-            <Form.Select
-              required
-              name="buildingName"
-              id="buildingName"
-              onChange={handleInputChange}
-            >
-              <option value="">Select</option>
-              <option value="Not Listed">Not Listed</option>
-              <Dropdown.Divider />
-              {allBuildings
-                .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
-                .map((selectedBuilding) => (
-                  <option
-                    key={selectedBuilding.buildingID}
-                    value={selectedBuilding.buildingName}
-                  >
-                    {selectedBuilding.buildingName}
-                  </option>
-                ))}
-            </Form.Select>
-          </Col>
-        </Row>
-      )}
+      <Row className="mb-3">
+        <Col md={6} className="mb-md-0">
+          <Form.Label>Select building</Form.Label>
+          <Form.Select
+            required
+            name="buildingName"
+            id="buildingName"
+            onChange={handleInputChange}
+          >
+            <option value="">Select</option>
+            <option value="Not Listed">Not Listed</option>
+            <Dropdown.Divider />
+            {allBuildings
+              .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
+              .map((selectedBuilding) => (
+                <option
+                  key={selectedBuilding.buildingID}
+                  value={selectedBuilding.buildingName}
+                >
+                  {selectedBuilding.buildingName}
+                </option>
+              ))}
+          </Form.Select>
+        </Col>
+      </Row>
+
       {/* New form, new building */}
       {selectedBuilding && !selectedBuilding.buildingID && (
         <NotListedForm
@@ -413,7 +411,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Row>
       )}
 
-      {(selectedBuilding || isExistingListing) && (
+      {selectedBuilding && (
         <>
           <Row>
             <Col>

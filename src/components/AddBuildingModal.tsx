@@ -18,7 +18,6 @@ const AddBuildingModal: React.FC<AddBuildingModalProps> = ({
       </Modal.Header>
       <Modal.Body>
         <EditListingForm
-          isExistingListing={false}
           toggleFormCallback={toggleFormCallback}
           onClose={onClose}
         />

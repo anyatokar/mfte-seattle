@@ -37,14 +37,14 @@ type ListingCardProps = {
   listing: ListingWithRequired | null;
   toggleFormCallback: (editListingID: string, clickedSave: boolean) => void;
   /** Existing, as opposed to a New listing card */
-  isExistingListing: boolean;
+
   editListingID: string;
   onEditClick: () => void;
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({
   listing,
-  isExistingListing,
+
   toggleFormCallback,
   editListingID,
   onEditClick,
@@ -160,27 +160,24 @@ const ListingCard: React.FC<ListingCardProps> = ({
       <Card.Header data-testid="listing-card-header" as={Row} className="p-3">
         <Col className="d-flex align-items-center p-0" xs={8} md={6}>
           <Card.Title className="mb-0 w-100">
-            {isExistingListing && (
-              <div className="d-flex align-items-center">
-                <span>{buildingName}</span>
-                {statusBadge && (
-                  <Badge
-                    pill
-                    bg={statusBadge.bg}
-                    text={statusBadge.text}
-                    className="ms-2"
-                  >
-                    {statusBadge.label}
-                  </Badge>
-                )}
-              </div>
-            )}
+            <div className="d-flex align-items-center">
+              <span>{buildingName}</span>
+              {statusBadge && (
+                <Badge
+                  pill
+                  bg={statusBadge.bg}
+                  text={statusBadge.text}
+                  className="ms-2"
+                >
+                  {statusBadge.label}
+                </Badge>
+              )}
+            </div>
           </Card.Title>
         </Col>
 
         <Col className="d-flex align-items-center justify-content-end p-0">
           <ListingActionsButtons
-            isExistingListing={isExistingListing}
             toggleFormCallback={toggleFormCallback}
             listing={listing}
             editListingID={editListingID}
@@ -196,70 +193,66 @@ const ListingCard: React.FC<ListingCardProps> = ({
             <EditListingForm
               key={listingID}
               listing={listing}
-              isExistingListing={isExistingListing}
               toggleFormCallback={toggleFormCallback}
             />
           </Card.Body>
         ) : (
-          isExistingListing && (
-            <Card.Body
-              data-testid="body-form-not-visible-existing-listing"
-              as={Col}
-            >
-              <div className="mb-2">
-                {building && (
-                  <BuildingDataTable
-                    type={TableTypeEnum.amiData}
-                    data={building.amiData}
-                  />
-                )}{" "}
-              </div>
+          <Card.Body
+            data-testid="body-form-not-visible-existing-listing"
+            as={Col}
+          >
+            <div className="mb-2">
+              {building && (
+                <BuildingDataTable
+                  type={TableTypeEnum.amiData}
+                  data={building.amiData}
+                />
+              )}{" "}
+            </div>
 
-              <BuildingDataTable
-                type={TableTypeEnum.availData}
-                data={availDataArray}
-                program={program}
-              />
+            <BuildingDataTable
+              type={TableTypeEnum.availData}
+              data={availDataArray}
+              program={program}
+            />
 
-              <Card.Text className="mt-3">
-                <strong>URL:</strong>{" "}
-                <a
-                  id="addressLink"
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="address-phone-link"
+            <Card.Text className="mt-3">
+              <strong>URL:</strong>{" "}
+              <a
+                id="addressLink"
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="address-phone-link"
+              >
+                {url}
+              </a>
+            </Card.Text>
+
+            <Card.Text className="d-flex align-items-center">
+              <strong className="me-1">Expires:</strong>
+              {formatDate(expiryDate)}
+              {expiryBadge && (
+                <Badge
+                  pill
+                  bg={expiryBadge.bg}
+                  text={expiryBadge.text}
+                  className="ms-2"
                 >
-                  {url}
-                </a>
-              </Card.Text>
-
-              <Card.Text className="d-flex align-items-center">
-                <strong className="me-1">Expires:</strong>
-                {formatDate(expiryDate)}
-                {expiryBadge && (
-                  <Badge
-                    pill
-                    bg={expiryBadge.bg}
-                    text={expiryBadge.text}
-                    className="ms-2"
-                  >
-                    {expiryBadge.label}
-                  </Badge>
-                )}
-              </Card.Text>
-              <Card.Text className="mt-3">
-                <strong>Description:</strong> {description}
-              </Card.Text>
-            </Card.Body>
-          )
+                  {expiryBadge.label}
+                </Badge>
+              )}
+            </Card.Text>
+            <Card.Text className="mt-3">
+              <strong>Description:</strong> {description}
+            </Card.Text>
+          </Card.Body>
         )}
       </Row>
-      {isExistingListing && (
-        <Card.Footer as={Row}>
-          Last update: {dateUpdated ? timestampToDateAndTime(dateUpdated) : ""}
-        </Card.Footer>
-      )}
+
+      <Card.Footer as={Row}>
+        Last update: {dateUpdated ? timestampToDateAndTime(dateUpdated) : ""}
+      </Card.Footer>
     </Card>
   );
 };

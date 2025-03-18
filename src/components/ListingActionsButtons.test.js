@@ -40,7 +40,6 @@ describe("ListingActionsButtons Component", () => {
         }}
         editListingID=""
         isFormVisible={false}
-        isExistingListing={false}
         toggleFormCallback={mockToggleFormCallback}
       />
     );
@@ -60,7 +59,6 @@ describe("ListingActionsButtons Component", () => {
         }}
         editListingID=""
         isFormVisible={false}
-        isExistingListing={true}
         toggleFormCallback={mockToggleFormCallback}
       />
     );
@@ -85,7 +83,6 @@ describe("ListingActionsButtons Component", () => {
         }}
         editListingID=""
         isFormVisible={false}
-        isExistingListing={true}
         toggleFormCallback={mockToggleFormCallback}
       />
     );
@@ -118,7 +115,6 @@ describe("ListingActionsButtons Component", () => {
         }}
         editListingID=""
         isFormVisible={false}
-        isExistingListing={true}
         toggleFormCallback={mockToggleFormCallback}
       />
     );
@@ -146,7 +142,6 @@ describe("ListingActionsButtons Component", () => {
         }}
         editListingID="listingID"
         isFormVisible={true}
-        isExistingListing={true}
         toggleFormCallback={mockToggleFormCallback}
       />
     );
