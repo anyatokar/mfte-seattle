@@ -172,8 +172,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
       </Card.Header>
 
       {/* Form is visible, so don't show the listing data. */}
-      {isFormVisible && editListingID === listingID ? (
-        <Row>
+      <Row>
+        {isFormVisible && editListingID === listingID ? (
           <Card.Body data-testid="body-form-visible" as={Col}>
             <EditListingForm
               isFormVisible={isFormVisible}
@@ -183,10 +183,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
               toggleFormCallback={toggleFormCallback}
             />
           </Card.Body>
-        </Row>
-      ) : (
-        isExistingListing && (
-          <Row>
+        ) : (
+          isExistingListing && (
             <Card.Body
               data-testid="body-form-not-visible-existing-listing"
               as={Col}
@@ -227,9 +225,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 <strong>Description:</strong> {description}
               </Card.Text>
             </Card.Body>
-          </Row>
-        )
-      )}
+          )
+        )}
+      </Row>
       {isExistingListing && (
         <Card.Footer as={Row}>
           Last update: {dateUpdated ? timestampToDateAndTime(dateUpdated) : ""}

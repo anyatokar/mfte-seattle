@@ -212,6 +212,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   const programOptionsArray: ProgramKeyEnum[] = [
     ProgramKeyEnum.P6,
     ProgramKeyEnum.P345,
+    ProgramKeyEnum.other,
   ];
 
   const emptyAddressSelectedBuilding: PartialWithRequired<
@@ -416,10 +417,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       {(selectedBuilding || isExistingListing) && (
         <>
-          <Row className="mb-3">
+          <Row>
             <Col>
               <Form.Label className="mb-0 fw-bold">Program</Form.Label>
-
               {programOptionsArray.map((program) => (
                 <Form.Check
                   required
@@ -435,9 +435,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               ))}
             </Col>
           </Row>
+          <Row>
+            <Col md={6}>
+              {formFields.program === ProgramKeyEnum.other && (
+                <Form.Control required />
+              )}
+            </Col>
+          </Row>
 
           {/* URL */}
-          <Row className="mb-3">
+          <Row className="my-3">
             <Col md={8} className="mb-0 mb-md-0">
               <Form.Label className="mb-0 fw-bold">Listings URL</Form.Label>
               <Form.Control
