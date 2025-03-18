@@ -20,6 +20,7 @@ import { p345UnitPricing } from "../config/P345-unit-pricing";
 
 import { AddressAndPhone } from "./AddressAndPhone";
 import NotListedForm from "./NotListedForm";
+import Program from "./Program";
 
 import IBuilding, {
   Address,
@@ -201,12 +202,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     // Close modal
     if (onClose) onClose();
   };
-
-  const programOptionsArray: ProgramKeyEnum[] = [
-    ProgramKeyEnum.P6,
-    ProgramKeyEnum.P345,
-    ProgramKeyEnum.other,
-  ];
 
   const emptyAddressSelectedBuilding: PartialWithRequired<
     Address,
@@ -409,31 +404,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       {selectedBuilding && (
         <>
-          <Row>
-            <Col>
-              <Form.Label className="mb-0 fw-bold">Program</Form.Label>
-              {programOptionsArray.map((program) => (
-                <Form.Check
-                  required
-                  key={program}
-                  type="radio"
-                  label={ProgramLabelEnum[program]}
-                  name="program"
-                  id={program}
-                  value={program}
-                  checked={formFields.program === program}
-                  onChange={(e) => handleInputChange(e)}
-                />
-              ))}
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              {formFields.program === ProgramKeyEnum.other && (
-                <Form.Control required />
-              )}
-            </Col>
-          </Row>
+          <Program
+            selectedProgram={formFields.program}
+            onProgramInputChange={handleInputChange}
+          />
 
           {/* URL */}
           <Row className="my-3">

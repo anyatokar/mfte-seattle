@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import IBuilding from "../interfaces/IBuilding";
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+import { AddressAndPhone } from "./AddressAndPhone";
+import Program from "./Program";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -183,64 +185,66 @@ const ListingCard: React.FC<ListingCardProps> = ({
         </Col>
       </Card.Header>
 
-      {/* Form is visible, so don't show the listing data. */}
       <Row>
-        {editListingID === listingID ? (
-          <Card.Body data-testid="body-form-visible" as={Col}>
-            <EditListingForm key={listingID} listing={listing} />
-          </Card.Body>
-        ) : (
-          <Card.Body
-            data-testid="body-form-not-visible-existing-listing"
-            as={Col}
-          >
-            <div className="mb-2">
-              {building && (
+        <Card.Body
+          data-testid="body-form-not-visible-existing-listing"
+          as={Col}
+        >
+          <div className="mb-2">
+            {building && (
+              <>
+                <AddressAndPhone
+                  buildingName={building.buildingName}
+                  address={building.address}
+                  contact={building.contact}
+                  withLinks={false}
+                />
+                <Program selectedProgram={listing.program} />
                 <BuildingDataTable
                   type={TableTypeEnum.amiData}
                   data={building.amiData}
                 />
-              )}{" "}
-            </div>
+              </>
+            )}
+          </div>
 
-            <BuildingDataTable
-              type={TableTypeEnum.availData}
-              data={availDataArray}
-              program={program}
-            />
+          <BuildingDataTable
+            type={TableTypeEnum.availData}
+            data={availDataArray}
+            program={program}
+          />
 
-            <Card.Text className="mt-3">
-              <strong>URL:</strong>{" "}
-              <a
-                id="addressLink"
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-                className="address-phone-link"
+          <Card.Text className="mt-3">
+            <strong>URL:</strong>{" "}
+            <a
+              id="addressLink"
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              className="address-phone-link"
+            >
+              {url}
+            </a>
+          </Card.Text>
+
+          <Card.Text className="d-flex align-items-center">
+            <strong className="me-1">Expires:</strong>
+            {formatDate(expiryDate)}
+            {expiryBadge && (
+              <Badge
+                pill
+                bg={expiryBadge.bg}
+                text={expiryBadge.text}
+                className="ms-2"
               >
-                {url}
-              </a>
-            </Card.Text>
-
-            <Card.Text className="d-flex align-items-center">
-              <strong className="me-1">Expires:</strong>
-              {formatDate(expiryDate)}
-              {expiryBadge && (
-                <Badge
-                  pill
-                  bg={expiryBadge.bg}
-                  text={expiryBadge.text}
-                  className="ms-2"
-                >
-                  {expiryBadge.label}
-                </Badge>
-              )}
-            </Card.Text>
-            <Card.Text className="mt-3">
-              <strong>Description:</strong> {description}
-            </Card.Text>
-          </Card.Body>
-        )}
+                {expiryBadge.label}
+              </Badge>
+            )}
+          </Card.Text>
+          <Card.Text className="mt-3">
+            <strong>Description:</strong> {description}
+          </Card.Text>
+        </Card.Body>
       </Row>
 
       <Card.Footer as={Row}>
