@@ -43,13 +43,11 @@ import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 
 type EditListingFormProps = {
-  toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
   listing?: ListingWithRequired;
   onClose?: () => void;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
-  toggleFormCallback,
   listing,
   onClose,
 }) => {
@@ -187,7 +185,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         console.log(
           `Successfully added listing for ${selectedBuilding?.buildingName}. ListingID: ${listingID}`
         );
-        toggleFormCallback("", true);
       }
     } else {
       const isSuccessful = await updateListingFirestore(
@@ -198,7 +195,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         console.log(
           `Successfully updated listing for ${selectedBuilding?.buildingName}, listingID: ${listing?.listingID || ""}`
         );
-        toggleFormCallback(listing?.listingID || "", true);
       }
     }
 

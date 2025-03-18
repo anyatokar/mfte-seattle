@@ -2,12 +2,10 @@ import Modal from "react-bootstrap/Modal";
 import EditListingForm from "./EditListingForm";
 
 type AddBuildingModalProps = {
-  toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
   showModal: boolean;
   onClose: () => void;
 };
 const AddBuildingModal: React.FC<AddBuildingModalProps> = ({
-  toggleFormCallback,
   showModal,
   onClose,
 }) => {
@@ -17,10 +15,7 @@ const AddBuildingModal: React.FC<AddBuildingModalProps> = ({
         <Modal.Title>Add Building Form</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <EditListingForm
-          toggleFormCallback={toggleFormCallback}
-          onClose={onClose}
-        />
+        <EditListingForm onClose={onClose} />
       </Modal.Body>
     </Modal>
   );

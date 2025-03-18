@@ -22,7 +22,6 @@ type ListingWithRequired = PartialWithRequired<
 >;
 
 type ListingActionsButtonsPropsType = {
-  toggleFormCallback: (editListingID: string, clickedSave: boolean) => void;
   listing: ListingWithRequired;
   editListingID: string;
   onEditClick: () => void;
@@ -31,7 +30,6 @@ type ListingActionsButtonsPropsType = {
 const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   listing,
   editListingID,
-  toggleFormCallback,
   onEditClick,
 }) => {
   const [showModal, setShowModal] = useState(false);
@@ -50,7 +48,6 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
 
   const onCancelClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    toggleFormCallback(listing.listingID, false);
   };
 
   const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {

@@ -38,11 +38,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleClose = () => setShowModal(false);
-  const handleShow = (listingID: string) => {
-    setModalListingID(listingID); // Set the listingID when showing the modal
-    setShowModal(true);
-  };
-
   const handleConfirm = () => {
     if (modalListingID === editListingID) {
       console.log("modalListingID === editListingID");
@@ -56,16 +51,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
 
     handleClose();
   };
-
-  function toggleFormCallback(listingID: string, clickedSave: boolean) {
-    if (clickedSave) {
-      setEditListingID("");
-    } else if (listingID !== editListingID) {
-      handleShow(listingID);
-    } else {
-      setEditListingID(listingID);
-    }
-  }
 
   if (!currentUser || accountType !== accountTypeEnum.MANAGER) {
     return null;
@@ -235,7 +220,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                             <Col className="pb-2" key={listing.listingID}>
                               <ListingCard
                                 listing={listing}
-                                toggleFormCallback={toggleFormCallback}
                                 editListingID={editListingID}
                                 onEditClick={() =>
                                   setShowAddBuildingModal(true)
@@ -249,7 +233,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                   <Tab.Pane eventKey="addListing">
                     <ListingCard
                       listing={null}
-                      toggleFormCallback={toggleFormCallback}
                       editListingID={editListingID}
                       onEditClick={() => setShowAddBuildingModal(true)}
                     />
@@ -286,7 +269,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                                   <ListingCard
                                     listing={listing}
                                     editListingID={editListingID}
-                                    toggleFormCallback={toggleFormCallback}
                                     onEditClick={() =>
                                       setShowAddBuildingModal(true)
                                     }
@@ -310,7 +292,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
         confirmType={confirmModalTypeEnum.LISTING_CANCEL_EDIT}
       />
       <AddBuildingModal
-        toggleFormCallback={toggleFormCallback}
         showModal={showAddBuildingModal}
         onClose={() => setShowAddBuildingModal(false)}
       />
