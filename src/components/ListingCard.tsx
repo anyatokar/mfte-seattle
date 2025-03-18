@@ -14,6 +14,8 @@ import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import IBuilding from "../interfaces/IBuilding";
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -38,6 +40,7 @@ type ListingCardProps = {
   /** Existing, as opposed to a New listing card */
   isExistingListing: boolean;
   editListingID: string;
+  onEditClick: () => void;
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -46,6 +49,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   isExistingListing,
   toggleFormCallback,
   editListingID,
+  onEditClick,
 }) => {
   if (listing === null) {
     listing = {
@@ -137,6 +141,22 @@ const ListingCard: React.FC<ListingCardProps> = ({
     // eslint-disable-next-line
   }, [listing]);
 
+  const [allBuildings] = useAllBuildingsContext();
+
+  function findSelectedBuilding(
+    buildingID: string | undefined
+  ): IBuilding | undefined {
+    if (buildingID === undefined) {
+      return undefined;
+    }
+
+    return allBuildings.find(
+      (building) => buildingName === building.buildingName
+    );
+  }
+
+  const building = findSelectedBuilding(listing.buildingID);
+
   return (
     <Card as={Container} fluid>
       <Card.Header data-testid="listing-card-header" as={Row} className="p-3">
@@ -167,6 +187,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             toggleFormCallback={toggleFormCallback}
             listing={listing}
             editListingID={editListingID}
+            onEditClick={onEditClick}
           />
         </Col>
       </Card.Header>
@@ -189,11 +210,21 @@ const ListingCard: React.FC<ListingCardProps> = ({
               data-testid="body-form-not-visible-existing-listing"
               as={Col}
             >
+              <div className="mb-2">
+                {building && (
+                  <BuildingDataTable
+                    type={TableTypeEnum.amiData}
+                    data={building.amiData}
+                  />
+                )}{" "}
+              </div>
+
               <BuildingDataTable
                 type={TableTypeEnum.availData}
                 data={availDataArray}
                 program={program}
               />
+
               <Card.Text className="mt-3">
                 <strong>URL:</strong>{" "}
                 <a

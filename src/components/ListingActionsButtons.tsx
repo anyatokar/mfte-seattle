@@ -27,6 +27,7 @@ type ListingActionsButtonsPropsType = {
   toggleFormCallback: (editListingID: string, clickedSave: boolean) => void;
   listing: ListingWithRequired;
   editListingID: string;
+  onEditClick: () => void;
 };
 
 const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
@@ -34,6 +35,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   editListingID,
   isFormVisible,
   toggleFormCallback,
+  onEditClick,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const { currentUser } = useAuth();
@@ -80,11 +82,6 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     event.preventDefault();
 
     handleShow();
-  };
-
-  const onEditClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    toggleFormCallback(listing.listingID, false);
   };
 
   return (

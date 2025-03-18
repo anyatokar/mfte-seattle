@@ -246,6 +246,9 @@ const ManageListingsPage: React.FC<IPage> = () => {
                                 isFormVisible={isFormVisible}
                                 isExistingListing={true}
                                 editListingID={editListingID}
+                                onEditClick={() =>
+                                  setShowAddBuildingModal(true)
+                                }
                               />
                             </Col>
                           ))}
@@ -259,6 +262,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                       toggleFormCallback={toggleFormCallback}
                       isExistingListing={false}
                       editListingID={editListingID}
+                      onEditClick={() => setShowAddBuildingModal(true)}
                     />
                   </Tab.Pane>
 
@@ -296,6 +300,9 @@ const ManageListingsPage: React.FC<IPage> = () => {
                                     editListingID={editListingID}
                                     toggleFormCallback={toggleFormCallback}
                                     isExistingListing={true}
+                                    onEditClick={() =>
+                                      setShowAddBuildingModal(true)
+                                    }
                                   />
                                 </Col>
                               ))}
