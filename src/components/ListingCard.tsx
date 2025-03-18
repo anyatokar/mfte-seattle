@@ -35,7 +35,6 @@ type ListingWithRequired = PartialWithRequired<
 
 type ListingCardProps = {
   listing: ListingWithRequired | null;
-  isFormVisible: boolean;
   toggleFormCallback: (editListingID: string, clickedSave: boolean) => void;
   /** Existing, as opposed to a New listing card */
   isExistingListing: boolean;
@@ -45,7 +44,6 @@ type ListingCardProps = {
 
 const ListingCard: React.FC<ListingCardProps> = ({
   listing,
-  isFormVisible,
   isExistingListing,
   toggleFormCallback,
   editListingID,
@@ -182,7 +180,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
         <Col className="d-flex align-items-center justify-content-end p-0">
           <ListingActionsButtons
-            isFormVisible={isFormVisible}
             isExistingListing={isExistingListing}
             toggleFormCallback={toggleFormCallback}
             listing={listing}
@@ -194,10 +191,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
       {/* Form is visible, so don't show the listing data. */}
       <Row>
-        {isFormVisible && editListingID === listingID ? (
+        {editListingID === listingID ? (
           <Card.Body data-testid="body-form-visible" as={Col}>
             <EditListingForm
-              isFormVisible={isFormVisible}
               key={listingID}
               listing={listing}
               isExistingListing={isExistingListing}

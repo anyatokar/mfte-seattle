@@ -22,7 +22,6 @@ type ListingWithRequired = PartialWithRequired<
 >;
 
 type ListingActionsButtonsPropsType = {
-  isFormVisible: boolean;
   isExistingListing: boolean;
   toggleFormCallback: (editListingID: string, clickedSave: boolean) => void;
   listing: ListingWithRequired;
@@ -33,7 +32,6 @@ type ListingActionsButtonsPropsType = {
 const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   listing,
   editListingID,
-  isFormVisible,
   toggleFormCallback,
   onEditClick,
 }) => {
@@ -121,7 +119,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
           </Dropdown.Item>
         </DropdownButton>
       )}
-      {isFormVisible && editListingID === listing.listingID && (
+      {editListingID === listing.listingID && (
         <Button variant="outline-danger" onClick={onCancelClick}>
           Cancel
         </Button>

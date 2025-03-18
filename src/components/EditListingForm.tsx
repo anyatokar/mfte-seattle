@@ -45,7 +45,6 @@ import Table from "react-bootstrap/Table";
 type EditListingFormProps = {
   isExistingListing: boolean;
   toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
-  isFormVisible: boolean;
   listing?: ListingWithRequired;
   onClose?: () => void;
 };
@@ -53,7 +52,6 @@ type EditListingFormProps = {
 const EditListingForm: React.FC<EditListingFormProps> = ({
   isExistingListing,
   toggleFormCallback,
-  isFormVisible,
   listing,
   onClose,
 }) => {
@@ -355,7 +353,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      {!isExistingListing && isFormVisible && (
+      {!isExistingListing && (
         <Row className="mb-3">
           <Col md={6} className="mb-md-0">
             <Form.Label>Select building</Form.Label>

@@ -33,7 +33,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
   );
   const defaultActiveKey: string = "viewListings";
   const [activeTab, setActiveTab] = useState<string>(defaultActiveKey);
-  const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
   const [editListingID, setEditListingID] = useState<string>("");
   const [modalListingID, setModalListingID] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
@@ -47,12 +46,10 @@ const ManageListingsPage: React.FC<IPage> = () => {
   const handleConfirm = () => {
     if (modalListingID === editListingID) {
       console.log("modalListingID === editListingID");
-      setIsFormVisible(false);
       setEditListingID("");
     } else if (modalListingID !== "" && modalListingID !== editListingID) {
       console.log("Switching listings");
       setEditListingID(modalListingID);
-      setIsFormVisible(true);
     } else if (modalListingID === "") {
       setEditListingID("");
     }
@@ -62,14 +59,10 @@ const ManageListingsPage: React.FC<IPage> = () => {
 
   function toggleFormCallback(listingID: string, clickedSave: boolean) {
     if (clickedSave) {
-      setIsFormVisible(false);
       setEditListingID("");
-    } else if (isFormVisible && listingID !== editListingID) {
-      handleShow(listingID);
-    } else if (isFormVisible) {
+    } else if (listingID !== editListingID) {
       handleShow(listingID);
     } else {
-      setIsFormVisible(true);
       setEditListingID(listingID);
     }
   }
@@ -243,7 +236,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                               <ListingCard
                                 listing={listing}
                                 toggleFormCallback={toggleFormCallback}
-                                isFormVisible={isFormVisible}
                                 isExistingListing={true}
                                 editListingID={editListingID}
                                 onEditClick={() =>
@@ -257,7 +249,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
 
                   <Tab.Pane eventKey="addListing">
                     <ListingCard
-                      isFormVisible={isFormVisible}
                       listing={null}
                       toggleFormCallback={toggleFormCallback}
                       isExistingListing={false}
@@ -296,7 +287,6 @@ const ManageListingsPage: React.FC<IPage> = () => {
                                 <Col className="pb-2" key={listing.listingID}>
                                   <ListingCard
                                     listing={listing}
-                                    isFormVisible={isFormVisible}
                                     editListingID={editListingID}
                                     toggleFormCallback={toggleFormCallback}
                                     isExistingListing={true}
