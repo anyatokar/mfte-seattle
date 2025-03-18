@@ -14,11 +14,9 @@ import { formatCurrency, getMaxExpiryDate } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { colWidths } from "../config/config";
-
 import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
 
-import { AddressAndPhone } from "./AddressAndPhone";
 import NotListedForm from "./NotListedForm";
 import Program from "./Program";
 
@@ -42,6 +40,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
+import ListingCardBuildingData from "./ListingCardBuildingData";
 
 type EditListingFormProps = {
   listing?: ListingWithRequired;
@@ -52,6 +51,29 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   listing,
   onClose,
 }) => {
+  const emptyListing = {
+    availDataArray: [],
+    url: "",
+    expiryDate: "",
+    listingID: "",
+    buildingID: "",
+    buildingName: "",
+    listingStatus: undefined,
+    description: "",
+    feedback: "",
+    program: undefined,
+  };
+
+  const {
+    buildingName,
+    availDataArray,
+    url,
+    expiryDate,
+    description,
+    feedback,
+    program,
+  } = listing ?? emptyListing;
+
   const blankAvailRow: UnitAvailData = {
     unitSize: undefined,
     dateAvailString: "",
@@ -62,16 +84,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   };
 
   const originalFormFields: Partial<IListing> = {
-    buildingName: listing?.buildingName || "",
+    buildingName: buildingName,
     availDataArray:
-      listing?.availDataArray && listing?.availDataArray.length > 0
+      availDataArray && availDataArray.length > 0
         ? listing?.availDataArray
         : [blankAvailRow],
-    url: listing?.url,
-    expiryDate: listing?.expiryDate,
-    description: listing?.description,
-    feedback: listing?.feedback,
-    program: listing?.program,
+    url: url,
+    expiryDate: expiryDate,
+    description: description,
+    feedback: feedback,
+    program: program,
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
@@ -370,7 +392,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       </Row>
 
       {/* Address */}
-      {/* TODO: Maybe show address for existing listing? */}
+      {/* TODO: Maybe show address for existing listing */}
       {/* New form, existing building */}
       {selectedBuilding && (
         <>
@@ -385,11 +407,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   selectedBuilding={selectedBuilding}
                 />
               ) : (
-                <AddressAndPhone
-                  buildingName={selectedBuilding.buildingName}
-                  address={selectedBuilding.address}
-                  contact={selectedBuilding.contact}
-                  withLinks={false}
+                <ListingCardBuildingData
+                  buildingID={selectedBuilding.buildingID}
                 />
               )}
 

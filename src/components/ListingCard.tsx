@@ -1,22 +1,21 @@
-import BuildingDataTable from "./BuildingDataTable";
+import { useEffect, useState } from "react";
 import {
   expiryBadgeEnum,
   listingStatusEnum,
   TableTypeEnum,
 } from "../types/enumTypes";
+import BuildingDataTable from "./BuildingDataTable";
 import ListingActionsButtons from "./ListingActionsButtons";
+import ListingCardBuildingData from "./ListingCardBuildingData";
 import IListing from "../interfaces/IListing";
 import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
 import { expiringSoonDays } from "../config/config";
 
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
-import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import IBuilding from "../interfaces/IBuilding";
-import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { AddressAndPhone } from "./AddressAndPhone";
-import Program from "./Program";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -137,22 +136,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
     // eslint-disable-next-line
   }, [listing]);
 
-  const [allBuildings] = useAllBuildingsContext();
-
-  function findSelectedBuilding(
-    buildingID: string | undefined
-  ): IBuilding | undefined {
-    if (buildingID === undefined) {
-      return undefined;
-    }
-
-    return allBuildings.find(
-      (building) => buildingName === building.buildingName
-    );
-  }
-
-  const building = findSelectedBuilding(listing.buildingID);
-
   return (
     <Card as={Container} fluid>
       <Card.Header className="px-0" data-testid="listing-card-header" as={Row}>
@@ -187,31 +170,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         className="py-2 px-0"
         data-testid="body-form-not-visible-existing-listing"
       >
-        {building && (
-          <>
-            <Card.Text className="mb-0">
-              <strong>Address and contact:</strong>
-            </Card.Text>
-            <AddressAndPhone
-              buildingName={building.buildingName}
-              address={building.address}
-              contact={building.contact}
-              withLinks={false}
-            />
-
-            <div className="mt-3">
-              <Program selectedProgram={listing.program} />
-            </div>
-
-            <Card.Text className="mt-3 mb-0">
-              <strong>All rent-reduced units in building:</strong>
-            </Card.Text>
-            <BuildingDataTable
-              type={TableTypeEnum.amiData}
-              data={building.amiData}
-            />
-          </>
-        )}
+        <ListingCardBuildingData buildingID={listing.buildingID} />
 
         <Card.Text className="mt-3 mb-0">
           <strong>Available rent-reduced units:</strong>
@@ -223,7 +182,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         />
 
         <Card.Text className="mt-3">
-          <strong>URL:</strong>{" "}
+          <strong>Listings URL:</strong>{" "}
           <a
             id="addressLink"
             href={url}
