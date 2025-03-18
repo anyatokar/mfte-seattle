@@ -82,18 +82,19 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
 
   return (
     <>
-      <h5>Add new building</h5>
-      <Row className="mb-2">
-        <Col md={6}>
-          <Form.Label className="mb-0">Building name</Form.Label>
-          <Form.Control
-            required
-            name="buildingName"
-            value={selectedBuilding.buildingName}
-            onChange={handleInputChange}
-          />
-        </Col>
-      </Row>
+      {selectedBuilding.buildingName === "" && (
+        <Row className="mb-2">
+          <Col md={6}>
+            <Form.Label className="mb-0">Building name</Form.Label>
+            <Form.Control
+              required
+              name="buildingName"
+              value={selectedBuilding.buildingName}
+              onChange={handleInputChange}
+            />
+          </Col>
+        </Row>
+      )}
       <Form.Label className="mb-0 fw-bold">Address</Form.Label>
       <Row className="mb-2">
         <Col md={6}>

@@ -4,15 +4,15 @@ import EditListingForm from "./EditListingForm";
 type AddBuildingModalProps = {
   toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
   showModal: boolean;
-  handleClose: () => void;
+  onClose: () => void;
 };
 const AddBuildingModal: React.FC<AddBuildingModalProps> = ({
   toggleFormCallback,
   showModal,
-  handleClose,
+  onClose,
 }) => {
   return (
-    <Modal show={showModal} onHide={handleClose} fullscreen>
+    <Modal show={showModal} onHide={onClose} fullscreen>
       <Modal.Header closeButton>
         <Modal.Title>Add Building Form</Modal.Title>
       </Modal.Header>
@@ -21,9 +21,9 @@ const AddBuildingModal: React.FC<AddBuildingModalProps> = ({
           isExistingListing={false}
           toggleFormCallback={toggleFormCallback}
           isFormVisible={true}
+          onClose={onClose}
         />
       </Modal.Body>
-      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 };

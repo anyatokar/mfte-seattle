@@ -318,7 +318,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
       <AddBuildingModal
         toggleFormCallback={toggleFormCallback}
         showModal={showAddBuildingModal}
-        handleClose={() => setShowAddBuildingModal(false)}
+        onClose={() => setShowAddBuildingModal(false)}
       />
     </Profiler>
   );

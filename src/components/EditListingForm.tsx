@@ -47,6 +47,7 @@ type EditListingFormProps = {
   toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
   isFormVisible: boolean;
   listing?: ListingWithRequired;
+  onClose?: () => void;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
@@ -54,6 +55,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   toggleFormCallback,
   isFormVisible,
   listing,
+  onClose,
 }) => {
   const blankAvailRow: UnitAvailData = {
     unitSize: undefined,
@@ -203,6 +205,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         toggleFormCallback(listing?.listingID || "", true);
       }
     }
+
+    // Close modal
+    if (onClose) onClose();
   };
 
   const programOptionsArray: ProgramKeyEnum[] = [
@@ -353,14 +358,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       {!isExistingListing && isFormVisible && (
         <Row className="mb-3">
           <Col md={6} className="mb-md-0">
+            <Form.Label>Select building</Form.Label>
             <Form.Select
-              //TODO: Listings cards need a refactor for better UI.
               required
               name="buildingName"
               id="buildingName"
               onChange={handleInputChange}
             >
-              <option value="">Select a building</option>
+              <option value="">Select</option>
               <option value="Not Listed">Not Listed</option>
               <Dropdown.Divider />
               {allBuildings
@@ -403,36 +408,35 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               contact={selectedBuilding.contact}
               withLinks={false}
             />
+            <Button variant="outline-primary" size="sm">
+              Edit
+            </Button>
           </Col>
         </Row>
       )}
 
       {(selectedBuilding || isExistingListing) && (
         <>
-          <Form.Group>
-            <Row className="mb-3">
-              <Col>
-                <Form.Label className="mb-0 fw-bold">Program</Form.Label>
+          <Row className="mb-3">
+            <Col>
+              <Form.Label className="mb-0 fw-bold">Program</Form.Label>
 
-                {programOptionsArray.map((program) => (
-                  <Form.Check
-                    required
-                    key={program}
-                    type="radio"
-                    label={ProgramLabelEnum[program]}
-                    name="program"
-                    id={program}
-                    value={program}
-                    checked={formFields.program === program}
-                    onChange={(e) => handleInputChange(e)}
-                  />
-                ))}
-              </Col>
-            </Row>
-          </Form.Group>
+              {programOptionsArray.map((program) => (
+                <Form.Check
+                  required
+                  key={program}
+                  type="radio"
+                  label={ProgramLabelEnum[program]}
+                  name="program"
+                  id={program}
+                  value={program}
+                  checked={formFields.program === program}
+                  onChange={(e) => handleInputChange(e)}
+                />
+              ))}
+            </Col>
+          </Row>
 
-          <hr className="my-4" />
-          <h5>Add Listings</h5>
           {/* URL */}
           <Row className="mb-3">
             <Col md={8} className="mb-0 mb-md-0">
