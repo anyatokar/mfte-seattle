@@ -45,6 +45,7 @@ const AreYouSureModal: React.FC<AreYouSureModalProps> = ({
 
   const [modalText, setModalText] = useState<ModalText | null>(null);
 
+  // TODO: useEffect is not needed here
   useEffect(() => {
     setModalText(modalTextLookup[confirmType]);
     // eslint-disable-next-line react-hooks/exhaustive-deps

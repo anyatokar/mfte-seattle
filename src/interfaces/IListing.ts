@@ -7,6 +7,18 @@ import {
 import { Address, AmiData, Contact, PercentAmi } from "./IBuilding";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 
+export type ListingWithRequired = PartialWithRequired<
+  IListing,
+  | "availDataArray"
+  | "url"
+  | "expiryDate"
+  | "listingID"
+  | "buildingID"
+  | "description"
+  | "feedback"
+  | "program"
+>;
+
 export type PartialAddress = PartialWithRequired<
   Address,
   "streetAddress" | "zip" | "neighborhood" | "neighborhood"

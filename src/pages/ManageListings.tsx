@@ -10,8 +10,12 @@ import {
 import { useAllListings } from "../hooks/useListings";
 
 import ListingCard from "../components/ListingCard";
+import AddBuildingModal from "../components/AddBuildingModal";
+import AreYouSureModal from "../components/AreYouSureModal";
+
 import IPage from "../interfaces/IPage";
 
+import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -19,8 +23,6 @@ import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-
-import AreYouSureModal from "../components/AreYouSureModal";
 
 const ManageListingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
@@ -110,6 +112,8 @@ const ManageListingsPage: React.FC<IPage> = () => {
     { label: "Expiring Soon", listingStatus: expiryBadgeEnum.EXPIRING_SOON },
     { label: "Expired", listingStatus: expiryBadgeEnum.EXPIRED },
   ];
+
+  const [showAddBuildingModal, setShowAddBuildingModal] = useState(false);
 
   return (
     <Profiler
@@ -202,18 +206,14 @@ const ManageListingsPage: React.FC<IPage> = () => {
 
                   <Tab.Pane eventKey="viewListings">
                     <Container fluid>
-                      {/* TODO: Pull out into a new component to reuse with archived */}
-                      <Row className="pb-2">
-                        <Col>
-                          <ListingCard
-                            listing={null}
-                            toggleFormCallback={toggleFormCallback}
-                            isFormVisible={isFormVisible}
-                            isExistingListing={false}
-                            editListingID={editListingID}
-                          />
-                        </Col>
-                      </Row>
+                      <div className="pb-2">
+                        <Button
+                          variant="success"
+                          onClick={() => setShowAddBuildingModal(true)}
+                        >
+                          Add Building
+                        </Button>
+                      </div>
 
                       {isLoadingRepsListings && (
                         <Spinner animation="border" variant="secondary" />
@@ -314,6 +314,11 @@ const ManageListingsPage: React.FC<IPage> = () => {
         handleClose={handleClose}
         handleConfirm={handleConfirm}
         confirmType={confirmModalTypeEnum.LISTING_CANCEL_EDIT}
+      />
+      <AddBuildingModal
+        toggleFormCallback={toggleFormCallback}
+        showModal={showAddBuildingModal}
+        handleClose={() => setShowAddBuildingModal(false)}
       />
     </Profiler>
   );

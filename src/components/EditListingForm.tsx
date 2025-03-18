@@ -29,6 +29,7 @@ import IBuilding, {
 } from "../interfaces/IBuilding";
 import IListing, {
   AvailDataArray,
+  ListingWithRequired,
   SelectedBuilding,
   UnitAvailData,
 } from "../interfaces/IListing";
@@ -41,40 +42,19 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 
-type ListingWithRequired = PartialWithRequired<
-  IListing,
-  | "availDataArray"
-  | "url"
-  | "expiryDate"
-  | "listingID"
-  | "buildingID"
-  | "description"
-  | "feedback"
-  | "program"
->;
 type EditListingFormProps = {
-  listing: ListingWithRequired;
   isExistingListing: boolean;
   toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
   isFormVisible: boolean;
+  listing?: ListingWithRequired;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
-  listing,
   isExistingListing,
   toggleFormCallback,
   isFormVisible,
+  listing,
 }) => {
-  const {
-    availDataArray,
-    url,
-    expiryDate,
-    listingID,
-    description,
-    feedback,
-    program,
-  } = listing;
-
   const blankAvailRow: UnitAvailData = {
     unitSize: undefined,
     dateAvailString: "",
@@ -85,14 +65,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   };
 
   const originalFormFields: Partial<IListing> = {
-    buildingName: listing.buildingName,
+    buildingName: listing?.buildingName || "",
     availDataArray:
-      availDataArray.length > 0 ? availDataArray : [blankAvailRow],
-    url: url,
-    expiryDate: expiryDate,
-    description: description,
-    feedback: feedback,
-    program: program,
+      listing?.availDataArray && listing?.availDataArray.length > 0
+        ? listing?.availDataArray
+        : [blankAvailRow],
+    url: listing?.url,
+    expiryDate: listing?.expiryDate,
+    description: listing?.description,
+    feedback: listing?.feedback,
+    program: listing?.program,
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
@@ -103,7 +85,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const [selectedBuilding, setSelectedBuilding] = useState<
     SelectedBuilding | undefined
-  >(findSelectedBuilding(listing.buildingName));
+  >(findSelectedBuilding(listing?.buildingName));
 
   if (!currentUser) return null;
 
@@ -210,12 +192,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         toggleFormCallback("", true);
       }
     } else {
-      const isSuccessful = await updateListingFirestore(formFields, listingID);
+      const isSuccessful = await updateListingFirestore(
+        formFields,
+        listing?.listingID || ""
+      );
       if (isSuccessful) {
         console.log(
-          `Successfully updated listing for ${selectedBuilding?.buildingName}, listingID: ${listingID}`
+          `Successfully updated listing for ${selectedBuilding?.buildingName}, listingID: ${listing?.listingID || ""}`
         );
-        toggleFormCallback(listingID, true);
+        toggleFormCallback(listing?.listingID || "", true);
       }
     }
   };
@@ -365,7 +350,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      {!isExistingListing && isFormVisible && listing.listingID === "" && (
+      {!isExistingListing && isFormVisible && (
         <Row className="mb-3">
           <Col md={6} className="mb-md-0">
             <Form.Select

@@ -15,8 +15,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useState } from "react";
 import AreYouSureModal from "./AreYouSureModal";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -35,7 +33,6 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   listing,
   editListingID,
   isFormVisible,
-  isExistingListing,
   toggleFormCallback,
 }) => {
   const [showModal, setShowModal] = useState(false);
@@ -85,11 +82,6 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     handleShow();
   };
 
-  const onAddClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    toggleFormCallback("", false);
-  };
-
   const onEditClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     toggleFormCallback(listing.listingID, false);
@@ -97,19 +89,6 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
 
   return (
     <>
-      {/* Show Add Listing only on New Listing Card and if either
-      no form is visible (meaning any form) 
-      OR a form is visible and it's listing ID is blank */}
-      {!isExistingListing &&
-        (!isFormVisible || (isFormVisible && editListingID !== "")) && (
-          <Row>
-            <Col>
-              <Button variant="success" onClick={onAddClick}>
-                Add Building
-              </Button>
-            </Col>
-          </Row>
-        )}
       {/* It's an existing listing & this listing is not getting edited */}
       {listing.listingID !== "" && listing.listingID !== editListingID && (
         <DropdownButton
