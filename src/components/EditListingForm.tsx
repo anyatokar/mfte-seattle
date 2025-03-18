@@ -143,11 +143,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       if (rowId !== undefined) {
         newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
-
         if (name === "unitSize") {
           newAvailData[rowIndex] = {
             ...newAvailData[rowIndex],
-            // TODO: Is this percentAmi needed?
+            // Clear out percentAmi
             percentAmi: undefined,
           };
         }
@@ -492,18 +491,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             onChange={(e) =>
                               handleInputChange(e, unitAvailData.rowId)
                             }
-                            value={unitAvailData.unitSize}
                             disabled={
                               selectedBuilding &&
                               Object.values(selectedBuilding.amiData).flat()
                                 .length === 0
                             }
                           >
-                            <option value={unitAvailData.unitSize}>
-                              {unitAvailData.unitSize
-                                ? unitSizeLabelEnum[unitAvailData.unitSize]
-                                : ""}
-                            </option>
+                            <option value={""}></option>
                             {availSizes.map((unitSize) => (
                               <option key={unitSize} value={unitSize}>
                                 {unitSizeLabelEnum[unitSize]}
