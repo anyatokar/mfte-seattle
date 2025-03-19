@@ -63,6 +63,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     description: "",
     feedback: "",
     program: undefined,
+    otherProgram: "",
   };
 
   const {
@@ -73,6 +74,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     description,
     feedback,
     program,
+    otherProgram,
   } = listing ?? emptyListing;
 
   const blankAvailRow: UnitAvailData = {
@@ -95,6 +97,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     description: description,
     feedback: feedback,
     program: program,
+    otherProgram: otherProgram,
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
@@ -433,6 +436,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Col md={8}>
               <Program
                 selectedProgram={formFields.program}
+                otherProgram={formFields.otherProgram}
                 onProgramInputChange={handleInputChange}
               />
             </Col>

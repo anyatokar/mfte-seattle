@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 
 type ProgramProps = {
   selectedProgram: ProgramKeyEnum | undefined;
-  otherProgram?: string;
+  otherProgram: string | undefined;
   onProgramInputChange?: (e: any) => void;
 };
 
@@ -58,6 +58,7 @@ const Program: React.FC<ProgramProps> = ({
               required
               name="otherProgram"
               onChange={(e) => onProgramInputChange(e)}
+              value={otherProgram}
             />
           )}
         </Col>
