@@ -481,8 +481,8 @@ const Profile: React.FC = () => {
 
       <AreYouSureModal
         showModal={showModal}
-        handleClose={handleClose}
-        handleConfirm={handleConfirm}
+        onClose={handleClose}
+        onConfirm={handleConfirm}
         confirmType={confirmModalTypeEnum.ACCOUNT_DELETE}
       />
     </Container>

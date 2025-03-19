@@ -36,10 +36,18 @@ const ManageListingsPage: React.FC<IPage> = () => {
   const [activeTab, setActiveTab] = useState<string>(defaultActiveKey);
   const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
-  const handleClose = () => setShowAreYouSureModal(false);
+  const handleAreYouSureModalClose = () => setShowAreYouSureModal(false);
   const handleConfirm = () => {
     setShowAddBuildingModal(false);
-    handleClose();
+    handleAreYouSureModalClose();
+  };
+
+  const handleAddBuildingModalClose = (shouldConfirm: boolean) => {
+    if (shouldConfirm) {
+      setShowAreYouSureModal(true);
+    } else {
+      handleConfirm();
+    }
   };
 
   const [selectedListing, setSelectedListing] = useState<IListing | null>(null);
@@ -277,16 +285,14 @@ const ManageListingsPage: React.FC<IPage> = () => {
       </Container>
       <AreYouSureModal
         showModal={showAreYouSureModal}
-        onClose={handleClose}
+        onClose={handleAreYouSureModalClose}
         onConfirm={handleConfirm}
         confirmType={confirmModalTypeEnum.LISTING_CANCEL_EDIT}
       />
       <AddBuildingModal
         listing={selectedListing}
         showModal={showAddBuildingModal}
-        onClose={() => {
-          setShowAreYouSureModal(true);
-        }}
+        onClose={handleAddBuildingModalClose}
       />
     </Profiler>
   );

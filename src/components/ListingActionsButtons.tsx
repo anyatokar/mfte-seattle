@@ -107,8 +107,8 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
 
       <AreYouSureModal
         showModal={showModal}
-        handleClose={handleClose}
-        handleConfirm={handleConfirm}
+        onClose={handleClose}
+        onConfirm={handleConfirm}
         confirmType={confirmModalTypeEnum.LISTING_DELETE}
       />
     </>
