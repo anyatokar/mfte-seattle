@@ -428,14 +428,19 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             </Col>
           </Row>
 
-          <Program
-            selectedProgram={formFields.program}
-            onProgramInputChange={handleInputChange}
-          />
+          {/* Program */}
+          <Row className="my-3">
+            <Col md={8}>
+              <Program
+                selectedProgram={formFields.program}
+                onProgramInputChange={handleInputChange}
+              />
+            </Col>
+          </Row>
 
           {/* URL */}
           <Row className="my-3">
-            <Col md={8} className="mb-0">
+            <Col md={8} lg={6} className="mb-0">
               <Form.Label className="mb-0 fw-bold">Listings URL</Form.Label>
               <Form.Control
                 required
@@ -626,7 +631,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Form.Label className="mb-0 fw-bold">
               Listing expiration date
             </Form.Label>
-            <Col md={6} className="mb-0">
+            <Col xs={6} md={4} lg={3} className="mb-0">
               <Form.Control
                 type="date"
                 name="expiryDate"

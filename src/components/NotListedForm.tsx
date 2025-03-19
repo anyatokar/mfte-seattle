@@ -162,6 +162,16 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         </Col>
         <Form.Text>Phone number to ask about rent-reduced units.</Form.Text>
       </Row>
+      <Row className="mb-3">
+        <Col sm={6}>
+          <Form.Label className="mb-0">Secondary phone</Form.Label>
+          <Form.Control
+            value={selectedBuilding.contact.phone2 || ""}
+            onChange={handleInputChange}
+            name="phone2"
+          />
+        </Col>
+      </Row>
 
       <Form.Label className="mb-0 fw-bold">All rent-reduced units</Form.Label>
       <br />
