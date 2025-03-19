@@ -21,8 +21,13 @@ interface AmiDataProps {
   type: TableTypeEnum.amiData;
   data: AmiData;
   isMarker?: boolean;
-  onClickCallback?: any;
-  tableFields?: any;
+  onClickCallback?: (
+    ami: PercentAmi,
+    unit: BedroomsKeyEnum,
+    isChecked: boolean
+  ) => void;
+  tableFields?: AmiData;
+  //TODO: data and tableFields seems redundant
 }
 
 interface AvailDataProps {
@@ -108,30 +113,32 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       return (
         <>
           {[...allAmi].sort().map((ami) => {
-            const isChecked = props.tableFields[unit].includes(ami);
+            const isChecked = props.tableFields?.[unit]?.includes(ami) ?? false;
 
-            return (
-              <Form.Check
-                inline
-                key={ami}
-                type="checkbox"
-                label={ami}
-                value={ami}
-                checked={isChecked}
-                onChange={() => props.onClickCallback(ami, unit, isChecked)}
-              />
-            );
+            if (props.type === TableTypeEnum.amiData && props.onClickCallback) {
+              return (
+                <Form.Check
+                  inline
+                  key={ami}
+                  type="checkbox"
+                  label={ami}
+                  value={ami}
+                  checked={isChecked}
+                  onChange={() => props.onClickCallback!(ami, unit, isChecked)}
+                />
+              );
+            }
           })}
         </>
       );
+    } else {
+      return percentages.map((item, index) => (
+        <Fragment key={index}>
+          {item}
+          {index < percentages.length - 1 ? ", " : ""}
+        </Fragment>
+      ));
     }
-
-    return percentages.map((item, index) => (
-      <Fragment key={index}>
-        {item}
-        {index < percentages.length - 1 ? ", " : ""}
-      </Fragment>
-    ));
   }
 
   return (

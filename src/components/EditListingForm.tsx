@@ -315,9 +315,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               ...prev,
               amiData: {
                 ...prev.amiData,
-                [unit]: prev.amiData[unit].includes(ami)
+                [unit]: prev.amiData[unit]?.includes(ami)
                   ? prev.amiData[unit]
-                  : [...prev.amiData[unit], ami],
+                  : // Buildings collection doesn't store empty arrays for units without AMIs.
+                    [...(prev.amiData[unit] || []), ami],
               },
             }
           : prev
@@ -325,28 +326,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     }
   }
 
-  const filterNonEmptyFields = (
-    fields: AmiData | undefined
-  ): AmiData | undefined => {
-    if (fields === undefined) return;
-    const filteredFields = {} as AmiData;
-
-    for (const key in fields) {
-      const value = fields[key as BedroomsKeyEnum];
-      if (value && value.length > 0) {
-        filteredFields[key as BedroomsKeyEnum] = value;
-      }
-    }
-
-    return filteredFields;
-  };
-
-  const amiData: AmiData | undefined = filterNonEmptyFields(
-    selectedBuilding?.amiData
-  );
-
-  const availSizes: BedroomsKeyEnum[] = amiData
-    ? (Object.keys(amiData) as BedroomsKeyEnum[])
+  const availSizes: BedroomsKeyEnum[] = selectedBuilding?.amiData
+    ? (Object.keys(selectedBuilding?.amiData) as BedroomsKeyEnum[])
     : [];
 
   function getMaxRent(unitAvailData: UnitAvailData): number {
@@ -364,6 +345,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     return 0;
   }
+
+  const [showEditBuildingData, setShowEditBuildingData] = useState(
+    selectedBuilding && !selectedBuilding.buildingID
+  );
 
   return (
     <Form onSubmit={handleFormSubmit}>
@@ -405,7 +390,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Col md={8}>
               <Card>
                 <Card.Body>
-                  {selectedBuilding && !selectedBuilding.buildingID ? (
+                  {showEditBuildingData ? (
                     <Row className="mb-3">
                       <Col className="mb-md-0">
                         <NotListedForm
@@ -425,16 +410,19 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           />
                         </Col>
                       </Row>
-
-                      <Row>
-                        <Col className="mb-md-0">
-                          <Button variant="outline-primary" size="sm">
-                            Edit
-                          </Button>
-                        </Col>
-                      </Row>
                     </>
                   )}
+                  <Row>
+                    <Col className="mb-md-0">
+                      <Button
+                        variant="outline-primary"
+                        size="sm"
+                        onClick={() => setShowEditBuildingData((prev) => !prev)}
+                      >
+                        {showEditBuildingData ? "Cancel" : "Edit"}
+                      </Button>
+                    </Col>
+                  </Row>
                 </Card.Body>
               </Card>
             </Col>
@@ -447,7 +435,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
           {/* URL */}
           <Row className="my-3">
-            <Col md={8} className="mb-0 mb-md-0">
+            <Col md={8} className="mb-0">
               <Form.Label className="mb-0 fw-bold">Listings URL</Form.Label>
               <Form.Control
                 required
@@ -530,7 +518,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             <option value={unitAvailData.percentAmi}>
                               {unitAvailData.percentAmi}
                             </option>
-                            {amiData?.[
+                            {selectedBuilding.amiData?.[
                               unitAvailData.unitSize as BedroomsKeyEnum
                             ]?.map((percent) => (
                               <option key={percent} value={percent}>
@@ -638,7 +626,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Form.Label className="mb-0 fw-bold">
               Listing expiration date
             </Form.Label>
-            <Col md={6} className="mb-0 mb-md-0">
+            <Col md={6} className="mb-0">
               <Form.Control
                 type="date"
                 name="expiryDate"
@@ -654,7 +642,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           </Row>
 
           <Row className="mb-3">
-            <Col className="mb-0 mb-md-0">
+            <Col className="mb-0">
               <Form.Label className="mb-0 fw-bold">
                 Featured description
               </Form.Label>
@@ -676,7 +664,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           </Row>
 
           <Row className="mb-3">
-            <Col className="mb-0 mb-md-0">
+            <Col className="mb-0">
               <Form.Label className="mb-0 fw-bold">Form feedback</Form.Label>
 
               <Form.Control

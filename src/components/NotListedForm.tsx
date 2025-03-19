@@ -97,7 +97,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
       )}
       <Form.Label className="mb-0 fw-bold">Address</Form.Label>
       <Row className="mb-2">
-        <Col md={6}>
+        <Col md={8}>
           <Form.Label className="mb-0">District</Form.Label>
           <Form.Control
             required
@@ -109,7 +109,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         </Col>
       </Row>
       <Row className="mb-2">
-        <Col md={6}>
+        <Col md={8}>
           <Form.Label className="mb-0">Street address</Form.Label>
           <Form.Control
             required
@@ -120,11 +120,11 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         </Col>
       </Row>
       <Row className="mb-2">
-        <Col md={3}>
+        <Col sm={4} className="mb-2">
           <Form.Label className="mb-0">City, State</Form.Label>
           <Form.Control disabled value="Seattle, WA" />
         </Col>
-        <Col md={3}>
+        <Col sm={3}>
           <Form.Label className="mb-0">Zip</Form.Label>
           <Form.Control
             required
@@ -139,7 +139,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
 
       <Form.Label className="mb-0 fw-bold">Contact</Form.Label>
       <Row className="mb-3">
-        <Col md={6}>
+        <Col md={10}>
           <Form.Label className="mb-0">Website</Form.Label>
           <Form.Control
             required
@@ -151,7 +151,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         </Col>
       </Row>
       <Row className="mb-3">
-        <Col md={3}>
+        <Col sm={6}>
           <Form.Label className="mb-0">Phone</Form.Label>
           <Form.Control
             required
@@ -166,7 +166,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
       <Form.Label className="mb-0 fw-bold">All rent-reduced units</Form.Label>
       <br />
       <Form.Text>Regardless of availability.</Form.Text>
-      <Row className="mb-3">
+      <Row>
         <BuildingDataTable
           type={TableTypeEnum.amiData}
           data={blankTable}

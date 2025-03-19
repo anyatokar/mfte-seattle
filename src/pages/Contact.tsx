@@ -124,7 +124,7 @@ const ContactPage: React.FC<IPage> = () => {
                 <Form onSubmit={handleFormSubmit}>
                   {/* Name and Email row */}
                   <Form.Group as={Row} className="mb-3">
-                    <Form.Group as={Col} md={6} className="mb-3 mb-md-0">
+                    <Form.Group as={Col} md={6} className="mb-3">
                       <Form.Label>Name</Form.Label>
                       <Form.Control
                         required
