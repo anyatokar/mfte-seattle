@@ -23,6 +23,7 @@ import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
+import IListing from "../interfaces/IListing";
 
 const ManageListingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
@@ -50,6 +51,20 @@ const ManageListingsPage: React.FC<IPage> = () => {
     }
 
     handleClose();
+  };
+
+  const [selectedListing, setSelectedListing] = useState<IListing | null>(null);
+
+  const handleEditClick = (listingID: string | null): void => {
+    if (listingID === null) {
+      setSelectedListing(null);
+    } else {
+      setSelectedListing(
+        repsListings.find((listing) => listing.listingID === listingID) || null
+      );
+    }
+
+    setShowAddBuildingModal(true);
   };
 
   if (!currentUser || accountType !== accountTypeEnum.MANAGER) {
@@ -187,7 +202,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                       <div className="pb-2">
                         <Button
                           variant="success"
-                          onClick={() => setShowAddBuildingModal(true)}
+                          onClick={() => handleEditClick(null)}
                         >
                           Add Building
                         </Button>
@@ -220,22 +235,11 @@ const ManageListingsPage: React.FC<IPage> = () => {
                             <Col className="pb-2" key={listing.listingID}>
                               <ListingCard
                                 listing={listing}
-                                editListingID={editListingID}
-                                onEditClick={() =>
-                                  setShowAddBuildingModal(true)
-                                }
+                                onEditClick={handleEditClick}
                               />
                             </Col>
                           ))}
                     </Container>
-                  </Tab.Pane>
-
-                  <Tab.Pane eventKey="addListing">
-                    <ListingCard
-                      listing={null}
-                      editListingID={editListingID}
-                      onEditClick={() => setShowAddBuildingModal(true)}
-                    />
                   </Tab.Pane>
 
                   <Tab.Pane eventKey="archived">
@@ -268,10 +272,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                                 <Col className="pb-2" key={listing.listingID}>
                                   <ListingCard
                                     listing={listing}
-                                    editListingID={editListingID}
-                                    onEditClick={() =>
-                                      setShowAddBuildingModal(true)
-                                    }
+                                    onEditClick={handleEditClick}
                                   />
                                 </Col>
                               ))}
@@ -292,6 +293,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
         confirmType={confirmModalTypeEnum.LISTING_CANCEL_EDIT}
       />
       <AddBuildingModal
+        listing={selectedListing}
         showModal={showAddBuildingModal}
         onClose={() => setShowAddBuildingModal(false)}
       />

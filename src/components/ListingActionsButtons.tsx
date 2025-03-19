@@ -2,19 +2,16 @@ import {
   deleteListingFirestore,
   updateListingFirestore,
 } from "../utils/firestoreUtils";
+import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-
+import AreYouSureModal from "./AreYouSureModal";
+import { confirmModalTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import IListing from "../interfaces/IListing";
 
-import { confirmModalTypeEnum, listingStatusEnum } from "../types/enumTypes";
-import { PartialWithRequired } from "../types/partialWithRequiredType";
-
-import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { useState } from "react";
-import AreYouSureModal from "./AreYouSureModal";
+import { PartialWithRequired } from "../types/partialWithRequiredType";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -23,15 +20,14 @@ type ListingWithRequired = PartialWithRequired<
 
 type ListingActionsButtonsPropsType = {
   listing: ListingWithRequired;
-  editListingID: string;
-  onEditClick: () => void;
+  onEditClick: (listingID: string) => void;
 };
 
 const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   listing,
-  editListingID,
   onEditClick,
 }) => {
+  const { listingID, buildingName, expiryDate, listingStatus } = listing;
   const [showModal, setShowModal] = useState(false);
   const { currentUser } = useAuth();
 
@@ -41,13 +37,9 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   const handleShow = () => setShowModal(true);
 
   const handleConfirm = () => {
-    deleteListingFirestore(listing.listingID, listing.buildingName);
+    deleteListingFirestore(listingID, buildingName);
 
     handleClose();
-  };
-
-  const onCancelClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
   };
 
   const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -55,9 +47,9 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     updateListingFirestore(
       {
         listingStatus: listingStatusEnum.ARCHIVED,
-        expiryDate: listing.expiryDate,
+        expiryDate: expiryDate,
       },
-      listing.listingID
+      listingID
     );
   };
 
@@ -66,9 +58,9 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     updateListingFirestore(
       {
         listingStatus: listingStatusEnum.IN_REVIEW,
-        expiryDate: listing.expiryDate,
+        expiryDate: expiryDate,
       },
-      listing.listingID
+      listingID
     );
   };
 
@@ -80,46 +72,38 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
 
   return (
     <>
-      {/* It's an existing listing & this listing is not getting edited */}
-      {listing.listingID !== "" && listing.listingID !== editListingID && (
-        <DropdownButton
-          id="actions-dropdown-button"
-          title="Actions"
-          as={ButtonGroup}
-          variant="outline-primary"
+      <DropdownButton
+        id="actions-dropdown-button"
+        title="Actions"
+        as={ButtonGroup}
+        variant="outline-primary"
+      >
+        {listingStatus === listingStatusEnum.ARCHIVED && (
+          <Dropdown.Item eventKey="unarchive" onClick={onUnarchiveClick}>
+            Move To Current
+          </Dropdown.Item>
+        )}
+
+        <Dropdown.Item eventKey="edit" onClick={() => onEditClick(listingID)}>
+          Edit / Renew
+        </Dropdown.Item>
+
+        <Dropdown.Divider />
+        {listingStatus !== listingStatusEnum.ARCHIVED && (
+          <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
+            Archive
+          </Dropdown.Item>
+        )}
+
+        <Dropdown.Item
+          data-testid="dropdown-delete"
+          className="delete-link"
+          eventKey="delete"
+          onClick={onDeleteClick}
         >
-          {listing.listingStatus === listingStatusEnum.ARCHIVED && (
-            <Dropdown.Item eventKey="unarchive" onClick={onUnarchiveClick}>
-              Move To Current
-            </Dropdown.Item>
-          )}
-
-          <Dropdown.Item eventKey="edit" onClick={onEditClick}>
-            Edit / Renew
-          </Dropdown.Item>
-
-          <Dropdown.Divider />
-          {listing.listingStatus !== listingStatusEnum.ARCHIVED && (
-            <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
-              Archive
-            </Dropdown.Item>
-          )}
-
-          <Dropdown.Item
-            data-testid="dropdown-delete"
-            className="delete-link"
-            eventKey="delete"
-            onClick={onDeleteClick}
-          >
-            Delete
-          </Dropdown.Item>
-        </DropdownButton>
-      )}
-      {editListingID === listing.listingID && (
-        <Button variant="outline-danger" onClick={onCancelClick}>
-          Cancel
-        </Button>
-      )}
+          Delete
+        </Dropdown.Item>
+      </DropdownButton>
 
       <AreYouSureModal
         showModal={showModal}

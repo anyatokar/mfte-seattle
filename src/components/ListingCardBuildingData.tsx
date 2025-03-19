@@ -57,10 +57,6 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
           </a>
         </Card.Text>
 
-        <div className="mt-3">
-          {/* <Program selectedProgram={program} /> */}
-        </div>
-
         <Card.Text className="mt-3 mb-0">
           <strong>All rent-reduced units in building:</strong>
         </Card.Text>

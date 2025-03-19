@@ -7,6 +7,7 @@ import {
 import BuildingDataTable from "./BuildingDataTable";
 import ListingActionsButtons from "./ListingActionsButtons";
 import ListingCardBuildingData from "./ListingCardBuildingData";
+import Program from "./Program";
 import IListing from "../interfaces/IListing";
 import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
 import { expiringSoonDays } from "../config/config";
@@ -35,18 +36,10 @@ type ListingWithRequired = PartialWithRequired<
 
 type ListingCardProps = {
   listing: ListingWithRequired | null;
-  /** Existing, as opposed to a New listing card */
-
-  editListingID: string;
-  onEditClick: () => void;
+  onEditClick: (listingID: string) => void;
 };
 
-const ListingCard: React.FC<ListingCardProps> = ({
-  listing,
-
-  editListingID,
-  onEditClick,
-}) => {
+const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
   if (listing === null) {
     listing = {
       availDataArray: [],
@@ -159,7 +152,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
           <Col className="d-flex align-items-center justify-content-end">
             <ListingActionsButtons
               listing={listing}
-              editListingID={editListingID}
               onEditClick={onEditClick}
             />
           </Col>
@@ -171,6 +163,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
         data-testid="body-form-not-visible-existing-listing"
       >
         <ListingCardBuildingData buildingID={listing.buildingID} />
+
+        <div className="mt-3">
+          <Program selectedProgram={program} />
+        </div>
 
         <Card.Text className="mt-3 mb-0">
           <strong>Available rent-reduced units:</strong>

@@ -52,7 +52,7 @@ export type AvailDataArray = UnitAvailData[];
 
 export default interface IListing {
   listingID: string;
-  listingStatus: listingStatusEnum;
+  listingStatus: listingStatusEnum | undefined;
   buildingName: string;
   url: string;
   description: string;

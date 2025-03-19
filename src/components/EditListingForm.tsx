@@ -43,7 +43,7 @@ import Table from "react-bootstrap/Table";
 import ListingCardBuildingData from "./ListingCardBuildingData";
 
 type EditListingFormProps = {
-  listing?: ListingWithRequired;
+  listing: ListingWithRequired | null;
   onClose?: () => void;
 };
 
