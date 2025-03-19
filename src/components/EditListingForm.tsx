@@ -32,19 +32,20 @@ import IListing, {
   SelectedBuilding,
   UnitAvailData,
 } from "../interfaces/IListing";
+import ListingCardBuildingData from "./ListingCardBuildingData";
 
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
-import ListingCardBuildingData from "./ListingCardBuildingData";
 
 type EditListingFormProps = {
   listing: ListingWithRequired | null;
-  onClose?: () => void;
+  onClose: () => void;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
@@ -222,7 +223,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     }
 
     // Close modal
-    if (onClose) onClose();
+    onClose();
   };
 
   const emptyAddressSelectedBuilding: PartialWithRequired<
@@ -286,6 +287,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       availDataArray: [...updatedAvailDataArray],
     }));
   }
+
   // Would be way simpler if Amis were a set but Firestore doesn't store the data type
   function handleToggleAmi(
     ami: PercentAmi,
@@ -365,56 +367,76 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      <Row className="mb-3">
-        <Col md={6} className="mb-md-0">
-          <Form.Label>Select building</Form.Label>
-          <Form.Select
-            required
-            name="buildingName"
-            id="buildingName"
-            onChange={handleInputChange}
-          >
-            <option value="">Select</option>
-            <option value="Not Listed">Not Listed</option>
-            <Dropdown.Divider />
-            {allBuildings
-              .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
-              .map((selectedBuilding) => (
-                <option
-                  key={selectedBuilding.buildingID}
-                  value={selectedBuilding.buildingName}
-                >
-                  {selectedBuilding.buildingName}
-                </option>
-              ))}
-          </Form.Select>
-        </Col>
-      </Row>
+      {!listing?.buildingID && (
+        <Row className="mb-3">
+          <Col md={6} className="mb-md-0">
+            <Form.Label>Select building</Form.Label>
+            <Form.Select
+              required
+              name="buildingName"
+              id="buildingName"
+              onChange={handleInputChange}
+            >
+              <option value="">Select</option>
+              <option value="Not Listed">Not Listed</option>
+              <Dropdown.Divider />
+              {allBuildings
+                .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
+                .map((selectedBuilding) => (
+                  <option
+                    key={selectedBuilding.buildingID}
+                    value={selectedBuilding.buildingName}
+                  >
+                    {selectedBuilding.buildingName}
+                  </option>
+                ))}
+            </Form.Select>
+          </Col>
+        </Row>
+      )}
 
       {/* Address */}
       {/* TODO: Maybe show address for existing listing */}
       {/* New form, existing building */}
       {selectedBuilding && (
         <>
+          {/* New form, new building */}
           <Row className="mb-3">
-            <Col className="mb-md-0">
-              {/* New form, new building */}
-              {selectedBuilding && !selectedBuilding.buildingID ? (
-                <NotListedForm
-                  onClickCallback={handleToggleAmi}
-                  amiData={selectedBuilding.amiData}
-                  setSelectedBuilding={setSelectedBuilding}
-                  selectedBuilding={selectedBuilding}
-                />
-              ) : (
-                <ListingCardBuildingData
-                  buildingID={selectedBuilding.buildingID}
-                />
-              )}
+            <Col md={8}>
+              <Card>
+                <Card.Body>
+                  {selectedBuilding && !selectedBuilding.buildingID ? (
+                    <Row className="mb-3">
+                      <Col className="mb-md-0">
+                        <NotListedForm
+                          onClickCallback={handleToggleAmi}
+                          amiData={selectedBuilding.amiData}
+                          setSelectedBuilding={setSelectedBuilding}
+                          selectedBuilding={selectedBuilding}
+                        />
+                      </Col>
+                    </Row>
+                  ) : (
+                    <>
+                      <Row className="mb-3">
+                        <Col className="mb-md-0">
+                          <ListingCardBuildingData
+                            buildingID={selectedBuilding.buildingID}
+                          />
+                        </Col>
+                      </Row>
 
-              <Button variant="outline-primary" size="sm">
-                Edit
-              </Button>
+                      <Row>
+                        <Col className="mb-md-0">
+                          <Button variant="outline-primary" size="sm">
+                            Edit
+                          </Button>
+                        </Col>
+                      </Row>
+                    </>
+                  )}
+                </Card.Body>
+              </Card>
             </Col>
           </Row>
 

@@ -12,7 +12,9 @@ const AddBuildingModal: React.FC<AddBuildingModalProps> = ({
   onClose,
   listing,
 }) => {
-  const formTitle = listing ? "Edit Building Form" : "Add Building Form";
+  const formTitle = listing
+    ? `Edit ${listing.buildingName}`
+    : "Add Building Form";
 
   return (
     <Modal show={showModal} onHide={onClose} fullscreen>

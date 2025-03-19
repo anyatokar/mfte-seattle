@@ -18,7 +18,7 @@ import Image from "react-bootstrap/Image";
 import Modal from "react-bootstrap/Modal";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Offcanvas from "react-bootstrap/esm/Offcanvas";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 export const TopNav = () => {
   const { currentUser, logout, accountType } = useAuth();

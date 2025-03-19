@@ -3,7 +3,10 @@ import { TableTypeEnum } from "../types/enumTypes";
 import { AddressAndPhone } from "./AddressAndPhone";
 import BuildingDataTable from "./BuildingDataTable";
 import IBuilding from "../interfaces/IBuilding";
+
 import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 type ListingCardBuildingDataProps = {
   buildingID: string;
@@ -60,10 +63,14 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
         <Card.Text className="mt-3 mb-0">
           <strong>All rent-reduced units in building:</strong>
         </Card.Text>
-        <BuildingDataTable
-          type={TableTypeEnum.amiData}
-          data={building.amiData}
-        />
+        <Row>
+          <Col md={6}>
+            <BuildingDataTable
+              type={TableTypeEnum.amiData}
+              data={building.amiData}
+            />
+          </Col>
+        </Row>
       </>
     )
   );
