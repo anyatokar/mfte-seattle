@@ -171,7 +171,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       }
 
       if (name === "buildingName") {
-        setFormFields(originalFormFields);
+        setFormFields({ ...originalFormFields, buildingName: value });
+
         if (value === "Not Listed") {
           setSelectedBuilding(emptySelectedBuilding);
         } else {
@@ -198,8 +199,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     if (!formFields) return;
 
-    // TODO: temp true
-    if (true) {
+    if (!listing?.listingID) {
       const listingID = await addListingFirestore(
         formFields,
         selectedBuilding,
@@ -213,11 +213,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     } else {
       const isSuccessful = await updateListingFirestore(
         formFields,
-        listing?.listingID || ""
+        listing.listingID
       );
       if (isSuccessful) {
         console.log(
-          `Successfully updated listing for ${selectedBuilding?.buildingName}, listingID: ${listing?.listingID || ""}`
+          `Successfully updated listing for ${selectedBuilding?.buildingName}, listingID: ${listing.listingID || ""}`
         );
       }
     }

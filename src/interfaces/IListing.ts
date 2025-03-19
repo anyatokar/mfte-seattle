@@ -65,6 +65,7 @@ export default interface IListing {
   managerID: string;
   feedback: string;
   program: ProgramKeyEnum | undefined;
+  otherProgram?: string;
   // When adding listing for a building not in the buildings collection.
   amiData?: AmiData;
   address?: PartialAddress;

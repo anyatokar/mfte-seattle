@@ -6,11 +6,13 @@ import Row from "react-bootstrap/Row";
 
 type ProgramProps = {
   selectedProgram: ProgramKeyEnum | undefined;
+  otherProgram?: string;
   onProgramInputChange?: (e: any) => void;
 };
 
 const Program: React.FC<ProgramProps> = ({
   selectedProgram,
+  otherProgram,
   onProgramInputChange,
 }) => {
   const programOptionsArray: ProgramKeyEnum[] = [
@@ -18,6 +20,16 @@ const Program: React.FC<ProgramProps> = ({
     ProgramKeyEnum.P345,
     ProgramKeyEnum.other,
   ];
+
+  const programValue = () => {
+    if (!selectedProgram) return;
+
+    if (selectedProgram === ProgramKeyEnum.other) {
+      return otherProgram;
+    } else {
+      return ProgramLabelEnum[selectedProgram];
+    }
+  };
 
   return onProgramInputChange ? (
     <>
@@ -35,7 +47,6 @@ const Program: React.FC<ProgramProps> = ({
               value={program}
               checked={selectedProgram === program}
               onChange={(e) => onProgramInputChange(e)}
-              // onChange={(e) => handleInputChange(e)}
             />
           ))}
         </Col>
@@ -43,7 +54,11 @@ const Program: React.FC<ProgramProps> = ({
       <Row>
         <Col md={6}>
           {selectedProgram === ProgramKeyEnum.other && (
-            <Form.Control required />
+            <Form.Control
+              required
+              name="otherProgram"
+              onChange={(e) => onProgramInputChange(e)}
+            />
           )}
         </Col>
       </Row>
@@ -51,8 +66,7 @@ const Program: React.FC<ProgramProps> = ({
   ) : (
     <Row>
       <Col>
-        <strong>Program:</strong>{" "}
-        {selectedProgram ? ProgramLabelEnum[selectedProgram] : ""}
+        <strong>Program:</strong> {programValue()}
       </Col>
     </Row>
   );

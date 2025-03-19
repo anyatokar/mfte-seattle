@@ -230,8 +230,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               <strong>AMI: </strong>
               {percentAmi}%
               <br />
-              <strong>Program: </strong>
-              {getModalSentence()}
+              <strong>Program:</strong> {getModalSentence()}
             </p>
 
             <Table bordered hover size="sm" className="my-0" responsive>

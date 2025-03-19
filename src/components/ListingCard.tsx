@@ -52,6 +52,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
       description: "",
       feedback: "",
       program: undefined,
+      otherProgram: "",
     };
   }
 
@@ -64,6 +65,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
     dateUpdated,
     description,
     program,
+    otherProgram,
   } = listing;
 
   type badgeObjectType = { label: string; bg: string; text?: string };
@@ -165,7 +167,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
         <ListingCardBuildingData buildingID={listing.buildingID} />
 
         <div className="mt-3">
-          <Program selectedProgram={program} />
+          <Program selectedProgram={program} otherProgram={otherProgram} />
         </div>
 
         <Card.Text className="mt-3 mb-0">

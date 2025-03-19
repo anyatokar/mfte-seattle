@@ -90,7 +90,7 @@ export async function addListingFirestore(
   selectedBuilding: SelectedBuilding | undefined,
   uid: string
 ): Promise<string> {
-  let listing: IListing = {
+  const listing: IListing = {
     buildingName: formFields.buildingName || "",
     buildingID: selectedBuilding?.buildingID || "",
     url: formFields.url || "",
@@ -107,13 +107,20 @@ export async function addListingFirestore(
     feedback: formFields.feedback || "",
   };
 
-  if (selectedBuilding) {
-    listing = {
-      ...listing,
-      amiData: selectedBuilding.amiData,
-      address: selectedBuilding.address,
-      contact: selectedBuilding.contact,
-    };
+  if (formFields.amiData) {
+    listing["amiData"] = formFields.amiData;
+  }
+
+  if (formFields.address) {
+    listing["address"] = formFields.address;
+  }
+
+  if (formFields.contact) {
+    listing["contact"] = formFields.contact;
+  }
+
+  if (formFields.otherProgram) {
+    listing["otherProgram"] = formFields.otherProgram;
   }
   try {
     // Create a new document reference with an auto-generated ID
