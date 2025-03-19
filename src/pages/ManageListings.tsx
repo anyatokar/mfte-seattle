@@ -11,19 +11,19 @@ import { useAllListings } from "../hooks/useListings";
 
 import ListingCard from "../components/ListingCard";
 import AddBuildingModal from "../components/AddBuildingModal";
-import AreYouSureModal from "../components/AreYouSureModal";
 
+import IListing from "../interfaces/IListing";
 import IPage from "../interfaces/IPage";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
-import Table from "react-bootstrap/Table";
 import Spinner from "react-bootstrap/Spinner";
 import Tab from "react-bootstrap/Tab";
-import Nav from "react-bootstrap/Nav";
-import IListing from "../interfaces/IListing";
+import Table from "react-bootstrap/Table";
+import AreYouSureModal from "../components/AreYouSureModal";
 
 const ManageListingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
@@ -34,22 +34,11 @@ const ManageListingsPage: React.FC<IPage> = () => {
   );
   const defaultActiveKey: string = "viewListings";
   const [activeTab, setActiveTab] = useState<string>(defaultActiveKey);
-  const [editListingID, setEditListingID] = useState<string>("");
-  const [modalListingID, setModalListingID] = useState<string>("");
-  const [showModal, setShowModal] = useState(false);
+  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => setShowAreYouSureModal(false);
   const handleConfirm = () => {
-    if (modalListingID === editListingID) {
-      console.log("modalListingID === editListingID");
-      setEditListingID("");
-    } else if (modalListingID !== "" && modalListingID !== editListingID) {
-      console.log("Switching listings");
-      setEditListingID(modalListingID);
-    } else if (modalListingID === "") {
-      setEditListingID("");
-    }
-
+    setShowAddBuildingModal(false);
     handleClose();
   };
 
@@ -287,15 +276,17 @@ const ManageListingsPage: React.FC<IPage> = () => {
         </>
       </Container>
       <AreYouSureModal
-        showModal={showModal}
-        handleClose={handleClose}
-        handleConfirm={handleConfirm}
+        showModal={showAreYouSureModal}
+        onClose={handleClose}
+        onConfirm={handleConfirm}
         confirmType={confirmModalTypeEnum.LISTING_CANCEL_EDIT}
       />
       <AddBuildingModal
         listing={selectedListing}
         showModal={showAddBuildingModal}
-        onClose={() => setShowAddBuildingModal(false)}
+        onClose={() => {
+          setShowAreYouSureModal(true);
+        }}
       />
     </Profiler>
   );

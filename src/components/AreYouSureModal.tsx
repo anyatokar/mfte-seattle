@@ -1,18 +1,17 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { confirmModalTypeEnum } from "../types/enumTypes";
-import { useEffect, useState } from "react";
 
 type AreYouSureModalProps = {
   showModal: boolean;
-  handleClose: () => void;
-  handleConfirm: () => void;
+  onClose: () => void;
+  onConfirm: () => void;
   confirmType: confirmModalTypeEnum;
 };
 const AreYouSureModal: React.FC<AreYouSureModalProps> = ({
   showModal,
-  handleClose,
-  handleConfirm,
+  onClose,
+  onConfirm,
   confirmType,
 }) => {
   type ModalText = {
@@ -43,27 +42,21 @@ const AreYouSureModal: React.FC<AreYouSureModalProps> = ({
     },
   };
 
-  const [modalText, setModalText] = useState<ModalText | null>(null);
-
-  // TODO: useEffect is not needed here
-  useEffect(() => {
-    setModalText(modalTextLookup[confirmType]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const modalText = modalTextLookup[confirmType];
 
   return (
-    <Modal show={showModal} onHide={handleClose}>
+    <Modal show={showModal} onHide={onClose}>
       <Modal.Header closeButton>
         <Modal.Title>{modalText?.header}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{modalText?.body}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="secondary" onClick={onClose}>
           {modalText?.goBackLabel || "Go Back"}
         </Button>
         <Button
           variant="danger"
-          onClick={handleConfirm}
+          onClick={onConfirm}
           data-testid="modal-confirm"
         >
           {modalText?.confirmLabel || "Confirm"}
