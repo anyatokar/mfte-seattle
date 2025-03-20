@@ -82,7 +82,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
 
   return (
     <>
-      {selectedBuilding.buildingName === "" && (
+      {selectedBuilding.buildingID === "" && (
         <Row className="mb-2">
           <Col md={6}>
             <Form.Label className="mb-0">Building name</Form.Label>
