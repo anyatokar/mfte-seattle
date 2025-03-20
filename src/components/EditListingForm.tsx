@@ -398,7 +398,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Col md={8}>
               <Card>
                 <Card.Body>
-                  {showEditBuildingData ? (
+                  {showEditBuildingData ||
+                  selectedBuilding.buildingID === "" ? (
                     <Row className="mb-3">
                       <Col className="mb-md-0">
                         <NotListedForm
@@ -420,17 +421,21 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       </Row>
                     </>
                   )}
-                  <Row>
-                    <Col className="mb-md-0">
-                      <Button
-                        variant="outline-primary"
-                        size="sm"
-                        onClick={() => setShowEditBuildingData((prev) => !prev)}
-                      >
-                        {showEditBuildingData ? "Cancel" : "Edit"}
-                      </Button>
-                    </Col>
-                  </Row>
+                  {selectedBuilding.buildingID !== "" && (
+                    <Row>
+                      <Col className="mb-md-0">
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          onClick={() =>
+                            setShowEditBuildingData((prev) => !prev)
+                          }
+                        >
+                          {showEditBuildingData ? "Cancel" : "Edit"}
+                        </Button>
+                      </Col>
+                    </Row>
+                  )}
                 </Card.Body>
               </Card>
             </Col>
