@@ -28,7 +28,6 @@ import IBuilding, {
 } from "../interfaces/IBuilding";
 import IListing, {
   AvailDataArray,
-  ListingWithRequired,
   SelectedBuilding,
   UnitAvailData,
 } from "../interfaces/IListing";
@@ -43,8 +42,22 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 
+export type OriginalFormFields = PartialWithRequired<
+  IListing,
+  | "buildingName"
+  | "availDataArray"
+  | "url"
+  | "expiryDate"
+  // | "listingID"
+  // | "buildingID"
+  | "description"
+  | "feedback"
+  | "program"
+  // | "otherProgram"
+>;
+
 type EditListingFormProps = {
-  listing: ListingWithRequired | null;
+  listing: OriginalFormFields | null;
   onClose: () => void;
 };
 
@@ -52,31 +65,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   listing,
   onClose,
 }) => {
-  const emptyListing = {
-    availDataArray: [],
-    url: "",
-    expiryDate: "",
-    listingID: "",
-    buildingID: "",
-    buildingName: "",
-    listingStatus: undefined,
-    description: "",
-    feedback: "",
-    program: undefined,
-    otherProgram: "",
-  };
-
-  const {
-    buildingName,
-    availDataArray,
-    url,
-    expiryDate,
-    description,
-    feedback,
-    program,
-    otherProgram,
-  } = listing ?? emptyListing;
-
   const blankAvailRow: UnitAvailData = {
     unitSize: undefined,
     dateAvailString: "",
@@ -86,19 +74,31 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     aptNum: "",
   };
 
-  const originalFormFields: Partial<IListing> = {
-    buildingName: buildingName,
-    availDataArray:
-      availDataArray && availDataArray.length > 0
-        ? listing?.availDataArray
-        : [blankAvailRow],
-    url: url,
-    expiryDate: expiryDate,
-    description: description,
-    feedback: feedback,
-    program: program,
-    otherProgram: otherProgram,
-  };
+  const originalFormFields: OriginalFormFields = listing
+    ? {
+        buildingName: listing.buildingName,
+        availDataArray: listing.availDataArray,
+        url: listing.url,
+        expiryDate: listing.expiryDate,
+        description: listing.description,
+        feedback: listing.feedback,
+        program: listing.program,
+        otherProgram: listing.otherProgram,
+      }
+    : {
+        buildingName: "",
+        availDataArray: [blankAvailRow],
+        url: "",
+        expiryDate: "",
+        description: "",
+        feedback: "",
+        program: undefined,
+        // otherProgram: "",
+
+        // listingID: "",
+        // buildingID: "",
+        // listingStatus: undefined,
+      };
 
   const [formFields, setFormFields] = useState(originalFormFields);
 
@@ -183,6 +183,38 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           setSelectedBuilding(findSelectedBuilding(value));
         }
       }
+
+      // if (name === "program" && value !== ProgramKeyEnum.other) {
+
+      // }
+
+      // const handleInputChange = (e: any, rowId?: string) => {
+      //   const { name, value } = e.target;
+
+      //   setFormFields((prev) => {
+
+      //     // If updating a specific row
+      //     // Find the index of the row with the specific rowId
+      //     let newAvailData;
+      //     if (rowId !== undefined) {
+
+      //       const updatedRow = prev.availDataArray.find((row) => row.rowId === rowId)
+      //       updatedRow[name] = value;
+      //       if (name === "unitSize") { updatedRow[percentAmi]: null }
+
+      //       newAvailData = prev.availDataArray ? [...prev.availDataArray] : [];
+
+      //       // const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
+
+      //       newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
+      //       if (name === "unitSize") {
+      //         newAvailData[rowIndex] = {
+      //           ...newAvailData[rowIndex],
+      //           // Clear out percentAmi
+      //           percentAmi: undefined,
+      //         };
+      //       }
+      //     }
 
       const update = rowId
         ? { availDataArray: newAvailData }
