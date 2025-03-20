@@ -155,75 +155,44 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     const { name, value } = e.target;
 
     setFormFields((prev) => {
-      const newAvailData = [...(prev.availDataArray || [])];
-
-      // If updating a specific row
-
-      // Find the index of the row with the specific rowId
-      const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
-
       if (rowId !== undefined) {
+        const newAvailData = [...prev.availDataArray];
+        const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
         newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
+
         if (name === "unitSize") {
           newAvailData[rowIndex] = {
             ...newAvailData[rowIndex],
-            // Clear out percentAmi
+            // Clear out percentAmi when unit size changes
             percentAmi: undefined,
           };
         }
-      }
 
-      if (name === "buildingName") {
-        setFormFields({ ...originalFormFields, buildingName: value });
-
-        if (value === "Not Listed") {
-          setSelectedBuilding(emptySelectedBuilding);
-        } else {
-          // This assumes building names are unique.
-          setSelectedBuilding(findSelectedBuilding(value));
+        return {
+          ...prev,
+          availDataArray: newAvailData,
+        };
+      } else {
+        const update = { [name]: value } as OriginalFormFields;
+        if (name === "buildingName") {
+          update.buildingName = value;
+          if (value === "Not Listed") {
+            setSelectedBuilding(emptySelectedBuilding);
+          } else {
+            // This assumes building names are unique.
+            setSelectedBuilding(findSelectedBuilding(value));
+          }
         }
+
+        if (name === "program" && value !== ProgramKeyEnum.other) {
+          update.otherProgram = undefined;
+        }
+
+        return {
+          ...prev,
+          ...update,
+        };
       }
-
-      // if (name === "program" && value !== ProgramKeyEnum.other) {
-
-      // }
-
-      // const handleInputChange = (e: any, rowId?: string) => {
-      //   const { name, value } = e.target;
-
-      //   setFormFields((prev) => {
-
-      //     // If updating a specific row
-      //     // Find the index of the row with the specific rowId
-      //     let newAvailData;
-      //     if (rowId !== undefined) {
-
-      //       const updatedRow = prev.availDataArray.find((row) => row.rowId === rowId)
-      //       updatedRow[name] = value;
-      //       if (name === "unitSize") { updatedRow[percentAmi]: null }
-
-      //       newAvailData = prev.availDataArray ? [...prev.availDataArray] : [];
-
-      //       // const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
-
-      //       newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
-      //       if (name === "unitSize") {
-      //         newAvailData[rowIndex] = {
-      //           ...newAvailData[rowIndex],
-      //           // Clear out percentAmi
-      //           percentAmi: undefined,
-      //         };
-      //       }
-      //     }
-
-      const update = rowId
-        ? { availDataArray: newAvailData }
-        : { [name]: value };
-
-      return {
-        ...prev,
-        ...update,
-      };
     });
   };
 
