@@ -54,7 +54,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
       );
     }
 
-    if (["phone", "urlForBuilding"].includes(name)) {
+    if (["phone", "phone2", "urlForBuilding"].includes(name)) {
       setSelectedBuilding((prev) =>
         prev
           ? {

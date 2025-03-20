@@ -369,9 +369,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               id="buildingName"
               onChange={handleInputChange}
             >
-              <option value="" disabled>
-                Select
-              </option>
+              <option value="">Select</option>
               <option value="Not Listed">Not Listed</option>
               <Dropdown.Divider />
               {allBuildings
