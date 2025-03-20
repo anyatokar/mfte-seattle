@@ -42,7 +42,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Table from "react-bootstrap/Table";
 
-export type OriginalFormFields = PartialWithRequired<
+export type EditListingFormFields = PartialWithRequired<
   IListing,
   | "buildingName"
   | "availDataArray"
@@ -57,7 +57,7 @@ export type OriginalFormFields = PartialWithRequired<
 >;
 
 type EditListingFormProps = {
-  listing: OriginalFormFields | null;
+  listing: EditListingFormFields | null;
   onClose: () => void;
 };
 
@@ -74,7 +74,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     aptNum: "",
   };
 
-  const originalFormFields: OriginalFormFields = listing
+  const originalFormFields: EditListingFormFields = listing
     ? {
         buildingName: listing.buildingName,
         availDataArray: listing.availDataArray,
@@ -173,7 +173,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           availDataArray: newAvailData,
         };
       } else {
-        const update = { [name]: value } as OriginalFormFields;
+        const update = { [name]: value } as EditListingFormFields;
         if (name === "buildingName") {
           update.buildingName = value;
           if (value === "Not Listed") {
