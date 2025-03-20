@@ -330,7 +330,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   }
 
   const availSizes: BedroomsKeyEnum[] = selectedBuilding?.amiData
-    ? (Object.keys(selectedBuilding?.amiData) as BedroomsKeyEnum[])
+    ? (Object.keys(selectedBuilding.amiData) as BedroomsKeyEnum[]).filter(
+        (key) => {
+          return selectedBuilding.amiData[key].length > 0;
+        }
+      )
     : [];
 
   function getMaxRent(unitAvailData: UnitAvailData): number {
@@ -365,7 +369,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               id="buildingName"
               onChange={handleInputChange}
             >
-              <option value="">Select</option>
+              <option value="" disabled>
+                Select
+              </option>
               <option value="Not Listed">Not Listed</option>
               <Dropdown.Divider />
               {allBuildings
@@ -502,8 +508,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                               Object.values(selectedBuilding.amiData).flat()
                                 .length === 0
                             }
+                            value={unitAvailData.unitSize || ""}
                           >
-                            <option value={""}></option>
+                            <option value="" disabled></option>
                             {availSizes.map((unitSize) => (
                               <option key={unitSize} value={unitSize}>
                                 {unitSizeLabelEnum[unitSize]}
@@ -521,17 +528,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             onChange={(e) =>
                               handleInputChange(e, unitAvailData.rowId)
                             }
-                            value={unitAvailData.percentAmi || ""}
                             disabled={!unitAvailData.unitSize}
+                            value={unitAvailData.percentAmi || ""}
                           >
-                            <option value={unitAvailData.percentAmi}>
-                              {unitAvailData.percentAmi}
-                            </option>
+                            <option value="" disabled></option>
                             {selectedBuilding.amiData?.[
                               unitAvailData.unitSize as BedroomsKeyEnum
-                            ]?.map((percent) => (
-                              <option key={percent} value={percent}>
-                                {percent}
+                            ]?.map((percentAmi) => (
+                              <option key={percentAmi} value={percentAmi}>
+                                {percentAmi}
                               </option>
                             ))}
                           </Form.Select>
