@@ -35,6 +35,7 @@ export type SelectedBuilding = {
   address: PartialAddress;
   contact: PartialContact;
   amiData: AmiData;
+  buildingNameWritein?: string;
 };
 
 export type UnitAvailData = {
@@ -67,6 +68,8 @@ export default interface IListing {
   program: ProgramKeyEnum | undefined;
   otherProgram?: string;
   // When adding listing for a building not in the buildings collection.
+  // TODO: figure out where writein data is being stored.
+  buildingNameWritein?: string;
   amiData?: AmiData;
   address?: PartialAddress;
   contact?: PartialContact;

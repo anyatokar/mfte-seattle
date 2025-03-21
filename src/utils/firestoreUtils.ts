@@ -107,21 +107,28 @@ export async function addListingFirestore(
     feedback: formFields.feedback || "",
   };
 
-  if (formFields.amiData) {
-    listing["amiData"] = formFields.amiData;
-  }
-
-  if (formFields.address) {
-    listing["address"] = formFields.address;
-  }
-
-  if (formFields.contact) {
-    listing["contact"] = formFields.contact;
-  }
-
   if (formFields.otherProgram) {
     listing["otherProgram"] = formFields.otherProgram;
   }
+  // TODO: Save one final name to use?
+  if (selectedBuilding) {
+    if (selectedBuilding.buildingNameWritein) {
+      listing["buildingNameWritein"] = selectedBuilding.buildingNameWritein;
+    }
+
+    if (selectedBuilding.amiData) {
+      listing["amiData"] = selectedBuilding.amiData;
+    }
+
+    if (selectedBuilding.address) {
+      listing["address"] = selectedBuilding.address;
+    }
+
+    if (selectedBuilding.contact) {
+      listing["contact"] = selectedBuilding.contact;
+    }
+  }
+
   try {
     // Create a new document reference with an auto-generated ID
     const listingDocRef = doc(collection(db, "listings"));

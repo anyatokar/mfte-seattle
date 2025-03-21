@@ -68,12 +68,12 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
       );
     }
 
-    if (name === "buildingName") {
+    if (name === "buildingNameWritein") {
       setSelectedBuilding((prev) =>
         prev
           ? {
               ...prev,
-              buildingName: value,
+              buildingNameWritein: value,
             }
           : prev
       );
@@ -88,8 +88,8 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
             <Form.Label className="mb-0">Building name</Form.Label>
             <Form.Control
               required
-              name="buildingName"
-              value={selectedBuilding.buildingName}
+              name="buildingNameWritein"
+              value={selectedBuilding.buildingNameWritein}
               onChange={handleInputChange}
             />
           </Col>

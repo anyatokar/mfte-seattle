@@ -175,7 +175,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       } else {
         const update = { [name]: value } as EditListingFormFields;
         if (name === "buildingName") {
-          update.buildingName = value;
           if (value === "Not Listed") {
             setSelectedBuilding(emptySelectedBuilding);
           } else {
@@ -213,6 +212,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         console.log(
           `Successfully added listing for ${selectedBuilding?.buildingName}. ListingID: ${listingID}`
         );
+
+        // Close modal
+        onClose();
       }
     } else {
       const isSuccessful = await updateListingFirestore(
@@ -223,11 +225,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         console.log(
           `Successfully updated listing for ${selectedBuilding?.buildingName}, listingID: ${listing.listingID || ""}`
         );
+
+        onClose();
       }
     }
-
-    // Close modal
-    onClose();
   };
 
   const emptyAddressSelectedBuilding: PartialWithRequired<
