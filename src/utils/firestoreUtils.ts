@@ -103,13 +103,9 @@ export async function addListingFirestore(
     expiryDate: formFields.expiryDate || getMaxExpiryDate(),
     listingID: "",
     managerID: uid,
-    program: formFields.program,
     feedback: formFields.feedback || "",
   };
 
-  if (formFields.otherProgram) {
-    listing["otherProgram"] = formFields.otherProgram;
-  }
   // TODO: Save one final name to use?
   if (selectedBuilding) {
     if (selectedBuilding.buildingNameWritein) {

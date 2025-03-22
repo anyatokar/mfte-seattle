@@ -55,6 +55,6 @@ export enum ProgramKeyEnum {
 
 export enum ProgramLabelEnum {
   P6 = "MFTE P6",
-  P345 = "MFTE Programs 3-5, IZ-Housing Bonus, MHA, or MPC-Yesler Terrace",
+  P345 = "MFTE P3-5, IZ-Housing Bonus, MHA, or MPC-Yesler Terrace",
   other = "Other",
 }

@@ -18,7 +18,6 @@ import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
 
 import NotListedForm from "./NotListedForm";
-import Program from "./Program";
 
 import IBuilding, {
   Address,
@@ -52,8 +51,6 @@ export type EditListingFormFields = PartialWithRequired<
   // | "buildingID"
   | "description"
   | "feedback"
-  | "program"
-  // | "otherProgram"
 >;
 
 type EditListingFormProps = {
@@ -72,6 +69,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     maxRent: "",
     rowId: `${Date.now()}`,
     aptNum: "",
+    selectedProgram: undefined,
+    otherProgram: undefined,
   };
 
   const originalFormFields: EditListingFormFields = listing
@@ -82,8 +81,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         expiryDate: listing.expiryDate,
         description: listing.description,
         feedback: listing.feedback,
-        program: listing.program,
-        otherProgram: listing.otherProgram,
       }
     : {
         buildingName: "",
@@ -92,7 +89,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         expiryDate: "",
         description: "",
         feedback: "",
-        program: undefined,
         // otherProgram: "",
 
         // listingID: "",
@@ -166,6 +162,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             // Clear out percentAmi when unit size changes
             percentAmi: undefined,
           };
+          if (name === "program") {
+            newAvailData[rowIndex] = {
+              ...newAvailData[rowIndex],
+              // Clear out percentAmi when unit size changes
+              otherProgram: undefined,
+            };
+          }
         }
 
         return {
@@ -181,10 +184,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             // This assumes building names are unique.
             setSelectedBuilding(findSelectedBuilding(value));
           }
-        }
-
-        if (name === "program" && value !== ProgramKeyEnum.other) {
-          update.otherProgram = undefined;
         }
 
         return {
@@ -340,12 +339,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     : [];
 
   function getMaxRent(unitAvailData: UnitAvailData): number {
-    const { unitSize, percentAmi } = unitAvailData;
+    const { unitSize, percentAmi, selectedProgram } = unitAvailData;
 
-    if (!unitSize || !percentAmi || !formFields.program) return 0;
+    if (!unitSize || !percentAmi || !selectedProgram) return 0;
 
     if (unitAvailData.unitSize && unitAvailData.percentAmi) {
-      if (formFields.program === ProgramKeyEnum.P6) {
+      if (selectedProgram === ProgramKeyEnum.P6) {
         return p6UnitPricing[unitSize][percentAmi];
       } else {
         return p345UnitPricing[unitSize][percentAmi];
@@ -358,6 +357,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   const [showEditBuildingData, setShowEditBuildingData] = useState(
     selectedBuilding && !selectedBuilding.buildingID
   );
+
+  const programOptionsArray: ProgramKeyEnum[] = [
+    ProgramKeyEnum.P6,
+    ProgramKeyEnum.P345,
+    ProgramKeyEnum.other,
+  ];
 
   return (
     <Form onSubmit={handleFormSubmit}>
@@ -442,17 +447,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             </Col>
           </Row>
 
-          {/* Program */}
-          <Row className="my-3">
-            <Col md={8}>
-              <Program
-                selectedProgram={formFields.program}
-                otherProgram={formFields.otherProgram}
-                onProgramInputChange={handleInputChange}
-              />
-            </Col>
-          </Row>
-
           {/* URL */}
           <Row className="my-3">
             <Col md={8} lg={6} className="mb-0">
@@ -489,6 +483,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                     <tr>
                       <th style={{ minWidth: colWidths.unitSize }}>Size</th>
                       <th style={{ minWidth: colWidths.percentAmi }}>% AMI</th>
+                      <th style={{ minWidth: colWidths.program }}>Program</th>
                       <th style={{ minWidth: colWidths.rent }}>Rent</th>
                       <th style={{ minWidth: colWidths.aptNum }}>Apt #</th>
                       <th style={{ minWidth: colWidths.dateAvail }}>
@@ -546,6 +541,45 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             ))}
                           </Form.Select>
                         </td>
+                        <td style={{ maxWidth: colWidths.program }}>
+                          <Row>
+                            <Col>
+                              <Form.Select
+                                required
+                                name="selectedProgram"
+                                id="selectedProgram"
+                                onChange={(e) =>
+                                  handleInputChange(e, unitAvailData.rowId)
+                                }
+                              >
+                                <option value="">Select</option>
+                                {programOptionsArray.map((program) => (
+                                  <option
+                                    key={program}
+                                    label={ProgramLabelEnum[program]}
+                                    id={program}
+                                    value={program}
+                                  />
+                                ))}
+                              </Form.Select>
+                            </Col>
+                          </Row>
+                          <Row className="mt-2">
+                            <Col>
+                              {unitAvailData.selectedProgram ===
+                                ProgramKeyEnum.other && (
+                                <Form.Control
+                                  required
+                                  name="otherProgram"
+                                  onChange={(e) =>
+                                    handleInputChange(e, unitAvailData.rowId)
+                                  }
+                                  value={unitAvailData.otherProgram}
+                                />
+                              )}
+                            </Col>
+                          </Row>
+                        </td>
                         <td style={{ maxWidth: colWidths.rent }}>
                           <InputGroup>
                             <InputGroup.Text>$</InputGroup.Text>
@@ -563,8 +597,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           <div className="text-end">
                             <Form.Text>
                               {!!getMaxRent(unitAvailData) &&
-                                formFields.program &&
-                                `${ProgramLabelEnum[formFields.program]}, 
+                                unitAvailData.selectedProgram &&
+                                unitAvailData.selectedProgram !==
+                                  ProgramKeyEnum.other &&
+                                `${ProgramLabelEnum[unitAvailData.selectedProgram]}, 
                               ${unitSizeLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]}, 
                               ${unitAvailData.percentAmi}% AMI ⟶ 
                               ${formatCurrency(getMaxRent(unitAvailData))} max with utilities*`}

@@ -14,6 +14,7 @@ export const colWidths = {
   unitSize: "120px",
   percentAmi: "100px",
   rent: "150px",
+  program: "150px",
   aptNum: "100px",
   dateAvail: "175px",
   delete: "100px",

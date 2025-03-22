@@ -47,6 +47,8 @@ export type UnitAvailData = {
   percentAmi: PercentAmi | undefined;
   rowId: string;
   aptNum: string;
+  selectedProgram: ProgramKeyEnum | undefined;
+  otherProgram?: string;
 };
 
 export type AvailDataArray = UnitAvailData[];
@@ -65,8 +67,6 @@ export default interface IListing {
   expiryDate: string;
   managerID: string;
   feedback: string;
-  program: ProgramKeyEnum | undefined;
-  otherProgram?: string;
   // When adding listing for a building not in the buildings collection.
   // TODO: figure out where writein data is being stored.
   buildingNameWritein?: string;
