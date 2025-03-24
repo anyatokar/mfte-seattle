@@ -1,5 +1,6 @@
 import { MutableRefObject } from "react";
 import BuildingCard from "./BuildingCard";
+import { listingStatusEnum } from "../types/enumTypes";
 
 import IBuilding from "../interfaces/IBuilding";
 import ISavedBuilding from "../interfaces/ISavedBuilding";
@@ -62,10 +63,12 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
               <Col
                 key={building.buildingID}
                 xs={12}
-                sm={6}
+                sm={
+                  building.listing?.listingStatus === listingStatusEnum.ACTIVE
+                    ? 12
+                    : 6
+                }
                 // Split screen starts at md
-                md={12}
-                lg={6}
                 className="p-1"
               >
                 <BuildingCard
