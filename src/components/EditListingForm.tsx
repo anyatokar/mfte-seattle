@@ -70,7 +70,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     rowId: `${Date.now()}`,
     aptNum: "",
     selectedProgram: undefined,
-    otherProgram: undefined,
   };
 
   const originalFormFields: EditListingFormFields = listing
@@ -162,14 +161,16 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             // Clear out percentAmi when unit size changes
             percentAmi: undefined,
           };
-          if (name === "program") {
+          if (name === "selectedProgram") {
             newAvailData[rowIndex] = {
               ...newAvailData[rowIndex],
-              // Clear out percentAmi when unit size changes
-              otherProgram: undefined,
             };
+
+            delete newAvailData[rowIndex].otherProgram;
           }
         }
+
+        console.log("newAvailData", newAvailData);
 
         return {
           ...prev,
@@ -551,6 +552,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                                 onChange={(e) =>
                                   handleInputChange(e, unitAvailData.rowId)
                                 }
+                                value={unitAvailData.selectedProgram || ""}
                               >
                                 <option value="">Select</option>
                                 {programOptionsArray.map((program) => (

@@ -12,7 +12,11 @@ import {
 } from "firebase/firestore";
 
 import { contactUsFormFieldsType } from "../pages/Contact";
-import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
+import {
+  accountTypeEnum,
+  listingStatusEnum,
+  ProgramKeyEnum,
+} from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 
 import IListing, {
@@ -153,8 +157,19 @@ export async function updateListingFirestore(
 
   try {
     const listingDocRef = doc(db, "listings", listingID);
+
+    const updatedAvailDataArray = fieldsToUpdate.availDataArray?.map((row) => {
+      if (row.selectedProgram !== ProgramKeyEnum.other && row.otherProgram) {
+        const updatedRow = { ...row };
+        delete updatedRow.otherProgram;
+        return updatedRow;
+      }
+      return row;
+    });
+
     await updateDoc(listingDocRef, {
       ...fieldsToUpdate,
+      availDataArray: updatedAvailDataArray,
       dateUpdated: Timestamp.fromDate(new Date()),
       expiryDate: fieldsToUpdate.expiryDate || getMaxExpiryDate(),
     });
