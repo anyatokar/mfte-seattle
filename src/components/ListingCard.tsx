@@ -9,7 +9,7 @@ import ListingActionsButtons from "./ListingActionsButtons";
 import ListingCardBuildingData from "./ListingCardBuildingData";
 import IListing from "../interfaces/IListing";
 import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
-import { expiringSoonDays } from "../config/config";
+import { expiringSoonDays } from "../config/constants";
 
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";

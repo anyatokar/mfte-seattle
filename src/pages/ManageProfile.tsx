@@ -1,6 +1,6 @@
 import { Profiler } from "react";
 import Profile from "../components/Profile";
-import { isProfilerOn } from "../config/config";
+import { isProfilerOn } from "../config/constants";
 import { useAuth } from "../contexts/AuthContext";
 import IPage from "../interfaces/IPage";
 

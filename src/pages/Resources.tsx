@@ -1,5 +1,5 @@
 import { Profiler } from "react";
-import { isProfilerOn } from "../config/config";
+import { isProfilerOn } from "../config/constants";
 import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";

@@ -11,6 +11,7 @@ import { AmiData, PercentAmi } from "../interfaces/IBuilding";
 import { AvailDataArray, UnitAvailData } from "../interfaces/IListing";
 import { p6maxIncomeData } from "../config/P6-income-limits";
 import { p345maxIncomeData } from "../config/P345-income-limits";
+import { optionalUrlsArray } from "../config/constants";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -150,20 +151,21 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       <Table bordered hover size="sm" className="my-0" responsive>
         <thead>
           <tr>
-            <th style={isMarker ? { minWidth: "50px" } : { minWidth: "65px" }}>
-              Size
-            </th>
+            <th style={{ minWidth: isMarker ? "50px" : "65px" }}>Size</th>
             <th style={{ whiteSpace: "nowrap" }}>% AMI</th>
             {type === TableTypeEnum.availData && (
-              <th style={{ whiteSpace: "nowrap" }}>Income</th>
-            )}
-            {/* TODO: Rent including utilities? */}
-            {type === TableTypeEnum.availData && <th>Rent</th>}
-            {type === TableTypeEnum.availData && (
-              <th style={{ whiteSpace: "nowrap" }}>Apt #</th>
-            )}
-            {type === TableTypeEnum.availData && (
-              <th style={{ whiteSpace: "nowrap" }}>Move-in Date</th>
+              <>
+                <th style={{ whiteSpace: "nowrap" }}>Income</th>
+                <th>Rent</th>
+                <th style={{ whiteSpace: "nowrap" }}>Apt #</th>
+                <th style={{ whiteSpace: "nowrap" }}>Move-in Date</th>
+
+                {optionalUrlsArray.map(({ key, label }) => (
+                  <th key={key} style={{ whiteSpace: "nowrap" }}>
+                    {label}
+                  </th>
+                ))}
+              </>
             )}
           </tr>
         </thead>
@@ -216,6 +218,21 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
                   </td>
+                  {optionalUrlsArray.map(({ key }) => (
+                    <td key={key}>
+                      {unitAvailData.optionalUrls?.[key] ? (
+                        <a
+                          href={unitAvailData.optionalUrls[key]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {unitAvailData.optionalUrls[key]}
+                        </a>
+                      ) : (
+                        "--"
+                      )}
+                    </td>
+                  ))}
                 </tr>
               ) : null;
             })}

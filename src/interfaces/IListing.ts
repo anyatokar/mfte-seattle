@@ -2,6 +2,7 @@ import { Timestamp } from "firebase/firestore";
 import {
   BedroomsKeyEnum,
   listingStatusEnum,
+  OptionalUrlsKeyEnum,
   ProgramKeyEnum,
 } from "../types/enumTypes";
 import { Address, AmiData, Contact, PercentAmi } from "./IBuilding";
@@ -47,10 +48,13 @@ export type UnitAvailData = {
   rowId: string;
   aptNum: string;
   selectedProgram: ProgramKeyEnum | undefined;
+  optionalUrls: OptionalUrls;
   otherProgram?: string;
 };
 
 export type AvailDataArray = UnitAvailData[];
+
+export type OptionalUrls = { [key in OptionalUrlsKeyEnum]?: string };
 
 export default interface IListing {
   listingID: string;

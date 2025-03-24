@@ -1,6 +1,6 @@
 import { Profiler, useRef, useState } from "react";
 import PrivateRoute from "./auth_components/PrivateRoute";
-import { isProfilerOn } from "./config/config";
+import { isProfilerOn } from "./config/constants";
 import privateRoutes from "./config/privateRoutes";
 import publicRoutes from "./config/publicRoutes";
 import { TopNav } from "./components/TopNav";

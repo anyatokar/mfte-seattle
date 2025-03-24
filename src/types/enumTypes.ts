@@ -58,3 +58,19 @@ export enum ProgramLabelEnum {
   P345 = "MFTE P3-5, IZ-Housing Bonus, MHA, or MPC-Yesler Terrace",
   other = "Other",
 }
+
+export enum OptionalUrlsKeyEnum {
+  listingPageUrl = "listingPageUrl",
+  walkTourUrl = "walkTourUrl",
+  floorPlanUrl = "floorPlanUrl",
+  otherUrl1 = "otherUrl1",
+  otherUrl2 = "otherUrl2",
+}
+
+export enum OptionalUrlsLabelEnum {
+  listingPageUrl = "Listing Page URL",
+  walkTourUrl = "Walk Tour URL",
+  floorPlanUrl = "Floor Plan URL",
+  otherUrl1 = "Other URL 1",
+  otherUrl2 = "Other URL 2",
+}

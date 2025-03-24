@@ -1,6 +1,6 @@
 import { Profiler, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { expiringSoonDays, isProfilerOn } from "../config/config";
+import { expiringSoonDays, isProfilerOn } from "../config/constants";
 import {
   accountTypeEnum,
   confirmModalTypeEnum,
@@ -163,7 +163,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                   </Nav.Item>
                 </Nav>
               </Col>
-              <Col sm={12} lg={8}>
+              <Col sm={12} lg={10}>
                 <Tab.Content>
                   <Tab.Pane eventKey="summary">
                     <Container fluid>

@@ -5,6 +5,7 @@ import {
   BedroomsKeyEnum,
   ProgramKeyEnum,
   ProgramLabelEnum,
+  OptionalUrlsKeyEnum,
 } from "../types/enumTypes";
 import {
   addListingFirestore,
@@ -13,10 +14,11 @@ import {
 import { formatCurrency, getMaxExpiryDate } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { colWidths } from "../config/config";
+import { colWidths, optionalUrlsArray } from "../config/constants";
 import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
 
+import ListingCardBuildingData from "./ListingCardBuildingData";
 import NotListedForm from "./NotListedForm";
 
 import IBuilding, {
@@ -27,10 +29,10 @@ import IBuilding, {
 } from "../interfaces/IBuilding";
 import IListing, {
   AvailDataArray,
+  OptionalUrls,
   SelectedBuilding,
   UnitAvailData,
 } from "../interfaces/IListing";
-import ListingCardBuildingData from "./ListingCardBuildingData";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -48,8 +50,6 @@ export type EditListingFormFields = PartialWithRequired<
   | "availDataArray"
   | "url"
   | "expiryDate"
-  // | "listingID"
-  // | "buildingID"
   | "description"
   | "feedback"
 >;
@@ -63,6 +63,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   listing,
   onClose,
 }) => {
+  const blankOptionalUrls: OptionalUrls = {
+    [OptionalUrlsKeyEnum.listingPageUrl]: "",
+    [OptionalUrlsKeyEnum.walkTourUrl]: "",
+    [OptionalUrlsKeyEnum.floorPlanUrl]: "",
+    [OptionalUrlsKeyEnum.otherUrl1]: "",
+    [OptionalUrlsKeyEnum.otherUrl2]: "",
+  };
+
   const blankAvailRow: UnitAvailData = {
     unitSize: undefined,
     dateAvailString: "",
@@ -71,6 +79,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     rowId: `${Date.now()}`,
     aptNum: "",
     selectedProgram: undefined,
+    optionalUrls: blankOptionalUrls,
   };
 
   const originalFormFields: EditListingFormFields = listing
@@ -153,22 +162,33 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       if (rowId !== undefined) {
         const newAvailData = [...prev.availDataArray];
         const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
-        newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
 
-        if (name === "unitSize") {
+        if (Object.values(OptionalUrlsKeyEnum).includes(name)) {
           newAvailData[rowIndex] = {
             ...newAvailData[rowIndex],
-            // Clear out percentAmi when unit size changes
-            percentAmi: undefined,
+            optionalUrls: {
+              ...newAvailData[rowIndex].optionalUrls,
+              [name]: value,
+            },
           };
-        }
+        } else {
+          newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
 
-        if (name === "selectedProgram") {
-          newAvailData[rowIndex] = {
-            ...newAvailData[rowIndex],
-          };
+          if (name === "unitSize") {
+            newAvailData[rowIndex] = {
+              ...newAvailData[rowIndex],
+              // Clear out percentAmi when unit size changes
+              percentAmi: undefined,
+            };
+          }
 
-          delete newAvailData[rowIndex].otherProgram;
+          if (name === "selectedProgram") {
+            newAvailData[rowIndex] = {
+              ...newAvailData[rowIndex],
+            };
+
+            delete newAvailData[rowIndex].otherProgram;
+          }
         }
 
         return {
@@ -450,7 +470,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           {/* URL */}
           <Row className="my-3">
             <Col md={8} lg={6} className="mb-0">
-              <Form.Label className="mb-0 fw-bold">Listings URL</Form.Label>
+              <Form.Label className="mb-0 fw-bold">
+                All listings URL:
+              </Form.Label>
               <Form.Control
                 required
                 type="url"
@@ -471,13 +493,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Row>
               <Col className="mb-0">
                 <Form.Label className="mb-0 fw-bold">
-                  Available units
+                  Available units:
                 </Form.Label>
-                <div>
-                  <Form.Text>
-                    Of the rent-reduced units listed above, which are available?
-                  </Form.Text>
-                </div>
                 <Table bordered hover responsive size="sm">
                   <thead>
                     <tr>
@@ -489,6 +506,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       <th style={{ minWidth: colWidths.dateAvail }}>
                         Move-in Date
                       </th>
+
+                      {optionalUrlsArray.map(({ key, label }) => (
+                        <th key={key} style={{ minWidth: colWidths.links }}>
+                          {label}
+                          <div>
+                            <Form.Text>Optional</Form.Text>
+                          </div>
+                        </th>
+                      ))}
                       <th>Delete Row</th>
                     </tr>
                   </thead>
@@ -587,7 +613,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             <Form.Control
                               required
                               type="number"
-                              min="0"
+                              min="1"
                               name="maxRent"
                               value={unitAvailData.maxRent}
                               onChange={(e) =>
@@ -630,6 +656,19 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             }
                           />
                         </td>
+                        {/* Optional URLs */}
+                        {optionalUrlsArray.map(({ key }) => (
+                          <td key={key}>
+                            <Form.Control
+                              type="url"
+                              name={key}
+                              onChange={(e) =>
+                                handleInputChange(e, unitAvailData.rowId)
+                              }
+                              value={unitAvailData.optionalUrls?.[key] || ""}
+                            />
+                          </td>
+                        ))}
                         <td className="text-center">
                           <Button
                             variant="outline-danger"
@@ -685,7 +724,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           {/* Expiry Date */}
           <Row className="mb-3">
             <Form.Label className="mb-0 fw-bold">
-              Listing expiration date
+              Listing expiration date:
             </Form.Label>
             <Col xs={6} md={4} lg={3} className="mb-0">
               <Form.Control
@@ -705,7 +744,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           <Row className="mb-3">
             <Col className="mb-0">
               <Form.Label className="mb-0 fw-bold">
-                Featured description
+                Featured description:
               </Form.Label>
 
               <Form.Control
@@ -726,8 +765,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
           <Row className="mb-3">
             <Col className="mb-0">
-              <Form.Label className="mb-0 fw-bold">Form feedback</Form.Label>
-
+              <Form.Label className="mb-0 fw-bold">Form feedback:</Form.Label>
               <Form.Control
                 as="textarea"
                 name="feedback"

@@ -1,5 +1,5 @@
 import { Profiler, useState } from "react";
-import { isProfilerOn } from "../config/config";
+import { isProfilerOn } from "../config/constants";
 import { sendMessageFirestore } from "../utils/firestoreUtils";
 import IPage from "../interfaces/IPage";
 
