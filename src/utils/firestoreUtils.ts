@@ -345,8 +345,6 @@ export async function signupFirestore(signupAuthData: SignupAuthDataType) {
       email: email,
       name: name,
       signupOrBackfillTimestamp: new Date(),
-      // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
-      recentUser: true,
     } as Omit<IUserSignupAuthData, "password">);
   }
 }
