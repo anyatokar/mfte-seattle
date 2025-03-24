@@ -161,16 +161,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             // Clear out percentAmi when unit size changes
             percentAmi: undefined,
           };
-          if (name === "selectedProgram") {
-            newAvailData[rowIndex] = {
-              ...newAvailData[rowIndex],
-            };
-
-            delete newAvailData[rowIndex].otherProgram;
-          }
         }
 
-        console.log("newAvailData", newAvailData);
+        if (name === "selectedProgram") {
+          newAvailData[rowIndex] = {
+            ...newAvailData[rowIndex],
+          };
+
+          delete newAvailData[rowIndex].otherProgram;
+        }
 
         return {
           ...prev,
