@@ -146,7 +146,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   }
 
   return (
-    <>
+    <div style={{ maxHeight: "250px", overflowY: "auto" }}>
       <Table bordered hover size="sm" className="my-0" responsive>
         <thead>
           <tr>
@@ -302,7 +302,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
           </Modal.Footer>
         </Modal>
       )}
-    </>
+    </div>
   );
 };
 
