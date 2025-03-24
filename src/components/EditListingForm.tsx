@@ -89,11 +89,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         expiryDate: "",
         description: "",
         feedback: "",
-        // otherProgram: "",
-
-        // listingID: "",
-        // buildingID: "",
-        // listingStatus: undefined,
       };
 
   const [formFields, setFormFields] = useState(originalFormFields);

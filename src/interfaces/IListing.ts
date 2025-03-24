@@ -16,7 +16,6 @@ export type ListingWithRequired = PartialWithRequired<
   | "buildingID"
   | "description"
   | "feedback"
-  | "program"
 >;
 
 export type PartialAddress = PartialWithRequired<

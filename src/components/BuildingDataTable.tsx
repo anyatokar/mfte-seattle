@@ -190,6 +190,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                 rowId,
                 unitSize,
                 aptNum,
+                otherProgram,
               } = unitAvailData;
 
               return rowId && unitSize ? (
@@ -197,7 +198,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                   <td>{unitSizeLabelEnum[unitSize]}</td>
                   <td>{percentAmi ?? "--"}</td>
                   <td className={percentAmi ? "py-0" : ""}>
-                    {percentAmi ? (
+                    {percentAmi && !otherProgram ? (
                       <Button
                         size="sm"
                         variant="link"
