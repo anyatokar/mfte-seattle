@@ -129,7 +129,6 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
           {building.listing && (
             <BuildingDataTable
               type={TableTypeEnum.availData}
-              program={building.listing.program}
               data={building.listing.availDataArray}
               isMarker={true}
             />

@@ -8,7 +8,7 @@ import {
 } from "../types/enumTypes";
 import { formatCurrency, formatDate } from "../utils/generalUtils";
 import { AmiData, PercentAmi } from "../interfaces/IBuilding";
-import { AvailDataArray } from "../interfaces/IListing";
+import { AvailDataArray, UnitAvailData } from "../interfaces/IListing";
 import { p6maxIncomeData } from "../config/P6-income-limits";
 import { p345maxIncomeData } from "../config/P345-income-limits";
 
@@ -33,7 +33,6 @@ interface AmiDataProps {
 interface AvailDataProps {
   type: TableTypeEnum.availData;
   data: AvailDataArray;
-  program: ProgramKeyEnum | undefined;
   isMarker?: boolean;
 }
 
@@ -43,23 +42,25 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const { type, data, isMarker = false } = props;
 
   const [showModal, setShowModal] = useState(false);
-  const [percentAmi, setPercentAmi] = useState<PercentAmi | null>(null);
+  const [unitAvailData, setUnitAvailData] = useState<UnitAvailData | null>(
+    null
+  );
 
   const handleClose = () => {
     setShowModal(false);
-    setPercentAmi(null);
+    setUnitAvailData(null);
   };
 
-  const handleShowModal = (percentAmi: PercentAmi) => {
-    setPercentAmi(percentAmi);
+  const handleShowModal = (unitAvailData: UnitAvailData) => {
+    setUnitAvailData(unitAvailData);
     setShowModal(true);
   };
 
   function getModalSentence(): string | undefined {
-    if (type === TableTypeEnum.availData) {
-      if (props.program === ProgramKeyEnum.P345) {
+    if (unitAvailData && type === TableTypeEnum.availData) {
+      if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
         return ProgramLabelEnum[ProgramKeyEnum.P345];
-      } else if (props.program === ProgramKeyEnum.P6) {
+      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
         return ProgramLabelEnum[ProgramKeyEnum.P6];
       } else {
         // TODO: Remove when there is no more unknown program types in listings.
@@ -69,16 +70,19 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   }
 
   function getModalData(
-    percentAmi: PercentAmi
+    unitAvailData: UnitAvailData
   ): [number[], number[]?] | undefined {
-    if (type === TableTypeEnum.availData) {
-      if (props.program === ProgramKeyEnum.P345) {
-        return [p345maxIncomeData[percentAmi]];
-      } else if (props.program === ProgramKeyEnum.P6) {
-        return [p6maxIncomeData[percentAmi]];
+    if (unitAvailData.percentAmi && type === TableTypeEnum.availData) {
+      if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
+        return [p345maxIncomeData[unitAvailData.percentAmi]];
+      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
+        return [p6maxIncomeData[unitAvailData.percentAmi]];
       } else {
         // TODO: Remove when there is no more unknown program types in listings.
-        return [p345maxIncomeData[percentAmi], p6maxIncomeData[percentAmi]];
+        return [
+          p345maxIncomeData[unitAvailData.percentAmi],
+          p6maxIncomeData[unitAvailData.percentAmi],
+        ];
       }
     }
   }
@@ -198,7 +202,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                         size="sm"
                         variant="link"
                         className="p-0 m-0"
-                        onClick={() => handleShowModal(percentAmi)}
+                        onClick={() => handleShowModal(unitAvailData)}
                       >
                         Max
                       </Button>
@@ -217,7 +221,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         </tbody>
       </Table>
 
-      {percentAmi && type === TableTypeEnum.availData && (
+      {unitAvailData && type === TableTypeEnum.availData && (
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Income Limits</Modal.Title>
@@ -228,7 +232,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               and program type.
               <br />
               <strong>AMI: </strong>
-              {percentAmi}%
+              {unitAvailData.percentAmi}%
               <br />
               <strong>Program:</strong> {getModalSentence()}
             </p>
@@ -238,18 +242,18 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                 <tr>
                   <th style={{ whiteSpace: "nowrap" }}>Household Size</th>
                   <th style={{ whiteSpace: "nowrap" }}>
-                    {props.program ? "Max Annual Income" : "MFTE P6"}
+                    {unitAvailData.selectedProgram
+                      ? "Max Annual Income"
+                      : ProgramLabelEnum.P6}
                   </th>
-                  {!props.program && (
-                    <th>
-                      Other developer agreements (MFTE P3-5, IZ, MHA, MPC-YT)
-                    </th>
+                  {!unitAvailData.selectedProgram && (
+                    <th>{ProgramLabelEnum.P345}</th>
                   )}
                 </tr>
               </thead>
               <tbody>
-                {props.program &&
-                  getModalData(percentAmi)?.[0].map((percentData, index) => (
+                {unitAvailData.selectedProgram &&
+                  getModalData(unitAvailData)?.[0].map((percentData, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{formatCurrency(percentData)}</td>
@@ -257,18 +261,21 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                   ))}
 
                 {/* TODO: Delete when every listing has program data. */}
-                {!props.program && getModalData(percentAmi)?.[0]
-                  ? getModalData(percentAmi)?.[0].map((percentData, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>
-                          {formatCurrency(
-                            getModalData(percentAmi)?.[1]?.[index] ?? 0
-                          )}
-                        </td>
-                        <td>{formatCurrency(percentData ?? 0)}</td>
-                      </tr>
-                    ))
+                {!unitAvailData.selectedProgram &&
+                getModalData(unitAvailData)?.[0]
+                  ? getModalData(unitAvailData)?.[0].map(
+                      (percentData, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>
+                            {formatCurrency(
+                              getModalData(unitAvailData)?.[1]?.[index] ?? 0
+                            )}
+                          </td>
+                          <td>{formatCurrency(percentData ?? 0)}</td>
+                        </tr>
+                      )
+                    )
                   : null}
               </tbody>
             </Table>

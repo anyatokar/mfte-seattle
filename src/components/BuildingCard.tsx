@@ -121,7 +121,6 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   <BuildingDataTable
                     type={TableTypeEnum.availData}
                     data={listing.availDataArray}
-                    program={listing.program}
                   />
                   {listing.description && (
                     <Card.Text className="mt-2">

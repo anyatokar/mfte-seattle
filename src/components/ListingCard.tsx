@@ -31,7 +31,6 @@ type ListingWithRequired = PartialWithRequired<
   | "buildingID"
   | "description"
   | "feedback"
-  | "program"
 >;
 
 type ListingCardProps = {
@@ -51,8 +50,6 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
       listingStatus: undefined,
       description: "",
       feedback: "",
-      program: undefined,
-      otherProgram: "",
     };
   }
 
@@ -65,8 +62,6 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
     expiryDate,
     dateUpdated,
     description,
-    program,
-    otherProgram,
   } = listing;
 
   type badgeObjectType = { label: string; bg: string; text?: string };
@@ -167,17 +162,12 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
       >
         <ListingCardBuildingData buildingID={listing.buildingID} />
 
-        <div className="mt-3">
-          <Program selectedProgram={program} otherProgram={otherProgram} />
-        </div>
-
         <Card.Text className="mt-3 mb-0">
           <strong>Available rent-reduced units:</strong>
         </Card.Text>
         <BuildingDataTable
           type={TableTypeEnum.availData}
           data={availDataArray}
-          program={program}
         />
 
         <Card.Text className="mt-3">
