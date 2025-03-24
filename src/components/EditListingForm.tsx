@@ -39,6 +39,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/esm/Stack";
 import Table from "react-bootstrap/Table";
 
 export type EditListingFormFields = PartialWithRequired<
@@ -107,11 +108,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   if (!currentUser) return null;
 
-  const handleAddRow = () => {
-    const newRow = {
-      ...blankAvailRow,
-      rowId: `${Date.now()}`,
-    };
+  const handleAddRow = (isDuplicate: boolean) => {
+    const newRow = isDuplicate
+      ? {
+          ...formFields.availDataArray[formFields.availDataArray.length - 1],
+          rowId: `${Date.now()}`,
+        }
+      : {
+          ...blankAvailRow,
+        };
 
     const newAvailDataArray = [...(formFields.availDataArray || []), newRow];
 
@@ -652,10 +657,15 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               </Col>
             </Row>
             <Row>
-              <Col className="text-end">
-                <Button onClick={handleAddRow} size="sm">
-                  Add Row
-                </Button>
+              <Col className="d-flex justify-content-end">
+                <Stack direction={"horizontal"} gap={2} className="ms-auto">
+                  <Button onClick={() => handleAddRow(true)} size="sm">
+                    Duplicate Row
+                  </Button>
+                  <Button onClick={() => handleAddRow(false)} size="sm">
+                    Add Empty Row
+                  </Button>
+                </Stack>
               </Col>
             </Row>
             {formFields.availDataArray?.[0]?.percentAmi && (
