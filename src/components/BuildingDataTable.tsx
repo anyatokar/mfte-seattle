@@ -5,6 +5,7 @@ import {
   TableTypeEnum,
   ProgramKeyEnum,
   ProgramLabelEnum,
+  TableParentEnum,
 } from "../types/enumTypes";
 import { formatCurrency, formatDate } from "../utils/generalUtils";
 import { AmiData, PercentAmi } from "../interfaces/IBuilding";
@@ -21,7 +22,7 @@ import Table from "react-bootstrap/Table";
 interface AmiDataProps {
   type: TableTypeEnum.amiData;
   data: AmiData;
-  isMarker?: boolean;
+  tableParent: TableParentEnum;
   onClickCallback?: (
     ami: PercentAmi,
     unit: BedroomsKeyEnum,
@@ -34,13 +35,13 @@ interface AmiDataProps {
 interface AvailDataProps {
   type: TableTypeEnum.availData;
   data: AvailDataArray;
-  isMarker?: boolean;
+  tableParent: TableParentEnum;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 
 const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
-  const { type, data, isMarker = false } = props;
+  const { type, data, tableParent } = props;
 
   const [showModal, setShowModal] = useState(false);
   const [unitAvailData, setUnitAvailData] = useState<UnitAvailData | null>(
@@ -147,11 +148,24 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   }
 
   return (
-    <div style={{ maxHeight: "250px", overflowY: "auto" }}>
+    <div
+      style={
+        tableParent === TableParentEnum.BUILDING_CARD
+          ? { maxHeight: "250px", overflowY: "auto" }
+          : undefined
+      }
+    >
       <Table bordered hover size="sm" className="my-0" responsive>
         <thead>
           <tr>
-            <th style={{ minWidth: isMarker ? "50px" : "65px" }}>Size</th>
+            <th
+              style={{
+                minWidth:
+                  tableParent === TableParentEnum.MARKER ? "50px" : "65px",
+              }}
+            >
+              Size
+            </th>
             <th style={{ whiteSpace: "nowrap" }}>% AMI</th>
             {type === TableTypeEnum.availData && (
               <>

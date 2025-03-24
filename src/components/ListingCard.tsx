@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   expiryBadgeEnum,
   listingStatusEnum,
+  TableParentEnum,
   TableTypeEnum,
 } from "../types/enumTypes";
 import BuildingDataTable from "./BuildingDataTable";
@@ -167,6 +168,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
         <BuildingDataTable
           type={TableTypeEnum.availData}
           data={availDataArray}
+          tableParent={TableParentEnum.LISTING_CARD}
         />
 
         <Card.Text className="mt-3">

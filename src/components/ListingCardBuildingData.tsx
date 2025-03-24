@@ -1,5 +1,5 @@
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { TableTypeEnum } from "../types/enumTypes";
+import { TableParentEnum, TableTypeEnum } from "../types/enumTypes";
 import { AddressAndPhone } from "./AddressAndPhone";
 import BuildingDataTable from "./BuildingDataTable";
 import IBuilding from "../interfaces/IBuilding";
@@ -68,6 +68,7 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
             <BuildingDataTable
               type={TableTypeEnum.amiData}
               data={building.amiData}
+              tableParent={TableParentEnum.LISTING_CARD}
             />
           </Col>
         </Row>

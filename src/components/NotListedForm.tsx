@@ -1,7 +1,11 @@
 import { Col, Form, Row } from "react-bootstrap";
 import { AmiData } from "../interfaces/IBuilding";
 import BuildingDataTable from "./BuildingDataTable";
-import { BedroomsKeyEnum, TableTypeEnum } from "../types/enumTypes";
+import {
+  BedroomsKeyEnum,
+  TableParentEnum,
+  TableTypeEnum,
+} from "../types/enumTypes";
 import { SelectedBuilding } from "../interfaces/IListing";
 
 type NotListedFormProps = {
@@ -182,6 +186,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
           data={blankTable}
           onClickCallback={onClickCallback}
           tableFields={amiData}
+          tableParent={TableParentEnum.LISTING_CARD}
         />
       </Row>
     </>
