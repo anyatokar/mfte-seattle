@@ -6,13 +6,14 @@ import {
   ProgramKeyEnum,
   ProgramLabelEnum,
   TableParentEnum,
+  OptionalUrlsKeyEnum,
+  OptionalUrlsLabelEnum,
 } from "../types/enumTypes";
 import { formatCurrency, formatDate } from "../utils/generalUtils";
 import { AmiData, PercentAmi } from "../interfaces/IBuilding";
 import { AvailDataArray, UnitAvailData } from "../interfaces/IListing";
 import { p6maxIncomeData } from "../config/P6-income-limits";
 import { p345maxIncomeData } from "../config/P345-income-limits";
-import { optionalUrlsArray } from "../config/constants";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -147,6 +148,22 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     }
   }
 
+  function getUrlColumns(): OptionalUrlsKeyEnum[] {
+    if (type !== TableTypeEnum.availData) return [];
+
+    const columnsToShow = new Set<OptionalUrlsKeyEnum>();
+
+    for (const unitAvailData of data) {
+      for (const key in unitAvailData.optionalUrls) {
+        if (unitAvailData.optionalUrls[key as OptionalUrlsKeyEnum]) {
+          columnsToShow.add(key as OptionalUrlsKeyEnum);
+        }
+      }
+    }
+
+    return Array.from(columnsToShow);
+  }
+
   return (
     <div
       style={
@@ -174,9 +191,9 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                 <th style={{ whiteSpace: "nowrap" }}>Apt #</th>
                 <th style={{ whiteSpace: "nowrap" }}>Move-in Date</th>
 
-                {optionalUrlsArray.map(({ key, label }) => (
+                {getUrlColumns().map((key) => (
                   <th key={key} style={{ whiteSpace: "nowrap" }}>
-                    {label}
+                    {OptionalUrlsLabelEnum[key]}
                   </th>
                 ))}
               </>
@@ -232,7 +249,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                   <td>
                     {dateAvailString ? formatDate(dateAvailString) : "--"}
                   </td>
-                  {optionalUrlsArray.map(({ key }) => (
+                  {getUrlColumns().map((key) => (
                     <td key={key}>
                       {unitAvailData.optionalUrls?.[key] ? (
                         <a
