@@ -89,47 +89,74 @@ function availDataToNum(
   return availDataArray;
 }
 
+async function addNewBuilding(
+  selectedBuilding: SelectedBuilding
+): Promise<string> {
+  const newBuilding = {} as SelectedBuilding;
+
+  if (selectedBuilding.buildingNameWritein) {
+    newBuilding["buildingNameWritein"] = selectedBuilding.buildingNameWritein;
+  }
+
+  if (selectedBuilding.amiData) {
+    newBuilding["amiData"] = selectedBuilding.amiData;
+  }
+
+  if (selectedBuilding.address) {
+    newBuilding["address"] = selectedBuilding.address;
+  }
+
+  if (selectedBuilding.contact) {
+    newBuilding["contact"] = selectedBuilding.contact;
+  }
+
+  try {
+    // Create a new document reference with an auto-generated ID
+    const newBuildingDocRef = doc(collection(db, "new_buildings"));
+
+    // Set the document and include the listingID field
+    await setDoc(newBuildingDocRef, {
+      ...newBuilding,
+      buildingID: newBuildingDocRef.id,
+    });
+
+    return newBuildingDocRef.id;
+  } catch (error) {
+    console.error("Error adding new building:", error);
+    return "";
+  }
+}
+
 export async function addListingFirestore(
   formFields: Partial<IListing>,
   selectedBuilding: SelectedBuilding | undefined,
   uid: string
 ): Promise<string> {
-  const listing: IListing = {
-    buildingName: formFields.buildingName || "",
-    buildingID: selectedBuilding?.buildingID || "",
-    url: formFields.url || "",
-    availDataArray: availDataToNum(formFields.availDataArray),
-    description: formFields.description || "",
-    listingStatus: listingStatusEnum.IN_REVIEW,
-    dateCreated: Timestamp.fromDate(new Date()),
-    dateUpdated: Timestamp.fromDate(new Date()),
-    /** YYYY-MM-DD */
-    expiryDate: formFields.expiryDate || getMaxExpiryDate(),
-    listingID: "",
-    managerID: uid,
-    feedback: formFields.feedback || "",
-  };
-
-  // TODO: Save one final name to use?
-  if (selectedBuilding) {
-    if (selectedBuilding.buildingNameWritein) {
-      listing["buildingNameWritein"] = selectedBuilding.buildingNameWritein;
-    }
-
-    if (selectedBuilding.amiData) {
-      listing["amiData"] = selectedBuilding.amiData;
-    }
-
-    if (selectedBuilding.address) {
-      listing["address"] = selectedBuilding.address;
-    }
-
-    if (selectedBuilding.contact) {
-      listing["contact"] = selectedBuilding.contact;
-    }
-  }
-
   try {
+    const newBuildingId =
+      selectedBuilding && !selectedBuilding.buildingID
+        ? addNewBuilding(selectedBuilding)
+        : "";
+
+    const listing: IListing = {
+      buildingName:
+        (selectedBuilding?.buildingNameWritein
+          ? selectedBuilding?.buildingNameWritein
+          : formFields.buildingName) || "",
+      buildingID: selectedBuilding?.buildingID || (await newBuildingId),
+      url: formFields.url || "",
+      availDataArray: availDataToNum(formFields.availDataArray),
+      description: formFields.description || "",
+      listingStatus: listingStatusEnum.IN_REVIEW,
+      dateCreated: Timestamp.fromDate(new Date()),
+      dateUpdated: Timestamp.fromDate(new Date()),
+      /** YYYY-MM-DD */
+      expiryDate: formFields.expiryDate || getMaxExpiryDate(),
+      listingID: "",
+      managerID: uid,
+      feedback: formFields.feedback || "",
+    };
+
     // Create a new document reference with an auto-generated ID
     const listingDocRef = doc(collection(db, "listings"));
 
