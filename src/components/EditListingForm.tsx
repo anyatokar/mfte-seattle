@@ -482,9 +482,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 value={formFields.url}
               />
               <Form.Text>
-                {`Url to view available rent-reduced units. Often ends with /floorplans`}
-                <br />
-                {`Include http://`}
+                {`Url to view available rent-reduced units. Include http://`}
               </Form.Text>
             </Col>
           </Row>
@@ -531,8 +529,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                                 ? formFields.availDataArray.length <= 1
                                 : true
                             }
+                            title="Delete row"
                           >
-                            <Trash size={20} />
+                            <Trash size={20} aria-label="Delete row" />
                           </Button>
                         </td>
                         <td>
@@ -692,11 +691,17 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Row>
               <Col className="d-flex justify-content-end">
                 <Stack direction={"horizontal"} gap={2} className="ms-auto">
-                  <Button onClick={() => handleAddRow(true)}>
-                    Duplicate Last Row
+                  <Button
+                    onClick={() => handleAddRow(true)}
+                    title="Duplicate last row"
+                  >
+                    Duplicate Row
                   </Button>
-                  <Button onClick={() => handleAddRow(false)}>
-                    Add Empty Row
+                  <Button
+                    onClick={() => handleAddRow(false)}
+                    title="Add empty row"
+                  >
+                    Add Row
                   </Button>
                 </Stack>
               </Col>
