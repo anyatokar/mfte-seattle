@@ -20,6 +20,7 @@ import { p345UnitPricing } from "../config/P345-unit-pricing";
 
 import ListingCardBuildingData from "./ListingCardBuildingData";
 import NotListedForm from "./NotListedForm";
+import { Trash } from "react-bootstrap-icons";
 
 import IBuilding, {
   Address,
@@ -498,6 +499,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 <Table bordered hover responsive size="sm">
                   <thead>
                     <tr>
+                      <th></th>
                       <th style={{ minWidth: colWidths.unitSize }}>Size</th>
                       <th style={{ minWidth: colWidths.percentAmi }}>% AMI</th>
                       <th style={{ minWidth: colWidths.program }}>Program</th>
@@ -515,12 +517,24 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                           </div>
                         </th>
                       ))}
-                      <th>Delete Row</th>
                     </tr>
                   </thead>
                   <tbody>
                     {formFields.availDataArray?.map((unitAvailData) => (
                       <tr key={unitAvailData.rowId}>
+                        <td className="text-center">
+                          <Button
+                            variant="outline-danger"
+                            onClick={() => handleDeleteRow(unitAvailData.rowId)}
+                            disabled={
+                              formFields.availDataArray
+                                ? formFields.availDataArray.length <= 1
+                                : true
+                            }
+                          >
+                            <Trash size={20} />
+                          </Button>
+                        </td>
                         <td>
                           <Form.Select
                             required
@@ -669,20 +683,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             />
                           </td>
                         ))}
-                        <td className="text-center">
-                          <Button
-                            variant="outline-danger"
-                            size="sm"
-                            onClick={() => handleDeleteRow(unitAvailData.rowId)}
-                            disabled={
-                              formFields.availDataArray
-                                ? formFields.availDataArray.length <= 1
-                                : true
-                            }
-                          >
-                            Delete
-                          </Button>
-                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -692,10 +692,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Row>
               <Col className="d-flex justify-content-end">
                 <Stack direction={"horizontal"} gap={2} className="ms-auto">
-                  <Button onClick={() => handleAddRow(true)} size="sm">
-                    Duplicate Row
+                  <Button onClick={() => handleAddRow(true)}>
+                    Duplicate Last Row
                   </Button>
-                  <Button onClick={() => handleAddRow(false)} size="sm">
+                  <Button onClick={() => handleAddRow(false)}>
                     Add Empty Row
                   </Button>
                 </Stack>
