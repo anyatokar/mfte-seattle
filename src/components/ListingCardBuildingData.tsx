@@ -1,4 +1,5 @@
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
 import { TableParentEnum, TableTypeEnum } from "../types/enumTypes";
 import { AddressAndPhone } from "./AddressAndPhone";
 import BuildingDataTable from "./BuildingDataTable";
@@ -16,12 +17,15 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
   buildingID,
 }) => {
   const [allBuildings] = useAllBuildingsContext();
+  const [tempBuildings] = useTempBuildingsContext();
 
-  const building = findSelectedBuilding(buildingID, allBuildings);
+  const building = findSelectedBuilding(
+    buildingID,
+    allBuildings,
+    tempBuildings
+  );
 
-  if (!building) {
-    return;
-  }
+  if (!building) return;
 
   const { contact, address, buildingName } = building;
 

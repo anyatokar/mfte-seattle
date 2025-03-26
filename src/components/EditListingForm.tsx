@@ -7,13 +7,11 @@ import {
   ProgramLabelEnum,
   OptionalUrlsKeyEnum,
 } from "../types/enumTypes";
-import {
-  setListingFirestore,
-  getAllTempBuildings,
-} from "../utils/firestoreUtils";
+import { setListingFirestore } from "../utils/firestoreUtils";
 import { formatCurrency, getMaxExpiryDate } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
 import { colWidths, optionalUrlsArray } from "../config/constants";
 import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
@@ -60,17 +58,17 @@ type EditListingFormProps = {
   listing: EditListingFormFields | null;
   onClose: () => void;
 };
-const allTempBuildings = await getAllTempBuildings();
 
 /** Temp collection takes precedence. */
 export function findSelectedBuilding(
   buildingID: string | undefined,
-  allBuildings: IBuilding[]
+  allBuildings: IBuilding[],
+  tempBuildings: IBuilding[]
 ): IBuilding | undefined {
   if (!buildingID) return;
 
   return (
-    allTempBuildings.find((building) => buildingID === building.buildingID) ||
+    tempBuildings.find((building) => buildingID === building.buildingID) ||
     allBuildings.find((building) => buildingID === building.buildingID)
   );
 }
@@ -123,10 +121,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   const { currentUser } = useAuth();
 
   const [allBuildings] = useAllBuildingsContext();
+  const [tempBuildings] = useTempBuildingsContext();
 
   const [selectedBuilding, setSelectedBuilding] = useState<
     SelectedBuilding | undefined
-  >(findSelectedBuilding(listing?.buildingID, allBuildings));
+  >(findSelectedBuilding(listing?.buildingID, allBuildings, tempBuildings));
 
   if (!currentUser) return null;
 
@@ -203,12 +202,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         };
       } else {
         const update = { [name]: value } as EditListingFormFields;
+
         if (name === "buildingName") {
           if (value === "Not Listed") {
             setSelectedBuilding(emptySelectedBuilding);
           } else {
-            // This assumes building names are unique.
-            setSelectedBuilding(findSelectedBuilding(buildingID, allBuildings));
+            setSelectedBuilding(
+              findSelectedBuilding(buildingID, allBuildings, tempBuildings)
+            );
           }
         }
 
@@ -391,7 +392,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 const selectedOption = e.target.selectedOptions[0];
                 const buildingID =
                   selectedOption.getAttribute("data-buildingid") || "";
-                handleInputChange(e, "", buildingID);
+                handleInputChange(e, undefined, buildingID);
               }}
             >
               <option value="">Select</option>
@@ -420,7 +421,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Col md={8}>
               <Card>
                 <Card.Body>
-                  {showEditBuildingData ? (
+                  {showEditBuildingData || !selectedBuilding.buildingID ? (
                     <Row className="mb-3">
                       <Col className="mb-md-0">
                         <NotListedForm

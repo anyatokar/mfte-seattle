@@ -134,13 +134,12 @@ export async function setListingFirestore(
   formFields: Partial<IListing>,
   selectedBuilding: SelectedBuilding | undefined,
   uid: string,
-  listingID: string | undefined,
+  listingID: string | undefined
 ): Promise<string> {
   try {
-    const tempBuildingID =
-      selectedBuilding
-        ? await addNewBuilding(selectedBuilding)
-        : "";
+    const tempBuildingID = selectedBuilding
+      ? await addNewBuilding(selectedBuilding)
+      : "";
 
     const listing: IListing = {
       buildingName:

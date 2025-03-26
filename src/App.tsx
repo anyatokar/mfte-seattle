@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AuthProvider from "./contexts/AuthContext";
 import { AllBuildingsProvider } from "./contexts/AllBuildingsContext";
+import { TempBuildingsProvider } from "./contexts/TempBuildingsContext";
 import { ModalContext, ModalState } from "./contexts/ModalContext";
 
 const Application: React.FC = () => {
@@ -46,27 +47,29 @@ const Application: React.FC = () => {
                 <TopNav />
               </div>
               <AllBuildingsProvider>
-                <Routes>
-                  {privateRoutes.map((route) => (
-                    <Route
-                      key={route.name}
-                      path={route.path}
-                      element={
-                        <PrivateRoute name={route.name}>
-                          <route.component />
-                        </PrivateRoute>
-                      }
-                    />
-                  ))}
+                <TempBuildingsProvider>
+                  <Routes>
+                    {privateRoutes.map((route) => (
+                      <Route
+                        key={route.name}
+                        path={route.path}
+                        element={
+                          <PrivateRoute name={route.name}>
+                            <route.component />
+                          </PrivateRoute>
+                        }
+                      />
+                    ))}
 
-                  {publicRoutes.map((route) => (
-                    <Route
-                      key={route.name}
-                      path={route.path}
-                      element={<route.component topNavRef={topNavRef} />}
-                    />
-                  ))}
-                </Routes>
+                    {publicRoutes.map((route) => (
+                      <Route
+                        key={route.name}
+                        path={route.path}
+                        element={<route.component topNavRef={topNavRef} />}
+                      />
+                    ))}
+                  </Routes>
+                </TempBuildingsProvider>
               </AllBuildingsProvider>
             </ModalContext.Provider>
           </AuthProvider>
