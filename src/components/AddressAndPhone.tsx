@@ -14,16 +14,16 @@ const AddressAndPhone: React.FC<AddressAndPhoneProps> = ({
   contact,
   withLinks,
 }) => {
-  const { streetNum, street, city, state, zip } = address;
+  const { streetAddress, city, state, zip } = address;
   const { phone, phone2 } = contact;
 
-  const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${streetNum} ${street}, ${city}, ${state} ${zip}`)}`;
+  const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${streetAddress}, ${city}, ${state} ${zip}`)}`;
   const phone1Ref = `tel:${phone}`;
   const phone2Ref = `tel:${phone2}`;
 
   return (
     <div>
-      {streetNum} {street}
+      {streetAddress}
       <br />
       {city}, {state} {zip}
       <a

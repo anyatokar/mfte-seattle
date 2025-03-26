@@ -56,7 +56,6 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
   const {
     availDataArray,
     buildingName,
-    buildingNameWritein,
     listingStatus,
     url,
     expiryDate,
@@ -133,7 +132,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
         <div className="d-flex align-items-center">
           <Col>
             <Card.Title className="m-0">
-              {buildingNameWritein ? buildingNameWritein : buildingName}
+              {buildingName}
               {statusBadge && (
                 <Badge
                   pill

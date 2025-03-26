@@ -2,11 +2,11 @@ import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { TableParentEnum, TableTypeEnum } from "../types/enumTypes";
 import { AddressAndPhone } from "./AddressAndPhone";
 import BuildingDataTable from "./BuildingDataTable";
-import IBuilding from "../interfaces/IBuilding";
 
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { findSelectedBuilding } from "./EditListingForm";
 
 type ListingCardBuildingDataProps = {
   buildingID: string;
@@ -17,17 +17,8 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
 }) => {
   const [allBuildings] = useAllBuildingsContext();
 
-  function findSelectedBuilding(
-    buildingID: string | undefined
-  ): IBuilding | undefined {
-    if (buildingID === undefined) {
-      return undefined;
-    }
+  const building = findSelectedBuilding(buildingID, allBuildings);
 
-    return allBuildings.find((building) => buildingID === building.buildingID);
-  }
-
-  const building = findSelectedBuilding(buildingID);
   if (!building) {
     return;
   }

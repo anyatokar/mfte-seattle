@@ -21,7 +21,7 @@ export type ListingWithRequired = PartialWithRequired<
 
 export type PartialAddress = PartialWithRequired<
   Address,
-  "streetAddress" | "zip" | "neighborhood" | "neighborhood"
+  "streetAddress" | "zip" | "neighborhood"
 >;
 
 export type PartialContact = PartialWithRequired<
@@ -70,10 +70,4 @@ export default interface IListing {
   expiryDate: string;
   managerID: string;
   feedback: string;
-  // When adding listing for a building not in the buildings collection.
-  // TODO: figure out where writein data is being stored.
-  buildingNameWritein?: string;
-  amiData?: AmiData;
-  address?: PartialAddress;
-  contact?: PartialContact;
 }

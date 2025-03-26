@@ -30,7 +30,6 @@ export function useAllListings(
       const listings: IListing[] = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...(doc.data() as IListing),
-        // Temp fix for key name change availData >> availDataArray
         availDataArray: doc.data().availDataArray
           ? doc.data().availDataArray
           : doc.data().availData,

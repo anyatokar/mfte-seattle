@@ -8,8 +8,8 @@ import {
   OptionalUrlsKeyEnum,
 } from "../types/enumTypes";
 import {
-  addListingFirestore,
-  updateListingFirestore,
+  setListingFirestore,
+  getAllTempBuildings,
 } from "../utils/firestoreUtils";
 import { formatCurrency, getMaxExpiryDate } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
@@ -48,6 +48,7 @@ import Table from "react-bootstrap/Table";
 export type EditListingFormFields = PartialWithRequired<
   IListing,
   | "buildingName"
+  | "buildingID"
   | "availDataArray"
   | "url"
   | "expiryDate"
@@ -59,6 +60,20 @@ type EditListingFormProps = {
   listing: EditListingFormFields | null;
   onClose: () => void;
 };
+const allTempBuildings = await getAllTempBuildings();
+
+/** Temp collection takes precedence. */
+export function findSelectedBuilding(
+  buildingID: string | undefined,
+  allBuildings: IBuilding[]
+): IBuilding | undefined {
+  if (!buildingID) return;
+
+  return (
+    allTempBuildings.find((building) => buildingID === building.buildingID) ||
+    allBuildings.find((building) => buildingID === building.buildingID)
+  );
+}
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
   listing,
@@ -86,6 +101,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   const originalFormFields: EditListingFormFields = listing
     ? {
         buildingName: listing.buildingName,
+        buildingID: listing.buildingID,
         availDataArray: listing.availDataArray,
         url: listing.url,
         expiryDate: listing.expiryDate,
@@ -94,6 +110,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       }
     : {
         buildingName: "",
+        buildingID: "",
         availDataArray: [blankAvailRow],
         url: "",
         expiryDate: "",
@@ -109,7 +126,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const [selectedBuilding, setSelectedBuilding] = useState<
     SelectedBuilding | undefined
-  >(findSelectedBuilding(listing?.buildingName));
+  >(findSelectedBuilding(listing?.buildingID, allBuildings));
 
   if (!currentUser) return null;
 
@@ -144,19 +161,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     });
   };
 
-  function findSelectedBuilding(
-    buildingName: string | undefined
-  ): IBuilding | undefined {
-    if (buildingName === undefined) {
-      return undefined;
-    }
-
-    return allBuildings.find(
-      (building) => buildingName === building.buildingName
-    );
-  }
-
-  const handleInputChange = (e: any, rowId?: string) => {
+  const handleInputChange = (e: any, rowId?: string, buildingID?: string) => {
     const { name, value } = e.target;
 
     setFormFields((prev) => {
@@ -203,7 +208,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             setSelectedBuilding(emptySelectedBuilding);
           } else {
             // This assumes building names are unique.
-            setSelectedBuilding(findSelectedBuilding(value));
+            setSelectedBuilding(findSelectedBuilding(buildingID, allBuildings));
           }
         }
 
@@ -222,32 +227,19 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     if (!formFields) return;
 
-    if (!listing?.listingID) {
-      const listingID = await addListingFirestore(
-        formFields,
-        selectedBuilding,
-        currentUser.uid
-      );
-      if (listingID) {
-        console.log(
-          `Successfully added listing for ${selectedBuilding?.buildingName}. ListingID: ${listingID}`
-        );
+    const listingID = await setListingFirestore(
+      formFields,
+      selectedBuilding,
+      currentUser.uid,
+      listing?.listingID
+    );
 
-        // Close modal
-        onClose();
-      }
-    } else {
-      const isSuccessful = await updateListingFirestore(
-        formFields,
-        listing.listingID
+    if (listingID) {
+      console.log(
+        `Successfully set listing for building: ${selectedBuilding?.buildingName}. ListingID: ${listingID}`
       );
-      if (isSuccessful) {
-        console.log(
-          `Successfully updated listing for ${selectedBuilding?.buildingName}, listingID: ${listing.listingID || ""}`
-        );
 
-        onClose();
-      }
+      onClose();
     }
   };
 
@@ -395,28 +387,31 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               required
               name="buildingName"
               id="buildingName"
-              onChange={handleInputChange}
+              onChange={(e) => {
+                const selectedOption = e.target.selectedOptions[0];
+                const buildingID =
+                  selectedOption.getAttribute("data-buildingid") || "";
+                handleInputChange(e, "", buildingID);
+              }}
             >
               <option value="">Select</option>
               <option value="Not Listed">Not Listed</option>
               <Dropdown.Divider />
-              {allBuildings
-                .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
-                .map((selectedBuilding) => (
-                  <option
-                    key={selectedBuilding.buildingID}
-                    value={selectedBuilding.buildingName}
-                  >
-                    {selectedBuilding.buildingName}
-                  </option>
-                ))}
+              {allBuildings.map((building) => (
+                <option
+                  key={building.buildingID}
+                  value={building.buildingName}
+                  data-buildingid={building.buildingID}
+                >
+                  {building.buildingName}
+                </option>
+              ))}
             </Form.Select>
           </Col>
         </Row>
       )}
 
       {/* Address */}
-      {/* TODO: Maybe show address for existing listing */}
       {/* New form, existing building */}
       {selectedBuilding && (
         <>
@@ -425,8 +420,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Col md={8}>
               <Card>
                 <Card.Body>
-                  {showEditBuildingData ||
-                  selectedBuilding.buildingID === "" ? (
+                  {showEditBuildingData ? (
                     <Row className="mb-3">
                       <Col className="mb-md-0">
                         <NotListedForm

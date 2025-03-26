@@ -9,6 +9,7 @@ import {
   addDoc,
   Timestamp,
   DocumentData,
+  getDocs,
 } from "firebase/firestore";
 
 import { contactUsFormFieldsType } from "../pages/Contact";
@@ -28,6 +29,7 @@ import {
   IUserSignupAuthData,
   SignupAuthDataType,
 } from "../interfaces/IUser";
+import IBuilding from "../interfaces/IBuilding";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -111,31 +113,33 @@ async function addNewBuilding(
   }
 
   try {
-    // Create a new document reference with an auto-generated ID
-    const newBuildingDocRef = doc(collection(db, "new_buildings"));
+    const buildingDocRef = selectedBuilding.buildingID
+      ? doc(db, "new_buildings", selectedBuilding.buildingID)
+      : doc(collection(db, "new_buildings"));
 
     // Set the document and include the listingID field
-    await setDoc(newBuildingDocRef, {
+    await setDoc(buildingDocRef, {
       ...newBuilding,
-      buildingID: newBuildingDocRef.id,
+      buildingID: buildingDocRef.id,
     });
 
-    return newBuildingDocRef.id;
+    return buildingDocRef.id;
   } catch (error) {
     console.error("Error adding new building:", error);
     return "";
   }
 }
 
-export async function addListingFirestore(
+export async function setListingFirestore(
   formFields: Partial<IListing>,
   selectedBuilding: SelectedBuilding | undefined,
-  uid: string
+  uid: string,
+  listingID: string | undefined,
 ): Promise<string> {
   try {
-    const newBuildingId =
-      selectedBuilding && !selectedBuilding.buildingID
-        ? addNewBuilding(selectedBuilding)
+    const tempBuildingID =
+      selectedBuilding
+        ? await addNewBuilding(selectedBuilding)
         : "";
 
     const listing: IListing = {
@@ -143,7 +147,7 @@ export async function addListingFirestore(
         (selectedBuilding?.buildingNameWritein
           ? selectedBuilding?.buildingNameWritein
           : formFields.buildingName) || "",
-      buildingID: selectedBuilding?.buildingID || (await newBuildingId),
+      buildingID: selectedBuilding?.buildingID || tempBuildingID,
       url: formFields.url || "",
       availDataArray: availDataToNum(formFields.availDataArray),
       description: formFields.description || "",
@@ -152,26 +156,32 @@ export async function addListingFirestore(
       dateUpdated: Timestamp.fromDate(new Date()),
       /** YYYY-MM-DD */
       expiryDate: formFields.expiryDate || getMaxExpiryDate(),
-      listingID: "",
+      listingID: listingID || "",
       managerID: uid,
       feedback: formFields.feedback || "",
     };
 
-    // Create a new document reference with an auto-generated ID
-    const listingDocRef = doc(collection(db, "listings"));
+    // Get existing doc ref or create a new doc ref with an auto-generated ID
+    const listingDocRef = listingID
+      ? doc(db, "listings", listingID)
+      : doc(collection(db, "listings"));
 
     // Set the document and include the listingID field
-    await setDoc(listingDocRef, {
-      ...listing,
-      listingID: listingDocRef.id,
-    });
-
+    await setDoc(
+      listingDocRef,
+      {
+        ...listing,
+        listingID: listingDocRef.id,
+      },
+      { merge: true }
+    );
     return listingDocRef.id;
   } catch (error) {
     console.error("Error adding listing or updating company rep:", error);
     return "";
   }
 }
+
 export async function updateListingFirestore(
   fieldsToUpdate: Partial<IListing>,
   listingID: string
@@ -204,6 +214,21 @@ export async function updateListingFirestore(
   } catch (error) {
     console.error("Error updating listing:", error);
     return false;
+  }
+}
+
+export async function getAllTempBuildings(): Promise<IBuilding[]> {
+  const tempBuildings: IBuilding[] = [];
+  try {
+    const querySnapshot = await getDocs(collection(db, "new_buildings"));
+
+    querySnapshot.forEach((doc) => {
+      tempBuildings.push(doc.data() as IBuilding);
+    });
+    return tempBuildings;
+  } catch (error: any) {
+    console.error(`Error getting new_buildings collection:`, error);
+    return [];
   }
 }
 
