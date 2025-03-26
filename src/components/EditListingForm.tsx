@@ -200,24 +200,29 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           ...prev,
           availDataArray: newAvailData,
         };
-      } else {
-        const update = { [name]: value } as EditListingFormFields;
-
-        if (name === "buildingName") {
-          if (value === "Not Listed") {
-            setSelectedBuilding(emptySelectedBuilding);
-          } else {
-            setSelectedBuilding(
-              findSelectedBuilding(buildingID, allBuildings, tempBuildings)
-            );
-          }
-        }
-
-        return {
-          ...prev,
-          ...update,
-        };
       }
+
+      if (name === "buildingName") {
+        if (value === "Not Listed") {
+          setSelectedBuilding({
+            ...emptySelectedBuilding,
+            buildingName: "Not Listed",
+          });
+        } else {
+          setSelectedBuilding(
+            findSelectedBuilding(buildingID, allBuildings, tempBuildings)
+          );
+        }
+      }
+
+      if (name === "otherBuildingName" && selectedBuilding) {
+        setSelectedBuilding({ ...selectedBuilding, buildingName: value });
+      }
+
+      return {
+        ...prev,
+        [name]: value,
+      };
     });
   };
 
@@ -271,7 +276,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const emptySelectedBuilding: SelectedBuilding = {
     buildingName: "",
-    otherBuildingName: "",
     buildingID: "",
     address: emptyAddressSelectedBuilding,
     contact: emptyContactSelectedBuilding,
@@ -412,7 +416,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               </Form.Select>
             </Col>
           </Row>
-          {selectedBuilding && selectedBuilding.buildingName === "" && (
+          {selectedBuilding && selectedBuilding.buildingID === "" && (
             <Row className="mb-0">
               <Col md={6}>
                 <Form.Control
