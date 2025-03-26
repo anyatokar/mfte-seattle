@@ -27,6 +27,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   listing,
   onEditClick,
 }) => {
+  // TODO: maybe don't use buildingName off of listing?
   const { listingID, buildingName, expiryDate, listingStatus } = listing;
   const [showModal, setShowModal] = useState(false);
   const { currentUser } = useAuth();

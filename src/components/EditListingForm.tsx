@@ -7,7 +7,7 @@ import {
   ProgramLabelEnum,
   OptionalUrlsKeyEnum,
 } from "../types/enumTypes";
-import { setListingFirestore } from "../utils/firestoreUtils";
+import { ITempBuilding, setListingFirestore } from "../utils/firestoreUtils";
 import { formatCurrency, getMaxExpiryDate } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
@@ -28,8 +28,8 @@ import IBuilding, {
 } from "../interfaces/IBuilding";
 import IListing, {
   AvailDataArray,
+  CurrentBuildingData,
   OptionalUrls,
-  SelectedBuilding,
   UnitAvailData,
 } from "../interfaces/IListing";
 
@@ -55,26 +55,14 @@ export type EditListingFormFields = PartialWithRequired<
 >;
 
 type EditListingFormProps = {
-  listing: EditListingFormFields | null;
+  listing: IListing | null;
+  building: IBuilding | ITempBuilding | null;
   onClose: () => void;
 };
 
-/** Temp collection takes precedence. */
-export function findSelectedBuilding(
-  buildingID: string | undefined,
-  allBuildings: IBuilding[],
-  tempBuildings: IBuilding[]
-): IBuilding | undefined {
-  if (!buildingID) return;
-
-  return (
-    tempBuildings.find((building) => buildingID === building.buildingID) ||
-    allBuildings.find((building) => buildingID === building.buildingID)
-  );
-}
-
 const EditListingForm: React.FC<EditListingFormProps> = ({
-  listing,
+  listing: originalListing,
+  building: buildingProp,
   onClose,
 }) => {
   const blankOptionalUrls: OptionalUrls = {
@@ -96,36 +84,25 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     optionalUrls: blankOptionalUrls,
   };
 
-  const originalFormFields: EditListingFormFields = listing
-    ? {
-        buildingName: listing.buildingName,
-        buildingID: listing.buildingID,
-        availDataArray: listing.availDataArray,
-        url: listing.url,
-        expiryDate: listing.expiryDate,
-        description: listing.description,
-        feedback: listing.feedback,
-      }
-    : {
-        buildingName: "",
-        buildingID: "",
-        availDataArray: [blankAvailRow],
-        url: "",
-        expiryDate: "",
-        description: "",
-        feedback: "",
-      };
+  const [allBuildings] = useAllBuildingsContext();
+  const [tempBuildings] = useTempBuildingsContext();
+
+  const originalFormFields: EditListingFormFields = {
+    buildingName: originalListing?.buildingName || "",
+    buildingID: originalListing?.buildingID || "",
+    availDataArray: originalListing?.availDataArray || [blankAvailRow],
+    url: originalListing?.url || "",
+    expiryDate: originalListing?.expiryDate || "",
+    description: originalListing?.description || "",
+    feedback: originalListing?.feedback || "",
+  };
 
   const [formFields, setFormFields] = useState(originalFormFields);
 
   const { currentUser } = useAuth();
 
-  const [allBuildings] = useAllBuildingsContext();
-  const [tempBuildings] = useTempBuildingsContext();
-
-  const [selectedBuilding, setSelectedBuilding] = useState<
-    SelectedBuilding | undefined
-  >(findSelectedBuilding(listing?.buildingID, allBuildings, tempBuildings));
+  const [currentBuildingData, setCurrentBuildingData] =
+    useState<CurrentBuildingData | null>(buildingProp);
 
   if (!currentUser) return null;
 
@@ -204,19 +181,27 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       if (name === "buildingName") {
         if (value === "Not Listed") {
-          setSelectedBuilding({
-            ...emptySelectedBuilding,
+          setCurrentBuildingData({
+            ...emptyCurrentBuildingData,
             buildingName: "Not Listed",
           });
         } else {
-          setSelectedBuilding(
-            findSelectedBuilding(buildingID, allBuildings, tempBuildings)
+          setCurrentBuildingData(
+            buildingID
+              ? tempBuildings.find(
+                  (building) => buildingID === building.listingID
+                ) ||
+                  allBuildings.find(
+                    (building) => buildingID === building.buildingID
+                  ) ||
+                  null
+              : null
           );
         }
       }
 
-      if (name === "otherBuildingName" && selectedBuilding) {
-        setSelectedBuilding({ ...selectedBuilding, buildingName: value });
+      if (name === "otherBuildingName" && currentBuildingData) {
+        setCurrentBuildingData({ ...currentBuildingData, buildingName: value });
       }
 
       return {
@@ -235,21 +220,21 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     const listingID = await setListingFirestore(
       formFields,
-      selectedBuilding,
+      currentBuildingData,
       currentUser.uid,
-      listing?.listingID
+      originalListing?.listingID
     );
 
     if (listingID) {
       console.log(
-        `Successfully set listing for building: ${selectedBuilding?.buildingName}. ListingID: ${listingID}`
+        `Successfully set listing for building: ${currentBuildingData?.buildingName}. ListingID: ${listingID}`
       );
 
       onClose();
     }
   };
 
-  const emptyAddressSelectedBuilding: PartialWithRequired<
+  const emptyAddressCurrentBuildingData: PartialWithRequired<
     Address,
     "streetAddress" | "zip" | "neighborhood"
   > = {
@@ -258,7 +243,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     neighborhood: "",
   };
 
-  const emptyContactSelectedBuilding: PartialWithRequired<
+  const emptyContactCurrentBuildingData: PartialWithRequired<
     Contact,
     "phone" | "urlForBuilding"
   > = {
@@ -274,11 +259,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     [BedroomsKeyEnum.THREE_PLUS]: [],
   };
 
-  const emptySelectedBuilding: SelectedBuilding = {
+  const emptyCurrentBuildingData: CurrentBuildingData = {
     buildingName: "",
     buildingID: "",
-    address: emptyAddressSelectedBuilding,
-    contact: emptyContactSelectedBuilding,
+    address: emptyAddressCurrentBuildingData,
+    contact: emptyContactCurrentBuildingData,
     amiData: blankTable,
   };
 
@@ -291,8 +276,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       if (row.unitSize === unit) {
         if (
-          selectedBuilding &&
-          Object.keys(selectedBuilding.amiData[unit]).length <= 1
+          currentBuildingData &&
+          Object.keys(currentBuildingData.amiData[unit]).length <= 1
         ) {
           updatedRow = { ...row, unitSize: undefined, percentAmi: undefined };
         } else if (row.percentAmi === ami) {
@@ -318,7 +303,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     isChecked: boolean
   ) {
     if (isChecked) {
-      setSelectedBuilding((prev) =>
+      setCurrentBuildingData((prev) =>
         prev
           ? {
               ...prev,
@@ -332,7 +317,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       updateAvailRow(unit, ami);
     } else {
-      setSelectedBuilding((prev) =>
+      setCurrentBuildingData((prev) =>
         prev
           ? {
               ...prev,
@@ -349,10 +334,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     }
   }
 
-  const availSizes: BedroomsKeyEnum[] = selectedBuilding?.amiData
-    ? (Object.keys(selectedBuilding.amiData) as BedroomsKeyEnum[]).filter(
+  const availSizes: BedroomsKeyEnum[] = currentBuildingData?.amiData
+    ? (Object.keys(currentBuildingData.amiData) as BedroomsKeyEnum[]).filter(
         (key) => {
-          return selectedBuilding.amiData[key].length > 0;
+          return currentBuildingData.amiData[key].length > 0;
         }
       )
     : [];
@@ -374,7 +359,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   }
 
   const [showEditBuildingData, setShowEditBuildingData] = useState(
-    selectedBuilding && !selectedBuilding.buildingID
+    currentBuildingData && !currentBuildingData.buildingID
   );
 
   const programOptionsArray: ProgramKeyEnum[] = [
@@ -385,7 +370,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      {!listing?.buildingID && (
+      {!originalListing?.buildingID && (
         <div className="mb-3">
           <Row className="mb-1">
             <Col md={6} className="mb-md-0">
@@ -416,14 +401,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               </Form.Select>
             </Col>
           </Row>
-          {selectedBuilding && selectedBuilding.buildingID === "" && (
+          {currentBuildingData && currentBuildingData.buildingID === "" && (
             <Row className="mb-0">
               <Col md={6}>
                 <Form.Control
                   autoFocus
                   required
                   name="otherBuildingName"
-                  value={selectedBuilding?.otherBuildingName}
+                  value={currentBuildingData?.otherBuildingName}
                   onChange={handleInputChange}
                 />
               </Col>
@@ -434,21 +419,21 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       {/* Address */}
       {/* New form, existing building */}
-      {selectedBuilding && (
+      {currentBuildingData && (
         <>
           {/* New form, new building */}
           <Row className="mb-3">
             <Col md={8}>
               <Card>
                 <Card.Body>
-                  {showEditBuildingData || !selectedBuilding.buildingID ? (
+                  {showEditBuildingData || !currentBuildingData.buildingID ? (
                     <Row className="mb-3">
                       <Col className="mb-md-0">
                         <NotListedForm
                           onClickCallback={handleToggleAmi}
-                          amiData={selectedBuilding.amiData}
-                          setSelectedBuilding={setSelectedBuilding}
-                          selectedBuilding={selectedBuilding}
+                          amiData={currentBuildingData.amiData}
+                          setCurrentBuildingData={setCurrentBuildingData}
+                          currentBuildingData={currentBuildingData}
                         />
                       </Col>
                     </Row>
@@ -457,13 +442,14 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       <Row className="mb-3">
                         <Col className="mb-md-0">
                           <ListingCardBuildingData
-                            buildingID={selectedBuilding.buildingID}
+                            // TODO: remove CurrentBuildingData type and just use temp building interface?
+                            building={currentBuildingData}
                           />
                         </Col>
                       </Row>
                     </>
                   )}
-                  {selectedBuilding.buildingID !== "" && (
+                  {currentBuildingData.buildingID !== "" && (
                     <Row>
                       <Col className="mb-md-0">
                         <Button
@@ -558,8 +544,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                               handleInputChange(e, unitAvailData.rowId)
                             }
                             disabled={
-                              selectedBuilding &&
-                              Object.values(selectedBuilding.amiData).flat()
+                              currentBuildingData &&
+                              Object.values(currentBuildingData.amiData).flat()
                                 .length === 0
                             }
                             value={unitAvailData.unitSize || ""}
@@ -586,7 +572,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                             value={unitAvailData.percentAmi || ""}
                           >
                             <option value="" disabled></option>
-                            {selectedBuilding.amiData?.[
+                            {currentBuildingData.amiData?.[
                               unitAvailData.unitSize as BedroomsKeyEnum
                             ]?.map((percentAmi) => (
                               <option key={percentAmi} value={percentAmi}>

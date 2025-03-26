@@ -24,6 +24,8 @@ import Spinner from "react-bootstrap/Spinner";
 import Tab from "react-bootstrap/Tab";
 import Table from "react-bootstrap/Table";
 import AreYouSureModal from "../components/AreYouSureModal";
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
 
 const ManageListingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
@@ -51,6 +53,18 @@ const ManageListingsPage: React.FC<IPage> = () => {
   };
 
   const [selectedListing, setSelectedListing] = useState<IListing | null>(null);
+
+  const [allBuildings] = useAllBuildingsContext();
+  const [tempBuildings] = useTempBuildingsContext();
+
+  const building =
+    tempBuildings.find(
+      (building) => selectedListing?.buildingID === building.buildingID
+    ) ||
+    allBuildings.find(
+      (building) => selectedListing?.buildingID === building.buildingID
+    ) ||
+    null;
 
   const handleEditClick = (listingID: string | null): void => {
     if (listingID === null) {
@@ -232,6 +246,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                             <Col className="pb-2" key={listing.listingID}>
                               <ListingCard
                                 listing={listing}
+                                building={building}
                                 onEditClick={handleEditClick}
                               />
                             </Col>
@@ -269,6 +284,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                                 <Col className="pb-2" key={listing.listingID}>
                                   <ListingCard
                                     listing={listing}
+                                    building={building}
                                     onEditClick={handleEditClick}
                                   />
                                 </Col>
@@ -291,6 +307,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
       />
       <AddBuildingModal
         listing={selectedListing}
+        building={building}
         showModal={showAddBuildingModal}
         onClose={handleAddBuildingModalClose}
       />

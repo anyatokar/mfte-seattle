@@ -21,7 +21,7 @@ import { getMaxExpiryDate } from "./generalUtils";
 
 import IListing, {
   AvailDataArray,
-  SelectedBuilding,
+  CurrentBuildingData,
 } from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
@@ -89,8 +89,12 @@ function availDataToNum(
   return availDataArray;
 }
 
+export interface ITempBuilding extends CurrentBuildingData {
+  listingID: string;
+}
+
 async function setTempBuilding(
-  selectedBuilding: SelectedBuilding,
+  selectedBuilding: CurrentBuildingData,
   listingID: string,
   randomTempBuildingID: string
 ): Promise<void> {
@@ -102,10 +106,6 @@ async function setTempBuilding(
     contact,
     amiData,
   } = selectedBuilding;
-
-  interface ITempBuilding extends SelectedBuilding {
-    listingID: string;
-  }
 
   const tempBuilding: ITempBuilding = {
     buildingName: otherBuildingName ? otherBuildingName : buildingName,
@@ -133,7 +133,7 @@ async function setTempBuilding(
 
 export async function setListingFirestore(
   formFields: Partial<IListing>,
-  selectedBuilding: SelectedBuilding | undefined,
+  selectedBuilding: CurrentBuildingData | null,
   uid: string,
   listingID: string | undefined
 ): Promise<string> {

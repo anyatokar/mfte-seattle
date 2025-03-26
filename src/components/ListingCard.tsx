@@ -17,6 +17,8 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { ITempBuilding } from "../utils/firestoreUtils";
+import IBuilding from "../interfaces/IBuilding";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -35,10 +37,15 @@ type ListingWithRequired = PartialWithRequired<
 
 type ListingCardProps = {
   listing: ListingWithRequired | null;
+  building: IBuilding | ITempBuilding | null;
   onEditClick: (listingID: string) => void;
 };
 
-const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
+const ListingCard: React.FC<ListingCardProps> = ({
+  listing,
+  building,
+  onEditClick,
+}) => {
   if (listing === null) {
     listing = {
       availDataArray: [],
@@ -55,7 +62,6 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
 
   const {
     availDataArray,
-    buildingName,
     listingStatus,
     url,
     expiryDate,
@@ -132,7 +138,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
         <div className="d-flex align-items-center">
           <Col>
             <Card.Title className="m-0">
-              {buildingName}
+              {building?.buildingName}
               {statusBadge && (
                 <Badge
                   pill
@@ -159,7 +165,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onEditClick }) => {
         className="py-2 px-0"
         data-testid="body-form-not-visible-existing-listing"
       >
-        <ListingCardBuildingData buildingID={listing.buildingID} />
+        <ListingCardBuildingData building={building} />
 
         <Card.Text className="mt-3 mb-0">
           <strong>Available rent-reduced units:</strong>

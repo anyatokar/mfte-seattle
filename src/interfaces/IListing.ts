@@ -29,7 +29,7 @@ export type PartialContact = PartialWithRequired<
   "phone" | "urlForBuilding"
 >;
 
-export type SelectedBuilding = {
+export type CurrentBuildingData = {
   buildingName: string;
   buildingID: string;
   address: PartialAddress;

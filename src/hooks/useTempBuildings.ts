@@ -1,10 +1,10 @@
 import { useCallback, useState, useEffect } from "react";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../db/firebase";
-import IBuilding from "../interfaces/IBuilding";
+import { ITempBuilding } from "../utils/firestoreUtils";
 
-export const useTempBuildings = (): [IBuilding[], boolean] => {
-  const [allTempBuildings, setTempBuildings] = useState<IBuilding[]>([]);
+export const useTempBuildings = (): [ITempBuilding[], boolean] => {
+  const [allTempBuildings, setTempBuildings] = useState<ITempBuilding[]>([]);
   const [isLoadingTempBuildings, setIsLoadingTempBuildings] = useState(true);
 
   const getTempBuildings = useCallback(() => {
@@ -13,9 +13,9 @@ export const useTempBuildings = (): [IBuilding[], boolean] => {
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("Temp buildings snapshot.");
-      const buildings: Array<IBuilding> = [];
+      const buildings: Array<ITempBuilding> = [];
       querySnapshot.forEach((doc) => {
-        const building = doc.data() as IBuilding;
+        const building = doc.data() as ITempBuilding;
         buildings.push(building);
       });
 

@@ -1,33 +1,23 @@
-import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
+import IBuilding from "../interfaces/IBuilding";
 import { TableParentEnum, TableTypeEnum } from "../types/enumTypes";
+import { ITempBuilding } from "../utils/firestoreUtils";
 import { AddressAndPhone } from "./AddressAndPhone";
 import BuildingDataTable from "./BuildingDataTable";
 
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { findSelectedBuilding } from "./EditListingForm";
 
 type ListingCardBuildingDataProps = {
-  buildingID: string;
+  building: IBuilding | ITempBuilding | null;
 };
 
 const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
-  buildingID,
+  building,
 }) => {
-  const [allBuildings] = useAllBuildingsContext();
-  const [tempBuildings] = useTempBuildingsContext();
-
-  const building = findSelectedBuilding(
-    buildingID,
-    allBuildings,
-    tempBuildings
-  );
-
   if (!building) return;
 
-  const { contact, address, buildingName } = building;
+  const { contact, address, buildingName, buildingID } = building;
 
   return (
     buildingID && (
