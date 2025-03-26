@@ -35,7 +35,7 @@ export type SelectedBuilding = {
   address: PartialAddress;
   contact: PartialContact;
   amiData: AmiData;
-  buildingNameWritein?: string;
+  otherBuildingName?: string;
 };
 
 export type UnitAvailData = {

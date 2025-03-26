@@ -32,7 +32,8 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
   return (
     buildingID && (
       <>
-        <Card.Text className="mb-0">
+        <strong>District:</strong> {address.neighborhood}
+        <Card.Text className="mt-3 mb-0">
           <strong>Address and contact:</strong>
         </Card.Text>
         <AddressAndPhone
@@ -41,7 +42,6 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
           contact={contact}
           withLinks={false}
         />
-
         <Card.Text className="mt-3 mb-0">
           <strong>Building URL:</strong>{" "}
           <a
@@ -54,7 +54,6 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
             {contact.urlForBuilding}
           </a>
         </Card.Text>
-
         <Card.Text className="mt-3 mb-0">
           <strong>All rent-reduced units in building:</strong>
         </Card.Text>

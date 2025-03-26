@@ -72,12 +72,12 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
       );
     }
 
-    if (name === "buildingNameWritein") {
+    if (name === "otherBuildingName") {
       setSelectedBuilding((prev) =>
         prev
           ? {
               ...prev,
-              buildingNameWritein: value,
+              otherBuildingName: value,
             }
           : prev
       );
@@ -86,23 +86,9 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
 
   return (
     <>
-      {selectedBuilding.buildingID === "" && (
-        <Row className="mb-2">
-          <Col md={6}>
-            <Form.Label className="mb-0">Building name</Form.Label>
-            <Form.Control
-              required
-              name="buildingNameWritein"
-              value={selectedBuilding.buildingNameWritein}
-              onChange={handleInputChange}
-            />
-          </Col>
-        </Row>
-      )}
-      <Form.Label className="mb-0 fw-bold">Address</Form.Label>
+      <Form.Label className="mb-0 fw-bold">District:</Form.Label>
       <Row className="mb-2">
         <Col md={8}>
-          <Form.Label className="mb-0">District</Form.Label>
           <Form.Control
             required
             name="neighborhood"
@@ -112,6 +98,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
           <Form.Text>e.g. Capitol Hill</Form.Text>
         </Col>
       </Row>
+      <Form.Label className="mb-0 fw-bold">Address:</Form.Label>
       <Row className="mb-2">
         <Col md={8}>
           <Form.Label className="mb-0">Street address</Form.Label>
@@ -141,7 +128,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         </Col>
       </Row>
 
-      <Form.Label className="mb-0 fw-bold">Contact</Form.Label>
+      <Form.Label className="mb-0 fw-bold">Contact:</Form.Label>
       <Row className="mb-3">
         <Col md={10}>
           <Form.Label className="mb-0">Website</Form.Label>
@@ -177,7 +164,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         </Col>
       </Row>
 
-      <Form.Label className="mb-0 fw-bold">All rent-reduced units</Form.Label>
+      <Form.Label className="mb-0 fw-bold">All rent-reduced units:</Form.Label>
       <br />
       <Form.Text>Regardless of availability.</Form.Text>
       <Row>

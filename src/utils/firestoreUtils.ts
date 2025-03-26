@@ -9,7 +9,6 @@ import {
   addDoc,
   Timestamp,
   DocumentData,
-  getDocs,
 } from "firebase/firestore";
 
 import { contactUsFormFieldsType } from "../pages/Contact";
@@ -29,7 +28,6 @@ import {
   IUserSignupAuthData,
   SignupAuthDataType,
 } from "../interfaces/IUser";
-import IBuilding from "../interfaces/IBuilding";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -91,42 +89,45 @@ function availDataToNum(
   return availDataArray;
 }
 
-async function addTempBuilding(
-  selectedBuilding: SelectedBuilding
-): Promise<string> {
-  const tempBuilding = {} as SelectedBuilding;
+async function setTempBuilding(
+  selectedBuilding: SelectedBuilding,
+  listingID: string,
+  randomTempBuildingID: string
+): Promise<void> {
+  const {
+    buildingName,
+    otherBuildingName,
+    buildingID,
+    address,
+    contact,
+    amiData,
+  } = selectedBuilding;
 
-  if (selectedBuilding.buildingNameWritein) {
-    tempBuilding["buildingNameWritein"] = selectedBuilding.buildingNameWritein;
+  interface ITempBuilding extends SelectedBuilding {
+    listingID: string;
   }
 
-  if (selectedBuilding.amiData) {
-    tempBuilding["amiData"] = selectedBuilding.amiData;
-  }
-
-  if (selectedBuilding.address) {
-    tempBuilding["address"] = selectedBuilding.address;
-  }
-
-  if (selectedBuilding.contact) {
-    tempBuilding["contact"] = selectedBuilding.contact;
-  }
+  const tempBuilding: ITempBuilding = {
+    buildingName: otherBuildingName ? otherBuildingName : buildingName,
+    buildingID: buildingID || randomTempBuildingID,
+    address: address,
+    contact: contact,
+    amiData: amiData,
+    listingID: listingID,
+  };
 
   try {
-    const buildingDocRef = selectedBuilding.buildingID
-      ? doc(db, "temp_buildings", selectedBuilding.buildingID)
+    // Temp building uses same ID as associated listing.
+    const tempBuildingDocRef = listingID
+      ? doc(db, "temp_buildings", listingID)
       : doc(collection(db, "temp_buildings"));
 
-    // Set the document and include the listingID field
-    await setDoc(buildingDocRef, {
-      ...tempBuilding,
-      buildingID: buildingDocRef.id,
-    });
-
-    return buildingDocRef.id;
+    // Overwrite all the fields
+    await setDoc(tempBuildingDocRef, tempBuilding);
+    return;
   } catch (error) {
-    console.error("Error adding new building:", error);
-    return "";
+    console.error("Error adding temp building:", error);
+    return;
   }
 }
 
@@ -137,43 +138,45 @@ export async function setListingFirestore(
   listingID: string | undefined
 ): Promise<string> {
   try {
-    const tempBuildingID = selectedBuilding
-      ? await addTempBuilding(selectedBuilding)
-      : "";
-
-    const listing: IListing = {
-      buildingName:
-        (selectedBuilding?.buildingNameWritein
-          ? selectedBuilding?.buildingNameWritein
-          : formFields.buildingName) || "",
-      buildingID: selectedBuilding?.buildingID || tempBuildingID,
-      url: formFields.url || "",
-      availDataArray: availDataToNum(formFields.availDataArray),
-      description: formFields.description || "",
-      listingStatus: listingStatusEnum.IN_REVIEW,
-      dateCreated: Timestamp.fromDate(new Date()),
-      dateUpdated: Timestamp.fromDate(new Date()),
-      /** YYYY-MM-DD */
-      expiryDate: formFields.expiryDate || getMaxExpiryDate(),
-      listingID: listingID || "",
-      managerID: uid,
-      feedback: formFields.feedback || "",
-    };
-
-    // Get existing doc ref or create a new doc ref with an auto-generated ID
     const listingDocRef = listingID
       ? doc(db, "listings", listingID)
       : doc(collection(db, "listings"));
 
+    const randomTempBuildingID = doc(collection(db, "temp_buildings")).id;
+
+    if (selectedBuilding) {
+      await setTempBuilding(
+        selectedBuilding,
+        listingDocRef.id,
+        randomTempBuildingID
+      );
+    }
+
+    const listing: Partial<IListing> = {
+      buildingName:
+        (selectedBuilding?.otherBuildingName
+          ? selectedBuilding?.otherBuildingName
+          : formFields.buildingName) || "",
+      buildingID: selectedBuilding?.buildingID || randomTempBuildingID,
+      url: formFields.url || "",
+      availDataArray: availDataToNum(formFields.availDataArray),
+      description: formFields.description || "",
+      dateCreated: Timestamp.fromDate(new Date()),
+      dateUpdated: Timestamp.fromDate(new Date()),
+      /** YYYY-MM-DD */
+      expiryDate: formFields.expiryDate || getMaxExpiryDate(),
+      listingID: listingDocRef.id,
+      managerID: uid,
+      feedback: formFields.feedback || "",
+    };
+
+    // Only change status for new listings
+    if (!listingID) {
+      listing.listingStatus = listingStatusEnum.IN_REVIEW;
+    }
+
     // Set the document and include the listingID field
-    await setDoc(
-      listingDocRef,
-      {
-        ...listing,
-        listingID: listingDocRef.id,
-      },
-      { merge: true }
-    );
+    await setDoc(listingDocRef, listing, { merge: true });
     return listingDocRef.id;
   } catch (error) {
     console.error("Error adding listing or updating company rep:", error);
@@ -216,21 +219,6 @@ export async function updateListingFirestore(
   }
 }
 
-export async function getAllTempBuildings(): Promise<IBuilding[]> {
-  const tempBuildings: IBuilding[] = [];
-  try {
-    const querySnapshot = await getDocs(collection(db, "temp_buildings"));
-
-    querySnapshot.forEach((doc) => {
-      tempBuildings.push(doc.data() as IBuilding);
-    });
-    return tempBuildings;
-  } catch (error: any) {
-    console.error(`Error getting temp_buildings collection:`, error);
-    return [];
-  }
-}
-
 export async function deleteListingFirestore(
   listingID: string,
   buildingName: string
@@ -248,6 +236,22 @@ export async function deleteListingFirestore(
         error
       );
     });
+
+  const tempBuildingDocRef = doc(db, "temp_buildings", listingID);
+  if (tempBuildingDocRef) {
+    await deleteDoc(tempBuildingDocRef)
+      .then(() => {
+        console.log(
+          `Temp building ${buildingName} deleted from Listings. Temp building ID was ${tempBuildingDocRef.id}`
+        );
+      })
+      .catch((error: any) => {
+        console.error(
+          `Error deleting listing for ${buildingName}, temp building ID is ${tempBuildingDocRef.id}:`,
+          error
+        );
+      });
+  }
 }
 
 export async function getManagerProfileFirestore(

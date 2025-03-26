@@ -271,6 +271,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   const emptySelectedBuilding: SelectedBuilding = {
     buildingName: "",
+    otherBuildingName: "",
     buildingID: "",
     address: emptyAddressSelectedBuilding,
     contact: emptyContactSelectedBuilding,
@@ -381,35 +382,50 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   return (
     <Form onSubmit={handleFormSubmit}>
       {!listing?.buildingID && (
-        <Row className="mb-3">
-          <Col md={6} className="mb-md-0">
-            <Form.Label>Select building</Form.Label>
-            <Form.Select
-              required
-              name="buildingName"
-              id="buildingName"
-              onChange={(e) => {
-                const selectedOption = e.target.selectedOptions[0];
-                const buildingID =
-                  selectedOption.getAttribute("data-buildingid") || "";
-                handleInputChange(e, undefined, buildingID);
-              }}
-            >
-              <option value="">Select</option>
-              <option value="Not Listed">Not Listed</option>
-              <Dropdown.Divider />
-              {allBuildings.map((building) => (
-                <option
-                  key={building.buildingID}
-                  value={building.buildingName}
-                  data-buildingid={building.buildingID}
-                >
-                  {building.buildingName}
-                </option>
-              ))}
-            </Form.Select>
-          </Col>
-        </Row>
+        <div className="mb-3">
+          <Row className="mb-1">
+            <Col md={6} className="mb-md-0">
+              <Form.Label className="mb-0 fw-bold">Building name:</Form.Label>
+              <Form.Select
+                required
+                name="buildingName"
+                id="buildingName"
+                onChange={(e) => {
+                  const selectedOption = e.target.selectedOptions[0];
+                  const buildingID =
+                    selectedOption.getAttribute("data-buildingid") || "";
+                  handleInputChange(e, undefined, buildingID);
+                }}
+              >
+                <option value="">Select</option>
+                <option value="Not Listed">Not Listed</option>
+                <Dropdown.Divider />
+                {allBuildings.map((building) => (
+                  <option
+                    key={building.buildingID}
+                    value={building.buildingName}
+                    data-buildingid={building.buildingID}
+                  >
+                    {building.buildingName}
+                  </option>
+                ))}
+              </Form.Select>
+            </Col>
+          </Row>
+          {selectedBuilding && selectedBuilding.buildingName === "" && (
+            <Row className="mb-0">
+              <Col md={6}>
+                <Form.Control
+                  autoFocus
+                  required
+                  name="otherBuildingName"
+                  value={selectedBuilding?.otherBuildingName}
+                  onChange={handleInputChange}
+                />
+              </Col>
+            </Row>
+          )}
+        </div>
       )}
 
       {/* Address */}
@@ -605,6 +621,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                                 ProgramKeyEnum.other && (
                                 <Form.Control
                                   required
+                                  autoFocus
                                   name="otherProgram"
                                   onChange={(e) =>
                                     handleInputChange(e, unitAvailData.rowId)
