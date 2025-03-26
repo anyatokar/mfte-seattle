@@ -91,35 +91,35 @@ function availDataToNum(
   return availDataArray;
 }
 
-async function addNewBuilding(
+async function addTempBuilding(
   selectedBuilding: SelectedBuilding
 ): Promise<string> {
-  const newBuilding = {} as SelectedBuilding;
+  const tempBuilding = {} as SelectedBuilding;
 
   if (selectedBuilding.buildingNameWritein) {
-    newBuilding["buildingNameWritein"] = selectedBuilding.buildingNameWritein;
+    tempBuilding["buildingNameWritein"] = selectedBuilding.buildingNameWritein;
   }
 
   if (selectedBuilding.amiData) {
-    newBuilding["amiData"] = selectedBuilding.amiData;
+    tempBuilding["amiData"] = selectedBuilding.amiData;
   }
 
   if (selectedBuilding.address) {
-    newBuilding["address"] = selectedBuilding.address;
+    tempBuilding["address"] = selectedBuilding.address;
   }
 
   if (selectedBuilding.contact) {
-    newBuilding["contact"] = selectedBuilding.contact;
+    tempBuilding["contact"] = selectedBuilding.contact;
   }
 
   try {
     const buildingDocRef = selectedBuilding.buildingID
-      ? doc(db, "new_buildings", selectedBuilding.buildingID)
-      : doc(collection(db, "new_buildings"));
+      ? doc(db, "temp_buildings", selectedBuilding.buildingID)
+      : doc(collection(db, "temp_buildings"));
 
     // Set the document and include the listingID field
     await setDoc(buildingDocRef, {
-      ...newBuilding,
+      ...tempBuilding,
       buildingID: buildingDocRef.id,
     });
 
@@ -138,7 +138,7 @@ export async function setListingFirestore(
 ): Promise<string> {
   try {
     const tempBuildingID = selectedBuilding
-      ? await addNewBuilding(selectedBuilding)
+      ? await addTempBuilding(selectedBuilding)
       : "";
 
     const listing: IListing = {
@@ -219,14 +219,14 @@ export async function updateListingFirestore(
 export async function getAllTempBuildings(): Promise<IBuilding[]> {
   const tempBuildings: IBuilding[] = [];
   try {
-    const querySnapshot = await getDocs(collection(db, "new_buildings"));
+    const querySnapshot = await getDocs(collection(db, "temp_buildings"));
 
     querySnapshot.forEach((doc) => {
       tempBuildings.push(doc.data() as IBuilding);
     });
     return tempBuildings;
   } catch (error: any) {
-    console.error(`Error getting new_buildings collection:`, error);
+    console.error(`Error getting temp_buildings collection:`, error);
     return [];
   }
 }

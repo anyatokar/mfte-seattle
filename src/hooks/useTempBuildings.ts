@@ -9,7 +9,7 @@ export const useTempBuildings = (): [IBuilding[], boolean] => {
 
   const getTempBuildings = useCallback(() => {
     setIsLoadingTempBuildings(true);
-    const q = query(collection(db, "new_buildings"));
+    const q = query(collection(db, "temp_buildings"));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       console.log("Temp buildings snapshot.");
