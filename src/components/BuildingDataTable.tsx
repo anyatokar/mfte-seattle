@@ -153,6 +153,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
     const columnsToShow = new Set<OptionalUrlsKeyEnum>();
 
+    // Check if any row has a field for the column
     for (const unitAvailData of data) {
       for (const key in unitAvailData.optionalUrls) {
         if (unitAvailData.optionalUrls[key as OptionalUrlsKeyEnum]) {
@@ -161,7 +162,15 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       }
     }
 
-    return Array.from(columnsToShow);
+    const order = [
+      OptionalUrlsKeyEnum.listingPageUrl,
+      OptionalUrlsKeyEnum.walkTourUrl,
+      OptionalUrlsKeyEnum.floorPlanUrl,
+      OptionalUrlsKeyEnum.otherUrl1,
+      OptionalUrlsKeyEnum.otherUrl2,
+    ];
+
+    return order.filter((column) => columnsToShow.has(column));
   }
 
   return (
