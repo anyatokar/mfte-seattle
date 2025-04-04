@@ -102,6 +102,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   const [expiryBadge, setExpiryBadge] = useState<badgeObjectType | null>(null);
 
+  // No useEffect here?
   useEffect(() => {
     function getStatusBadge() {
       if (!listing) return null;

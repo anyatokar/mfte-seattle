@@ -43,7 +43,7 @@ const Application: React.FC = () => {
         <BrowserRouter>
           <AuthProvider>
             <ModalContext.Provider value={modalStateHook}>
-              <div ref={topNavRef} className="topnav-container">
+              <div ref={topNavRef}>
                 <TopNav />
               </div>
               <AllBuildingsProvider>
