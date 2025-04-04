@@ -9,12 +9,14 @@ type AddBuildingModalProps = {
   onClose: (shouldConfirm: boolean) => void;
   listing: IListing | null;
   building: IBuilding | ITempBuilding | null;
+  shouldDim: boolean;
 };
 const AddBuildingModal: React.FC<AddBuildingModalProps> = ({
   showModal,
   onClose,
   listing,
   building,
+  shouldDim,
 }) => {
   const formTitle = building
     ? `Edit ${building.buildingName}`
@@ -23,6 +25,8 @@ const AddBuildingModal: React.FC<AddBuildingModalProps> = ({
   return (
     <>
       <Modal show={showModal} onHide={() => onClose(true)} fullscreen>
+        {/* Custom because edit listing is a modal and the "are you sure" is a modal on top of it */}
+        <div className={shouldDim ? "dimmer-overlay" : ""}></div>
         <Modal.Header closeButton>
           <Modal.Title>{formTitle}</Modal.Title>
         </Modal.Header>

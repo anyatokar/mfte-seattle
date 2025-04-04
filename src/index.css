@@ -214,6 +214,16 @@ textarea {
 .form-check-label {
   cursor: pointer !important;
 }
+
+.dimmer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
 /* end of misc */
 
 /* map and building lists */

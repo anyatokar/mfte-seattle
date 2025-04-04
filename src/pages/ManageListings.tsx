@@ -310,6 +310,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
         building={building}
         showModal={showAddBuildingModal}
         onClose={handleAddBuildingModalClose}
+        shouldDim={showAreYouSureModal}
       />
     </Profiler>
   );
