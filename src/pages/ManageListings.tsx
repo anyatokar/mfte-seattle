@@ -8,12 +8,17 @@ import {
   listingStatusEnum,
 } from "../types/enumTypes";
 import { useAllListings } from "../hooks/useListings";
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
 
+import AreYouSureModal from "../components/AreYouSureModal";
 import ListingCard from "../components/ListingCard";
 import AddBuildingModal from "../components/AddBuildingModal";
 
+import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 import IPage from "../interfaces/IPage";
+import { ITempBuilding } from "../utils/firestoreUtils";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -23,9 +28,6 @@ import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 import Tab from "react-bootstrap/Tab";
 import Table from "react-bootstrap/Table";
-import AreYouSureModal from "../components/AreYouSureModal";
-import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
 
 const ManageListingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
@@ -57,14 +59,15 @@ const ManageListingsPage: React.FC<IPage> = () => {
   const [allBuildings] = useAllBuildingsContext();
   const [tempBuildings] = useTempBuildingsContext();
 
-  const building =
-    tempBuildings.find(
-      (building) => selectedListing?.buildingID === building.buildingID
-    ) ||
-    allBuildings.find(
-      (building) => selectedListing?.buildingID === building.buildingID
-    ) ||
-    null;
+  function findBuilding(
+    buildingID: string | undefined
+  ): IBuilding | ITempBuilding | null {
+    return (
+      tempBuildings.find((building) => buildingID === building.buildingID) ||
+      allBuildings.find((building) => buildingID === building.buildingID) ||
+      null
+    );
+  }
 
   const handleEditClick = (listingID: string | null): void => {
     if (listingID === null) {
@@ -246,7 +249,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                             <Col className="pb-2" key={listing.listingID}>
                               <ListingCard
                                 listing={listing}
-                                building={building}
+                                building={findBuilding(listing.buildingID)}
                                 onEditClick={handleEditClick}
                               />
                             </Col>
@@ -284,7 +287,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                                 <Col className="pb-2" key={listing.listingID}>
                                   <ListingCard
                                     listing={listing}
-                                    building={building}
+                                    building={findBuilding(listing.buildingID)}
                                     onEditClick={handleEditClick}
                                   />
                                 </Col>
@@ -307,7 +310,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
       />
       <AddBuildingModal
         listing={selectedListing}
-        building={building}
+        building={findBuilding(selectedListing?.buildingID)}
         showModal={showAddBuildingModal}
         onClose={handleAddBuildingModalClose}
         shouldDim={showAreYouSureModal}
