@@ -1,4 +1,5 @@
 import IBuilding from "../interfaces/IBuilding";
+import { CurrentBuildingData } from "../interfaces/IListing";
 import { TableParentEnum, TableTypeEnum } from "../types/enumTypes";
 import { ITempBuilding } from "../utils/firestoreUtils";
 import { AddressAndPhone } from "./AddressAndPhone";
@@ -9,7 +10,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 type ListingCardBuildingDataProps = {
-  building: IBuilding | ITempBuilding | null;
+  building: IBuilding | ITempBuilding | CurrentBuildingData | null;
 };
 
 const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({

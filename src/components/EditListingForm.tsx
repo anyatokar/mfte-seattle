@@ -211,6 +211,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       };
     });
   };
+
   const [alert, setAlert] = useState<string>("");
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (
@@ -226,7 +227,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       );
       return;
     }
+
     setAlert("");
+
     const listingID = await setListingFirestore(
       formFields,
       currentBuildingData,
@@ -240,6 +243,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       );
 
       onClose();
+    } else {
+      setAlert("There was a problem submitting your data. Please contact mfte-seattle@gmail.com if the issue persists.");
     }
   };
 
