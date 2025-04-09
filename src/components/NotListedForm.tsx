@@ -137,6 +137,7 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
             value={currentBuildingData.contact.urlForBuilding}
             onChange={handleInputChange}
             name="urlForBuilding"
+            type="url"
           />
           <Form.Text>General website for the building.</Form.Text>
         </Col>

@@ -33,6 +33,7 @@ import IListing, {
   UnitAvailData,
 } from "../interfaces/IListing";
 
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -40,7 +41,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import Stack from "react-bootstrap/esm/Stack";
+import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 
 export type EditListingFormFields = PartialWithRequired<
@@ -210,14 +211,22 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       };
     });
   };
+  const [alert, setAlert] = useState<string>("");
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (
     e
   ) => {
     e.preventDefault();
 
-    if (!formFields) return;
+    if (!formFields || !currentBuildingData) return;
 
+    if (Object.values(currentBuildingData.amiData).flat().length === 0) {
+      setAlert(
+        `Please select at least one % AMI in the "All rent-reduced units" table.`
+      );
+      return;
+    }
+    setAlert("");
     const listingID = await setListingFirestore(
       formFields,
       currentBuildingData,
@@ -788,7 +797,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               </Form.Text>
             </Col>
           </Row>
-
+          {alert && <Alert variant="danger">{alert}</Alert>}
           <Form.Group className="text-end">
             <Button variant="success" type="submit">
               Submit
