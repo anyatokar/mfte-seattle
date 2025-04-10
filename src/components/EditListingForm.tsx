@@ -457,9 +457,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               {!formFields.noneAvailable && (
                 <AvailUnitsTable
                   currentBuildingData={currentBuildingData}
-                  setCurrentBuildingData={setCurrentBuildingData}
                   formFields={formFields}
                   setFormFields={setFormFields}
+                  handleInputChange={handleInputChange}
                 />
               )}
             </Col>

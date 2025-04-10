@@ -1,7 +1,5 @@
 import { formatCurrency } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
-import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
 import { colWidths, optionalUrlsArray } from "../config/constants";
 import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
@@ -11,9 +9,7 @@ import {
   BedroomsKeyEnum,
   ProgramKeyEnum,
   ProgramLabelEnum,
-  OptionalUrlsKeyEnum,
 } from "../types/enumTypes";
-import { Address, AmiData, Contact } from "../interfaces/IBuilding";
 import IListing, {
   CurrentBuildingData,
   UnitAvailData,
@@ -42,22 +38,17 @@ export type EditListingFormFields = PartialWithRequired<
 
 type EditListingFormProps = {
   currentBuildingData: CurrentBuildingData;
-  setCurrentBuildingData: React.Dispatch<
-    React.SetStateAction<CurrentBuildingData | null>
-  >;
   formFields: EditListingFormFields;
   setFormFields: React.Dispatch<React.SetStateAction<EditListingFormFields>>;
+  handleInputChange: (e: any, rowId?: string, buildingID?: string) => void;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
   currentBuildingData,
-  setCurrentBuildingData,
   formFields,
   setFormFields,
+  handleInputChange,
 }) => {
-  const [allBuildings] = useAllBuildingsContext();
-  const [tempBuildings] = useTempBuildingsContext();
-
   const { currentUser } = useAuth();
 
   if (!currentUser) return null;
@@ -91,113 +82,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       ...formFields,
       availDataArray: newAvailDataArray,
     });
-  };
-
-  const handleInputChange = (e: any, rowId?: string, buildingID?: string) => {
-    const { name, value } = e.target;
-
-    setFormFields((prev) => {
-      if (rowId !== undefined) {
-        const newAvailData = [...prev.availDataArray];
-        const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
-
-        if (Object.values(OptionalUrlsKeyEnum).includes(name)) {
-          newAvailData[rowIndex] = {
-            ...newAvailData[rowIndex],
-            optionalUrls: {
-              ...newAvailData[rowIndex].optionalUrls,
-              [name]: value,
-            },
-          };
-        } else {
-          newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
-
-          if (name === "unitSize") {
-            newAvailData[rowIndex] = {
-              ...newAvailData[rowIndex],
-              // Clear out percentAmi when unit size changes
-              percentAmi: undefined,
-            };
-          }
-
-          if (name === "selectedProgram") {
-            newAvailData[rowIndex] = {
-              ...newAvailData[rowIndex],
-            };
-
-            delete newAvailData[rowIndex].otherProgram;
-          }
-        }
-
-        return {
-          ...prev,
-          availDataArray: newAvailData,
-        };
-      }
-
-      if (name === "buildingName") {
-        if (value === "Not Listed") {
-          setCurrentBuildingData({
-            ...emptyCurrentBuildingData,
-            buildingName: "Not Listed",
-          });
-        } else {
-          setCurrentBuildingData(
-            buildingID
-              ? tempBuildings.find(
-                  (building) => buildingID === building.listingID
-                ) ||
-                  allBuildings.find(
-                    (building) => buildingID === building.buildingID
-                  ) ||
-                  null
-              : null
-          );
-        }
-      }
-
-      if (name === "otherBuildingName" && currentBuildingData) {
-        setCurrentBuildingData({ ...currentBuildingData, buildingName: value });
-      }
-
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const emptyAddressCurrentBuildingData: PartialWithRequired<
-    Address,
-    "streetAddress" | "zip" | "neighborhood"
-  > = {
-    streetAddress: "",
-    zip: "",
-    neighborhood: "",
-  };
-
-  const emptyContactCurrentBuildingData: PartialWithRequired<
-    Contact,
-    "phone" | "urlForBuilding"
-  > = {
-    phone: "",
-    urlForBuilding: "",
-  };
-
-  const blankTable: AmiData = {
-    [BedroomsKeyEnum.MICRO]: [],
-    [BedroomsKeyEnum.STUDIO]: [],
-    [BedroomsKeyEnum.ONE_BED]: [],
-    [BedroomsKeyEnum.TWO_BED]: [],
-    [BedroomsKeyEnum.THREE_PLUS]: [],
-  };
-
-  const emptyCurrentBuildingData: CurrentBuildingData = {
-    buildingName: "",
-    buildingID: "",
-    address: emptyAddressCurrentBuildingData,
-    contact: emptyContactCurrentBuildingData,
-    amiData: blankTable,
   };
 
   const availSizes: BedroomsKeyEnum[] = currentBuildingData?.amiData
