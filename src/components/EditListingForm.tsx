@@ -40,6 +40,7 @@ export type EditListingFormFields = PartialWithRequired<
   | "expiryDate"
   | "description"
   | "feedback"
+  | "noneAvailable"
 >;
 
 type EditListingFormProps = {
@@ -48,41 +49,46 @@ type EditListingFormProps = {
   onClose: () => void;
 };
 
+const blankOptionalUrls: OptionalUrls = {
+  [OptionalUrlsKeyEnum.listingPageUrl]: "",
+  [OptionalUrlsKeyEnum.walkTourUrl]: "",
+  [OptionalUrlsKeyEnum.floorPlanUrl]: "",
+  [OptionalUrlsKeyEnum.otherUrl1]: "",
+  [OptionalUrlsKeyEnum.otherUrl2]: "",
+};
+
+export const createBlankAvailRow = (): UnitAvailData => ({
+  unitSize: undefined,
+  dateAvailString: "",
+  percentAmi: undefined,
+  maxRent: "",
+  rowId: `${Date.now()}`,
+  aptNum: "",
+  selectedProgram: undefined,
+  optionalUrls: blankOptionalUrls,
+});
+
 const EditListingForm: React.FC<EditListingFormProps> = ({
   listing: originalListing,
   building: buildingProp,
   onClose,
 }) => {
-  const blankOptionalUrls: OptionalUrls = {
-    [OptionalUrlsKeyEnum.listingPageUrl]: "",
-    [OptionalUrlsKeyEnum.walkTourUrl]: "",
-    [OptionalUrlsKeyEnum.floorPlanUrl]: "",
-    [OptionalUrlsKeyEnum.otherUrl1]: "",
-    [OptionalUrlsKeyEnum.otherUrl2]: "",
-  };
-
-  const blankAvailRow: UnitAvailData = {
-    unitSize: undefined,
-    dateAvailString: "",
-    percentAmi: undefined,
-    maxRent: "",
-    rowId: `${Date.now()}`,
-    aptNum: "",
-    selectedProgram: undefined,
-    optionalUrls: blankOptionalUrls,
-  };
-
   const [allBuildings] = useAllBuildingsContext();
   const [tempBuildings] = useTempBuildingsContext();
 
   const originalFormFields: EditListingFormFields = {
     buildingName: originalListing?.buildingName || "",
     buildingID: originalListing?.buildingID || "",
-    availDataArray: originalListing?.availDataArray || [blankAvailRow],
+    availDataArray:
+      originalListing?.availDataArray &&
+      originalListing.availDataArray.length > 0
+        ? originalListing.availDataArray
+        : [createBlankAvailRow()],
     url: originalListing?.url || "",
     expiryDate: originalListing?.expiryDate || "",
     description: originalListing?.description || "",
     feedback: originalListing?.feedback || "",
+    noneAvailable: originalListing?.noneAvailable || false,
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
@@ -159,6 +165,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
       if (name === "otherBuildingName" && currentBuildingData) {
         setCurrentBuildingData({ ...currentBuildingData, buildingName: value });
+      }
+
+      if (name === "noneAvailable") {
+        return {
+          ...prev,
+          [name]: e.target.checked,
+        };
       }
 
       return {
@@ -241,6 +254,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
   function updateAvailRow(unit: BedroomsKeyEnum, ami: PercentAmi) {
     if (!formFields.availDataArray) return;
+
     const updatedAvailDataArray: AvailDataArray = [];
 
     for (const row of formFields.availDataArray) {
@@ -429,15 +443,27 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               </Form.Text>
             </Col>
           </Row>
+          <Row className="mb-3">
+            <Col className="mb-0">
+              <Form.Label className="mb-0 fw-bold">Available units:</Form.Label>
+              <Form.Check
+                type="switch"
+                name="noneAvailable"
+                label="No units available"
+                checked={formFields.noneAvailable}
+                onChange={handleInputChange}
+              />
 
-          {/* Table */}
-          <AvailUnitsTable
-            originalListing={originalListing}
-            currentBuildingData={currentBuildingData}
-            setCurrentBuildingData={setCurrentBuildingData}
-            formFields={formFields}
-            setFormFields={setFormFields}
-          />
+              {!formFields.noneAvailable && (
+                <AvailUnitsTable
+                  currentBuildingData={currentBuildingData}
+                  setCurrentBuildingData={setCurrentBuildingData}
+                  formFields={formFields}
+                  setFormFields={setFormFields}
+                />
+              )}
+            </Col>
+          </Row>
 
           {/* Expiry Date */}
           <Row className="mb-3">

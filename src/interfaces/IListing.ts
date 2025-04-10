@@ -70,4 +70,5 @@ export default interface IListing {
   expiryDate: string;
   managerID: string;
   feedback: string;
+  noneAvailable: boolean;
 }

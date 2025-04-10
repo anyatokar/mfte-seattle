@@ -159,7 +159,9 @@ export async function setListingFirestore(
           : formFields.buildingName) || "",
       buildingID: selectedBuilding?.buildingID || randomTempBuildingID,
       url: formFields.url || "",
-      availDataArray: availDataToNum(formFields.availDataArray),
+      availDataArray: formFields.noneAvailable
+        ? []
+        : availDataToNum(formFields.availDataArray),
       description: formFields.description || "",
       dateCreated: Timestamp.fromDate(new Date()),
       dateUpdated: Timestamp.fromDate(new Date()),
@@ -168,6 +170,7 @@ export async function setListingFirestore(
       listingID: listingDocRef.id,
       managerID: uid,
       feedback: formFields.feedback || "",
+      noneAvailable: formFields.noneAvailable || false,
     };
 
     // Only change status for new listings
