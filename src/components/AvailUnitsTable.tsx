@@ -32,6 +32,7 @@ export type EditListingFormFields = PartialWithRequired<
   | "expiryDate"
   | "description"
   | "feedback"
+  | "noneAvailable"
 >;
 
 type EditListingFormProps = {

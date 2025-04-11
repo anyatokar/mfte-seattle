@@ -155,7 +155,7 @@ export async function setListingFirestore(
           ? selectedBuilding?.otherBuildingName
           : formFields.buildingName) || "",
       buildingID: selectedBuilding?.buildingID || randomTempBuildingID,
-      url: formFields.url || "",
+      url: !formFields.noneAvailable && formFields.url ? formFields.url : "",
       availDataArray: formFields.noneAvailable
         ? []
         : availDataToNum(formFields.availDataArray),

@@ -5,6 +5,7 @@ import {
   TableTypeEnum,
 } from "../types/enumTypes";
 import { deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
+import { willShowAvailTable } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
@@ -53,12 +54,26 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     shouldScroll.current = false;
   }
 
+  function getSentenceItem(): JSX.Element | null {
+    if (!listing || listing.listingStatus !== listingStatusEnum.ACTIVE) {
+      return (
+        <ListGroup.Item>
+          Contact building for current availability.
+        </ListGroup.Item>
+      );
+    } else if (listing.availDataArray.length === 0) {
+      return <ListGroup.Item>No rent-reduced units available.</ListGroup.Item>;
+    } else {
+      return null;
+    }
+  }
+
   const header = (
     <Card.Header>
       <Card.Title className="mt-2">
         <div>
           {buildingName}
-          {listing?.listingStatus === listingStatusEnum.ACTIVE && (
+          {willShowAvailTable(listing) && (
             <Badge pill bg="warning" text="dark" className="units-avail-badge">
               Units available!
             </Badge>
@@ -98,41 +113,37 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   return (
     <Card
       border={
-        listing?.listingStatus === listingStatusEnum.ACTIVE ? "success" : ""
+        listing?.listingStatus === listingStatusEnum.ACTIVE
+          ? listing?.availDataArray.length > 0
+            ? "success"
+            : "danger"
+          : ""
       }
     >
       {header}
       <ListGroup variant="flush" className="mb-2">
-        {(!listing || listing.listingStatus !== listingStatusEnum.ACTIVE) && (
-          <ListGroup.Item>
-            Contact building for current availability.
-          </ListGroup.Item>
-        )}
-
+        {getSentenceItem()}
         <ListGroup.Item>
           <Tabs
             className="tabs"
             defaultActiveKey={
-              listing?.listingStatus === listingStatusEnum.ACTIVE
-                ? "available"
-                : "contact"
+              willShowAvailTable(listing) ? "available" : "contact"
             }
           >
-            {listing?.listingStatus === listingStatusEnum.ACTIVE &&
-              listing?.availDataArray && (
-                <Tab eventKey="available" title="Available" className="mt-2">
-                  <BuildingDataTable
-                    type={TableTypeEnum.availData}
-                    data={listing.availDataArray}
-                    tableParent={TableParentEnum.BUILDING_CARD}
-                  />
-                  {listing.description && (
-                    <Card.Text className="mt-2">
-                      <strong>Description:</strong> {listing.description}
-                    </Card.Text>
-                  )}
-                </Tab>
-              )}
+            {willShowAvailTable(listing) && (
+              <Tab eventKey="available" title="Available" className="mt-2">
+                <BuildingDataTable
+                  type={TableTypeEnum.availData}
+                  data={listing.availDataArray}
+                  tableParent={TableParentEnum.BUILDING_CARD}
+                />
+                {listing.description && (
+                  <Card.Text className="mt-2">
+                    <strong>Description:</strong> {listing.description}
+                  </Card.Text>
+                )}
+              </Tab>
+            )}
 
             <Tab eventKey="contact" title="Contact">
               <div className="mt-2">
