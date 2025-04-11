@@ -26,6 +26,7 @@ const AddressAndPhone: React.FC<AddressAndPhoneProps> = ({
       {streetAddress}
       <br />
       {city}, {state} {zip}
+      <br />
       <a
         id="addressLink"
         href={mapViewUrl}
@@ -33,7 +34,7 @@ const AddressAndPhone: React.FC<AddressAndPhoneProps> = ({
         rel="noreferrer"
         className="address-phone-link"
       >
-        <div> View on Google Maps</div>
+        View on Google Maps
       </a>
       {withLinks ? (
         <>
