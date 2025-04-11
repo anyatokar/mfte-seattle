@@ -445,7 +445,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   currentBuildingData={currentBuildingData}
                   formFields={formFields}
                   setFormFields={setFormFields}
-                  vv
+                  handleInputChange={handleInputChange}
                 />
               )}
             </Col>
