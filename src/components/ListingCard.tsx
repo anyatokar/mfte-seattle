@@ -1,19 +1,24 @@
-import BuildingDataTable from "./BuildingDataTable";
+import { useEffect, useState } from "react";
 import {
   expiryBadgeEnum,
   listingStatusEnum,
-  tableType,
+  TableParentEnum,
+  TableTypeEnum,
 } from "../types/enumTypes";
+import BuildingDataTable from "./BuildingDataTable";
 import ListingActionsButtons from "./ListingActionsButtons";
+import ListingCardBuildingData from "./ListingCardBuildingData";
+import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
+import { ITempBuilding } from "../interfaces/ITempBuilding";
 import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
-import EditListingForm from "./EditListingForm";
-import { expiringSoonDays } from "../config/config";
+import { expiringSoonDays } from "../config/constants";
 
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
-import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;
@@ -28,24 +33,18 @@ type ListingWithRequired = PartialWithRequired<
   | "buildingID"
   | "description"
   | "feedback"
-  | "program"
 >;
 
 type ListingCardProps = {
   listing: ListingWithRequired | null;
-  isFormVisible: boolean;
-  toggleFormCallback: (editListingID: string, clickedSave: boolean) => void;
-  /** Existing, as opposed to a New listing card */
-  isExistingListing: boolean;
-  editListingID: string;
+  building: IBuilding | ITempBuilding | null;
+  onEditClick: (listingID: string) => void;
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({
   listing,
-  isFormVisible,
-  isExistingListing,
-  toggleFormCallback,
-  editListingID,
+  building,
+  onEditClick,
 }) => {
   if (listing === null) {
     listing = {
@@ -58,20 +57,16 @@ const ListingCard: React.FC<ListingCardProps> = ({
       listingStatus: undefined,
       description: "",
       feedback: "",
-      program: undefined,
     };
   }
 
   const {
     availDataArray,
-    buildingName,
     listingStatus,
     url,
-    listingID,
     expiryDate,
     dateUpdated,
     description,
-    program,
   } = listing;
 
   type badgeObjectType = { label: string; bg: string; text?: string };
@@ -107,6 +102,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   const [expiryBadge, setExpiryBadge] = useState<badgeObjectType | null>(null);
 
+  // No useEffect here?
   useEffect(() => {
     function getStatusBadge() {
       if (!listing) return null;
@@ -139,102 +135,90 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <Card as={Container} fluid>
-      <Card.Header data-testid="listing-card-header" as={Row} className="p-3">
-        <Col className="d-flex align-items-center p-0" xs={8} md={6}>
-          <Card.Title className="mb-0 w-100">
-            {isExistingListing && (
-              <div className="d-flex align-items-center">
-                <span>{buildingName}</span>
-                {statusBadge && (
-                  <Badge
-                    pill
-                    bg={statusBadge.bg}
-                    text={statusBadge.text}
-                    className="ms-2"
-                  >
-                    {statusBadge.label}
-                  </Badge>
-                )}
-              </div>
-            )}
-          </Card.Title>
-        </Col>
+      <Card.Header className="px-0" data-testid="listing-card-header" as={Row}>
+        <div className="d-flex align-items-center">
+          <Col>
+            <Card.Title className="m-0">
+              {building?.buildingName}
+              {statusBadge && (
+                <Badge
+                  pill
+                  bg={statusBadge.bg}
+                  text={statusBadge.text}
+                  className="ms-2"
+                >
+                  {statusBadge.label}
+                </Badge>
+              )}
+            </Card.Title>
+          </Col>
 
-        <Col className="d-flex align-items-center justify-content-end p-0">
-          <ListingActionsButtons
-            isFormVisible={isFormVisible}
-            isExistingListing={isExistingListing}
-            toggleFormCallback={toggleFormCallback}
-            listing={listing}
-            editListingID={editListingID}
-          />
-        </Col>
+          <Col className="d-flex align-items-center justify-content-end">
+            <ListingActionsButtons
+              listing={listing}
+              onEditClick={onEditClick}
+            />
+          </Col>
+        </div>
       </Card.Header>
 
-      {/* Form is visible, so don't show the listing data. */}
-      {isFormVisible && editListingID === listingID ? (
-        <Row>
-          <Card.Body data-testid="body-form-visible" as={Col}>
-            <EditListingForm
-              isFormVisible={isFormVisible}
-              key={listingID}
-              listing={listing}
-              isExistingListing={isExistingListing}
-              toggleFormCallback={toggleFormCallback}
-            />
-          </Card.Body>
-        </Row>
-      ) : (
-        isExistingListing && (
-          <Row>
-            <Card.Body
-              data-testid="body-form-not-visible-existing-listing"
-              as={Col}
-            >
-              <BuildingDataTable
-                type={tableType.availData}
-                data={availDataArray}
-                program={program}
-              />
-              <Card.Text className="mt-3">
-                <strong>URL:</strong>{" "}
-                <a
-                  id="addressLink"
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="address-phone-link"
-                >
-                  {url}
-                </a>
-              </Card.Text>
+      <Card.Body
+        className="py-2 px-0"
+        data-testid="body-form-not-visible-existing-listing"
+      >
+        <ListingCardBuildingData building={building} />
 
-              <Card.Text className="d-flex align-items-center">
-                <strong className="me-1">Expires:</strong>
-                {formatDate(expiryDate)}
-                {expiryBadge && (
-                  <Badge
-                    pill
-                    bg={expiryBadge.bg}
-                    text={expiryBadge.text}
-                    className="ms-2"
-                  >
-                    {expiryBadge.label}
-                  </Badge>
-                )}
-              </Card.Text>
-              <Card.Text className="mt-3">
-                <strong>Description:</strong> {description}
-              </Card.Text>
-            </Card.Body>
-          </Row>
-        )
-      )}
-      {isExistingListing && (
-        <Card.Footer as={Row}>
+        <Card.Text className="mt-3 mb-0">
+          <strong>Available rent-reduced units: </strong>
+        </Card.Text>
+        {listing.noneAvailable ? (
+          <>No availability</>
+        ) : (
+          <>
+            <BuildingDataTable
+              type={TableTypeEnum.availData}
+              data={availDataArray}
+              tableParent={TableParentEnum.LISTING_CARD}
+            />
+          </>
+        )}
+
+        <Card.Text className="mt-3">
+          <strong>Listings URL:</strong>{" "}
+          <a
+            id="addressLink"
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            className="address-phone-link"
+          >
+            {url}
+          </a>
+        </Card.Text>
+
+        <Card.Text className="d-flex align-items-center">
+          <strong className="me-1">Expires:</strong> {formatDate(expiryDate)}
+          {expiryBadge && (
+            <Badge
+              pill
+              bg={expiryBadge.bg}
+              text={expiryBadge.text}
+              className="ms-2"
+            >
+              {expiryBadge.label}
+            </Badge>
+          )}
+        </Card.Text>
+        <Card.Text className="mt-3">
+          <strong>Description:</strong> {description}
+        </Card.Text>
+      </Card.Body>
+
+      <Card.Footer as={Row} className="px-0">
+        <Card.Text>
           Last update: {dateUpdated ? timestampToDateAndTime(dateUpdated) : ""}
-        </Card.Footer>
-      )}
+        </Card.Text>
+      </Card.Footer>
     </Card>
   );
 };

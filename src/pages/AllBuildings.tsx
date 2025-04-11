@@ -7,7 +7,7 @@ import {
   useReducer,
   useLayoutEffect,
 } from "react";
-import { isProfilerOn } from "../config/config";
+import { isProfilerOn } from "../config/constants";
 
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { useSavedBuildings } from "../hooks/useSavedBuildings";

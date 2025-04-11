@@ -1,5 +1,5 @@
 import { Profiler } from "react";
-import { isProfilerOn } from "../config/config";
+import { isProfilerOn } from "../config/constants";
 import ListingAccordion from "../components/ListingAccordion";
 
 import IPage from "../interfaces/IPage";

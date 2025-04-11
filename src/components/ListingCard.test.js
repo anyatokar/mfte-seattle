@@ -30,7 +30,7 @@ const mockProps = {
   listing: mockListing,
   isFormVisible: false,
   toggleFormCallback: mockToggleFormCallback,
-  isExistingListing: true,
+
   editListingID: "editID",
 };
 

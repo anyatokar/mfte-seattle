@@ -1,6 +1,6 @@
 import { Profiler, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { expiringSoonDays, isProfilerOn } from "../config/config";
+import { expiringSoonDays, isProfilerOn } from "../config/constants";
 import {
   accountTypeEnum,
   confirmModalTypeEnum,
@@ -8,19 +8,26 @@ import {
   listingStatusEnum,
 } from "../types/enumTypes";
 import { useAllListings } from "../hooks/useListings";
-
-import ListingCard from "../components/ListingCard";
-import IPage from "../interfaces/IPage";
-
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Table from "react-bootstrap/Table";
-import Spinner from "react-bootstrap/Spinner";
-import Tab from "react-bootstrap/Tab";
-import Nav from "react-bootstrap/Nav";
+import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
+import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
 
 import AreYouSureModal from "../components/AreYouSureModal";
+import ListingCard from "../components/ListingCard";
+import AddBuildingModal from "../components/AddBuildingModal";
+
+import IBuilding from "../interfaces/IBuilding";
+import IListing from "../interfaces/IListing";
+import IPage from "../interfaces/IPage";
+import { ITempBuilding } from "../utils/firestoreUtils";
+
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Row from "react-bootstrap/Row";
+import Spinner from "react-bootstrap/Spinner";
+import Tab from "react-bootstrap/Tab";
+import Table from "react-bootstrap/Table";
 
 const ManageListingsPage: React.FC<IPage> = () => {
   const { currentUser, accountType } = useAuth();
@@ -31,46 +38,48 @@ const ManageListingsPage: React.FC<IPage> = () => {
   );
   const defaultActiveKey: string = "viewListings";
   const [activeTab, setActiveTab] = useState<string>(defaultActiveKey);
-  const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
-  const [editListingID, setEditListingID] = useState<string>("");
-  const [modalListingID, setModalListingID] = useState<string>("");
-  const [showModal, setShowModal] = useState(false);
+  const [showAreYouSureModal, setShowAreYouSureModal] = useState(false);
 
-  const handleClose = () => setShowModal(false);
-  const handleShow = (listingID: string) => {
-    setModalListingID(listingID); // Set the listingID when showing the modal
-    setShowModal(true);
-  };
-
+  const handleAreYouSureModalClose = () => setShowAreYouSureModal(false);
   const handleConfirm = () => {
-    if (modalListingID === editListingID) {
-      console.log("modalListingID === editListingID");
-      setIsFormVisible(false);
-      setEditListingID("");
-    } else if (modalListingID !== "" && modalListingID !== editListingID) {
-      console.log("Switching listings");
-      setEditListingID(modalListingID);
-      setIsFormVisible(true);
-    } else if (modalListingID === "") {
-      setEditListingID("");
-    }
-
-    handleClose();
+    setShowAddBuildingModal(false);
+    handleAreYouSureModalClose();
   };
 
-  function toggleFormCallback(listingID: string, clickedSave: boolean) {
-    if (clickedSave) {
-      setIsFormVisible(false);
-      setEditListingID("");
-    } else if (isFormVisible && listingID !== editListingID) {
-      handleShow(listingID);
-    } else if (isFormVisible) {
-      handleShow(listingID);
+  const handleAddBuildingModalClose = (shouldConfirm: boolean) => {
+    if (shouldConfirm) {
+      setShowAreYouSureModal(true);
     } else {
-      setIsFormVisible(true);
-      setEditListingID(listingID);
+      handleConfirm();
     }
+  };
+
+  const [selectedListing, setSelectedListing] = useState<IListing | null>(null);
+
+  const [allBuildings] = useAllBuildingsContext();
+  const [tempBuildings] = useTempBuildingsContext();
+
+  function findBuilding(
+    buildingID: string | undefined
+  ): IBuilding | ITempBuilding | null {
+    return (
+      tempBuildings.find((building) => buildingID === building.buildingID) ||
+      allBuildings.find((building) => buildingID === building.buildingID) ||
+      null
+    );
   }
+
+  const handleEditClick = (listingID: string | null): void => {
+    if (listingID === null) {
+      setSelectedListing(null);
+    } else {
+      setSelectedListing(
+        repsListings.find((listing) => listing.listingID === listingID) || null
+      );
+    }
+
+    setShowAddBuildingModal(true);
+  };
 
   if (!currentUser || accountType !== accountTypeEnum.MANAGER) {
     return null;
@@ -110,6 +119,8 @@ const ManageListingsPage: React.FC<IPage> = () => {
     { label: "Expiring Soon", listingStatus: expiryBadgeEnum.EXPIRING_SOON },
     { label: "Expired", listingStatus: expiryBadgeEnum.EXPIRED },
   ];
+
+  const [showAddBuildingModal, setShowAddBuildingModal] = useState(false);
 
   return (
     <Profiler
@@ -169,7 +180,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                   </Nav.Item>
                 </Nav>
               </Col>
-              <Col sm={12} lg={8}>
+              <Col sm={12} lg={10}>
                 <Tab.Content>
                   <Tab.Pane eventKey="summary">
                     <Container fluid>
@@ -202,18 +213,14 @@ const ManageListingsPage: React.FC<IPage> = () => {
 
                   <Tab.Pane eventKey="viewListings">
                     <Container fluid>
-                      {/* TODO: Pull out into a new component to reuse with archived */}
-                      <Row className="pb-2">
-                        <Col>
-                          <ListingCard
-                            listing={null}
-                            toggleFormCallback={toggleFormCallback}
-                            isFormVisible={isFormVisible}
-                            isExistingListing={false}
-                            editListingID={editListingID}
-                          />
-                        </Col>
-                      </Row>
+                      <div className="pb-2">
+                        <Button
+                          variant="success"
+                          onClick={() => handleEditClick(null)}
+                        >
+                          Add Building
+                        </Button>
+                      </div>
 
                       {isLoadingRepsListings && (
                         <Spinner animation="border" variant="secondary" />
@@ -224,6 +231,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                           (listing) =>
                             listing.listingStatus !== listingStatusEnum.ARCHIVED
                         ).length === 0 && <p>No current listings.</p>}
+
                       {!isLoadingRepsListings &&
                         repsListings.length > 0 &&
                         repsListings
@@ -241,24 +249,12 @@ const ManageListingsPage: React.FC<IPage> = () => {
                             <Col className="pb-2" key={listing.listingID}>
                               <ListingCard
                                 listing={listing}
-                                toggleFormCallback={toggleFormCallback}
-                                isFormVisible={isFormVisible}
-                                isExistingListing={true}
-                                editListingID={editListingID}
+                                building={findBuilding(listing.buildingID)}
+                                onEditClick={handleEditClick}
                               />
                             </Col>
                           ))}
                     </Container>
-                  </Tab.Pane>
-
-                  <Tab.Pane eventKey="addListing">
-                    <ListingCard
-                      isFormVisible={isFormVisible}
-                      listing={null}
-                      toggleFormCallback={toggleFormCallback}
-                      isExistingListing={false}
-                      editListingID={editListingID}
-                    />
                   </Tab.Pane>
 
                   <Tab.Pane eventKey="archived">
@@ -291,10 +287,8 @@ const ManageListingsPage: React.FC<IPage> = () => {
                                 <Col className="pb-2" key={listing.listingID}>
                                   <ListingCard
                                     listing={listing}
-                                    isFormVisible={isFormVisible}
-                                    editListingID={editListingID}
-                                    toggleFormCallback={toggleFormCallback}
-                                    isExistingListing={true}
+                                    building={findBuilding(listing.buildingID)}
+                                    onEditClick={handleEditClick}
                                   />
                                 </Col>
                               ))}
@@ -309,10 +303,17 @@ const ManageListingsPage: React.FC<IPage> = () => {
         </>
       </Container>
       <AreYouSureModal
-        showModal={showModal}
-        handleClose={handleClose}
-        handleConfirm={handleConfirm}
+        showModal={showAreYouSureModal}
+        onClose={handleAreYouSureModalClose}
+        onConfirm={handleConfirm}
         confirmType={confirmModalTypeEnum.LISTING_CANCEL_EDIT}
+      />
+      <AddBuildingModal
+        listing={selectedListing}
+        building={findBuilding(selectedListing?.buildingID)}
+        showModal={showAddBuildingModal}
+        onClose={handleAddBuildingModalClose}
+        shouldDim={showAreYouSureModal}
       />
     </Profiler>
   );

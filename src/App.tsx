@@ -1,6 +1,6 @@
 import { Profiler, useRef, useState } from "react";
 import PrivateRoute from "./auth_components/PrivateRoute";
-import { isProfilerOn } from "./config/config";
+import { isProfilerOn } from "./config/constants";
 import privateRoutes from "./config/privateRoutes";
 import publicRoutes from "./config/publicRoutes";
 import { TopNav } from "./components/TopNav";
@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AuthProvider from "./contexts/AuthContext";
 import { AllBuildingsProvider } from "./contexts/AllBuildingsContext";
+import { TempBuildingsProvider } from "./contexts/TempBuildingsContext";
 import { ModalContext, ModalState } from "./contexts/ModalContext";
 
 const Application: React.FC = () => {
@@ -42,31 +43,33 @@ const Application: React.FC = () => {
         <BrowserRouter>
           <AuthProvider>
             <ModalContext.Provider value={modalStateHook}>
-              <div ref={topNavRef} className="topnav-container">
+              <div ref={topNavRef}>
                 <TopNav />
               </div>
               <AllBuildingsProvider>
-                <Routes>
-                  {privateRoutes.map((route) => (
-                    <Route
-                      key={route.name}
-                      path={route.path}
-                      element={
-                        <PrivateRoute name={route.name}>
-                          <route.component />
-                        </PrivateRoute>
-                      }
-                    />
-                  ))}
+                <TempBuildingsProvider>
+                  <Routes>
+                    {privateRoutes.map((route) => (
+                      <Route
+                        key={route.name}
+                        path={route.path}
+                        element={
+                          <PrivateRoute name={route.name}>
+                            <route.component />
+                          </PrivateRoute>
+                        }
+                      />
+                    ))}
 
-                  {publicRoutes.map((route) => (
-                    <Route
-                      key={route.name}
-                      path={route.path}
-                      element={<route.component topNavRef={topNavRef} />}
-                    />
-                  ))}
-                </Routes>
+                    {publicRoutes.map((route) => (
+                      <Route
+                        key={route.name}
+                        path={route.path}
+                        element={<route.component topNavRef={topNavRef} />}
+                      />
+                    ))}
+                  </Routes>
+                </TempBuildingsProvider>
               </AllBuildingsProvider>
             </ModalContext.Provider>
           </AuthProvider>

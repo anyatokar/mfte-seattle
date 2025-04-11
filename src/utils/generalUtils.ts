@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore";
-import { listingMaxDays } from "../config/config";
+import { listingMaxDays } from "../config/constants";
 
 export function timestampToDateAndTime(timestamp: string | Timestamp): string {
   if (timestamp instanceof Timestamp) {

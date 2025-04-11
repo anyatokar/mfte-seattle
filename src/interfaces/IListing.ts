@@ -2,9 +2,32 @@ import { Timestamp } from "firebase/firestore";
 import {
   BedroomsKeyEnum,
   listingStatusEnum,
+  OptionalUrlsKeyEnum,
   ProgramKeyEnum,
 } from "../types/enumTypes";
-import { PercentAmi } from "./IBuilding";
+import { Address, Contact, PercentAmi } from "./IBuilding";
+import { PartialWithRequired } from "../types/partialWithRequiredType";
+
+export type ListingWithRequired = PartialWithRequired<
+  IListing,
+  | "availDataArray"
+  | "url"
+  | "expiryDate"
+  | "listingID"
+  | "buildingID"
+  | "description"
+  | "feedback"
+>;
+
+export type PartialAddress = PartialWithRequired<
+  Address,
+  "streetAddress" | "zip" | "neighborhood"
+>;
+
+export type PartialContact = PartialWithRequired<
+  Contact,
+  "phone" | "urlForBuilding"
+>;
 
 export type UnitAvailData = {
   unitSize: BedroomsKeyEnum | undefined;
@@ -15,13 +38,18 @@ export type UnitAvailData = {
   percentAmi: PercentAmi | undefined;
   rowId: string;
   aptNum: string;
+  selectedProgram: ProgramKeyEnum | undefined;
+  optionalUrls: OptionalUrls;
+  otherProgram?: string;
 };
 
 export type AvailDataArray = UnitAvailData[];
 
+export type OptionalUrls = { [key in OptionalUrlsKeyEnum]?: string };
+
 export default interface IListing {
   listingID: string;
-  listingStatus: listingStatusEnum;
+  listingStatus: listingStatusEnum | undefined;
   buildingName: string;
   url: string;
   description: string;
@@ -33,5 +61,5 @@ export default interface IListing {
   expiryDate: string;
   managerID: string;
   feedback: string;
-  program: ProgramKeyEnum | undefined;
+  noneAvailable: boolean;
 }

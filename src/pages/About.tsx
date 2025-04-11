@@ -1,6 +1,6 @@
 import { Profiler } from "react";
 import { Link } from "react-router-dom";
-import { isProfilerOn } from "../config/config";
+import { isProfilerOn } from "../config/constants";
 import IPage from "../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";

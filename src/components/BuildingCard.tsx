@@ -1,5 +1,9 @@
 import { useContext, MutableRefObject } from "react";
-import { listingStatusEnum, tableType } from "../types/enumTypes";
+import {
+  listingStatusEnum,
+  TableParentEnum,
+  TableTypeEnum,
+} from "../types/enumTypes";
 import { deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
@@ -99,12 +103,11 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     >
       {header}
       <ListGroup variant="flush" className="mb-2">
-        {!listing ||
-          (listing.listingStatus !== listingStatusEnum.ACTIVE && (
-            <ListGroup.Item>
-              Contact building for current availability.
-            </ListGroup.Item>
-          ))}
+        {(!listing || listing.listingStatus !== listingStatusEnum.ACTIVE) && (
+          <ListGroup.Item>
+            Contact building for current availability.
+          </ListGroup.Item>
+        )}
 
         <ListGroup.Item>
           <Tabs
@@ -119,10 +122,9 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
               listing?.availDataArray && (
                 <Tab eventKey="available" title="Available" className="mt-2">
                   <BuildingDataTable
-                    type={tableType.availData}
+                    type={TableTypeEnum.availData}
                     data={listing.availDataArray}
-                    program={listing.program}
-                    isMarker={false}
+                    tableParent={TableParentEnum.BUILDING_CARD}
                   />
                   {listing.description && (
                     <Card.Text className="mt-2">
@@ -145,9 +147,9 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             {amiData && (
               <Tab eventKey="details" title="Details" className="mt-2">
                 <BuildingDataTable
-                  type={tableType.amiData}
+                  type={TableTypeEnum.amiData}
                   data={amiData}
-                  isMarker={false}
+                  tableParent={TableParentEnum.BUILDING_CARD}
                 />
               </Tab>
             )}

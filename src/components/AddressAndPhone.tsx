@@ -1,30 +1,32 @@
 import { Address, Contact } from "../interfaces/IBuilding";
+import { PartialAddress, PartialContact } from "../interfaces/IListing";
 
-interface addressAndPhoneProps {
+interface AddressAndPhoneProps {
   buildingName: string;
-  address: Address;
-  contact: Contact;
+  address: Address | PartialAddress;
+  contact: Contact | PartialContact;
   withLinks: boolean;
 }
 
-const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
+const AddressAndPhone: React.FC<AddressAndPhoneProps> = ({
   buildingName,
   address,
   contact,
   withLinks,
 }) => {
-  const { streetNum, street, city, state, zip } = address;
+  const { streetAddress, city, state, zip } = address;
   const { phone, phone2 } = contact;
 
-  const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${streetNum} ${street}, ${city}, ${state} ${zip}`)}`;
+  const mapViewUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${streetAddress}, ${city}, ${state} ${zip}`)}`;
   const phone1Ref = `tel:${phone}`;
   const phone2Ref = `tel:${phone2}`;
 
   return (
     <div>
-      {streetNum} {street}
+      {streetAddress}
       <br />
       {city}, {state} {zip}
+      <br />
       <a
         id="addressLink"
         href={mapViewUrl}
@@ -32,7 +34,7 @@ const AddressAndPhone: React.FC<addressAndPhoneProps> = ({
         rel="noreferrer"
         className="address-phone-link"
       >
-        <div> View on Google Maps</div>
+        View on Google Maps
       </a>
       {withLinks ? (
         <>

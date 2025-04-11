@@ -1,4 +1,4 @@
-export enum tableType {
+export enum TableTypeEnum {
   amiData = "amiData",
   availData = "availData",
 }
@@ -50,9 +50,33 @@ export enum unitSizeLabelEnum {
 export enum ProgramKeyEnum {
   P6 = "P6",
   P345 = "P345",
+  other = "other",
 }
 
 export enum ProgramLabelEnum {
   P6 = "MFTE P6",
-  P345 = "MFTE Programs 3-5, IZ-Housing Bonus, MHA, or MPC-Yesler Terrace",
+  P345 = "MFTE P3-5, IZ-Housing Bonus, MHA, or MPC-Yesler Terrace",
+  other = "Other",
+}
+
+export enum OptionalUrlsKeyEnum {
+  listingPageUrl = "listingPageUrl",
+  walkTourUrl = "walkTourUrl",
+  floorPlanUrl = "floorPlanUrl",
+  otherUrl1 = "otherUrl1",
+  otherUrl2 = "otherUrl2",
+}
+
+export enum OptionalUrlsLabelEnum {
+  listingPageUrl = "Listing Page URL",
+  walkTourUrl = "Walk Tour URL",
+  floorPlanUrl = "Floor Plan URL",
+  otherUrl1 = "Other URL 1",
+  otherUrl2 = "Other URL 2",
+}
+
+export enum TableParentEnum {
+  MARKER = "marker",
+  LISTING_CARD = "listingCard",
+  BUILDING_CARD = "buildingCard",
 }

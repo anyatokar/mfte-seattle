@@ -2,21 +2,16 @@ import {
   deleteListingFirestore,
   updateListingFirestore,
 } from "../utils/firestoreUtils";
+import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-
+import AreYouSureModal from "./AreYouSureModal";
+import { confirmModalTypeEnum, listingStatusEnum } from "../types/enumTypes";
 import IListing from "../interfaces/IListing";
 
-import { confirmModalTypeEnum, listingStatusEnum } from "../types/enumTypes";
-import { PartialWithRequired } from "../types/partialWithRequiredType";
-
-import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import { useState } from "react";
-import AreYouSureModal from "./AreYouSureModal";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { PartialWithRequired } from "../types/partialWithRequiredType";
 
 type ListingWithRequired = PartialWithRequired<
   IListing,
@@ -24,20 +19,16 @@ type ListingWithRequired = PartialWithRequired<
 >;
 
 type ListingActionsButtonsPropsType = {
-  isFormVisible: boolean;
-  isExistingListing: boolean;
-  toggleFormCallback: (editListingID: string, clickedSave: boolean) => void;
   listing: ListingWithRequired;
-  editListingID: string;
+  onEditClick: (listingID: string) => void;
 };
 
 const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   listing,
-  editListingID,
-  isFormVisible,
-  isExistingListing,
-  toggleFormCallback,
+  onEditClick,
 }) => {
+  // TODO: maybe don't use buildingName off of listing? In general figure out how to store other building name.
+  const { listingID, buildingName, expiryDate, listingStatus } = listing;
   const [showModal, setShowModal] = useState(false);
   const { currentUser } = useAuth();
 
@@ -47,14 +38,9 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   const handleShow = () => setShowModal(true);
 
   const handleConfirm = () => {
-    deleteListingFirestore(listing.listingID, listing.buildingName);
+    deleteListingFirestore(listingID, buildingName);
 
     handleClose();
-  };
-
-  const onCancelClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    toggleFormCallback(listing.listingID, false);
   };
 
   const onArchiveClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -62,9 +48,9 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     updateListingFirestore(
       {
         listingStatus: listingStatusEnum.ARCHIVED,
-        expiryDate: listing.expiryDate,
+        expiryDate: expiryDate,
       },
-      listing.listingID
+      listingID
     );
   };
 
@@ -73,9 +59,9 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     updateListingFirestore(
       {
         listingStatus: listingStatusEnum.IN_REVIEW,
-        expiryDate: listing.expiryDate,
+        expiryDate: expiryDate,
       },
-      listing.listingID
+      listingID
     );
   };
 
@@ -85,76 +71,45 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
     handleShow();
   };
 
-  const onAddClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    toggleFormCallback("", false);
-  };
-
-  const onEditClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    toggleFormCallback(listing.listingID, false);
-  };
-
   return (
     <>
-      {/* Show Add Listing only on New Listing Card and if either
-      no form is visible (meaning any form) 
-      OR a form is visible and it's listing ID is blank */}
-      {!isExistingListing &&
-        (!isFormVisible || (isFormVisible && editListingID !== "")) && (
-          <Row>
-            <Col>
-              <Button variant="success" onClick={onAddClick}>
-                Add Building
-              </Button>
-            </Col>
-          </Row>
+      <DropdownButton
+        id="actions-dropdown-button"
+        title="Actions"
+        as={ButtonGroup}
+        variant="outline-primary"
+      >
+        {listingStatus === listingStatusEnum.ARCHIVED && (
+          <Dropdown.Item eventKey="unarchive" onClick={onUnarchiveClick}>
+            Move To Current
+          </Dropdown.Item>
         )}
-      {/* It's an existing listing & this listing is not getting edited */}
-      {listing.listingID !== "" && listing.listingID !== editListingID && (
-        <DropdownButton
-          id="actions-dropdown-button"
-          title="Actions"
-          as={ButtonGroup}
-          variant="outline-primary"
+
+        <Dropdown.Item eventKey="edit" onClick={() => onEditClick(listingID)}>
+          Edit / Renew
+        </Dropdown.Item>
+
+        <Dropdown.Divider />
+        {listingStatus !== listingStatusEnum.ARCHIVED && (
+          <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
+            Archive
+          </Dropdown.Item>
+        )}
+
+        <Dropdown.Item
+          data-testid="dropdown-delete"
+          className="delete-link"
+          eventKey="delete"
+          onClick={onDeleteClick}
         >
-          {listing.listingStatus === listingStatusEnum.ARCHIVED && (
-            <Dropdown.Item eventKey="unarchive" onClick={onUnarchiveClick}>
-              Move To Current
-            </Dropdown.Item>
-          )}
-
-          <Dropdown.Item eventKey="edit" onClick={onEditClick}>
-            Edit / Renew
-          </Dropdown.Item>
-
-          <Dropdown.Divider />
-          {listing.listingStatus !== listingStatusEnum.ARCHIVED && (
-            <Dropdown.Item eventKey="archive" onClick={onArchiveClick}>
-              Archive
-            </Dropdown.Item>
-          )}
-
-          <Dropdown.Item
-            data-testid="dropdown-delete"
-            className="delete-link"
-            eventKey="delete"
-            onClick={onDeleteClick}
-          >
-            Delete
-          </Dropdown.Item>
-        </DropdownButton>
-      )}
-      {isFormVisible && editListingID === listing.listingID && (
-        <Button variant="outline-danger" onClick={onCancelClick}>
-          Cancel
-        </Button>
-      )}
+          Delete
+        </Dropdown.Item>
+      </DropdownButton>
 
       <AreYouSureModal
         showModal={showModal}
-        handleClose={handleClose}
-        handleConfirm={handleConfirm}
+        onClose={handleClose}
+        onConfirm={handleConfirm}
         confirmType={confirmModalTypeEnum.LISTING_DELETE}
       />
     </>

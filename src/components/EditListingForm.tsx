@@ -1,308 +1,438 @@
 import { useState } from "react";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
-import {
-  unitSizeLabelEnum,
-  BedroomsKeyEnum,
-  ProgramKeyEnum,
-  ProgramLabelEnum,
-} from "../types/enumTypes";
-import {
-  addListingFirestore,
-  updateListingFirestore,
-} from "../utils/firestoreUtils";
-import { formatCurrency, getMaxExpiryDate } from "../utils/generalUtils";
+import { BedroomsKeyEnum, OptionalUrlsKeyEnum } from "../types/enumTypes";
+import { setListingFirestore } from "../utils/firestoreUtils";
+import { getMaxExpiryDate } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { colWidths } from "../config/config";
+import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
+import ListingCardBuildingData from "./ListingCardBuildingData";
+import NotListedForm from "./NotListedForm";
+import IBuilding, {
+  Address,
+  AmiData,
+  Contact,
+  PercentAmi,
+} from "../interfaces/IBuilding";
+import IListing, {
+  AvailDataArray,
+  OptionalUrls,
+  UnitAvailData,
+} from "../interfaces/IListing";
+import {
+  CurrentBuildingData,
+  ITempBuilding,
+} from "../interfaces/ITempBuilding";
 
-import { p6UnitPricing } from "../config/P6-unit-pricing";
-import { p345UnitPricing } from "../config/P345-unit-pricing";
-
-import { AddressAndPhone } from "./AddressAndPhone";
-
-import IBuilding from "../interfaces/IBuilding";
-import IListing, { UnitAvailData } from "../interfaces/IListing";
-
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
+import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import Table from "react-bootstrap/Table";
+import AvailUnitsTable from "./AvailUnitsTable";
 
-type ListingWithRequired = PartialWithRequired<
+export type EditListingFormFields = PartialWithRequired<
   IListing,
+  | "buildingName"
+  | "buildingID"
   | "availDataArray"
   | "url"
   | "expiryDate"
-  | "listingID"
-  | "buildingID"
   | "description"
   | "feedback"
-  | "program"
+  | "noneAvailable"
 >;
+
 type EditListingFormProps = {
-  listing: ListingWithRequired;
-  isExistingListing: boolean;
-  toggleFormCallback: (editListingID: string, isSaved: boolean) => void;
-  isFormVisible: boolean;
+  listing: IListing | null;
+  building: IBuilding | ITempBuilding | null;
+  onClose: () => void;
 };
 
+const blankOptionalUrls: OptionalUrls = {
+  [OptionalUrlsKeyEnum.listingPageUrl]: "",
+  [OptionalUrlsKeyEnum.walkTourUrl]: "",
+  [OptionalUrlsKeyEnum.floorPlanUrl]: "",
+  [OptionalUrlsKeyEnum.otherUrl1]: "",
+  [OptionalUrlsKeyEnum.otherUrl2]: "",
+};
+
+export const createBlankAvailRow = (): UnitAvailData => ({
+  unitSize: undefined,
+  dateAvailString: "",
+  percentAmi: undefined,
+  maxRent: "",
+  rowId: `${Date.now()}`,
+  aptNum: "",
+  selectedProgram: undefined,
+  optionalUrls: blankOptionalUrls,
+});
+
 const EditListingForm: React.FC<EditListingFormProps> = ({
-  listing,
-  isExistingListing,
-  toggleFormCallback,
-  isFormVisible,
+  listing: originalListing,
+  building: buildingProp,
+  onClose,
 }) => {
-  const {
-    availDataArray,
-    url,
-    expiryDate,
-    listingID,
-    description,
-    feedback,
-    program,
-  } = listing;
+  const [allBuildings] = useAllBuildingsContext();
+  const [tempBuildings] = useTempBuildingsContext();
 
-  const blankAvailRow: UnitAvailData = {
-    unitSize: undefined,
-    dateAvailString: "",
-    percentAmi: undefined,
-    maxRent: "",
-    rowId: `${Date.now()}`,
-    aptNum: "",
-  };
-
-  const originalFormFields: Partial<IListing> = {
-    buildingName: listing.buildingName,
+  const originalFormFields: EditListingFormFields = {
+    buildingName: originalListing?.buildingName || "",
+    buildingID: originalListing?.buildingID || "",
     availDataArray:
-      availDataArray.length > 0 ? availDataArray : [blankAvailRow],
-    url: url,
-    expiryDate: expiryDate,
-    description: description,
-    feedback: feedback,
-    program: program,
+      originalListing?.availDataArray &&
+      originalListing.availDataArray.length > 0
+        ? originalListing.availDataArray
+        : [createBlankAvailRow()],
+    url: originalListing?.url || "",
+    expiryDate: originalListing?.expiryDate || "",
+    description: originalListing?.description || "",
+    feedback: originalListing?.feedback || "",
+    noneAvailable: originalListing?.noneAvailable || false,
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
 
   const { currentUser } = useAuth();
 
-  const [allBuildings] = useAllBuildingsContext();
-
-  const [selectedBuilding, setSelectedBuilding] = useState<
-    IBuilding | undefined
-  >(findSelectedBuilding(listing.buildingName || ""));
+  const [currentBuildingData, setCurrentBuildingData] =
+    useState<CurrentBuildingData | null>(buildingProp);
 
   if (!currentUser) return null;
 
-  const handleAddRow = () => {
-    const newRow = {
-      ...blankAvailRow,
-      rowId: `${Date.now()}`,
-    };
-
-    const newAvailDataArray = [...(formFields.availDataArray || []), newRow];
-
-    setFormFields({
-      ...formFields,
-      availDataArray: newAvailDataArray,
-    });
-  };
-
-  const handleDeleteRow = (rowId: string) => {
-    if (!formFields.availDataArray) return;
-
-    const newAvailDataArray = formFields.availDataArray.filter(
-      (row) => row.rowId !== rowId
-    );
-
-    setFormFields({
-      ...formFields,
-      availDataArray: newAvailDataArray,
-    });
-  };
-
-  function findSelectedBuilding(buildingName: string): IBuilding | undefined {
-    return allBuildings.find(
-      (building) => buildingName === building.buildingName
-    );
-  }
-
-  const handleInputChange = (e: any, rowId?: string) => {
+  const handleInputChange = (e: any, rowId?: string, buildingID?: string) => {
     const { name, value } = e.target;
 
     setFormFields((prev) => {
-      const newAvailData = [...(prev.availDataArray || [])];
-
-      // If updating a specific row
-
-      // Find the index of the row with the specific rowId
-      const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
-
       if (rowId !== undefined) {
-        newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
+        const newAvailData = [...prev.availDataArray];
+        const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
 
-        if (name === "unitSize") {
+        if (Object.values(OptionalUrlsKeyEnum).includes(name)) {
           newAvailData[rowIndex] = {
             ...newAvailData[rowIndex],
-            // TODO: Is this percentAmi needed?
-            percentAmi: undefined,
+            optionalUrls: {
+              ...newAvailData[rowIndex].optionalUrls,
+              [name]: value,
+            },
           };
+        } else {
+          newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
+
+          if (name === "unitSize") {
+            newAvailData[rowIndex] = {
+              ...newAvailData[rowIndex],
+              // Clear out percentAmi when unit size changes
+              percentAmi: undefined,
+            };
+          }
+
+          if (name === "selectedProgram") {
+            newAvailData[rowIndex] = {
+              ...newAvailData[rowIndex],
+            };
+
+            delete newAvailData[rowIndex].otherProgram;
+          }
+        }
+
+        return {
+          ...prev,
+          availDataArray: newAvailData,
+        };
+      }
+
+      if (name === "buildingName") {
+        if (value === "Not Listed") {
+          setCurrentBuildingData({
+            ...emptyCurrentBuildingData,
+            buildingName: "Not Listed",
+          });
+        } else {
+          setCurrentBuildingData(
+            buildingID
+              ? tempBuildings.find(
+                  (building) => buildingID === building.listingID
+                ) ||
+                  allBuildings.find(
+                    (building) => buildingID === building.buildingID
+                  ) ||
+                  null
+              : null
+          );
         }
       }
-      if (name === "buildingName") {
-        // This assumes building names are unique.
-        const selectedBuilding = allBuildings.find(
-          (building) => value === building.buildingName
-        );
 
-        setSelectedBuilding(selectedBuilding || undefined);
+      if (name === "otherBuildingName" && currentBuildingData) {
+        setCurrentBuildingData({ ...currentBuildingData, buildingName: value });
       }
 
-      const update = rowId
-        ? { availDataArray: newAvailData }
-        : { [name]: value };
+      if (name === "noneAvailable") {
+        return {
+          ...prev,
+          [name]: e.target.checked,
+        };
+      }
 
       return {
         ...prev,
-        ...update,
+        [name]: value,
       };
     });
   };
+
+  const [alert, setAlert] = useState<string>("");
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (
     e
   ) => {
     e.preventDefault();
 
-    if (!formFields) return;
+    if (!formFields || !currentBuildingData) return;
 
-    if (!isExistingListing) {
-      const listingID = await addListingFirestore(
-        formFields,
-        selectedBuilding?.buildingID || "",
-        currentUser.uid
+    if (Object.values(currentBuildingData.amiData).flat().length === 0) {
+      setAlert(
+        `Please select at least one % AMI in the "All rent-reduced units" table.`
       );
-      if (listingID) {
-        console.log(
-          `Successfully added listing for ${selectedBuilding?.buildingName}. ListingID: ${listingID}`
-        );
-        toggleFormCallback("", true);
-      }
+      return;
+    }
+
+    setAlert("");
+
+    const listingID = await setListingFirestore(
+      formFields,
+      currentBuildingData,
+      currentUser.uid,
+      originalListing?.listingID
+    );
+
+    if (listingID) {
+      console.log(
+        `Successfully set listing for building: ${currentBuildingData?.buildingName}. ListingID: ${listingID}`
+      );
+
+      onClose();
     } else {
-      const isSuccessful = await updateListingFirestore(formFields, listingID);
-      if (isSuccessful) {
-        console.log(
-          `Successfully updated listing for ${selectedBuilding?.buildingName}, listingID: ${listingID}`
-        );
-        toggleFormCallback(listingID, true);
-      }
+      setAlert(
+        "There was a problem submitting your data. Please contact mfte.seattle@gmail.com if the issue persists."
+      );
     }
   };
 
-  const programOptionsArray: ProgramKeyEnum[] = [
-    ProgramKeyEnum.P6,
-    ProgramKeyEnum.P345,
-  ];
+  const emptyAddressCurrentBuildingData: PartialWithRequired<
+    Address,
+    "streetAddress" | "zip" | "neighborhood"
+  > = {
+    streetAddress: "",
+    zip: "",
+    neighborhood: "",
+  };
 
-  const availSizes: BedroomsKeyEnum[] = selectedBuilding
-    ? (Object.keys(selectedBuilding.amiData) as BedroomsKeyEnum[])
-    : [];
+  const emptyContactCurrentBuildingData: PartialWithRequired<
+    Contact,
+    "phone" | "urlForBuilding"
+  > = {
+    phone: "",
+    urlForBuilding: "",
+  };
 
-  function getMaxRent(unitAvailData: UnitAvailData): number {
-    const { unitSize, percentAmi } = unitAvailData;
+  const blankTable: AmiData = {
+    [BedroomsKeyEnum.MICRO]: [],
+    [BedroomsKeyEnum.STUDIO]: [],
+    [BedroomsKeyEnum.ONE_BED]: [],
+    [BedroomsKeyEnum.TWO_BED]: [],
+    [BedroomsKeyEnum.THREE_PLUS]: [],
+  };
 
-    if (!unitSize || !percentAmi || !formFields.program) return 0;
+  const emptyCurrentBuildingData: CurrentBuildingData = {
+    buildingName: "",
+    buildingID: "",
+    address: emptyAddressCurrentBuildingData,
+    contact: emptyContactCurrentBuildingData,
+    amiData: blankTable,
+  };
 
-    if (unitAvailData.unitSize && unitAvailData.percentAmi) {
-      if (formFields.program === ProgramKeyEnum.P6) {
-        return p6UnitPricing[unitSize][percentAmi];
+  function updateAvailRow(unit: BedroomsKeyEnum, ami: PercentAmi) {
+    if (!formFields.availDataArray) return;
+
+    const updatedAvailDataArray: AvailDataArray = [];
+
+    for (const row of formFields.availDataArray) {
+      let updatedRow = { ...row };
+
+      if (row.unitSize === unit) {
+        if (
+          currentBuildingData &&
+          Object.keys(currentBuildingData.amiData[unit]).length <= 1
+        ) {
+          updatedRow = { ...row, unitSize: undefined, percentAmi: undefined };
+        } else if (row.percentAmi === ami) {
+          updatedRow = { ...row, percentAmi: undefined };
+        }
+
+        updatedAvailDataArray.push(updatedRow);
       } else {
-        return p345UnitPricing[unitSize][percentAmi];
+        updatedAvailDataArray.push(row);
       }
     }
 
-    return 0;
+    setFormFields((prev) => ({
+      ...prev,
+      availDataArray: [...updatedAvailDataArray],
+    }));
   }
+
+  // Would be way simpler if Amis were a set but Firestore doesn't store the data type
+  function handleToggleAmi(
+    ami: PercentAmi,
+    unit: BedroomsKeyEnum,
+    isChecked: boolean
+  ) {
+    if (isChecked) {
+      setCurrentBuildingData((prev) =>
+        prev
+          ? {
+              ...prev,
+              amiData: {
+                ...prev.amiData,
+                [unit]: prev.amiData[unit].filter((item) => item !== ami),
+              },
+            }
+          : prev
+      );
+
+      updateAvailRow(unit, ami);
+    } else {
+      setCurrentBuildingData((prev) =>
+        prev
+          ? {
+              ...prev,
+              amiData: {
+                ...prev.amiData,
+                [unit]: prev.amiData[unit]?.includes(ami)
+                  ? prev.amiData[unit]
+                  : // Buildings collection doesn't store empty arrays for units without AMIs.
+                    [...(prev.amiData[unit] || []), ami],
+              },
+            }
+          : prev
+      );
+    }
+  }
+
+  const [showEditBuildingData, setShowEditBuildingData] = useState(
+    currentBuildingData && !currentBuildingData.buildingID
+  );
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      {!isExistingListing && isFormVisible && listing.listingID === "" && (
-        <Row className="mb-3">
-          <Col md={6} className="mb-md-0">
-            <Form.Select
-              //TODO: Listings cards need a refactor for better UI.
-              required
-              name="buildingName"
-              id="buildingName"
-              onChange={handleInputChange}
-            >
-              <option value="">Select a building</option>
-              {allBuildings
-                .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
-                .map((selectedBuilding) => (
+      {!originalListing?.buildingID && (
+        <div className="mb-3">
+          <Row className="mb-1">
+            <Col md={6} className="mb-md-0">
+              <Form.Label className="mb-0 fw-bold">Building name:</Form.Label>
+              <Form.Select
+                required
+                name="buildingName"
+                id="buildingName"
+                onChange={(e) => {
+                  const selectedOption = e.target.selectedOptions[0];
+                  const buildingID =
+                    selectedOption.getAttribute("data-buildingid") || "";
+                  handleInputChange(e, undefined, buildingID);
+                }}
+              >
+                <option value="">Select</option>
+                <option value="Not Listed">Not Listed</option>
+                <Dropdown.Divider />
+                {allBuildings.map((building) => (
                   <option
-                    key={selectedBuilding.buildingID}
-                    value={selectedBuilding.buildingName}
+                    key={building.buildingID}
+                    value={building.buildingName}
+                    data-buildingid={building.buildingID}
                   >
-                    {selectedBuilding.buildingName}
+                    {building.buildingName}
                   </option>
                 ))}
-            </Form.Select>
-          </Col>
-        </Row>
+              </Form.Select>
+            </Col>
+          </Row>
+          {currentBuildingData && currentBuildingData.buildingID === "" && (
+            <Row className="mb-0">
+              <Col md={6}>
+                <Form.Control
+                  autoFocus
+                  required
+                  name="otherBuildingName"
+                  value={currentBuildingData?.otherBuildingName}
+                  onChange={handleInputChange}
+                />
+              </Col>
+            </Row>
+          )}
+        </div>
       )}
 
       {/* Address */}
-      {/* TODO: Maybe show address for existing listing? */}
-      {selectedBuilding && (
-        <Row className="mb-3">
-          <Col className="mb-md-0">
-            <Form.Label className="mb-0 fw-bold">
-              Confirm location and contact info:
-            </Form.Label>
-
-            <AddressAndPhone
-              buildingName={selectedBuilding.buildingName}
-              address={selectedBuilding.address}
-              contact={selectedBuilding.contact}
-              withLinks={false}
-            />
-          </Col>
-        </Row>
-      )}
-
-      {(selectedBuilding || isExistingListing) && (
-        <Form.Group>
+      {/* New form, existing building */}
+      {currentBuildingData && (
+        <>
+          {/* New form, new building */}
           <Row className="mb-3">
-            <Col>
-              <Form.Label className="mb-0 fw-bold">Program:</Form.Label>
-
-              {programOptionsArray.map((program) => (
-                <Form.Check
-                  required
-                  key={program}
-                  type="radio"
-                  label={ProgramLabelEnum[program]}
-                  name="program"
-                  id={program}
-                  value={program}
-                  checked={formFields.program === program}
-                  onChange={(e) => handleInputChange(e)}
-                />
-              ))}
+            <Col md={8}>
+              <Card>
+                <Card.Body>
+                  {showEditBuildingData || !currentBuildingData.buildingID ? (
+                    <Row className="mb-3">
+                      <Col className="mb-md-0">
+                        <NotListedForm
+                          onClickCallback={handleToggleAmi}
+                          amiData={currentBuildingData.amiData}
+                          setCurrentBuildingData={setCurrentBuildingData}
+                          currentBuildingData={currentBuildingData}
+                        />
+                      </Col>
+                    </Row>
+                  ) : (
+                    <>
+                      <Row className="mb-3">
+                        <Col className="mb-md-0">
+                          <ListingCardBuildingData
+                            // TODO: remove CurrentBuildingData type and just use temp building interface?
+                            building={currentBuildingData}
+                          />
+                        </Col>
+                      </Row>
+                    </>
+                  )}
+                  {currentBuildingData.buildingID !== "" && (
+                    <Row>
+                      <Col className="mb-md-0">
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          onClick={() =>
+                            setShowEditBuildingData((prev) => !prev)
+                          }
+                        >
+                          {showEditBuildingData ? "Cancel" : "Edit"}
+                        </Button>
+                      </Col>
+                    </Row>
+                  )}
+                </Card.Body>
+              </Card>
             </Col>
           </Row>
-        </Form.Group>
-      )}
 
-      {(isExistingListing || (selectedBuilding && formFields.program)) && (
-        <Form.Group>
           {/* URL */}
-          <Row className="mb-3">
-            <Col className="mb-0 mb-md-0">
-              <Form.Label className="mb-0 fw-bold">Listings URL:</Form.Label>
+          <Row className="my-3">
+            <Col md={8} lg={6} className="mb-0">
+              <Form.Label className="mb-0 fw-bold">
+                All listings URL:
+              </Form.Label>
               <Form.Control
                 required
                 type="url"
@@ -311,174 +441,30 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 value={formFields.url}
               />
               <Form.Text>
-                {`Url to view available rent-reduced units. Often ends with /floorplans`}
-                <br />
-                {`Include http://`}
+                {`Url to view available rent-reduced units. Include http://`}
               </Form.Text>
             </Col>
           </Row>
-
-          {/* Table */}
           <Row className="mb-3">
             <Col className="mb-0">
-              <Form.Label className="fw-bold mb-0">Available units:</Form.Label>
-              <div>
-                <Form.Text>List all available rent-reduced units.</Form.Text>
-              </div>
-              <Table bordered hover responsive size="sm">
-                <thead>
-                  <tr>
-                    <th style={{ minWidth: colWidths.unitSize }}>Size</th>
-                    <th style={{ minWidth: colWidths.percentAmi }}>% AMI</th>
-                    <th style={{ minWidth: colWidths.rent }}>Rent</th>
-                    <th style={{ minWidth: colWidths.aptNum }}>Apt #</th>
-                    <th style={{ minWidth: colWidths.dateAvail }}>
-                      Move-in Date
-                    </th>
-                    <th>Delete Row</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {formFields.availDataArray?.map((unitAvailData) => (
-                    <tr key={unitAvailData.rowId}>
-                      <td>
-                        <Form.Select
-                          required
-                          name="unitSize"
-                          id="unitSize"
-                          onChange={(e) =>
-                            handleInputChange(e, unitAvailData.rowId)
-                          }
-                          value={unitAvailData.unitSize}
-                        >
-                          <option value={unitAvailData.unitSize}>
-                            {unitAvailData.unitSize
-                              ? unitSizeLabelEnum[unitAvailData.unitSize]
-                              : ""}
-                          </option>
-                          {availSizes.map((unitSize) => (
-                            <option key={unitSize} value={unitSize}>
-                              {unitSizeLabelEnum[unitSize]}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </td>
+              <Form.Label className="mb-0 fw-bold">Available units:</Form.Label>
+              <Form.Check
+                type="switch"
+                name="noneAvailable"
+                label="No units available"
+                checked={formFields.noneAvailable}
+                onChange={handleInputChange}
+              />
 
-                      {/* AMI */}
-                      <td>
-                        <Form.Select
-                          required
-                          name="percentAmi"
-                          id="percentAmi"
-                          onChange={(e) =>
-                            handleInputChange(e, unitAvailData.rowId)
-                          }
-                          value={unitAvailData.percentAmi || ""}
-                          disabled={!unitAvailData.unitSize}
-                        >
-                          <option value={unitAvailData.percentAmi}>
-                            {unitAvailData.percentAmi}
-                          </option>
-                          {selectedBuilding?.amiData[
-                            unitAvailData.unitSize as BedroomsKeyEnum
-                          ]?.map((percent) => (
-                            <option key={percent} value={percent}>
-                              {percent}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </td>
-                      <td style={{ maxWidth: colWidths.rent }}>
-                        <InputGroup>
-                          <InputGroup.Text>$</InputGroup.Text>
-                          <Form.Control
-                            required
-                            type="number"
-                            min="0"
-                            name="maxRent"
-                            value={unitAvailData.maxRent}
-                            onChange={(e) =>
-                              handleInputChange(e, unitAvailData.rowId)
-                            }
-                          />
-                        </InputGroup>
-                        <div className="text-end">
-                          <Form.Text>
-                            {!!getMaxRent(unitAvailData) &&
-                              formFields.program &&
-                              `${ProgramLabelEnum[formFields.program]}, 
-                              ${unitSizeLabelEnum[unitAvailData.unitSize as BedroomsKeyEnum]}, 
-                              ${unitAvailData.percentAmi}% AMI ⟶ 
-                              ${formatCurrency(getMaxRent(unitAvailData))} max with utilities*`}
-                          </Form.Text>
-                        </div>
-                      </td>
-                      <td style={{ maxWidth: colWidths.aptNum }}>
-                        <Form.Control
-                          required
-                          type="string"
-                          name="aptNum"
-                          value={unitAvailData.aptNum}
-                          onChange={(e) =>
-                            handleInputChange(e, unitAvailData.rowId)
-                          }
-                        />
-                      </td>
-                      <td style={{ maxWidth: colWidths.dateAvail }}>
-                        <Form.Control
-                          required
-                          type="date"
-                          name="dateAvailString"
-                          value={unitAvailData.dateAvailString || ""}
-                          onChange={(e) =>
-                            handleInputChange(e, unitAvailData.rowId)
-                          }
-                        />
-                      </td>
-                      <td className="text-center">
-                        <Button
-                          variant="outline-danger"
-                          size="sm"
-                          onClick={() => handleDeleteRow(unitAvailData.rowId)}
-                          disabled={
-                            formFields.availDataArray
-                              ? formFields.availDataArray.length <= 1
-                              : true
-                          }
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              {!formFields.noneAvailable && (
+                <AvailUnitsTable
+                  currentBuildingData={currentBuildingData}
+                  formFields={formFields}
+                  setFormFields={setFormFields}
+                  handleInputChange={handleInputChange}
+                />
+              )}
             </Col>
-            <Row>
-              <Col className="text-end">
-                <Button onClick={handleAddRow} size="sm">
-                  Add Row
-                </Button>
-              </Col>
-            </Row>
-            {formFields.availDataArray?.[0]?.percentAmi && (
-              <Row>
-                <Col>
-                  <Form.Text className="mt-0 pt-0">
-                    *Max rent calculation based on{" "}
-                    <a
-                      id="income-and-rent-limits"
-                      href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
-                      title="Income and Rent Limits (FY 2024)"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Income and Rent Limits (FY 2024)
-                    </a>
-                  </Form.Text>
-                </Col>
-              </Row>
-            )}
           </Row>
 
           {/* Expiry Date */}
@@ -486,7 +472,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             <Form.Label className="mb-0 fw-bold">
               Listing expiration date:
             </Form.Label>
-            <Col md={6} className="mb-0 mb-md-0">
+            <Col xs={6} md={4} lg={3} className="mb-0">
               <Form.Control
                 type="date"
                 name="expiryDate"
@@ -502,9 +488,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           </Row>
 
           <Row className="mb-3">
-            <Col className="mb-0 mb-md-0">
+            <Col className="mb-0">
               <Form.Label className="mb-0 fw-bold">
-                Featured description:{" "}
+                Featured description:
               </Form.Label>
 
               <Form.Control
@@ -524,9 +510,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           </Row>
 
           <Row className="mb-3">
-            <Col className="mb-0 mb-md-0">
+            <Col className="mb-0">
               <Form.Label className="mb-0 fw-bold">Form feedback:</Form.Label>
-
               <Form.Control
                 as="textarea"
                 name="feedback"
@@ -542,13 +527,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               </Form.Text>
             </Col>
           </Row>
-
+          {alert && <Alert variant="danger">{alert}</Alert>}
           <Form.Group className="text-end">
             <Button variant="success" type="submit">
               Submit
             </Button>
           </Form.Group>
-        </Form.Group>
+        </>
       )}
     </Form>
   );

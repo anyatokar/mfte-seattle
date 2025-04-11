@@ -12,7 +12,11 @@ import {
 } from "firebase/firestore";
 
 import { contactUsFormFieldsType } from "../pages/Contact";
-import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
+import {
+  accountTypeEnum,
+  listingStatusEnum,
+  ProgramKeyEnum,
+} from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 
 import IListing, { AvailDataArray } from "../interfaces/IListing";
@@ -21,6 +25,10 @@ import {
   IUserSignupAuthData,
   SignupAuthDataType,
 } from "../interfaces/IUser";
+import {
+  CurrentBuildingData,
+  ITempBuilding,
+} from "../interfaces/ITempBuilding";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -82,43 +90,100 @@ function availDataToNum(
   return availDataArray;
 }
 
-export async function addListingFirestore(
-  formFields: Partial<IListing>,
-  buildingID: string,
-  uid: string
-): Promise<string> {
-  const listing: IListing = {
-    buildingName: formFields.buildingName || "",
-    url: formFields.url || "",
-    availDataArray: availDataToNum(formFields.availDataArray),
-    description: formFields.description || "",
-    listingStatus: listingStatusEnum.IN_REVIEW,
-    buildingID: buildingID || "",
-    dateCreated: Timestamp.fromDate(new Date()),
-    dateUpdated: Timestamp.fromDate(new Date()),
-    /** YYYY-MM-DD */
-    expiryDate: formFields.expiryDate || getMaxExpiryDate(),
-    listingID: "",
-    managerID: uid,
-    program: formFields.program,
-    feedback: formFields.feedback || "",
+async function setTempBuilding(
+  selectedBuilding: CurrentBuildingData,
+  listingID: string,
+  randomTempBuildingID: string
+): Promise<void> {
+  const {
+    buildingName,
+    otherBuildingName,
+    buildingID,
+    address,
+    contact,
+    amiData,
+  } = selectedBuilding;
+
+  const tempBuilding: ITempBuilding = {
+    buildingName: otherBuildingName ? otherBuildingName : buildingName,
+    buildingID: buildingID || randomTempBuildingID,
+    address: address,
+    contact: contact,
+    amiData: amiData,
+    listingID: listingID,
   };
+
   try {
-    // Create a new document reference with an auto-generated ID
-    const listingDocRef = doc(collection(db, "listings"));
+    // Temp building uses same ID as associated listing.
+    const tempBuildingDocRef = listingID
+      ? doc(db, "temp_buildings", listingID)
+      : doc(collection(db, "temp_buildings"));
+
+    // Overwrite all the fields
+    await setDoc(tempBuildingDocRef, tempBuilding);
+    return;
+  } catch (error) {
+    console.error("Error adding temp building:", error);
+    return;
+  }
+}
+
+export async function setListingFirestore(
+  formFields: Partial<IListing>,
+  selectedBuilding: CurrentBuildingData | null,
+  uid: string,
+  listingID: string | undefined
+): Promise<string> {
+  try {
+    const listingDocRef = listingID
+      ? doc(db, "listings", listingID)
+      : doc(collection(db, "listings"));
+
+    const randomTempBuildingID = doc(collection(db, "temp_buildings")).id;
+
+    if (selectedBuilding) {
+      await setTempBuilding(
+        selectedBuilding,
+        listingDocRef.id,
+        randomTempBuildingID
+      );
+    }
+
+    const listing: Partial<IListing> = {
+      buildingName:
+        (selectedBuilding?.otherBuildingName
+          ? selectedBuilding?.otherBuildingName
+          : formFields.buildingName) || "",
+      buildingID: selectedBuilding?.buildingID || randomTempBuildingID,
+      url: formFields.url || "",
+      availDataArray: formFields.noneAvailable
+        ? []
+        : availDataToNum(formFields.availDataArray),
+      description: formFields.description || "",
+      dateCreated: Timestamp.fromDate(new Date()),
+      dateUpdated: Timestamp.fromDate(new Date()),
+      /** YYYY-MM-DD */
+      expiryDate: formFields.expiryDate || getMaxExpiryDate(),
+      listingID: listingDocRef.id,
+      managerID: uid,
+      feedback: formFields.feedback || "",
+      noneAvailable: formFields.noneAvailable || false,
+    };
+
+    // Only change status for new listings
+    if (!listingID) {
+      listing.listingStatus = listingStatusEnum.IN_REVIEW;
+    }
 
     // Set the document and include the listingID field
-    await setDoc(listingDocRef, {
-      ...listing,
-      listingID: listingDocRef.id,
-    });
-
+    await setDoc(listingDocRef, listing, { merge: true });
     return listingDocRef.id;
   } catch (error) {
     console.error("Error adding listing or updating company rep:", error);
     return "";
   }
 }
+
 export async function updateListingFirestore(
   fieldsToUpdate: Partial<IListing>,
   listingID: string
@@ -131,8 +196,19 @@ export async function updateListingFirestore(
 
   try {
     const listingDocRef = doc(db, "listings", listingID);
+
+    const updatedAvailDataArray = fieldsToUpdate.availDataArray?.map((row) => {
+      if (row.selectedProgram !== ProgramKeyEnum.other && row.otherProgram) {
+        const updatedRow = { ...row };
+        delete updatedRow.otherProgram;
+        return updatedRow;
+      }
+      return row;
+    });
+
     await updateDoc(listingDocRef, {
       ...fieldsToUpdate,
+      availDataArray: updatedAvailDataArray,
       dateUpdated: Timestamp.fromDate(new Date()),
       expiryDate: fieldsToUpdate.expiryDate || getMaxExpiryDate(),
     });
@@ -160,6 +236,22 @@ export async function deleteListingFirestore(
         error
       );
     });
+
+  const tempBuildingDocRef = doc(db, "temp_buildings", listingID);
+  if (tempBuildingDocRef) {
+    await updateDoc(tempBuildingDocRef, { wasDeleted: true })
+      .then(() => {
+        console.log(
+          `Temp building ${buildingName} (id: ${tempBuildingDocRef.id}) marked as deleted.`
+        );
+      })
+      .catch((error: any) => {
+        console.error(
+          `Error marking temp building ${buildingName} (id: ${tempBuildingDocRef.id}) as deleted:`,
+          error
+        );
+      });
+  }
 }
 
 export async function getManagerProfileFirestore(
@@ -308,8 +400,6 @@ export async function signupFirestore(signupAuthData: SignupAuthDataType) {
       email: email,
       name: name,
       signupOrBackfillTimestamp: new Date(),
-      // Since Dec 8, 2023. This is to facilitate development and search in Firestore.
-      recentUser: true,
     } as Omit<IUserSignupAuthData, "password">);
   }
 }
