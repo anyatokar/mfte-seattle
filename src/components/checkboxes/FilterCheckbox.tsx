@@ -5,16 +5,18 @@ type FilterCheckboxProps<T extends string | PercentAmi> = {
   checkboxKey: T;
   onCheckboxChange: (checkbox: T) => void;
   isChecked: boolean;
+  dropdownType?: string;
 };
 
 const FilterCheckbox = <T extends string | PercentAmi>({
   checkboxKey,
   onCheckboxChange,
   isChecked,
+  dropdownType,
 }: FilterCheckboxProps<T>) => {
   return (
     <Form.Check
-      type="checkbox"
+      type={dropdownType === "household" ? "radio" : "checkbox"}
       label={checkboxKey}
       id={checkboxKey}
       value={checkboxKey}

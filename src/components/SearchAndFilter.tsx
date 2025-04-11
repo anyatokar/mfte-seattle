@@ -1,9 +1,11 @@
 import { Dispatch, useContext } from "react";
 import SearchInput from "./SearchInput";
 import FilterSwitch from "./checkboxes/FilterSwitch";
-import BedroomDropdown from "./searchAndFilter/BedroomDropdown";
-import NeighborhoodDropdown from "./searchAndFilter/NeighborhoodDropdown";
 import AmiDropdown from "./searchAndFilter/AmiDropdown";
+import BedroomDropdown from "./searchAndFilter/BedroomDropdown";
+import HouseholdDropdown from "./searchAndFilter/HouseholdDropdown";
+import NeighborhoodDropdown from "./searchAndFilter/NeighborhoodDropdown";
+
 import { ActiveFilters } from "../utils/buildingsFilter";
 import { FilterAction } from "../reducers/filterReducer";
 import { BedroomsKeyEnum } from "../types/enumTypes";
@@ -102,7 +104,6 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               onBedroomsChange={handleBedroomsChange}
               activeFilters={activeFilters}
             />
-
             <AmiDropdown
               onAmiChange={handleAmiChange}
               allAmi={allAmi}
@@ -118,6 +119,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               type="savedOnly"
               isChecked={activeFilters.isSavedOnly}
             />
+            <HouseholdDropdown />
           </Stack>
         </Col>
       </Row>
@@ -140,6 +142,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               allAmi={allAmi}
               activeFilters={activeFilters}
             />
+            <HouseholdDropdown />
           </Stack>
         </Col>
         <Col sm={6}>
