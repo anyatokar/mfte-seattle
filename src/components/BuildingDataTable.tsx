@@ -30,7 +30,7 @@ interface AmiDataProps {
     isChecked: boolean
   ) => void;
   tableFields?: AmiData;
-  //TODO: data and tableFields seems redundant
+  // TODO: data and tableFields seems redundant
 }
 
 interface AvailDataProps {

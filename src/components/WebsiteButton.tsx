@@ -1,13 +1,13 @@
 import { Button } from "react-bootstrap";
 import IBuilding from "../interfaces/IBuilding";
-import { listingStatusEnum } from "../types/enumTypes";
+import { willShowAvailTable } from "../utils/generalUtils";
 
 interface ListingButtonProps {
   building: IBuilding;
 }
 const WebsiteButton: React.FC<ListingButtonProps> = ({ building }) => {
-  const hasListing =
-    building.listing?.listingStatus === listingStatusEnum.ACTIVE;
+  const hasListing = willShowAvailTable(building.listing);
+
   const websiteUrl = hasListing
     ? building.listing.url
     : building.contact.urlForBuilding;

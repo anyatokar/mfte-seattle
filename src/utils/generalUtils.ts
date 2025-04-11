@@ -1,5 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import { listingMaxDays } from "../config/constants";
+import { listingStatusEnum } from "../types/enumTypes";
+import IListing from "../interfaces/IListing";
 
 export function timestampToDateAndTime(timestamp: string | Timestamp): string {
   if (timestamp instanceof Timestamp) {
@@ -50,4 +52,13 @@ export function checkPassword(
 
   if (error) console.error(error);
   return error;
+}
+
+export function willShowAvailTable(listing: IListing) {
+  if (!listing) return false;
+
+  return (
+    listing.listingStatus === listingStatusEnum.ACTIVE &&
+    listing.availDataArray.length > 0
+  );
 }
