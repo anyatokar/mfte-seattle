@@ -21,13 +21,13 @@ import { getMaxExpiryDate } from "./generalUtils";
 
 import IListing, {
   AvailDataArray,
-  CurrentBuildingData,
 } from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
   IUserSignupAuthData,
   SignupAuthDataType,
 } from "../interfaces/IUser";
+import { CurrentBuildingData, ITempBuilding } from "../interfaces/ITempBuilding";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -87,10 +87,6 @@ function availDataToNum(
   }
 
   return availDataArray;
-}
-
-export interface ITempBuilding extends CurrentBuildingData {
-  listingID: string;
 }
 
 async function setTempBuilding(
@@ -242,15 +238,15 @@ export async function deleteListingFirestore(
 
   const tempBuildingDocRef = doc(db, "temp_buildings", listingID);
   if (tempBuildingDocRef) {
-    await deleteDoc(tempBuildingDocRef)
+    await updateDoc(tempBuildingDocRef, {wasDeleted: true})
       .then(() => {
         console.log(
-          `Temp building ${buildingName} deleted from Listings. Temp building ID was ${tempBuildingDocRef.id}`
+          `Temp building ${buildingName} (id: ${tempBuildingDocRef.id}) marked as deleted.`
         );
       })
       .catch((error: any) => {
         console.error(
-          `Error deleting listing for ${buildingName}, temp building ID is ${tempBuildingDocRef.id}:`,
+          `Error marking temp building ${buildingName} (id: ${tempBuildingDocRef.id}) as deleted:`,
           error
         );
       });

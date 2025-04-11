@@ -8,7 +8,9 @@ import {
 import BuildingDataTable from "./BuildingDataTable";
 import ListingActionsButtons from "./ListingActionsButtons";
 import ListingCardBuildingData from "./ListingCardBuildingData";
+import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
+import { ITempBuilding } from "../interfaces/ITempBuilding";
 import { formatDate, timestampToDateAndTime } from "../utils/generalUtils";
 import { expiringSoonDays } from "../config/constants";
 
@@ -17,8 +19,6 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { ITempBuilding } from "../utils/firestoreUtils";
-import IBuilding from "../interfaces/IBuilding";
 
 type PartialWithRequired<T, K extends keyof T> = Partial<T> &
   Required<Pick<T, K>>;

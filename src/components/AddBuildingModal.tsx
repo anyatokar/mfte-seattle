@@ -1,8 +1,8 @@
 import Modal from "react-bootstrap/Modal";
 import EditListingForm from "./EditListingForm";
-import IListing from "../interfaces/IListing";
-import { ITempBuilding } from "../utils/firestoreUtils";
 import IBuilding from "../interfaces/IBuilding";
+import IListing from "../interfaces/IListing";
+import { ITempBuilding } from "../interfaces/ITempBuilding";
 
 type AddBuildingModalProps = {
   showModal: boolean;

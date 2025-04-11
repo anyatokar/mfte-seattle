@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { useTempBuildings } from "../hooks/useTempBuildings";
-import { ITempBuilding } from "../utils/firestoreUtils";
 import IProps from "../interfaces/IProps";
+import { ITempBuilding } from "../interfaces/ITempBuilding";
 
 type TempBuildingsContextType = [ITempBuilding[], boolean];
 

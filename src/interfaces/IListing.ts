@@ -5,7 +5,7 @@ import {
   OptionalUrlsKeyEnum,
   ProgramKeyEnum,
 } from "../types/enumTypes";
-import { Address, AmiData, Contact, PercentAmi } from "./IBuilding";
+import { Address, Contact, PercentAmi } from "./IBuilding";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 
 export type ListingWithRequired = PartialWithRequired<
@@ -28,15 +28,6 @@ export type PartialContact = PartialWithRequired<
   Contact,
   "phone" | "urlForBuilding"
 >;
-
-export type CurrentBuildingData = {
-  buildingName: string;
-  buildingID: string;
-  address: PartialAddress;
-  contact: PartialContact;
-  amiData: AmiData;
-  otherBuildingName?: string;
-};
 
 export type UnitAvailData = {
   unitSize: BedroomsKeyEnum | undefined;

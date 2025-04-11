@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { colWidths, optionalUrlsArray } from "../config/constants";
 import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
+import { createBlankAvailRow } from "./EditListingForm";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import {
   unitSizeLabelEnum,
@@ -11,9 +12,9 @@ import {
   ProgramLabelEnum,
 } from "../types/enumTypes";
 import IListing, {
-  CurrentBuildingData,
   UnitAvailData,
 } from "../interfaces/IListing";
+import { CurrentBuildingData } from "../interfaces/ITempBuilding";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -23,7 +24,6 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 import { Trash } from "react-bootstrap-icons";
-import { createBlankAvailRow } from "./EditListingForm";
 
 export type EditListingFormFields = PartialWithRequired<
   IListing,

@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import { BedroomsKeyEnum, OptionalUrlsKeyEnum } from "../types/enumTypes";
-import { ITempBuilding, setListingFirestore } from "../utils/firestoreUtils";
+import { setListingFirestore } from "../utils/firestoreUtils";
 import { getMaxExpiryDate } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
 import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
 import ListingCardBuildingData from "./ListingCardBuildingData";
 import NotListedForm from "./NotListedForm";
-
 import IBuilding, {
   Address,
   AmiData,
@@ -17,10 +16,10 @@ import IBuilding, {
 } from "../interfaces/IBuilding";
 import IListing, {
   AvailDataArray,
-  CurrentBuildingData,
   OptionalUrls,
   UnitAvailData,
 } from "../interfaces/IListing";
+import { CurrentBuildingData, ITempBuilding } from "../interfaces/ITempBuilding";
 
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
