@@ -192,7 +192,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             rel="noreferrer"
             className="address-phone-link"
           >
-            {url}
+            {url ? url : "--"}
           </a>
         </Card.Text>
 
@@ -210,7 +210,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
           )}
         </Card.Text>
         <Card.Text className="mt-3">
-          <strong>Description:</strong> {description}
+          <strong>Description:</strong> {description ? description : "--"}
         </Card.Text>
       </Card.Body>
 
