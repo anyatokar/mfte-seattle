@@ -213,7 +213,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       onClose();
     } else {
       setAlert(
-        "There was a problem submitting your data. Please contact mfte-seattle@gmail.com if the issue persists."
+        "There was a problem submitting your data. Please contact mfte.seattle@gmail.com if the issue persists."
       );
     }
   };
