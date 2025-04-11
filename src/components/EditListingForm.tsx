@@ -427,29 +427,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             </Col>
           </Row>
 
-          {/* URL */}
-          <Row className="my-3">
-            <Col md={8} lg={6} className="mb-0">
-              <Form.Label className="mb-0 fw-bold">
-                All listings URL:
-              </Form.Label>
-              <Form.Control
-                required
-                type="url"
-                name="url"
-                onChange={handleInputChange}
-                value={formFields.url}
-              />
-              <Form.Text>
-                {`Url to view available rent-reduced units. Include http://`}
-              </Form.Text>
-            </Col>
-          </Row>
           <Row className="mb-3">
             <Col className="mb-0">
               <Form.Label className="mb-0 fw-bold">Available units:</Form.Label>
+
               <Form.Check
                 type="switch"
+                id="noneAvailableSwitch"
                 name="noneAvailable"
                 label="No units available"
                 checked={formFields.noneAvailable}
@@ -461,11 +445,32 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   currentBuildingData={currentBuildingData}
                   formFields={formFields}
                   setFormFields={setFormFields}
-                  handleInputChange={handleInputChange}
+                  vv
                 />
               )}
             </Col>
           </Row>
+
+          {/* URL */}
+          {!formFields.noneAvailable && (
+            <Row className="my-3">
+              <Col md={8} lg={6} className="mb-0">
+                <Form.Label className="mb-0 fw-bold">
+                  All listings URL:
+                </Form.Label>
+                <Form.Control
+                  required
+                  type="url"
+                  name="url"
+                  onChange={handleInputChange}
+                  value={formFields.url}
+                />
+                <Form.Text>
+                  {`Url to view available rent-reduced units. Include http://`}
+                </Form.Text>
+              </Col>
+            </Row>
+          )}
 
           {/* Expiry Date */}
           <Row className="mb-3">

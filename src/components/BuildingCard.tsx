@@ -62,9 +62,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
         </ListGroup.Item>
       );
     } else if (listing.availDataArray.length === 0) {
-      return (
-        <ListGroup.Item>No rent-reduced units available.</ListGroup.Item>
-      );
+      return <ListGroup.Item>No rent-reduced units available.</ListGroup.Item>;
     } else {
       return null;
     }
