@@ -19,15 +19,16 @@ import {
 } from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 
-import IListing, {
-  AvailDataArray,
-} from "../interfaces/IListing";
+import IListing, { AvailDataArray } from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
   IUserSignupAuthData,
   SignupAuthDataType,
 } from "../interfaces/IUser";
-import { CurrentBuildingData, ITempBuilding } from "../interfaces/ITempBuilding";
+import {
+  CurrentBuildingData,
+  ITempBuilding,
+} from "../interfaces/ITempBuilding";
 
 export async function saveBuilding(
   uid: string | undefined,
@@ -238,7 +239,7 @@ export async function deleteListingFirestore(
 
   const tempBuildingDocRef = doc(db, "temp_buildings", listingID);
   if (tempBuildingDocRef) {
-    await updateDoc(tempBuildingDocRef, {wasDeleted: true})
+    await updateDoc(tempBuildingDocRef, { wasDeleted: true })
       .then(() => {
         console.log(
           `Temp building ${buildingName} (id: ${tempBuildingDocRef.id}) marked as deleted.`

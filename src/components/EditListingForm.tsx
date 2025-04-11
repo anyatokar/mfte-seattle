@@ -19,7 +19,10 @@ import IListing, {
   OptionalUrls,
   UnitAvailData,
 } from "../interfaces/IListing";
-import { CurrentBuildingData, ITempBuilding } from "../interfaces/ITempBuilding";
+import {
+  CurrentBuildingData,
+  ITempBuilding,
+} from "../interfaces/ITempBuilding";
 
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";

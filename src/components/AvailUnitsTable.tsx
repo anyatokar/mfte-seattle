@@ -11,9 +11,7 @@ import {
   ProgramKeyEnum,
   ProgramLabelEnum,
 } from "../types/enumTypes";
-import IListing, {
-  UnitAvailData,
-} from "../interfaces/IListing";
+import IListing, { UnitAvailData } from "../interfaces/IListing";
 import { CurrentBuildingData } from "../interfaces/ITempBuilding";
 
 import Button from "react-bootstrap/Button";

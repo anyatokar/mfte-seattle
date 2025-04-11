@@ -27,7 +27,7 @@ const ListingActionsButtons: React.FC<ListingActionsButtonsPropsType> = ({
   listing,
   onEditClick,
 }) => {
-  // TODO: maybe don't use buildingName off of listing?
+  // TODO: maybe don't use buildingName off of listing? In general figure out how to store other building name.
   const { listingID, buildingName, expiryDate, listingStatus } = listing;
   const [showModal, setShowModal] = useState(false);
   const { currentUser } = useAuth();
