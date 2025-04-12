@@ -37,7 +37,7 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
         id="bedroom-filter-dropdown"
         size="sm"
       >
-        Size{" "}
+        Bedrooms{" "}
         {activeFilters.bedrooms.size > 0 && (
           <Badge>
             <TooltipWrapper

@@ -1,9 +1,11 @@
 import { Dispatch, useContext } from "react";
 import SearchInput from "./SearchInput";
 import FilterSwitch from "./checkboxes/FilterSwitch";
-import BedroomDropdown from "./searchAndFilter/BedroomDropdown";
-import NeighborhoodDropdown from "./searchAndFilter/NeighborhoodDropdown";
 import AmiDropdown from "./searchAndFilter/AmiDropdown";
+import BedroomDropdown from "./searchAndFilter/BedroomDropdown";
+import HouseholdDropdown from "./searchAndFilter/HouseholdDropdown";
+import NeighborhoodDropdown from "./searchAndFilter/NeighborhoodDropdown";
+
 import { ActiveFilters } from "../utils/buildingsFilter";
 import { FilterAction } from "../reducers/filterReducer";
 import { BedroomsKeyEnum } from "../types/enumTypes";
@@ -102,12 +104,12 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               onBedroomsChange={handleBedroomsChange}
               activeFilters={activeFilters}
             />
-
             <AmiDropdown
               onAmiChange={handleAmiChange}
               allAmi={allAmi}
               activeFilters={activeFilters}
             />
+            <HouseholdDropdown />
             <FilterSwitch
               onCheckboxChange={handleAvailOnlyToggle}
               type="knownOnly"
@@ -140,6 +142,11 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               allAmi={allAmi}
               activeFilters={activeFilters}
             />
+          </Stack>
+        </Col>
+        <Col sm={7} className="mb-1">
+          <Stack direction="horizontal" gap={2}>
+            <HouseholdDropdown />
           </Stack>
         </Col>
         <Col sm={6}>
