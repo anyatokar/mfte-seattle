@@ -14,6 +14,7 @@ import { AmiData, PercentAmi } from "../interfaces/IBuilding";
 import { AvailDataArray, UnitAvailData } from "../interfaces/IListing";
 import { p6maxIncomeData } from "../config/P6-income-limits";
 import { p345maxIncomeData } from "../config/P345-income-limits";
+import { useHousehold } from "../contexts/HouseholdContext";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -72,6 +73,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     }
   }
 
+  /** When household size is not selected */
   function getModalData(
     unitAvailData: UnitAvailData
   ): [number[], number[]?] | undefined {
@@ -88,6 +90,28 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         ];
       }
     }
+  }
+
+  /** When household size is selected */
+  function getMaxForHousehold(unitAvailData: UnitAvailData): string {
+    const index = Number(selectedHousehold) - 1;
+
+    if (unitAvailData.percentAmi && type === TableTypeEnum.availData) {
+      if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
+        return formatCurrency(
+          p345maxIncomeData[unitAvailData.percentAmi][index]
+        );
+      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
+        return formatCurrency(p6maxIncomeData[unitAvailData.percentAmi][index]);
+      } else {
+        return (
+          formatCurrency(p345maxIncomeData[unitAvailData.percentAmi][index]) +
+          " or " +
+          formatCurrency(p6maxIncomeData[unitAvailData.percentAmi][index])
+        );
+      }
+    }
+    return "--";
   }
 
   const order: BedroomsKeyEnum[] = [
@@ -173,6 +197,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     return order.filter((column) => columnsToShow.has(column));
   }
 
+  const { selectedHousehold } = useHousehold();
+
   return (
     <div
       style={
@@ -195,7 +221,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
             <th style={{ whiteSpace: "nowrap" }}>% AMI</th>
             {type === TableTypeEnum.availData && (
               <>
-                <th style={{ whiteSpace: "nowrap" }}>Income</th>
+                <th style={{ whiteSpace: "nowrap" }}>Max Income</th>
                 <th>Rent</th>
                 <th style={{ whiteSpace: "nowrap" }}>Apt #</th>
                 <th style={{ whiteSpace: "nowrap" }}>Move-in Date</th>
@@ -241,14 +267,18 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
                   <td>{percentAmi ?? "--"}</td>
                   <td className={percentAmi ? "py-0" : ""}>
                     {percentAmi && !otherProgram ? (
-                      <Button
-                        size="sm"
-                        variant="link"
-                        className="p-0 m-0"
-                        onClick={() => handleShowModal(unitAvailData)}
-                      >
-                        Max
-                      </Button>
+                      !selectedHousehold ? (
+                        <Button
+                          size="sm"
+                          variant="link"
+                          className="p-0 m-0"
+                          onClick={() => handleShowModal(unitAvailData)}
+                        >
+                          View
+                        </Button>
+                      ) : (
+                        <>{getMaxForHousehold(unitAvailData)}</>
+                      )
                     ) : (
                       "--"
                     )}

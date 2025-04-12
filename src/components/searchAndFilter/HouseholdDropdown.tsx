@@ -1,6 +1,6 @@
-import { useState } from "react";
 import FilterCheckbox from "../checkboxes/FilterCheckbox";
 import TooltipWrapper from "../TooltipWrapper";
+import { useHousehold } from "../../contexts/HouseholdContext";
 
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
@@ -10,11 +10,9 @@ import Form from "react-bootstrap/Form";
 export type Household = "1" | "2" | "3" | "4" | "5" | "6";
 
 const HouseholdDropdown: React.FC = () => {
-  const householdOptions: Household[] = ["1", "2", "3", "4", "5", "6"];
+  const { selectedHousehold, setSelectedHousehold } = useHousehold();
 
-  const [selectedHousehold, setSelectedHousehold] = useState<Household | null>(
-    null
-  );
+  const householdOptions: Household[] = ["1", "2", "3", "4", "5", "6"];
 
   function handleHouseholdChange(value: Household) {
     setSelectedHousehold(value);
@@ -31,18 +29,10 @@ const HouseholdDropdown: React.FC = () => {
         {" "}
         <TooltipWrapper
           label={"Household Size "}
-          overlay={"Only for max income"}
-          placement={"bottom"}
+          overlay={"Determines max income"}
+          placement={"right"}
         ></TooltipWrapper>
-        {!!selectedHousehold && (
-          <Badge>
-            <TooltipWrapper
-              label={selectedHousehold}
-              overlay={selectedHousehold || ""}
-              placement="right"
-            />
-          </Badge>
-        )}
+        {!!selectedHousehold && <Badge>{selectedHousehold}</Badge>}
       </Dropdown.Toggle>
       <Dropdown.Menu
         style={{ maxHeight: "200px", overflowY: "auto" }}

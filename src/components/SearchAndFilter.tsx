@@ -109,6 +109,7 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               allAmi={allAmi}
               activeFilters={activeFilters}
             />
+            <HouseholdDropdown />
             <FilterSwitch
               onCheckboxChange={handleAvailOnlyToggle}
               type="knownOnly"
@@ -119,7 +120,6 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               type="savedOnly"
               isChecked={activeFilters.isSavedOnly}
             />
-            <HouseholdDropdown />
           </Stack>
         </Col>
       </Row>
@@ -142,6 +142,10 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               allAmi={allAmi}
               activeFilters={activeFilters}
             />
+          </Stack>
+        </Col>
+        <Col sm={7} className="mb-1">
+          <Stack direction="horizontal" gap={2}>
             <HouseholdDropdown />
           </Stack>
         </Col>
