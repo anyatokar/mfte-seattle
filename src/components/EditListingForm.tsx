@@ -347,15 +347,17 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 <option value="">Select</option>
                 <option value="Not Listed">Not Listed</option>
                 <Dropdown.Divider />
-                {allBuildings.map((building) => (
-                  <option
-                    key={building.buildingID}
-                    value={building.buildingName}
-                    data-buildingid={building.buildingID}
-                  >
-                    {building.buildingName}
-                  </option>
-                ))}
+                {allBuildings
+                  .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
+                  .map((building) => (
+                    <option
+                      key={building.buildingID}
+                      value={building.buildingName}
+                      data-buildingid={building.buildingID}
+                    >
+                      {building.buildingName}
+                    </option>
+                  ))}
               </Form.Select>
             </Col>
           </Row>
