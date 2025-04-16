@@ -46,17 +46,24 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
         }
         buildings.push(building);
       });
-      // Most recently updated listing is first
-      const sortedBuildings = buildings.sort(
-        (buildingA: IBuilding, buildingB: IBuilding) => {
-          const dateUpdatedA =
-            buildingA.listing?.dateUpdated?.toMillis?.() || 0;
-          const dateUpdatedB =
-            buildingB.listing?.dateUpdated?.toMillis?.() || 0;
+      // Most recently updated listing, with availability, is first
+      const sortedBuildings = buildings.sort((a: IBuilding, b: IBuilding) => {
+        const aNoneAvailable = a.listing?.noneAvailable ?? false;
+        const bNoneAvailable = b.listing?.noneAvailable ?? false;
 
-          return dateUpdatedB - dateUpdatedA;
-        }
-      );
+        // If both are marked noneAvailable, don't change their order
+        if (aNoneAvailable && bNoneAvailable) return 0;
+
+        // If only one is noneAvailable, keep its position (don't swap)
+        if (aNoneAvailable) return 1; // move a down
+        if (bNoneAvailable) return -1; // move b down
+
+        // Otherwise, sort by dateUpdated (most recent first)
+        const aUpdated = a.listing?.dateUpdated?.toMillis?.() || 0;
+        const bUpdated = b.listing?.dateUpdated?.toMillis?.() || 0;
+
+        return bUpdated - aUpdated;
+      });
 
       setAllBuildings(sortedBuildings);
       setIsLoadingAllBuildings(false);
