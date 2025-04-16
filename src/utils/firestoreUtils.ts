@@ -18,6 +18,11 @@ import {
   ProgramKeyEnum,
 } from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
+import {
+  isSameAddress,
+  isSameContact,
+  isSameAmiData,
+} from "./firestoreUtilHelpers";
 
 import IListing, { AvailDataArray } from "../interfaces/IListing";
 import {
@@ -104,14 +109,46 @@ async function setTempBuilding(
     amiData,
   } = selectedBuilding;
 
+  const finalBuildingName = otherBuildingName
+    ? otherBuildingName
+    : buildingName;
+  const finalBuildingID = buildingID || randomTempBuildingID;
+
   const tempBuilding: ITempBuilding = {
-    buildingName: otherBuildingName ? otherBuildingName : buildingName,
-    buildingID: buildingID || randomTempBuildingID,
+    buildingName: finalBuildingName,
+    buildingID: finalBuildingID,
     address: address,
     contact: contact,
     amiData: amiData,
     listingID: listingID,
   };
+
+  // Temp building uses same ID as associated listing.
+  // Check if the building already exists in buildings collection and is the same
+  if (buildingID) {
+    try {
+      const existingDocRef = doc(db, "buildings_3", buildingID);
+      const existingDocSnap = await getDoc(existingDocRef);
+
+      if (existingDocSnap.exists()) {
+        const existingData = existingDocSnap.data();
+
+        const isSame =
+          existingData.buildingName === finalBuildingName &&
+          isSameAddress(existingData.address, address) &&
+          isSameContact(existingData.contact, contact) &&
+          isSameAmiData(existingData.amiData, amiData);
+
+        if (isSame) {
+          // Skip writing to temp_buildings
+          return;
+        }
+      }
+    } catch (error) {
+      console.error("Error checking existing building:", error);
+      // Continue to temp building write in case of read error
+    }
+  }
 
   try {
     // Temp building uses same ID as associated listing.
