@@ -68,11 +68,11 @@ export enum OptionalUrlsKeyEnum {
 }
 
 export enum OptionalUrlsLabelEnum {
-  listingPageUrl = "Listing Page URL",
-  walkTourUrl = "Walk Tour URL",
-  floorPlanUrl = "Floor Plan URL",
-  otherUrl1 = "Other URL 1",
-  otherUrl2 = "Other URL 2",
+  listingPageUrl = "Listing Page",
+  walkTourUrl = "Walk Tour",
+  floorPlanUrl = "Floor Plan",
+  otherUrl1 = "Additional Link",
+  otherUrl2 = "Additional Link 2",
 }
 
 export enum TableParentEnum {

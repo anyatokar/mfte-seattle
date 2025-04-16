@@ -135,7 +135,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                     <th key={key} style={{ minWidth: colWidths.links }}>
                       {label}
                       <div>
-                        <Form.Text>Optional</Form.Text>
+                        <Form.Text>Optional URL</Form.Text>
                       </div>
                     </th>
                   ))}
