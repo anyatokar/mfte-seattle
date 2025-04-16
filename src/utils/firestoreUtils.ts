@@ -151,6 +151,7 @@ async function setTempBuilding(
   }
 
   try {
+    // Temp building uses same ID as associated listing.
     const tempBuildingDocRef = listingID
       ? doc(db, "temp_buildings", listingID)
       : doc(collection(db, "temp_buildings"));
