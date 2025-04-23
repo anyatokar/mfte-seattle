@@ -46,6 +46,6 @@ This is an open-source project and contributions are welcome. For guidelines on 
 
 ### Data Source
 
-Data is sourced from the spreadsheet of [Market-Rate Rental Properties with Affordable Housing Units Regulated by the City of Seattle (April 2024)](https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf) and from direct communication with property owners.
+Data is sourced from the Seattle Office of Housing and from direct communication with property owners.
 
 Real-time availability information is submitted directly by building managers.
