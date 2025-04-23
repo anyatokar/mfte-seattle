@@ -18,7 +18,7 @@ import AddBuildingModal from "../components/AddBuildingModal";
 import IBuilding from "../interfaces/IBuilding";
 import IListing from "../interfaces/IListing";
 import IPage from "../interfaces/IPage";
-import { ITempBuilding } from "../utils/firestoreUtils";
+import { ITempBuilding } from "../interfaces/ITempBuilding";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
