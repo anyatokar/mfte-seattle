@@ -131,21 +131,9 @@ const AboutPage: React.FC<IPage> = () => {
                   Multifamily Tax Exemption (MFTE), Incentive Zoning (IZ),
                   Mandatory Housing Affordability (MHA), and Master Planned
                   Community (MPC)-Yesler Terrace. Data is sourced from the
-                  spreadsheet of
-                  <a
-                    id="properties-spreadsheet-april-2024"
-                    href="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"
-                    title="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {" "}
-                    Market-Rate Rental Properties with Affordable Housing Units
-                    Regulated by the City of Seattle (April 2024)
-                  </a>{" "}
-                  and from direct communication with property owners. If you
-                  would like to see another type of program mapped, please use
-                  the{" "}
+                  Seattle Office of Housing and from direct communication with
+                  property owners. If you would like to see another type of
+                  program mapped, please use the{" "}
                   <Link id="contact-us" to="../contact">
                     contact us
                   </Link>{" "}

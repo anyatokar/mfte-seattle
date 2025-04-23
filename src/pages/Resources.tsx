@@ -39,7 +39,7 @@ const ResourcesPage: React.FC<IPage> = () => {
             <ListGroup variant="flush">
               <ListGroup.Item style={{ background: "none" }}>
                 <div className="fw-light">
-                  Seattle Office of Housing homepage with contact information.
+                  Seattle Office of Housing homepage with contact information
                 </div>
                 <a
                   id="seattle-housing-website"
@@ -58,17 +58,16 @@ const ResourcesPage: React.FC<IPage> = () => {
 
               <ListGroup.Item style={{ background: "none" }}>
                 <div className="fw-light">
-                  Information about MFTE and other income and rent-restricted
-                  programs.
+                  Information about MFTE and other rent-reduced programs
                 </div>
                 <a
                   id="mfte-city-website-renters"
-                  href="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
-                  title="https://www.seattle.gov/housing/renters/find-housing#affordableapartmentsinmarketratebuildings"
+                  href="https://www.seattle.gov/housing/renters/find-housing"
+                  title="https://www.seattle.gov/housing/renters/find-housing"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  MFTE Main Resources Page
+                  Find Affordable Rental Housing Page
                 </a>
 
                 <div className="fw-light">
@@ -77,57 +76,34 @@ const ResourcesPage: React.FC<IPage> = () => {
               </ListGroup.Item>
 
               <ListGroup.Item style={{ background: "none" }}>
-                <div className="fw-light">
-                  Market-Rate Rental Properties with Affordable Housing Units
-                  spreadsheet.
-                </div>
-                <a
-                  id="properties-spreadsheet-april-2024"
-                  href="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"
-                  title="https://www.seattle.gov/documents/Departments/Housing/Renters/Affordable_Rental_Housing_MFTE-MHA-IZ.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  MFTE Spreadsheet of Buildings
-                </a>
-
-                <div className="fw-light">
-                  PDF — Seattle Office of Housing — April 2024
-                </div>
-              </ListGroup.Item>
-
-              <ListGroup.Item style={{ background: "none" }}>
                 <a
                   id="income-and-rent-limits"
-                  href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
-                  title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
+                  href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf"
+                  title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Income and Rent Limits (FY 2024)
+                  Income and Rent Limits (FY 2025)
                 </a>
 
                 <div className="fw-light">
-                  PDF — Seattle Office of Housing — April 22, 2024
+                  PDF — Seattle Office of Housing — April 25, 2025
                 </div>
               </ListGroup.Item>
 
               <ListGroup.Item style={{ background: "none" }}>
-                <div className="fw-light">
-                  Renters' Guide for Market-Rate Apartment Buildings with
-                  Affordable Units.
-                </div>
+                <div className="fw-light">General Renters' Guide</div>
                 <a
                   id="renters-guide"
-                  href="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Renters_Guide_7-2023.pdf"
-                  title="https://www.seattle.gov/documents/Departments/Housing/Renters/Incentive_Programs_Renters_Guide_7-2023.pdf"
+                  href="https://www.seattle.gov/rentinginseattle/renters"
+                  title="https://www.seattle.gov/rentinginseattle/renters"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Detailed Renters' Guide
+                  Renting in Seattle
                 </a>
                 <div className="fw-light">
-                  PDF — Seattle Office of Housing — July 2023
+                  website — Seattle Office of Housing
                 </div>
               </ListGroup.Item>
             </ListGroup>

@@ -46,7 +46,7 @@ export const useAllBuildings = (): [IBuilding[], boolean] => {
         }
         buildings.push(building);
       });
-      // Most recently updated listing, with availability, is first
+      // Order: 1. available 2. unknown availability 3. not available
       const sortedBuildings = buildings.sort((a: IBuilding, b: IBuilding) => {
         const aNoneAvailable = a.listing?.noneAvailable ?? false;
         const bNoneAvailable = b.listing?.noneAvailable ?? false;
