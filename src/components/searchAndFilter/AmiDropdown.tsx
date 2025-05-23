@@ -19,7 +19,9 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
   allAmi,
   activeFilters,
 }) => {
-  const overlayText = [...activeFilters.ami].join(", ");
+  const overlayText = [...activeFilters.ami]
+    .map((value) => `${value}%`)
+    .join(", ");
 
   return (
     <Dropdown>
