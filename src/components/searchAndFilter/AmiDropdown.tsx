@@ -31,7 +31,13 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
         id="ami-filter-dropdown"
         size="sm"
       >
-        AMI{" "}
+        <TooltipWrapper
+          label={"AMI "}
+          overlay={
+            "Lower % AMI = lower rent and stricter income cap. Leave blank if unsure."
+          }
+          placement={"right"}
+        />
         {activeFilters.ami.size > 0 && (
           <Badge>
             <TooltipWrapper
