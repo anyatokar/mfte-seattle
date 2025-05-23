@@ -316,7 +316,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
           </Modal.Header>
           <Modal.Body>
             <p>
-              Determined by percent area median income (% AMI), household size,
+              Determined by percent Area Median Income (% AMI), household size,
               and program type.
               <br />
               <strong>AMI: </strong>
@@ -372,8 +372,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               management. Max annual income limit data sourced from{" "}
               <a
                 id="income-and-rent-limits"
-                href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2024/2024_RentIncomeLimits_5.28.24.pdf"
-                title="Income and Rent Limits (FY 2024)"
+                href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf"
+                title="Income and Rent Limits (FY 2025)"
                 target="_blank"
                 rel="noreferrer"
               >

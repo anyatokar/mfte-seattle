@@ -19,7 +19,9 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
   allAmi,
   activeFilters,
 }) => {
-  const overlayText = [...activeFilters.ami].join(", ");
+  const overlayText = [...activeFilters.ami]
+    .map((value) => `${value}%`)
+    .join(", ");
 
   return (
     <Dropdown>
@@ -29,7 +31,13 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
         id="ami-filter-dropdown"
         size="sm"
       >
-        % AMI{" "}
+        <TooltipWrapper
+          label={"AMI "}
+          overlay={
+            "Lower % AMI = lower rent and stricter income cap. Leave blank if unsure."
+          }
+          placement={"right"}
+        />
         {activeFilters.ami.size > 0 && (
           <Badge>
             <TooltipWrapper
@@ -55,6 +63,7 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
               checkboxKey={ami}
               onCheckboxChange={onAmiChange}
               isChecked={activeFilters.ami.has(ami)}
+              dropdownType="ami"
             />
           ))}
         </Form>

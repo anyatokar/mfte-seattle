@@ -92,7 +92,7 @@ const ResourcesPage: React.FC<IPage> = () => {
               </ListGroup.Item>
 
               <ListGroup.Item style={{ background: "none" }}>
-                <div className="fw-light">General Renters' Guide</div>
+                <div className="fw-light">General renters' guide</div>
                 <a
                   id="renters-guide"
                   href="https://www.seattle.gov/rentinginseattle/renters"

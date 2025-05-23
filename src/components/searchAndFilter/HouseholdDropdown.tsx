@@ -31,7 +31,7 @@ const HouseholdDropdown: React.FC = () => {
           label={"Household Size "}
           overlay={"Determines max income"}
           placement={"right"}
-        ></TooltipWrapper>
+        />
         {!!selectedHousehold && <Badge>{selectedHousehold}</Badge>}
       </Dropdown.Toggle>
       <Dropdown.Menu
