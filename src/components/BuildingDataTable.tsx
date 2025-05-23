@@ -316,7 +316,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
           </Modal.Header>
           <Modal.Body>
             <p>
-              Determined by percent area median income (% AMI), household size,
+              Determined by percent Area Median Income (% AMI), household size,
               and program type.
               <br />
               <strong>AMI: </strong>
