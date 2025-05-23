@@ -29,7 +29,7 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
         id="ami-filter-dropdown"
         size="sm"
       >
-        % AMI{" "}
+        AMI{" "}
         {activeFilters.ami.size > 0 && (
           <Badge>
             <TooltipWrapper
@@ -55,6 +55,7 @@ const AmiDropdown: React.FC<AmiFilterProps> = ({
               checkboxKey={ami}
               onCheckboxChange={onAmiChange}
               isChecked={activeFilters.ami.has(ami)}
+              dropdownType="ami"
             />
           ))}
         </Form>

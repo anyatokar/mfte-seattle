@@ -17,7 +17,7 @@ const FilterCheckbox = <T extends string | PercentAmi>({
   return (
     <Form.Check
       type={dropdownType === "household" ? "radio" : "checkbox"}
-      label={checkboxKey}
+      label={dropdownType === "ami" ? checkboxKey + "%" : checkboxKey}
       id={checkboxKey}
       value={checkboxKey}
       checked={isChecked}
