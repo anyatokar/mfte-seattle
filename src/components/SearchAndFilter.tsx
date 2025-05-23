@@ -104,12 +104,12 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               onBedroomsChange={handleBedroomsChange}
               activeFilters={activeFilters}
             />
+            <HouseholdDropdown />
             <AmiDropdown
               onAmiChange={handleAmiChange}
               allAmi={allAmi}
               activeFilters={activeFilters}
             />
-            <HouseholdDropdown />
             <FilterSwitch
               onCheckboxChange={handleAvailOnlyToggle}
               type="knownOnly"
@@ -137,16 +137,16 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               onBedroomsChange={handleBedroomsChange}
               activeFilters={activeFilters}
             />
-            <AmiDropdown
-              onAmiChange={handleAmiChange}
-              allAmi={allAmi}
-              activeFilters={activeFilters}
-            />
           </Stack>
         </Col>
         <Col sm={7} className="mb-1">
           <Stack direction="horizontal" gap={2}>
             <HouseholdDropdown />
+            <AmiDropdown
+              onAmiChange={handleAmiChange}
+              allAmi={allAmi}
+              activeFilters={activeFilters}
+            />
           </Stack>
         </Col>
         <Col sm={6}>
