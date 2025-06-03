@@ -48,7 +48,7 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
         )}
       </Dropdown.Toggle>
       <Dropdown.Menu
-        style={{ maxHeight: "200px", overflowY: "auto" }}
+        style={{ maxHeight: "200px", minWidth: "250px", overflowY: "auto" }}
         className="p-2"
         aria-labelledby="neighborhood-filter-dropdown"
       >
