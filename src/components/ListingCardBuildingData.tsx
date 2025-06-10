@@ -1,7 +1,7 @@
 import IBuilding from "../interfaces/IBuilding";
-import { CurrentBuildingData } from "../interfaces/IListing";
+import { ITempBuilding } from "../interfaces/ITempBuilding";
+import { CurrentBuildingData } from "../interfaces/ITempBuilding";
 import { TableParentEnum, TableTypeEnum } from "../types/enumTypes";
-import { ITempBuilding } from "../utils/firestoreUtils";
 import { AddressAndPhone } from "./AddressAndPhone";
 import BuildingDataTable from "./BuildingDataTable";
 

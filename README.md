@@ -1,20 +1,20 @@
 # MFTE Seattle
 
-This is the source for [https://mfte-seattle.com](https://mfte-seattle.com)
+Source code for [https://mfte-seattle.com](https://mfte-seattle.com)
 
 ## Purpose
 
-This web application rent-reduced housing in Seattle by featuring currently available and generally existing units in a user-friendly and accessible way.
+This web application reduces the barrier for finding rent-reduced housing in Seattle by mapping and presenting key information about currently available and generally existing units in a user-friendly and accessible way.
 
-It currently supports 3,000 monthly active users on average.
+It currently supports 3,500 monthly active users on average.
 
-**New!** Soft-launched a feature that allows building managers to add real-time availability using a manager portal.
+**New!** Building managers can contribute real-time availability using a manager portal.
 
 ## Technologies
 
 ### Frontend
 
-This application is built with TypeScript and React. It uses React-Bootstrap for consistent styling, accessibility, and a responsive layout across devices.
+This application is built with TypeScript and React. It uses the React-Bootstrap component library for consistent styling, accessibility, and a responsive layout across devices.
 
 ### Backend
 

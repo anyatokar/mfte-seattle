@@ -39,9 +39,9 @@ const ListingAccordion: React.FC = () => {
             </p>
             <p>
               Each listing includes a link to the building’s listing page, an
-              optional short description, as well as a table of available units
-              with unit size, % AMI, income limits, monthly rent, and move-in
-              date.
+              optional short description and links, as well as a table of
+              available units with unit size, % AMI, program type/income limits,
+              monthly rent, apartment #s, and move-in date.
             </p>
           </Accordion.Body>
         </Accordion.Item>
@@ -99,7 +99,7 @@ const ListingAccordion: React.FC = () => {
           <Accordion.Header>Website Metrics</Accordion.Header>
           <Accordion.Body>
             <p>
-              This website averages 3,000 active monthly users and consistently
+              This website averages 3,500 active monthly users and consistently
               ranks as a top result for MFTE properties in Seattle across search
               engines. It provides an accessible and optimized experience across
               devices, making it easier for a wide range of users to find

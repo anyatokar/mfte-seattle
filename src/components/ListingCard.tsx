@@ -184,16 +184,20 @@ const ListingCard: React.FC<ListingCardProps> = ({
         )}
 
         <Card.Text className="mt-3">
-          <strong>Listings URL:</strong>{" "}
-          <a
-            id="addressLink"
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            className="address-phone-link"
-          >
-            {url ? url : "--"}
-          </a>
+          <strong>All listings URL:</strong>{" "}
+          {url ? (
+            <a
+              id="addressLink"
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              className="address-phone-link"
+            >
+              {url}
+            </a>
+          ) : (
+            "--"
+          )}
         </Card.Text>
 
         <Card.Text className="d-flex align-items-center">
