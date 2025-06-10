@@ -36,8 +36,16 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   savedHomeData,
   shouldScroll,
 }) => {
-  const { buildingID, buildingName, address, contact, amiData, listing } =
-    building;
+  const {
+    buildingID,
+    buildingName,
+    address,
+    contact,
+    amiData,
+    listing,
+    isEnding,
+    isAgeRestricted,
+  } = building;
 
   const { currentUser } = useAuth();
 
@@ -157,6 +165,12 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             </Tab>
             {amiData && (
               <Tab eventKey="details" title="Details" className="mt-2">
+                <Card.Text>
+                  {isEnding && "Affordability ends in 2 years or less"}
+                </Card.Text>
+                <Card.Text>
+                  {isAgeRestricted && "Age-restricted community"}
+                </Card.Text>
                 <BuildingDataTable
                   type={TableTypeEnum.amiData}
                   data={amiData}
