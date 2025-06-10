@@ -106,6 +106,59 @@ const ResourcesPage: React.FC<IPage> = () => {
                   website — Seattle Office of Housing
                 </div>
               </ListGroup.Item>
+
+              <ListGroup.Item style={{ background: "none" }}>
+                <a
+                  id="renters-guide"
+                  href="https://www.archhousing.org/rental-program"
+                  title="https://www.archhousing.org/rental-program"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  ARCH Rental Program
+                </a>
+                <div className="fw-light">
+                  website — ARCH (A Regional Coalition for Housing) — a
+                  partnership of the County and East King County Cities working
+                  to preserve and increase the supply of housing for low and
+                  moderate income households in the region
+                </div>
+              </ListGroup.Item>
+
+              <ListGroup.Item style={{ background: "none" }}>
+                <div className="fw-light">
+                  A list of resources such as emergency shelters, rental
+                  assistance, and legal representation
+                </div>
+                <a
+                  id="renters-guide"
+                  href="https://www.archhousing.org/renter-resources"
+                  title="https://www.archhousing.org/renter-resources"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  ARCH Rental Assistance and Other Resources
+                </a>
+                <div className="fw-light">website — ARCH</div>
+              </ListGroup.Item>
+
+              <ListGroup.Item style={{ background: "none" }}>
+                <div className="fw-light">
+                  King County Housing Authority homepage
+                </div>
+                <a
+                  id="renters-guide"
+                  href="https://www.kcha.org/"
+                  title="https://www.kcha.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  King County Housing Authority
+                </a>
+                <div className="fw-light">
+                  website — King County Housing Authority
+                </div>
+              </ListGroup.Item>
             </ListGroup>
           </Col>
         </Row>
