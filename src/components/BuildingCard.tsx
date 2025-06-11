@@ -118,6 +118,22 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     </Card.Header>
   );
 
+  const expiresOrAgeRestricted =
+    isEnding || isAgeRestricted ? (
+      <>
+        {isEnding && (
+          <div>
+            <strong>Affordability ends in 2 years or less</strong>
+          </div>
+        )}
+        {isAgeRestricted && (
+          <div>
+            <strong>Age-restricted community</strong>
+          </div>
+        )}
+      </>
+    ) : null;
+
   return (
     <Card
       border={
@@ -150,6 +166,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                     <strong>Description:</strong> {listing.description}
                   </Card.Text>
                 )}
+                {expiresOrAgeRestricted}
               </Tab>
             )}
 
@@ -165,17 +182,12 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
             </Tab>
             {amiData && (
               <Tab eventKey="details" title="Details" className="mt-2">
-                <Card.Text>
-                  {isEnding && "Affordability ends in 2 years or less"}
-                </Card.Text>
-                <Card.Text>
-                  {isAgeRestricted && "Age-restricted community"}
-                </Card.Text>
                 <BuildingDataTable
                   type={TableTypeEnum.amiData}
                   data={amiData}
                   tableParent={TableParentEnum.BUILDING_CARD}
                 />
+                <div className="mt-3">{expiresOrAgeRestricted}</div>
               </Tab>
             )}
           </Tabs>

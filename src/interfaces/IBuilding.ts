@@ -51,6 +51,6 @@ export default interface IBuilding {
   contact: Contact;
   listing: IListing;
   searchFields: SearchFields;
-  isEnding: string;
-  isAgeRestricted: string;
+  isEnding: boolean;
+  isAgeRestricted: boolean;
 }
