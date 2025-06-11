@@ -163,7 +163,8 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                 />
                 {listing.description && (
                   <Card.Text className="mt-2">
-                    <strong>Description:</strong> {listing.description}
+                    <span style={{ fontWeight: "bold" }}>Description:</span>{" "}
+                    {listing.description}
                   </Card.Text>
                 )}
                 {expiresOrAgeRestricted}

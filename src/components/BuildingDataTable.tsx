@@ -319,10 +319,11 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
               Determined by percent Area Median Income (% AMI), household size,
               and program type.
               <br />
-              <strong>AMI: </strong>
+              <span style={{ fontWeight: "bold" }}>AMI: </span>
               {unitAvailData.percentAmi}%
               <br />
-              <strong>Program:</strong> {getModalSentence()}
+              <span style={{ fontWeight: "bold" }}>Program: </span>{" "}
+              {getModalSentence()}
             </p>
 
             <Table bordered hover size="sm" className="my-0" responsive>
