@@ -5,7 +5,7 @@ import {
   TableTypeEnum,
 } from "../types/enumTypes";
 import { deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
-import { willShowAvailTable } from "../utils/generalUtils";
+import { calculateDaysAgo, willShowAvailTable } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
@@ -36,8 +36,16 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   savedHomeData,
   shouldScroll,
 }) => {
-  const { buildingID, buildingName, address, contact, amiData, listing } =
-    building;
+  const {
+    buildingID,
+    buildingName,
+    address,
+    contact,
+    amiData,
+    listing,
+    isEnding,
+    isAgeRestricted,
+  } = building;
 
   const { currentUser } = useAuth();
 
@@ -110,6 +118,34 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     </Card.Header>
   );
 
+  const expiresOrAgeRestricted =
+    isEnding || isAgeRestricted ? (
+      <>
+        {isEnding && (
+          <div>
+            <strong>Affordability ends in 2 years or less</strong>
+          </div>
+        )}
+        {isAgeRestricted && (
+          <div>
+            <strong>Age-restricted community</strong>
+          </div>
+        )}
+      </>
+    ) : null;
+
+  function getDaysAgoText() {
+    const daysAgo = calculateDaysAgo(listing.dateUpdated);
+
+    if (daysAgo === 0) {
+      return "Updated today";
+    } else if (daysAgo === 1) {
+      return "Updated day ago";
+    } else {
+      return `Updated ${daysAgo} days ago`;
+    }
+  }
+
   return (
     <Card
       border={
@@ -137,11 +173,14 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   data={listing.availDataArray}
                   tableParent={TableParentEnum.BUILDING_CARD}
                 />
+                <i>{getDaysAgoText()}</i>
                 {listing.description && (
                   <Card.Text className="mt-2">
-                    <strong>Description:</strong> {listing.description}
+                    <span style={{ fontWeight: "bold" }}>Description:</span>{" "}
+                    {listing.description}
                   </Card.Text>
                 )}
+                {expiresOrAgeRestricted}
               </Tab>
             )}
 
@@ -155,6 +194,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                 />
               </div>
             </Tab>
+
             {amiData && (
               <Tab eventKey="details" title="Details" className="mt-2">
                 <BuildingDataTable
@@ -162,6 +202,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   data={amiData}
                   tableParent={TableParentEnum.BUILDING_CARD}
                 />
+                <div className="mt-3">{expiresOrAgeRestricted}</div>
               </Tab>
             )}
           </Tabs>

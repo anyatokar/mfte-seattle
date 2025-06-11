@@ -52,7 +52,7 @@ const ListingAccordion: React.FC = () => {
             <p>If you already have a manager account, skip to step 2.</p>
             <ol>
               <li className="mb-3">
-                Logout of your personal account (if applicable).{" "}
+                Log out of your personal account (if applicable).{" "}
                 <Button
                   variant="link"
                   id="manager-signup-modal"

@@ -127,7 +127,7 @@ async function setTempBuilding(
   // Check if the building already exists in buildings collection and is the same
   if (buildingID) {
     try {
-      const existingDocRef = doc(db, "buildings_4", buildingID);
+      const existingDocRef = doc(db, "buildings_5", buildingID);
       const existingDocSnap = await getDoc(existingDocRef);
 
       if (existingDocSnap.exists()) {

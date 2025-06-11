@@ -160,7 +160,7 @@ export const TopNav = () => {
                     active={false}
                     onClick={handleLogout}
                   >
-                    Logout
+                    Log out
                   </Nav.Link>
                 </Nav>
               ) : (
