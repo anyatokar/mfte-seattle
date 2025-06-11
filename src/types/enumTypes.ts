@@ -75,6 +75,11 @@ export enum OptionalUrlsLabelEnum {
   otherUrl2 = "Additional Link 2",
 }
 
+export enum OptionalUrlsSubtextEnum {
+  listingPageUrl = "Optional. Include if different from the All Listings URL above",
+  optionalUrl = "Optional URL",
+}
+
 export enum TableParentEnum {
   MARKER = "marker",
   LISTING_CARD = "listingCard",

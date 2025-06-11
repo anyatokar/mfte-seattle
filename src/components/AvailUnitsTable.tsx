@@ -131,11 +131,11 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                     Move-in Date
                   </th>
 
-                  {optionalUrlsArray.map(({ key, label }) => (
+                  {optionalUrlsArray.map(({ key, label, subtext }) => (
                     <th key={key} style={{ minWidth: colWidths.links }}>
                       {label}
                       <div>
-                        <Form.Text>Optional URL</Form.Text>
+                        <Form.Text>{subtext}</Form.Text>
                       </div>
                     </th>
                   ))}
