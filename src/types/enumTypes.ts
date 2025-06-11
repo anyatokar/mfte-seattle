@@ -76,7 +76,7 @@ export enum OptionalUrlsLabelEnum {
 }
 
 export enum OptionalUrlsSubtextEnum {
-  listingPageUrl = "Optional. Include if different from the All Listings URL above",
+  listingPageUrl = "Optional URL. Include if different from All Listings URL",
   optionalUrl = "Optional URL",
 }
 
