@@ -457,7 +457,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       value={formFields.url}
                     />
                     <Form.Text>
-                      {`URL to view available rent-reduced units. Include http://`}
+                      Link that comes as close as possible to showing all
+                      available rent-reduced units in this building. Include
+                      http://
                     </Form.Text>
                   </Col>
                 </Row>
