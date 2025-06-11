@@ -140,7 +140,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     if (daysAgo === 0) {
       return "Updated today";
     } else if (daysAgo === 1) {
-      return "Updated day ago";
+      return "Updated yesterday";
     } else {
       return `Updated ${daysAgo} days ago`;
     }
