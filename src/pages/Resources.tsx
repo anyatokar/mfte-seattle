@@ -7,158 +7,156 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 
+type resourceGroupsType = {
+  title: string;
+  overallDescription: string;
+  items: {
+    id: string;
+    href: string;
+    label: string;
+    description: string | null;
+  }[];
+}[];
+const resourceGroups: resourceGroupsType = [
+  {
+    title: "Seattle Office Of Housing",
+    overallDescription:
+      "An official resource for MFTE and other rent-reduced programs.",
+    items: [
+      {
+        id: "seattle-housing-website",
+        href: "https://seattle.gov/housing",
+        label: "Seattle Office of Housing Homepage",
+        description:
+          "Seattle Office of Housing homepage with contact information",
+      },
+      {
+        id: "mfte-city-website-renters",
+        href: "https://www.seattle.gov/housing/renters/find-housing",
+        label: "Find Affordable Rental Housing Page",
+        description: "Information about MFTE and other rent-reduced programs",
+      },
+      {
+        id: "income-and-rent-limits",
+        href: "https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf",
+        label: "Income and Rent Limits (FY 2025)",
+        description: null,
+      },
+      {
+        id: "renters-guide",
+        href: "https://www.seattle.gov/rentinginseattle/renters",
+        label: "Renting in Seattle",
+        description: "General renters' guide",
+      },
+    ],
+  },
+  {
+    title: "ARCH (A Regional Coalition for Housing)",
+    overallDescription:
+      "A partnership of King County and East King County cities working to preserve and increase the supply of housing for low- and moderate-income households in the region. Similarly to the Seattle Office of Housing, ARCH maintains its own list of income-restricted rental units.",
+    items: [
+      {
+        id: "arch-rental-program",
+        href: "https://www.archhousing.org/rental-program",
+        label: "ARCH Rental Program",
+        description:
+          "Detailed resource about the ARCH rental program including contact information",
+      },
+      {
+        id: "arch-renter-resources",
+        href: "https://www.archhousing.org/renter-resources",
+        label: "ARCH Rental Assistance and Other Resources",
+        description:
+          "🚨 A list of resources such as emergency shelters, rental assistance, and legal representation",
+      },
+    ],
+  },
+  {
+    title: "Community Roots Housing",
+    overallDescription:
+      "Builds, preserves, and operates affordable homes to rent throughout the Seattle area.",
+    items: [
+      {
+        id: "crh-home",
+        href: "https://communityrootshousing.org/",
+        label: "Community Roots Housing Homepage",
+        description: null,
+      },
+      {
+        id: "crh-search",
+        href: "https://communityrootshousing.org/find-apartment/",
+        label: "Community Roots Housing available apartment search",
+        description: null,
+      },
+    ],
+  },
+  {
+    title: "King County Housing Authority",
+    overallDescription:
+      "An agency providing affordable housing and rental assistance programs throughout King County.",
+    items: [
+      {
+        id: "kcha-home",
+        href: "https://www.kcha.org/",
+        label: "King County Housing Authority Homepage",
+        description: null,
+      },
+    ],
+  },
+];
+
 const ResourcesPage: React.FC<IPage> = () => {
-  return (
-    <Profiler
-      id={"Resources"}
-      onRender={(
+  const onRender = (
+    id: string,
+    phase: string,
+    actualDuration: number,
+    baseDuration: number,
+    startTime: number,
+    commitTime: number
+  ) => {
+    if (isProfilerOn) {
+      console.log({
         id,
         phase,
         actualDuration,
         baseDuration,
         startTime,
-        commitTime
-      ) => {
-        if (isProfilerOn) {
-          console.log({
-            id,
-            phase,
-            actualDuration,
-            baseDuration,
-            startTime,
-            commitTime,
-          });
-        }
-      }}
-    >
+        commitTime,
+      });
+    }
+  };
+
+  return (
+    <Profiler id="Resources" onRender={onRender}>
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
             <div className="display-6 mb-5">Resources</div>
-
             <ListGroup variant="flush">
-              <ListGroup.Item style={{ background: "none" }}>
-                <div className="fw-light">
-                  Seattle Office of Housing homepage with contact information
+              {resourceGroups.map((group) => (
+                <div key={group.title} className="mb-4">
+                  <h5 className="fw-bold">{group.title}</h5>
+                  <div className="fw-light mb-2">
+                    {group.overallDescription}
+                  </div>
+                  {group.items.map(({ id, href, label, description }) => (
+                    <ListGroup.Item key={id} style={{ background: "none" }}>
+                      <a
+                        id={id}
+                        href={href}
+                        title={href}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {label}
+                      </a>
+                      {description && (
+                        <div className="fw-light">{description}</div>
+                      )}
+                    </ListGroup.Item>
+                  ))}
                 </div>
-                <a
-                  id="seattle-housing-website"
-                  href="https://seattle.gov/housing"
-                  title="https://seattle.gov/housing"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Seattle Office of Housing
-                </a>
-
-                <div className="fw-light">
-                  website — Seattle Office of Housing
-                </div>
-              </ListGroup.Item>
-
-              <ListGroup.Item style={{ background: "none" }}>
-                <div className="fw-light">
-                  Information about MFTE and other rent-reduced programs
-                </div>
-                <a
-                  id="mfte-city-website-renters"
-                  href="https://www.seattle.gov/housing/renters/find-housing"
-                  title="https://www.seattle.gov/housing/renters/find-housing"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Find Affordable Rental Housing Page
-                </a>
-
-                <div className="fw-light">
-                  website — Seattle Office of Housing
-                </div>
-              </ListGroup.Item>
-
-              <ListGroup.Item style={{ background: "none" }}>
-                <a
-                  id="income-and-rent-limits"
-                  href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf"
-                  title="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Income and Rent Limits (FY 2025)
-                </a>
-
-                <div className="fw-light">
-                  PDF — Seattle Office of Housing — April 25, 2025
-                </div>
-              </ListGroup.Item>
-
-              <ListGroup.Item style={{ background: "none" }}>
-                <div className="fw-light">General renters' guide</div>
-                <a
-                  id="renters-guide"
-                  href="https://www.seattle.gov/rentinginseattle/renters"
-                  title="https://www.seattle.gov/rentinginseattle/renters"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Renting in Seattle
-                </a>
-                <div className="fw-light">
-                  website — Seattle Office of Housing
-                </div>
-              </ListGroup.Item>
-
-              <ListGroup.Item style={{ background: "none" }}>
-                <a
-                  id="renters-guide"
-                  href="https://www.archhousing.org/rental-program"
-                  title="https://www.archhousing.org/rental-program"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  ARCH Rental Program
-                </a>
-                <div className="fw-light">
-                  website — ARCH (A Regional Coalition for Housing) — a
-                  partnership of the County and East King County Cities working
-                  to preserve and increase the supply of housing for low and
-                  moderate income households in the region
-                </div>
-              </ListGroup.Item>
-
-              <ListGroup.Item style={{ background: "none" }}>
-                <div className="fw-light">
-                  A list of resources such as emergency shelters, rental
-                  assistance, and legal representation
-                </div>
-                <a
-                  id="renters-guide"
-                  href="https://www.archhousing.org/renter-resources"
-                  title="https://www.archhousing.org/renter-resources"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  ARCH Rental Assistance and Other Resources
-                </a>
-                <div className="fw-light">website — ARCH</div>
-              </ListGroup.Item>
-
-              <ListGroup.Item style={{ background: "none" }}>
-                <div className="fw-light">
-                  King County Housing Authority homepage
-                </div>
-                <a
-                  id="renters-guide"
-                  href="https://www.kcha.org/"
-                  title="https://www.kcha.org/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  King County Housing Authority
-                </a>
-                <div className="fw-light">
-                  website — King County Housing Authority
-                </div>
-              </ListGroup.Item>
+              ))}
             </ListGroup>
           </Col>
         </Row>
