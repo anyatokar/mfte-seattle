@@ -21,7 +21,7 @@ const resourceGroups: resourceGroupsType = [
   {
     title: "Seattle Office Of Housing",
     overallDescription:
-      "City of Seattle's official resource for MFTE and other rent-reduced programs.",
+      "An official resource for MFTE and other rent-reduced programs.",
     items: [
       {
         id: "seattle-housing-website",
@@ -51,9 +51,9 @@ const resourceGroups: resourceGroupsType = [
     ],
   },
   {
-    title: "ARCH (East King County)",
+    title: "ARCH (A Regional Coalition for Housing)",
     overallDescription:
-      "ARCH (A Regional Coalition for Housing) is a partnership of King County and East King County cities working to preserve and increase the supply of housing for low- and moderate-income households in the region. Similar to the MFTE program, ARCH maintains its own list of income-restricted rental units.",
+      "A partnership of King County and East King County cities working to preserve and increase the supply of housing for low- and moderate-income households in the region. Similarly to the Seattle Office of Housing, ARCH maintains its own list of income-restricted rental units.",
     items: [
       {
         id: "arch-rental-program",
@@ -93,7 +93,7 @@ const resourceGroups: resourceGroupsType = [
   {
     title: "King County Housing Authority",
     overallDescription:
-      "Official agency providing affordable housing and rental assistance programs throughout King County.",
+      "An agency providing affordable housing and rental assistance programs throughout King County.",
     items: [
       {
         id: "kcha-home",
