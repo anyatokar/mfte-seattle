@@ -5,7 +5,7 @@ import {
   TableTypeEnum,
 } from "../types/enumTypes";
 import { deleteBuilding, saveBuilding } from "../utils/firestoreUtils";
-import { willShowAvailTable } from "../utils/generalUtils";
+import { calculateDaysAgo, willShowAvailTable } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { ModalContext, ModalState } from "../contexts/ModalContext";
 
@@ -134,6 +134,18 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
       </>
     ) : null;
 
+  function getDaysAgoText() {
+    const daysAgo = calculateDaysAgo(listing.dateUpdated);
+
+    if (daysAgo === 0) {
+      return "Listed today";
+    } else if (daysAgo === 1) {
+      return "Listed 1 day ago";
+    } else {
+      return `Listed ${daysAgo} days ago`;
+    }
+  }
+
   return (
     <Card
       border={
@@ -161,6 +173,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   data={listing.availDataArray}
                   tableParent={TableParentEnum.BUILDING_CARD}
                 />
+                <i>{getDaysAgoText()}</i>
                 {listing.description && (
                   <Card.Text className="mt-2">
                     <span style={{ fontWeight: "bold" }}>Description:</span>{" "}
@@ -181,6 +194,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                 />
               </div>
             </Tab>
+
             {amiData && (
               <Tab eventKey="details" title="Details" className="mt-2">
                 <BuildingDataTable

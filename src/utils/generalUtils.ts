@@ -31,6 +31,28 @@ export const getMaxExpiryDate = () => {
   return `${year}-${month}-${day}`;
 };
 
+/**
+ * Returns the number of full days between the given Firestore Timestamp and today.
+ * Always positive (i.e., "how many days ago").
+ */
+export function calculateDaysAgo(timestamp: Timestamp): number {
+  const now = new Date();
+  const targetDate = timestamp.toDate();
+
+  // Strip time component for both dates to compare date-only
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const past = new Date(
+    targetDate.getFullYear(),
+    targetDate.getMonth(),
+    targetDate.getDate()
+  );
+
+  const diffInMs = today.getTime() - past.getTime();
+  const diffInDays = Math.max(0, Math.round(diffInMs / (1000 * 60 * 60 * 24)));
+
+  return diffInDays;
+}
+
 // Input will always be number.
 export function formatCurrency(amount: number | string): string {
   if (!amount || typeof amount !== "number") return "--";
