@@ -138,11 +138,11 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     const daysAgo = calculateDaysAgo(listing.dateUpdated);
 
     if (daysAgo === 0) {
-      return "Listed today";
+      return "Updated today";
     } else if (daysAgo === 1) {
-      return "Listed 1 day ago";
+      return "Updated day ago";
     } else {
-      return `Listed ${daysAgo} days ago`;
+      return `Updated ${daysAgo} days ago`;
     }
   }
 
