@@ -143,6 +143,38 @@ const ResourcesPage: React.FC<IPage> = () => {
               </ListGroup.Item>
 
               <ListGroup.Item style={{ background: "none" }}>
+                <div className="fw-light">Community Roots Housing homepage</div>
+                <a
+                  id="renters-guide"
+                  href="https://communityrootshousing.org/"
+                  title="https://communityrootshousing.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Community Roots Housing
+                </a>
+                <div className="fw-light">
+                  website — Community Roots Housing — builds, preserves, and
+                  operates affordable homes to rent throughout the Seattle area
+                </div>
+              </ListGroup.Item>
+
+              <ListGroup.Item style={{ background: "none" }}>
+                <a
+                  id="renters-guide"
+                  href="https://communityrootshousing.org/find-apartment/"
+                  title="https://communityrootshousing.org/find-apartment/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Community Roots Housing available apartment search
+                </a>
+                <div className="fw-light">
+                  website — Community Roots Housing
+                </div>
+              </ListGroup.Item>
+
+              <ListGroup.Item style={{ background: "none" }}>
                 <div className="fw-light">
                   King County Housing Authority homepage
                 </div>
