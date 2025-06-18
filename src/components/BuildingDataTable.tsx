@@ -75,47 +75,51 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     }
   }
 
+  const incomeTables = {
+    [ProgramKeyEnum.P345]: p345maxIncomeData,
+    [ProgramKeyEnum.P6]: p6maxIncomeData,
+    [ProgramKeyEnum.ARCH_OLD]: archOldIncomeData,
+    [ProgramKeyEnum.ARCH_NEW]: archNewIncomeData,
+  };
+
   /** When household size is not selected */
   function getModalData(
     unitAvailData: UnitAvailData
   ): [number[], number[]?] | undefined {
-    if (unitAvailData.percentAmi && type === TableTypeEnum.availData) {
-      if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
-        return [p345maxIncomeData[unitAvailData.percentAmi] || []];
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
-        return [p6maxIncomeData[unitAvailData.percentAmi] || []];
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.ARCH_OLD) {
-        return [archOldIncomeData[unitAvailData.percentAmi] || []];
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.ARCH_NEW) {
-        return [archNewIncomeData[unitAvailData.percentAmi] || []];
-      }
+    const { percentAmi, selectedProgram } = unitAvailData;
+
+    if (!selectedProgram) return;
+
+    if (
+      !percentAmi ||
+      selectedProgram === ProgramKeyEnum.other ||
+      type !== TableTypeEnum.availData
+    ) {
+      return;
     }
+
+    const incomeTable = incomeTables[selectedProgram];
+    return [incomeTable?.[percentAmi] || []];
   }
 
   /** When household size is selected */
   function getMaxForHousehold(unitAvailData: UnitAvailData): string {
     const index = Number(selectedHousehold) - 1;
+    const { percentAmi, selectedProgram } = unitAvailData;
 
-    if (unitAvailData.percentAmi && type === TableTypeEnum.availData) {
-      if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
-        return formatCurrency(
-          p345maxIncomeData[unitAvailData.percentAmi]?.[index] || ""
-        );
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
-        return formatCurrency(
-          p6maxIncomeData[unitAvailData.percentAmi]?.[index] || ""
-        );
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.ARCH_NEW) {
-        return formatCurrency(
-          archNewIncomeData[unitAvailData.percentAmi]?.[index] || ""
-        );
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.ARCH_OLD) {
-        return formatCurrency(
-          archOldIncomeData[unitAvailData.percentAmi][index] || ""
-        );
-      }
+    if (
+      !percentAmi ||
+      !selectedProgram ||
+      selectedProgram === ProgramKeyEnum.other ||
+      type !== TableTypeEnum.availData
+    ) {
+      return "--";
     }
-    return "--";
+
+    const incomeTable = incomeTables[selectedProgram];
+    const value = incomeTable?.[percentAmi]?.[index];
+
+    return formatCurrency(value || "");
   }
 
   const order: BedroomsKeyEnum[] = [

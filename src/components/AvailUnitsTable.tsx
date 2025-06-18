@@ -93,25 +93,29 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       )
     : [];
 
-  function getMaxRent(unitAvailData: UnitAvailData): number {
-    const { unitSize, percentAmi, selectedProgram } = unitAvailData;
+  function getMaxRent({
+    unitSize,
+    percentAmi,
+    selectedProgram,
+  }: UnitAvailData): number {
+    if (
+      !unitSize ||
+      !percentAmi ||
+      !selectedProgram ||
+      // This is for TS
+      selectedProgram === ProgramKeyEnum.other
+    )
+      return 0;
 
-    if (!unitSize || !percentAmi || !selectedProgram) return 0;
+    const pricingTables = {
+      [ProgramKeyEnum.P6]: p6UnitPricing,
+      [ProgramKeyEnum.P345]: p345UnitPricing,
+      [ProgramKeyEnum.ARCH_OLD]: archOldUnitPricing,
+      [ProgramKeyEnum.ARCH_NEW]: archNewUnitPricing,
+    };
 
-    if (unitAvailData.unitSize && unitAvailData.percentAmi) {
-      if (selectedProgram === ProgramKeyEnum.P6) {
-        return p6UnitPricing[unitSize][percentAmi] || 0;
-      } else if (selectedProgram === ProgramKeyEnum.P345) {
-        return p345UnitPricing[unitSize][percentAmi] || 0;
-        //TODO: Add both ARCH tables
-      } else if (selectedProgram === ProgramKeyEnum.ARCH_OLD) {
-        return archOldUnitPricing[unitSize]?.[percentAmi] || 0;
-      } else if (selectedProgram === ProgramKeyEnum.ARCH_NEW) {
-        return archNewUnitPricing[unitSize]?.[percentAmi] || 0;
-      }
-    }
-
-    return 0;
+    const pricingTable = pricingTables[selectedProgram];
+    return pricingTable?.[unitSize]?.[percentAmi] || 0;
   }
 
   const programOptionsArray: ProgramKeyEnum[] = [
