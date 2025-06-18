@@ -50,14 +50,16 @@ export enum unitSizeLabelEnum {
 export enum ProgramKeyEnum {
   P6 = "P6",
   P345 = "P345",
-  ARCH = "ARCH",
+  ARCH_NEW = "ARCH_NEW",
+  ARCH_OLD = "ARCH_OLD",
   other = "other",
 }
 
 export enum ProgramLabelEnum {
   P6 = "MFTE P6",
   P345 = "MFTE P3-5, IZ-Housing Bonus, MHA, or MPC-Yesler Terrace",
-  ARCH = "ARCH",
+  ARCH_OLD = "ARCH before May 2019",
+  ARCH_NEW = "ARCH after May 2019",
   other = "Other",
 }
 

@@ -1,9 +1,10 @@
 import { formatCurrency } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { colWidths, optionalUrlsArray } from "../config/constants";
-import { p6UnitPricing } from "../config/P6-unit-pricing";
-import { p345UnitPricing } from "../config/P345-unit-pricing";
-import { archUnitPricing } from "../config/ARCH-unit-pricing";
+import { p6UnitPricing } from "../dataTables/P6-unit-pricing";
+import { p345UnitPricing } from "../dataTables/P345-unit-pricing";
+import { archOldUnitPricing } from "../dataTables/ARCH-old-unit-pricing";
+import { archNewUnitPricing } from "../dataTables/ARCH-new-unit-pricing";
 import { createBlankAvailRow } from "./EditListingForm";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import {
@@ -103,8 +104,10 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       } else if (selectedProgram === ProgramKeyEnum.P345) {
         return p345UnitPricing[unitSize][percentAmi] || 0;
         //TODO: Add both ARCH tables
-      } else if (selectedProgram === ProgramKeyEnum.ARCH) {
-        return archUnitPricing[unitSize]?.[percentAmi] || 0;
+      } else if (selectedProgram === ProgramKeyEnum.ARCH_OLD) {
+        return archOldUnitPricing[unitSize]?.[percentAmi] || 0;
+      } else if (selectedProgram === ProgramKeyEnum.ARCH_NEW) {
+        return archNewUnitPricing[unitSize]?.[percentAmi] || 0;
       }
     }
 

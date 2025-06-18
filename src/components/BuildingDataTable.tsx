@@ -12,8 +12,10 @@ import {
 import { formatCurrency, formatDate } from "../utils/generalUtils";
 import { AmiData, PercentAmi } from "../interfaces/IBuilding";
 import { AvailDataArray, UnitAvailData } from "../interfaces/IListing";
-import { p6maxIncomeData } from "../config/P6-income-limits";
-import { p345maxIncomeData } from "../config/P345-income-limits";
+import { p6maxIncomeData } from "../dataTables/P6-income-limits";
+import { p345maxIncomeData } from "../dataTables/P345-income-limits";
+import { archNewIncomeData } from "../dataTables/ARCH-new-income-limits";
+import { archOldIncomeData } from "../dataTables/ARCH-old-income-limits";
 import { useHousehold } from "../contexts/HouseholdContext";
 
 import Button from "react-bootstrap/Button";
@@ -79,15 +81,13 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   ): [number[], number[]?] | undefined {
     if (unitAvailData.percentAmi && type === TableTypeEnum.availData) {
       if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
-        return [p345maxIncomeData[unitAvailData.percentAmi]];
+        return [p345maxIncomeData[unitAvailData.percentAmi] || []];
       } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
-        return [p6maxIncomeData[unitAvailData.percentAmi]];
-      } else {
-        // TODO: Remove when there is no more unknown program types in listings.
-        return [
-          p345maxIncomeData[unitAvailData.percentAmi],
-          p6maxIncomeData[unitAvailData.percentAmi],
-        ];
+        return [p6maxIncomeData[unitAvailData.percentAmi] || []];
+      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.ARCH_OLD) {
+        return [archOldIncomeData[unitAvailData.percentAmi] || []];
+      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.ARCH_NEW) {
+        return [archNewIncomeData[unitAvailData.percentAmi] || []];
       }
     }
   }
@@ -99,15 +99,19 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     if (unitAvailData.percentAmi && type === TableTypeEnum.availData) {
       if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
         return formatCurrency(
-          p345maxIncomeData[unitAvailData.percentAmi][index]
+          p345maxIncomeData[unitAvailData.percentAmi]?.[index] || ""
         );
       } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
-        return formatCurrency(p6maxIncomeData[unitAvailData.percentAmi][index]);
-      } else {
-        return (
-          formatCurrency(p345maxIncomeData[unitAvailData.percentAmi][index]) +
-          " or " +
-          formatCurrency(p6maxIncomeData[unitAvailData.percentAmi][index])
+        return formatCurrency(
+          p6maxIncomeData[unitAvailData.percentAmi]?.[index] || ""
+        );
+      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.ARCH_NEW) {
+        return formatCurrency(
+          archNewIncomeData[unitAvailData.percentAmi]?.[index] || ""
+        );
+      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.ARCH_OLD) {
+        return formatCurrency(
+          archOldIncomeData[unitAvailData.percentAmi][index] || ""
         );
       }
     }

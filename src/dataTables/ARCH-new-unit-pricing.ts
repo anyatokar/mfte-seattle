@@ -1,7 +1,7 @@
 import { PercentAmi } from "../interfaces/IBuilding";
 import { BedroomsKeyEnum } from "../types/enumTypes";
 
-export const archUnitPricing: Partial<
+export const archNewUnitPricing: Partial<
   Record<BedroomsKeyEnum, Partial<Record<PercentAmi, number>>>
 > = {
   [BedroomsKeyEnum.STUDIO]: {
