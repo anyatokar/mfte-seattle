@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { colWidths, optionalUrlsArray } from "../config/constants";
 import { p6UnitPricing } from "../config/P6-unit-pricing";
 import { p345UnitPricing } from "../config/P345-unit-pricing";
+import { archUnitPricing } from "../config/ARCH-unit-pricing";
 import { createBlankAvailRow } from "./EditListingForm";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import {
@@ -98,9 +99,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
 
     if (unitAvailData.unitSize && unitAvailData.percentAmi) {
       if (selectedProgram === ProgramKeyEnum.P6) {
-        return p6UnitPricing[unitSize][percentAmi];
-      } else {
-        return p345UnitPricing[unitSize][percentAmi];
+        return p6UnitPricing[unitSize][percentAmi] || 0;
+      } else if (selectedProgram === ProgramKeyEnum.P345) {
+        return p345UnitPricing[unitSize][percentAmi] || 0;
+        //TODO: Add both ARCH tables
+      } else if (selectedProgram === ProgramKeyEnum.ARCH) {
+        return archUnitPricing[unitSize]?.[percentAmi] || 0;
       }
     }
 

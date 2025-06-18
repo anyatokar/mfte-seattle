@@ -4,15 +4,26 @@ import { BedroomsKeyEnum } from "../types/enumTypes";
 
 export type PercentAmi =
   | "30"
+  | "35"
   | "40"
+  | "45"
   | "50"
+  | "55"
   | "60"
   | "65"
   | "70"
   | "75"
   | "80"
   | "85"
-  | "90";
+  | "90"
+  | "95"
+  | "100"
+  | "105"
+  | "110"
+  | "120"
+  | "150"
+  | "200"
+  | "250";
 
 export type AmiData = { [key in BedroomsKeyEnum]: PercentAmi[] };
 
