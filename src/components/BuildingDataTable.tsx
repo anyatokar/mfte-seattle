@@ -86,15 +86,16 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   ): [number[], number[]?] | undefined {
     const { percentAmi, selectedProgram } = unitAvailData;
 
-    if (!percentAmi || !selectedProgram) return;
-
     if (
-      selectedProgram !== ProgramKeyEnum.other &&
-      type === TableTypeEnum.availData
-    ) {
-      const incomeTable = incomeTables[selectedProgram];
-      return [incomeTable?.[percentAmi] || []];
-    }
+      !percentAmi ||
+      !selectedProgram ||
+      selectedProgram === ProgramKeyEnum.other ||
+      type !== TableTypeEnum.availData
+    )
+      return;
+
+    const incomeTable = incomeTables[selectedProgram];
+    return [incomeTable?.[percentAmi] || []];
   }
 
   /** When household size is selected */
