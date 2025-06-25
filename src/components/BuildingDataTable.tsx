@@ -63,9 +63,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   };
 
   function getModalSentence(): string | undefined {
-    if (type !== TableTypeEnum.availData) return;
-
     if (
+      type === TableTypeEnum.availData &&
       unitAvailData?.selectedProgram &&
       unitAvailData?.selectedProgram !== ProgramKeyEnum.other
     ) {
