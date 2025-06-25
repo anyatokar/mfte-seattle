@@ -63,15 +63,13 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   };
 
   function getModalSentence(): string | undefined {
-    if (unitAvailData && type === TableTypeEnum.availData) {
-      if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
-        return ProgramLabelEnum[ProgramKeyEnum.P345];
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
-        return ProgramLabelEnum[ProgramKeyEnum.P6];
-      } else {
-        // TODO: Remove when there is no more unknown program types in listings.
-        return "Unknown therefore both annual income limits are listed.";
-      }
+    if (type !== TableTypeEnum.availData) return;
+
+    if (
+      unitAvailData?.selectedProgram &&
+      unitAvailData?.selectedProgram !== ProgramKeyEnum.other
+    ) {
+      return ProgramLabelEnum[unitAvailData.selectedProgram];
     }
   }
 
@@ -88,18 +86,15 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   ): [number[], number[]?] | undefined {
     const { percentAmi, selectedProgram } = unitAvailData;
 
-    if (!selectedProgram) return;
+    if (!percentAmi || !selectedProgram) return;
 
     if (
-      !percentAmi ||
-      selectedProgram === ProgramKeyEnum.other ||
-      type !== TableTypeEnum.availData
+      selectedProgram !== ProgramKeyEnum.other &&
+      type === TableTypeEnum.availData
     ) {
-      return;
+      const incomeTable = incomeTables[selectedProgram];
+      return [incomeTable?.[percentAmi] || []];
     }
-
-    const incomeTable = incomeTables[selectedProgram];
-    return [incomeTable?.[percentAmi] || []];
   }
 
   /** When household size is selected */
