@@ -40,8 +40,8 @@ const ListingAccordion: React.FC = () => {
             <p>
               Each listing includes a link to the building’s listing page, an
               optional short description and links, as well as a table of
-              available units with unit size, % AMI, program type/income limits,
-              monthly rent, apartment #s, and move-in date.
+              available units with unit size, percent AMI, program type/income
+              limits, monthly rent, apartment numbers, and move-in date.
             </p>
           </Accordion.Body>
         </Accordion.Item>
