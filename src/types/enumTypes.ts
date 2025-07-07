@@ -50,12 +50,16 @@ export enum unitSizeLabelEnum {
 export enum ProgramKeyEnum {
   P6 = "P6",
   P345 = "P345",
+  ARCH_NEW = "ARCH_NEW",
+  ARCH_OLD = "ARCH_OLD",
   other = "other",
 }
 
 export enum ProgramLabelEnum {
   P6 = "MFTE P6",
   P345 = "MFTE P3-5, IZ-Housing Bonus, MHA, or MPC-Yesler Terrace",
+  ARCH_OLD = "ARCH before May 2019",
+  ARCH_NEW = "ARCH after May 2019",
   other = "Other",
 }
 
@@ -76,7 +80,7 @@ export enum OptionalUrlsLabelEnum {
 }
 
 export enum OptionalUrlsSubtextEnum {
-  listingPageUrl = `Optional URL. Only if different from "All listings URL" above`,
+  listingPageUrl = "Optional URL. Include if different from the all listings link above",
   optionalUrl = "Optional URL",
 }
 

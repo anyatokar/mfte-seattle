@@ -1,8 +1,10 @@
 import { formatCurrency } from "../utils/generalUtils";
 import { useAuth } from "../contexts/AuthContext";
 import { colWidths, optionalUrlsArray } from "../config/constants";
-import { p6UnitPricing } from "../config/P6-unit-pricing";
-import { p345UnitPricing } from "../config/P345-unit-pricing";
+import { p6UnitPricing } from "../dataTables/P6-unit-pricing";
+import { p345UnitPricing } from "../dataTables/P345-unit-pricing";
+import { archOldUnitPricing } from "../dataTables/ARCH-old-unit-pricing";
+import { archNewUnitPricing } from "../dataTables/ARCH-new-unit-pricing";
 import { createBlankAvailRow } from "./EditListingForm";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 import {
@@ -91,20 +93,30 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       )
     : [];
 
-  function getMaxRent(unitAvailData: UnitAvailData): number {
-    const { unitSize, percentAmi, selectedProgram } = unitAvailData;
+  function getMaxRent({
+    unitSize,
+    percentAmi,
+    selectedProgram,
+  }: UnitAvailData): number {
+    if (
+      !unitSize ||
+      !percentAmi ||
+      !selectedProgram ||
+      // This is for TS
+      selectedProgram === ProgramKeyEnum.other
+    )
+      return 0;
 
-    if (!unitSize || !percentAmi || !selectedProgram) return 0;
+    const pricingTables = {
+      [ProgramKeyEnum.P6]: p6UnitPricing,
+      [ProgramKeyEnum.P345]: p345UnitPricing,
+      [ProgramKeyEnum.ARCH_OLD]: archOldUnitPricing,
+      [ProgramKeyEnum.ARCH_NEW]: archNewUnitPricing,
+    };
 
-    if (unitAvailData.unitSize && unitAvailData.percentAmi) {
-      if (selectedProgram === ProgramKeyEnum.P6) {
-        return p6UnitPricing[unitSize][percentAmi];
-      } else {
-        return p345UnitPricing[unitSize][percentAmi];
-      }
-    }
-
-    return 0;
+    const pricingTable = pricingTables[selectedProgram];
+    // TODO: Should 0 be the fallback return?
+    return pricingTable?.[unitSize]?.[percentAmi] || 0;
   }
 
   const programOptionsArray: ProgramKeyEnum[] = [

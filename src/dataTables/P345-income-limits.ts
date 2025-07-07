@@ -1,6 +1,6 @@
 import { PercentAmi } from "../interfaces/IBuilding";
 /** Index + 1 = household size */
-export const p345maxIncomeData: Record<PercentAmi, number[]> = {
+export const p345maxIncomeData: Partial<Record<PercentAmi, number[]>> = {
   30: [33000, 37710, 42420, 47130, 50910, 54690],
   40: [44000, 50280, 56560, 62840, 67880, 72920],
   50: [55000, 62850, 70700, 78550, 84850, 91150],

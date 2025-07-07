@@ -3,7 +3,7 @@ import { BedroomsKeyEnum } from "../types/enumTypes";
 
 export const p6UnitPricing: Record<
   BedroomsKeyEnum,
-  Record<PercentAmi, number>
+  Partial<Record<PercentAmi, number>>
 > = {
   [BedroomsKeyEnum.MICRO]: {
     30: 724,

@@ -12,8 +12,9 @@ import {
 import { formatCurrency, formatDate } from "../utils/generalUtils";
 import { AmiData, PercentAmi } from "../interfaces/IBuilding";
 import { AvailDataArray, UnitAvailData } from "../interfaces/IListing";
-import { p6maxIncomeData } from "../config/P6-income-limits";
-import { p345maxIncomeData } from "../config/P345-income-limits";
+import { p6maxIncomeData } from "../dataTables/P6-income-limits";
+import { p345maxIncomeData } from "../dataTables/P345-income-limits";
+import { archIncomeData } from "../dataTables/ARCH-income-limits";
 import { useHousehold } from "../contexts/HouseholdContext";
 
 import Button from "react-bootstrap/Button";
@@ -61,57 +62,58 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   };
 
   function getModalSentence(): string | undefined {
-    if (unitAvailData && type === TableTypeEnum.availData) {
-      if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
-        return ProgramLabelEnum[ProgramKeyEnum.P345];
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
-        return ProgramLabelEnum[ProgramKeyEnum.P6];
-      } else {
-        // TODO: Remove when there is no more unknown program types in listings.
-        return "Unknown therefore both annual income limits are listed.";
-      }
+    if (
+      type === TableTypeEnum.availData &&
+      unitAvailData?.selectedProgram &&
+      unitAvailData?.selectedProgram !== ProgramKeyEnum.other
+    ) {
+      return ProgramLabelEnum[unitAvailData.selectedProgram];
     }
   }
+
+  const incomeTables = {
+    [ProgramKeyEnum.P345]: p345maxIncomeData,
+    [ProgramKeyEnum.P6]: p6maxIncomeData,
+    [ProgramKeyEnum.ARCH_OLD]: archIncomeData,
+    [ProgramKeyEnum.ARCH_NEW]: archIncomeData,
+  };
 
   /** When household size is not selected */
   function getModalData(
     unitAvailData: UnitAvailData
   ): [number[], number[]?] | undefined {
-    if (unitAvailData.percentAmi && type === TableTypeEnum.availData) {
-      if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
-        return [p345maxIncomeData[unitAvailData.percentAmi]];
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
-        return [p6maxIncomeData[unitAvailData.percentAmi]];
-      } else {
-        // TODO: Remove when there is no more unknown program types in listings.
-        return [
-          p345maxIncomeData[unitAvailData.percentAmi],
-          p6maxIncomeData[unitAvailData.percentAmi],
-        ];
-      }
-    }
+    const { percentAmi, selectedProgram } = unitAvailData;
+
+    if (
+      !percentAmi ||
+      !selectedProgram ||
+      selectedProgram === ProgramKeyEnum.other ||
+      type !== TableTypeEnum.availData
+    )
+      return;
+
+    const incomeTable = incomeTables[selectedProgram];
+    return [incomeTable?.[percentAmi] || []];
   }
 
   /** When household size is selected */
   function getMaxForHousehold(unitAvailData: UnitAvailData): string {
     const index = Number(selectedHousehold) - 1;
+    const { percentAmi, selectedProgram } = unitAvailData;
 
-    if (unitAvailData.percentAmi && type === TableTypeEnum.availData) {
-      if (unitAvailData.selectedProgram === ProgramKeyEnum.P345) {
-        return formatCurrency(
-          p345maxIncomeData[unitAvailData.percentAmi][index]
-        );
-      } else if (unitAvailData.selectedProgram === ProgramKeyEnum.P6) {
-        return formatCurrency(p6maxIncomeData[unitAvailData.percentAmi][index]);
-      } else {
-        return (
-          formatCurrency(p345maxIncomeData[unitAvailData.percentAmi][index]) +
-          " or " +
-          formatCurrency(p6maxIncomeData[unitAvailData.percentAmi][index])
-        );
-      }
+    if (
+      !percentAmi ||
+      !selectedProgram ||
+      selectedProgram === ProgramKeyEnum.other ||
+      type !== TableTypeEnum.availData
+    ) {
+      return "--";
     }
-    return "--";
+
+    const incomeTable = incomeTables[selectedProgram];
+    const value = incomeTable?.[percentAmi]?.[index];
+
+    return formatCurrency(value || "");
   }
 
   const order: BedroomsKeyEnum[] = [
