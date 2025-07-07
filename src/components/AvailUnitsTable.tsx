@@ -115,6 +115,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     };
 
     const pricingTable = pricingTables[selectedProgram];
+    // TODO: Should 0 be the fallback return?
     return pricingTable?.[unitSize]?.[percentAmi] || 0;
   }
 
