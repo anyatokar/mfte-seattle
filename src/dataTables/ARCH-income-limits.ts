@@ -1,5 +1,5 @@
 /** Index + 1 = household size */
-export const archNewIncomeData: Record<string, number[]> = {
+export const archIncomeData: Record<string, number[]> = {
   30: [32991, 37704, 42417, 47130, 50900, 54671, 58441, 62212],
   35: [38490, 43988, 49487, 54985, 59384, 63783, 68181, 72580],
   40: [43988, 50272, 56556, 62840, 67867, 72894, 77922, 82949],

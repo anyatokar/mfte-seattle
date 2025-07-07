@@ -14,8 +14,7 @@ import { AmiData, PercentAmi } from "../interfaces/IBuilding";
 import { AvailDataArray, UnitAvailData } from "../interfaces/IListing";
 import { p6maxIncomeData } from "../dataTables/P6-income-limits";
 import { p345maxIncomeData } from "../dataTables/P345-income-limits";
-import { archNewIncomeData } from "../dataTables/ARCH-new-income-limits";
-import { archOldIncomeData } from "../dataTables/ARCH-old-income-limits";
+import { archIncomeData } from "../dataTables/ARCH-income-limits";
 import { useHousehold } from "../contexts/HouseholdContext";
 
 import Button from "react-bootstrap/Button";
@@ -75,8 +74,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const incomeTables = {
     [ProgramKeyEnum.P345]: p345maxIncomeData,
     [ProgramKeyEnum.P6]: p6maxIncomeData,
-    [ProgramKeyEnum.ARCH_OLD]: archOldIncomeData,
-    [ProgramKeyEnum.ARCH_NEW]: archNewIncomeData,
+    [ProgramKeyEnum.ARCH_OLD]: archIncomeData,
+    [ProgramKeyEnum.ARCH_NEW]: archIncomeData,
   };
 
   /** When household size is not selected */
