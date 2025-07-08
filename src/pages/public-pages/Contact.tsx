@@ -1,7 +1,7 @@
 import { useState } from "react";
 import config from "../../config/config";
 import { sendMessageFirestore } from "../../utils/firestoreUtils";
-import RenderProfiler from "../../components/RenderProfiler";
+import RenderProfiler from "../../components/utility/RenderProfiler";
 import IPage from "../../interfaces/IPage";
 import { ContactFormFieldsType } from "../../types/contactFormFieldsType";
 

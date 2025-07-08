@@ -11,10 +11,10 @@ import config from "../../config/config";
 import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
 import { useSavedBuildings } from "../../hooks/useSavedBuildings";
 
-import AllBuildingsList from "../../components/BuildingsList";
-import SearchAndFilter from "../../components/SearchAndFilter";
-import ReactMap from "../../map/ReactMap";
-import RenderProfiler from "../../components/RenderProfiler";
+import AllBuildingsList from "../../components/all-buildings/BuildingsList";
+import SearchAndFilter from "../../components/search-and-filter/SearchAndFilter";
+import ReactMap from "../../components/map/ReactMap";
+import RenderProfiler from "../../components/utility/RenderProfiler";
 
 import { genericSearch } from "../../utils/genericSearch";
 import { buildingsFilter } from "../../utils/buildingsFilter";

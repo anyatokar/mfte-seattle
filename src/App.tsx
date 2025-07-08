@@ -1,12 +1,13 @@
 import { useRef, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PrivateRoute from "./auth_components/PrivateRoute";
+import PrivateRoute from "./components/auth/PrivateRoute";
 import config from "./config/config";
 import privateRoutes from "./config/privateRoutes";
 import publicRoutes from "./config/publicRoutes";
-import RenderProfiler from "./components/RenderProfiler";
-import { TopNav } from "./components/TopNav";
-import { Footer } from "./components/Footer";
+
+import RenderProfiler from "./components/utility/RenderProfiler";
+import { TopNav } from "./components/navbars/TopNav";
+import { Footer } from "./components/navbars/Footer";
 
 import AuthProvider from "./contexts/AuthContext";
 import { AllBuildingsProvider } from "./contexts/AllBuildingsContext";
