@@ -3,13 +3,13 @@ import { useAllBuildings } from "../hooks/useAllBuildings";
 import IBuilding from "../interfaces/IBuilding";
 import IProps from "../interfaces/IProps";
 
-type AllBuildingsContextType = [IBuilding[], boolean];
+type AllBuildingsContext = [IBuilding[], boolean];
 
-const AllBuildingsContext = createContext<AllBuildingsContextType | undefined>(
+const AllBuildingsContext = createContext<AllBuildingsContext | undefined>(
   undefined
 );
 
-export const useAllBuildingsContext = (): AllBuildingsContextType => {
+export const useAllBuildingsContext = (): AllBuildingsContext => {
   const context = useContext(AllBuildingsContext);
   if (!context) {
     throw new Error(

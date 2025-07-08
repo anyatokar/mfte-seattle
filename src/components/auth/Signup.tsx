@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { checkPassword } from "../../utils/generalUtils";
 import { accountTypeEnum } from "../../types/enumTypes";
-import { SignupAuthDataType } from "../../interfaces/IUser";
+import { SignupAuthData } from "../../interfaces/IUser";
 
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -36,7 +36,7 @@ export default function Signup({ onLoginClicked }: Props) {
       return setError(errorMessage);
     }
 
-    const signupAuthData: SignupAuthDataType = {
+    const signupAuthData: SignupAuthData = {
       email: formFields.email,
       password: formFields.password,
       name: formFields.name,
