@@ -2,20 +2,13 @@ import { Profiler, useState } from "react";
 import { isProfilerOn } from "../../config/constants";
 import { sendMessageFirestore } from "../../utils/firestoreUtils";
 import IPage from "../../interfaces/IPage";
+import { ContactFormFieldsType } from "../../types/contactFormFieldsType";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-
-export type contactUsFormFieldsType = {
-  authorName: string;
-  email: string;
-  description: string;
-  subject: string;
-  message: string;
-};
 
 const ContactPage: React.FC<IPage> = () => {
   function clearFields(): void {
@@ -45,7 +38,7 @@ const ContactPage: React.FC<IPage> = () => {
     const newFormFields = {
       ...formFields,
     };
-    newFormFields[event.target.name as keyof contactUsFormFieldsType] =
+    newFormFields[event.target.name as keyof ContactFormFieldsType] =
       event.target.value;
     setFormFields(newFormFields);
   };
@@ -90,35 +83,36 @@ const ContactPage: React.FC<IPage> = () => {
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
             <div className="display-6 mb-5">Contact us</div>
-            <p className="lead mb-4">
-              We are always looking to improve this website — your feedback is
-              welcome and appreciated.
-            </p>
-            <p>
-              Please note, this is an independent website intended solely to map
-              rent-reduced units. We are not affiliated with the Seattle Office
-              of Housing or any property owners, and we cannot provide
-              assistance with specific program or property questions.{" "}
-            </p>
-            <p>
-              As a suggestion, if you have questions or feedback about the MFTE
-              program, contact the{" "}
-              <a
-                id="seattle-housing-website"
-                href="https://seattle.gov/housing"
-                title="Seattle Office of Housing government website"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Seattle Office of Housing
-              </a>
-              . For inquiries about a specific building such as tenant
-              eligibility or the application process, contact the building’s
-              management directly.
-            </p>
-
             {isFormVisible ? (
               <>
+                <p className="lead mb-4">
+                  We are always looking to improve this website — your feedback
+                  is welcome and appreciated.
+                </p>
+                <p>
+                  Please note, this is an independent website intended solely to
+                  map rent-reduced units. We are not affiliated with the Seattle
+                  Office of Housing or any property owners, and we cannot
+                  provide assistance with specific program or property
+                  questions.{" "}
+                </p>
+                <p>
+                  As a suggestion, if you have questions or feedback about the
+                  MFTE program, contact the{" "}
+                  <a
+                    id="seattle-housing-website"
+                    href="https://seattle.gov/housing"
+                    title="Seattle Office of Housing government website"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Seattle Office of Housing
+                  </a>
+                  . For inquiries about a specific building such as tenant
+                  eligibility or the application process, contact the building’s
+                  management directly.
+                </p>
+
                 <p>All fields are required.</p>
 
                 <Form onSubmit={handleFormSubmit}>
@@ -210,7 +204,7 @@ const ContactPage: React.FC<IPage> = () => {
                 </Form>
               </>
             ) : (
-              <p>Message sent successfully.</p>
+              <p>Thank you, your message was sent successfully.</p>
             )}
           </Col>
         </Row>
