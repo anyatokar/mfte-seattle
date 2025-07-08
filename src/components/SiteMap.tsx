@@ -26,7 +26,7 @@ const SiteMap = () => {
       </Nav.Item>
       <Nav.Item className="px-3 px-md-4 pt-1">
         <Link className="footer-nav-link-custom" to="/cookies">
-          Cookies Policy
+          Cookie Policy
         </Link>
       </Nav.Item>
       <Nav.Item className="px-3 px-md-4 pt-1">
