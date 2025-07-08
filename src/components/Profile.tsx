@@ -18,7 +18,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import AreYouSureModal from "./AreYouSureModal";
+import AreYouSureModal from "./shared/AreYouSureModal";
 
 const Profile: React.FC = () => {
   // TODO: This is a lot of states - put the fields in an object?

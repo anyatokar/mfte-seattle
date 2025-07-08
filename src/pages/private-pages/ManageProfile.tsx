@@ -1,7 +1,7 @@
 import Profile from "../../components/Profile";
 import config from "../../config/config";
 import { useAuth } from "../../contexts/AuthContext";
-import RenderProfiler from "../../components/RenderProfiler";
+import RenderProfiler from "../../components/utility/RenderProfiler";
 import IPage from "../../interfaces/IPage";
 
 import Container from "react-bootstrap/Container";

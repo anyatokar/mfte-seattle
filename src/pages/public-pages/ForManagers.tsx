@@ -1,6 +1,6 @@
 import config from "../../config/config";
 import ListingAccordion from "../../components/ListingAccordion";
-import RenderProfiler from "../../components/RenderProfiler";
+import RenderProfiler from "../../components/utility/RenderProfiler";
 import IPage from "../../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";

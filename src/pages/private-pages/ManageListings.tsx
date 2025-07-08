@@ -12,10 +12,10 @@ import { useAllListings } from "../../hooks/useListings";
 import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
 import { useTempBuildingsContext } from "../../contexts/TempBuildingsContext";
 
-import AddBuildingModal from "../../components/AddBuildingModal";
-import AreYouSureModal from "../../components/AreYouSureModal";
-import ListingCard from "../../components/ListingCard";
-import RenderProfiler from "../../components/RenderProfiler";
+import AddBuildingModal from "../../components/manage-listings/AddBuildingModal";
+import AreYouSureModal from "../../components/shared/AreYouSureModal";
+import ListingCard from "../../components/manage-listings/ListingCard";
+import RenderProfiler from "../../components/utility/RenderProfiler";
 
 import IBuilding from "../../interfaces/IBuilding";
 import IListing from "../../interfaces/IListing";

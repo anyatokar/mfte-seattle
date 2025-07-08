@@ -1,7 +1,7 @@
 import { useContext, MutableRefObject } from "react";
 
-import { useAuth } from "../contexts/AuthContext";
-import { ModalContext, ModalState } from "../contexts/ModalContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { ModalContext, ModalState } from "../../contexts/ModalContext";
 import {
   AdvancedMarker,
   InfoWindow,
@@ -10,17 +10,17 @@ import {
 } from "@vis.gl/react-google-maps";
 import { Marker } from "@googlemaps/markerclusterer";
 
-import { saveBuilding, deleteBuilding } from "../utils/firestoreUtils";
-import { willShowAvailTable } from "../utils/generalUtils";
-import { TableParentEnum, TableTypeEnum } from "../types/enumTypes";
+import { saveBuilding, deleteBuilding } from "../../utils/firestoreUtils";
+import { willShowAvailTable } from "../../utils/generalUtils";
+import { TableParentEnum, TableTypeEnum } from "../../types/enumTypes";
 
 import { MarkersObj } from "./AllMarkers";
-import { AddressAndPhone } from "../components/shared/AddressAndPhone";
-import BuildingDataTable from "../components/shared/BuildingDataTable";
-import SaveButton from "../components/shared/SaveButton";
-import WebsiteButton from "../components/WebsiteButton";
-import IBuilding from "../interfaces/IBuilding";
-import ISavedBuilding from "../interfaces/ISavedBuilding";
+import { AddressAndPhone } from "../shared/AddressAndPhone";
+import BuildingDataTable from "../shared/BuildingDataTable";
+import SaveButton from "../shared/SaveButton";
+import WebsiteButton from "../../components/shared/WebsiteButton";
+import IBuilding from "../../interfaces/IBuilding";
+import ISavedBuilding from "../../interfaces/ISavedBuilding";
 import Stack from "react-bootstrap/Stack";
 
 interface IBuildingMarkerProps {

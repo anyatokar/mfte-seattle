@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Household } from "../components/searchAndFilter/HouseholdDropdown";
+import { Household } from "../components/search-and-filter/HouseholdDropdown";
 
 interface HouseholdContextType {
   selectedHousehold: Household | null;
