@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { expiringSoonDays, isProfilerOn } from "../../config/constants";
+import { expiringSoonDays } from "../../config/constants";
 import {
   accountTypeEnum,
   confirmModalTypeEnum,
   expiryBadgeEnum,
   listingStatusEnum,
 } from "../../types/enumTypes";
+import config from "../../config/config";
 import { useAllListings } from "../../hooks/useListings";
 import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
 import { useTempBuildingsContext } from "../../contexts/TempBuildingsContext";
@@ -124,7 +125,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
   const [showAddBuildingModal, setShowAddBuildingModal] = useState(false);
 
   return (
-    <RenderProfiler id="ManageListings" isProfilerOn={isProfilerOn}>
+    <RenderProfiler id="ManageListings" isProfilerOn={config.debug.isProfilerOn}>
       <Container fluid className="all-pages">
         <Row className="justify-content-center">
           <Col lg={8}>

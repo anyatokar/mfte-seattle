@@ -1,10 +1,10 @@
 import IRoute from "../interfaces/IRoute";
 
 import AboutPage from "../pages/public-pages/About";
-import ForManagers from "../pages/public-pages/ForManagers";
 import AllBuildingsPage from "../pages/public-pages/AllBuildings";
 import ContactPage from "../pages/public-pages/Contact";
 import CookiePolicyPage from "../pages/public-pages/termly-pages/CookiePolicy";
+import ForManagers from "../pages/public-pages/ForManagers";
 import NotFoundPage from "../pages/public-pages/fallback-pages/NotFound";
 import PrivacyPolicyPage from "../pages/public-pages/termly-pages/PrivacyPolicy";
 import ResourcesPage from "../pages/public-pages/Resources";

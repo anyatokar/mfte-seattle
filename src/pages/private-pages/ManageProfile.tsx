@@ -1,5 +1,5 @@
 import Profile from "../../components/Profile";
-import { isProfilerOn } from "../../config/constants";
+import config from "../../config/config";
 import { useAuth } from "../../contexts/AuthContext";
 import RenderProfiler from "../../components/RenderProfiler";
 import IPage from "../../interfaces/IPage";
@@ -16,7 +16,7 @@ const ManageProfilePage: React.FC<IPage> = () => {
   }
 
   return (
-    <RenderProfiler id="Manager Profile" isProfilerOn={isProfilerOn}>
+    <RenderProfiler id="Manager Profile" isProfilerOn={config.debug.isProfilerOn}>
       <Container fluid className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={8}>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { isProfilerOn } from "../../config/constants";
+import config from "../../config/config";
 import { sendMessageFirestore } from "../../utils/firestoreUtils";
 import RenderProfiler from "../../components/RenderProfiler";
 import IPage from "../../interfaces/IPage";
@@ -58,7 +58,7 @@ const ContactPage: React.FC<IPage> = () => {
   };
 
   return (
-    <RenderProfiler id="Contact" isProfilerOn={isProfilerOn}>
+    <RenderProfiler id="Contact" isProfilerOn={config.debug.isProfilerOn}>
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>

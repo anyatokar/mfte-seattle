@@ -6,7 +6,7 @@ import {
   useReducer,
   useLayoutEffect,
 } from "react";
-import { isProfilerOn } from "../../config/constants";
+import config from "../../config/config";
 
 import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
 import { useSavedBuildings } from "../../hooks/useSavedBuildings";
@@ -140,7 +140,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
   }, [topNavRef, searchAndFilterRef, mapContainerRef, sideNavRef]);
 
   return (
-    <RenderProfiler id="AllBuildings" isProfilerOn={isProfilerOn}>
+    <RenderProfiler id="AllBuildings" isProfilerOn={config.debug.isProfilerOn}>
       <div className="all-buildings-page pt-2" ref={searchAndFilterRef}>
         <SearchAndFilter
           setSearchQuery={setSearchQuery}

@@ -1,4 +1,4 @@
-import { isProfilerOn } from "../../config/constants";
+import config from "../../config/config";
 import RenderProfiler from "../../components/RenderProfiler";
 import IPage from "../../interfaces/IPage";
 
@@ -107,7 +107,7 @@ const resourceGroups: resourceGroupsType = [
 
 const ResourcesPage: React.FC<IPage> = () => {
   return (
-    <RenderProfiler id="Resources" isProfilerOn={isProfilerOn}>
+    <RenderProfiler id="Resources" isProfilerOn={config.debug.isProfilerOn}>
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>

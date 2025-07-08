@@ -1,4 +1,4 @@
-import { isProfilerOn } from "../../config/constants";
+import config from "../../config/config";
 import ListingAccordion from "../../components/ListingAccordion";
 import RenderProfiler from "../../components/RenderProfiler";
 import IPage from "../../interfaces/IPage";
@@ -9,7 +9,7 @@ import Row from "react-bootstrap/Row";
 
 const AddListingPage: React.FC<IPage> = () => {
   return (
-    <RenderProfiler id="AddListing" isProfilerOn={isProfilerOn}>
+    <RenderProfiler id="AddListing" isProfilerOn={config.debug.isProfilerOn}>
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>

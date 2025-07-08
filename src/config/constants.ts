@@ -7,9 +7,6 @@ import {
 export const listingMaxDays = 60;
 export const expiringSoonDays = 14;
 
-// For debugging
-export const isProfilerOn = false;
-
 export const colWidths = {
   unitSize: "120px",
   percentAmi: "100px",

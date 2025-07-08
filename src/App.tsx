@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./auth_components/PrivateRoute";
-import { isProfilerOn } from "./config/constants";
+import config from "./config/config";
 import privateRoutes from "./config/privateRoutes";
 import publicRoutes from "./config/publicRoutes";
 import RenderProfiler from "./components/RenderProfiler";
@@ -19,7 +19,7 @@ const Application: React.FC = () => {
   const topNavRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <RenderProfiler id="Application" isProfilerOn={isProfilerOn}>
+    <RenderProfiler id="Application" isProfilerOn={config.debug.isProfilerOn}>
       <div className="main">
         <BrowserRouter>
           <AuthProvider>
