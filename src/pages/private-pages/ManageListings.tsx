@@ -125,7 +125,10 @@ const ManageListingsPage: React.FC<IPage> = () => {
   const [showAddBuildingModal, setShowAddBuildingModal] = useState(false);
 
   return (
-    <RenderProfiler id="ManageListings" isProfilerOn={config.debug.isProfilerOn}>
+    <RenderProfiler
+      id="ManageListings"
+      isProfilerOn={config.debug.isProfilerOn}
+    >
       <Container fluid className="all-pages">
         <Row className="justify-content-center">
           <Col lg={8}>

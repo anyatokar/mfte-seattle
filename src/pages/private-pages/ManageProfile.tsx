@@ -16,7 +16,10 @@ const ManageProfilePage: React.FC<IPage> = () => {
   }
 
   return (
-    <RenderProfiler id="Manager Profile" isProfilerOn={config.debug.isProfilerOn}>
+    <RenderProfiler
+      id="Manager Profile"
+      isProfilerOn={config.debug.isProfilerOn}
+    >
       <Container fluid className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={8}>
