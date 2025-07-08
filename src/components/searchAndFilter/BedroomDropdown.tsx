@@ -52,13 +52,13 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
           Remove Filter
         </Button>
         {checkboxKeys.map((checkboxKey) => (
-            <FilterCheckbox
-              key={checkboxKey}
-              checkboxKey={checkboxKey}
-              onCheckboxChange={onBedroomsChange}
-              isChecked={activeFilters.bedrooms.has(checkboxKey)}
-              dropdownType="bedrooms"
-            />
+          <FilterCheckbox
+            key={checkboxKey}
+            checkboxKey={checkboxKey}
+            onCheckboxChange={onBedroomsChange}
+            isChecked={activeFilters.bedrooms.has(checkboxKey)}
+            dropdownType="bedrooms"
+          />
         ))}
       </Dropdown.Menu>
     </Dropdown>

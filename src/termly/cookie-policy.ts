@@ -1,4 +1,4 @@
-const CookiesPolicyHtml = `<style>
+const cookiePolicyHtml = `<style>
 [data-custom-class='body'], [data-custom-class='body'] * {
         background: transparent !important;
       }
@@ -55,4 +55,4 @@ word-break: break-word !important;
     This cookie policy was created using Termly's <a style="color: rgb(48, 48, 241) !important;" href="https://termly.io/products/cookie-consent-manager/">Cookie Consent Manager</a>.
     </div>`;
 
-export default CookiesPolicyHtml;
+export default cookiePolicyHtml;

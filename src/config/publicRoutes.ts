@@ -5,7 +5,7 @@ import AddListingPage from "../pages/AddListing";
 import AllBuildingsPage from "../pages/AllBuildings";
 import ContactPage from "../pages/Contact";
 import ResourcesPage from "../pages/Resources";
-import CookiesPolicyPage from "../pages/CookiesPolicy";
+import CookiePolicyPage from "../pages/CookiePolicy";
 import PrivacyPolicyPage from "../pages/PrivacyPolicy";
 import NotFoundPage from "../pages/NotFound";
 
@@ -54,8 +54,8 @@ const publicRoutes: IRoute[] = [
   },
   {
     path: "/cookies",
-    name: "Cookies Policy Page",
-    component: CookiesPolicyPage,
+    name: "Cookie Policy Page",
+    component: CookiePolicyPage,
     exact: true,
   },
   {
