@@ -1,4 +1,4 @@
-import { isProfilerOn } from "../../../config/constants";
+import config from "../../../config/config";
 import RenderProfiler from "../../../components/RenderProfiler";
 import IPage from "../../../interfaces/IPage";
 
@@ -8,7 +8,7 @@ import Row from "react-bootstrap/Row";
 
 const NotFoundPage: React.FC<IPage> = () => {
   return (
-    <RenderProfiler id="NotFound" isProfilerOn={isProfilerOn}>
+    <RenderProfiler id="NotFound" isProfilerOn={config.debug.isProfilerOn}>
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
