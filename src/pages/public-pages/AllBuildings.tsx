@@ -1,7 +1,6 @@
 import {
   useState,
   useMemo,
-  Profiler,
   useRef,
   useEffect,
   useReducer,
@@ -15,6 +14,7 @@ import { useSavedBuildings } from "../../hooks/useSavedBuildings";
 import AllBuildingsList from "../../components/BuildingsList";
 import SearchAndFilter from "../../components/SearchAndFilter";
 import ReactMap from "../../map/ReactMap";
+import RenderProfiler from "../../components/RenderProfiler";
 
 import { genericSearch } from "../../utils/genericSearch";
 import { buildingsFilter } from "../../utils/buildingsFilter";
@@ -140,28 +140,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
   }, [topNavRef, searchAndFilterRef, mapContainerRef, sideNavRef]);
 
   return (
-    <Profiler
-      id={"AllBuildings"}
-      onRender={(
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        startTime,
-        commitTime
-      ) => {
-        if (isProfilerOn) {
-          console.log({
-            id,
-            phase,
-            actualDuration,
-            baseDuration,
-            startTime,
-            commitTime,
-          });
-        }
-      }}
-    >
+    <RenderProfiler id="AllBuildings" isProfilerOn={isProfilerOn}>
       <div className="all-buildings-page pt-2" ref={searchAndFilterRef}>
         <SearchAndFilter
           setSearchQuery={setSearchQuery}
@@ -252,7 +231,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
           </Tab.Content>
         </Tab.Container>
       </Container>
-    </Profiler>
+    </RenderProfiler>
   );
 };
 

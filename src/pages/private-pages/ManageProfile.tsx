@@ -1,7 +1,7 @@
-import { Profiler } from "react";
 import Profile from "../../components/Profile";
 import { isProfilerOn } from "../../config/constants";
 import { useAuth } from "../../contexts/AuthContext";
+import RenderProfiler from "../../components/RenderProfiler";
 import IPage from "../../interfaces/IPage";
 
 import Container from "react-bootstrap/Container";
@@ -16,28 +16,7 @@ const ManageProfilePage: React.FC<IPage> = () => {
   }
 
   return (
-    <Profiler
-      id={"Manage Profile"}
-      onRender={(
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        startTime,
-        commitTime
-      ) => {
-        if (isProfilerOn) {
-          console.log({
-            id,
-            phase,
-            actualDuration,
-            baseDuration,
-            startTime,
-            commitTime,
-          });
-        }
-      }}
-    >
+    <RenderProfiler id="Manager Profile" isProfilerOn={isProfilerOn}>
       <Container fluid className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={8}>
@@ -46,7 +25,7 @@ const ManageProfilePage: React.FC<IPage> = () => {
           </Col>
         </Row>
       </Container>
-    </Profiler>
+    </RenderProfiler>
   );
 };
 

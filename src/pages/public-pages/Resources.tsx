@@ -1,5 +1,5 @@
-import { Profiler } from "react";
 import { isProfilerOn } from "../../config/constants";
+import RenderProfiler from "../../components/RenderProfiler";
 import IPage from "../../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
@@ -106,28 +106,8 @@ const resourceGroups: resourceGroupsType = [
 ];
 
 const ResourcesPage: React.FC<IPage> = () => {
-  const onRender = (
-    id: string,
-    phase: string,
-    actualDuration: number,
-    baseDuration: number,
-    startTime: number,
-    commitTime: number
-  ) => {
-    if (isProfilerOn) {
-      console.log({
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        startTime,
-        commitTime,
-      });
-    }
-  };
-
   return (
-    <Profiler id="Resources" onRender={onRender}>
+    <RenderProfiler id="Resources" isProfilerOn={isProfilerOn}>
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
@@ -161,7 +141,7 @@ const ResourcesPage: React.FC<IPage> = () => {
           </Col>
         </Row>
       </Container>
-    </Profiler>
+    </RenderProfiler>
   );
 };
 

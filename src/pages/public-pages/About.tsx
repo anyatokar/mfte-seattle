@@ -1,6 +1,6 @@
-import { Profiler } from "react";
 import { Link } from "react-router-dom";
 import { isProfilerOn } from "../../config/constants";
+import RenderProfiler from "../../components/RenderProfiler";
 import IPage from "../../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
@@ -9,28 +9,7 @@ import Row from "react-bootstrap/Row";
 
 const AboutPage: React.FC<IPage> = () => {
   return (
-    <Profiler
-      id={"About"}
-      onRender={(
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        startTime,
-        commitTime
-      ) => {
-        if (isProfilerOn) {
-          console.log({
-            id,
-            phase,
-            actualDuration,
-            baseDuration,
-            startTime,
-            commitTime,
-          });
-        }
-      }}
-    >
+    <RenderProfiler id="About" isProfilerOn={isProfilerOn}>
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={8}>
@@ -183,7 +162,7 @@ const AboutPage: React.FC<IPage> = () => {
           </Col>
         </Row>
       </Container>
-    </Profiler>
+    </RenderProfiler>
   );
 };
 

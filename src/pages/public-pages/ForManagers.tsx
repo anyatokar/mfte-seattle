@@ -1,6 +1,6 @@
-import { Profiler } from "react";
 import { isProfilerOn } from "../../config/constants";
 import ListingAccordion from "../../components/ListingAccordion";
+import RenderProfiler from "../../components/RenderProfiler";
 import IPage from "../../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
@@ -9,28 +9,7 @@ import Row from "react-bootstrap/Row";
 
 const AddListingPage: React.FC<IPage> = () => {
   return (
-    <Profiler
-      id={"AddListing"}
-      onRender={(
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        startTime,
-        commitTime
-      ) => {
-        if (isProfilerOn) {
-          console.log({
-            id,
-            phase,
-            actualDuration,
-            baseDuration,
-            startTime,
-            commitTime,
-          });
-        }
-      }}
-    >
+    <RenderProfiler id="AddListing" isProfilerOn={isProfilerOn}>
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
@@ -43,7 +22,7 @@ const AddListingPage: React.FC<IPage> = () => {
           </Col>
         </Row>
       </Container>
-    </Profiler>
+    </RenderProfiler>
   );
 };
 
