@@ -1,12 +1,11 @@
 import { unitSizeLabelEnum, BedroomsKeyEnum } from "../../types/enumTypes";
-import BedroomCheckbox from "../checkboxes/BedroomCheckbox";
+import FilterCheckbox from "../checkboxes/FilterCheckbox";
 import TooltipWrapper from "../TooltipWrapper";
 import { ActiveFilters } from "../../utils/buildingsFilter";
 
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
-import Form from "react-bootstrap/Form";
 
 type BedroomFilterProps = {
   onBedroomsChange: (checkbox?: BedroomsKeyEnum) => void;
@@ -53,12 +52,13 @@ const BedroomDropdown: React.FC<BedroomFilterProps> = ({
           Remove Filter
         </Button>
         {checkboxKeys.map((checkboxKey) => (
-          <Form key={checkboxKey}>
-            <BedroomCheckbox
+            <FilterCheckbox
+              key={checkboxKey}
               checkboxKey={checkboxKey}
               onCheckboxChange={onBedroomsChange}
+              isChecked={activeFilters.bedrooms.has(checkboxKey)}
+              dropdownType="bedrooms"
             />
-          </Form>
         ))}
       </Dropdown.Menu>
     </Dropdown>
