@@ -1,7 +1,7 @@
 import IRoute from "../interfaces/IRoute";
 
-import ManageProfilePage from "../pages/ManageProfile";
-import ManageListingsPage from "../pages/ManageListings";
+import ManageProfilePage from "../pages/private-pages/ManageProfile";
+import ManageListingsPage from "../pages/private-pages/ManageListings";
 
 const privateRoutes: IRoute[] = [
   {

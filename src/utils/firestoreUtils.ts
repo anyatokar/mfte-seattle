@@ -11,7 +11,7 @@ import {
   DocumentData,
 } from "firebase/firestore";
 
-import { contactUsFormFieldsType } from "../pages/Contact";
+import { contactUsFormFieldsType } from "../pages/public-pages/Contact";
 import {
   accountTypeEnum,
   listingStatusEnum,

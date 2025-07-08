@@ -7,22 +7,22 @@ import {
   useReducer,
   useLayoutEffect,
 } from "react";
-import { isProfilerOn } from "../config/constants";
+import { isProfilerOn } from "../../config/constants";
 
-import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { useSavedBuildings } from "../hooks/useSavedBuildings";
+import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
+import { useSavedBuildings } from "../../hooks/useSavedBuildings";
 
-import AllBuildingsList from "../components/BuildingsList";
-import SearchAndFilter from "../components/SearchAndFilter";
-import ReactMap from "../map/ReactMap";
+import AllBuildingsList from "../../components/BuildingsList";
+import SearchAndFilter from "../../components/SearchAndFilter";
+import ReactMap from "../../map/ReactMap";
 
-import { genericSearch } from "../utils/genericSearch";
-import { buildingsFilter } from "../utils/buildingsFilter";
-import { filterReducer } from "../reducers/filterReducer";
+import { genericSearch } from "../../utils/genericSearch";
+import { buildingsFilter } from "../../utils/buildingsFilter";
+import { filterReducer } from "../../reducers/filterReducer";
 
-import { PercentAmi, SearchFields } from "../interfaces/IBuilding";
-import IPage from "../interfaces/IPage";
-import { BedroomsKeyEnum } from "../types/enumTypes";
+import { PercentAmi, SearchFields } from "../../interfaces/IBuilding";
+import IPage from "../../interfaces/IPage";
+import { BedroomsKeyEnum } from "../../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";

@@ -1,7 +1,7 @@
 import { Profiler, useState } from "react";
-import { isProfilerOn } from "../config/constants";
-import { sendMessageFirestore } from "../utils/firestoreUtils";
-import IPage from "../interfaces/IPage";
+import { isProfilerOn } from "../../config/constants";
+import { sendMessageFirestore } from "../../utils/firestoreUtils";
+import IPage from "../../interfaces/IPage";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";

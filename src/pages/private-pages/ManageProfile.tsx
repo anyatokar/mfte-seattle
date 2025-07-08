@@ -1,15 +1,23 @@
 import { Profiler } from "react";
-import { isProfilerOn } from "../config/constants";
-import IPage from "../interfaces/IPage";
+import Profile from "../../components/Profile";
+import { isProfilerOn } from "../../config/constants";
+import { useAuth } from "../../contexts/AuthContext";
+import IPage from "../../interfaces/IPage";
 
-import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-const NotFoundPage: React.FC<IPage> = () => {
+const ManageProfilePage: React.FC<IPage> = () => {
+  const { currentUser } = useAuth();
+
+  if (!currentUser) {
+    return null;
+  }
+
   return (
     <Profiler
-      id={"Not Found"}
+      id={"Manage Profile"}
       onRender={(
         id,
         phase,
@@ -30,11 +38,11 @@ const NotFoundPage: React.FC<IPage> = () => {
         }
       }}
     >
-      <Container className="all-pages diy-jumbotron">
+      <Container fluid className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
-          <Col lg={10} xl={8}>
-            <div className="display-6">404: Not Found</div>
-            <p className="lead">Try navigating to a different page.</p>
+          <Col lg={8}>
+            <div className="display-6 mb-5">Profile</div>
+            <Profile />
           </Col>
         </Row>
       </Container>
@@ -42,4 +50,4 @@ const NotFoundPage: React.FC<IPage> = () => {
   );
 };
 
-export default NotFoundPage;
+export default ManageProfilePage;
