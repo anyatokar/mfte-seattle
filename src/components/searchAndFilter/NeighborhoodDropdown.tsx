@@ -70,6 +70,7 @@ const NeighborhoodDropdown: React.FC<NeighborhoodFilterProps> = ({
               checkboxKey={neighborhood}
               onCheckboxChange={onNeighborhoodsChange}
               isChecked={activeFilters.neighborhoods.has(neighborhood)}
+              dropdownType="neighborhood"
             />
           ))}
         </Form>
