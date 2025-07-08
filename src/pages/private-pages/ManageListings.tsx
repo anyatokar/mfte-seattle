@@ -1,4 +1,4 @@
-import { Profiler, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { expiringSoonDays, isProfilerOn } from "../../config/constants";
 import {
@@ -11,9 +11,10 @@ import { useAllListings } from "../../hooks/useListings";
 import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
 import { useTempBuildingsContext } from "../../contexts/TempBuildingsContext";
 
+import AddBuildingModal from "../../components/AddBuildingModal";
 import AreYouSureModal from "../../components/AreYouSureModal";
 import ListingCard from "../../components/ListingCard";
-import AddBuildingModal from "../../components/AddBuildingModal";
+import RenderProfiler from "../../components/RenderProfiler";
 
 import IBuilding from "../../interfaces/IBuilding";
 import IListing from "../../interfaces/IListing";
@@ -123,28 +124,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
   const [showAddBuildingModal, setShowAddBuildingModal] = useState(false);
 
   return (
-    <Profiler
-      id={"ManageListings"}
-      onRender={(
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        startTime,
-        commitTime
-      ) => {
-        if (isProfilerOn) {
-          console.log({
-            id,
-            phase,
-            actualDuration,
-            baseDuration,
-            startTime,
-            commitTime,
-          });
-        }
-      }}
-    >
+    <RenderProfiler id="ManageListings" isProfilerOn={isProfilerOn}>
       <Container fluid className="all-pages">
         <Row className="justify-content-center">
           <Col lg={8}>
@@ -315,7 +295,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
         onClose={handleAddBuildingModalClose}
         shouldDim={showAreYouSureModal}
       />
-    </Profiler>
+    </RenderProfiler>
   );
 };
 

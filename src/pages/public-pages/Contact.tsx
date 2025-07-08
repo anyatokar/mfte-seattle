@@ -1,6 +1,7 @@
-import { Profiler, useState } from "react";
+import { useState } from "react";
 import { isProfilerOn } from "../../config/constants";
 import { sendMessageFirestore } from "../../utils/firestoreUtils";
+import RenderProfiler from "../../components/RenderProfiler";
 import IPage from "../../interfaces/IPage";
 import { ContactFormFieldsType } from "../../types/contactFormFieldsType";
 
@@ -57,28 +58,7 @@ const ContactPage: React.FC<IPage> = () => {
   };
 
   return (
-    <Profiler
-      id={"Contact"}
-      onRender={(
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        startTime,
-        commitTime
-      ) => {
-        if (isProfilerOn) {
-          console.log({
-            id,
-            phase,
-            actualDuration,
-            baseDuration,
-            startTime,
-            commitTime,
-          });
-        }
-      }}
-    >
+    <RenderProfiler id="Contact" isProfilerOn={isProfilerOn}>
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
@@ -209,7 +189,7 @@ const ContactPage: React.FC<IPage> = () => {
           </Col>
         </Row>
       </Container>
-    </Profiler>
+    </RenderProfiler>
   );
 };
 

@@ -1,9 +1,10 @@
-import { Profiler, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./auth_components/PrivateRoute";
 import { isProfilerOn } from "./config/constants";
 import privateRoutes from "./config/privateRoutes";
 import publicRoutes from "./config/publicRoutes";
+import RenderProfiler from "./components/RenderProfiler";
 import { TopNav } from "./components/TopNav";
 import { Footer } from "./components/Footer";
 
@@ -18,28 +19,7 @@ const Application: React.FC = () => {
   const topNavRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <Profiler
-      id={"Application"}
-      onRender={(
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        startTime,
-        commitTime
-      ) => {
-        if (isProfilerOn) {
-          console.log({
-            id,
-            phase,
-            actualDuration,
-            baseDuration,
-            startTime,
-            commitTime,
-          });
-        }
-      }}
-    >
+    <RenderProfiler id="Application" isProfilerOn={isProfilerOn}>
       <div className="main">
         <BrowserRouter>
           <AuthProvider>
@@ -80,7 +60,7 @@ const Application: React.FC = () => {
           <Footer />
         </BrowserRouter>
       </div>
-    </Profiler>
+    </RenderProfiler>
   );
 };
 
