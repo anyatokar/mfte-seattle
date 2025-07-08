@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import ManageListingsPage from "./ManageListings";
-import { useAuth } from "../contexts/AuthContext";
-import { useAllListings } from "../hooks/useListings";
-import { useAllBuildings } from "../hooks/useAllBuildings";
-import { accountTypeEnum, listingStatusEnum } from "../types/enumTypes";
+import { useAuth } from "../../contexts/AuthContext";
+import { useAllListings } from "../../hooks/useListings";
+import { useAllBuildings } from "../../hooks/useAllBuildings";
+import { accountTypeEnum, listingStatusEnum } from "../../types/enumTypes";
 import { BrowserRouter } from "react-router-dom";
 
 jest.mock("../contexts/AuthContext", () => ({

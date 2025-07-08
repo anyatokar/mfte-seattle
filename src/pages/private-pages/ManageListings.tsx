@@ -1,24 +1,24 @@
 import { Profiler, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { expiringSoonDays, isProfilerOn } from "../config/constants";
+import { useAuth } from "../../contexts/AuthContext";
+import { expiringSoonDays, isProfilerOn } from "../../config/constants";
 import {
   accountTypeEnum,
   confirmModalTypeEnum,
   expiryBadgeEnum,
   listingStatusEnum,
-} from "../types/enumTypes";
-import { useAllListings } from "../hooks/useListings";
-import { useAllBuildingsContext } from "../contexts/AllBuildingsContext";
-import { useTempBuildingsContext } from "../contexts/TempBuildingsContext";
+} from "../../types/enumTypes";
+import { useAllListings } from "../../hooks/useListings";
+import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
+import { useTempBuildingsContext } from "../../contexts/TempBuildingsContext";
 
-import AreYouSureModal from "../components/AreYouSureModal";
-import ListingCard from "../components/ListingCard";
-import AddBuildingModal from "../components/AddBuildingModal";
+import AreYouSureModal from "../../components/AreYouSureModal";
+import ListingCard from "../../components/ListingCard";
+import AddBuildingModal from "../../components/AddBuildingModal";
 
-import IBuilding from "../interfaces/IBuilding";
-import IListing from "../interfaces/IListing";
-import IPage from "../interfaces/IPage";
-import { ITempBuilding } from "../interfaces/ITempBuilding";
+import IBuilding from "../../interfaces/IBuilding";
+import IListing from "../../interfaces/IListing";
+import IPage from "../../interfaces/IPage";
+import { ITempBuilding } from "../../interfaces/ITempBuilding";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";

@@ -1,17 +1,15 @@
 import { Profiler } from "react";
-import { isProfilerOn } from "../config/constants";
-import ListingAccordion from "../components/ListingAccordion";
-
-import IPage from "../interfaces/IPage";
+import { isProfilerOn } from "../../../config/constants";
+import IPage from "../../../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-const AddListingPage: React.FC<IPage> = () => {
+const NotFoundPage: React.FC<IPage> = () => {
   return (
     <Profiler
-      id={"AddListing"}
+      id={"Not Found"}
       onRender={(
         id,
         phase,
@@ -35,12 +33,8 @@ const AddListingPage: React.FC<IPage> = () => {
       <Container className="all-pages diy-jumbotron">
         <Row className="justify-content-center">
           <Col lg={10} xl={8}>
-            <div className="display-6 mb-5">For Property Owners & Managers</div>
-            <p className="lead">
-              Add listings for currently available rent-reduced apartments in
-              your building to reach this website's 3.5K monthly active users.
-            </p>
-            <ListingAccordion />
+            <div className="display-6">404: Not Found</div>
+            <p className="lead">Try navigating to a different page.</p>
           </Col>
         </Row>
       </Container>
@@ -48,4 +42,4 @@ const AddListingPage: React.FC<IPage> = () => {
   );
 };
 
-export default AddListingPage;
+export default NotFoundPage;

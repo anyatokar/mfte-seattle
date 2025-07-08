@@ -11,12 +11,6 @@ import {
   DocumentData,
 } from "firebase/firestore";
 
-import { contactUsFormFieldsType } from "../pages/Contact";
-import {
-  accountTypeEnum,
-  listingStatusEnum,
-  ProgramKeyEnum,
-} from "../types/enumTypes";
 import { getMaxExpiryDate } from "./generalUtils";
 import {
   isSameAddress,
@@ -24,6 +18,12 @@ import {
   isSameAmiData,
 } from "./firestoreUtilHelpers";
 
+import { ContactFormFieldsType } from "../types/contactFormFieldsType";
+import {
+  accountTypeEnum,
+  listingStatusEnum,
+  ProgramKeyEnum,
+} from "../types/enumTypes";
 import IListing, { AvailDataArray } from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
@@ -364,9 +364,7 @@ export async function updateProfileFirestore(updateData: UpdateData) {
   }
 }
 
-export async function sendMessageFirestore(
-  formFields: contactUsFormFieldsType
-) {
+export async function sendMessageFirestore(formFields: ContactFormFieldsType) {
   await addDoc(collection(db, "contactus"), {
     authorName: formFields.authorName,
     email: formFields.email,

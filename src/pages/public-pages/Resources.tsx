@@ -1,6 +1,6 @@
 import { Profiler } from "react";
-import { isProfilerOn } from "../config/constants";
-import IPage from "../interfaces/IPage";
+import { isProfilerOn } from "../../config/constants";
+import IPage from "../../interfaces/IPage";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";

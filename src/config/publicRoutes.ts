@@ -1,13 +1,13 @@
 import IRoute from "../interfaces/IRoute";
 
-import AboutPage from "../pages/About";
-import AddListingPage from "../pages/AddListing";
-import AllBuildingsPage from "../pages/AllBuildings";
-import ContactPage from "../pages/Contact";
-import ResourcesPage from "../pages/Resources";
-import CookiePolicyPage from "../pages/CookiePolicy";
-import PrivacyPolicyPage from "../pages/PrivacyPolicy";
-import NotFoundPage from "../pages/NotFound";
+import AboutPage from "../pages/public-pages/About";
+import ForManagers from "../pages/public-pages/ForManagers";
+import AllBuildingsPage from "../pages/public-pages/AllBuildings";
+import ContactPage from "../pages/public-pages/Contact";
+import CookiePolicyPage from "../pages/public-pages/termly-pages/CookiePolicy";
+import NotFoundPage from "../pages/public-pages/fallback-pages/NotFound";
+import PrivacyPolicyPage from "../pages/public-pages/termly-pages/PrivacyPolicy";
+import ResourcesPage from "../pages/public-pages/Resources";
 
 const publicRoutes: IRoute[] = [
   {
@@ -36,8 +36,8 @@ const publicRoutes: IRoute[] = [
   },
   {
     path: "/for-managers",
-    name: "Add Listing Page",
-    component: AddListingPage,
+    name: "For Managers Page",
+    component: ForManagers,
     exact: true,
   },
   {
