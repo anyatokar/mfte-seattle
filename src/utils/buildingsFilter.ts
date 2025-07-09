@@ -7,6 +7,7 @@ export type ActiveFilters = {
   ami: Set<PercentAmi>;
   isAvailOnly: boolean;
   isSavedOnly: boolean;
+  isAgeRestrictedOnly: boolean;
 };
 
 function filterBedroomsAndAmi(
@@ -78,7 +79,7 @@ export function buildingsFilter(
   building: IBuilding,
   activeFilters: ActiveFilters
 ): boolean {
-  const { isAvailOnly, neighborhoods } = activeFilters;
+  const { isAvailOnly, neighborhoods, isAgeRestrictedOnly } = activeFilters;
 
   const listingsResult =
     !isAvailOnly ||
@@ -86,9 +87,17 @@ export function buildingsFilter(
       building.listing?.listingStatus === listingStatusEnum.ACTIVE);
   const bedroomsAndAmiResult = filterBedroomsAndAmi(building, activeFilters);
   const neighborhoodsResult =
-    // If no boxes are checked, evaluate to be the same as the box is checked - omit that dropdown.
+    // If no boxes are checked, evaluate as if the box is checked - aka omit that dropdown.
     neighborhoods.size === 0 ||
     neighborhoods.has(building.address.neighborhood);
+  const isAgeRestrictedResult =
+    !isAgeRestrictedOnly ||
+    (isAgeRestrictedOnly && building.isAgeRestricted === true);
 
-  return listingsResult && bedroomsAndAmiResult && neighborhoodsResult;
+  return (
+    listingsResult &&
+    bedroomsAndAmiResult &&
+    neighborhoodsResult &&
+    isAgeRestrictedResult
+  );
 }

@@ -56,6 +56,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
     ami: new Set<PercentAmi>(),
     isAvailOnly: false,
     isSavedOnly: false,
+    isAgeRestrictedOnly: false,
   });
 
   const resultBuildingsUnsorted = useMemo(() => {

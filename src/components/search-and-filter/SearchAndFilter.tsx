@@ -46,6 +46,12 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     dispatch({ type: "toggleSwitch", category: "isSavedOnly" });
   };
 
+  // Handler for Age Restricted Switch
+  const handleAgeRestrictedOnlyToggle = () => {
+    if (!currentUser) return setModalState(ModalState.LOGIN);
+    dispatch({ type: "toggleSwitch", category: "isAgeRestrictedOnly" });
+  };
+
   // Handler for Bedrooms
   const handleBedroomsChange = (checkbox?: BedroomsKeyEnum): void => {
     if (!checkbox) {
@@ -120,6 +126,11 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               type="savedOnly"
               isChecked={activeFilters.isSavedOnly}
             />
+            <FilterSwitch
+              onCheckboxChange={handleAgeRestrictedOnlyToggle}
+              type="ageRestrictedOnly"
+              isChecked={activeFilters.isAgeRestrictedOnly}
+            />
           </Stack>
         </Col>
       </Row>
@@ -162,6 +173,11 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
               isChecked={activeFilters.isSavedOnly}
             />
           </Stack>
+          <FilterSwitch
+            onCheckboxChange={handleAgeRestrictedOnlyToggle}
+            type="ageRestrictedOnly"
+            isChecked={activeFilters.isAgeRestrictedOnly}
+          />
         </Col>
       </Row>
     </Container>
