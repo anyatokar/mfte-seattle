@@ -3,13 +3,13 @@ import { useTempBuildings } from "../hooks/useTempBuildings";
 import IProps from "../interfaces/IProps";
 import { ITempBuilding } from "../interfaces/ITempBuilding";
 
-type TempBuildingsContextType = [ITempBuilding[], boolean];
+type TempBuildingsContext = [ITempBuilding[], boolean];
 
 const TempBuildingsContext = createContext<
-  TempBuildingsContextType | undefined
+  TempBuildingsContext | undefined
 >(undefined);
 
-export const useTempBuildingsContext = (): TempBuildingsContextType => {
+export const useTempBuildingsContext = (): TempBuildingsContext => {
   const context = useContext(TempBuildingsContext);
   if (!context) {
     throw new Error(

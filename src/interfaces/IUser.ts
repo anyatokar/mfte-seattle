@@ -17,4 +17,4 @@ export interface IUserSignupAuthData extends IBaseSignupAuthData {
   accountType: accountTypeEnum.RENTER;
 }
 
-export type SignupAuthDataType = IManagerSignupAuthData | IUserSignupAuthData;
+export type SignupAuthData = IManagerSignupAuthData | IUserSignupAuthData;

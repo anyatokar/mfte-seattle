@@ -1,4 +1,4 @@
-export type ContactFormFieldsType = {
+export type ContactFormFields = {
   authorName: string;
   email: string;
   description: string;

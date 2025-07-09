@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, createContext } from "react";
 import { accountTypeEnum } from "../types/enumTypes";
 
 import IProps from "../interfaces/IProps";
-import { SignupAuthDataType } from "../interfaces/IUser";
+import { SignupAuthData } from "../interfaces/IUser";
 
 import {
   getAuth,
@@ -25,7 +25,7 @@ interface AuthContextProps {
   currentUser: User | null;
   accountType: accountTypeEnum | null;
   login: (email: string, password: string) => Promise<void>;
-  signupAuth: (signupAuthData: SignupAuthDataType) => Promise<void>;
+  signupAuth: (signupAuthData: SignupAuthData) => Promise<void>;
   logout: () => Promise<void>;
   resetPasswordAuth: (email: string) => Promise<void>;
   updateDisplayNameAuth: (displayName: string) => Promise<void> | undefined;
@@ -49,7 +49,7 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [accountType, setAccountType] = useState<accountTypeEnum | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  async function signupAuth(signupAuthData: SignupAuthDataType) {
+  async function signupAuth(signupAuthData: SignupAuthData) {
     const { email, password, name } = signupAuthData;
 
     const cred = await createUserWithEmailAndPassword(

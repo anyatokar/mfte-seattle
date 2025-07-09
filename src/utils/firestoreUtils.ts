@@ -18,7 +18,7 @@ import {
   isSameAmiData,
 } from "./firestoreUtilHelpers";
 
-import { ContactFormFieldsType } from "../types/contactFormFieldsType";
+import { ContactFormFields } from "../types/contactFormFieldsType";
 import {
   accountTypeEnum,
   listingStatusEnum,
@@ -28,7 +28,7 @@ import IListing, { AvailDataArray } from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
   IUserSignupAuthData,
-  SignupAuthDataType,
+  SignupAuthData,
 } from "../interfaces/IUser";
 import {
   CurrentBuildingData,
@@ -364,7 +364,7 @@ export async function updateProfileFirestore(updateData: UpdateData) {
   }
 }
 
-export async function sendMessageFirestore(formFields: ContactFormFieldsType) {
+export async function sendMessageFirestore(formFields: ContactFormFields) {
   await addDoc(collection(db, "contactus"), {
     authorName: formFields.authorName,
     email: formFields.email,
@@ -409,7 +409,7 @@ export async function deleteUserFirestore(
   }
 }
 
-export async function signupFirestore(signupAuthData: SignupAuthDataType) {
+export async function signupFirestore(signupAuthData: SignupAuthData) {
   const { uid, accountType } = signupAuthData;
 
   if (!uid) return;

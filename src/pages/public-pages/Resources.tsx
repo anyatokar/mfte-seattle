@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 
-type resourceGroupsType = {
+type ResourceGroups = {
   title: string;
   overallDescription: string;
   items: {
@@ -17,7 +17,7 @@ type resourceGroupsType = {
     description: string | null;
   }[];
 }[];
-const resourceGroups: resourceGroupsType = [
+const resourceGroups: ResourceGroups = [
   {
     title: "Seattle Office Of Housing",
     overallDescription:
