@@ -14,7 +14,7 @@ export default defineConfig({
       },
       manifest: {
         short_name: "MFTE Seattle",
-        name: "MFTE Seattle - Find Rent-Reduced Apartments",
+        name: "Find Rent-Reduced Apartments",
         start_url: "/",
         display: "standalone",
         background_color: "#e2fbfd",
