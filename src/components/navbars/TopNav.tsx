@@ -113,7 +113,7 @@ export const TopNav = () => {
                 src={mftelogo}
                 height="65"
                 width="75"
-                alt="MFTE Seattle website logo: a teal map pin with a house on it"
+                alt="MFTE Seattle logo: a teal map pin with a house"
               />
             </Navbar.Brand>
           </LinkContainer>

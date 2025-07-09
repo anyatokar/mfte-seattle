@@ -2,8 +2,8 @@
 
 ## High Level Architecture
 
-![Alt text](/public/mfte-high-level.png)
+![Alt text](/docs/mfte-high-level.png)
 
 ## Data Model
 
-![Alt text](/public/data-model.png)
+![Alt text](/docs/data-model.png)
