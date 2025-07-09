@@ -48,7 +48,6 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
 
   // Handler for Age Restricted Switch
   const handleAgeRestrictedOnlyToggle = () => {
-    if (!currentUser) return setModalState(ModalState.LOGIN);
     dispatch({ type: "toggleSwitch", category: "isAgeRestrictedOnly" });
   };
 
