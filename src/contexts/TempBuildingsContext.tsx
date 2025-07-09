@@ -5,9 +5,9 @@ import { ITempBuilding } from "../interfaces/ITempBuilding";
 
 type TempBuildingsContext = [ITempBuilding[], boolean];
 
-const TempBuildingsContext = createContext<
-  TempBuildingsContext | undefined
->(undefined);
+const TempBuildingsContext = createContext<TempBuildingsContext | undefined>(
+  undefined
+);
 
 export const useTempBuildingsContext = (): TempBuildingsContext => {
   const context = useContext(TempBuildingsContext);
