@@ -7,7 +7,10 @@ export type FilterAction =
       category: "bedrooms" | "neighborhoods" | "ami";
       checkbox?: BedroomsKeyEnum | string;
     }
-  | { type: "toggleSwitch"; category: "isAvailOnly" | "isSavedOnly" };
+  | {
+      type: "toggleSwitch";
+      category: "isAvailOnly" | "isSavedOnly" | "isAgeRestrictedOnly";
+    };
 
 export const filterReducer = (
   state: ActiveFilters,

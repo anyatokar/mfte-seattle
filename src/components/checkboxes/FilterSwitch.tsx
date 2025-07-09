@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 
 type FilterSwitchProps = {
   onCheckboxChange: () => void;
-  type: "knownOnly" | "savedOnly";
+  type: "knownOnly" | "savedOnly" | "ageRestrictedOnly";
   isChecked: boolean;
 };
 
@@ -14,6 +14,7 @@ const FilterSwitch: React.FC<FilterSwitchProps> = ({
   const labels = {
     knownOnly: "Known Availability",
     savedOnly: "Saved",
+    ageRestrictedOnly: "Age Restricted",
   };
 
   return (
