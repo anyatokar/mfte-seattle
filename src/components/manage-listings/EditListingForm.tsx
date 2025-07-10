@@ -15,7 +15,6 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
@@ -116,7 +115,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   );
 
   return (
-    <Container>
+    <>
       <Row className="mb-3">
         <Col md={8}>
           <Card>
@@ -274,7 +273,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           Submit
         </Button>
       </Form.Group>
-    </Container>
+    </>
   );
 };
 
