@@ -219,8 +219,7 @@ const ManageListingsPage: React.FC<IPage> = () => {
                       repsListings
                         .filter(
                           (listing) =>
-                            listing.listingStatus !==
-                            listingStatusEnum.ARCHIVED
+                            listing.listingStatus !== listingStatusEnum.ARCHIVED
                         )
                         .sort(
                           (a, b) =>

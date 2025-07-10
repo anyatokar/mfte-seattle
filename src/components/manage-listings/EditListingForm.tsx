@@ -1,27 +1,15 @@
 import { useState } from "react";
-import { PartialWithRequired } from "../../types/partialWithRequiredType";
-import { BedroomsKeyEnum, OptionalUrlsKeyEnum } from "../../types/enumTypes";
 import { getMaxExpiryDate } from "../../utils/generalUtils";
 import { useAuth } from "../../contexts/AuthContext";
-import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
-import { useTempBuildingsContext } from "../../contexts/TempBuildingsContext";
+import AvailUnitsTable from "../shared/AvailUnitsTable";
 import ListingCardBuildingData from "./ListingCardBuildingData";
 import NotListedForm from "./NotListedForm";
-import IBuilding, {
-  Address,
-  AmiData,
-  Contact,
-  PercentAmi,
-} from "../../interfaces/IBuilding";
-import IListing, {
-  AvailDataArray,
-  OptionalUrls,
-  UnitAvailData,
-} from "../../interfaces/IListing";
-import {
-  CurrentBuildingData,
-  ITempBuilding,
-} from "../../interfaces/ITempBuilding";
+
+import { BedroomsKeyEnum } from "../../types/enumTypes";
+import { EditListingFormFields } from "../../types/editListingFormFieldsType";
+import { PercentAmi } from "../../interfaces/IBuilding";
+import { AvailDataArray } from "../../interfaces/IListing";
+import { CurrentBuildingData } from "../../interfaces/ITempBuilding";
 
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -30,180 +18,30 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import AvailUnitsTable from "../shared/AvailUnitsTable";
-import { EditListingFormFields } from "../../types/editListingFormFieldsType";
 
 type EditListingFormProps = {
-  listing: IListing | null;
-  building: IBuilding | ITempBuilding | null;
-  // onClose: () => void;
+  currentBuildingData: CurrentBuildingData | null;
   alert: string;
+  formFields: EditListingFormFields;
+  setFormFields: React.Dispatch<React.SetStateAction<EditListingFormFields>>;
+  setCurrentBuildingData: React.Dispatch<
+    React.SetStateAction<CurrentBuildingData | null>
+  >;
+  onInputChange: (e: any, rowId?: string, buildingID?: string) => void;
 };
-
-const blankOptionalUrls: OptionalUrls = {
-  [OptionalUrlsKeyEnum.listingPageUrl]: "",
-  [OptionalUrlsKeyEnum.walkTourUrl]: "",
-  [OptionalUrlsKeyEnum.floorPlanUrl]: "",
-  [OptionalUrlsKeyEnum.otherUrl1]: "",
-  [OptionalUrlsKeyEnum.otherUrl2]: "",
-};
-
-export const createBlankAvailRow = (): UnitAvailData => ({
-  unitSize: undefined,
-  dateAvailString: "",
-  percentAmi: undefined,
-  maxRent: "",
-  rowId: `${Date.now()}`,
-  aptNum: "",
-  selectedProgram: undefined,
-  optionalUrls: blankOptionalUrls,
-});
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
-  listing: originalListing,
-  building: buildingProp,
+  currentBuildingData,
   alert,
+  formFields,
+  setFormFields,
+  onInputChange,
+  setCurrentBuildingData,
 }) => {
-  const [allBuildings] = useAllBuildingsContext();
-  const [tempBuildings] = useTempBuildingsContext();
-
-  const originalFormFields: EditListingFormFields = {
-    buildingName: originalListing?.buildingName || "",
-    buildingID: originalListing?.buildingID || "",
-    availDataArray:
-      originalListing?.availDataArray &&
-      originalListing.availDataArray.length > 0
-        ? originalListing.availDataArray
-        : [createBlankAvailRow()],
-    url: originalListing?.url || "",
-    expiryDate: originalListing?.expiryDate || "",
-    description: originalListing?.description || "",
-    feedback: originalListing?.feedback || "",
-    noneAvailable: originalListing?.noneAvailable || false,
-  };
-
-  const [formFields, setFormFields] = useState(originalFormFields);
-
+  if (!currentBuildingData) return;
   const { currentUser } = useAuth();
 
-  const [currentBuildingData, setCurrentBuildingData] =
-    useState<CurrentBuildingData | null>(buildingProp);
-
   if (!currentUser) return null;
-
-  const handleInputChange = (e: any, rowId?: string, buildingID?: string) => {
-    const { name, value } = e.target;
-
-    setFormFields((prev) => {
-      if (rowId !== undefined) {
-        const newAvailData = [...prev.availDataArray];
-        const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
-
-        if (Object.values(OptionalUrlsKeyEnum).includes(name)) {
-          newAvailData[rowIndex] = {
-            ...newAvailData[rowIndex],
-            optionalUrls: {
-              ...newAvailData[rowIndex].optionalUrls,
-              [name]: value,
-            },
-          };
-        } else {
-          newAvailData[rowIndex] = { ...newAvailData[rowIndex], [name]: value };
-
-          if (name === "unitSize") {
-            newAvailData[rowIndex] = {
-              ...newAvailData[rowIndex],
-              // Clear out percentAmi when unit size changes
-              percentAmi: undefined,
-            };
-          }
-
-          if (name === "selectedProgram") {
-            newAvailData[rowIndex] = {
-              ...newAvailData[rowIndex],
-            };
-
-            delete newAvailData[rowIndex].otherProgram;
-          }
-        }
-
-        return {
-          ...prev,
-          availDataArray: newAvailData,
-        };
-      }
-
-      if (name === "buildingName") {
-        if (value === "Not Listed") {
-          setCurrentBuildingData({
-            ...emptyCurrentBuildingData,
-            buildingName: "Not Listed",
-          });
-        } else {
-          setCurrentBuildingData(
-            buildingID
-              ? tempBuildings.find(
-                  (building) => buildingID === building.listingID
-                ) ||
-                  allBuildings.find(
-                    (building) => buildingID === building.buildingID
-                  ) ||
-                  null
-              : null
-          );
-        }
-      }
-
-      if (name === "otherBuildingName" && currentBuildingData) {
-        setCurrentBuildingData({ ...currentBuildingData, buildingName: value });
-      }
-
-      if (name === "noneAvailable") {
-        return {
-          ...prev,
-          [name]: e.target.checked,
-        };
-      }
-
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const emptyAddressCurrentBuildingData: PartialWithRequired<
-    Address,
-    "streetAddress" | "zip" | "neighborhood"
-  > = {
-    streetAddress: "",
-    zip: "",
-    neighborhood: "",
-  };
-
-  const emptyContactCurrentBuildingData: PartialWithRequired<
-    Contact,
-    "phone" | "urlForBuilding"
-  > = {
-    phone: "",
-    urlForBuilding: "",
-  };
-
-  const blankTable: AmiData = {
-    [BedroomsKeyEnum.MICRO]: [],
-    [BedroomsKeyEnum.STUDIO]: [],
-    [BedroomsKeyEnum.ONE_BED]: [],
-    [BedroomsKeyEnum.TWO_BED]: [],
-    [BedroomsKeyEnum.THREE_PLUS]: [],
-  };
-
-  const emptyCurrentBuildingData: CurrentBuildingData = {
-    buildingName: "",
-    buildingID: "",
-    address: emptyAddressCurrentBuildingData,
-    contact: emptyContactCurrentBuildingData,
-    amiData: blankTable,
-  };
 
   function updateAvailRow(unit: BedroomsKeyEnum, ami: PercentAmi) {
     if (!formFields.availDataArray) return;
@@ -277,9 +115,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
     currentBuildingData && !currentBuildingData.buildingID
   );
 
-  if (!currentBuildingData) return;
-  
-  {/* Show if building is filled in - new or existing listing */}
   return (
     <Container>
       <Row className="mb-3">
@@ -315,9 +150,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                     <Button
                       variant="outline-primary"
                       size="sm"
-                      onClick={() =>
-                        setShowEditBuildingData((prev) => !prev)
-                      }
+                      onClick={() => setShowEditBuildingData((prev) => !prev)}
                     >
                       {showEditBuildingData ? "Cancel" : "Edit"}
                     </Button>
@@ -340,7 +173,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             name="noneAvailable"
             label="No units available"
             checked={formFields.noneAvailable}
-            onChange={handleInputChange}
+            onChange={onInputChange}
           />
 
           {/* URL */}
@@ -354,13 +187,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   required
                   type="url"
                   name="url"
-                  onChange={handleInputChange}
+                  onChange={onInputChange}
                   value={formFields.url}
                 />
                 <Form.Text>
-                  Link that comes as close as possible to showing all
-                  available rent-reduced units in this building. Include
-                  http://
+                  Link that comes as close as possible to showing all available
+                  rent-reduced units in this building. Include http://
                 </Form.Text>
               </Col>
             </Row>
@@ -371,7 +203,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               currentBuildingData={currentBuildingData}
               formFields={formFields}
               setFormFields={setFormFields}
-              handleInputChange={handleInputChange}
+              handleInputChange={onInputChange}
             />
           )}
         </Col>
@@ -388,12 +220,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             name="expiryDate"
             value={formFields.expiryDate || ""}
             max={getMaxExpiryDate()}
-            onChange={handleInputChange}
+            onChange={onInputChange}
           />
         </Col>
         <Form.Text>
-          Optional. Up to 60 days. If left blank will be set to the max of
-          60 days.
+          Optional. Up to 60 days. If left blank will be set to the max of 60
+          days.
         </Form.Text>
       </Row>
 
@@ -408,13 +240,12 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             name="description"
             id="description"
             rows={3}
-            onChange={handleInputChange}
+            onChange={onInputChange}
             value={formFields.description}
             maxLength={200}
           />
           <Form.Text>
-            Optional. Will be shared as part of the listing. Max 200
-            characters.
+            Optional. Will be shared as part of the listing. Max 200 characters.
           </Form.Text>
         </Col>
       </Row>
@@ -427,13 +258,13 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
             name="feedback"
             id="feedback"
             rows={3}
-            onChange={handleInputChange}
+            onChange={onInputChange}
             value={formFields.feedback}
           />
           <Form.Text>
             Optional. Will not be shared publicly. Feedback can include data
-            corrections, suggestions for form improvement, user experience,
-            etc. Thank you!
+            corrections, suggestions for form improvement, user experience, etc.
+            Thank you!
           </Form.Text>
         </Col>
       </Row>

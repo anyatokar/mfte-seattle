@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { EditListingFormFields } from "../../types/editListingFormFieldsType";
-import { PartialWithRequired } from "../../types/partialWithRequiredType";
-import { BedroomsKeyEnum, OptionalUrlsKeyEnum } from "../../types/enumTypes";
 import { setListingFirestore } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
 import { useTempBuildingsContext } from "../../contexts/TempBuildingsContext";
+import EditListingForm from "./EditListingForm";
+
+import { BedroomsKeyEnum, OptionalUrlsKeyEnum } from "../../types/enumTypes";
+import { EditListingFormFields } from "../../types/editListingFormFieldsType";
+import { PartialWithRequired } from "../../types/partialWithRequiredType";
 import IBuilding, {
   Address,
   AmiData,
@@ -19,7 +21,6 @@ import {
   CurrentBuildingData,
   ITempBuilding,
 } from "../../interfaces/ITempBuilding";
-import EditListingForm from "./EditListingForm";
 
 import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -286,7 +287,14 @@ const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
         </div>
       )}
 
-<EditListingForm alert={alert} listing={originalListing} building={buildingProp}/>
+      <EditListingForm
+        alert={alert}
+        currentBuildingData={currentBuildingData}
+        formFields={formFields}
+        setFormFields={setFormFields}
+        setCurrentBuildingData={setCurrentBuildingData}
+        onInputChange={handleInputChange}
+      />
     </Form>
   );
 };

@@ -5,7 +5,7 @@ import { p6UnitPricing } from "../../dataTables/P6-unit-pricing";
 import { p345UnitPricing } from "../../dataTables/P345-unit-pricing";
 import { archOldUnitPricing } from "../../dataTables/ARCH-old-unit-pricing";
 import { archNewUnitPricing } from "../../dataTables/ARCH-new-unit-pricing";
-import { createBlankAvailRow } from "../manage-listings/EditListingForm";
+import { createBlankAvailRow } from "../manage-listings/EditListingFormWrapper";
 import {
   unitSizeLabelEnum,
   BedroomsKeyEnum,
