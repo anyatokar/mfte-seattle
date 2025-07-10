@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
 import { useTempBuildingsContext } from "../../contexts/TempBuildingsContext";
 import EditListingForm from "./EditListingForm";
+import EditListingFormBuildingSelect from "./EditListingFormBuildingSelect";
 
 import { BedroomsKeyEnum, OptionalUrlsKeyEnum } from "../../types/enumTypes";
 import { EditListingFormFields } from "../../types/editListingFormFieldsType";
@@ -22,10 +23,7 @@ import {
   ITempBuilding,
 } from "../../interfaces/ITempBuilding";
 
-import Col from "react-bootstrap/Col";
-import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
 
 type EditListingFormProps = {
   listing: IListing | null;
@@ -238,54 +236,12 @@ const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      {!originalListing?.buildingID && (
-        <div className="mb-3">
-          <Row className="mb-1">
-            <Col md={6} className="mb-md-0">
-              <Form.Label className="mb-0 fw-bold">Building name:</Form.Label>
-              <Form.Select
-                required
-                name="buildingName"
-                id="buildingName"
-                onChange={(e) => {
-                  const selectedOption = e.target.selectedOptions[0];
-                  const buildingID =
-                    selectedOption.getAttribute("data-buildingid") || "";
-                  handleInputChange(e, undefined, buildingID);
-                }}
-              >
-                <option value="">Select</option>
-                <option value="Not Listed">Not Listed</option>
-                <Dropdown.Divider />
-                {allBuildings
-                  .sort((a, b) => a.buildingName.localeCompare(b.buildingName))
-                  .map((building) => (
-                    <option
-                      key={building.buildingID}
-                      value={building.buildingName}
-                      data-buildingid={building.buildingID}
-                    >
-                      {building.buildingName}
-                    </option>
-                  ))}
-              </Form.Select>
-            </Col>
-          </Row>
-          {currentBuildingData && currentBuildingData.buildingID === "" && (
-            <Row className="mb-0">
-              <Col md={6}>
-                <Form.Control
-                  autoFocus
-                  required
-                  name="otherBuildingName"
-                  value={currentBuildingData?.otherBuildingName}
-                  onChange={handleInputChange}
-                />
-              </Col>
-            </Row>
-          )}
-        </div>
-      )}
+      <EditListingFormBuildingSelect
+        currentBuildingData={currentBuildingData}
+        originalListing={originalListing}
+        onInputChange={handleInputChange}
+        allBuildings={allBuildings}
+      />
 
       <EditListingForm
         alert={alert}
