@@ -2,7 +2,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import IBuilding from "../../interfaces/IBuilding";
 import IListing from "../../interfaces/IListing";
 import { CurrentBuildingData } from "../../interfaces/ITempBuilding";
-
 import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";

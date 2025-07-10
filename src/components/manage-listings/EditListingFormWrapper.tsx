@@ -5,24 +5,18 @@ import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
 import { useTempBuildingsContext } from "../../contexts/TempBuildingsContext";
 import EditListingForm from "./EditListingForm";
 import EditListingFormBuildingSelect from "./EditListingFormBuildingSelect";
-
-import { BedroomsKeyEnum, OptionalUrlsKeyEnum } from "../../types/enumTypes";
+import {
+  createBlankAvailRow,
+  emptyCurrentBuildingData,
+} from "../../constants/listingDefaults";
+import { OptionalUrlsKeyEnum } from "../../types/enumTypes";
 import { EditListingFormFields } from "../../types/editListingFormFieldsType";
-import { PartialWithRequired } from "../../types/partialWithRequiredType";
-import IBuilding, {
-  Address,
-  AmiData,
-  Contact,
-} from "../../interfaces/IBuilding";
-import IListing, {
-  OptionalUrls,
-  UnitAvailData,
-} from "../../interfaces/IListing";
+import IBuilding from "../../interfaces/IBuilding";
+import IListing from "../../interfaces/IListing";
 import {
   CurrentBuildingData,
   ITempBuilding,
 } from "../../interfaces/ITempBuilding";
-
 import Form from "react-bootstrap/Form";
 
 type EditListingFormProps = {
@@ -30,25 +24,6 @@ type EditListingFormProps = {
   building: IBuilding | ITempBuilding | null;
   onClose: () => void;
 };
-
-const blankOptionalUrls: OptionalUrls = {
-  [OptionalUrlsKeyEnum.listingPageUrl]: "",
-  [OptionalUrlsKeyEnum.walkTourUrl]: "",
-  [OptionalUrlsKeyEnum.floorPlanUrl]: "",
-  [OptionalUrlsKeyEnum.otherUrl1]: "",
-  [OptionalUrlsKeyEnum.otherUrl2]: "",
-};
-
-export const createBlankAvailRow = (): UnitAvailData => ({
-  unitSize: undefined,
-  dateAvailString: "",
-  percentAmi: undefined,
-  maxRent: "",
-  rowId: `${Date.now()}`,
-  aptNum: "",
-  selectedProgram: undefined,
-  optionalUrls: blankOptionalUrls,
-});
 
 const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
   listing: originalListing,
@@ -74,12 +49,11 @@ const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
   };
 
   const [formFields, setFormFields] = useState(originalFormFields);
-
-  const { currentUser } = useAuth();
-
   const [currentBuildingData, setCurrentBuildingData] =
     useState<CurrentBuildingData | null>(buildingProp);
+  const [alert, setAlert] = useState<string>("");
 
+  const { currentUser } = useAuth();
   if (!currentUser) return null;
 
   const handleInputChange = (e: any, rowId?: string, buildingID?: string) => {
@@ -163,8 +137,6 @@ const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
     });
   };
 
-  const [alert, setAlert] = useState<string>("");
-
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (
     e
   ) => {
@@ -199,39 +171,6 @@ const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
         "There was a problem submitting your data. Please contact mfte.seattle@gmail.com if the issue persists."
       );
     }
-  };
-
-  const emptyAddressCurrentBuildingData: PartialWithRequired<
-    Address,
-    "streetAddress" | "zip" | "neighborhood"
-  > = {
-    streetAddress: "",
-    zip: "",
-    neighborhood: "",
-  };
-
-  const emptyContactCurrentBuildingData: PartialWithRequired<
-    Contact,
-    "phone" | "urlForBuilding"
-  > = {
-    phone: "",
-    urlForBuilding: "",
-  };
-
-  const blankTable: AmiData = {
-    [BedroomsKeyEnum.MICRO]: [],
-    [BedroomsKeyEnum.STUDIO]: [],
-    [BedroomsKeyEnum.ONE_BED]: [],
-    [BedroomsKeyEnum.TWO_BED]: [],
-    [BedroomsKeyEnum.THREE_PLUS]: [],
-  };
-
-  const emptyCurrentBuildingData: CurrentBuildingData = {
-    buildingName: "",
-    buildingID: "",
-    address: emptyAddressCurrentBuildingData,
-    contact: emptyContactCurrentBuildingData,
-    amiData: blankTable,
   };
 
   return (

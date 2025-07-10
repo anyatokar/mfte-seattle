@@ -1,11 +1,14 @@
 import { formatCurrency } from "../../utils/generalUtils";
 import { useAuth } from "../../contexts/AuthContext";
-import { colWidths, optionalUrlsArray } from "../../config/constants";
+import {
+  colWidths,
+  optionalUrlsArray,
+} from "../../constants/availUnitsTableConstants";
 import { p6UnitPricing } from "../../dataTables/P6-unit-pricing";
 import { p345UnitPricing } from "../../dataTables/P345-unit-pricing";
 import { archOldUnitPricing } from "../../dataTables/ARCH-old-unit-pricing";
 import { archNewUnitPricing } from "../../dataTables/ARCH-new-unit-pricing";
-import { createBlankAvailRow } from "../manage-listings/EditListingFormWrapper";
+import { createBlankAvailRow } from "../../constants/listingDefaults";
 import {
   unitSizeLabelEnum,
   BedroomsKeyEnum,
