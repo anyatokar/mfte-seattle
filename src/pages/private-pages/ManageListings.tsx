@@ -135,156 +135,153 @@ const ManageListingsPage: React.FC<IPage> = () => {
             <div className="display-6 mb-5">Manage Listings</div>
           </Col>
         </Row>
-
-        <>
-          <Tab.Container
-            id="sidebar"
-            activeKey={activeTab}
-            onSelect={(key) => {
-              setActiveTab(key as string);
-            }}
-          >
-            <Row>
-              <Col sm={12} lg={2}>
-                <Nav variant="pills" className="flex-column">
-                  <Nav.Item>
-                    <Nav.Link eventKey="summary" className="tab">
-                      Summary
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="viewListings" className="tab">
-                      Current
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="archived" className="tab">
-                      Archived
-                    </Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </Col>
-              <Col sm={12} lg={10}>
-                <Tab.Content>
-                  <Tab.Pane eventKey="summary">
-                    <Container fluid>
-                      <Row>
-                        <Col xs={12} sm={6} lg={4} className="pb-4">
-                          <Table responsive bordered hover className="mt-0">
-                            <thead>
-                              <tr>
-                                <th>Status</th>
-                                <th>Count</th>
+        <Tab.Container
+          id="sidebar"
+          activeKey={activeTab}
+          onSelect={(key) => {
+            setActiveTab(key as string);
+          }}
+        >
+          <Row>
+            <Col sm={12} lg={2}>
+              <Nav variant="pills" className="flex-column">
+                <Nav.Item>
+                  <Nav.Link eventKey="summary" className="tab">
+                    Summary
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="viewListings" className="tab">
+                    Current
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="archived" className="tab">
+                    Archived
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Col>
+            <Col sm={12} lg={10}>
+              <Tab.Content>
+                <Tab.Pane eventKey="summary">
+                  <Container fluid>
+                    <Row>
+                      <Col xs={12} sm={6} lg={4} className="pb-4">
+                        <Table responsive bordered hover className="mt-0">
+                          <thead>
+                            <tr>
+                              <th>Status</th>
+                              <th>Count</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {summaryTableRows.map((tableRow) => (
+                              <tr key={tableRow.listingStatus}>
+                                <td>{tableRow.label}</td>
+                                <td>
+                                  {isLoadingRepsListings
+                                    ? "--"
+                                    : getCount(tableRow.listingStatus)}
+                                </td>
                               </tr>
-                            </thead>
-                            <tbody>
-                              {summaryTableRows.map((tableRow) => (
-                                <tr key={tableRow.listingStatus}>
-                                  <td>{tableRow.label}</td>
-                                  <td>
-                                    {isLoadingRepsListings
-                                      ? "--"
-                                      : getCount(tableRow.listingStatus)}
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </Table>
-                        </Col>
-                      </Row>
-                    </Container>
-                  </Tab.Pane>
+                            ))}
+                          </tbody>
+                        </Table>
+                      </Col>
+                    </Row>
+                  </Container>
+                </Tab.Pane>
 
-                  <Tab.Pane eventKey="viewListings">
-                    <Container fluid>
-                      <div className="pb-2">
-                        <Button
-                          variant="success"
-                          onClick={() => handleEditClick(null)}
-                        >
-                          Add Building
-                        </Button>
-                      </div>
+                <Tab.Pane eventKey="viewListings">
+                  <Container fluid>
+                    <div className="pb-2">
+                      <Button
+                        variant="success"
+                        onClick={() => handleEditClick(null)}
+                      >
+                        Add Building
+                      </Button>
+                    </div>
 
-                      {isLoadingRepsListings && (
-                        <Spinner animation="border" variant="secondary" />
-                      )}
+                    {isLoadingRepsListings && (
+                      <Spinner animation="border" variant="secondary" />
+                    )}
 
-                      {!isLoadingRepsListings &&
-                        repsListings.filter(
+                    {!isLoadingRepsListings &&
+                      repsListings.filter(
+                        (listing) =>
+                          listing.listingStatus !== listingStatusEnum.ARCHIVED
+                      ).length === 0 && <p>No current listings.</p>}
+
+                    {!isLoadingRepsListings &&
+                      repsListings.length > 0 &&
+                      repsListings
+                        .filter(
                           (listing) =>
-                            listing.listingStatus !== listingStatusEnum.ARCHIVED
-                        ).length === 0 && <p>No current listings.</p>}
+                            listing.listingStatus !==
+                            listingStatusEnum.ARCHIVED
+                        )
+                        .sort(
+                          (a, b) =>
+                            new Date(b.dateUpdated?.toDate()).getTime() -
+                            new Date(a.dateUpdated?.toDate()).getTime()
+                        )
+                        .map((listing) => (
+                          <Col className="pb-2" key={listing.listingID}>
+                            <ListingCard
+                              listing={listing}
+                              building={findBuilding(listing.buildingID)}
+                              onEditClick={handleEditClick}
+                            />
+                          </Col>
+                        ))}
+                  </Container>
+                </Tab.Pane>
 
-                      {!isLoadingRepsListings &&
-                        repsListings.length > 0 &&
-                        repsListings
-                          .filter(
+                <Tab.Pane eventKey="archived">
+                  <Container fluid>
+                    <Row>
+                      <Col>
+                        {isLoadingRepsListings && (
+                          <Spinner animation="border" variant="secondary" />
+                        )}
+                        {!isLoadingRepsListings &&
+                          repsListings.filter(
                             (listing) =>
-                              listing.listingStatus !==
+                              listing.listingStatus ===
                               listingStatusEnum.ARCHIVED
-                          )
-                          .sort(
-                            (a, b) =>
-                              new Date(b.dateUpdated?.toDate()).getTime() -
-                              new Date(a.dateUpdated?.toDate()).getTime()
-                          )
-                          .map((listing) => (
-                            <Col className="pb-2" key={listing.listingID}>
-                              <ListingCard
-                                listing={listing}
-                                building={findBuilding(listing.buildingID)}
-                                onEditClick={handleEditClick}
-                              />
-                            </Col>
-                          ))}
-                    </Container>
-                  </Tab.Pane>
-
-                  <Tab.Pane eventKey="archived">
-                    <Container fluid>
-                      <Row>
-                        <Col>
-                          {isLoadingRepsListings && (
-                            <Spinner animation="border" variant="secondary" />
-                          )}
-                          {!isLoadingRepsListings &&
-                            repsListings.filter(
+                          ).length === 0 && <p>Archived list is empty.</p>}
+                        {!isLoadingRepsListings &&
+                          repsListings.length > 0 &&
+                          repsListings
+                            .filter(
                               (listing) =>
                                 listing.listingStatus ===
                                 listingStatusEnum.ARCHIVED
-                            ).length === 0 && <p>Archived list is empty.</p>}
-                          {!isLoadingRepsListings &&
-                            repsListings.length > 0 &&
-                            repsListings
-                              .filter(
-                                (listing) =>
-                                  listing.listingStatus ===
-                                  listingStatusEnum.ARCHIVED
-                              )
-                              .sort(
-                                (a, b) =>
-                                  new Date(b.dateUpdated?.toDate()).getTime() -
-                                  new Date(a.dateUpdated?.toDate()).getTime()
-                              )
-                              .map((listing) => (
-                                <Col className="pb-2" key={listing.listingID}>
-                                  <ListingCard
-                                    listing={listing}
-                                    building={findBuilding(listing.buildingID)}
-                                    onEditClick={handleEditClick}
-                                  />
-                                </Col>
-                              ))}
-                        </Col>
-                      </Row>
-                    </Container>
-                  </Tab.Pane>
-                </Tab.Content>
-              </Col>
-            </Row>
-          </Tab.Container>
-        </>
+                            )
+                            .sort(
+                              (a, b) =>
+                                new Date(b.dateUpdated?.toDate()).getTime() -
+                                new Date(a.dateUpdated?.toDate()).getTime()
+                            )
+                            .map((listing) => (
+                              <Col className="pb-2" key={listing.listingID}>
+                                <ListingCard
+                                  listing={listing}
+                                  building={findBuilding(listing.buildingID)}
+                                  onEditClick={handleEditClick}
+                                />
+                              </Col>
+                            ))}
+                      </Col>
+                    </Row>
+                  </Container>
+                </Tab.Pane>
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
       </Container>
       <AreYouSureModal
         showModal={showAreYouSureModal}
