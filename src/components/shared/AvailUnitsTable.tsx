@@ -6,15 +6,15 @@ import { p345UnitPricing } from "../../dataTables/P345-unit-pricing";
 import { archOldUnitPricing } from "../../dataTables/ARCH-old-unit-pricing";
 import { archNewUnitPricing } from "../../dataTables/ARCH-new-unit-pricing";
 import { createBlankAvailRow } from "../manage-listings/EditListingForm";
-import { PartialWithRequired } from "../../types/partialWithRequiredType";
 import {
   unitSizeLabelEnum,
   BedroomsKeyEnum,
   ProgramKeyEnum,
   ProgramLabelEnum,
 } from "../../types/enumTypes";
-import IListing, { UnitAvailData } from "../../interfaces/IListing";
+import { UnitAvailData } from "../../interfaces/IListing";
 import { CurrentBuildingData } from "../../interfaces/ITempBuilding";
+import { EditListingFormFields } from "../../types/editListingFormFieldsType";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -24,18 +24,6 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import Table from "react-bootstrap/Table";
 import { Trash } from "react-bootstrap-icons";
-
-export type EditListingFormFields = PartialWithRequired<
-  IListing,
-  | "buildingName"
-  | "buildingID"
-  | "availDataArray"
-  | "url"
-  | "expiryDate"
-  | "description"
-  | "feedback"
-  | "noneAvailable"
->;
 
 type EditListingFormProps = {
   currentBuildingData: CurrentBuildingData;
