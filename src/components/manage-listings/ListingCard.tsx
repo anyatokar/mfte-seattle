@@ -130,7 +130,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
     setStatusBadge(getStatusBadge());
     setExpiryBadge(getExpiryBadge());
-    // eslint-disable-next-line
   }, [listing]);
 
   return (
