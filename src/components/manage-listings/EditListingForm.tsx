@@ -38,9 +38,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   onInputChange,
   setCurrentBuildingData,
 }) => {
-  if (!currentBuildingData) return;
-  const { currentUser } = useAuth();
+  if (!currentBuildingData) return null;
 
+  const { currentUser } = useAuth();
   if (!currentUser) return null;
 
   function updateAvailRow(unit: BedroomsKeyEnum, ami: PercentAmi) {
