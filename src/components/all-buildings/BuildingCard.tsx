@@ -1,9 +1,4 @@
 import { useContext, MutableRefObject } from "react";
-import {
-  listingStatusEnum,
-  TableParentEnum,
-  TableTypeEnum,
-} from "../../types/enumTypes";
 import { deleteBuilding, saveBuilding } from "../../utils/firestoreUtils";
 import { calculateDaysAgo, willShowAvailTable } from "../../utils/generalUtils";
 import { useAuth } from "../../contexts/AuthContext";
@@ -15,6 +10,11 @@ import BuildingDataTable from "../shared/BuildingDataTable";
 import SaveButton from "../shared/SaveButton";
 import WebsiteButton from "../shared/WebsiteButton";
 
+import {
+  listingStatusEnum,
+  TableParentEnum,
+  TableTypeEnum,
+} from "../../types/enumTypes";
 import IBuilding from "../../interfaces/IBuilding";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
 
@@ -70,7 +70,12 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
         </ListGroup.Item>
       );
     } else if (listing.availDataArray.length === 0) {
-      return <ListGroup.Item>No rent-reduced units available.</ListGroup.Item>;
+      return (
+        <ListGroup.Item>
+          <Card.Text>No rent-reduced units available.</Card.Text>
+          <i>{getDaysAgoText()}</i>
+        </ListGroup.Item>
+      );
     } else {
       return null;
     }
