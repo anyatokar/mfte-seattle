@@ -194,6 +194,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       OptionalUrlsKeyEnum.floorPlanUrl,
       OptionalUrlsKeyEnum.otherUrl1,
       OptionalUrlsKeyEnum.otherUrl2,
+      OptionalUrlsKeyEnum.otherUrl3,
     ];
 
     return order.filter((column) => columnsToShow.has(column));

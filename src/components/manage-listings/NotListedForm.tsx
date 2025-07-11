@@ -185,7 +185,9 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
             checked={currentBuildingData.isAgeRestricted || false}
             onChange={handleInputChange}
           />
-          <Form.Label className="mb-0 fw-bold">Age-restricted community</Form.Label>
+          <Form.Label className="mb-0 fw-bold">
+            Age-restricted community
+          </Form.Label>
         </Col>
       </Row>
     </>
