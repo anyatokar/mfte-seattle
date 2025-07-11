@@ -157,8 +157,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       variant="outline-primary"
                       size="sm"
                       onClick={() => setShowEditBuildingData((prev) => !prev)}
+                      disabled={showEditBuildingData}
                     >
-                      {showEditBuildingData ? "Cancel" : "Edit"}
+                      Edit
                     </Button>
                   </Col>
                 </Row>
