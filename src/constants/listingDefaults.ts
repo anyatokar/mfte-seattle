@@ -1,6 +1,7 @@
 import { Address, AmiData, Contact } from "../interfaces/IBuilding";
 import { OptionalUrls, UnitAvailData } from "../interfaces/IListing";
 import { CurrentBuildingData } from "../interfaces/ITempBuilding";
+import { EditListingFormFields } from "../types/editListingFormFieldsType";
 import { BedroomsKeyEnum, OptionalUrlsKeyEnum } from "../types/enumTypes";
 import { PartialWithRequired } from "../types/partialWithRequiredType";
 
@@ -55,3 +56,14 @@ export const emptyCurrentBuildingData: CurrentBuildingData = {
   contact: emptyContactCurrentBuildingData,
   amiData: blankTable,
 };
+
+export const createEmptyFormFields = (): EditListingFormFields => ({
+  buildingName: "",
+  buildingID: "",
+  availDataArray: [createBlankAvailRow()],
+  url: "",
+  expiryDate: "",
+  description: "",
+  feedback: "",
+  noneAvailable: false,
+});

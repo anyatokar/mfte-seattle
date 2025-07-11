@@ -7,10 +7,10 @@ import EditListingForm from "./EditListingForm";
 import EditListingFormBuildingSelect from "./EditListingFormBuildingSelect";
 import {
   createBlankAvailRow,
+  createEmptyFormFields,
   emptyCurrentBuildingData,
 } from "../../constants/listingDefaults";
 import { OptionalUrlsKeyEnum } from "../../types/enumTypes";
-import { EditListingFormFields } from "../../types/editListingFormFieldsType";
 import IBuilding from "../../interfaces/IBuilding";
 import IListing from "../../interfaces/IListing";
 import {
@@ -33,20 +33,33 @@ const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
   const [allBuildings] = useAllBuildingsContext();
   const [tempBuildings] = useTempBuildingsContext();
 
-  const originalFormFields: EditListingFormFields = {
-    buildingName: originalListing?.buildingName || "",
-    buildingID: originalListing?.buildingID || "",
-    availDataArray:
-      originalListing?.availDataArray &&
-      originalListing.availDataArray.length > 0
-        ? originalListing.availDataArray
-        : [createBlankAvailRow()],
-    url: originalListing?.url || "",
-    expiryDate: originalListing?.expiryDate || "",
-    description: originalListing?.description || "",
-    feedback: originalListing?.feedback || "",
-    noneAvailable: originalListing?.noneAvailable || false,
-  };
+  let originalFormFields;
+  if (originalListing) {
+    const {
+      buildingName,
+      buildingID,
+      availDataArray,
+      url,
+      expiryDate,
+      description,
+      feedback,
+      noneAvailable,
+    } = originalListing;
+
+    originalFormFields = {
+      buildingName: buildingName,
+      buildingID: buildingID,
+      availDataArray:
+        availDataArray.length > 0 ? availDataArray : [createBlankAvailRow()],
+      url: url,
+      expiryDate: expiryDate,
+      description: description,
+      feedback: feedback,
+      noneAvailable: noneAvailable,
+    };
+  } else {
+    originalFormFields = createEmptyFormFields();
+  }
 
   const [formFields, setFormFields] = useState(originalFormFields);
   const [currentBuildingData, setCurrentBuildingData] =
@@ -177,18 +190,18 @@ const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
     <Form onSubmit={handleFormSubmit}>
       <EditListingFormBuildingSelect
         currentBuildingData={currentBuildingData}
-        originalListing={originalListing}
         onInputChange={handleInputChange}
+        originalListing={originalListing}
         allBuildings={allBuildings}
       />
 
       <EditListingForm
         alert={alert}
         currentBuildingData={currentBuildingData}
+        onInputChange={handleInputChange}
         formFields={formFields}
         setFormFields={setFormFields}
         setCurrentBuildingData={setCurrentBuildingData}
-        onInputChange={handleInputChange}
       />
     </Form>
   );
