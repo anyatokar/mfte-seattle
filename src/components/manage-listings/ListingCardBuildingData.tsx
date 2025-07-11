@@ -18,7 +18,7 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
 }) => {
   if (!building?.buildingID) return null;
 
-  const { contact, address, buildingName } = building;
+  const { contact, address, buildingName, isAgeRestricted } = building;
 
   return (
     <>
@@ -56,6 +56,9 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
           />
         </Col>
       </Row>
+      {isAgeRestricted && <Card.Text className="mt-3 mb-0">
+        <strong>Age-restricted community</strong>
+      </Card.Text>}
     </>
   );
 };
