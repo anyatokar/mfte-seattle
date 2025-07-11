@@ -169,17 +169,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
         <ListingCardBuildingData building={building} />
 
         <Card.Text className="mt-3">
-          <strong>Available rent-reduced units: </strong>{" "}
-          {listing.noneAvailable ? (
-            "None"
-          ) : (
-            <BuildingDataTable
-              type={TableTypeEnum.availData}
-              data={availDataArray}
-              tableParent={TableParentEnum.LISTING_CARD}
-            />
-          )}
+          <strong>Available rent-reduced units:</strong>
+          {listing.noneAvailable ? "None" : null}
         </Card.Text>
+
+        {!listing.noneAvailable && (
+          <BuildingDataTable
+            type={TableTypeEnum.availData}
+            data={availDataArray}
+            tableParent={TableParentEnum.LISTING_CARD}
+          />
+        )}
 
         <Card.Text className="mt-3">
           <strong>All listings URL:</strong>{" "}
