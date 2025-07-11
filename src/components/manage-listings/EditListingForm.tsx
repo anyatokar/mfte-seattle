@@ -26,7 +26,13 @@ type EditListingFormProps = {
   setCurrentBuildingData: React.Dispatch<
     React.SetStateAction<CurrentBuildingData | null>
   >;
-  onInputChange: (e: any, rowId?: string, buildingID?: string) => void;
+  onInputChange: (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+    rowId?: string,
+    buildingID?: string
+  ) => void;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({
@@ -143,6 +149,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                   </Row>
                 </>
               )}
+              {/* This isn't clear, there's, null, "", or the ID. Maybe just add names to these. */}
               {currentBuildingData.buildingID !== "" && (
                 <Row>
                   <Col className="mb-md-0">
