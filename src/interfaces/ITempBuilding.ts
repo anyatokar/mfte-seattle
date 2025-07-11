@@ -8,6 +8,7 @@ export type CurrentBuildingData = {
   contact: PartialContact;
   amiData: AmiData;
   isAgeRestricted: boolean;
+  isEnding: boolean;
   otherBuildingName?: string;
   wasDeleted?: boolean;
 };

@@ -57,6 +57,7 @@ export const emptyCurrentBuildingData: CurrentBuildingData = {
   contact: emptyContactCurrentBuildingData,
   amiData: createBlankTable(),
   isAgeRestricted: false,
+  isEnding: false,
 };
 
 export const createEmptyFormFields = (): EditListingFormFields => ({
