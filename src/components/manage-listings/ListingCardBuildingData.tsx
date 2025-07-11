@@ -1,9 +1,9 @@
+import { AddressAndPhone } from "../shared/AddressAndPhone";
+import BuildingDataTable from "../shared/BuildingDataTable";
 import IBuilding from "../../interfaces/IBuilding";
 import { ITempBuilding } from "../../interfaces/ITempBuilding";
 import { CurrentBuildingData } from "../../interfaces/ITempBuilding";
 import { TableParentEnum, TableTypeEnum } from "../../types/enumTypes";
-import { AddressAndPhone } from "../shared/AddressAndPhone";
-import BuildingDataTable from "../shared/BuildingDataTable";
 
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -16,49 +16,55 @@ type ListingCardBuildingDataProps = {
 const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
   building,
 }) => {
-  if (!building) return;
+  if (!building?.buildingID) return null;
 
-  const { contact, address, buildingName, buildingID } = building;
+  const { contact, address, buildingName, isAgeRestricted } = building;
 
   return (
-    buildingID && (
-      <>
-        <strong>District:</strong> {address.neighborhood}
-        <Card.Text className="mt-3 mb-0">
-          <strong>Address and contact:</strong>
-        </Card.Text>
-        <AddressAndPhone
-          buildingName={buildingName}
-          address={address}
-          contact={contact}
-          withLinks={false}
-        />
-        <Card.Text className="mt-3 mb-0">
-          <strong>Building URL:</strong>{" "}
-          <a
-            id="addressLink"
-            href={contact.urlForBuilding}
-            target="_blank"
-            rel="noreferrer"
-            className="address-phone-link"
-          >
-            {contact.urlForBuilding}
-          </a>
-        </Card.Text>
-        <Card.Text className="mt-3 mb-0">
-          <strong>All rent-reduced units in building:</strong>
-        </Card.Text>
-        <Row>
-          <Col md={6}>
-            <BuildingDataTable
-              type={TableTypeEnum.amiData}
-              data={building.amiData}
-              tableParent={TableParentEnum.LISTING_CARD}
-            />
-          </Col>
-        </Row>
-      </>
-    )
+    <>
+      <strong>District:</strong> {address.neighborhood}
+      <Card.Text className="mt-3 mb-0">
+        <strong>Address and contact:</strong>
+      </Card.Text>
+      <AddressAndPhone
+        buildingName={buildingName}
+        address={address}
+        contact={contact}
+        withLinks={false}
+      />
+      <Card.Text className="mt-3 mb-0">
+        <strong>Building URL:</strong>{" "}
+        <a
+          id="addressLink"
+          href={contact.urlForBuilding}
+          target="_blank"
+          rel="noreferrer"
+          className="address-phone-link"
+        >
+          {contact.urlForBuilding}
+        </a>
+      </Card.Text>
+      <Card.Text className="mt-3 mb-0">
+        <strong>All rent-reduced units in building:</strong>
+      </Card.Text>
+      <Row>
+        <Col md={6}>
+          <BuildingDataTable
+            type={TableTypeEnum.amiData}
+            data={building.amiData}
+            tableParent={TableParentEnum.LISTING_CARD}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Card.Text className="mt-3 mb-0">
+            <strong>Age-restricted community: </strong>
+            {isAgeRestricted ? "Yes" : "No"}
+          </Card.Text>
+        </Col>
+      </Row>
+    </>
   );
 };
 

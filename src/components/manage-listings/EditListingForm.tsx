@@ -157,8 +157,9 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                       variant="outline-primary"
                       size="sm"
                       onClick={() => setShowEditBuildingData((prev) => !prev)}
+                      disabled={showEditBuildingData}
                     >
-                      {showEditBuildingData ? "Cancel" : "Edit"}
+                      Edit
                     </Button>
                   </Col>
                 </Row>
@@ -173,6 +174,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         <Col className="mb-0">
           <Form.Label className="mb-0 fw-bold">Available units:</Form.Label>
 
+          {/* No Units Available */}
           <Form.Check
             type="switch"
             id="noneAvailableSwitch"
@@ -235,6 +237,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Form.Text>
       </Row>
 
+      {/* Description */}
       <Row className="mb-3">
         <Col className="mb-0">
           <Form.Label className="mb-0 fw-bold">
@@ -256,6 +259,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Col>
       </Row>
 
+      {/* Feedback */}
       <Row className="mb-3">
         <Col className="mb-0">
           <Form.Label className="mb-0 fw-bold">Form feedback:</Form.Label>
@@ -274,6 +278,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           </Form.Text>
         </Col>
       </Row>
+
       {alert && <Alert variant="danger">{alert}</Alert>}
       <Form.Group className="text-end">
         <Button variant="success" type="submit">
