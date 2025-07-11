@@ -11,6 +11,7 @@ const blankOptionalUrls: OptionalUrls = {
   [OptionalUrlsKeyEnum.floorPlanUrl]: "",
   [OptionalUrlsKeyEnum.otherUrl1]: "",
   [OptionalUrlsKeyEnum.otherUrl2]: "",
+  [OptionalUrlsKeyEnum.otherUrl3]: "",
 };
 
 export const createBlankAvailRow = (): UnitAvailData => ({
@@ -55,6 +56,8 @@ export const emptyCurrentBuildingData: CurrentBuildingData = {
   address: emptyAddressCurrentBuildingData,
   contact: emptyContactCurrentBuildingData,
   amiData: createBlankTable(),
+  isAgeRestricted: false,
+  isEnding: false,
 };
 
 export const createEmptyFormFields = (): EditListingFormFields => ({

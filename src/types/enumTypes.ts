@@ -69,6 +69,7 @@ export enum OptionalUrlsKeyEnum {
   floorPlanUrl = "floorPlanUrl",
   otherUrl1 = "otherUrl1",
   otherUrl2 = "otherUrl2",
+  otherUrl3 = "otherUrl3",
 }
 
 export enum OptionalUrlsLabelEnum {
@@ -77,6 +78,7 @@ export enum OptionalUrlsLabelEnum {
   floorPlanUrl = "Floor Plan",
   otherUrl1 = "Additional Link",
   otherUrl2 = "Additional Link 2",
+  otherUrl3 = "Additional Link 3",
 }
 
 export enum OptionalUrlsSubtextEnum {

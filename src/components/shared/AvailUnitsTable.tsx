@@ -137,7 +137,6 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
                 <th style={{ minWidth: colWidths.rent }}>Rent</th>
                 <th style={{ minWidth: colWidths.aptNum }}>Apt #</th>
                 <th style={{ minWidth: colWidths.dateAvail }}>Move-in Date</th>
-
                 {optionalUrlsArray.map(({ key, label, subtext }) => (
                   <th key={key} style={{ minWidth: colWidths.links }}>
                     {label}

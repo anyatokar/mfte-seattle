@@ -47,4 +47,9 @@ export const optionalUrlsArray: OptionalUrlHeader[] = [
     label: OptionalUrlsLabelEnum.otherUrl2,
     subtext: OptionalUrlsSubtextEnum.optionalUrl,
   },
+  {
+    key: OptionalUrlsKeyEnum.otherUrl3,
+    label: OptionalUrlsLabelEnum.otherUrl3,
+    subtext: OptionalUrlsSubtextEnum.optionalUrl,
+  },
 ];

@@ -70,12 +70,12 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
       });
     }
 
-    if (name === "isAgeRestricted") {
+    if (name === "isAgeRestricted" || name === "isEnding") {
       setCurrentBuildingData((prev) => {
         if (!prev) return null;
         return {
           ...prev,
-          isAgeRestricted: !prev.isAgeRestricted,
+          [name]: !prev[name],
         };
       });
     }
@@ -185,7 +185,23 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
             checked={currentBuildingData.isAgeRestricted || false}
             onChange={handleInputChange}
           />
-          <Form.Label className="mb-0 fw-bold">Age-restricted community</Form.Label>
+          <Form.Label className="mb-0 fw-bold">
+            Age-restricted community
+          </Form.Label>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="d-flex align-items-center gap-1">
+          <Form.Check
+            type="checkbox"
+            id="isEnding"
+            name="isEnding"
+            checked={currentBuildingData.isEnding || false}
+            onChange={handleInputChange}
+          />
+          <Form.Label className="mb-0 fw-bold">
+            Affordability ends in 2 years or less
+          </Form.Label>
         </Col>
       </Row>
     </>
