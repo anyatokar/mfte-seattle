@@ -235,6 +235,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Form.Text>
       </Row>
 
+      {/* Description */}
       <Row className="mb-3">
         <Col className="mb-0">
           <Form.Label className="mb-0 fw-bold">
@@ -256,6 +257,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Col>
       </Row>
 
+      {/* Feedback */}
       <Row className="mb-3">
         <Col className="mb-0">
           <Form.Label className="mb-0 fw-bold">Form feedback:</Form.Label>
@@ -274,6 +276,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
           </Form.Text>
         </Col>
       </Row>
+
       {alert && <Alert variant="danger">{alert}</Alert>}
       <Form.Group className="text-end">
         <Button variant="success" type="submit">
