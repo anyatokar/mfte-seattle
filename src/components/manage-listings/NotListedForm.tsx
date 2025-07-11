@@ -73,7 +73,6 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
     if (name === "isAgeRestricted") {
       setCurrentBuildingData((prev) => {
         if (!prev) return null;
-
         return {
           ...prev,
           isAgeRestricted: !prev.isAgeRestricted,
