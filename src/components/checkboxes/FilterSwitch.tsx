@@ -12,7 +12,7 @@ const FilterSwitch: React.FC<FilterSwitchProps> = ({
   isChecked,
 }) => {
   const labels = {
-    knownOnly: "Known Availability",
+    knownOnly: "Listings",
     savedOnly: "Saved",
     ageRestrictedOnly: "Age Restricted",
   };
