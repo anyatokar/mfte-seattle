@@ -58,11 +58,10 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
       </Row>
       <Row>
         <Col>
-          {isAgeRestricted && (
-            <Card.Text className="mt-3 mb-0">
-              <strong>Age-restricted community</strong>
-            </Card.Text>
-          )}
+          <Card.Text className="mt-3 mb-0">
+            <strong>Age-restricted community: </strong>
+            {isAgeRestricted ? "Yes" : "No"}
+          </Card.Text>
         </Col>
       </Row>
     </>

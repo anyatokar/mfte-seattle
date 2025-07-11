@@ -178,15 +178,15 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="d-flex align-items-center gap-1">
           <Form.Check
             type="checkbox"
             id="isAgeRestricted"
             name="isAgeRestricted"
-            label="Age Restricted Community"
             checked={currentBuildingData.isAgeRestricted || false}
             onChange={handleInputChange}
           />
+          <Form.Label className="mb-0 fw-bold">Age-restricted community</Form.Label>
         </Col>
       </Row>
     </>
