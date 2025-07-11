@@ -106,6 +106,7 @@ async function setTempBuilding(
     address,
     contact,
     amiData,
+    isAgeRestricted,
   } = selectedBuilding;
 
   const finalBuildingName = otherBuildingName
@@ -120,6 +121,7 @@ async function setTempBuilding(
     contact: contact,
     amiData: amiData,
     listingID: listingID,
+    isAgeRestricted: isAgeRestricted,
   };
 
   // Temp building uses same ID as associated listing.
