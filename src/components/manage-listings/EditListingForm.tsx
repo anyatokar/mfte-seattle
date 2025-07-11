@@ -173,6 +173,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         <Col className="mb-0">
           <Form.Label className="mb-0 fw-bold">Available units:</Form.Label>
 
+          {/* No Units Available */}
           <Form.Check
             type="switch"
             id="noneAvailableSwitch"

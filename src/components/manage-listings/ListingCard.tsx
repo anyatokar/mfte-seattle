@@ -47,6 +47,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   onEditClick,
 }) => {
   if (listing === null) {
+    // TODO: Move the empty to defaults.
     listing = {
       availDataArray: [],
       url: "",
