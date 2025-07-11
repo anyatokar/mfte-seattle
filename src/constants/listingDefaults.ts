@@ -41,20 +41,20 @@ const emptyContactCurrentBuildingData: PartialWithRequired<
   urlForBuilding: "",
 };
 
-const blankTable: AmiData = {
+export const createBlankTable = (): AmiData => ({
   [BedroomsKeyEnum.MICRO]: [],
   [BedroomsKeyEnum.STUDIO]: [],
   [BedroomsKeyEnum.ONE_BED]: [],
   [BedroomsKeyEnum.TWO_BED]: [],
   [BedroomsKeyEnum.THREE_PLUS]: [],
-};
+});
 
 export const emptyCurrentBuildingData: CurrentBuildingData = {
   buildingName: "",
   buildingID: "",
   address: emptyAddressCurrentBuildingData,
   contact: emptyContactCurrentBuildingData,
-  amiData: blankTable,
+  amiData: createBlankTable(),
 };
 
 export const createEmptyFormFields = (): EditListingFormFields => ({

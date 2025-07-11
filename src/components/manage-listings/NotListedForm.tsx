@@ -1,5 +1,5 @@
 import { Col, Form, Row } from "react-bootstrap";
-import { AmiData } from "../../interfaces/IBuilding";
+import { AmiData, PercentAmi } from "../../interfaces/IBuilding";
 import BuildingDataTable from "../shared/BuildingDataTable";
 import {
   BedroomsKeyEnum,
@@ -7,9 +7,14 @@ import {
   TableTypeEnum,
 } from "../../types/enumTypes";
 import { CurrentBuildingData } from "../../interfaces/ITempBuilding";
+import { createBlankTable } from "../../constants/listingDefaults";
 
 type NotListedFormProps = {
-  onClickCallback: any;
+  onClickCallback: (
+    ami: PercentAmi,
+    unit: BedroomsKeyEnum,
+    isChecked: boolean
+  ) => void;
   amiData: AmiData;
   setCurrentBuildingData: React.Dispatch<
     React.SetStateAction<CurrentBuildingData | null>
@@ -24,25 +29,10 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
   currentBuildingData,
 }): JSX.Element => {
   // TODO: This gets overwritten... needs a refactor
-  const blankTable: AmiData = {
-    [BedroomsKeyEnum.MICRO]: [],
-    [BedroomsKeyEnum.STUDIO]: [],
-    [BedroomsKeyEnum.ONE_BED]: [],
-    [BedroomsKeyEnum.TWO_BED]: [],
-    [BedroomsKeyEnum.THREE_PLUS]: [],
-  };
+  const blankTable = createBlankTable();
 
-  // const [zip, setZip] = useState("");
-  // const handleChange = (e) => {
-  //   const newValue = e.target.value;
-  //   if (/^\d{0,5}$/.test(newValue)) {
-  //     // Allows only 5 digits
-  //     setZip(newValue);
-  //   }
-  // };
-
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
 
     if (["streetAddress", "zip", "neighborhood", "district"].includes(name)) {
       setCurrentBuildingData((prev) =>

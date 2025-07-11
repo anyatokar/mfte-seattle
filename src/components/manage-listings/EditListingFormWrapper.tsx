@@ -69,15 +69,25 @@ const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
   const { currentUser } = useAuth();
   if (!currentUser) return null;
 
-  const handleInputChange = (e: any, rowId?: string, buildingID?: string) => {
-    const { name, value } = e.target;
+  const handleInputChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+    rowId?: string,
+    buildingID?: string
+  ) => {
+    const { name, value } = event.target;
 
     setFormFields((prev) => {
       if (rowId !== undefined) {
         const newAvailData = [...prev.availDataArray];
         const rowIndex = newAvailData.findIndex((row) => row.rowId === rowId);
 
-        if (Object.values(OptionalUrlsKeyEnum).includes(name)) {
+        if (
+          Object.values(OptionalUrlsKeyEnum).includes(
+            name as OptionalUrlsKeyEnum
+          )
+        ) {
           newAvailData[rowIndex] = {
             ...newAvailData[rowIndex],
             optionalUrls: {
@@ -136,10 +146,13 @@ const EditListingFormWrapper: React.FC<EditListingFormProps> = ({
         setCurrentBuildingData({ ...currentBuildingData, buildingName: value });
       }
 
-      if (name === "noneAvailable") {
+      if (
+        name === "noneAvailable" &&
+        event.target instanceof HTMLInputElement
+      ) {
         return {
           ...prev,
-          [name]: e.target.checked,
+          [name]: event.target.checked,
         };
       }
 

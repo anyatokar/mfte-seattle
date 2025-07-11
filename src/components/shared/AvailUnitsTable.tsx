@@ -32,7 +32,13 @@ type EditListingFormProps = {
   currentBuildingData: CurrentBuildingData;
   formFields: EditListingFormFields;
   setFormFields: React.Dispatch<React.SetStateAction<EditListingFormFields>>;
-  handleInputChange: (e: any, rowId?: string, buildingID?: string) => void;
+  handleInputChange: (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+    rowId?: string,
+    buildingID?: string
+  ) => void;
 };
 
 const EditListingForm: React.FC<EditListingFormProps> = ({

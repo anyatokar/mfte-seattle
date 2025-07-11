@@ -10,7 +10,13 @@ import Row from "react-bootstrap/Row";
 type EditListingFormProps = {
   currentBuildingData: CurrentBuildingData | null;
   originalListing: IListing | null;
-  onInputChange: (e: any, rowId?: string, buildingID?: string) => void;
+  onInputChange: (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+    rowId?: string,
+    buildingID?: string
+  ) => void;
   allBuildings: IBuilding[];
 };
 
