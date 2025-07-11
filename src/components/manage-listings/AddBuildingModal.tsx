@@ -1,5 +1,5 @@
 import Modal from "react-bootstrap/Modal";
-import EditListingForm from "./EditListingForm";
+import EditListingFormWrapper from "./EditListingFormWrapper";
 import IBuilding from "../../interfaces/IBuilding";
 import IListing from "../../interfaces/IListing";
 import { ITempBuilding } from "../../interfaces/ITempBuilding";
@@ -31,7 +31,7 @@ const AddBuildingModal: React.FC<AddBuildingModalProps> = ({
           <Modal.Title>{formTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <EditListingForm
+          <EditListingFormWrapper
             onClose={() => onClose(false)}
             listing={listing}
             building={building}
