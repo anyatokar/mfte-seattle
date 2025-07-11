@@ -47,17 +47,16 @@ export async function saveBuilding(
   const userDocRef = doc(db, "users", uid);
   const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
 
-  await setDoc(buildingDocRef, {
-    buildingID,
-    buildingName,
-    savedTimestamp: new Date(),
-  })
-    .then(() => {
-      console.log(`${buildingName} saved to user list.`);
-    })
-    .catch((error: any) => {
-      console.error("Error adding document: ", error);
+  try {
+    await setDoc(buildingDocRef, {
+      buildingID,
+      buildingName,
+      savedTimestamp: new Date(),
     });
+    console.log(`${buildingName} saved to user list.`);
+  } catch (error: any) {
+    console.error("Error adding document: ", error);
+  }
 }
 
 export async function deleteBuilding(
@@ -261,33 +260,36 @@ export async function deleteListingFirestore(
   buildingName: string
 ) {
   const listingDocRef = doc(db, "listings", listingID);
-  await deleteDoc(listingDocRef)
-    .then(() => {
-      console.log(
-        `Listing for ${buildingName} deleted from Listings. ListingID was ${listingID}`
-      );
-    })
-    .catch((error: any) => {
-      console.error(
-        `Error deleting listing for ${buildingName}, listingID ${listingID}:`,
-        error
-      );
-    });
+  try {
+    await deleteDoc(listingDocRef);
+    console.log(
+      `Listing for ${buildingName} deleted from Listings. ListingID was ${listingID}`
+    );
+  } catch (error: any) {
+    console.error(
+      `Error deleting listing for ${buildingName}, listingID ${listingID}:`,
+      error
+    );
+  }
 
   const tempBuildingDocRef = doc(db, "temp_buildings", listingID);
-  if (tempBuildingDocRef) {
-    await updateDoc(tempBuildingDocRef, { wasDeleted: true })
-      .then(() => {
-        console.log(
-          `Temp building ${buildingName} (id: ${tempBuildingDocRef.id}) marked as deleted.`
-        );
-      })
-      .catch((error: any) => {
-        console.error(
-          `Error marking temp building ${buildingName} (id: ${tempBuildingDocRef.id}) as deleted:`,
-          error
-        );
-      });
+  try {
+    const docSnap = await getDoc(tempBuildingDocRef);
+
+    if (!docSnap.exists()) {
+      console.log(`No temp building found for ID: ${listingID}, skipping.`);
+      return;
+    }
+
+    await updateDoc(tempBuildingDocRef, { wasDeleted: true });
+    console.log(
+      `Temp building ${buildingName} (id: ${tempBuildingDocRef.id}) marked as deleted.`
+    );
+  } catch (error) {
+    console.error(
+      `Error marking temp building ${buildingName} (id: ${tempBuildingDocRef.id}) as deleted:`,
+      error
+    );
   }
 }
 
