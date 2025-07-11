@@ -35,42 +35,50 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
     const { name, value } = event.target;
 
     if (["streetAddress", "zip", "neighborhood", "district"].includes(name)) {
-      setCurrentBuildingData((prev) =>
-        prev
-          ? {
-              ...prev,
-              address: {
-                ...prev.address,
-                [name]: value,
-              },
-            }
-          : prev
-      );
+      setCurrentBuildingData((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          address: {
+            ...prev.address,
+            [name]: value,
+          },
+        };
+      });
     }
 
     if (["phone", "phone2", "urlForBuilding"].includes(name)) {
-      setCurrentBuildingData((prev) =>
-        prev
-          ? {
-              ...prev,
-              contact: {
-                ...prev.contact,
-                [name]: value,
-              },
-            }
-          : prev
-      );
+      setCurrentBuildingData((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          contact: {
+            ...prev.contact,
+            [name]: value,
+          },
+        };
+      });
     }
 
     if (name === "otherBuildingName") {
-      setCurrentBuildingData((prev) =>
-        prev
-          ? {
-              ...prev,
-              otherBuildingName: value,
-            }
-          : prev
-      );
+      setCurrentBuildingData((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          otherBuildingName: value,
+        };
+      });
+    }
+
+    if (name === "isAgeRestricted") {
+      setCurrentBuildingData((prev) => {
+        if (!prev) return null;
+
+        return {
+          ...prev,
+          isAgeRestricted: !prev.isAgeRestricted,
+        };
+      });
     }
   };
 
@@ -158,14 +166,28 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
       <Form.Label className="mb-0 fw-bold">All rent-reduced units:</Form.Label>
       <br />
       <Form.Text>Regardless of availability.</Form.Text>
+      <Row className="mb-3">
+        <Col>
+          <BuildingDataTable
+            type={TableTypeEnum.amiData}
+            data={blankTable}
+            onClickCallback={onClickCallback}
+            tableFields={amiData}
+            tableParent={TableParentEnum.LISTING_CARD}
+          />
+        </Col>
+      </Row>
       <Row>
-        <BuildingDataTable
-          type={TableTypeEnum.amiData}
-          data={blankTable}
-          onClickCallback={onClickCallback}
-          tableFields={amiData}
-          tableParent={TableParentEnum.LISTING_CARD}
-        />
+        <Col>
+          <Form.Check
+            type="checkbox"
+            id="isAgeRestricted"
+            name="isAgeRestricted"
+            label="Age Restricted Community"
+            checked={currentBuildingData.isAgeRestricted || false}
+            onChange={handleInputChange}
+          />
+        </Col>
       </Row>
     </>
   );
