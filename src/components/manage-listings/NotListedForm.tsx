@@ -199,7 +199,9 @@ const NotListedForm: React.FC<NotListedFormProps> = ({
             checked={currentBuildingData.isEnding || false}
             onChange={handleInputChange}
           />
-          <Form.Label className="mb-0 fw-bold">Affordability ends in 2 years or less</Form.Label>
+          <Form.Label className="mb-0 fw-bold">
+            Affordability ends in 2 years or less
+          </Form.Label>
         </Col>
       </Row>
     </>
