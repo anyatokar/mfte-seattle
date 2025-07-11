@@ -161,7 +161,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
         </Col>
       </Row>
 
-      {/* Availabile Units */}
+      {/* Available Units */}
       <Row className="mb-3">
         <Col className="mb-0">
           <Form.Label className="mb-0 fw-bold">Available units:</Form.Label>
