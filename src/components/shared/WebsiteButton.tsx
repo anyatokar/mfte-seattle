@@ -13,19 +13,17 @@ const WebsiteButton: React.FC<ListingButtonProps> = ({ building }) => {
     : building.contact.urlForBuilding;
 
   return (
-    <>
-      <Button
-        size="sm"
-        id="building-url"
-        target="_blank"
-        rel="noreferrer"
-        variant={hasListing ? "success" : "outline-dark"}
-        href={websiteUrl}
-        title={`Open new tab: ${websiteUrl}`}
-      >
-        {hasListing ? "Listings" : "Website"}
-      </Button>
-    </>
+    <Button
+      size="sm"
+      id="building-url"
+      target="_blank"
+      rel="noreferrer"
+      variant="primary"
+      href={websiteUrl}
+      title={`Open new tab: ${websiteUrl}`}
+    >
+      Website
+    </Button>
   );
 };
 

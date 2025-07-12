@@ -84,7 +84,8 @@ export function buildingsFilter(
   const listingsResult =
     !isAvailOnly ||
     (isAvailOnly &&
-      building.listing?.listingStatus === listingStatusEnum.ACTIVE && building.listing?.noneAvailable === false);
+      building.listing?.listingStatus === listingStatusEnum.ACTIVE &&
+      building.listing?.noneAvailable === false);
   const bedroomsAndAmiResult = filterBedroomsAndAmi(building, activeFilters);
   const neighborhoodsResult =
     // If no boxes are checked, evaluate as if the box is checked - aka omit that dropdown.
