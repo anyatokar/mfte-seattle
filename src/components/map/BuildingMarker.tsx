@@ -9,16 +9,16 @@ import {
   useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 import { Marker } from "@googlemaps/markerclusterer";
-
 import { saveBuilding, deleteBuilding } from "../../utils/firestoreUtils";
 import { willShowAvailTable } from "../../utils/generalUtils";
-import { TableParentEnum, TableTypeEnum } from "../../types/enumTypes";
-
 import { MarkersObj } from "./AllMarkers";
 import { AddressAndPhone } from "../shared/AddressAndPhone";
 import BuildingDataTable from "../shared/BuildingDataTable";
+import FullDetailsButton from "../shared/FullDetailsButton";
 import SaveButton from "../shared/SaveButton";
 import WebsiteButton from "../../components/shared/WebsiteButton";
+
+import { TableParentEnum, TableTypeEnum } from "../../types/enumTypes";
 import IBuilding from "../../interfaces/IBuilding";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
 import Stack from "react-bootstrap/Stack";
@@ -94,6 +94,11 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                         isSaved={true}
                         onClickCallback={handleToggleSaveBuilding}
                       />
+                      <FullDetailsButton
+                        building={building}
+                        savedHomeData={savedHomeData}
+                        shouldScroll={shouldScroll}
+                      />
                     </Stack>
                   ) : (
                     <Stack direction={"horizontal"} gap={2}>
@@ -101,6 +106,11 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                       <SaveButton
                         isSaved={false}
                         onClickCallback={handleToggleSaveBuilding}
+                      />
+                      <FullDetailsButton
+                        building={building}
+                        savedHomeData={savedHomeData}
+                        shouldScroll={shouldScroll}
                       />
                     </Stack>
                   )
@@ -110,6 +120,11 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                     <SaveButton
                       isSaved={false}
                       onClickCallback={handleShowLogin}
+                    />
+                    <FullDetailsButton
+                      building={building}
+                      savedHomeData={savedHomeData}
+                      shouldScroll={shouldScroll}
                     />
                   </Stack>
                 )}

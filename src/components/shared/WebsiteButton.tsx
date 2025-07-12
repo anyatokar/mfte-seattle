@@ -2,10 +2,10 @@ import { Button } from "react-bootstrap";
 import IBuilding from "../../interfaces/IBuilding";
 import { willShowAvailTable } from "../../utils/generalUtils";
 
-interface ListingButtonProps {
+interface WebsiteButtonProps {
   building: IBuilding;
 }
-const WebsiteButton: React.FC<ListingButtonProps> = ({ building }) => {
+const WebsiteButton: React.FC<WebsiteButtonProps> = ({ building }) => {
   const hasListing = willShowAvailTable(building.listing);
 
   const websiteUrl = hasListing
