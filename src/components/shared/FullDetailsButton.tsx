@@ -25,7 +25,8 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
   };
 
   return (
-    <>
+    // Button only visible on small screens
+    <div className="d-block d-md-none">
       <Button
         size="sm"
         id="full-details"
@@ -49,7 +50,7 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 };
 

@@ -1,25 +1,23 @@
 import { Fragment, ReactNode, useState } from "react";
+import IncomeLimitsModal from "./IncomeLimitsModal";
+import { formatCurrency, formatDate } from "../../utils/generalUtils";
+import { useHousehold } from "../../contexts/HouseholdContext";
+import { p6maxIncomeData } from "../../dataTables/P6-income-limits";
+import { p345maxIncomeData } from "../../dataTables/P345-income-limits";
+import { archIncomeData } from "../../dataTables/ARCH-income-limits";
 import {
   unitSizeLabelEnum,
   BedroomsKeyEnum,
   TableTypeEnum,
   ProgramKeyEnum,
-  ProgramLabelEnum,
   TableParentEnum,
   OptionalUrlsKeyEnum,
   OptionalUrlsLabelEnum,
 } from "../../types/enumTypes";
-import { formatCurrency, formatDate } from "../../utils/generalUtils";
 import { AmiData, PercentAmi } from "../../interfaces/IBuilding";
 import { AvailDataArray, UnitAvailData } from "../../interfaces/IListing";
-import { p6maxIncomeData } from "../../dataTables/P6-income-limits";
-import { p345maxIncomeData } from "../../dataTables/P345-income-limits";
-import { archIncomeData } from "../../dataTables/ARCH-income-limits";
-import { useHousehold } from "../../contexts/HouseholdContext";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 
 interface AmiDataProps {
@@ -43,6 +41,13 @@ interface AvailDataProps {
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 
+export const incomeTables = {
+  [ProgramKeyEnum.P345]: p345maxIncomeData,
+  [ProgramKeyEnum.P6]: p6maxIncomeData,
+  [ProgramKeyEnum.ARCH_OLD]: archIncomeData,
+  [ProgramKeyEnum.ARCH_NEW]: archIncomeData,
+};
+
 const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const { type, data, tableParent } = props;
 
@@ -60,41 +65,6 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
     setUnitAvailData(unitAvailData);
     setShowModal(true);
   };
-
-  function getModalSentence(): string | undefined {
-    if (
-      type === TableTypeEnum.availData &&
-      unitAvailData?.selectedProgram &&
-      unitAvailData?.selectedProgram !== ProgramKeyEnum.other
-    ) {
-      return ProgramLabelEnum[unitAvailData.selectedProgram];
-    }
-  }
-
-  const incomeTables = {
-    [ProgramKeyEnum.P345]: p345maxIncomeData,
-    [ProgramKeyEnum.P6]: p6maxIncomeData,
-    [ProgramKeyEnum.ARCH_OLD]: archIncomeData,
-    [ProgramKeyEnum.ARCH_NEW]: archIncomeData,
-  };
-
-  /** When household size is not selected */
-  function getModalData(
-    unitAvailData: UnitAvailData
-  ): [number[], number[]?] | undefined {
-    const { percentAmi, selectedProgram } = unitAvailData;
-
-    if (
-      !percentAmi ||
-      !selectedProgram ||
-      selectedProgram === ProgramKeyEnum.other ||
-      type !== TableTypeEnum.availData
-    )
-      return;
-
-    const incomeTable = incomeTables[selectedProgram];
-    return [incomeTable?.[percentAmi] || []];
-  }
 
   /** When household size is selected */
   function getMaxForHousehold(unitAvailData: UnitAvailData): string {
@@ -313,85 +283,12 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       </Table>
 
       {unitAvailData && type === TableTypeEnum.availData && (
-        <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Income Limits</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-              Determined by percent Area Median Income (% AMI), household size,
-              and program type.
-              <br />
-              <span style={{ fontWeight: "bold" }}>AMI: </span>
-              {unitAvailData.percentAmi}%
-              <br />
-              <span style={{ fontWeight: "bold" }}>Program: </span>{" "}
-              {getModalSentence()}
-            </p>
-
-            <Table bordered hover size="sm" className="my-0" responsive>
-              <thead>
-                <tr>
-                  <th style={{ whiteSpace: "nowrap" }}>Household Size</th>
-                  <th style={{ whiteSpace: "nowrap" }}>
-                    {unitAvailData.selectedProgram
-                      ? "Max Annual Income"
-                      : ProgramLabelEnum.P6}
-                  </th>
-                  {!unitAvailData.selectedProgram && (
-                    <th>{ProgramLabelEnum.P345}</th>
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {unitAvailData.selectedProgram &&
-                  getModalData(unitAvailData)?.[0].map((percentData, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{formatCurrency(percentData)}</td>
-                    </tr>
-                  ))}
-
-                {/* TODO: Delete when every listing has program data. */}
-                {!unitAvailData.selectedProgram &&
-                getModalData(unitAvailData)?.[0]
-                  ? getModalData(unitAvailData)?.[0].map(
-                      (percentData, index) => (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>
-                            {formatCurrency(
-                              getModalData(unitAvailData)?.[1]?.[index] ?? 0
-                            )}
-                          </td>
-                          <td>{formatCurrency(percentData ?? 0)}</td>
-                        </tr>
-                      )
-                    )
-                  : null}
-              </tbody>
-            </Table>
-            <div className="pt-2 text-muted">
-              Program and % AMI for the specific unit provided by building
-              management. Max annual income limit data sourced from{" "}
-              <a
-                id="income-and-rent-limits"
-                href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf"
-                title="Income and Rent Limits (FY 2025)"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Seattle Office of Housing Income and Rent Limits
-              </a>
-              .
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <IncomeLimitsModal
+          type={type}
+          unitAvailData={unitAvailData}
+          showModal={showModal}
+          handleClose={handleClose}
+        />
       )}
     </div>
   );

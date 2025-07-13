@@ -17,7 +17,6 @@ import BuildingDataTable from "../shared/BuildingDataTable";
 import FullDetailsButton from "../shared/FullDetailsButton";
 import SaveButton from "../shared/SaveButton";
 import WebsiteButton from "../../components/shared/WebsiteButton";
-
 import { TableParentEnum, TableTypeEnum } from "../../types/enumTypes";
 import IBuilding from "../../interfaces/IBuilding";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
