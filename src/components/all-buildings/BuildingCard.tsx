@@ -3,7 +3,6 @@ import { deleteBuilding, saveBuilding } from "../../utils/firestoreUtils";
 import { calculateDaysAgo, willShowAvailTable } from "../../utils/generalUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import { ModalContext, ModalState } from "../../contexts/ModalContext";
-
 import { AddressAndPhone } from "../shared/AddressAndPhone";
 import BuildingCardNote from "./BuildingCardNote";
 import BuildingDataTable from "../shared/BuildingDataTable";
@@ -16,6 +15,7 @@ import {
   TableTypeEnum,
 } from "../../types/enumTypes";
 import IBuilding from "../../interfaces/IBuilding";
+import { UnitAvailData } from "../../interfaces/IListing";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
 
 import Badge from "react-bootstrap/Badge";
@@ -29,12 +29,14 @@ export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
+  setModalContent: React.Dispatch<React.SetStateAction<UnitAvailData | null>>
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
   building,
   savedHomeData,
   shouldScroll,
+  setModalContent,
 }) => {
   const {
     buildingID,
@@ -177,6 +179,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   type={TableTypeEnum.availData}
                   data={listing.availDataArray}
                   tableParent={TableParentEnum.BUILDING_CARD}
+                  setModalContent={setModalContent}
                 />
                 <i>{getDaysAgoText()}</i>
                 {listing.description && (

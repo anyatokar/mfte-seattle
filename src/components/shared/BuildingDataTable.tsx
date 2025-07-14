@@ -37,6 +37,7 @@ interface AvailDataProps {
   type: TableTypeEnum.availData;
   data: AvailDataArray;
   tableParent: TableParentEnum;
+  setModalContent: React.Dispatch<React.SetStateAction<UnitAvailData | null>>
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
@@ -64,6 +65,9 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const handleShowModal = (unitAvailData: UnitAvailData) => {
     setUnitAvailData(unitAvailData);
     setShowModal(true);
+    if (type === TableTypeEnum.availData && props.setModalContent) {
+      props.setModalContent(unitAvailData);
+    }
   };
 
   /** When household size is selected */
