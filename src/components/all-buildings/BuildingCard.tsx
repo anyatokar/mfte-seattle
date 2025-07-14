@@ -29,7 +29,7 @@ export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
-  setModalContent: React.Dispatch<React.SetStateAction<UnitAvailData | null>>
+  setModalContent: React.Dispatch<React.SetStateAction<UnitAvailData | null>>;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({

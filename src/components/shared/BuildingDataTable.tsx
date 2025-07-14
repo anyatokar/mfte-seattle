@@ -18,6 +18,7 @@ import { AmiData, PercentAmi } from "../../interfaces/IBuilding";
 import { AvailDataArray, UnitAvailData } from "../../interfaces/IListing";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 
 interface AmiDataProps {
@@ -37,7 +38,7 @@ interface AvailDataProps {
   type: TableTypeEnum.availData;
   data: AvailDataArray;
   tableParent: TableParentEnum;
-  setModalContent: React.Dispatch<React.SetStateAction<UnitAvailData | null>>
+  setModalContent: React.Dispatch<React.SetStateAction<UnitAvailData | null>>;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
@@ -59,7 +60,6 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
   const handleClose = () => {
     setShowModal(false);
-    setUnitAvailData(null);
   };
 
   const handleShowModal = (unitAvailData: UnitAvailData) => {
@@ -287,12 +287,20 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
       </Table>
 
       {unitAvailData && type === TableTypeEnum.availData && (
-        <IncomeLimitsModal
-          type={type}
-          unitAvailData={unitAvailData}
-          showModal={showModal}
-          handleClose={handleClose}
-        />
+        <Modal show={showModal} onHide={handleClose}>
+          <IncomeLimitsModal
+            type={type}
+            unitAvailData={unitAvailData}
+            showModal={showModal}
+            handleClose={handleClose}
+          />
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );

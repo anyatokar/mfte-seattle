@@ -13,8 +13,8 @@ import Table from "react-bootstrap/Table";
 type IncomeLimitsModalProps = {
   type: TableTypeEnum.availData;
   unitAvailData: UnitAvailData;
-  showModal: any;
-  handleClose: any;
+  showModal?: any;
+  handleClose?: any;
 };
 
 const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({
@@ -52,7 +52,8 @@ const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({
   }
 
   return (
-    <Modal show={showModal} onHide={handleClose}>
+    // <Modal show={showModal} onHide={handleClose}>
+    <>
       <Modal.Header closeButton>
         <Modal.Title>Income Limits</Modal.Title>
       </Modal.Header>
@@ -107,12 +108,13 @@ const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({
           .
         </div>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    </>
+    //   <Modal.Footer>
+    //     <Button variant="secondary" onClick={handleClose}>
+    //       Close
+    //     </Button>
+    //   </Modal.Footer>
+    // </Modal>
   );
 };
 
