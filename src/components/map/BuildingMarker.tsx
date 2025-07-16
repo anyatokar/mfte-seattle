@@ -84,36 +84,22 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
             </>
           }
         >
-          <div className="mt-0 pt-0">
-            <AddressAndPhone
-              buildingName={buildingName}
-              address={address}
-              contact={contact}
-              parentElement={TableParentEnum.MARKER}
-            />
-          </div>
+          <AddressAndPhone
+            buildingName={buildingName}
+            address={address}
+            contact={contact}
+            parentElement={TableParentEnum.MARKER}
+          />
 
-          {/* Large screens only */}
-          <div className="mt-2 d-none d-md-flex">
-            <Stack direction="horizontal" gap={2}>
-              <WebsiteButton building={building} />
-              <SaveButton
-                isSaved={currentUser && savedHomeData ? true : false}
-                onClickCallback={
-                  currentUser ? handleToggleSaveBuilding : handleShowLogin
-                }
-              />
-            </Stack>
-          </div>
-
-          {/* Small screens only */}
-          <div className="mt-2 d-flex d-md-none">
-            <Stack gap={1}>
-              <FullDetailsButton
-                building={building}
-                savedHomeData={savedHomeData}
-                shouldScroll={shouldScroll}
-              />
+          <div className="mt-2">
+            <Stack direction="horizontal" gap={1}>
+              <div className="d-flex d-md-none">
+                <FullDetailsButton
+                  building={building}
+                  savedHomeData={savedHomeData}
+                  shouldScroll={shouldScroll}
+                />
+              </div>
               <WebsiteButton building={building} />
               <SaveButton
                 isSaved={currentUser && savedHomeData ? true : false}
