@@ -15,8 +15,8 @@ type IncomeLimitsModalProps = {
 };
 
 const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({ type }) => {
-  const { unitAvailData } = useUnitAvailData();
-  if (!unitAvailData) return;
+  const { unitAvailDataContext } = useUnitAvailData();
+  if (!unitAvailDataContext) return;
 
   /** When household size is not selected */
   function getModalData(
@@ -39,10 +39,10 @@ const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({ type }) => {
   function getModalSentence(): string | undefined {
     if (
       type === TableTypeEnum.availData &&
-      unitAvailData?.selectedProgram &&
-      unitAvailData?.selectedProgram !== ProgramKeyEnum.other
+      unitAvailDataContext?.selectedProgram &&
+      unitAvailDataContext?.selectedProgram !== ProgramKeyEnum.other
     ) {
-      return ProgramLabelEnum[unitAvailData.selectedProgram];
+      return ProgramLabelEnum[unitAvailDataContext.selectedProgram];
     }
   }
 
@@ -57,7 +57,7 @@ const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({ type }) => {
           program type.
           <br />
           <span style={{ fontWeight: "bold" }}>AMI: </span>
-          {unitAvailData.percentAmi}%
+          {unitAvailDataContext.percentAmi}%
           <br />
           <span style={{ fontWeight: "bold" }}>Program: </span>{" "}
           {getModalSentence()}
@@ -68,23 +68,25 @@ const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({ type }) => {
             <tr>
               <th style={{ whiteSpace: "nowrap" }}>Household Size</th>
               <th style={{ whiteSpace: "nowrap" }}>
-                {unitAvailData.selectedProgram
+                {unitAvailDataContext.selectedProgram
                   ? "Max Annual Income"
                   : ProgramLabelEnum.P6}
               </th>
-              {!unitAvailData.selectedProgram && (
+              {!unitAvailDataContext.selectedProgram && (
                 <th>{ProgramLabelEnum.P345}</th>
               )}
             </tr>
           </thead>
           <tbody>
-            {unitAvailData.selectedProgram &&
-              getModalData(unitAvailData)?.[0].map((percentData, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{formatCurrency(percentData)}</td>
-                </tr>
-              ))}
+            {unitAvailDataContext.selectedProgram &&
+              getModalData(unitAvailDataContext)?.[0].map(
+                (percentData, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{formatCurrency(percentData)}</td>
+                  </tr>
+                )
+              )}
           </tbody>
         </Table>
         <div className="pt-2 text-muted">

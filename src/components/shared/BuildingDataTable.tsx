@@ -54,18 +54,15 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const { type, data, tableParent } = props;
 
   const [showModal, setShowModal] = useState(false);
-  const { unitAvailData, setUnitAvailData } = useUnitAvailData();
+  const { setUnitAvailDataContext } = useUnitAvailData();
 
   const handleClose = () => {
     setShowModal(false);
   };
 
   const handleShowModal = (unitAvailData: UnitAvailData) => {
-    setUnitAvailData(unitAvailData);
+    setUnitAvailDataContext(unitAvailData);
     setShowModal(true);
-    if (type === TableTypeEnum.availData) {
-      setUnitAvailData(unitAvailData);
-    }
   };
 
   /** When household size is selected */
@@ -284,7 +281,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
         </tbody>
       </Table>
 
-      {unitAvailData && type === TableTypeEnum.availData && (
+      {type === TableTypeEnum.availData && (
         <Modal show={showModal} onHide={handleClose}>
           <IncomeLimitsModal type={type} />
 

@@ -19,14 +19,14 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
   shouldScroll,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const { unitAvailData, setUnitAvailData } = useUnitAvailData();
+  const { unitAvailDataContext, setUnitAvailDataContext } = useUnitAvailData();
 
   const handleClose = () => {
     setShowModal(false);
   };
 
   const handleShowModal = () => {
-    setUnitAvailData(null);
+    setUnitAvailDataContext(null);
     setShowModal(true);
   };
 
@@ -43,7 +43,7 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
       </Button>
 
       <Modal show={showModal} onHide={handleClose}>
-        {!unitAvailData ? (
+        {!unitAvailDataContext ? (
           <>
             <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
@@ -66,7 +66,7 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
             <Modal.Footer>
               <Button
                 variant="secondary"
-                onClick={() => setUnitAvailData(null)}
+                onClick={() => setUnitAvailDataContext(null)}
               >
                 Back
               </Button>
