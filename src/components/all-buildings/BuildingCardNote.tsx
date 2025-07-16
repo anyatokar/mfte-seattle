@@ -2,6 +2,7 @@ import { useState, useEffect, MutableRefObject } from "react";
 import { addNote } from "../../utils/firestoreUtils";
 import useDebounce from "../../hooks/useDebounce";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
+import { accountTypeEnum } from "../../types/enumTypes";
 import Form from "react-bootstrap/Form";
 
 export interface AllBuildingCardProps {
@@ -9,6 +10,7 @@ export interface AllBuildingCardProps {
   savedHomeData: ISavedBuilding;
   shouldScroll: MutableRefObject<boolean>;
   currentUserId: string;
+  accountType: accountTypeEnum | null;
 }
 
 const BuildingCardNote: React.FC<AllBuildingCardProps> = ({
@@ -16,25 +18,27 @@ const BuildingCardNote: React.FC<AllBuildingCardProps> = ({
   savedHomeData,
   shouldScroll,
   currentUserId,
+  accountType,
 }) => {
-  // Saved Buildings - note form
-  const originalNote = savedHomeData?.note || "";
+  const [updatedNote, setUpdatedNote] = useState(savedHomeData?.note || "");
 
-  const [updatedNote, setUpdatedNote] = useState(originalNote);
+  useEffect(() => {
+    setUpdatedNote(savedHomeData?.note || "");
+  }, [savedHomeData?.note]);
 
   // This runs every time component re-renders (on every keystroke).
   // But it only updates when user stops typing.
   const debouncedNote = useDebounce(updatedNote, 1000);
 
   useEffect(() => {
-    if (debouncedNote !== undefined && debouncedNote !== originalNote) {
+    if (debouncedNote !== undefined && debouncedNote !== savedHomeData?.note) {
       shouldScroll.current = false;
       handleNoteUpdate(debouncedNote);
     }
   }, [debouncedNote]);
 
   async function handleNoteUpdate(debouncedNote: string): Promise<void> {
-    return addNote(currentUserId, buildingID, debouncedNote)
+    return addNote(currentUserId, buildingID, debouncedNote, accountType)
       .then(() => {
         console.log("Note updated successfully.");
       })

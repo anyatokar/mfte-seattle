@@ -46,7 +46,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     isAgeRestricted,
   } = building;
 
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
 
   // All Buildings Page - save/saved button
   const [, /* modalState */ setModalState] = useContext(ModalContext);
@@ -54,9 +54,9 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
 
   function handleToggleSaveBuilding() {
     if (savedHomeData) {
-      deleteBuilding(currentUser?.uid, buildingID, buildingName);
+      deleteBuilding(currentUser?.uid, buildingID, buildingName, accountType);
     } else {
-      saveBuilding(currentUser?.uid, buildingID, buildingName);
+      saveBuilding(currentUser?.uid, buildingID, buildingName, accountType);
     }
     shouldScroll.current = false;
   }
@@ -218,6 +218,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
               savedHomeData={savedHomeData}
               shouldScroll={shouldScroll}
               currentUserId={currentUser.uid}
+              accountType={accountType}
             />
           </ListGroup.Item>
         ) : null}

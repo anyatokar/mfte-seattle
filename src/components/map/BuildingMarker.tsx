@@ -47,13 +47,13 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
 
   function handleToggleSaveBuilding() {
     if (savedHomeData) {
-      deleteBuilding(currentUser?.uid, buildingID, buildingName);
+      deleteBuilding(currentUser?.uid, buildingID, buildingName, accountType);
     } else {
-      saveBuilding(currentUser?.uid, buildingID, buildingName);
+      saveBuilding(currentUser?.uid, buildingID, buildingName, accountType);
     }
     shouldScroll.current = false;
   }
