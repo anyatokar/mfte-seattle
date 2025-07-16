@@ -6,22 +6,17 @@ import {
 } from "../../types/enumTypes";
 import { formatCurrency } from "../../utils/generalUtils";
 import { UnitAvailData } from "../../interfaces/IListing";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 
 type IncomeLimitsModalProps = {
   type: TableTypeEnum.availData;
   unitAvailData: UnitAvailData;
-  showModal?: any;
-  handleClose?: any;
 };
 
 const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({
   unitAvailData,
   type,
-  showModal,
-  handleClose,
 }) => {
   /** When household size is not selected */
   function getModalData(
@@ -52,7 +47,6 @@ const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({
   }
 
   return (
-    // <Modal show={showModal} onHide={handleClose}>
     <>
       <Modal.Header closeButton>
         <Modal.Title>Income Limits</Modal.Title>
@@ -109,12 +103,6 @@ const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({
         </div>
       </Modal.Body>
     </>
-    //   <Modal.Footer>
-    //     <Button variant="secondary" onClick={handleClose}>
-    //       Close
-    //     </Button>
-    //   </Modal.Footer>
-    // </Modal>
   );
 };
 

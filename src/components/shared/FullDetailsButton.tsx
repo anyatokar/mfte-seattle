@@ -19,14 +19,14 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
   shouldScroll,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState<UnitAvailData | null>(null);
+  const [incomeData, setIncomeData] = useState<UnitAvailData | null>(null);
 
   const handleClose = () => {
     setShowModal(false);
-    setModalContent(null);
   };
 
   const handleShowModal = () => {
+    setIncomeData(null);
     setShowModal(true);
   };
 
@@ -39,11 +39,11 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
         variant="outline-dark"
         onClick={handleShowModal}
       >
-        Details
+        Full Info
       </Button>
 
       <Modal show={showModal} onHide={handleClose}>
-        {!modalContent ? (
+        {!incomeData ? (
           <>
             <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
@@ -51,7 +51,7 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
                 building={building}
                 savedHomeData={savedHomeData}
                 shouldScroll={shouldScroll}
-                setModalContent={setModalContent}
+                setIncomeData={setIncomeData}
               />
             </Modal.Body>
             <Modal.Footer>
@@ -64,11 +64,11 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
           <>
             <IncomeLimitsModal
               type={TableTypeEnum.availData}
-              unitAvailData={modalContent}
+              unitAvailData={incomeData}
             />
 
             <Modal.Footer>
-              <Button variant="secondary" onClick={() => setModalContent(null)}>
+              <Button variant="secondary" onClick={() => setIncomeData(null)}>
                 Back
               </Button>
             </Modal.Footer>
