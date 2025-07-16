@@ -85,51 +85,6 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
               <div>{address.neighborhood}</div>
 
               <div className="mt-2">
-                {currentUser ? (
-                  savedHomeData ? (
-                    <Stack direction={"horizontal"} gap={2}>
-                      <WebsiteButton building={building} />
-                      <SaveButton
-                        isSaved={true}
-                        onClickCallback={handleToggleSaveBuilding}
-                      />
-                      <FullDetailsButton
-                        building={building}
-                        savedHomeData={savedHomeData}
-                        shouldScroll={shouldScroll}
-                      />
-                    </Stack>
-                  ) : (
-                    <Stack direction={"horizontal"} gap={2}>
-                      <WebsiteButton building={building} />
-                      <SaveButton
-                        isSaved={false}
-                        onClickCallback={handleToggleSaveBuilding}
-                      />
-                      <FullDetailsButton
-                        building={building}
-                        savedHomeData={savedHomeData}
-                        shouldScroll={shouldScroll}
-                      />
-                    </Stack>
-                  )
-                ) : (
-                  <Stack direction={"horizontal"} gap={2}>
-                    <WebsiteButton building={building} />
-                    <SaveButton
-                      isSaved={false}
-                      onClickCallback={handleShowLogin}
-                    />
-                    <FullDetailsButton
-                      building={building}
-                      savedHomeData={savedHomeData}
-                      shouldScroll={shouldScroll}
-                    />
-                  </Stack>
-                )}
-              </div>
-
-              <div className="my-2">
                 <AddressAndPhone
                   buildingName={buildingName}
                   address={address}
@@ -137,15 +92,51 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                   withLinks={true}
                 />
               </div>
+
+              <div className="mt-2 d-none d-md-flex">
+                <Stack direction="horizontal" gap={2}>
+                  <WebsiteButton building={building} />
+                  <SaveButton
+                    isSaved={currentUser && savedHomeData ? true : false}
+                    onClickCallback={
+                      currentUser ? handleToggleSaveBuilding : handleShowLogin
+                    }
+                  />
+                  <FullDetailsButton
+                    building={building}
+                    savedHomeData={savedHomeData}
+                    shouldScroll={shouldScroll}
+                  />
+                </Stack>
+              </div>
+
+              <div className="mt-2 d-flex d-md-none">
+                <Stack gap={2}>
+                  <WebsiteButton building={building} />
+                  <SaveButton
+                    isSaved={currentUser && savedHomeData ? true : false}
+                    onClickCallback={
+                      currentUser ? handleToggleSaveBuilding : handleShowLogin
+                    }
+                  />
+                  <FullDetailsButton
+                    building={building}
+                    savedHomeData={savedHomeData}
+                    shouldScroll={shouldScroll}
+                  />
+                </Stack>
+              </div>
             </>
           }
         >
           {willShowAvailTable(building.listing) && (
-            <BuildingDataTable
-              type={TableTypeEnum.availData}
-              data={building.listing.availDataArray}
-              tableParent={TableParentEnum.MARKER}
-            />
+            <div className="my-2 mt-2 d-none d-md-flex">
+              <BuildingDataTable
+                type={TableTypeEnum.availData}
+                data={building.listing.availDataArray}
+                tableParent={TableParentEnum.MARKER}
+              />
+            </div>
           )}
         </InfoWindow>
       )}
