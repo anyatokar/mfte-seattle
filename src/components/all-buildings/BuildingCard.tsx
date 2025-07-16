@@ -194,7 +194,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   buildingName={buildingName}
                   address={address}
                   contact={contact}
-                  withLinks={true}
+                  parentElement={TableParentEnum.BUILDING_CARD}
                 />
               </div>
             </Tab>

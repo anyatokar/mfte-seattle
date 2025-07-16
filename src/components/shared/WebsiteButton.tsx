@@ -16,7 +16,7 @@ const WebsiteButton: React.FC<WebsiteButtonProps> = ({
 
   return (
     <Button
-      variant="primary"
+      variant="outline-dark"
       size="sm"
       id="building-url"
       target="_blank"

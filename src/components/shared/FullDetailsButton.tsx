@@ -34,7 +34,7 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
   return (
     <>
       <Button
-        variant="outline-dark"
+        variant="primary"
         size="sm"
         id="full-details"
         onClick={handleShowModal}
