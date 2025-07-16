@@ -38,7 +38,7 @@ interface AvailDataProps {
   type: TableTypeEnum.availData;
   data: AvailDataArray;
   tableParent: TableParentEnum;
-  setIncomeData: React.Dispatch<React.SetStateAction<UnitAvailData | null>>;
+  setUnitAvailData: React.Dispatch<React.SetStateAction<UnitAvailData | null>>;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
@@ -65,8 +65,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const handleShowModal = (unitAvailData: UnitAvailData) => {
     setUnitAvailData(unitAvailData);
     setShowModal(true);
-    if (type === TableTypeEnum.availData && props.setIncomeData) {
-      props.setIncomeData(unitAvailData);
+    if (type === TableTypeEnum.availData && props.setUnitAvailData) {
+      props.setUnitAvailData(unitAvailData);
     }
   };
 
@@ -288,10 +288,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
       {unitAvailData && type === TableTypeEnum.availData && (
         <Modal show={showModal} onHide={handleClose}>
-          <IncomeLimitsModal
-            type={type}
-            unitAvailData={unitAvailData}
-          />
+          <IncomeLimitsModal type={type} unitAvailData={unitAvailData} />
 
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

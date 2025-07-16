@@ -29,14 +29,14 @@ export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
-  setIncomeData: React.Dispatch<React.SetStateAction<UnitAvailData | null>>;
+  setUnitAvailData: React.Dispatch<React.SetStateAction<UnitAvailData | null>>;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
   building,
   savedHomeData,
   shouldScroll,
-  setIncomeData,
+  setUnitAvailData,
 }) => {
   const {
     buildingID,
@@ -179,7 +179,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   type={TableTypeEnum.availData}
                   data={listing.availDataArray}
                   tableParent={TableParentEnum.BUILDING_CARD}
-                  setIncomeData={setIncomeData}
+                  setUnitAvailData={setUnitAvailData}
                 />
                 <i>{getDaysAgoText()}</i>
                 {listing.description && (
