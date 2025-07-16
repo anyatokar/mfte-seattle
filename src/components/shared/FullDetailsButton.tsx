@@ -1,9 +1,9 @@
 import { MutableRefObject, useState } from "react";
+import { useUnitAvailData } from "../../contexts/UnitAvailDataContext";
 import IncomeLimitsModal from "./IncomeLimitsModal";
 import BuildingCard from "../all-buildings/BuildingCard";
 import { TableTypeEnum } from "../../types/enumTypes";
 import IBuilding from "../../interfaces/IBuilding";
-import { UnitAvailData } from "../../interfaces/IListing";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -19,9 +19,7 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
   shouldScroll,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const [unitAvailData, setUnitAvailData] = useState<UnitAvailData | null>(
-    null
-  );
+  const { unitAvailData, setUnitAvailData } = useUnitAvailData();
 
   const handleClose = () => {
     setShowModal(false);
@@ -53,7 +51,6 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
                 building={building}
                 savedHomeData={savedHomeData}
                 shouldScroll={shouldScroll}
-                setUnitAvailData={setUnitAvailData}
               />
             </Modal.Body>
             <Modal.Footer>
@@ -64,10 +61,7 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
           </>
         ) : (
           <>
-            <IncomeLimitsModal
-              type={TableTypeEnum.availData}
-              unitAvailData={unitAvailData}
-            />
+            <IncomeLimitsModal type={TableTypeEnum.availData} />
 
             <Modal.Footer>
               <Button

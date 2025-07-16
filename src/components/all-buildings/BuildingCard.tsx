@@ -15,7 +15,6 @@ import {
   TableTypeEnum,
 } from "../../types/enumTypes";
 import IBuilding from "../../interfaces/IBuilding";
-import { UnitAvailData } from "../../interfaces/IListing";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
 
 import Badge from "react-bootstrap/Badge";
@@ -29,14 +28,12 @@ export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
-  setUnitAvailData: React.Dispatch<React.SetStateAction<UnitAvailData | null>>;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
   building,
   savedHomeData,
   shouldScroll,
-  setUnitAvailData,
 }) => {
   const {
     buildingID,
@@ -179,7 +176,6 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   type={TableTypeEnum.availData}
                   data={listing.availDataArray}
                   tableParent={TableParentEnum.BUILDING_CARD}
-                  setUnitAvailData={setUnitAvailData}
                 />
                 <i>{getDaysAgoText()}</i>
                 {listing.description && (

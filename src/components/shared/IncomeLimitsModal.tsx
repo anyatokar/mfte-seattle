@@ -1,3 +1,4 @@
+import { useUnitAvailData } from "../../contexts/UnitAvailDataContext";
 import { incomeTables } from "./BuildingDataTable";
 import {
   TableTypeEnum,
@@ -11,13 +12,12 @@ import Table from "react-bootstrap/Table";
 
 type IncomeLimitsModalProps = {
   type: TableTypeEnum.availData;
-  unitAvailData: UnitAvailData;
 };
 
-const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({
-  unitAvailData,
-  type,
-}) => {
+const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({ type }) => {
+  const { unitAvailData } = useUnitAvailData();
+  if (!unitAvailData) return;
+
   /** When household size is not selected */
   function getModalData(
     unitAvailData: UnitAvailData

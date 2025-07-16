@@ -2,6 +2,7 @@ import { Fragment, ReactNode, useState } from "react";
 import IncomeLimitsModal from "./IncomeLimitsModal";
 import { formatCurrency, formatDate } from "../../utils/generalUtils";
 import { useHousehold } from "../../contexts/HouseholdContext";
+import { useUnitAvailData } from "../../contexts/UnitAvailDataContext";
 import { p6maxIncomeData } from "../../dataTables/P6-income-limits";
 import { p345maxIncomeData } from "../../dataTables/P345-income-limits";
 import { archIncomeData } from "../../dataTables/ARCH-income-limits";
@@ -38,7 +39,6 @@ interface AvailDataProps {
   type: TableTypeEnum.availData;
   data: AvailDataArray;
   tableParent: TableParentEnum;
-  setUnitAvailData: React.Dispatch<React.SetStateAction<UnitAvailData | null>>;
 }
 
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
@@ -54,9 +54,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const { type, data, tableParent } = props;
 
   const [showModal, setShowModal] = useState(false);
-  const [unitAvailData, setUnitAvailData] = useState<UnitAvailData | null>(
-    null
-  );
+  const { unitAvailData, setUnitAvailData } = useUnitAvailData();
 
   const handleClose = () => {
     setShowModal(false);
@@ -65,8 +63,8 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const handleShowModal = (unitAvailData: UnitAvailData) => {
     setUnitAvailData(unitAvailData);
     setShowModal(true);
-    if (type === TableTypeEnum.availData && props.setUnitAvailData) {
-      props.setUnitAvailData(unitAvailData);
+    if (type === TableTypeEnum.availData && setUnitAvailData) {
+      setUnitAvailData(unitAvailData);
     }
   };
 
@@ -288,7 +286,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
 
       {unitAvailData && type === TableTypeEnum.availData && (
         <Modal show={showModal} onHide={handleClose}>
-          <IncomeLimitsModal type={type} unitAvailData={unitAvailData} />
+          <IncomeLimitsModal type={type} />
 
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
