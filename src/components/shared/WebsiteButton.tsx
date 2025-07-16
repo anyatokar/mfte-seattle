@@ -2,10 +2,12 @@ import { Button } from "react-bootstrap";
 import IBuilding from "../../interfaces/IBuilding";
 import { willShowAvailTable } from "../../utils/generalUtils";
 
-interface WebsiteButtonProps {
+type WebsiteButtonProps = {
   building: IBuilding;
-}
-const WebsiteButton: React.FC<WebsiteButtonProps> = ({ building }) => {
+};
+const WebsiteButton: React.FC<WebsiteButtonProps> = ({
+  building,
+}): JSX.Element => {
   const hasListing = willShowAvailTable(building.listing);
 
   const websiteUrl = hasListing
@@ -14,11 +16,11 @@ const WebsiteButton: React.FC<WebsiteButtonProps> = ({ building }) => {
 
   return (
     <Button
+      variant="primary"
       size="sm"
       id="building-url"
       target="_blank"
       rel="noreferrer"
-      variant="primary"
       href={websiteUrl}
       title={`Open new tab: ${websiteUrl}`}
     >

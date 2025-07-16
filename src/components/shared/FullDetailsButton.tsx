@@ -8,16 +8,17 @@ import ISavedBuilding from "../../interfaces/ISavedBuilding";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-interface FullDetailsButtonProps {
+type FullDetailsButtonProps = {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
-}
+};
+
 const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
   building,
   savedHomeData,
   shouldScroll,
-}) => {
+}): JSX.Element => {
   const [showModal, setShowModal] = useState(false);
   const { unitAvailDataContext, setUnitAvailDataContext } = useUnitAvailData();
 
@@ -31,12 +32,11 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
   };
 
   return (
-    // Button only visible on small screens
-    <div className="d-block d-md-none">
+    <>
       <Button
+        variant="outline-dark"
         size="sm"
         id="full-details"
-        variant="outline-dark"
         onClick={handleShowModal}
       >
         Full Info
@@ -74,7 +74,7 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
           </>
         )}
       </Modal>
-    </div>
+    </>
   );
 };
 

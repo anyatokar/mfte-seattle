@@ -93,6 +93,7 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                 />
               </div>
 
+              {/* Large screens only */}
               <div className="mt-2 d-none d-md-flex">
                 <Stack direction="horizontal" gap={2}>
                   <WebsiteButton building={building} />
@@ -102,14 +103,10 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
                       currentUser ? handleToggleSaveBuilding : handleShowLogin
                     }
                   />
-                  <FullDetailsButton
-                    building={building}
-                    savedHomeData={savedHomeData}
-                    shouldScroll={shouldScroll}
-                  />
                 </Stack>
               </div>
 
+              {/* Small screens only */}
               <div className="mt-2 d-flex d-md-none">
                 <Stack gap={2}>
                   <WebsiteButton building={building} />
