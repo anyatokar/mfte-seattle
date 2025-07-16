@@ -63,7 +63,7 @@ const BuildingDataTable: React.FC<BuildingDataTableProps> = (props) => {
   const handleShowModal = (unitAvailData: UnitAvailData) => {
     setUnitAvailData(unitAvailData);
     setShowModal(true);
-    if (type === TableTypeEnum.availData && setUnitAvailData) {
+    if (type === TableTypeEnum.availData) {
       setUnitAvailData(unitAvailData);
     }
   };
