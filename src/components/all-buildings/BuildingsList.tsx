@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import { MutableRefObject, useEffect, useRef } from "react";
 import BuildingCard from "./BuildingCard";
 import { willShowAvailTable } from "../../utils/generalUtils";
 import IBuilding from "../../interfaces/IBuilding";
@@ -33,11 +33,20 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   shouldScroll,
   selectedBuildingId,
 }) => {
+  const buildingRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+    if (selectedBuildingId && buildingRefs.current[selectedBuildingId]) {
+      buildingRefs.current[selectedBuildingId]?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [selectedBuildingId]);
+
   if (!resultBuildingsUnsorted) {
     return null;
   }
-
-  console.log(selectedBuildingId);
 
   return (
     <Container fluid>
@@ -65,7 +74,9 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
             {resultBuildingsUnsorted.map((building: IBuilding) => (
               <Col
                 key={building.buildingID}
-                xs={12}
+                ref={(el: HTMLDivElement | null) => {
+                  buildingRefs.current[building.buildingID] = el;
+                }}
                 sm={willShowAvailTable(building.listing) ? 12 : 6}
                 // Split screen starts at md
                 className="p-1"
