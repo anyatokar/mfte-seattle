@@ -12,6 +12,8 @@ interface IAllMarkersProps {
   buildingsToMap: IBuilding[];
   shouldScroll: MutableRefObject<boolean>;
   savedBuildings: ISavedBuilding[];
+  setSelectedBuilding: React.Dispatch<React.SetStateAction<IBuilding | null>>;
+  selectedBuilding: IBuilding | null;
 }
 
 export type MarkersObj = {
@@ -22,12 +24,11 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
   buildingsToMap,
   shouldScroll,
   savedBuildings,
+  setSelectedBuilding,
+  selectedBuilding,
 }) => {
   const map = useMap();
   const [markers, setMarkers] = useState<MarkersObj>({});
-  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
-    null
-  );
 
   const clusterer = useRef<MarkerClusterer | null>(null);
 
