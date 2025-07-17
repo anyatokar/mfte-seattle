@@ -20,10 +20,7 @@ import { genericSearch } from "../../utils/genericSearch";
 import { buildingsFilter } from "../../utils/buildingsFilter";
 import { filterReducer } from "../../reducers/filterReducer";
 
-import IBuilding, {
-  PercentAmi,
-  SearchFields,
-} from "../../interfaces/IBuilding";
+import { PercentAmi, SearchFields } from "../../interfaces/IBuilding";
 import IPage from "../../interfaces/IPage";
 import { BedroomsKeyEnum } from "../../types/enumTypes";
 
@@ -41,7 +38,7 @@ export type HandleCheckboxChange = (
 const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
-  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
+  const [selectedBuildingId, setSelectedBuildingId] = useState<string | null>(
     null
   );
 
@@ -167,8 +164,8 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
               resultBuildingsUnsorted={resultBuildingsUnsorted}
               savedBuildings={savedBuildings}
               shouldScroll={shouldScroll}
-              setSelectedBuilding={setSelectedBuilding}
-              selectedBuilding={selectedBuilding}
+              setSelectedBuildingId={setSelectedBuildingId}
+              selectedBuildingId={selectedBuildingId}
             />
           </Col>
           <Col
@@ -185,7 +182,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
               resultBuildingsUnsorted={resultBuildingsUnsorted}
               savedBuildings={savedBuildings}
               shouldScroll={shouldScroll}
-              selectedBuilding={selectedBuilding}
+              selectedBuildingId={selectedBuildingId}
             />
           </Col>
         </Row>
@@ -228,8 +225,8 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
                 savedBuildings={savedBuildings}
                 mapHeight={mapHeight}
                 shouldScroll={shouldScroll}
-                setSelectedBuilding={setSelectedBuilding}
-                selectedBuilding={selectedBuilding}
+                setSelectedBuildingId={setSelectedBuildingId}
+                selectedBuildingId={selectedBuildingId}
               />
             </Tab.Pane>
             <Tab.Pane eventKey="list">
@@ -238,7 +235,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
                 shouldScroll={shouldScroll}
-                selectedBuilding={selectedBuilding}
+                selectedBuildingId={selectedBuildingId}
               />
             </Tab.Pane>
           </Tab.Content>

@@ -14,7 +14,7 @@ type AllBuildingsListProps = {
   resultBuildingsUnsorted: IBuilding[];
   savedBuildings: ISavedBuilding[];
   shouldScroll: MutableRefObject<boolean>;
-  selectedBuilding: IBuilding | null;
+  selectedBuildingId: string | null;
 };
 
 export const getSavedData = (
@@ -31,13 +31,13 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   resultBuildingsUnsorted,
   savedBuildings,
   shouldScroll,
-  selectedBuilding,
+  selectedBuildingId,
 }) => {
   if (!resultBuildingsUnsorted) {
     return null;
   }
 
-  console.log(selectedBuilding)
+  console.log(selectedBuildingId);
 
   return (
     <Container fluid>
