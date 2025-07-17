@@ -239,3 +239,20 @@ textarea {
   padding: 8px 16px !important;
 }
 /* end of map and building lists */
+
+@keyframes pulseBorder {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+.selected-card-animation {
+  animation: pulseBorder 10s ease-in;
+  animation-iteration-count: 1;
+}

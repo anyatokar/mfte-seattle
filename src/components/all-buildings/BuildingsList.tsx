@@ -82,6 +82,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                 className="p-1"
               >
                 <BuildingCard
+                  isSelected={selectedBuildingId === building.buildingID}
                   building={building}
                   savedHomeData={getSavedData(savedBuildings, building)}
                   shouldScroll={shouldScroll}

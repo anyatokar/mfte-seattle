@@ -28,12 +28,14 @@ export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
+  isSelected: boolean;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
   building,
   savedHomeData,
   shouldScroll,
+  isSelected,
 }) => {
   const {
     buildingID,
@@ -150,15 +152,21 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     }
   }
 
+  function getBorder() {
+    if (isSelected) {
+      return "primary";
+    }
+
+    if (listing?.listingStatus === listingStatusEnum.ACTIVE) {
+      return listing?.availDataArray.length > 0 ? "success" : "danger";
+    }
+    return "";
+  }
+
   return (
     <Card
-      border={
-        listing?.listingStatus === listingStatusEnum.ACTIVE
-          ? listing?.availDataArray.length > 0
-            ? "success"
-            : "danger"
-          : ""
-      }
+      border={getBorder()}
+      className={isSelected ? "card mb-3 selected-card-animation" : "card mb-3"}
     >
       {header}
       <ListGroup variant="flush" className="mb-2">
