@@ -182,6 +182,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
               resultBuildingsUnsorted={resultBuildingsUnsorted}
               savedBuildings={savedBuildings}
               shouldScroll={shouldScroll}
+              setSelectedBuildingId={setSelectedBuildingId}
               selectedBuildingId={selectedBuildingId}
             />
           </Col>
@@ -235,6 +236,7 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
                 shouldScroll={shouldScroll}
+                setSelectedBuildingId={setSelectedBuildingId}
                 selectedBuildingId={selectedBuildingId}
               />
             </Tab.Pane>

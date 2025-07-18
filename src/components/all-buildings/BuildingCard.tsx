@@ -29,6 +29,7 @@ export interface AllBuildingCardProps {
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
   isSelected: boolean;
+  setSelectedBuildingId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
@@ -36,6 +37,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   savedHomeData,
   shouldScroll,
   isSelected,
+  setSelectedBuildingId,
 }) => {
   const {
     buildingID,
@@ -166,7 +168,9 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   return (
     <Card
       border={getBorder()}
-      className={isSelected ? "card mb-3 selected-card-animation" : "card mb-3"}
+      className={"mb-3 card-hover-raise"}
+      style={{ cursor: "pointer" }}
+      onClick={() => setSelectedBuildingId(building.buildingID)}
     >
       {header}
       <ListGroup variant="flush" className="mb-2">

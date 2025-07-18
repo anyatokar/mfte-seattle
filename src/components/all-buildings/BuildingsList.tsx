@@ -14,6 +14,7 @@ type AllBuildingsListProps = {
   resultBuildingsUnsorted: IBuilding[];
   savedBuildings: ISavedBuilding[];
   shouldScroll: MutableRefObject<boolean>;
+  setSelectedBuildingId: React.Dispatch<React.SetStateAction<string | null>>;
   selectedBuildingId: string | null;
 };
 
@@ -31,6 +32,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   resultBuildingsUnsorted,
   savedBuildings,
   shouldScroll,
+  setSelectedBuildingId,
   selectedBuildingId,
 }) => {
   const buildingRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -83,6 +85,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
               >
                 <BuildingCard
                   isSelected={selectedBuildingId === building.buildingID}
+                  setSelectedBuildingId={setSelectedBuildingId}
                   building={building}
                   savedHomeData={getSavedData(savedBuildings, building)}
                   shouldScroll={shouldScroll}
