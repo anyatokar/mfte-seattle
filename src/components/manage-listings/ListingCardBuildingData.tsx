@@ -31,7 +31,7 @@ const ListingCardBuildingData: React.FC<ListingCardBuildingDataProps> = ({
         buildingName={buildingName}
         address={address}
         contact={contact}
-        withLinks={false}
+        parentElement={TableParentEnum.LISTING_CARD}
       />
       <Card.Text className="mt-3 mb-0">
         <strong>Building URL:</strong>{" "}

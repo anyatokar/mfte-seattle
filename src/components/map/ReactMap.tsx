@@ -22,6 +22,8 @@ const ReactMap: React.FC<IMap> = ({
   savedBuildings,
   mapHeight,
   shouldScroll,
+  setSelectedBuildingId,
+  selectedBuildingId,
 }) => {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
 
@@ -66,6 +68,8 @@ const ReactMap: React.FC<IMap> = ({
                   buildingsToMap={resultBuildingsUnsorted}
                   shouldScroll={shouldScroll}
                   savedBuildings={savedBuildings}
+                  setSelectedBuildingId={setSelectedBuildingId}
+                  selectedBuildingId={selectedBuildingId}
                 />
               </Map>
             </Col>

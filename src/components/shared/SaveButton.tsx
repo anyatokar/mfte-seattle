@@ -1,9 +1,9 @@
 import { Button } from "react-bootstrap";
 
-interface SaveButtonProps {
+type SaveButtonProps = {
   isSaved: boolean;
   onClickCallback: () => void;
-}
+};
 
 const SaveButton: React.FC<SaveButtonProps> = ({
   isSaved,

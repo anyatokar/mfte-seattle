@@ -239,3 +239,16 @@ textarea {
   padding: 8px 16px !important;
 }
 /* end of map and building lists */
+
+/* building card animations */
+.card-hover-raise {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card-hover-raise:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+/* end of building card animations */

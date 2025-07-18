@@ -3,7 +3,6 @@ import { deleteBuilding, saveBuilding } from "../../utils/firestoreUtils";
 import { calculateDaysAgo, willShowAvailTable } from "../../utils/generalUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import { ModalContext, ModalState } from "../../contexts/ModalContext";
-
 import { AddressAndPhone } from "../shared/AddressAndPhone";
 import BuildingCardNote from "./BuildingCardNote";
 import BuildingDataTable from "../shared/BuildingDataTable";
@@ -29,12 +28,16 @@ export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
+  isSelected: boolean;
+  setSelectedBuildingId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
   building,
   savedHomeData,
   shouldScroll,
+  isSelected,
+  setSelectedBuildingId,
 }) => {
   const {
     buildingID,
@@ -47,7 +50,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     isAgeRestricted,
   } = building;
 
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
 
   // All Buildings Page - save/saved button
   const [, /* modalState */ setModalState] = useContext(ModalContext);
@@ -55,9 +58,9 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
 
   function handleToggleSaveBuilding() {
     if (savedHomeData) {
-      deleteBuilding(currentUser?.uid, buildingID, buildingName);
+      deleteBuilding(currentUser?.uid, buildingID, buildingName, accountType);
     } else {
-      saveBuilding(currentUser?.uid, buildingID, buildingName);
+      saveBuilding(currentUser?.uid, buildingID, buildingName, accountType);
     }
     shouldScroll.current = false;
   }
@@ -151,15 +154,23 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     }
   }
 
+  function getBorder() {
+    if (isSelected) {
+      return "primary";
+    }
+
+    if (listing?.listingStatus === listingStatusEnum.ACTIVE) {
+      return listing?.availDataArray.length > 0 ? "success" : "danger";
+    }
+    return "";
+  }
+
   return (
     <Card
-      border={
-        listing?.listingStatus === listingStatusEnum.ACTIVE
-          ? listing?.availDataArray.length > 0
-            ? "success"
-            : "danger"
-          : ""
-      }
+      border={getBorder()}
+      className={"mb-3 card-hover-raise"}
+      style={{ cursor: "pointer" }}
+      onClick={() => setSelectedBuildingId(building.buildingID)}
     >
       {header}
       <ListGroup variant="flush" className="mb-2">
@@ -195,7 +206,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   buildingName={buildingName}
                   address={address}
                   contact={contact}
-                  withLinks={true}
+                  parentElement={TableParentEnum.BUILDING_CARD}
                 />
               </div>
             </Tab>
@@ -219,6 +230,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
               savedHomeData={savedHomeData}
               shouldScroll={shouldScroll}
               currentUserId={currentUser.uid}
+              accountType={accountType}
             />
           </ListGroup.Item>
         ) : null}

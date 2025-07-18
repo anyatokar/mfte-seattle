@@ -9,16 +9,13 @@ import {
   useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 import { Marker } from "@googlemaps/markerclusterer";
-
 import { saveBuilding, deleteBuilding } from "../../utils/firestoreUtils";
-import { willShowAvailTable } from "../../utils/generalUtils";
-import { TableParentEnum, TableTypeEnum } from "../../types/enumTypes";
-
 import { MarkersObj } from "./AllMarkers";
 import { AddressAndPhone } from "../shared/AddressAndPhone";
-import BuildingDataTable from "../shared/BuildingDataTable";
+import FullDetailsButton from "../shared/FullDetailsButton";
 import SaveButton from "../shared/SaveButton";
 import WebsiteButton from "../../components/shared/WebsiteButton";
+import { TableParentEnum } from "../../types/enumTypes";
 import IBuilding from "../../interfaces/IBuilding";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
 import Stack from "react-bootstrap/Stack";
@@ -50,13 +47,13 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
   const [, /* modalState */ setModalState] = useContext(ModalContext);
   const handleShowLogin = () => setModalState(ModalState.LOGIN);
 
-  const { currentUser } = useAuth();
+  const { currentUser, accountType } = useAuth();
 
   function handleToggleSaveBuilding() {
     if (savedHomeData) {
-      deleteBuilding(currentUser?.uid, buildingID, buildingName);
+      deleteBuilding(currentUser?.uid, buildingID, buildingName, accountType);
     } else {
-      saveBuilding(currentUser?.uid, buildingID, buildingName);
+      saveBuilding(currentUser?.uid, buildingID, buildingName, accountType);
     }
     shouldScroll.current = false;
   }
@@ -83,56 +80,35 @@ const BuildingMarker: React.FC<IBuildingMarkerProps> = ({
           headerContent={
             <>
               <h6 className="mb-0">{buildingName}</h6>
-              <div>{address.neighborhood}</div>
-
-              <div className="mt-2">
-                {currentUser ? (
-                  savedHomeData ? (
-                    <Stack direction={"horizontal"} gap={2}>
-                      <WebsiteButton building={building} />
-                      <SaveButton
-                        isSaved={true}
-                        onClickCallback={handleToggleSaveBuilding}
-                      />
-                    </Stack>
-                  ) : (
-                    <Stack direction={"horizontal"} gap={2}>
-                      <WebsiteButton building={building} />
-                      <SaveButton
-                        isSaved={false}
-                        onClickCallback={handleToggleSaveBuilding}
-                      />
-                    </Stack>
-                  )
-                ) : (
-                  <Stack direction={"horizontal"} gap={2}>
-                    <WebsiteButton building={building} />
-                    <SaveButton
-                      isSaved={false}
-                      onClickCallback={handleShowLogin}
-                    />
-                  </Stack>
-                )}
-              </div>
-
-              <div className="my-2">
-                <AddressAndPhone
-                  buildingName={buildingName}
-                  address={address}
-                  contact={contact}
-                  withLinks={true}
-                />
-              </div>
+              {address.neighborhood}
             </>
           }
         >
-          {willShowAvailTable(building.listing) && (
-            <BuildingDataTable
-              type={TableTypeEnum.availData}
-              data={building.listing.availDataArray}
-              tableParent={TableParentEnum.MARKER}
-            />
-          )}
+          <AddressAndPhone
+            buildingName={buildingName}
+            address={address}
+            contact={contact}
+            parentElement={TableParentEnum.MARKER}
+          />
+
+          <div className="mt-2">
+            <Stack direction="horizontal" gap={1}>
+              <div className="d-flex d-md-none">
+                <FullDetailsButton
+                  building={building}
+                  savedHomeData={savedHomeData}
+                  shouldScroll={shouldScroll}
+                />
+              </div>
+              <WebsiteButton building={building} />
+              <SaveButton
+                isSaved={currentUser && savedHomeData ? true : false}
+                onClickCallback={
+                  currentUser ? handleToggleSaveBuilding : handleShowLogin
+                }
+              />
+            </Stack>
+          </div>
         </InfoWindow>
       )}
     </AdvancedMarker>

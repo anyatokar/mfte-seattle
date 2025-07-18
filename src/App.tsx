@@ -14,6 +14,7 @@ import { AllBuildingsProvider } from "./contexts/AllBuildingsContext";
 import { HouseholdProvider } from "./contexts/HouseholdContext";
 import { ModalContext, ModalState } from "./contexts/ModalContext";
 import { TempBuildingsProvider } from "./contexts/TempBuildingsContext";
+import { UnitAvailDataProvider } from "./contexts/UnitAvailDataContext";
 
 const Application: React.FC = () => {
   const modalStateHook = useState(ModalState.HIDDEN);
@@ -31,27 +32,29 @@ const Application: React.FC = () => {
               <AllBuildingsProvider>
                 <TempBuildingsProvider>
                   <HouseholdProvider>
-                    <Routes>
-                      {privateRoutes.map((route) => (
-                        <Route
-                          key={route.name}
-                          path={route.path}
-                          element={
-                            <PrivateRoute name={route.name}>
-                              <route.component />
-                            </PrivateRoute>
-                          }
-                        />
-                      ))}
+                    <UnitAvailDataProvider>
+                      <Routes>
+                        {privateRoutes.map((route) => (
+                          <Route
+                            key={route.name}
+                            path={route.path}
+                            element={
+                              <PrivateRoute name={route.name}>
+                                <route.component />
+                              </PrivateRoute>
+                            }
+                          />
+                        ))}
 
-                      {publicRoutes.map((route) => (
-                        <Route
-                          key={route.name}
-                          path={route.path}
-                          element={<route.component topNavRef={topNavRef} />}
-                        />
-                      ))}
-                    </Routes>
+                        {publicRoutes.map((route) => (
+                          <Route
+                            key={route.name}
+                            path={route.path}
+                            element={<route.component topNavRef={topNavRef} />}
+                          />
+                        ))}
+                      </Routes>
+                    </UnitAvailDataProvider>
                   </HouseholdProvider>
                 </TempBuildingsProvider>
               </AllBuildingsProvider>
