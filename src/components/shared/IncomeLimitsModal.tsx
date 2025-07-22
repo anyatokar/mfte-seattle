@@ -94,7 +94,7 @@ const IncomeLimitsModal: React.FC<IncomeLimitsModalProps> = ({ type }) => {
           management. Max annual income limit data sourced from{" "}
           <a
             id="income-and-rent-limits"
-            href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimitsModal.pdf"
+            href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf"
             title="Income and Rent Limits (FY 2025)"
             target="_blank"
             rel="noreferrer"
