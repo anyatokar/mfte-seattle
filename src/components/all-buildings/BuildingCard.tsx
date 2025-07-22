@@ -8,8 +8,8 @@ import BuildingCardNote from "./BuildingCardNote";
 import BuildingDataTable from "../shared/BuildingDataTable";
 import SaveButton from "../shared/SaveButton";
 import WebsiteButton from "../shared/WebsiteButton";
-
 import {
+  BuildingCardEnum,
   listingStatusEnum,
   TableParentEnum,
   TableTypeEnum,
@@ -28,8 +28,9 @@ export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
-  isSelected: boolean;
-  setSelectedBuildingId: React.Dispatch<React.SetStateAction<string | null>>;
+  parentComponent: BuildingCardEnum;
+  isSelected?: boolean;
+  setSelectedBuildingId?: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
@@ -38,6 +39,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   shouldScroll,
   isSelected,
   setSelectedBuildingId,
+  parentComponent,
 }) => {
   const {
     buildingID,
@@ -168,9 +170,9 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
   return (
     <Card
       border={getBorder()}
-      className={"mb-3 card-hover-raise"}
+      className={`mb-3 ${parentComponent === BuildingCardEnum.BUILDING_LIST ? "card-hover-raise" : ""}`}
       style={{ cursor: "pointer" }}
-      onClick={() => setSelectedBuildingId(building.buildingID)}
+      onClick={() => setSelectedBuildingId?.(building.buildingID)}
     >
       {header}
       <ListGroup variant="flush" className="mb-2">

@@ -3,6 +3,7 @@ import BuildingCard from "./BuildingCard";
 import { willShowAvailTable } from "../../utils/generalUtils";
 import IBuilding from "../../interfaces/IBuilding";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
+import { BuildingCardEnum } from "../../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -89,6 +90,7 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
                   building={building}
                   savedHomeData={getSavedData(savedBuildings, building)}
                   shouldScroll={shouldScroll}
+                  parentComponent={BuildingCardEnum.BUILDING_LIST}
                 />
               </Col>
             ))}
