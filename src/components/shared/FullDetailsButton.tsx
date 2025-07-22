@@ -45,7 +45,7 @@ const FullDetailsButton: React.FC<FullDetailsButtonProps> = ({
       <Modal show={showModal} onHide={handleClose}>
         {!unitAvailDataContext ? (
           <>
-            <Modal.Header closeButton></Modal.Header>
+            <Modal.Header closeButton />
             <Modal.Body>
               <BuildingCard
                 building={building}
