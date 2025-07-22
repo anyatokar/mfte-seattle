@@ -1,8 +1,9 @@
-import { MutableRefObject } from "react";
+import { MutableRefObject, useEffect, useRef } from "react";
 import BuildingCard from "./BuildingCard";
 import { willShowAvailTable } from "../../utils/generalUtils";
 import IBuilding from "../../interfaces/IBuilding";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
+import { BuildingCardEnum } from "../../types/enumTypes";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -14,6 +15,8 @@ type AllBuildingsListProps = {
   resultBuildingsUnsorted: IBuilding[];
   savedBuildings: ISavedBuilding[];
   shouldScroll: MutableRefObject<boolean>;
+  setSelectedBuildingId: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedBuildingId: string | null;
 };
 
 export const getSavedData = (
@@ -30,7 +33,20 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   resultBuildingsUnsorted,
   savedBuildings,
   shouldScroll,
+  setSelectedBuildingId,
+  selectedBuildingId,
 }) => {
+  const buildingRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+    if (selectedBuildingId && buildingRefs.current[selectedBuildingId]) {
+      buildingRefs.current[selectedBuildingId]?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [selectedBuildingId]);
+
   if (!resultBuildingsUnsorted) {
     return null;
   }
@@ -61,15 +77,20 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
             {resultBuildingsUnsorted.map((building: IBuilding) => (
               <Col
                 key={building.buildingID}
-                xs={12}
+                ref={(el: HTMLDivElement | null) => {
+                  buildingRefs.current[building.buildingID] = el;
+                }}
                 sm={willShowAvailTable(building.listing) ? 12 : 6}
                 // Split screen starts at md
                 className="p-1"
               >
                 <BuildingCard
+                  isSelected={selectedBuildingId === building.buildingID}
+                  setSelectedBuildingId={setSelectedBuildingId}
                   building={building}
                   savedHomeData={getSavedData(savedBuildings, building)}
                   shouldScroll={shouldScroll}
+                  parentComponent={BuildingCardEnum.BUILDING_LIST}
                 />
               </Col>
             ))}

@@ -7,4 +7,6 @@ export default interface IMap {
   savedBuildings: ISavedBuilding[];
   mapHeight: number;
   shouldScroll: MutableRefObject<boolean>;
+  setSelectedBuildingId: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedBuildingId: string | null;
 }

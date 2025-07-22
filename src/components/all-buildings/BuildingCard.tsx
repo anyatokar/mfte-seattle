@@ -1,16 +1,12 @@
-import { useContext, MutableRefObject } from "react";
-import { deleteBuilding, saveBuilding } from "../../utils/firestoreUtils";
+import { MutableRefObject } from "react";
 import { calculateDaysAgo, willShowAvailTable } from "../../utils/generalUtils";
 import { useAuth } from "../../contexts/AuthContext";
-import { ModalContext, ModalState } from "../../contexts/ModalContext";
-
 import { AddressAndPhone } from "../shared/AddressAndPhone";
+import BuildingCardHeader from "./BuildingCardHeader";
 import BuildingCardNote from "./BuildingCardNote";
 import BuildingDataTable from "../shared/BuildingDataTable";
-import SaveButton from "../shared/SaveButton";
-import WebsiteButton from "../shared/WebsiteButton";
-
 import {
+  BuildingCardEnum,
   listingStatusEnum,
   TableParentEnum,
   TableTypeEnum,
@@ -18,23 +14,27 @@ import {
 import IBuilding from "../../interfaces/IBuilding";
 import ISavedBuilding from "../../interfaces/ISavedBuilding";
 
-import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import Stack from "react-bootstrap/Stack";
 
 export interface AllBuildingCardProps {
   building: IBuilding;
   savedHomeData: ISavedBuilding | undefined;
   shouldScroll: MutableRefObject<boolean>;
+  parentComponent: BuildingCardEnum;
+  isSelected?: boolean;
+  setSelectedBuildingId?: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const BuildingCard: React.FC<AllBuildingCardProps> = ({
   building,
   savedHomeData,
   shouldScroll,
+  isSelected,
+  setSelectedBuildingId,
+  parentComponent,
 }) => {
   const {
     buildingID,
@@ -47,20 +47,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     isAgeRestricted,
   } = building;
 
-  const { currentUser } = useAuth();
-
-  // All Buildings Page - save/saved button
-  const [, /* modalState */ setModalState] = useContext(ModalContext);
-  const handleShowLogin = () => setModalState(ModalState.LOGIN);
-
-  function handleToggleSaveBuilding() {
-    if (savedHomeData) {
-      deleteBuilding(currentUser?.uid, buildingID, buildingName);
-    } else {
-      saveBuilding(currentUser?.uid, buildingID, buildingName);
-    }
-    shouldScroll.current = false;
-  }
+  const { currentUser, accountType } = useAuth();
 
   function getSentenceItem(): JSX.Element | null {
     if (!listing || listing.listingStatus !== listingStatusEnum.ACTIVE) {
@@ -80,48 +67,6 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
       return null;
     }
   }
-
-  const header = (
-    <Card.Header>
-      <Card.Title className="mt-2">
-        <div>
-          {buildingName}
-          {willShowAvailTable(listing) && (
-            <Badge pill bg="warning" text="dark" className="units-avail-badge">
-              Units available!
-            </Badge>
-          )}
-        </div>
-      </Card.Title>
-      <Card.Subtitle>{address.neighborhood}</Card.Subtitle>
-      <div className="mt-2">
-        {currentUser ? (
-          savedHomeData ? (
-            <Stack direction={"horizontal"} gap={2}>
-              <WebsiteButton building={building} />
-              <SaveButton
-                isSaved={true}
-                onClickCallback={handleToggleSaveBuilding}
-              />
-            </Stack>
-          ) : (
-            <Stack direction={"horizontal"} gap={2}>
-              <WebsiteButton building={building} />
-              <SaveButton
-                isSaved={false}
-                onClickCallback={handleToggleSaveBuilding}
-              />
-            </Stack>
-          )
-        ) : (
-          <Stack direction={"horizontal"} gap={2}>
-            <WebsiteButton building={building} />
-            <SaveButton isSaved={false} onClickCallback={handleShowLogin} />
-          </Stack>
-        )}
-      </div>
-    </Card.Header>
-  );
 
   const expiresOrAgeRestricted =
     isEnding || isAgeRestricted ? (
@@ -151,17 +96,29 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
     }
   }
 
+  function getBorder() {
+    if (isSelected) {
+      return "primary";
+    }
+
+    if (listing?.listingStatus === listingStatusEnum.ACTIVE) {
+      return listing?.availDataArray.length > 0 ? "success" : "danger";
+    }
+    return "";
+  }
+
   return (
     <Card
-      border={
-        listing?.listingStatus === listingStatusEnum.ACTIVE
-          ? listing?.availDataArray.length > 0
-            ? "success"
-            : "danger"
-          : ""
-      }
+      border={getBorder()}
+      className={`mb-3 ${parentComponent === BuildingCardEnum.BUILDING_LIST ? "card-hover-raise" : ""}`}
+      style={{ cursor: "pointer" }}
+      onClick={() => setSelectedBuildingId?.(building.buildingID)}
     >
-      {header}
+      <BuildingCardHeader
+        building={building}
+        savedHomeData={savedHomeData}
+        shouldScroll={shouldScroll}
+      />
       <ListGroup variant="flush" className="mb-2">
         {getSentenceItem()}
         <ListGroup.Item>
@@ -195,7 +152,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
                   buildingName={buildingName}
                   address={address}
                   contact={contact}
-                  withLinks={true}
+                  parentElement={TableParentEnum.BUILDING_CARD}
                 />
               </div>
             </Tab>
@@ -219,6 +176,7 @@ const BuildingCard: React.FC<AllBuildingCardProps> = ({
               savedHomeData={savedHomeData}
               shouldScroll={shouldScroll}
               currentUserId={currentUser.uid}
+              accountType={accountType}
             />
           </ListGroup.Item>
         ) : null}

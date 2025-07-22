@@ -38,6 +38,9 @@ export type HandleCheckboxChange = (
 const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
+  const [selectedBuildingId, setSelectedBuildingId] = useState<string | null>(
+    null
+  );
 
   // search, filter
   const allNeighborhoods = new Set(
@@ -161,6 +164,8 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
               resultBuildingsUnsorted={resultBuildingsUnsorted}
               savedBuildings={savedBuildings}
               shouldScroll={shouldScroll}
+              setSelectedBuildingId={setSelectedBuildingId}
+              selectedBuildingId={selectedBuildingId}
             />
           </Col>
           <Col
@@ -177,6 +182,8 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
               resultBuildingsUnsorted={resultBuildingsUnsorted}
               savedBuildings={savedBuildings}
               shouldScroll={shouldScroll}
+              setSelectedBuildingId={setSelectedBuildingId}
+              selectedBuildingId={selectedBuildingId}
             />
           </Col>
         </Row>
@@ -219,6 +226,8 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
                 savedBuildings={savedBuildings}
                 mapHeight={mapHeight}
                 shouldScroll={shouldScroll}
+                setSelectedBuildingId={setSelectedBuildingId}
+                selectedBuildingId={selectedBuildingId}
               />
             </Tab.Pane>
             <Tab.Pane eventKey="list">
@@ -227,6 +236,8 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
                 resultBuildingsUnsorted={resultBuildingsUnsorted}
                 savedBuildings={savedBuildings}
                 shouldScroll={shouldScroll}
+                setSelectedBuildingId={setSelectedBuildingId}
+                selectedBuildingId={selectedBuildingId}
               />
             </Tab.Pane>
           </Tab.Content>

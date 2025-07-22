@@ -12,6 +12,8 @@ interface IAllMarkersProps {
   buildingsToMap: IBuilding[];
   shouldScroll: MutableRefObject<boolean>;
   savedBuildings: ISavedBuilding[];
+  setSelectedBuildingId: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedBuildingId: string | null;
 }
 
 export type MarkersObj = {
@@ -22,12 +24,11 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
   buildingsToMap,
   shouldScroll,
   savedBuildings,
+  setSelectedBuildingId,
+  selectedBuildingId,
 }) => {
   const map = useMap();
   const [markers, setMarkers] = useState<MarkersObj>({});
-  const [selectedBuilding, setSelectedBuilding] = useState<IBuilding | null>(
-    null
-  );
 
   const clusterer = useRef<MarkerClusterer | null>(null);
 
@@ -69,7 +70,7 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
     if (!ev.latLng) return;
     console.log("marker clicked:", ev.latLng.toString());
     map.panTo(ev.latLng);
-    setSelectedBuilding(building);
+    setSelectedBuildingId(building.buildingID);
   }
 
   return (
@@ -79,8 +80,8 @@ const AllMarkers: React.FC<IAllMarkersProps> = ({
           key={building.buildingID}
           building={building}
           updateMarkerRefs={updateMarkerRefs}
-          isSelected={building.buildingID === selectedBuilding?.buildingID}
-          clearSelection={() => setSelectedBuilding(null)}
+          isSelected={building.buildingID === selectedBuildingId}
+          clearSelection={() => setSelectedBuildingId(null)}
           savedHomeData={getSavedData(savedBuildings, building)}
           shouldScroll={shouldScroll}
           onMarkerClick={handleMarkerClick}

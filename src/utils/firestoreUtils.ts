@@ -9,6 +9,7 @@ import {
   addDoc,
   Timestamp,
   DocumentData,
+  DocumentReference,
 } from "firebase/firestore";
 
 import { getMaxExpiryDate } from "./generalUtils";
@@ -35,17 +36,33 @@ import {
   ITempBuilding,
 } from "../interfaces/ITempBuilding";
 
+export function getUserDocRef(
+  uid: string,
+  accountType: accountTypeEnum
+): DocumentReference<DocumentData, DocumentData> {
+  let userDocRef;
+  if (accountType === accountTypeEnum.RENTER) {
+    userDocRef = doc(db, "users", uid);
+  } else {
+    userDocRef = doc(db, "managers", uid);
+  }
+
+  return userDocRef;
+}
+
 export async function saveBuilding(
   uid: string | undefined,
   buildingID: string,
-  buildingName: string
+  buildingName: string,
+  accountType: accountTypeEnum | null
 ) {
-  if (!uid || !buildingID) {
+  if (!uid || !buildingID || !accountType) {
     return;
   }
 
-  const userDocRef = doc(db, "users", uid);
-  const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
+  const userDocRef = getUserDocRef(uid, accountType);
+
+  const buildingDocRef = await doc(userDocRef, "savedHomes", buildingID);
 
   try {
     await setDoc(buildingDocRef, {
@@ -62,13 +79,15 @@ export async function saveBuilding(
 export async function deleteBuilding(
   uid: string | undefined,
   buildingID: string,
-  buildingName: string
+  buildingName: string,
+  accountType: accountTypeEnum | null
 ) {
-  if (!uid) {
+  if (!uid || !accountType) {
     return;
   }
 
-  const userDocRef = doc(db, "users", uid);
+  const userDocRef = getUserDocRef(uid, accountType);
+
   await deleteDoc(doc(userDocRef, "savedHomes", buildingID))
     .then(() => {
       console.log(`${buildingName} deleted from user list.`);
@@ -385,13 +404,15 @@ export async function sendMessageFirestore(formFields: ContactFormFields) {
 export async function addNote(
   uid: string | undefined,
   buildingID: string,
-  noteToAdd: string
+  noteToAdd: string,
+  accountType: accountTypeEnum | null
 ) {
-  if (!uid) {
+  if (!uid || !accountType) {
     return;
   }
 
-  const userDocRef = doc(db, "users", uid);
+  const userDocRef = getUserDocRef(uid, accountType);
+
   const buildingDocRef = doc(userDocRef, "savedHomes", buildingID);
 
   await updateDoc(buildingDocRef, {
@@ -423,6 +444,7 @@ export async function signupFirestore(signupAuthData: SignupAuthData) {
   if (accountType === accountTypeEnum.MANAGER) {
     const { email, name, uid, companyName, jobTitle } = signupAuthData;
     const managerDocRef = doc(db, "managers", uid);
+
     await setDoc(managerDocRef, {
       accountType: accountType,
       uid: uid,
@@ -435,6 +457,7 @@ export async function signupFirestore(signupAuthData: SignupAuthData) {
   } else if (accountType === accountTypeEnum.RENTER) {
     const { email, name, uid } = signupAuthData;
     const userDocRef = doc(db, "users", uid);
+
     await setDoc(userDocRef, {
       accountType: accountType,
       uid: uid,

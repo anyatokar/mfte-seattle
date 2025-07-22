@@ -91,3 +91,8 @@ export enum TableParentEnum {
   LISTING_CARD = "listingCard",
   BUILDING_CARD = "buildingCard",
 }
+
+export enum BuildingCardEnum {
+  BUILDING_LIST = "buildingList",
+  MODAL = "modal",
+}
