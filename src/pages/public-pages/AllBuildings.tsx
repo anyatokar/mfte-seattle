@@ -43,6 +43,7 @@ export type HandleCheckboxChange = (
 const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
   const [allBuildings, isLoadingAllBuildings] = useAllBuildingsContext();
   const [savedBuildings] = useSavedBuildings();
+
   const [selectedBuildingId, setSelectedBuildingId] = useState<string | null>(
     null
   );

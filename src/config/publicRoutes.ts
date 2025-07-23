@@ -16,6 +16,7 @@ const publicRoutes: IRoute[] = [
     name: "All Buildings Page",
     component: AllBuildingsPage,
     exact: true,
+    wrapWith: [AllBuildingsProvider, HouseholdProvider],
   },
   {
     path: "/all-buildings",
