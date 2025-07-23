@@ -7,8 +7,13 @@ import {
   useLayoutEffect,
 } from "react";
 import config from "../../config/config";
-
-import { useAllBuildingsContext } from "../../contexts/AllBuildingsContext";
+import {
+  AllBuildingsProvider,
+  useAllBuildingsContext,
+} from "../../contexts/AllBuildingsContext";
+import { HouseholdProvider } from "../../contexts/HouseholdContext";
+import { TempBuildingsProvider } from "../../contexts/TempBuildingsContext";
+import { UnitAvailDataProvider } from "../../contexts/UnitAvailDataContext";
 import { useSavedBuildings } from "../../hooks/useSavedBuildings";
 
 import AllBuildingsList from "../../components/all-buildings/BuildingsList";
@@ -145,104 +150,115 @@ const AllBuildingsPage: React.FC<IPage> = ({ topNavRef }) => {
 
   return (
     <RenderProfiler id="AllBuildings" isProfilerOn={config.debug.isProfilerOn}>
-      <div className="all-buildings-page pt-2" ref={searchAndFilterRef}>
-        <SearchAndFilter
-          setSearchQuery={setSearchQuery}
-          allNeighborhoods={allNeighborhoods}
-          allAmi={allAmi}
-          activeFilters={activeFilters}
-          dispatch={dispatch}
-        />
-      </div>
+      <AllBuildingsProvider>
+        <TempBuildingsProvider>
+          <HouseholdProvider>
+            <UnitAvailDataProvider>
+              <div className="all-buildings-page pt-2" ref={searchAndFilterRef}>
+                <SearchAndFilter
+                  setSearchQuery={setSearchQuery}
+                  allNeighborhoods={allNeighborhoods}
+                  allAmi={allAmi}
+                  activeFilters={activeFilters}
+                  dispatch={dispatch}
+                />
+              </div>
 
-      {/* Only visible on large screens */}
-      <Container fluid className="d-none d-md-block map-and-list-container">
-        <Row>
-          <Col className="px-1" ref={mapContainerRef}>
-            <ReactMap
-              mapHeight={mapHeight}
-              resultBuildingsUnsorted={resultBuildingsUnsorted}
-              savedBuildings={savedBuildings}
-              shouldScroll={shouldScroll}
-              setSelectedBuildingId={setSelectedBuildingId}
-              selectedBuildingId={selectedBuildingId}
-            />
-          </Col>
-          <Col
-            className="px-0"
-            style={{
-              height: `${mapHeight}px`,
-              overflowY: "auto",
-            }}
-            // Ref to scroll to the top of the list on search input
-            ref={buildingsListRef}
-          >
-            <AllBuildingsList
-              isLoading={isLoadingAllBuildings}
-              resultBuildingsUnsorted={resultBuildingsUnsorted}
-              savedBuildings={savedBuildings}
-              shouldScroll={shouldScroll}
-              setSelectedBuildingId={setSelectedBuildingId}
-              selectedBuildingId={selectedBuildingId}
-            />
-          </Col>
-        </Row>
-      </Container>
+              {/* Only visible on large screens */}
+              <Container
+                fluid
+                className="d-none d-md-block map-and-list-container"
+              >
+                <Row>
+                  <Col className="px-1" ref={mapContainerRef}>
+                    <ReactMap
+                      mapHeight={mapHeight}
+                      resultBuildingsUnsorted={resultBuildingsUnsorted}
+                      savedBuildings={savedBuildings}
+                      shouldScroll={shouldScroll}
+                      setSelectedBuildingId={setSelectedBuildingId}
+                      selectedBuildingId={selectedBuildingId}
+                    />
+                  </Col>
+                  <Col
+                    className="px-0"
+                    style={{
+                      height: `${mapHeight}px`,
+                      overflowY: "auto",
+                    }}
+                    // Ref to scroll to the top of the list on search input
+                    ref={buildingsListRef}
+                  >
+                    <AllBuildingsList
+                      isLoading={isLoadingAllBuildings}
+                      resultBuildingsUnsorted={resultBuildingsUnsorted}
+                      savedBuildings={savedBuildings}
+                      shouldScroll={shouldScroll}
+                      setSelectedBuildingId={setSelectedBuildingId}
+                      selectedBuildingId={selectedBuildingId}
+                    />
+                  </Col>
+                </Row>
+              </Container>
 
-      {/* Only visible on small screens */}
-      <Container
-        fluid
-        className="d-block d-md-none mt-1 map-and-list-container"
-      >
-        <Tab.Container id="sidebar" defaultActiveKey="map">
-          <div ref={sideNavRef}>
-            <Nav
-              variant="pills"
-              className="mb-1 small d-flex justify-content-end"
-            >
-              <Nav.Item>
-                <Nav.Link
-                  eventKey="map"
-                  className="tab small py-1 px-2 text-size-override"
-                >
-                  Map View
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link
-                  eventKey="list"
-                  className="tab small py-1 px-2 text-size-override"
-                >
-                  List View
-                </Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </div>
+              {/* Only visible on small screens */}
+              <Container
+                fluid
+                className="d-block d-md-none mt-1 map-and-list-container"
+              >
+                <Tab.Container id="sidebar" defaultActiveKey="map">
+                  <div ref={sideNavRef}>
+                    <Nav
+                      variant="pills"
+                      className="mb-1 small d-flex justify-content-end"
+                    >
+                      <Nav.Item>
+                        <Nav.Link
+                          eventKey="map"
+                          className="tab small py-1 px-2 text-size-override"
+                        >
+                          Map View
+                        </Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link
+                          eventKey="list"
+                          className="tab small py-1 px-2 text-size-override"
+                        >
+                          List View
+                        </Nav.Link>
+                      </Nav.Item>
+                    </Nav>
+                  </div>
 
-          <Tab.Content ref={mapContainerRef}>
-            <Tab.Pane eventKey="map">
-              <ReactMap
-                resultBuildingsUnsorted={resultBuildingsUnsorted}
-                savedBuildings={savedBuildings}
-                mapHeight={mapHeight}
-                shouldScroll={shouldScroll}
-                setSelectedBuildingId={setSelectedBuildingId}
-                selectedBuildingId={selectedBuildingId}
-              />
-            </Tab.Pane>
-            <Tab.Pane eventKey="list">
-              <AllBuildingsList
-                isLoading={isLoadingAllBuildings}
-                resultBuildingsUnsorted={resultBuildingsUnsorted}
-                savedBuildings={savedBuildings}
-                shouldScroll={shouldScroll}
-                setSelectedBuildingId={setSelectedBuildingId}
-                selectedBuildingId={selectedBuildingId}
-              />
-            </Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
-      </Container>
+                  <Tab.Content ref={mapContainerRef}>
+                    <Tab.Pane eventKey="map">
+                      <ReactMap
+                        resultBuildingsUnsorted={resultBuildingsUnsorted}
+                        savedBuildings={savedBuildings}
+                        mapHeight={mapHeight}
+                        shouldScroll={shouldScroll}
+                        setSelectedBuildingId={setSelectedBuildingId}
+                        selectedBuildingId={selectedBuildingId}
+                      />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="list">
+                      <AllBuildingsList
+                        isLoading={isLoadingAllBuildings}
+                        resultBuildingsUnsorted={resultBuildingsUnsorted}
+                        savedBuildings={savedBuildings}
+                        shouldScroll={shouldScroll}
+                        setSelectedBuildingId={setSelectedBuildingId}
+                        selectedBuildingId={selectedBuildingId}
+                      />
+                    </Tab.Pane>
+                  </Tab.Content>
+                </Tab.Container>
+              </Container>
+            </UnitAvailDataProvider>
+          </HouseholdProvider>
+        </TempBuildingsProvider>
+      </AllBuildingsProvider>
     </RenderProfiler>
   );
 };

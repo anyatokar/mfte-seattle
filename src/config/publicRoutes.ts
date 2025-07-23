@@ -1,5 +1,6 @@
 import IRoute from "../interfaces/IRoute";
-
+import { AllBuildingsProvider } from "../contexts/AllBuildingsContext";
+import { HouseholdProvider } from "../contexts/HouseholdContext";
 import AboutPage from "../pages/public-pages/About";
 import AllBuildingsPage from "../pages/public-pages/AllBuildings";
 import ContactPage from "../pages/public-pages/Contact";
@@ -21,6 +22,7 @@ const publicRoutes: IRoute[] = [
     name: "All Buildings Page",
     component: AllBuildingsPage,
     exact: true,
+    wrapWith: [AllBuildingsProvider, HouseholdProvider],
   },
   {
     path: "/about",
