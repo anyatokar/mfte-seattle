@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef } from "react";
+import { MutableRefObject, useRef } from "react";
 import BuildingCard from "./BuildingCard";
 import { willShowAvailTable } from "../../utils/generalUtils";
 import IBuilding from "../../interfaces/IBuilding";
@@ -37,19 +37,6 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   selectedBuildingId,
 }) => {
   const buildingRefs = useRef<Record<string, HTMLDivElement | null>>({});
-
-  useEffect(() => {
-    if (selectedBuildingId && buildingRefs.current[selectedBuildingId]) {
-      buildingRefs.current[selectedBuildingId]?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }, [selectedBuildingId]);
-
-  if (!resultBuildingsUnsorted) {
-    return null;
-  }
 
   return (
     <Container fluid>
