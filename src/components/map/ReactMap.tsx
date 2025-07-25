@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   APIProvider,
   Map,
@@ -10,7 +11,7 @@ import IMap from "../../interfaces/IMap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { useState } from "react";
+
 const seattleCoordinates = {
   lat: 47.62,
   lng: -122.315,
