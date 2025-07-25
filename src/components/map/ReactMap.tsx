@@ -11,6 +11,10 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { useState } from "react";
+const seattleCoordinates = {
+  lat: 47.62,
+  lng: -122.315,
+};
 
 const ReactMap: React.FC<IMap> = ({
   resultBuildingsUnsorted = [],
@@ -21,22 +25,6 @@ const ReactMap: React.FC<IMap> = ({
   selectedBuildingId,
 }) => {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
-
-  const seattleCoordinates = {
-    lat: 47.62,
-    lng: -122.315,
-  };
-
-  const mapTypeControlOptions = {
-    style: window.google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-    position: window.google.maps.ControlPosition.TOP_LEFT,
-    mapTypeIds: [
-      window.google.maps.MapTypeId.ROADMAP,
-      window.google.maps.MapTypeId.SATELLITE,
-      window.google.maps.MapTypeId.TERRAIN,
-      window.google.maps.MapTypeId.HYBRID,
-    ],
-  };
 
   return (
     <APIProvider
@@ -67,7 +55,16 @@ const ReactMap: React.FC<IMap> = ({
                   )
                 }
                 mapTypeControl={true}
-                mapTypeControlOptions={mapTypeControlOptions}
+                mapTypeControlOptions={{
+                  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                  position: google.maps.ControlPosition.TOP_LEFT,
+                  mapTypeIds: [
+                    google.maps.MapTypeId.ROADMAP,
+                    google.maps.MapTypeId.SATELLITE,
+                    google.maps.MapTypeId.TERRAIN,
+                    google.maps.MapTypeId.HYBRID,
+                  ],
+                }}
               >
                 <AllMarkers
                   buildingsToMap={resultBuildingsUnsorted}
