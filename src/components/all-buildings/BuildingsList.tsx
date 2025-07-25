@@ -1,4 +1,4 @@
-import { MutableRefObject, useRef } from "react";
+import { MutableRefObject, useEffect, useRef } from "react";
 import BuildingCard from "./BuildingCard";
 import { willShowAvailTable } from "../../utils/generalUtils";
 import IBuilding from "../../interfaces/IBuilding";
@@ -37,6 +37,24 @@ const AllBuildingsList: React.FC<AllBuildingsListProps> = ({
   selectedBuildingId,
 }) => {
   const buildingRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+  if (selectedBuildingId && buildingRefs.current[selectedBuildingId]) {
+    const element = buildingRefs.current[selectedBuildingId];
+    const rect = element.getBoundingClientRect();
+
+    const isInView =
+      rect.top >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight);
+
+    if (!isInView) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }
+}, [selectedBuildingId]);
 
   return (
     <Container fluid>
