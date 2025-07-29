@@ -32,17 +32,36 @@ const Application: React.FC = () => {
                 <TopNav />
               </div>
               <Routes>
-                {privateRoutes.map(({ name, path, component: Component }) => (
-                  <Route
-                    key={name}
-                    path={path}
-                    element={
-                      <PrivateRoute name={name}>
-                        <Component />
-                      </PrivateRoute>
-                    }
-                  />
-                ))}
+                {/* TODO: Can DRY this up. */}
+                {privateRoutes.map(
+                  ({
+                    name,
+                    path,
+                    component: Component,
+                    wrapWith = [],
+                    props,
+                  }) => {
+                    const element = (
+                      <Component {...(props || {})} topNavRef={topNavRef} />
+                    );
+
+                    const wrappedElement = wrapWith.length
+                      ? composeProviders(wrapWith)(element)
+                      : element;
+
+                    const protectedElement = (
+                      <PrivateRoute name={name}>{wrappedElement}</PrivateRoute>
+                    );
+
+                    return (
+                      <Route
+                        key={name}
+                        path={path}
+                        element={protectedElement}
+                      />
+                    );
+                  }
+                )}
 
                 {publicRoutes.map(
                   ({
