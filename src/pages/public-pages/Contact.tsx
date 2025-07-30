@@ -3,7 +3,7 @@ import config from "../../config/config";
 import { sendMessageFirestore } from "../../utils/firestoreUtils";
 import RenderProfiler from "../../components/utility/RenderProfiler";
 import IPage from "../../interfaces/IPage";
-import { ContactFormFields } from "../../types/contactFormFieldsType";
+import { IContactFormFields } from "../../interfaces/IContactFormFields";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -39,7 +39,7 @@ const ContactPage: React.FC<IPage> = () => {
     const newFormFields = {
       ...formFields,
     };
-    newFormFields[event.target.name as keyof ContactFormFields] =
+    newFormFields[event.target.name as keyof IContactFormFields] =
       event.target.value;
     setFormFields(newFormFields);
   };
