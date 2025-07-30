@@ -19,7 +19,7 @@ import {
   isSameAmiData,
 } from "./firestoreUtilHelpers";
 
-import { ContactFormFields } from "../types/contactFormFieldsType";
+import { IContactFormFields } from "../interfaces/IContactFormFields";
 import {
   accountTypeEnum,
   listingStatusEnum,
@@ -389,7 +389,7 @@ export async function updateProfileFirestore(updateData: UpdateData) {
   }
 }
 
-export async function sendMessageFirestore(formFields: ContactFormFields) {
+export async function sendMessageFirestore(formFields: IContactFormFields) {
   await addDoc(collection(db, "contactus"), {
     authorName: formFields.authorName,
     email: formFields.email,
