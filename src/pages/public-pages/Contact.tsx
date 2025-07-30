@@ -16,7 +16,7 @@ const ContactPage: React.FC<IPage> = () => {
     setFormFields({
       authorName: "",
       email: "",
-      description: "",
+      role: "",
       subject: "",
       message: "",
     });
@@ -25,12 +25,13 @@ const ContactPage: React.FC<IPage> = () => {
   const [formFields, setFormFields] = useState({
     authorName: "",
     email: "",
-    description: "",
+    role: "",
     subject: "",
     message: "",
   });
 
   const [isFormVisible, setIsFormVisible] = useState(true);
+  const [sentMessage, setSentMessage] = useState("");
 
   // event handlers
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (
@@ -46,9 +47,11 @@ const ContactPage: React.FC<IPage> = () => {
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
+
     return sendMessageFirestore(formFields)
       .then(() => {
         console.log("Message sent successfully.");
+        setSentMessage(formFields.message);
         clearFields();
         setIsFormVisible(false);
       })
@@ -56,6 +59,18 @@ const ContactPage: React.FC<IPage> = () => {
         console.error("Error sending message: ", error);
       });
   };
+
+  const seattleHousingLink = (
+    <a
+      id="seattle-housing-website"
+      href="https://seattle.gov/housing"
+      title="Seattle Office of Housing government website"
+      target="_blank"
+      rel="noreferrer"
+    >
+      Seattle Office of Housing
+    </a>
+  );
 
   return (
     <RenderProfiler id="Contact" isProfilerOn={config.debug.isProfilerOn}>
@@ -71,26 +86,29 @@ const ContactPage: React.FC<IPage> = () => {
                 </p>
                 <p>
                   Please note, this is an independent website intended solely to
-                  map rent-reduced units. We are not affiliated with the Seattle
-                  Office of Housing or any property owners, and we cannot
-                  provide assistance with specific program or property
-                  questions.{" "}
+                  map rent-reduced units.
                 </p>
                 <p>
-                  As a suggestion, if you have questions or feedback about the
-                  MFTE program, contact the{" "}
-                  <a
-                    id="seattle-housing-website"
-                    href="https://seattle.gov/housing"
-                    title="Seattle Office of Housing government website"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Seattle Office of Housing
-                  </a>
-                  . For inquiries about a specific building such as tenant
-                  eligibility or the application process, contact the building’s
-                  management directly.
+                  ⚠️ We are not affiliated with the Seattle Office of Housing or
+                  any property owners, and we cannot provide assistance with
+                  specific program or property questions. We also do not have
+                  capacity for quick replies and are not able to help with
+                  urgent issues.
+                </p>
+                <p>
+                  <strong>
+                    If you have questions or feedback about the rent-reduced or
+                    affordable housing programs, or need help securing housing,
+                    contact the {seattleHousingLink}.
+                  </strong>
+                </p>
+                <p>
+                  {" "}
+                  <strong>
+                    For inquiries about a specific building such as tenant
+                    eligibility or the application process, contact the
+                    building’s management directly.
+                  </strong>{" "}
                 </p>
 
                 <p>All fields are required.</p>
@@ -121,22 +139,22 @@ const ContactPage: React.FC<IPage> = () => {
                     </Form.Group>
                   </Form.Group>
 
-                  {/* Description */}
+                  {/* Role */}
                   <Form.Group className="mb-3">
-                    <Form.Label>Description</Form.Label>
+                    <Form.Label>Role</Form.Label>
                     <Form.Control
                       required
                       as="select"
-                      name="description"
-                      id="description"
+                      name="role"
+                      id="role"
                       onChange={onInputChange}
-                      value={formFields.description}
+                      value={formFields.role}
                     >
                       <option key="blankChoice" hidden></option>
                       <option>Prospective renter</option>
                       <option>Company representative</option>
                       <option>Government representative</option>
-                      <option>None of the above</option>
+                      <option>Other</option>
                     </Form.Control>
                   </Form.Group>
 
@@ -184,7 +202,32 @@ const ContactPage: React.FC<IPage> = () => {
                 </Form>
               </>
             ) : (
-              <p>Thank you, your message was sent successfully.</p>
+              <>
+                <p>Thank you, your message was sent successfully.</p>
+                <p>
+                  Please note, this website is independent and not affiliated
+                  with the Seattle Office of Housing.
+                </p>
+                <p>
+                  <strong>
+                    If your message concerned an urgent housing issue, this is
+                    not the right place — please contact an appropriate agency
+                    or organization for immediate assistance.
+                  </strong>
+                </p>
+                <ul>
+                  <li>
+                    For questions about rent-reduced housing programs or your
+                    tenant rights, contact the {seattleHousingLink}.
+                  </li>
+                  <li>
+                    For questions about your application to a specific building,
+                    contact the building management.
+                  </li>
+                </ul>
+                <p>Your message:</p>
+                <p>{sentMessage}</p>
+              </>
             )}
           </Col>
         </Row>

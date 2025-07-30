@@ -394,7 +394,7 @@ export async function sendMessageFirestore(formFields: IContactFormFields) {
     authorName: formFields.authorName,
     email: formFields.email,
     subject: formFields.subject,
-    description: formFields.description,
+    description: formFields.role,
     message: formFields.message,
     sentTimestamp: new Date(),
     didReply: false,
