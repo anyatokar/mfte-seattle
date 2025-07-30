@@ -21,8 +21,7 @@ import * as logger from "firebase-functions/logger";
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as sgMail from "@sendgrid/mail";
-import { IContactData } from "../../src/interfaces/IContactFormFields";
-import { timestampToDateAndTime } from "../../src/utils/generalUtils";
+import { IContactData } from "./IContactFormFields";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -43,12 +42,12 @@ export const emailOnContactUs = functions.firestore
       from: "mfte.seattle@gmail.com",
       subject: "Reply to your message from mfte-seattle.com",
       html: `
-        <p><strong>From:</strong>${email}</p>
-        <p><strong>Name:</strong>${authorName}</p>
-        <p><strong>Description:</strong>${description}</p>
-        <p><strong>Subject:</strong>${subject}</p>
-        <p><strong>Timestamp:</strong>${timestampToDateAndTime(sentTimestamp)}</p>
-        <p><strong>Message:</strong>${message}</p>
+        <p><strong>From:</strong> ${authorName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Date:</strong> ${sentTimestamp.toDate().toLocaleString()}</p>
+        <p><strong>Role:</strong> ${description}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Message:</strong> ${message}</p>
       `,
     };
 
