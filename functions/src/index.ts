@@ -21,6 +21,8 @@ import * as logger from "firebase-functions/logger";
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as sgMail from "@sendgrid/mail";
+import { IContactData } from "../../src/interfaces/IContactFormFields";
+import { timestampToDateAndTime } from "../../src/utils/generalUtils";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -34,19 +36,19 @@ export const emailOnContactUs = functions.firestore
   .onCreate(async (snap, context) => {
     const data = snap.data();
 
-    const userEmail = data.email || "Not provided";
-    const userMessage = data.message || "No message";
-    const sentTime = data.sentTimestamp?.toDate?.().toLocaleString() || "Unknown time";
+    const {authorName, email, description, subject, message, sentTimestamp} = data as IContactData;
 
     const msg = {
       to: "mfte.seattle@gmail.com",
       from: "mfte.seattle@gmail.com",
-      subject: "New Contact Us Submission",
+      subject: "Reply to your message from mfte-seattle.com",
       html: `
-        <p><strong>From:</strong> ${userEmail}</p>
-        <p><strong>Sent At:</strong> ${sentTime}</p>
-        <p><strong>Message:</strong></p>
-        <p>${userMessage}</p>
+        <p><strong>From:</strong>${email}</p>
+        <p><strong>Name:</strong>${authorName}</p>
+        <p><strong>Description:</strong>${description}</p>
+        <p><strong>Subject:</strong>${subject}</p>
+        <p><strong>Timestamp:</strong>${timestampToDateAndTime(sentTimestamp)}</p>
+        <p><strong>Message:</strong>${message}</p>
       `,
     };
 
@@ -57,5 +59,3 @@ export const emailOnContactUs = functions.firestore
       console.error("Error sending contact email:", error);
     }
   });
-
-
