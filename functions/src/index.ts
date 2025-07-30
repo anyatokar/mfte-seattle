@@ -7,7 +7,7 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-import {onRequest} from "firebase-functions/v2/https";
+import { onRequest } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 
 // Start writing functions
@@ -35,7 +35,8 @@ export const emailOnContactUs = functions.firestore
   .onCreate(async (snap, context) => {
     const data = snap.data();
 
-    const {authorName, email, description, subject, message, sentTimestamp} = data as IContactData;
+    const { authorName, email, description, subject, message, sentTimestamp } =
+      data as IContactData;
 
     const msg = {
       to: "mfte.seattle@gmail.com",

@@ -6,10 +6,8 @@ export interface IContactFormFields {
   description: string;
   subject: string;
   message: string;
-};
+}
 
 export interface IContactData extends IContactFormFields {
   sentTimestamp: Timestamp;
 }
-
-
