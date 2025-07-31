@@ -85,27 +85,20 @@ const ContactPage: React.FC<IPage> = () => {
                   is welcome and appreciated.
                 </p>
                 <p>
-                  Please note, this is an independent website intended solely to
-                  map rent-reduced units.
-                </p>
-                <p>
-                  ⚠️ We are not affiliated with the Seattle Office of Housing or
-                  any property owners, and we cannot provide assistance with
-                  specific program or property questions. We also do not have
-                  capacity for quick replies and are not able to help with
-                  urgent issues.
+                  ⚠️ Please note, this is an independent website intended only
+                  to map rent-reduced units.
                 </p>
                 <p>
                   <strong>
-                    If you have questions or feedback about the rent-reduced or
-                    affordable housing programs, or need help securing housing,
-                    contact the {seattleHousingLink}.
+                    For general questions about rent-reduced and affordable
+                    housing programs, or help with securing housing, contact the{" "}
+                    {seattleHousingLink}.
                   </strong>
                 </p>
                 <p>
                   {" "}
                   <strong>
-                    For inquiries about a specific building such as tenant
+                    For questions about a specific building such as tenant
                     eligibility or the application process, contact the
                     building’s management directly.
                   </strong>{" "}
