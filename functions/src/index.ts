@@ -1,42 +1,28 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
-import { onRequest } from "firebase-functions/v2/https";
+import { onDocumentCreated } from "firebase-functions/v2/firestore";
 import * as logger from "firebase-functions/logger";
-
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
-
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
-
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
 import * as sgMail from "@sendgrid/mail";
 import { IContactData } from "./IContactFormFields";
+import { defineSecret } from "firebase-functions/params";
 
-// Initialize Firebase Admin SDK
-admin.initializeApp();
+const SENDGRID_KEY = defineSecret("SENDGRID_KEY");
 
-// Get SendGrid API key from environment config
-const SENDGRID_API_KEY = functions.config().sendgrid.key;
-sgMail.setApiKey(SENDGRID_API_KEY);
+export const emailOnContactUsV2 = onDocumentCreated(
+  {
+    document: "contactus/{docId}",
+    secrets: [SENDGRID_KEY],
+  },
+  async (event) => {
+    const snap = event.data;
+    if (!snap) {
+      logger.error("No Firestore snapshot available");
+      return;
+    }
 
-export const emailOnContactUs = functions.firestore
-  .document("contactus/{docId}")
-  .onCreate(async (snap, context) => {
-    const data = snap.data();
-
+    const data = snap.data() as IContactData;
     const { authorName, email, description, subject, message, sentTimestamp } =
-      data as IContactData;
+      data;
+
+    sgMail.setApiKey(SENDGRID_KEY.value());
 
     const msg = {
       to: "mfte.seattle@gmail.com",
@@ -54,8 +40,9 @@ export const emailOnContactUs = functions.firestore
 
     try {
       await sgMail.send(msg);
-      console.log("Contact email sent successfully");
+      logger.info("Contact email sent successfully");
     } catch (error) {
-      console.error("Error sending contact email:", error);
+      logger.error("Error sending contact email:", error);
     }
-  });
+  }
+);
