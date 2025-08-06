@@ -106,7 +106,6 @@ function maxRentToFloat(row: UnitAvailData): UnitAvailData {
   if (typeof row.maxRent === "string") {
     row.maxRent = parseFloat(row.maxRent);
   }
-
   return row;
 }
 
@@ -265,7 +264,6 @@ export async function updateListingFirestore(
         delete updatedRow.otherProgram;
         return updatedRow;
       }
-
       return maxRentToFloat(row);
     });
 
