@@ -25,7 +25,10 @@ import {
   listingStatusEnum,
   ProgramKeyEnum,
 } from "../types/enumTypes";
-import IListing, { AvailDataArray } from "../interfaces/IListing";
+import IListing, {
+  AvailDataArray,
+  UnitAvailData,
+} from "../interfaces/IListing";
 import {
   IManagerSignupAuthData,
   IUserSignupAuthData,
@@ -97,17 +100,22 @@ export async function deleteBuilding(
     });
 }
 
+function maxRentToFloat(row: UnitAvailData): UnitAvailData {
+  // The check is for TS and because form fields and listing in db share IListing.
+  // Type will always be string when incoming from the form.
+  if (typeof row.maxRent === "string") {
+    row.maxRent = parseFloat(row.maxRent);
+  }
+  return row;
+}
+
 function availDataToNum(
   availDataArray: AvailDataArray | undefined
 ): AvailDataArray {
   if (!availDataArray) return [];
 
-  for (const ele of availDataArray) {
-    // The check is for TS and because form fields and listing in db share IListing.
-    // Type will always be string when incoming from the form.
-    if (typeof ele.maxRent === "string") {
-      ele.maxRent = parseFloat(ele.maxRent);
-    }
+  for (const row of availDataArray) {
+    maxRentToFloat(row);
   }
 
   return availDataArray;
@@ -247,27 +255,21 @@ export async function updateListingFirestore(
   fieldsToUpdate: Partial<IListing>,
   listingID: string
 ) {
-  if (fieldsToUpdate.availDataArray) {
-    fieldsToUpdate.availDataArray = availDataToNum(
-      fieldsToUpdate.availDataArray
-    );
-  }
-
   try {
     const listingDocRef = doc(db, "listings", listingID);
 
     const updatedAvailDataArray = fieldsToUpdate.availDataArray?.map((row) => {
-      if (row.selectedProgram !== ProgramKeyEnum.other && row.otherProgram) {
+      if (row.otherProgram && row.selectedProgram !== ProgramKeyEnum.other) {
         const updatedRow = { ...row };
         delete updatedRow.otherProgram;
         return updatedRow;
       }
-      return row;
+      return maxRentToFloat(row);
     });
 
     await updateDoc(listingDocRef, {
       ...fieldsToUpdate,
-      availDataArray: updatedAvailDataArray,
+      availDataArray: updatedAvailDataArray || [],
       dateUpdated: Timestamp.fromDate(new Date()),
       expiryDate: fieldsToUpdate.expiryDate || getMaxExpiryDate(),
     });
