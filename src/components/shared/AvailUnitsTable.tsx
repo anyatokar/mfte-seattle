@@ -341,8 +341,8 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
               *Max rent calculation based on{" "}
               <a
                 id="income-and-rent-limits"
-                href="https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf"
-                title="Income and Rent Limits (FY 2025)"
+                href="https://seattle.gov/housing/property-managers/income-and-rent-limits"
+                title="Income and Rent Limits (2026-2027)"
                 target="_blank"
                 rel="noreferrer"
               >

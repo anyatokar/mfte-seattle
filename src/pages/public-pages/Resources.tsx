@@ -38,8 +38,8 @@ const resourceGroups: ResourceGroups = [
       },
       {
         id: "income-and-rent-limits",
-        href: "https://www.seattle.gov/documents/Departments/Housing/PropertyManagers/IncomeRentLimits/2025/2025_Rental_IncomeLimits.pdf",
-        label: "Income and Rent Limits (FY 2025)",
+        href: "https://seattle.gov/housing/property-managers/income-and-rent-limits",
+        label: "Income and Rent Limits (2026-2027)",
         description: null,
       },
       {
