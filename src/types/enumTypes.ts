@@ -37,6 +37,7 @@ export enum BedroomsKeyEnum {
   ONE_BED = "oneBed",
   TWO_BED = "twoBed",
   THREE_PLUS = "threePlusBed",
+  FOUR_BED = "fourBed",
 }
 
 export enum unitSizeLabelEnum {
@@ -45,6 +46,7 @@ export enum unitSizeLabelEnum {
   oneBed = "1 Bed",
   twoBed = "2 Bed",
   threePlusBed = "3+ Bed",
+  fourBed = "4 Bed",
 }
 
 export enum ProgramKeyEnum {
