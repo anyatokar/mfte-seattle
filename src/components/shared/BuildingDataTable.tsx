@@ -3,6 +3,7 @@ import IncomeLimitsModal from "./IncomeLimitsModal";
 import { formatCurrency, formatDate } from "../../utils/generalUtils";
 import { useHousehold } from "../../contexts/HouseholdContext";
 import { useUnitAvailData } from "../../contexts/UnitAvailDataContext";
+import { p7maxIncomeData } from "../../dataTables/P7-income-limits";
 import { p6maxIncomeData } from "../../dataTables/P6-income-limits";
 import { p345maxIncomeData } from "../../dataTables/P345-income-limits";
 import { archIncomeData } from "../../dataTables/ARCH-income-limits";
@@ -44,8 +45,9 @@ interface AvailDataProps {
 type BuildingDataTableProps = AmiDataProps | AvailDataProps;
 
 export const incomeTables = {
-  [ProgramKeyEnum.P345]: p345maxIncomeData,
+  [ProgramKeyEnum.P7]: p7maxIncomeData,
   [ProgramKeyEnum.P6]: p6maxIncomeData,
+  [ProgramKeyEnum.P345]: p345maxIncomeData,
   [ProgramKeyEnum.ARCH_OLD]: archIncomeData,
   [ProgramKeyEnum.ARCH_NEW]: archIncomeData,
 };
