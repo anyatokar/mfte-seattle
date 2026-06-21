@@ -4,6 +4,7 @@ import {
   colWidths,
   optionalUrlsArray,
 } from "../../constants/availUnitsTableConstants";
+import { p7UnitPricing } from "../../dataTables/P7-unit-pricing";
 import { p6UnitPricing } from "../../dataTables/P6-unit-pricing";
 import { p345UnitPricing } from "../../dataTables/P345-unit-pricing";
 import { archOldUnitPricing } from "../../dataTables/ARCH-old-unit-pricing";
@@ -106,6 +107,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
       return 0;
 
     const pricingTables = {
+      [ProgramKeyEnum.P7]: p7UnitPricing,
       [ProgramKeyEnum.P6]: p6UnitPricing,
       [ProgramKeyEnum.P345]: p345UnitPricing,
       [ProgramKeyEnum.ARCH_OLD]: archOldUnitPricing,
@@ -118,6 +120,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({
   }
 
   const programOptionsArray: ProgramKeyEnum[] = [
+    ProgramKeyEnum.P7,
     ProgramKeyEnum.P6,
     ProgramKeyEnum.P345,
     ProgramKeyEnum.other,

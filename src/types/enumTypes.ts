@@ -37,6 +37,7 @@ export enum BedroomsKeyEnum {
   ONE_BED = "oneBed",
   TWO_BED = "twoBed",
   THREE_PLUS = "threePlusBed",
+  FOUR_BED = "fourBed",
 }
 
 export enum unitSizeLabelEnum {
@@ -45,9 +46,11 @@ export enum unitSizeLabelEnum {
   oneBed = "1 Bed",
   twoBed = "2 Bed",
   threePlusBed = "3+ Bed",
+  fourBed = "4 Bed",
 }
 
 export enum ProgramKeyEnum {
+  P7 = "P7",
   P6 = "P6",
   P345 = "P345",
   ARCH_NEW = "ARCH_NEW",
@@ -56,6 +59,7 @@ export enum ProgramKeyEnum {
 }
 
 export enum ProgramLabelEnum {
+  P7 = "MFTE P7",
   P6 = "MFTE P6",
   P345 = "MFTE P3-5, IZ-Housing Bonus, MHA, or MPC-Yesler Terrace",
   ARCH_OLD = "ARCH before May 2019",
